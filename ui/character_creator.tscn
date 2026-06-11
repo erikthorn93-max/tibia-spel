@@ -1,0 +1,67 @@
+[gd_scene load_steps=3 format=3 uid="uid://chargen0001"]
+
+[ext_resource type="Script" path="res://ui/character_creator.gd" id="1"]
+[ext_resource type="Script" path="res://entities/player/character_visual.gd" id="2"]
+
+[node name="CharacterCreator" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1")
+
+[node name="Preview" type="Node2D" parent="."]
+position = Vector2(880, 360)
+script = ExtResource("2")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+offset_left = 100.0
+offset_top = 100.0
+offset_right = 480.0
+offset_bottom = 620.0
+
+[node name="Header" type="Label" parent="VBox"]
+text = "Skapa din karaktär"
+theme_override_font_sizes/font_size = 28
+
+[node name="NameRow" type="HBoxContainer" parent="VBox"]
+
+[node name="NameLbl" type="Label" parent="VBox/NameRow"]
+text = "Namn:  "
+
+[node name="NameEdit" type="LineEdit" parent="VBox/NameRow"]
+custom_minimum_size = Vector2(200, 0)
+
+[node name="SkinRow" type="HBoxContainer" parent="VBox"]
+
+[node name="Lbl" type="Label" parent="VBox/SkinRow"]
+text = "Hudfärg:  "
+
+[node name="Picker" type="ColorPickerButton" parent="VBox/SkinRow"]
+custom_minimum_size = Vector2(60, 28)
+
+[node name="HairRow" type="HBoxContainer" parent="VBox"]
+
+[node name="Lbl" type="Label" parent="VBox/HairRow"]
+text = "Hårfärg:  "
+
+[node name="Picker" type="ColorPickerButton" parent="VBox/HairRow"]
+custom_minimum_size = Vector2(60, 28)
+
+[node name="ShirtRow" type="HBoxContainer" parent="VBox"]
+
+[node name="Lbl" type="Label" parent="VBox/ShirtRow"]
+text = "Tröja:  "
+
+[node name="Picker" type="ColorPickerButton" parent="VBox/ShirtRow"]
+custom_minimum_size = Vector2(60, 28)
+
+[node name="PantsRow" type="HBoxContainer" parent="VBox"]
+
+[node name="Lbl" type="Label" parent="VBox/PantsRow"]
+text = "Byxor:  "
+
+[node name="Picker" type="ColorPickerButton" parent="VBox/PantsRow"]
+custom_minimum_size = Vector2(60, 28)
+
+[node name="StartBtn" type="Button" parent="VBox"]
+text = "Börja äventyret!"

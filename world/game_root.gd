@@ -3,7 +3,7 @@ extends Node2D
 
 func _ready() -> void:
 	World.game_root = self
-	if ResourceLoader.exists("res://ui/hud.tscn"):    # HUD skapas i Task 11
-		var hud := (load("res://ui/hud.tscn") as PackedScene).instantiate()
-		add_child(hud)
-	World.start_game(GameState.current_zone)
+	var hud := preload("res://ui/hud.tscn").instantiate()
+	add_child(hud)
+	World.start_game(GameState.current_zone,
+		GameState.player_tile if SaveManager.has_save() and GameState.player_tile != Vector2i.ZERO else Vector2i(-1, -1))
