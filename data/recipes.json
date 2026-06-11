@@ -1,0 +1,19 @@
+{
+	"anvil": [
+		{"id": "copper_plate", "level": 5,  "skill": "smithing", "ingredients": {"copper_ore": 3},                 "xp": 20},
+		{"id": "iron_sword",   "level": 8,  "skill": "smithing", "ingredients": {"iron_ore": 2},                   "xp": 25},
+		{"id": "steel_sword",  "level": 15, "skill": "smithing", "ingredients": {"iron_ore": 3, "copper_ore": 1},  "xp": 40}
+	],
+	"stove": [
+		{"id": "cooked_trout", "level": 1,  "skill": "cooking", "ingredients": {"raw_trout": 1},                                     "xp": 10},
+		{"id": "fish_stew",    "level": 10, "skill": "cooking", "ingredients": {"raw_trout": 1, "raw_pike": 1, "mint_herb": 1},      "xp": 25}
+	],
+	"alchemy_table": [
+		{"id": "health_potion", "level": 1,  "skill": "alchemy", "ingredients": {"mint_herb": 2, "empty_vial": 1},                          "xp": 12},
+		{"id": "mana_potion",   "level": 8,  "skill": "alchemy", "ingredients": {"nightshade_herb": 1, "empty_vial": 1},                    "xp": 18},
+		{"id": "mining_brew",   "level": 15, "skill": "alchemy", "ingredients": {"nightshade_herb": 2, "mint_herb": 1, "empty_vial": 1},    "xp": 30}
+	],
+	"rune_altar": [
+		{"id": "attack_rune", "level": 1, "skill": "runecrafting", "ingredients": {"bone_chips": 2, "spider_silk": 1}, "xp": 15}
+	]
+}
