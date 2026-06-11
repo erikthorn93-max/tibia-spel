@@ -1,0 +1,41 @@
+﻿Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/Hem/AppData/Roaming/Godot/app_userdata/Tibia2D] for temporary output.
+Godot version:  4.6.2
+GUT version:  9.6.0
+[4m
+
+res://tests/unit/test_game_state.gd
+[0m* test_xp_for_level
+* test_gain_exp_levels_up
+* test_level_up_raises_stats
+* test_skill_xp_next_formula
+* test_gain_skill_xp_levels_skill
+* test_coins_route_to_gold
+* test_inventory_add_stacks
+[1m7/7 passed.
+[0m[4m
+
+res://tests/unit/test_smoke.gd
+[0m* test_sanity
+[1m1/1 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m
+Totals
+------
+Scripts               2
+Tests                 8
+Passing Tests         8
+Asserts              12
+Time              0.446s
+
+
+[32m---- All tests passed! ----
+[0m
