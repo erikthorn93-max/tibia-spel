@@ -36,19 +36,42 @@ color = Color(0.2, 0.3, 0.9, 1)
 [node name="StatsLabel" type="Label" parent="."]
 offset_left = 16.0
 offset_top = 52.0
-offset_right = 400.0
+offset_right = 460.0
 offset_bottom = 70.0
 theme_override_font_sizes/font_size = 12
+
+[node name="BuffsLabel" type="Label" parent="."]
+offset_left = 16.0
+offset_top = 70.0
+offset_right = 460.0
+offset_bottom = 86.0
+theme_override_font_sizes/font_size = 11
+modulate = Color(0.7, 0.9, 1, 1)
+
+[node name="MessageLabel" type="Label" parent="."]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 90.0
+offset_right = 200.0
+offset_bottom = 112.0
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 14
+modulate = Color(1, 0.9, 0.5, 1)
 
 [node name="InventoryPanel" type="PanelContainer" parent="."]
 visible = false
 offset_left = 16.0
-offset_top = 80.0
-offset_right = 220.0
-offset_bottom = 300.0
+offset_top = 110.0
+offset_right = 260.0
+offset_bottom = 420.0
 
-[node name="InvList" type="Label" parent="InventoryPanel"]
-theme_override_font_sizes/font_size = 12
+[node name="InvScroll" type="ScrollContainer" parent="InventoryPanel"]
+
+[node name="InvList" type="VBoxContainer" parent="InventoryPanel/InvScroll"]
+size_flags_horizontal = 3
 
 [node name="DeathLabel" type="Label" parent="."]
 visible = false
