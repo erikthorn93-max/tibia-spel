@@ -160,3 +160,52 @@ func use_item(item_id: String) -> bool:
 	if used:
 		remove_item(item_id, 1)
 	return used
+
+func weapon_skill() -> String:
+	var w: Dictionary = ItemDB.items.get(equipped_weapon, {})
+	return String(w.get("skill", "fist"))
+
+func equip_weapon(item_id: String) -> bool:
+	if int(inventory.get(item_id, 0)) < 1:
+		return false
+	if ItemDB.items.get(item_id, {}).get("type") != "weapon":
+		return false
+	remove_item(item_id, 1)
+	if equipped_weapon != "":
+		add_item(equipped_weapon, 1)
+	equipped_weapon = item_id
+	inventory_changed.emit()
+	return true
+
+func unequip_weapon() -> void:
+	if equipped_weapon == "":
+		return
+	add_item(equipped_weapon, 1)
+	equipped_weapon = ""
+	inventory_changed.emit()
+
+func buy_item(item_id: String) -> bool:
+	var price := int(ItemDB.items[item_id]["value"])
+	if gold < price:
+		return false
+	gold -= price
+	gold_changed.emit(gold)
+	add_item(item_id, 1)
+	return true
+
+func sell_item(item_id: String) -> bool:
+	if not remove_item(item_id, 1):
+		return false
+	gold += int(int(ItemDB.items[item_id]["value"]) * 0.5)
+	gold_changed.emit(gold)
+	return true
+
+func craft(recipe: Dictionary) -> bool:
+	var skill := String(recipe["skill"])
+	if not Recipes.can_craft(recipe, inventory, effective_skill_level(skill)):
+		return false
+	for ing in recipe["ingredients"]:
+		remove_item(ing, int(recipe["ingredients"][ing]))
+	add_item(String(recipe["id"]), 1)
+	gain_skill_xp(skill, int(recipe["xp"]))
+	return true

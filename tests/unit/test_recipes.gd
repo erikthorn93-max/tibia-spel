@@ -30,3 +30,19 @@ func test_weapons_have_skill_field():
 	for id in db.items:
 		if db.items[id].get("type") == "weapon":
 			assert_true(db.items[id].has("skill"), id)
+
+func _recipe(level := 5, ingredients := {"copper_ore": 3}) -> Dictionary:
+	return {"id": "copper_plate", "level": level, "skill": "smithing", "ingredients": ingredients, "xp": 20}
+
+func test_can_craft_true_when_level_and_ingredients_ok():
+	assert_true(Recipes.can_craft(_recipe(), {"copper_ore": 3}, 5))
+
+func test_can_craft_false_on_low_level():
+	assert_false(Recipes.can_craft(_recipe(5), {"copper_ore": 3}, 4))
+
+func test_can_craft_false_on_missing_ingredients():
+	assert_false(Recipes.can_craft(_recipe(), {"copper_ore": 2}, 99))
+
+func test_missing_ingredients_lists_shortfall():
+	var missing = Recipes.missing_ingredients(_recipe(), {"copper_ore": 1})
+	assert_eq(missing, {"copper_ore": 2})
