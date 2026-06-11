@@ -73,7 +73,7 @@ func _process(delta: float) -> void:
 		if _atk_timer <= 0.0:
 			_atk_timer = cooldown
 			var raw := CombatFormulas.roll_monster(atk)
-			var dmg := CombatFormulas.mitigate(raw, GameState.skills["shielding"]["level"], 2)
+			var dmg := CombatFormulas.mitigate(raw, GameState.effective_skill_level("shielding"), 2)
 			if dmg > 0:
 				GameState.take_damage(dmg)
 				GameState.gain_skill_xp("shielding", 1)

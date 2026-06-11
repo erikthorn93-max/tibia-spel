@@ -1,8 +1,8 @@
-﻿{
+{
 	"name": "Thais",
 	"tiles": [
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-		"W......................................W",
+		"W..................1...................W",
 		"W..WWWW....WWWW........................W",
 		"W..W..W....W..W.....a..................W",
 		"W..W..W....W..W........................W",
@@ -17,7 +17,7 @@
 		"W........................W,0,W.........W",
 		"W........................W,,,W.........W",
 		"W........................WW,WW.........W",
-		"W......................................W",
+		"W..A.G.L.R..H..........................W",
 		"W.....a................................W",
 		"W......................................W",
 		"W..........a...........................W",
@@ -28,6 +28,12 @@
 	],
 	"legend": {
 		"0": {"type": "portal", "to": "cave"},
-		"a": {"type": "spawn", "monster": "Råtta", "respawn": 12.0}
+		"1": {"type": "portal", "to": "forest"},
+		"a": {"type": "spawn", "monster": "Råtta", "respawn": 12.0},
+		"A": {"type": "station", "station": "anvil"},
+		"G": {"type": "station", "station": "stove"},
+		"L": {"type": "station", "station": "alchemy_table"},
+		"R": {"type": "station", "station": "rune_altar"},
+		"H": {"type": "shop"}
 	}
 }

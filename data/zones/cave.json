@@ -2,7 +2,7 @@
 	"name": "Thais-grottan",
 	"tiles": [
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-		"W,,,,,,,,,WWWWWWW,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,k,,,,,k,WWWWWWW,,,,,,,,,,,,,,,,,,,,,,W",
 		"W,P,,0,,,,,,,,,,W,,,b,,,,,WWW,,,,,,,,,,W",
 		"W,,,,,,,,,,,,,,,W,,,,,,,,,,,W,,,,c,,,,,W",
 		"WWWWWW,,,,,b,,,,W,,,,,,,,,,,W,,,,,,,,,,W",
@@ -12,7 +12,7 @@
 		"W,,,,,,,,W,,,W,,,,,c,,,,,,WWWWWW,,,,,,,W",
 		"W,,,,,,,,W,,,W,,,,,,,,,,,,W,,,,,,,,,,,,W",
 		"W,,,,,,,,WW,WW,,,,,,,,,,,,W,,,d,,,,,,,,W",
-		"W,,,,,,,,,,,,,,,,,,,,,,,,,W,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,j,j,,,,,W,,,,,,,,,,,,W",
 		"W,,b,,,,,,,,,,,,WWWW,,,,,,W,,,,,,d,,,,,W",
 		"W,,,,,,,,,,,,,,,W,,,,,,,,,WWWW,,,,,,,,,W",
 		"W,,,,,,,,,,,,,,,W,,c,,,,,,,,,,,,,,,,,,,W",
@@ -21,7 +21,7 @@
 		"W,,,,,,,,,,,,,,,WWWWWWWW,,,,,,,,,,,,,,,W",
 		"W,,,,c,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
 		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,WWWW,,,,,,W",
-		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,W,,,,,e,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,W,g,g,e,,,W",
 		"W,,,,,,,,b,,,,,,,,,,,,,,,,,,,W,,,,,,,,,W",
 		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,W,,,,,,,,,W",
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
@@ -31,6 +31,9 @@
 		"b": {"type": "spawn", "monster": "Orm", "respawn": 15.0},
 		"c": {"type": "spawn", "monster": "Spindel", "respawn": 15.0},
 		"d": {"type": "spawn", "monster": "Skelett", "respawn": 25.0},
-		"e": {"type": "spawn", "monster": "Ghoul", "respawn": 45.0}
+		"e": {"type": "spawn", "monster": "Ghoul", "respawn": 45.0},
+		"k": {"type": "node", "node": "copper_vein"},
+		"j": {"type": "node", "node": "iron_vein"},
+		"g": {"type": "node", "node": "gold_vein"}
 	}
 }

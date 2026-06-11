@@ -1,14 +1,22 @@
 extends Node
-## Autoload: ItemDB
+## Autoload: ItemDB. Laddar items, recept och gathering-nodtyper.
 
 var items: Dictionary = {}
+var recipes: Dictionary = {}
+var nodes: Dictionary = {}
 
 func _ready() -> void:
 	_load()
 
 func _load() -> void:
-	var f := FileAccess.open("res://data/items.json", FileAccess.READ)
-	items = JSON.parse_string(f.get_as_text())
+	items = _read_json("res://data/items.json")
+	recipes = _read_json("res://data/recipes.json")
+	nodes = _read_json("res://data/nodes.json")
+
+func _read_json(path: String) -> Dictionary:
+	var f := FileAccess.open(path, FileAccess.READ)
+	var parsed = JSON.parse_string(f.get_as_text()) if f else null
+	return parsed if parsed is Dictionary else {}
 
 func roll_loot(loot_table: Array) -> Array:
 	var result: Array = []

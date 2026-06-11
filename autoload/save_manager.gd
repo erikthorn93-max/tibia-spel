@@ -1,7 +1,7 @@
 extends Node
 ## Autoload: SaveManager. JSON-sparfil + autosave var 60 s.
 
-const SAVE_VERSION := 1
+const SAVE_VERSION := 2
 var save_path := "user://save.json"
 var _timer := 0.0
 
@@ -52,6 +52,7 @@ func load_game() -> bool:
 	GameState.mana = float(s["mana"]); GameState.max_mana = float(s["max_mana"])
 	GameState.gold = int(s["gold"]); GameState.inventory = s["inventory"]
 	GameState.skills = s["skills"]; GameState.appearance = s["appearance"]
+	GameState.ensure_all_skills()   # v1→v2: fyll på skills som saknas i gamla saves
 	GameState.equipped_weapon = s.get("equipped_weapon", "rusty_sword")
 	GameState.current_zone = s.get("zone", "town")
 	var t: Array = s.get("tile", [-1, -1])

@@ -10,6 +10,9 @@ var grid_size := Vector2i.ZERO
 var player_start := Vector2i.ZERO
 var portals: Dictionary = {}        # Vector2i -> mål-zon-id
 var spawn_points: Array = []        # [{tile, monster, respawn}]
+var node_points: Array = []        # [{tile, node}]
+var station_points: Array = []     # [{tile, station}]
+var shop_points: Array = []        # [tile]
 var _walkable: Dictionary = {}      # Vector2i -> bool
 var _astar := AStarGrid2D.new()
 var tilemap: TileMapLayer
@@ -36,6 +39,7 @@ func build(id: String) -> void:
 			var ch := row[x]
 			var t := Vector2i(x, y)
 			var terrain := ch
+			var blocked := false
 			match ch:
 				"P":
 					player_start = t
@@ -43,15 +47,26 @@ func build(id: String) -> void:
 				_:
 					if legend.has(ch):
 						var e: Dictionary = legend[ch]
-						if e["type"] == "portal":
-							portals[t] = e["to"]
-						elif e["type"] == "spawn":
-							spawn_points.append({"tile": t, "monster": e["monster"], "respawn": float(e["respawn"])})
-						terrain = "," if zone_id != "town" else "."
+						var default_terrain := "," if zone_id != "town" else "."
+						terrain = String(e.get("terrain", default_terrain))
+						match e["type"]:
+							"portal":
+								portals[t] = e["to"]
+							"spawn":
+								spawn_points.append({"tile": t, "monster": e["monster"], "respawn": float(e["respawn"])})
+							"node":
+								node_points.append({"tile": t, "node": e["node"]})
+								blocked = true
+							"station":
+								station_points.append({"tile": t, "station": e["station"]})
+								blocked = true
+							"shop":
+								shop_points.append(t)
+								blocked = true
 			if not PlaceholderTiles.TERRAIN.has(terrain):
 				terrain = "."
 			tilemap.set_cell(t, 0, Vector2i(PlaceholderTiles.TERRAIN[terrain], 0))
-			_walkable[t] = terrain != "W" and terrain != "~"
+			_walkable[t] = terrain != "W" and terrain != "~" and not blocked
 
 	_astar.region = Rect2i(Vector2i.ZERO, grid_size)
 	_astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
@@ -67,6 +82,20 @@ func find_path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 	if not is_walkable(to):
 		return []
 	return _astar.get_id_path(from, to)
+
+func find_path_adjacent(from: Vector2i, to: Vector2i) -> Array:
+	var best: Array = []
+	for d in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT,
+			Vector2i(1, 1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(-1, -1)]:
+		var n: Vector2i = to + d
+		if not is_walkable(n):
+			continue
+		if n == from:
+			return [from]
+		var p := find_path(from, n)
+		if p.size() > 0 and (best.is_empty() or p.size() < best.size()):
+			best = p
+	return best
 
 static func tile_to_world(t: Vector2i) -> Vector2:
 	return Vector2(t) * TILE + Vector2(TILE / 2.0, TILE / 2.0)
