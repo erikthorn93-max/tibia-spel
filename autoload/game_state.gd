@@ -32,6 +32,7 @@ var skills: Dictionary = {}
 var skill_defs: Dictionary = {}
 var current_zone := "town"
 var player_tile := Vector2i.ZERO
+var active_buffs: Array = []   # [{stat, amount, time_left}]
 
 ## _init (inte _ready): skills måste finnas direkt vid .new() i tester,
 ## och innan andra autoloads läser GameState.skills.
@@ -109,3 +110,53 @@ func remove_item(item_id: String, qty: int) -> bool:
 		inventory.erase(item_id)
 	inventory_changed.emit()
 	return true
+
+func _process(delta: float) -> void:
+	_tick_buffs(delta)
+
+func apply_buff(stat: String, amount: float, duration: float) -> void:
+	for i in range(active_buffs.size() - 1, -1, -1):
+		if active_buffs[i]["stat"] == stat:
+			active_buffs.remove_at(i)
+	active_buffs.append({"stat": stat, "amount": amount, "time_left": duration})
+	buffs_changed.emit()
+
+func _tick_buffs(delta: float) -> void:
+	var changed := false
+	for i in range(active_buffs.size() - 1, -1, -1):
+		var b: Dictionary = active_buffs[i]
+		if b["stat"] == "regen":
+			heal(float(b["amount"]) * delta)
+		b["time_left"] -= delta
+		if b["time_left"] <= 0.0:
+			active_buffs.remove_at(i)
+			changed = true
+	if changed:
+		buffs_changed.emit()
+
+func effective_skill_level(skill: String) -> int:
+	var lvl := int(skills.get(skill, {"level": 1})["level"])
+	for b in active_buffs:
+		if String(b["stat"]) == "skill:" + skill:
+			lvl += int(b["amount"])
+	return lvl
+
+func use_item(item_id: String) -> bool:
+	if int(inventory.get(item_id, 0)) < 1:
+		return false
+	var d: Dictionary = ItemDB.items.get(item_id, {})
+	var used := false
+	if d.has("heal"):
+		heal(float(d["heal"]))
+		used = true
+	if d.has("mana"):
+		mana = minf(mana + float(d["mana"]), max_mana)
+		mana_changed.emit(mana, max_mana)
+		used = true
+	if d.has("buff"):
+		var b: Dictionary = d["buff"]
+		apply_buff(String(b["stat"]), float(b["amount"]), float(b["duration"]))
+		used = true
+	if used:
+		remove_item(item_id, 1)
+	return used
