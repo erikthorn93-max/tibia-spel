@@ -33,12 +33,15 @@ var skill_defs: Dictionary = {}
 var current_zone := "town"
 var player_tile := Vector2i.ZERO
 
+## _init (inte _ready): skills måste finnas direkt vid .new() i tester,
+## och innan andra autoloads läser GameState.skills.
 func _init() -> void:
 	_load_skills()
 
 func _load_skills() -> void:
 	var f := FileAccess.open("res://data/skills.json", FileAccess.READ)
-	skill_defs = JSON.parse_string(f.get_as_text())
+	var parsed = JSON.parse_string(f.get_as_text()) if f else null
+	skill_defs = parsed if parsed is Dictionary else {}
 	ensure_all_skills()
 
 func ensure_all_skills() -> void:

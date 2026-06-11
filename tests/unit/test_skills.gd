@@ -33,3 +33,8 @@ func test_ensure_all_skills_preserves_existing():
 	assert_eq(gs.skills.size(), 18)
 	assert_eq(gs.skills["sword"]["level"], 25)
 	assert_eq(gs.skills["sword"]["xp"], 7)
+
+func test_skill_xp_next_uses_per_skill_curve():
+	assert_eq(gs.skill_xp_next(0, "sword"), 50)        # xp_base 50
+	gs.skill_defs["sword"]["xp_base"] = 100.0
+	assert_eq(gs.skill_xp_next(0, "sword"), 100)       # per-skill override används
