@@ -9,6 +9,7 @@ const MONSTER_SCENE_PATH := "res://entities/monster/monster.tscn"
 var current_zone: Node2D
 var player: Node2D
 var game_root: Node2D    # sätts av game.tscn vid _ready
+var hud: CanvasLayer     # sätts av hud.gd vid _ready
 
 func start_game(zone_id: String, at_tile := Vector2i(-1, -1)) -> void:
 	if current_zone:
@@ -30,6 +31,7 @@ func start_game(zone_id: String, at_tile := Vector2i(-1, -1)) -> void:
 	player.snap_to(start)
 
 	_spawn_monsters()
+	_spawn_world_objects()
 
 func change_zone(zone_id: String) -> void:
 	SaveManager.save_game()
@@ -49,3 +51,17 @@ func spawn_monster(monster_name: String, t: Vector2i, respawn := -1.0) -> Node2D
 
 func _spawn_one(sp: Dictionary) -> void:
 	spawn_monster(sp["monster"], sp["tile"], sp["respawn"])
+
+func _spawn_world_objects() -> void:
+	for np in current_zone.node_points:
+		var n: Node2D = preload("res://entities/gather_node.tscn").instantiate()
+		current_zone.add_child(n)
+		n.setup(np["node"], np["tile"])
+	for sp in current_zone.station_points:
+		var s: Node2D = preload("res://entities/crafting_station.tscn").instantiate()
+		current_zone.add_child(s)
+		s.setup(sp["station"], sp["tile"])
+	for t in current_zone.shop_points:
+		var npc: Node2D = preload("res://entities/shop_npc.tscn").instantiate()
+		current_zone.add_child(npc)
+		npc.setup(t)
