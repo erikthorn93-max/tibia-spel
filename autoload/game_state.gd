@@ -166,6 +166,8 @@ func weapon_skill() -> String:
 	return String(w.get("skill", "fist"))
 
 func equip_weapon(item_id: String) -> bool:
+	if item_id == equipped_weapon:
+		return true   # redan utrustat
 	if int(inventory.get(item_id, 0)) < 1:
 		return false
 	if ItemDB.items.get(item_id, {}).get("type") != "weapon":
@@ -185,7 +187,10 @@ func unequip_weapon() -> void:
 	inventory_changed.emit()
 
 func buy_item(item_id: String) -> bool:
-	var price := int(ItemDB.items[item_id]["value"])
+	var d: Dictionary = ItemDB.items.get(item_id, {})
+	if d.is_empty():
+		return false
+	var price := int(d["value"])
 	if gold < price:
 		return false
 	gold -= price
@@ -194,9 +199,12 @@ func buy_item(item_id: String) -> bool:
 	return true
 
 func sell_item(item_id: String) -> bool:
+	var d: Dictionary = ItemDB.items.get(item_id, {})
+	if d.is_empty():
+		return false
 	if not remove_item(item_id, 1):
 		return false
-	gold += int(int(ItemDB.items[item_id]["value"]) * 0.5)
+	gold += int(int(d["value"]) * 0.5)
 	gold_changed.emit(gold)
 	return true
 

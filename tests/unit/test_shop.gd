@@ -28,3 +28,8 @@ func test_sell_gives_half_value():
 
 func test_sell_fails_without_item():
 	assert_false(gs.sell_item("copper_ore"))
+
+func test_buy_unknown_item_returns_false():
+	gs.gold = 1000
+	assert_false(gs.buy_item("finns_inte"))
+	assert_eq(gs.gold, 1000)

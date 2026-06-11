@@ -62,3 +62,9 @@ func test_unequip_returns_weapon_to_inventory():
 	gs.unequip_weapon()
 	assert_eq(gs.equipped_weapon, "")
 	assert_eq(gs.inventory.get("rusty_sword", 0), 1)
+
+func test_equip_same_weapon_does_not_duplicate():
+	gs.equipped_weapon = "rusty_sword"
+	assert_true(gs.equip_weapon("rusty_sword"))
+	assert_eq(gs.equipped_weapon, "rusty_sword")
+	assert_false(gs.inventory.has("rusty_sword"))
