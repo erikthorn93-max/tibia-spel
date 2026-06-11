@@ -15,7 +15,8 @@ func _load() -> void:
 
 func _read_json(path: String) -> Dictionary:
 	var f := FileAccess.open(path, FileAccess.READ)
-	return JSON.parse_string(f.get_as_text())
+	var parsed = JSON.parse_string(f.get_as_text()) if f else null
+	return parsed if parsed is Dictionary else {}
 
 func roll_loot(loot_table: Array) -> Array:
 	var result: Array = []
