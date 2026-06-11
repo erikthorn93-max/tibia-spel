@@ -8,6 +8,8 @@ signal gold_changed(gold: int)
 signal inventory_changed
 signal level_up(new_level: int)
 signal player_died
+signal skill_changed(skill: String)
+signal buffs_changed
 
 const SKILL_XP_BASE := 50.0
 const SKILL_XP_GROWTH := 1.1
@@ -26,18 +28,34 @@ var equipped_weapon := "rusty_sword"
 var appearance := {                   # character creation (M1: färger)
 	"skin": "#e0b894", "hair": "#332211", "shirt": "#2e4dc0", "pants": "#1a1a52",
 }
-var skills: Dictionary = {
-	"sword":     {"level": 10, "xp": 0},
-	"shielding": {"level": 10, "xp": 0},
-}
+var skills: Dictionary = {}
+var skill_defs: Dictionary = {}
 var current_zone := "town"
 var player_tile := Vector2i.ZERO
+
+func _init() -> void:
+	_load_skills()
+
+func _load_skills() -> void:
+	var f := FileAccess.open("res://data/skills.json", FileAccess.READ)
+	skill_defs = JSON.parse_string(f.get_as_text())
+	ensure_all_skills()
+
+func ensure_all_skills() -> void:
+	for id in skill_defs:
+		if not skills.has(id):
+			skills[id] = {"level": int(skill_defs[id].get("start_level", 1)), "xp": 0}
 
 func xp_for_level(lvl: int) -> int:
 	return 50 * lvl * (lvl + 1)
 
-func skill_xp_next(skill_level: int) -> int:
-	return int(SKILL_XP_BASE * pow(SKILL_XP_GROWTH, skill_level))
+func skill_xp_next(skill_level: int, skill_id := "") -> int:
+	var base := SKILL_XP_BASE
+	var growth := SKILL_XP_GROWTH
+	if skill_defs.has(skill_id):
+		base = float(skill_defs[skill_id].get("xp_base", SKILL_XP_BASE))
+		growth = float(skill_defs[skill_id].get("xp_growth", SKILL_XP_GROWTH))
+	return int(base * pow(growth, skill_level))
 
 func gain_exp(amount: int) -> void:
 	experience += amount
@@ -57,9 +75,10 @@ func gain_skill_xp(skill: String, amount: int) -> void:
 		return
 	var s: Dictionary = skills[skill]
 	s["xp"] += amount
-	while s["xp"] >= skill_xp_next(s["level"]):
-		s["xp"] -= skill_xp_next(s["level"])
+	while s["xp"] >= skill_xp_next(s["level"], skill):
+		s["xp"] -= skill_xp_next(s["level"], skill)
 		s["level"] += 1
+	skill_changed.emit(skill)
 
 func take_damage(dmg: float) -> void:
 	health = maxf(health - dmg, 0.0)
