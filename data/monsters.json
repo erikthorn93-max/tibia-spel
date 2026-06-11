@@ -1,0 +1,18 @@
+{
+	"Råtta":   {"hp": 20, "atk": 5,  "exp": 8,  "speed": 2.5, "cooldown": 1.1, "aggro": 6, "color": "#b88c61",
+		"loot": [{"item": "iron_coin", "min": 1, "max": 4, "chance": 0.9}]},
+	"Orm":     {"hp": 15, "atk": 4,  "exp": 6,  "speed": 2.2, "cooldown": 1.0, "aggro": 5, "color": "#618c2e",
+		"loot": [{"item": "snake_skin", "min": 1, "max": 1, "chance": 0.75},
+		         {"item": "iron_coin", "min": 1, "max": 2, "chance": 0.4}]},
+	"Spindel": {"hp": 20, "atk": 7,  "exp": 12, "speed": 2.4, "cooldown": 1.1, "aggro": 6, "color": "#261f1a",
+		"loot": [{"item": "spider_silk", "min": 1, "max": 1, "chance": 0.6},
+		         {"item": "iron_coin", "min": 1, "max": 3, "chance": 0.35}]},
+	"Skelett": {"hp": 45, "atk": 10, "exp": 35, "speed": 2.0, "cooldown": 1.4, "aggro": 7, "color": "#e0d9c2",
+		"loot": [{"item": "bone_chips", "min": 1, "max": 2, "chance": 0.65},
+		         {"item": "iron_coin", "min": 3, "max": 12, "chance": 0.75},
+		         {"item": "health_potion", "min": 1, "max": 1, "chance": 0.04}]},
+	"Ghoul":   {"hp": 95, "atk": 18, "exp": 65, "speed": 1.8, "cooldown": 1.8, "aggro": 7, "color": "#61854d",
+		"loot": [{"item": "ghoul_hand", "min": 1, "max": 1, "chance": 0.5},
+		         {"item": "iron_coin", "min": 10, "max": 35, "chance": 0.85},
+		         {"item": "health_potion", "min": 1, "max": 1, "chance": 0.06}]}
+}

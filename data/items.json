@@ -1,0 +1,10 @@
+{
+	"iron_coin":     {"name": "Järnmynt",      "type": "currency", "value": 1,  "color": "#c8a838"},
+	"health_potion": {"name": "Hälsodryck",    "type": "potion",   "value": 45, "color": "#d03030", "heal": 60},
+	"snake_skin":    {"name": "Ormskinn",      "type": "junk",     "value": 8,  "color": "#608830"},
+	"spider_silk":   {"name": "Spindelsilke",  "type": "junk",     "value": 12, "color": "#d8d8e8"},
+	"bone_chips":    {"name": "Benbitar",      "type": "junk",     "value": 10, "color": "#e0dcc8"},
+	"ghoul_hand":    {"name": "Ghoulhand",     "type": "junk",     "value": 25, "color": "#5a7848"},
+	"rusty_sword":   {"name": "Rostigt svärd", "type": "weapon",   "value": 30, "color": "#907860", "atk": 8},
+	"iron_sword":    {"name": "Järnsvärd",     "type": "weapon",   "value": 150,"color": "#b0b8c0", "atk": 14}
+}
