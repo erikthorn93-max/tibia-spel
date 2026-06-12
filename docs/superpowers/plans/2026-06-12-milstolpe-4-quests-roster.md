@@ -514,7 +514,7 @@ git commit -m "feat: questdata — 5 quests, 5 NPC:er, dialogträd + warding_can
 - Modify: `project.godot` (autoload-sektionen)
 - Test: `tests/unit/test_quest_system.gd`
 
-- [ ] **Step 1: Registrera autoload i `project.godot`**
+- [x] **Step 1: Registrera autoload i `project.godot`**
 
 Lägg till i `[autoload]`-sektionen efter `TaskSystem`-raden (ordningen spelar roll — före `World`):
 
@@ -530,7 +530,7 @@ extends Node
 ## Autoload: DialogueDB. Fylls i Task 3.
 ```
 
-- [ ] **Step 2: Skriv failande tester**
+- [x] **Step 2: Skriv failande tester**
 
 `tests/unit/test_quest_system.gd`:
 
@@ -644,13 +644,13 @@ func test_hint_follows_step():
 	assert_string_contains(qs.hint("quest_welcome"), "forest")
 ```
 
-- [ ] **Step 3: Kör — förvänta FAIL (filen saknas)**
+- [x] **Step 3: Kör — förvänta FAIL (filen saknas)**
 
 ```bash
 "/c/Godot/Godot_v4.6.2-stable_win64.exe" --headless --path /c/Users/Hem/tibia2d -s addons/gut/gut_cmdln.gd -gselect=test_quest_system -gexit 2>&1 | tail -8
 ```
 
-- [ ] **Step 4: Implementera `autoload/quest_system.gd`**
+- [x] **Step 4: Implementera `autoload/quest_system.gd`**
 
 ```gdscript
 extends Node
@@ -777,13 +777,13 @@ func reset() -> void:
 
 OBS: efter JSON-laddning av sparfil är `step`/`progress` floats — därför `int()`-casts vid varje läsning (samma mönster som TaskSystem).
 
-- [ ] **Step 5: Kör — förvänta PASS**
+- [x] **Step 5: Kör — förvänta PASS**
 
 ```bash
 "/c/Godot/Godot_v4.6.2-stable_win64.exe" --headless --path /c/Users/Hem/tibia2d -s addons/gut/gut_cmdln.gd -gselect=test_quest_system -gexit 2>&1 | tail -8
 ```
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add autoload/quest_system.gd autoload/dialogue_db.gd project.godot tests/unit/test_quest_system.gd
@@ -798,7 +798,7 @@ git commit -m "feat: QuestSystem-autoload — stegprogression (kill/collect/expl
 - Modify: `autoload/dialogue_db.gd` (ersätt platshållaren från Task 2)
 - Test: `tests/unit/test_dialogue.gd`
 
-- [ ] **Step 1: Skriv failande tester**
+- [x] **Step 1: Skriv failande tester**
 
 `tests/unit/test_dialogue.gd`:
 
@@ -866,13 +866,13 @@ func test_run_actions_take_and_advance_completes():
 	assert_eq(int(GameState.inventory.get("iron_ore", 0)), 0)
 ```
 
-- [ ] **Step 2: Kör — förvänta FAIL**
+- [x] **Step 2: Kör — förvänta FAIL**
 
 ```bash
 "/c/Godot/Godot_v4.6.2-stable_win64.exe" --headless --path /c/Users/Hem/tibia2d -s addons/gut/gut_cmdln.gd -gselect=test_dialogue -gexit 2>&1 | tail -8
 ```
 
-- [ ] **Step 3: Implementera `autoload/dialogue_db.gd` (ersätt hela platshållaren)**
+- [x] **Step 3: Implementera `autoload/dialogue_db.gd` (ersätt hela platshållaren)**
 
 ```gdscript
 extends Node
@@ -937,13 +937,13 @@ func run_actions(actions: Array, npc_id: String) -> void:
 				GameState.remove_item(String(a["item"]), int(a.get("count", 1)))
 ```
 
-- [ ] **Step 4: Kör — förvänta PASS**
+- [x] **Step 4: Kör — förvänta PASS**
 
 ```bash
 "/c/Godot/Godot_v4.6.2-stable_win64.exe" --headless --path /c/Users/Hem/tibia2d -s addons/gut/gut_cmdln.gd -gselect=test_dialogue -gexit 2>&1 | tail -8
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add autoload/dialogue_db.gd tests/unit/test_dialogue.gd
@@ -957,7 +957,7 @@ git commit -m "feat: DialogueDB-autoload — villkorsutvärdering (inkl not-nega
 **Files:**
 - Modify: `entities/monster/monster.gd` (~rad 114), `autoload/world.gd` (~rad 22), `entities/player/player.gd` (rad 31 och 65), `autoload/game_state.gd` (`use_item`), `ui/hud.gd` (`_refresh_inv`)
 
-- [ ] **Step 1: monster.gd — questkills**
+- [x] **Step 1: monster.gd — questkills**
 
 Efter raden `TaskSystem.record_kill(monster_name)` i `_die()`:
 
@@ -965,7 +965,7 @@ Efter raden `TaskSystem.record_kill(monster_name)` i `_die()`:
 	QuestSystem.record_kill(monster_name)
 ```
 
-- [ ] **Step 2: world.gd — explore vid zonbyte**
+- [x] **Step 2: world.gd — explore vid zonbyte**
 
 I `start_game()`, direkt efter `GameState.current_zone = zone_id`:
 
@@ -973,7 +973,7 @@ I `start_game()`, direkt efter `GameState.current_zone = zone_id`:
 	QuestSystem.record_explore(zone_id)
 ```
 
-- [ ] **Step 3: player.gd — position vid tile-byte**
+- [x] **Step 3: player.gd — position vid tile-byte**
 
 I `snap_to()` efter `GameState.player_tile = t`:
 
@@ -987,7 +987,7 @@ I `_physics_process` (rad ~65) efter `GameState.player_tile = tile`:
 			QuestSystem.record_position(GameState.current_zone, tile)
 ```
 
-- [ ] **Step 4: game_state.gd — usable-items + record_use**
+- [x] **Step 4: game_state.gd — usable-items + record_use**
 
 I `use_item()`, efter `if d.has("buff"):`-blocket och före `if used:`:
 
@@ -1005,7 +1005,7 @@ och ändra slutet av funktionen:
 	return used
 ```
 
-- [ ] **Step 5: hud.gd — "Använd"-knapp för usable-items**
+- [x] **Step 5: hud.gd — "Använd"-knapp för usable-items**
 
 I `_refresh_inv()`, ändra villkorsraden:
 
@@ -1013,7 +1013,7 @@ I `_refresh_inv()`, ändra villkorsraden:
 			elif d.has("heal") or d.has("mana") or d.has("buff") or d.get("usable", false):
 ```
 
-- [ ] **Step 6: Lägg till hook-test i `tests/unit/test_quest_system.gd`**
+- [x] **Step 6: Lägg till hook-test i `tests/unit/test_quest_system.gd`**
 
 ```gdscript
 func test_use_item_via_gamestate_consumes_and_records():
@@ -1030,14 +1030,14 @@ func test_use_item_via_gamestate_consumes_and_records():
 	QuestSystem.reset()
 ```
 
-- [ ] **Step 7: Kör hela sviten + boot-check — förvänta PASS / inga skriptfel**
+- [x] **Step 7: Kör hela sviten + boot-check — förvänta PASS / inga skriptfel**
 
 ```bash
 "/c/Godot/Godot_v4.6.2-stable_win64.exe" --headless --path /c/Users/Hem/tibia2d -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -ginclude_subdirs -gexit 2>&1 | tail -15
 timeout 8 "/c/Godot/Godot_v4.6.2-stable_win64.exe" --headless --path /c/Users/Hem/tibia2d res://world/game.tscn 2>&1 | grep -iE "script error|parse error" | head -5
 ```
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add entities/monster/monster.gd autoload/world.gd entities/player/player.gd autoload/game_state.gd ui/hud.gd tests/unit/test_quest_system.gd
@@ -1052,7 +1052,7 @@ git commit -m "feat: questhooks — kill/explore/position/use_item kopplade till
 - Modify: `autoload/save_manager.gd`
 - Test: `tests/unit/test_save.gd`
 
-- [ ] **Step 1: Skriv failande tester (lägg till i befintliga `test_save.gd`, följ filens befintliga setup/teardown med temporär save_path)**
+- [x] **Step 1: Skriv failande tester (lägg till i befintliga `test_save.gd`, följ filens befintliga setup/teardown med temporär save_path)**
 
 ```gdscript
 func test_v3_save_migrates_to_v4_empty_quests():
@@ -1083,13 +1083,13 @@ func test_v4_roundtrip_quests():
 	QuestSystem.reset()
 ```
 
-- [ ] **Step 2: Kör — förvänta FAIL (fälten sparas inte ännu)**
+- [x] **Step 2: Kör — förvänta FAIL (fälten sparas inte ännu)**
 
 ```bash
 "/c/Godot/Godot_v4.6.2-stable_win64.exe" --headless --path /c/Users/Hem/tibia2d -s addons/gut/gut_cmdln.gd -gselect=test_save -gexit 2>&1 | tail -8
 ```
 
-- [ ] **Step 3: Implementera i `save_manager.gd`**
+- [x] **Step 3: Implementera i `save_manager.gd`**
 
 Ändra `const SAVE_VERSION := 3` → `const SAVE_VERSION := 4`.
 
@@ -1108,13 +1108,13 @@ I `load_game()`, efter `UnlockSystem.unlocked = s.get("unlocked", {})`:
 	QuestSystem.completed = s.get("quests_completed", {})
 ```
 
-- [ ] **Step 4: Kör — förvänta PASS**
+- [x] **Step 4: Kör — förvänta PASS**
 
 ```bash
 "/c/Godot/Godot_v4.6.2-stable_win64.exe" --headless --path /c/Users/Hem/tibia2d -s addons/gut/gut_cmdln.gd -gselect=test_save -gexit 2>&1 | tail -8
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add autoload/save_manager.gd tests/unit/test_save.gd
@@ -1129,7 +1129,7 @@ git commit -m "feat: save v4 — queststate i sparfilen med v3-migrering"
 - Create: `entities/npc.gd`, `entities/npc.tscn`
 - Modify: `autoload/world.gd` (`_spawn_world_objects`)
 
-- [ ] **Step 1: Skapa `entities/npc.gd`**
+- [x] **Step 1: Skapa `entities/npc.gd`**
 
 ```gdscript
 class_name DialogueNpc
@@ -1192,7 +1192,7 @@ func _on_click(_vp, event: InputEvent, _shape) -> void:
 			World.hud.show_message("Gå närmare %s." % DialogueDB.npcs[npc_id]["name"])
 ```
 
-- [ ] **Step 2: Skapa `entities/npc.tscn`** (samma mönster som taskmaster, grön kropp)
+- [x] **Step 2: Skapa `entities/npc.tscn`** (samma mönster som taskmaster, grön kropp)
 
 ```ini
 [gd_scene load_steps=3 format=3 uid="uid://dialognpc1"]
@@ -1235,7 +1235,7 @@ modulate = Color(1, 1, 0.75, 1)
 shape = SubResource("shape1")
 ```
 
-- [ ] **Step 3: Spawna NPC:er i `world.gd`**
+- [x] **Step 3: Spawna NPC:er i `world.gd`** *(avvikelse: setup() före add_child — _ready läser npc_id)*
 
 Sist i `_spawn_world_objects()`:
 
@@ -1248,7 +1248,7 @@ Sist i `_spawn_world_objects()`:
 			npc.setup(id, Vector2i(int(nd["position"][0]), int(nd["position"][1])))
 ```
 
-- [ ] **Step 4: Re-import + boot-check (ny scen + class_name)**
+- [x] **Step 4: Re-import + boot-check (ny scen + class_name)**
 
 ```bash
 "/c/Godot/Godot_v4.6.2-stable_win64.exe" --headless --path /c/Users/Hem/tibia2d --import 2>&1 | tail -3
@@ -1256,7 +1256,7 @@ timeout 8 "/c/Godot/Godot_v4.6.2-stable_win64.exe" --headless --path /c/Users/He
 ```
 Förväntat: inga skriptfel. (`open_dialogue` finns inte i HUD ännu — den anropas bara vid klick, inte vid boot.)
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add entities/npc.gd entities/npc.tscn autoload/world.gd
@@ -1271,7 +1271,7 @@ git commit -m "feat: dialog-NPC-entitet med idle barks; spawnas per zon från np
 - Create: `ui/dialogue_box.gd`
 - Modify: `ui/hud.gd`
 
-- [ ] **Step 1: Skapa `ui/dialogue_box.gd`**
+- [x] **Step 1: Skapa `ui/dialogue_box.gd`**
 
 ```gdscript
 extends PanelContainer
@@ -1347,7 +1347,7 @@ func _play_voice(node_id: String) -> void:
 			return
 ```
 
-- [ ] **Step 2: Koppla in i `ui/hud.gd`**
+- [x] **Step 2: Koppla in i `ui/hud.gd`**
 
 Lägg till medlemsvariabel efter `var bestiary_panel: PanelContainer`:
 
@@ -1378,14 +1378,14 @@ I `_unhandled_input`, ESC-grenen — lägg till:
 			dialogue_box.close()
 ```
 
-- [ ] **Step 3: Boot-check + hela testsviten**
+- [x] **Step 3: Boot-check + hela testsviten**
 
 ```bash
 timeout 8 "/c/Godot/Godot_v4.6.2-stable_win64.exe" --headless --path /c/Users/Hem/tibia2d res://world/game.tscn 2>&1 | grep -iE "script error|parse error" | head -5
 "/c/Godot/Godot_v4.6.2-stable_win64.exe" --headless --path /c/Users/Hem/tibia2d -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -ginclude_subdirs -gexit 2>&1 | tail -10
 ```
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add ui/dialogue_box.gd ui/hud.gd
@@ -1400,7 +1400,7 @@ git commit -m "feat: dialogruta — text, villkorsfiltrerade val, röstuppspelni
 - Create: `ui/quest_log.gd`
 - Modify: `ui/hud.gd`, `ui/hud.tscn`, `project.godot`
 
-- [ ] **Step 1: Input-action `toggle_quest_log` (J) i `project.godot`**
+- [x] **Step 1: Input-action `toggle_quest_log` (J) i `project.godot`**
 
 Efter `toggle_console`-blocket i `[input]`:
 
@@ -1412,7 +1412,7 @@ toggle_quest_log={
 }
 ```
 
-- [ ] **Step 2: QuestsLabel i `ui/hud.tscn`**
+- [x] **Step 2: QuestsLabel i `ui/hud.tscn`**
 
 Efter `TasksLabel`-noden:
 
@@ -1426,7 +1426,7 @@ theme_override_font_sizes/font_size = 11
 modulate = Color(0.7, 1, 0.7, 1)
 ```
 
-- [ ] **Step 3: Skapa `ui/quest_log.gd`**
+- [x] **Step 3: Skapa `ui/quest_log.gd`**
 
 ```gdscript
 extends PanelContainer
@@ -1489,7 +1489,7 @@ func _row(text: String) -> void:
 	_list.add_child(lbl)
 ```
 
-- [ ] **Step 4: Koppla in i `ui/hud.gd`**
+- [x] **Step 4: Koppla in i `ui/hud.gd`**
 
 Medlemsvariabel efter `var dialogue_box: PanelContainer`:
 
@@ -1542,14 +1542,14 @@ och i ESC-grenen, lägg till:
 			quest_log.visible = false
 ```
 
-- [ ] **Step 5: Boot-check + hela testsviten — förvänta PASS**
+- [x] **Step 5: Boot-check + hela testsviten — förvänta PASS**
 
 ```bash
 timeout 8 "/c/Godot/Godot_v4.6.2-stable_win64.exe" --headless --path /c/Users/Hem/tibia2d res://world/game.tscn 2>&1 | grep -iE "script error|parse error" | head -5
 "/c/Godot/Godot_v4.6.2-stable_win64.exe" --headless --path /c/Users/Hem/tibia2d -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -ginclude_subdirs -gexit 2>&1 | tail -10
 ```
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add ui/quest_log.gd ui/hud.gd ui/hud.tscn project.godot
@@ -1564,7 +1564,7 @@ git commit -m "feat: questlogg (J) med aktiva/klarade + HUD-questrad och quest-k
 - Create: `tools/generate_voices.py`
 - Genereras: `audio/voice/<npc_id>/*.ogg` (eller `.wav`), `tools/voice_manifest.json`
 
-- [ ] **Step 1: Installera Piper**
+- [x] **Step 1: Installera Piper**
 
 ```bash
 pip install piper-tts
@@ -1572,7 +1572,7 @@ python -m piper --help 2>&1 | head -5
 ```
 Förväntat: hjälptext. OBS: flaggnamn varierar mellan piper-versioner (`--length-scale` vs `--length_scale`, `-f` vs `--output_file`) — kontrollera hjälptexten och justera konstanterna överst i skriptet vid behov.
 
-- [ ] **Step 2: Skapa `tools/generate_voices.py`**
+- [x] **Step 2: Skapa `tools/generate_voices.py`** *(avvikelse: piper ≥1.3 laddar inte ner röster själv — `_ensure_model()` hämtar via `piper.download_voices`)*
 
 ```python
 """Genererar röstfiler för NPC-dialog och barks via Piper (lokal TTS).
@@ -1668,27 +1668,27 @@ if __name__ == "__main__":
     main()
 ```
 
-- [ ] **Step 3: Generera rösterna**
+- [x] **Step 3: Generera rösterna** *(31 rader: 21 noder + 10 barks; .wav då ffmpeg saknas)*
 
 ```bash
 cd /c/Users/Hem/tibia2d && python tools/generate_voices.py
 ```
 Förväntat: ~30 rader genereras (24 dialognoder + 10 barks), modeller laddas ner första gången. Lyssna stickprovsmässigt på ett par filer.
 
-- [ ] **Step 4: Re-importera så Godot ser ljudfilerna**
+- [x] **Step 4: Re-importera så Godot ser ljudfilerna**
 
 ```bash
 "/c/Godot/Godot_v4.6.2-stable_win64.exe" --headless --path /c/Users/Hem/tibia2d --import 2>&1 | tail -3
 ```
 
-- [ ] **Step 5: Verifiera att manifestet hoppar över oförändrade rader**
+- [x] **Step 5: Verifiera att manifestet hoppar över oförändrade rader** *(Genererade 0, hoppade över 31)*
 
 ```bash
 python tools/generate_voices.py
 ```
 Förväntat: `Genererade 0, hoppade över 34.` (eller motsvarande antal).
 
-- [ ] **Step 6: Commit (inkl. genererade ljudfiler + Godots .import-filer)**
+- [x] **Step 6: Commit (inkl. genererade ljudfiler + Godots .import-filer)** *(avvikelse: *.import gitignoreras redan i projektet; tools/voices/ tillagd i .gitignore)*
 
 ```bash
 git add tools/generate_voices.py tools/voice_manifest.json audio/
@@ -1699,20 +1699,20 @@ git commit -m "feat: Piper-TTS-pipeline med hash-manifest + genererade röstfile
 
 ### Task 10: Slutverifiering
 
-- [ ] **Step 1: Hela testsviten**
+- [x] **Step 1: Hela testsviten** *(138 tester, 704 asserts — alla gröna)*
 
 ```bash
 "/c/Godot/Godot_v4.6.2-stable_win64.exe" --headless --path /c/Users/Hem/tibia2d -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -ginclude_subdirs -gexit 2>&1 | tail -15
 ```
 Förväntat: ~130+ tester, alla gröna.
 
-- [ ] **Step 2: Boot-check utan fel**
+- [x] **Step 2: Boot-check utan fel**
 
 ```bash
 timeout 8 "/c/Godot/Godot_v4.6.2-stable_win64.exe" --headless --path /c/Users/Hem/tibia2d res://world/game.tscn 2>&1 | grep -iE "script error|parse error" | head -5
 ```
 
-- [ ] **Step 3: Fånga upp genererade .uid-filer**
+- [x] **Step 3: Fånga upp genererade .uid-filer** *(committade löpande per task)*
 
 Godot genererar `.uid`-filer för nya skript vid import. Kontrollera och committa dem:
 
@@ -1721,7 +1721,7 @@ git status --short
 git add "*.uid" && git commit -m "chore: Godot-genererade .uid-filer för M4-skript" || echo "inga .uid-filer"
 ```
 
-- [ ] **Step 4: Bocka av planen + commit**
+- [x] **Step 4: Bocka av planen + commit**
 
 Markera alla utförda checkboxar i denna fil och committa:
 
