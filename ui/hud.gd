@@ -18,6 +18,7 @@ var recipe_panel: PanelContainer
 var shop_panel: PanelContainer
 var task_panel: PanelContainer
 var bestiary_panel: PanelContainer
+var dialogue_box: PanelContainer
 var _msg_timer := 0.0
 
 func _ready() -> void:
@@ -35,6 +36,8 @@ func _ready() -> void:
 	add_child(task_panel)
 	bestiary_panel = preload("res://ui/bestiary_panel.gd").new()
 	add_child(bestiary_panel)
+	dialogue_box = preload("res://ui/dialogue_box.gd").new()
+	add_child(dialogue_box)
 	add_child(preload("res://ui/debug_console.gd").new())
 	TaskSystem.task_taken.connect(func(_id): _refresh_tasks())
 	TaskSystem.task_progress.connect(func(_id): _refresh_tasks())
@@ -79,6 +82,12 @@ func open_tasks() -> void:
 	recipe_panel.visible = false
 	shop_panel.visible = false
 	task_panel.open()
+
+func open_dialogue(npc_id: String) -> void:
+	recipe_panel.visible = false
+	shop_panel.visible = false
+	task_panel.visible = false
+	dialogue_box.open(npc_id)
 
 func _refresh_tasks() -> void:
 	var parts: Array = []
@@ -147,6 +156,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		shop_panel.visible = false
 		task_panel.visible = false
 		bestiary_panel.visible = false
+		dialogue_box.close()
 	elif death_lbl.visible and event is InputEventKey and event.pressed and event.keycode == KEY_ENTER:
 		_respawn()
 
