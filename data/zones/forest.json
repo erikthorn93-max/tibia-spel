@@ -24,6 +24,10 @@
   "W....t.....................~~..........W",
   "W..................P.......~~..........W",
   "W....................0.....~~..........W",
+  "WWWWWWWWWWWWWWWWWW1WWWWWWWWWWWWWWWWWWWWW",
+  "W,,,,,F,,,,,,,,,,,,,,,,,,F,,,,,,,,,,,,,W",
+  "W,,,,,,,,,,,,,,,,,,F,,,,,,,,,,,,,,,,,,,W",
+  "W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
   "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
  ],
  "legend": {
@@ -78,6 +82,17 @@
    "monster": "Spindel",
    "respawn": 20.0,
    "terrain": "."
+  },
+  "1": {
+   "type": "gate",
+   "unlock": "morka_dungen",
+   "terrain": ","
+  },
+  "F": {
+   "type": "spawn",
+   "monster": "Fantom",
+   "respawn": 40.0,
+   "terrain": ","
   }
  }
 }

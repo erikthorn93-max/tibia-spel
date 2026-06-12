@@ -19,6 +19,8 @@ config/features=PackedStringArray("4.6")
 GameState="*res://autoload/game_state.gd"
 ItemDB="*res://autoload/item_db.gd"
 MonsterDB="*res://autoload/monster_db.gd"
+UnlockSystem="*res://autoload/unlock_system.gd"
+TaskSystem="*res://autoload/task_system.gd"
 World="*res://autoload/world.gd"
 SaveManager="*res://autoload/save_manager.gd"
 
@@ -71,6 +73,16 @@ toggle_inventory={
 toggle_skills={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":75,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+toggle_bestiary={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":66,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+toggle_console={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":96,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
 debug_spawn={

@@ -1,0 +1,10 @@
+{
+	"task_ratta":          {"monster": "Råtta",          "required": 30,  "slayer_level_req": 1,  "reward_slayer_xp": 100,  "reward_gold": 150,  "repeatable": true},
+	"task_orm":            {"monster": "Orm",            "required": 50,  "slayer_level_req": 1,  "reward_slayer_xp": 200,  "reward_gold": 250,  "repeatable": true},
+	"task_spindel":        {"monster": "Spindel",        "required": 75,  "slayer_level_req": 3,  "reward_slayer_xp": 400,  "reward_gold": 500,  "unlocks": "spindelhalan", "repeatable": true},
+	"task_skelett":        {"monster": "Skelett",        "required": 100, "slayer_level_req": 5,  "reward_slayer_xp": 700,  "reward_gold": 800,  "unlocks": "kryptan", "repeatable": true},
+	"task_ghoul":          {"monster": "Ghoul",          "required": 150, "slayer_level_req": 10, "reward_slayer_xp": 1200, "reward_gold": 1500, "unlocks": "morka_dungen", "repeatable": true},
+	"task_jattespindel":   {"monster": "Jättespindel",   "required": 100, "slayer_level_req": 8,  "reward_slayer_xp": 900,  "reward_gold": 1000, "repeatable": true},
+	"task_skelettkrigare": {"monster": "Skelettkrigare", "required": 125, "slayer_level_req": 12, "reward_slayer_xp": 1100, "reward_gold": 1200, "repeatable": true},
+	"task_fantom":         {"monster": "Fantom",         "required": 150, "slayer_level_req": 15, "reward_slayer_xp": 1500, "reward_gold": 2000, "repeatable": true}
+}

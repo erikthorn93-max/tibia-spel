@@ -16,6 +16,7 @@ var exp_reward := 0
 var loot_table: Array = []
 var respawn_time := -1.0
 var home_tile := Vector2i.ZERO
+var is_boss := false
 
 var zone: Node2D
 var tile := Vector2i.ZERO
@@ -41,6 +42,9 @@ func setup(mname: String, t: Vector2i, z: Node2D, respawn := -1.0) -> void:
 	atk = int(d["atk"]); exp_reward = int(d["exp"])
 	speed = float(d["speed"]); cooldown = float(d["cooldown"])
 	aggro_range = int(d["aggro"]); loot_table = d["loot"]
+	is_boss = bool(d.get("boss", false))
+	if is_boss:
+		scale = Vector2(2, 2)
 	tile = t
 	position = zone.tile_to_world(t)
 	body.color = Color(d["color"])
@@ -107,17 +111,21 @@ func _update_hp_bar() -> void:
 func _die() -> void:
 	dead = true
 	GameState.gain_exp(exp_reward)
+	TaskSystem.record_kill(monster_name)   # bestiary + task-progress; boss-XP/cooldown hanteras där
 	var drops: Array = ItemDB.roll_loot(loot_table)
 	if not drops.is_empty():
 		var gi := preload("res://entities/ground_item.gd").new()
 		zone.add_child(gi)
 		gi.setup(drops, tile)
 	if respawn_time > 0.0:
-		var t := get_tree().create_timer(respawn_time)
-		var mname := monster_name
-		var ht := home_tile
-		var rt := respawn_time
-		t.timeout.connect(func(): if is_instance_valid(zone): World.spawn_monster(mname, ht, rt))
+		if is_boss:
+			World.spawn_boss_marker(monster_name, home_tile, respawn_time)
+		else:
+			var t := get_tree().create_timer(respawn_time)
+			var mname := monster_name
+			var ht := home_tile
+			var rt := respawn_time
+			t.timeout.connect(func(): if is_instance_valid(zone): World.spawn_monster(mname, ht, rt))
 	if World.player and World.player.target == self:
 		World.player.set_target(null)
 	queue_free()

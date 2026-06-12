@@ -57,7 +57,7 @@ timeout 8 "/c/Godot/Godot_v4.6.2-stable_win64.exe" --headless --path /c/Users/He
 
 ### Task 0: Branch
 
-- [ ] **Step 1: Skapa feature-branch**
+- [x] **Step 1: Skapa feature-branch**
 
 ```powershell
 git -C C:\Users\Hem\tibia2d checkout -b m3-tasksystem
@@ -72,7 +72,7 @@ git -C C:\Users\Hem\tibia2d checkout -b m3-tasksystem
 - Modify: `data/items.json`
 - Test: `tests/unit/test_databases.gd` (befintlig, ska förbli grön — den validerar att loot-items finns)
 
-- [ ] **Step 1: Ersätt `data/monsters.json`** (befintliga 5 oförändrade + 4 nya):
+- [x] **Step 1: Ersätt `data/monsters.json`** (befintliga 5 oförändrade + 4 nya):
 
 ```json
 {
@@ -111,15 +111,15 @@ git -C C:\Users\Hem\tibia2d checkout -b m3-tasksystem
 }
 ```
 
-- [ ] **Step 2: Lägg till i `data/items.json`** (efter `attack_rune`-raden, glöm inte komma på raden före):
+- [x] **Step 2: Lägg till i `data/items.json`** (efter `attack_rune`-raden, glöm inte komma på raden före):
 
 ```json
 	"boss_crown":      {"name": "Ghulkungens krona", "type": "trophy",  "value": 2500, "color": "#e8d44a"}
 ```
 
-- [ ] **Step 3: Kör tester — förvänta PASS** (test_databases validerar loot-items mot items.json)
+- [x] **Step 3: Kör tester — förvänta PASS** (test_databases validerar loot-items mot items.json)
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```powershell
 git -C C:\Users\Hem\tibia2d add -A; git -C C:\Users\Hem\tibia2d commit -m "feat: 4 nya monster inkl boss Ghulkungen + kronan (data)"
@@ -134,7 +134,7 @@ git -C C:\Users\Hem\tibia2d add -A; git -C C:\Users\Hem\tibia2d commit -m "feat:
 - Modify: `project.godot` (autoload)
 - Test: `tests/unit/test_unlock_system.gd`
 
-- [ ] **Step 1: Skriv failande test `tests/unit/test_unlock_system.gd`**
+- [x] **Step 1: Skriv failande test `tests/unit/test_unlock_system.gd`**
 
 ```gdscript
 extends GutTest
@@ -165,9 +165,9 @@ func test_unlock_idempotent():
 	assert_eq(us.unlocked.size(), 1)
 ```
 
-- [ ] **Step 2: Kör — förvänta FAIL** (filen finns inte)
+- [x] **Step 2: Kör — förvänta FAIL** (filen finns inte)
 
-- [ ] **Step 3: Skapa `autoload/unlock_system.gd`**
+- [x] **Step 3: Skapa `autoload/unlock_system.gd`**
 
 ```gdscript
 extends Node
@@ -187,15 +187,15 @@ func is_unlocked(id: String) -> bool:
 	return unlocked.has(id)
 ```
 
-- [ ] **Step 4: Registrera autoload i `project.godot`** — i `[autoload]`-sektionen, efter `MonsterDB`-raden:
+- [x] **Step 4: Registrera autoload i `project.godot`** — i `[autoload]`-sektionen, efter `MonsterDB`-raden:
 
 ```ini
 UnlockSystem="*res://autoload/unlock_system.gd"
 ```
 
-- [ ] **Step 5: Kör tester — förvänta PASS**
+- [x] **Step 5: Kör tester — förvänta PASS**
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```powershell
 git -C C:\Users\Hem\tibia2d add -A; git -C C:\Users\Hem\tibia2d commit -m "feat: UnlockSystem-autoload (TDD)"
@@ -211,14 +211,14 @@ git -C C:\Users\Hem\tibia2d add -A; git -C C:\Users\Hem\tibia2d commit -m "feat:
 - Modify: `project.godot` (autoload `TaskSystem` efter `UnlockSystem`)
 - Test: `tests/unit/test_task_system.gd`, `tests/unit/test_bestiary.gd`, `tests/unit/test_tasks_data.gd`
 
-- [ ] **Step 1: Skapa `data/tasks.json`** — id:n `task_ratta`, `task_orm`, `task_spindel`, `task_skelett`, `task_ghoul`, `task_jattespindel`, `task_skelettkrigare`, `task_fantom`. Fält per spec: `monster, required, slayer_level_req, reward_slayer_xp, reward_gold, unlocks (valfri), repeatable: true`.
+- [x] **Step 1: Skapa `data/tasks.json`** — id:n `task_ratta`, `task_orm`, `task_spindel`, `task_skelett`, `task_ghoul`, `task_jattespindel`, `task_skelettkrigare`, `task_fantom`. Fält per spec: `monster, required, slayer_level_req, reward_slayer_xp, reward_gold, unlocks (valfri), repeatable: true`.
 
-- [ ] **Step 2: Skriv failande tester.** TaskSystem instansieras med `.new()`; GameState/UnlockSystem nås som autoloads och återställs i `before_each` (`GameState.skills["slayer"] = {"level": N, "xp": 0}`, `GameState.gold = 0`, `UnlockSystem.unlocked.clear()`). Täcker:
+- [x] **Step 2: Skriv failande tester.** TaskSystem instansieras med `.new()`; GameState/UnlockSystem nås som autoloads och återställs i `before_each` (`GameState.skills["slayer"] = {"level": N, "xp": 0}`, `GameState.gold = 0`, `UnlockSystem.unlocked.clear()`). Täcker:
   - `test_task_system.gd`: take (slayer-krav + slots), abandon nollar progress, record_kill räknar bara aktiv task, claim ger XP+guld+unlock, repeterbar omtagning ger halv XP/guld och ingen ny unlock, slots 1/2/3 vid Slayer 1/15/30, boss-gate öppnas när ghoul+fantom klarade, Slayer-XP delas ENDAST ut via claim/boss.
   - `test_bestiary.gd`: kills räknas även utan aktiv task, tier-trösklar 100/400/1000, `damage_multiplier` = 1.0/1.02/1.04/1.06, boss-kill ger 2000 Slayer-XP + cooldown-timestamp, `boss_available` falsk under cooldown.
   - `test_tasks_data.gd`: varje tasks `monster` finns i MonsterDB; varje `unlocks`-id + `bossrummet` har gate-tile i någon zon-JSON (körs först efter Task 6 — skrivs nu, väntas FAIL på gates tills zondata finns).
 
-- [ ] **Step 3: Skapa `autoload/task_system.gd`** — API per spec:
+- [x] **Step 3: Skapa `autoload/task_system.gd`** — API per spec:
 
 ```gdscript
 extends Node
@@ -248,8 +248,8 @@ func boss_cooldown_left(monster_name) -> float
 
 Boss-gate: i `claim_reward`, om `completed` har både `task_ghoul` och `task_fantom` → `UnlockSystem.unlock("bossrummet")`.
 
-- [ ] **Step 4: Registrera autoload, kör tester — task/bestiary PASS** (tasks_data-gates får vänta på Task 6)
-- [ ] **Step 5: Commit** `feat: TaskSystem-autoload med bestiary och boss-cooldown (TDD)`
+- [x] **Step 4: Registrera autoload, kör tester — task/bestiary PASS** (tasks_data-gates får vänta på Task 6)
+- [x] **Step 5: Commit** `feat: TaskSystem-autoload med bestiary och boss-cooldown (TDD)`
 
 ---
 
@@ -257,9 +257,9 @@ Boss-gate: i `claim_reward`, om `completed` har både `task_ghoul` och `task_fan
 
 **Files:** Modify `autoload/save_manager.gd`, `tests/unit/test_save.gd`
 
-- [ ] **Step 1: Failande tester:** `SAVE_VERSION == 3`; v2-snapshot (utan task-fält) laddar felfritt och ger tomma defaults; roundtrip bevarar `tasks_active/tasks_completed/bestiary/unlocked/boss_kill_times`.
-- [ ] **Step 2:** `SAVE_VERSION := 3`; `save_game()` skriver de fem nya fälten från TaskSystem/UnlockSystem; `load_game()` läser med `.get(..., {})`-defaults (v2→v3-migrering gratis).
-- [ ] **Step 3: Kör tester — PASS. Commit** `feat: save v3 — tasks, bestiary, unlocks, boss-cooldowns`
+- [x] **Step 1: Failande tester:** `SAVE_VERSION == 3`; v2-snapshot (utan task-fält) laddar felfritt och ger tomma defaults; roundtrip bevarar `tasks_active/tasks_completed/bestiary/unlocked/boss_kill_times`.
+- [x] **Step 2:** `SAVE_VERSION := 3`; `save_game()` skriver de fem nya fälten från TaskSystem/UnlockSystem; `load_game()` läser med `.get(..., {})`-defaults (v2→v3-migrering gratis).
+- [x] **Step 3: Kör tester — PASS. Commit** `feat: save v3 — tasks, bestiary, unlocks, boss-cooldowns`
 
 ---
 
@@ -267,11 +267,11 @@ Boss-gate: i `claim_reward`, om `completed` har både `task_ghoul` och `task_fan
 
 **Files:** Modify `world/zone.gd`, `tests/unit/test_zone.gd`
 
-- [ ] **Step 1: Failande tester** (mot temporär inline-testzon? Nej — gates testas mot cave.json efter Task 6; skriv testerna nu mot cave: gate-tiles parsas till `gate_points`, blockerade före unlock, `UnlockSystem.unlock("spindelhalan")` öppnar live: `is_walkable == true` efteråt. `before_each` rensar `UnlockSystem.unlocked`.)
-- [ ] **Step 2: zone.gd:**
+- [x] **Step 1: Failande tester** (mot temporär inline-testzon? Nej — gates testas mot cave.json efter Task 6; skriv testerna nu mot cave: gate-tiles parsas till `gate_points`, blockerade före unlock, `UnlockSystem.unlock("spindelhalan")` öppnar live: `is_walkable == true` efteråt. `before_each` rensar `UnlockSystem.unlocked`.)
+- [x] **Step 2: zone.gd:**
   - Nya legend-typer i `build()`-match: `"gate"` → `gate_points[t] = e["unlock"]`; ritas som `"W"`-tile och blockeras om `not UnlockSystem.is_unlocked(id)`, annars normal terräng. Spara gate-terräng (default `","`) för öppning. `"taskmaster"` → `taskmaster_points.append(t)`, blocked.
   - `UnlockSystem.unlock_added.connect(_on_unlock_added)` i `build()`; handlern öppnar matchande gates: sätt terräng-tile, `_walkable[t] = true`, `_astar.set_point_solid(t, false)`.
-- [ ] **Step 3: Kör — zone-gatetesterna FAIL tills Task 6 (cave saknar gates). Commit ihop med Task 6.**
+- [x] **Step 3: Kör — zone-gatetesterna FAIL tills Task 6 (cave saknar gates). Commit ihop med Task 6.**
 
 ---
 
@@ -279,10 +279,10 @@ Boss-gate: i `claim_reward`, om `completed` har både `task_ghoul` och `task_fan
 
 **Files:** Replace `data/zones/cave.json` (+6 rader), `data/zones/forest.json` (+5 rader), Modify `data/zones/town.json`
 
-- [ ] **Step 1: cave.json** — infoga 6 rader före bottenväggen: gaterad väggrad med `1`(spindelhålan, kol 10), `2`(kryptan, kol 23), `3`(bossrummet, kol 33), därunder tre kammare avdelade med väggar: `J` Jättespindel-spawns (x2), `S` Skelettkrigare-spawns (x2), `X` Ghulkungen-spawn (x1). Legend: `1/2/3` = gate med unlock-id, `J/S` = spawn, `X` = spawn Ghulkungen respawn 3600.
-- [ ] **Step 2: forest.json** — infoga 5 rader före bottenväggen: gaterad väggrad med `1`(morka_dungen, kol 18), kammare med `F` Fantom-spawns (x3), terräng `,`.
-- [ ] **Step 3: town.json** — `T` på stationsraden (`W..A.G.L.R..H..T...`), legend `"T": {"type": "taskmaster"}`.
-- [ ] **Step 4: Kör tester — test_zone + test_tasks_data nu PASS. Commit** `feat: gates + nya områden (spindelhålan, kryptan, bossrummet, mörka dungen) + taskmaster-tile`
+- [x] **Step 1: cave.json** — infoga 6 rader före bottenväggen: gaterad väggrad med `1`(spindelhålan, kol 10), `2`(kryptan, kol 23), `3`(bossrummet, kol 33), därunder tre kammare avdelade med väggar: `J` Jättespindel-spawns (x2), `S` Skelettkrigare-spawns (x2), `X` Ghulkungen-spawn (x1). Legend: `1/2/3` = gate med unlock-id, `J/S` = spawn, `X` = spawn Ghulkungen respawn 3600.
+- [x] **Step 2: forest.json** — infoga 5 rader före bottenväggen: gaterad väggrad med `1`(morka_dungen, kol 18), kammare med `F` Fantom-spawns (x3), terräng `,`.
+- [x] **Step 3: town.json** — `T` på stationsraden (`W..A.G.L.R..H..T...`), legend `"T": {"type": "taskmaster"}`.
+- [x] **Step 4: Kör tester — test_zone + test_tasks_data nu PASS. Commit** `feat: gates + nya områden (spindelhålan, kryptan, bossrummet, mörka dungen) + taskmaster-tile`
 
 ---
 
@@ -290,10 +290,10 @@ Boss-gate: i `claim_reward`, om `completed` har både `task_ghoul` och `task_fan
 
 **Files:** Modify `entities/monster/monster.gd`, `entities/player/player.gd`, `autoload/world.gd`; Create `entities/boss_marker.gd`
 
-- [ ] **Step 1: monster.gd:** `setup()`: `is_boss := bool(d.get("boss", false))` → `scale = Vector2(2, 2)`. `_die()`: `TaskSystem.record_kill(monster_name)` (TaskSystem hanterar boss-XP/cooldown internt).
-- [ ] **Step 2: player.gd `_update_attack`:** `dmg = roundf(dmg * TaskSystem.damage_multiplier(target.monster_name))` (minst originalskadan vid tier 0).
-- [ ] **Step 3: world.gd `_spawn_one`:** om monstret är boss och `not TaskSystem.boss_available(namn)` → spawna `boss_marker.gd` istället (Node2D som var sekund kollar: cooldown slut → `World.spawn_monster(...)` + `queue_free()`; spelare inom 6 tiles → HUD-meddelande "Ghulkungen är inte här... (X min)" max var 10:e sekund).
-- [ ] **Step 4: Kör tester + boot-check. Commit** `feat: kill-registrering, bossmekanik med cooldown-markör, bestiary-skadebonus`
+- [x] **Step 1: monster.gd:** `setup()`: `is_boss := bool(d.get("boss", false))` → `scale = Vector2(2, 2)`. `_die()`: `TaskSystem.record_kill(monster_name)` (TaskSystem hanterar boss-XP/cooldown internt).
+- [x] **Step 2: player.gd `_update_attack`:** `dmg = roundf(dmg * TaskSystem.damage_multiplier(target.monster_name))` (minst originalskadan vid tier 0).
+- [x] **Step 3: world.gd `_spawn_one`:** om monstret är boss och `not TaskSystem.boss_available(namn)` → spawna `boss_marker.gd` istället (Node2D som var sekund kollar: cooldown slut → `World.spawn_monster(...)` + `queue_free()`; spelare inom 6 tiles → HUD-meddelande "Ghulkungen är inte här... (X min)" max var 10:e sekund).
+- [x] **Step 4: Kör tester + boot-check. Commit** `feat: kill-registrering, bossmekanik med cooldown-markör, bestiary-skadebonus`
 
 ---
 
@@ -301,11 +301,11 @@ Boss-gate: i `claim_reward`, om `completed` har både `task_ghoul` och `task_fan
 
 **Files:** Create `entities/taskmaster_npc.gd` + `.tscn`, `ui/task_panel.gd`; Modify `autoload/world.gd`, `ui/hud.gd`
 
-- [ ] **Step 1: taskmaster_npc.gd/.tscn** — kopiera shop_npc-mönstret (Polygon2D + Label "Taskmastern" + ClickArea); klick intill → `World.hud.open_tasks()`, annars "Gå närmare Taskmastern."
-- [ ] **Step 2: world.gd `_spawn_world_objects`:** spawna taskmaster för `zone.taskmaster_points`.
-- [ ] **Step 3: ui/task_panel.gd** — programmatisk PanelContainer (recipe_panel-mönstret) med `open()`: tre sektioner — Tillgängliga (filtrerade på slayer-nivå, "Ta task"-knapp spärrad vid fulla slots), Aktiva ("X/Y" + Avbryt), Klara ("Hämta belöning"). Lyssnar på `task_progress/task_completed` för refresh när öppen. Unlock vid claim → `World.hud.show_message("... har öppnats!")`.
-- [ ] **Step 4: hud.gd:** `open_tasks()` (stänger recipe/shop), Escape stänger även taskpanelen.
-- [ ] **Step 5: Boot-check + manuell verifiering. Commit** `feat: Taskmaster-NPC och taskpanel`
+- [x] **Step 1: taskmaster_npc.gd/.tscn** — kopiera shop_npc-mönstret (Polygon2D + Label "Taskmastern" + ClickArea); klick intill → `World.hud.open_tasks()`, annars "Gå närmare Taskmastern."
+- [x] **Step 2: world.gd `_spawn_world_objects`:** spawna taskmaster för `zone.taskmaster_points`.
+- [x] **Step 3: ui/task_panel.gd** — programmatisk PanelContainer (recipe_panel-mönstret) med `open()`: tre sektioner — Tillgängliga (filtrerade på slayer-nivå, "Ta task"-knapp spärrad vid fulla slots), Aktiva ("X/Y" + Avbryt), Klara ("Hämta belöning"). Lyssnar på `task_progress/task_completed` för refresh när öppen. Unlock vid claim → `World.hud.show_message("... har öppnats!")`.
+- [x] **Step 4: hud.gd:** `open_tasks()` (stänger recipe/shop), Escape stänger även taskpanelen.
+- [x] **Step 5: Boot-check + manuell verifiering. Commit** `feat: Taskmaster-NPC och taskpanel`
 
 ---
 
@@ -313,9 +313,9 @@ Boss-gate: i `claim_reward`, om `completed` har både `task_ghoul` och `task_fan
 
 **Files:** Create `ui/bestiary_panel.gd`; Modify `ui/hud.gd`, `project.godot`
 
-- [ ] **Step 1: project.godot:** input-actions `toggle_bestiary` (physical B, keycode 66) och `toggle_console` (physical `, keycode 96 — tangenten under Esc, § på svenskt tangentbord).
-- [ ] **Step 2: bestiary_panel.gd** — skill_panel-mönstret: rad per monster i MonsterDB-ordning; dödade ≥1: namn, kills, ★-tiers, "+X % skada"; annars "???". Refresh via `TaskSystem.bestiary_changed` + vid visning.
-- [ ] **Step 3: hud.gd:** toggle på `toggle_bestiary`. Commit `feat: bestiary-panel (B) med tiers och skadebonus`
+- [x] **Step 1: project.godot:** input-actions `toggle_bestiary` (physical B, keycode 66) och `toggle_console` (physical `, keycode 96 — tangenten under Esc, § på svenskt tangentbord).
+- [x] **Step 2: bestiary_panel.gd** — skill_panel-mönstret: rad per monster i MonsterDB-ordning; dödade ≥1: namn, kills, ★-tiers, "+X % skada"; annars "???". Refresh via `TaskSystem.bestiary_changed` + vid visning.
+- [x] **Step 3: hud.gd:** toggle på `toggle_bestiary`. Commit `feat: bestiary-panel (B) med tiers och skadebonus`
 
 ---
 
@@ -323,10 +323,10 @@ Boss-gate: i `claim_reward`, om `completed` har både `task_ghoul` och `task_fan
 
 **Files:** Create `ui/debug_console.gd`; Modify `ui/hud.gd` (instansiering)
 
-- [ ] **Step 1:** CanvasLayer (layer 10) med PanelContainer + RichTextLabel-logg + LineEdit. Toggle via `toggle_console`; när synlig: LineEdit grabbar fokus, `_input` markerar tangenttryck som hanterade (ingen läcka till spelet); när stängd: släpper fokus, noll input-konsumtion.
-- [ ] **Step 2: Kommandon** (parse via `split(" ")`, okänt → hjälptext):
+- [x] **Step 1:** CanvasLayer (layer 10) med PanelContainer + RichTextLabel-logg + LineEdit. Toggle via `toggle_console`; när synlig: LineEdit grabbar fokus, `_input` markerar tangenttryck som hanterade (ingen läcka till spelet); när stängd: släpper fokus, noll input-konsumtion.
+- [x] **Step 2: Kommandon** (parse via `split(" ")`, okänt → hjälptext):
   `give <item_id> [antal]`, `gold <antal>`, `xp <skill> <mängd>`, `kills <monster> <antal>` (sätter bestiary direkt + bestiary_changed), `unlock <id>`, `tasklist` (alla tasks + status), `tp <zon>`, `heal`, `spawn <monster>` (intill spelaren).
-- [ ] **Step 3: Boot-check. Commit** `feat: debug-konsol (§) med give/gold/xp/kills/unlock/tasklist/tp/heal/spawn`
+- [x] **Step 3: Boot-check. Commit** `feat: debug-konsol (§) med give/gold/xp/kills/unlock/tasklist/tp/heal/spawn`
 
 ---
 
@@ -334,13 +334,13 @@ Boss-gate: i `claim_reward`, om `completed` har både `task_ghoul` och `task_fan
 
 **Files:** Modify `ui/hud.gd`
 
-- [ ] **Step 1:** Label under buffarna: "Skelett 34/100 · Ghoul 12/150" — uppdateras via `task_taken/task_progress/task_completed` + vid claim/abandon (refresh från `TaskSystem.active`). Commit `feat: aktiva tasks i HUD`
+- [x] **Step 1:** Label under buffarna: "Skelett 34/100 · Ghoul 12/150" — uppdateras via `task_taken/task_progress/task_completed` + vid claim/abandon (refresh från `TaskSystem.active`). Commit `feat: aktiva tasks i HUD`
 
 ---
 
 ### Task 12: Slutverifiering
 
-- [ ] **Step 1:** Full GUT-svit grön (förväntat ~90+ tester)
-- [ ] **Step 2:** Re-import + boot-check utan script-/parsefel
-- [ ] **Step 3:** Perftest: `--perftest` ger min-FPS ≥ 60
-- [ ] **Step 4:** Slutcommit, kvar på `m3-tasksystem` för manuellt speltest (acceptanskriterier i specen) innan merge
+- [x] **Step 1:** Full GUT-svit grön (förväntat ~90+ tester)
+- [x] **Step 2:** Re-import + boot-check utan script-/parsefel
+- [x] **Step 3:** Perftest: `--perftest` ger min-FPS ≥ 60
+- [x] **Step 4:** Slutcommit, kvar på `m3-tasksystem` för manuellt speltest (acceptanskriterier i specen) innan merge

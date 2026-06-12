@@ -30,5 +30,6 @@
 	"fish_stew":       {"name": "Fiskgryta",       "type": "food",     "value": 35,  "color": "#c89868", "heal": 30, "buff": {"stat": "regen", "amount": 2, "duration": 30}},
 	"mana_potion":     {"name": "Manadryck",       "type": "potion",   "value": 55,  "color": "#3050d0", "mana": 50},
 	"mining_brew":     {"name": "Gruvbrygd",       "type": "potion",   "value": 70,  "color": "#a88030", "buff": {"stat": "skill:mining", "amount": 2, "duration": 60}},
-	"attack_rune":     {"name": "Attackruna",      "type": "rune",     "value": 30,  "color": "#d04848"}
+	"attack_rune":     {"name": "Attackruna",      "type": "rune",     "value": 30,  "color": "#d04848"},
+	"boss_crown":      {"name": "Ghulkungens krona", "type": "trophy", "value": 2500, "color": "#e8d44a"}
 }

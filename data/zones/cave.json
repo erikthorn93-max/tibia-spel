@@ -24,6 +24,11 @@
 		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,W,g,g,e,,,W",
 		"W,,,,,,,,b,,,,,,,,,,,,,,,,,,,W,,,,,,,,,W",
 		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,W,,,,,,,,,W",
+		"WWWWWWWWWW1WWWWWWWWWWWW2WWWWWWWWW3WWWWWW",
+		"W,,,,J,,,,,,,,,W,,,,S,,,,,,,W,,,,,,,,,,W",
+		"W,,,,,,,,,J,,,,W,,,,,,,,S,,,W,,,,X,,,,,W",
+		"W,,,,,,,,,,,,,,W,,,,,,,,,,,,W,,,,,,,,,,W",
+		"W,,J,,,,,,,,,,,W,,,,,,,,,,,,W,,,,,,,,,,W",
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
 	],
 	"legend": {
@@ -34,6 +39,12 @@
 		"e": {"type": "spawn", "monster": "Ghoul", "respawn": 45.0},
 		"k": {"type": "node", "node": "copper_vein"},
 		"j": {"type": "node", "node": "iron_vein"},
-		"g": {"type": "node", "node": "gold_vein"}
+		"g": {"type": "node", "node": "gold_vein"},
+		"1": {"type": "gate", "unlock": "spindelhalan"},
+		"2": {"type": "gate", "unlock": "kryptan"},
+		"3": {"type": "gate", "unlock": "bossrummet"},
+		"J": {"type": "spawn", "monster": "Jättespindel", "respawn": 30.0},
+		"S": {"type": "spawn", "monster": "Skelettkrigare", "respawn": 40.0},
+		"X": {"type": "spawn", "monster": "Ghulkungen", "respawn": 3600.0}
 	}
 }

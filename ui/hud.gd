@@ -1,9 +1,13 @@
 extends CanvasLayer
 
+const UNLOCK_NAMES := {"spindelhalan": "Spindelhålan", "kryptan": "Kryptan",
+	"morka_dungen": "Mörka dungen", "bossrummet": "Bossrummet"}
+
 @onready var hp_bar: ColorRect = $HpBar
 @onready var mana_bar: ColorRect = $ManaBar
 @onready var stats: Label = $StatsLabel
 @onready var buffs_lbl: Label = $BuffsLabel
+@onready var tasks_lbl: Label = $TasksLabel
 @onready var msg_lbl: Label = $MessageLabel
 @onready var inv_panel: PanelContainer = $InventoryPanel
 @onready var inv_list: VBoxContainer = $InventoryPanel/InvScroll/InvList
@@ -12,6 +16,8 @@ extends CanvasLayer
 var skill_panel: PanelContainer
 var recipe_panel: PanelContainer
 var shop_panel: PanelContainer
+var task_panel: PanelContainer
+var bestiary_panel: PanelContainer
 var _msg_timer := 0.0
 
 func _ready() -> void:
@@ -25,6 +31,15 @@ func _ready() -> void:
 	add_child(recipe_panel)
 	shop_panel = preload("res://ui/shop_panel.gd").new()
 	add_child(shop_panel)
+	task_panel = preload("res://ui/task_panel.gd").new()
+	add_child(task_panel)
+	bestiary_panel = preload("res://ui/bestiary_panel.gd").new()
+	add_child(bestiary_panel)
+	add_child(preload("res://ui/debug_console.gd").new())
+	TaskSystem.task_taken.connect(func(_id): _refresh_tasks())
+	TaskSystem.task_progress.connect(func(_id): _refresh_tasks())
+	TaskSystem.task_completed.connect(func(_id): _refresh_tasks())
+	UnlockSystem.unlock_added.connect(func(id): show_message("%s har öppnats!" % UNLOCK_NAMES.get(id, id)))
 	GameState.hp_changed.connect(func(_h, _m): _refresh())
 	GameState.mana_changed.connect(func(_v, _m): _refresh())
 	GameState.exp_changed.connect(func(_x, _n, _l): _refresh())
@@ -36,6 +51,7 @@ func _ready() -> void:
 	_refresh()
 	_refresh_inv()
 	_refresh_buffs()
+	_refresh_tasks()
 
 func _process(delta: float) -> void:
 	if _msg_timer > 0.0:
@@ -56,7 +72,20 @@ func open_recipes(station_type: String) -> void:
 
 func open_shop() -> void:
 	recipe_panel.visible = false
+	task_panel.visible = false
 	shop_panel.open()
+
+func open_tasks() -> void:
+	recipe_panel.visible = false
+	shop_panel.visible = false
+	task_panel.open()
+
+func _refresh_tasks() -> void:
+	var parts: Array = []
+	for id in TaskSystem.active:
+		var def: Dictionary = TaskSystem.tasks[id]
+		parts.append("%s %d/%d" % [def["monster"], int(TaskSystem.active[id]), int(def["required"])])
+	tasks_lbl.text = " · ".join(parts)
 
 func _refresh() -> void:
 	hp_bar.size.x = 200.0 * (GameState.health / GameState.max_health)
@@ -108,12 +137,16 @@ func _unhandled_input(event: InputEvent) -> void:
 		inv_panel.visible = not inv_panel.visible
 	elif event.is_action_pressed("toggle_skills"):
 		skill_panel.visible = not skill_panel.visible
+	elif event.is_action_pressed("toggle_bestiary"):
+		bestiary_panel.toggle()
 	elif event.is_action_pressed("hotkey_1"):
 		if not GameState.use_item("health_potion"):
 			show_message("Ingen hälsodryck.")
 	elif event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		recipe_panel.visible = false
 		shop_panel.visible = false
+		task_panel.visible = false
+		bestiary_panel.visible = false
 	elif death_lbl.visible and event is InputEventKey and event.pressed and event.keycode == KEY_ENTER:
 		_respawn()
 

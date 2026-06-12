@@ -100,7 +100,8 @@ func _update_attack(delta: float) -> void:
 			var wskill := GameState.weapon_skill()
 			var weapon: Dictionary = ItemDB.items.get(GameState.equipped_weapon, {})
 			var dmg := CombatFormulas.roll_melee(GameState.level,
-				GameState.effective_skill_level(wskill), int(weapon.get("atk", 5)))
+				GameState.effective_skill_level(wskill), int(weapon.get("atk", 5))) \
+				* TaskSystem.damage_multiplier(target.monster_name)   # bestiary-tierbonus
 			target.take_damage(dmg)
 			GameState.gain_skill_xp(wskill, 1)
 
