@@ -31,5 +31,6 @@
 	"mana_potion":     {"name": "Manadryck",       "type": "potion",   "value": 55,  "color": "#3050d0", "mana": 50},
 	"mining_brew":     {"name": "Gruvbrygd",       "type": "potion",   "value": 70,  "color": "#a88030", "buff": {"stat": "skill:mining", "amount": 2, "duration": 60}},
 	"attack_rune":     {"name": "Attackruna",      "type": "rune",     "value": 30,  "color": "#d04848"},
-	"boss_crown":      {"name": "Ghulkungens krona", "type": "trophy", "value": 2500, "color": "#e8d44a"}
+	"boss_crown":      {"name": "Ghulkungens krona", "type": "trophy", "value": 2500, "color": "#e8d44a"},
+	"warding_candle":  {"name": "Warding Candle", "type": "quest", "value": 0, "usable": true}
 }

@@ -1,0 +1,54 @@
+{
+	"quest_welcome": {
+		"name": "Welcome to Town",
+		"giver": "npc_elder",
+		"requires": [],
+		"steps": [
+			{"type": "talk_to", "npc": "npc_blacksmith", "hint": "Introduce yourself to Brom the Blacksmith in town."},
+			{"type": "explore", "zone": "forest", "hint": "Take a walk through the old forest."},
+			{"type": "talk_to", "npc": "npc_elder", "hint": "Report back to Elder Rowan."}
+		],
+		"rewards": {"xp": 200, "gold": 100}
+	},
+	"quest_lost_ore": {
+		"name": "The Lost Ore",
+		"giver": "npc_blacksmith",
+		"requires": ["quest_welcome"],
+		"steps": [
+			{"type": "collect", "item": "iron_ore", "count": 3, "hint": "Mine 3 iron ore in the cave."},
+			{"type": "talk_to", "npc": "npc_blacksmith", "hint": "Bring the ore back to Brom."}
+		],
+		"rewards": {"xp": 500, "gold": 200, "items": {"steel_sword": 1}}
+	},
+	"quest_snakes": {
+		"name": "Serpents in the Grass",
+		"giver": "npc_hunter",
+		"requires": [],
+		"steps": [
+			{"type": "kill", "monster": "Orm", "count": 8, "hint": "Cull 8 snakes in the forest."},
+			{"type": "talk_to", "npc": "npc_hunter", "hint": "Return to Sylva the Huntress."}
+		],
+		"rewards": {"xp": 800, "gold": 300}
+	},
+	"quest_crypt": {
+		"name": "Into the Crypt",
+		"giver": "npc_scholar",
+		"requires": ["quest_welcome"],
+		"steps": [
+			{"type": "explore", "zone": "cave", "tile": [20, 29], "radius": 3, "hint": "Find the old crypt behind the cave's south passage."},
+			{"type": "use_item", "item": "warding_candle", "hint": "Light the warding candle inside the crypt."},
+			{"type": "talk_to", "npc": "npc_scholar", "hint": "Tell Maelis what you saw."}
+		],
+		"rewards": {"xp": 1200, "gold": 400}
+	},
+	"quest_ghoul_king": {
+		"name": "The Ghoul King's Shadow",
+		"giver": "npc_scholar",
+		"requires": ["quest_crypt"],
+		"steps": [
+			{"type": "kill", "monster": "Ghulkungen", "count": 1, "hint": "Slay the Ghoul King in his lair. (Finish the ghoul and phantom slayer tasks to open it.)"},
+			{"type": "talk_to", "npc": "npc_scholar", "hint": "Bring word of your victory to Maelis."}
+		],
+		"rewards": {"xp": 3000, "gold": 1500}
+	}
+}

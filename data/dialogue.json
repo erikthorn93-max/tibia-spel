@@ -1,0 +1,202 @@
+{
+	"elder_root": {
+		"speaker": "npc_elder", "emotion": "friendly",
+		"text": "Welcome, stranger. Our little town could use a helping hand.",
+		"choices": [
+			{"text": "Who are you?", "next": "elder_who"},
+			{"text": "Is there anything I can do?", "next": "elder_offer",
+			 "conditions": [{"type": "quest_available", "quest": "quest_welcome"}]},
+			{"text": "I've seen the forest, as you asked.", "next": "elder_thanks",
+			 "conditions": [{"type": "quest_step", "quest": "quest_welcome", "step": 2}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_welcome"}]},
+			{"text": "Goodbye.", "next": null}
+		]
+	},
+	"elder_who": {
+		"speaker": "npc_elder", "emotion": "neutral",
+		"text": "I am Rowan, elder of this town. I have watched over it for forty years.",
+		"choices": [
+			{"text": "Back.", "next": "elder_root"},
+			{"text": "Goodbye.", "next": null}
+		]
+	},
+	"elder_offer": {
+		"speaker": "npc_elder", "emotion": "friendly",
+		"text": "Get to know the place. Meet Brom at the forge, and take a look at the old forest north of here.",
+		"choices": [
+			{"text": "I'll do that.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_welcome"}]},
+			{"text": "Maybe later.", "next": null}
+		]
+	},
+	"elder_thanks": {
+		"speaker": "npc_elder", "emotion": "friendly",
+		"text": "Good. You'll do fine here. Take this for your trouble.",
+		"choices": [
+			{"text": "Thank you.", "next": null}
+		]
+	},
+	"blacksmith_root": {
+		"speaker": "npc_blacksmith", "emotion": "friendly",
+		"text": "Ah, a new face! Need something forged?",
+		"choices": [
+			{"text": "Rowan sent me to introduce myself.", "next": "blacksmith_welcome",
+			 "conditions": [{"type": "quest_step", "quest": "quest_welcome", "step": 0}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_welcome"}]},
+			{"text": "Need any help?", "next": "blacksmith_offer",
+			 "conditions": [{"type": "quest_available", "quest": "quest_lost_ore"}]},
+			{"text": "I have your iron ore.", "next": "blacksmith_thanks",
+			 "conditions": [{"type": "quest_step", "quest": "quest_lost_ore", "step": 1},
+			                {"type": "has_item", "item": "iron_ore", "count": 3}],
+			 "actions": [{"type": "take_item", "item": "iron_ore", "count": 3},
+			             {"type": "advance_quest", "quest": "quest_lost_ore"}]},
+			{"text": "Who are you?", "next": "blacksmith_who"},
+			{"text": "Goodbye.", "next": null}
+		]
+	},
+	"blacksmith_who": {
+		"speaker": "npc_blacksmith", "emotion": "neutral",
+		"text": "Brom. Best smith in town. Only smith, too.",
+		"choices": [
+			{"text": "Back.", "next": "blacksmith_root"},
+			{"text": "Goodbye.", "next": null}
+		]
+	},
+	"blacksmith_welcome": {
+		"speaker": "npc_blacksmith", "emotion": "friendly",
+		"text": "Rowan's taken a liking to you, eh? Good. Come back once you've seen the forest.",
+		"choices": [
+			{"text": "Goodbye.", "next": null}
+		]
+	},
+	"blacksmith_offer": {
+		"speaker": "npc_blacksmith", "emotion": "neutral",
+		"text": "My ore shipment never arrived. Bring me three iron ore from the cave and I'll make it worth your while.",
+		"choices": [
+			{"text": "Consider it done.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_lost_ore"}]},
+			{"text": "Not right now.", "next": null}
+		]
+	},
+	"blacksmith_thanks": {
+		"speaker": "npc_blacksmith", "emotion": "friendly",
+		"text": "Fine ore! Here, a steel sword, forged while you wait. Well, almost.",
+		"choices": [
+			{"text": "Thank you.", "next": null}
+		]
+	},
+	"scholar_root": {
+		"speaker": "npc_scholar", "emotion": "neutral",
+		"text": "Fascinating ruins in that cave. Simply fascinating...",
+		"choices": [
+			{"text": "What do you study?", "next": "scholar_who"},
+			{"text": "Need help with your research?", "next": "scholar_offer",
+			 "conditions": [{"type": "quest_available", "quest": "quest_crypt"}]},
+			{"text": "I lost the candle you gave me.", "next": "scholar_candle",
+			 "conditions": [{"type": "quest_step", "quest": "quest_crypt", "step": 1},
+			                {"type": "has_item", "item": "warding_candle", "not": true}],
+			 "actions": [{"type": "give_item", "item": "warding_candle", "count": 1}]},
+			{"text": "I lit the candle in the crypt.", "next": "scholar_crypt_done",
+			 "conditions": [{"type": "quest_step", "quest": "quest_crypt", "step": 2}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_crypt"}]},
+			{"text": "Is there more to be done?", "next": "scholar_offer2",
+			 "conditions": [{"type": "quest_available", "quest": "quest_ghoul_king"}]},
+			{"text": "The Ghoul King is dead.", "next": "scholar_king_done",
+			 "conditions": [{"type": "quest_step", "quest": "quest_ghoul_king", "step": 1}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_ghoul_king"}]},
+			{"text": "Goodbye.", "next": null}
+		]
+	},
+	"scholar_who": {
+		"speaker": "npc_scholar", "emotion": "neutral",
+		"text": "Maelis. I study the old crypt beneath the cave. Or I would, if it weren't crawling with the dead.",
+		"choices": [
+			{"text": "Back.", "next": "scholar_root"},
+			{"text": "Goodbye.", "next": null}
+		]
+	},
+	"scholar_offer": {
+		"speaker": "npc_scholar", "emotion": "neutral",
+		"text": "Take this warding candle to the crypt behind the cave's south passage, and light it there. It should reveal whatever lingers.",
+		"choices": [
+			{"text": "I'll light it.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_crypt"},
+			             {"type": "give_item", "item": "warding_candle", "count": 1}]},
+			{"text": "Sounds dangerous. Maybe later.", "next": null}
+		]
+	},
+	"scholar_candle": {
+		"speaker": "npc_scholar", "emotion": "annoyed",
+		"text": "Careless! Here is another. Do be careful with this one.",
+		"choices": [
+			{"text": "Thank you.", "next": null}
+		]
+	},
+	"scholar_crypt_done": {
+		"speaker": "npc_scholar", "emotion": "worried",
+		"text": "A shadow, you say? Then it is as I feared. The Ghoul King stirs. We are not done, you and I.",
+		"choices": [
+			{"text": "I'll be ready.", "next": null}
+		]
+	},
+	"scholar_offer2": {
+		"speaker": "npc_scholar", "emotion": "worried",
+		"text": "The candle revealed his shadow. The Ghoul King must be destroyed. Finish the slayer tasks to open his lair, then end him.",
+		"choices": [
+			{"text": "He's as good as dead.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_ghoul_king"}]},
+			{"text": "I need to prepare.", "next": null}
+		]
+	},
+	"scholar_king_done": {
+		"speaker": "npc_scholar", "emotion": "friendly",
+		"text": "Then it is over. The crypt can finally rest. And so can I. You have my deepest thanks.",
+		"choices": [
+			{"text": "Farewell, Maelis.", "next": null}
+		]
+	},
+	"hunter_root": {
+		"speaker": "npc_hunter", "emotion": "neutral",
+		"text": "Quiet... you'll scare the game.",
+		"choices": [
+			{"text": "Who are you?", "next": "hunter_who"},
+			{"text": "Need a hand with anything?", "next": "hunter_offer",
+			 "conditions": [{"type": "quest_available", "quest": "quest_snakes"}]},
+			{"text": "The snakes are dealt with.", "next": "hunter_thanks",
+			 "conditions": [{"type": "quest_step", "quest": "quest_snakes", "step": 1}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_snakes"}]},
+			{"text": "Goodbye.", "next": null}
+		]
+	},
+	"hunter_who": {
+		"speaker": "npc_hunter", "emotion": "neutral",
+		"text": "Sylva. I hunt these woods. The snakes have grown bold lately.",
+		"choices": [
+			{"text": "Back.", "next": "hunter_root"},
+			{"text": "Goodbye.", "next": null}
+		]
+	},
+	"hunter_offer": {
+		"speaker": "npc_hunter", "emotion": "neutral",
+		"text": "Snakes everywhere this season. Cull eight of them and the forest paths will be safe again.",
+		"choices": [
+			{"text": "I'm on it.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_snakes"}]},
+			{"text": "Not my problem.", "next": null}
+		]
+	},
+	"hunter_thanks": {
+		"speaker": "npc_hunter", "emotion": "friendly",
+		"text": "Well done. The paths are safer already. Here, your share of the bounty.",
+		"choices": [
+			{"text": "Thank you.", "next": null}
+		]
+	},
+	"finn_root": {
+		"speaker": "npc_fisherman", "emotion": "neutral",
+		"text": "The fish aren't biting today. They never are.",
+		"choices": [
+			{"text": "Good luck, old man.", "next": null}
+		]
+	}
+}
