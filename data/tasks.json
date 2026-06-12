@@ -6,5 +6,7 @@
 	"task_ghoul":          {"monster": "Ghoul",          "required": 150, "slayer_level_req": 10, "reward_slayer_xp": 1200, "reward_gold": 1500, "unlocks": "morka_dungen", "repeatable": true},
 	"task_jattespindel":   {"monster": "Jättespindel",   "required": 100, "slayer_level_req": 8,  "reward_slayer_xp": 900,  "reward_gold": 1000, "repeatable": true},
 	"task_skelettkrigare": {"monster": "Skelettkrigare", "required": 125, "slayer_level_req": 12, "reward_slayer_xp": 1100, "reward_gold": 1200, "repeatable": true},
-	"task_fantom":         {"monster": "Fantom",         "required": 150, "slayer_level_req": 15, "reward_slayer_xp": 1500, "reward_gold": 2000, "repeatable": true}
+	"task_fantom":         {"monster": "Fantom",         "required": 150, "slayer_level_req": 15, "reward_slayer_xp": 1500, "reward_gold": 2000, "repeatable": true},
+	"task_giftpadda":      {"monster": "Giftpadda",      "required": 100, "slayer_level_req": 12, "reward_slayer_xp": 1000, "reward_gold": 1100, "unlocks": "traskets_hjarta", "repeatable": true},
+	"task_traskdjavul":    {"monster": "Träskdjävul",    "required": 125, "slayer_level_req": 18, "reward_slayer_xp": 1800, "reward_gold": 2400, "repeatable": true}
 }

@@ -32,5 +32,9 @@
 	"mining_brew":     {"name": "Gruvbrygd",       "type": "potion",   "value": 70,  "color": "#a88030", "buff": {"stat": "skill:mining", "amount": 2, "duration": 60}},
 	"attack_rune":     {"name": "Attackruna",      "type": "rune",     "value": 30,  "color": "#d04848"},
 	"boss_crown":      {"name": "Ghulkungens krona", "type": "trophy", "value": 2500, "color": "#e8d44a"},
-	"warding_candle":  {"name": "Warding Candle", "type": "quest", "value": 0, "usable": true}
+	"warding_candle":  {"name": "Warding Candle", "type": "quest", "value": 0, "usable": true},
+	"toad_gland":      {"name": "Paddkörtel",      "type": "junk",     "value": 18,  "color": "#8aa84a"},
+	"swamp_essence":   {"name": "Träskessens",     "type": "junk",     "value": 35,  "color": "#3a5a3e"},
+	"raw_eel":         {"name": "Rå ål",           "type": "material", "value": 30,  "color": "#4a5a52"},
+	"marsh_herb":      {"name": "Kärrört",         "type": "material", "value": 25,  "color": "#4a7a4a"}
 }
