@@ -23,6 +23,7 @@ var _auto_path: Array = []
 
 func _ready() -> void:
 	visual.apply_appearance(GameState.appearance)
+	GameState.appearance_changed.connect(func(): visual.apply_appearance(GameState.appearance))
 
 func snap_to(t: Vector2i) -> void:
 	tile = t
@@ -88,11 +89,22 @@ func _step(dir: Vector2i) -> void:
 	facing = dir
 	visual.face(dir)
 	var next := tile + dir
-	if zone.is_walkable(next):
-		_from = position
-		_to = zone.tile_to_world(next)
-		tile = next
-		_move_t = 0.0
+	if not zone.is_walkable(next):
+		_try_bump_unlock(next)
+		return
+	_from = position
+	_to = zone.tile_to_world(next)
+	tile = next
+	_move_t = 0.0
+	GameState.gain_skill_xp("agility", 1)   # gång tränar agility (genvägskrav)
+
+## Gå mot låst gate/genväg: lås upp om kraven är uppfyllda, annars visa hint.
+func _try_bump_unlock(t: Vector2i) -> void:
+	var uid: String = zone.lock_at(t)
+	if uid == "":
+		return
+	if not UnlockSystem.try_unlock(uid):
+		World.hud.show_message(UnlockSystem.hint_for(uid))
 
 func _update_attack(delta: float) -> void:
 	_attack_timer = maxf(_attack_timer - delta, 0.0)
@@ -127,5 +139,11 @@ func _update_gather(delta: float) -> void:
 			gather_target = null
 
 func _check_portal() -> void:
-	if zone.portals.has(tile):
-		World.change_zone(zone.portals[tile])
+	if not zone.portals.has(tile):
+		return
+	if zone.portal_locks.has(tile):
+		var uid: String = zone.portal_locks[tile]
+		if not UnlockSystem.try_unlock(uid):
+			World.hud.show_message(UnlockSystem.hint_for(uid))
+			return
+	World.change_zone(zone.portals[tile])

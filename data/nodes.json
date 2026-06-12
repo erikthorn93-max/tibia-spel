@@ -8,5 +8,7 @@
 	"fishing_spot":     {"skill": "fishing",     "level": 1,  "tool": "fishing_rod", "yields": "raw_trout",       "xp": 15, "charges": [5, 8], "respawn": 25, "color": "#4a90c8", "label": "Fiskestim"},
 	"pike_spot":        {"skill": "fishing",     "level": 15, "tool": "fishing_rod", "yields": "raw_pike",        "xp": 30, "charges": [4, 6], "respawn": 40, "color": "#3a70a8", "label": "Gäddstim"},
 	"mint_patch":       {"skill": "herbalism",   "level": 1,  "tool": "sickle",      "yields": "mint_herb",       "xp": 15, "charges": [3, 4], "respawn": 25, "color": "#58b868", "label": "Mynta"},
-	"nightshade_patch": {"skill": "herbalism",   "level": 15, "tool": "sickle",      "yields": "nightshade_herb", "xp": 30, "charges": [2, 4], "respawn": 45, "color": "#6a4a8a", "label": "Nattskatta"}
+	"nightshade_patch": {"skill": "herbalism",   "level": 15, "tool": "sickle",      "yields": "nightshade_herb", "xp": 30, "charges": [2, 4], "respawn": 45, "color": "#6a4a8a", "label": "Nattskatta"},
+	"eel_spot":         {"skill": "fishing",     "level": 25, "tool": "fishing_rod", "yields": "raw_eel",         "xp": 45, "charges": [4, 6], "respawn": 50, "color": "#2a4a3e", "label": "Ålstim"},
+	"marsh_patch":      {"skill": "herbalism",   "level": 25, "tool": "sickle",      "yields": "marsh_herb",      "xp": 45, "charges": [2, 4], "respawn": 50, "color": "#4a7a4a", "label": "Kärrört"}
 }

@@ -1,7 +1,7 @@
 extends Node
 ## Autoload: SaveManager. JSON-sparfil + autosave var 60 s.
 
-const SAVE_VERSION := 4
+const SAVE_VERSION := 5
 var save_path := "user://save.json"
 var _timer := 0.0
 
@@ -36,6 +36,8 @@ func save_game() -> void:
 		"mana": GameState.mana, "max_mana": GameState.max_mana,
 		"gold": GameState.gold, "inventory": GameState.inventory,
 		"skills": GameState.skills, "appearance": GameState.appearance,
+		"appearance_base": GameState.appearance_base,
+		"outfit_equipped": GameState.outfit_equipped,
 		"equipped_weapon": GameState.equipped_weapon,
 		"zone": GameState.current_zone,
 		"tile": [GameState.player_tile.x, GameState.player_tile.y],
@@ -73,4 +75,8 @@ func load_game() -> bool:
 	# v3→v4: quests saknas i äldre saves — börja tomt
 	QuestSystem.active = s.get("quests_active", {})
 	QuestSystem.completed = s.get("quests_completed", {})
+	# v4→v5: outfit saknas — standard, basen = sparat utseende
+	GameState.outfit_equipped = s.get("outfit_equipped", "standard")
+	var base = s.get("appearance_base", {})
+	GameState.appearance_base = base if not base.is_empty() else GameState.appearance.duplicate()
 	return true

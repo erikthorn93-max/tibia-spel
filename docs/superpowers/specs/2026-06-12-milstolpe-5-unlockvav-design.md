@@ -1,7 +1,7 @@
 # Milstolpe 5 — Unlock-väv: Designspec
 
 **Datum:** 2026-06-12
-**Status:** Utkast — väntar på godkännande
+**Status:** Godkänd av Erik
 **Bygger på:** Masterspec §Milstolpar (rad 5), milstolpe 1–4 (mergade till master)
 
 ## Mål

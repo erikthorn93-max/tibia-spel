@@ -7,8 +7,8 @@ func before_all():
 	var f := FileAccess.open("res://data/tasks.json", FileAccess.READ)
 	tasks = JSON.parse_string(f.get_as_text())
 
-func test_eight_tasks():
-	assert_eq(tasks.size(), 8)
+func test_ten_tasks():
+	assert_eq(tasks.size(), 10)
 
 func test_task_monsters_exist_in_monsterdb():
 	for id in tasks:

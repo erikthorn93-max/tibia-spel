@@ -1,0 +1,79 @@
+{
+ "name": "Träsket",
+ "tiles": [
+  "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+  "WssssssssssssssssssssssssssssssssssssssW",
+  "WsP0sssssssss~~ssssshssssssssssssdsssssW",
+  "Wssssssssssss~E~sssssssssssssssssssssssW",
+  "Wsssssssssssss~~ssssspsssssssssssssssssW",
+  "WssssssssssssssssssssssssssspsdssssssssW",
+  "WspssssssssssssssssssssssssssssssssssssW",
+  "WssssssssshsssssssspsssssssssssssssssssW",
+  "WsssssssssssssssssssssssWWsssssssssssssW",
+  "WssssssssssssssssssssssssssssshssssssssW",
+  "WssssssssssssssssWWssssssssssssssssssssW",
+  "WssssssssssspssssWsssssssssssssssssssssW",
+  "WssssssssssssssssssssssssssssssssssssssW",
+  "WssssssssssssssssssssssspssssssssssssssW",
+  "WssssssssssssssssssssssssssssssssssssssW",
+  "WssssshsssssssssssssssssssssWWWWWWWWWWWW",
+  "WsssssssssssssssssssssssssssWssssssssssW",
+  "WsssssssssssssssssssdsssssssWsysgsssyssW",
+  "WsssssssdsssssssssssssssssssWsssssdssssW",
+  "Wssss~~sssssssssssssssssssss2ssssysssssW",
+  "Wssss~E~ssssssssssssssssssssWssdsssgsssW",
+  "Ws1sssssssssssssssssssssssssWsssssssdssW",
+  "WsssssssssssssssssssssssssssWssssssssssW",
+  "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+ ],
+ "legend": {
+  "0": {
+   "type": "portal",
+   "to": "forest",
+   "terrain": "s"
+  },
+  "1": {
+   "type": "portal",
+   "to": "cave",
+   "unlock": "genvag_grottan",
+   "terrain": "s"
+  },
+  "2": {
+   "type": "gate",
+   "unlock": "traskets_hjarta",
+   "terrain": "s"
+  },
+  "E": {
+   "type": "node",
+   "node": "eel_spot",
+   "terrain": "~"
+  },
+  "h": {
+   "type": "node",
+   "node": "marsh_patch",
+   "terrain": "s"
+  },
+  "g": {
+   "type": "node",
+   "node": "gold_vein",
+   "terrain": "s"
+  },
+  "y": {
+   "type": "node",
+   "node": "willow_tree",
+   "terrain": "s"
+  },
+  "p": {
+   "type": "spawn",
+   "monster": "Giftpadda",
+   "respawn": 25.0,
+   "terrain": "s"
+  },
+  "d": {
+   "type": "spawn",
+   "monster": "Träskdjävul",
+   "respawn": 40.0,
+   "terrain": "s"
+  }
+ }
+}

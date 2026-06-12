@@ -89,7 +89,7 @@ func _on_submit(text: String) -> void:
 				_say("%s (%s) — %s" % [id, TaskSystem.tasks[id]["monster"], status])
 		"tp":
 			if parts.size() < 2 or not FileAccess.file_exists("res://data/zones/%s.json" % parts[1]):
-				_say("tp <zon> — zoner: town, cave, forest")
+				_say("tp <zon> — zoner: town, cave, forest, swamp")
 				return
 			visible = false
 			get_tree().paused = false

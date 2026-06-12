@@ -10,6 +10,7 @@ signal level_up(new_level: int)
 signal player_died
 signal skill_changed(skill: String)
 signal buffs_changed
+signal appearance_changed
 
 const SKILL_XP_BASE := 50.0
 const SKILL_XP_GROWTH := 1.1
@@ -28,6 +29,9 @@ var equipped_weapon := "rusty_sword"
 var appearance := {                   # character creation (M1: färger)
 	"skin": "#e0b894", "hair": "#332211", "shirt": "#2e4dc0", "pants": "#1a1a52",
 }
+var appearance_base: Dictionary = {}  # originalfärgerna — fångas vid första outfit-bytet
+var outfit_equipped := "standard"
+var outfit_defs: Dictionary = {}      # data/outfits.json
 var skills: Dictionary = {}
 var skill_defs: Dictionary = {}
 var current_zone := "town"
@@ -38,6 +42,28 @@ var active_buffs: Array = []   # [{stat, amount, time_left}]
 ## och innan andra autoloads läser GameState.skills.
 func _init() -> void:
 	_load_skills()
+	_load_outfits()
+
+func _load_outfits() -> void:
+	var f := FileAccess.open("res://data/outfits.json", FileAccess.READ)
+	var parsed = JSON.parse_string(f.get_as_text()) if f else null
+	outfit_defs = parsed if parsed is Dictionary else {}
+
+func equip_outfit(id: String) -> bool:
+	if not outfit_defs.has(id):
+		return false
+	var uid := String(outfit_defs[id].get("unlock", ""))
+	if uid != "" and not UnlockSystem.is_unlocked(uid):
+		return false
+	if appearance_base.is_empty():
+		appearance_base = appearance.duplicate()
+	appearance = appearance_base.duplicate()
+	for key in outfit_defs[id].get("colors", {}):
+		if key != "skin":   # skin kommer alltid från character creation
+			appearance[key] = outfit_defs[id]["colors"][key]
+	outfit_equipped = id
+	appearance_changed.emit()
+	return true
 
 func _load_skills() -> void:
 	var f := FileAccess.open("res://data/skills.json", FileAccess.READ)

@@ -4,10 +4,11 @@ class_name PlaceholderTiles
 
 const TILE := 32
 # atlas-kolumn per terrängtecken
-const TERRAIN := {".": 0, ",": 1, "W": 2, "~": 3}
+const TERRAIN := {".": 0, ",": 1, "W": 2, "~": 3, "s": 4}
 const COLORS := {
 	".": Color("4a8f3c"), ",": Color("6b5436"),
 	"W": Color("6e6e72"), "~": Color("2e5f9e"),
+	"s": Color("4f5a2e"),   # sumpmark (Träsket)
 }
 
 static func build() -> TileSet:
