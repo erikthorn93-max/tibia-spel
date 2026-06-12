@@ -1,0 +1,13 @@
+{
+ "name": "Träsket",
+ "tiles": [
+  "WWWWWWWWWWWWWWWWWWWW",
+  "WssssssssssssssssssW",
+  "WsPss0sssssssssssssW",
+  "WssssssssssssssssssW",
+  "WWWWWWWWWWWWWWWWWWWW"
+ ],
+ "legend": {
+  "0": {"type": "portal", "to": "forest", "terrain": "s"}
+ }
+}

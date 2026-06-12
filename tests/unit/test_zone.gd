@@ -120,6 +120,45 @@ func test_new_monster_spawns_behind_gates():
 	var f = _make_zone("forest")
 	assert_gt(f.spawn_points.filter(func(s): return s["monster"] == "Fantom").size(), 0)
 
+func _shortcut_tile(z, unlock_id: String):
+	for t in z.shortcut_points:
+		if z.shortcut_points[t] == unlock_id:
+			return t
+	return null
+
+func test_forest_shortcut_parsed_and_blocked():
+	var z = _make_zone("forest")
+	assert_eq(z.shortcut_points.size(), 2)   # två stenar över floden
+	var t = _shortcut_tile(z, "genvag_stenarna")
+	assert_not_null(t)
+	assert_false(z.is_walkable(t))
+
+func test_shortcut_opens_live_on_unlock():
+	var z = _make_zone("forest")
+	UnlockSystem.unlock("genvag_stenarna")
+	for t in z.shortcut_points:
+		assert_true(z.is_walkable(t))
+
+func test_shortcut_open_at_build_if_unlocked():
+	UnlockSystem.unlock("genvag_stenarna")
+	var z = _make_zone("forest")
+	for t in z.shortcut_points:
+		assert_true(z.is_walkable(t))
+
+func test_forest_portal_to_swamp_locked():
+	var z = _make_zone("forest")
+	assert_true(z.portals.values().has("swamp"))
+	assert_true(z.portal_locks.values().has("trasket"))
+	UnlockSystem.unlock("trasket")
+	assert_eq(z.portal_locks.size(), 0)
+
+func test_lock_at_reports_unlock_id():
+	var z = _make_zone("forest")
+	var t = _shortcut_tile(z, "genvag_stenarna")
+	assert_eq(z.lock_at(t), "genvag_stenarna")
+	UnlockSystem.unlock("genvag_stenarna")
+	assert_eq(z.lock_at(t), "")
+
 func test_gate_ids_cover_task_unlocks_and_boss():
 	var gate_ids: Array = []
 	for id in ["town", "cave", "forest"]:
