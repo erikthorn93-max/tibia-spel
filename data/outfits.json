@@ -1,0 +1,11 @@
+{
+	"standard":          {"name": "Standard",           "colors": {}},
+	"outfit_explorer":   {"name": "Vandrarens kläder",  "unlock": "outfit_explorer",
+		"colors": {"shirt": "#7a5a34", "pants": "#4a3a24"}},
+	"outfit_slayer":     {"name": "Slayer's Garb",      "unlock": "outfit_slayer",
+		"colors": {"shirt": "#5a1f1f", "pants": "#1a1a1a"}},
+	"outfit_angler":     {"name": "Fiskarens ställ",    "unlock": "outfit_angler",
+		"colors": {"shirt": "#2e5f9e", "pants": "#3a4a5a"}},
+	"outfit_ghoul_king": {"name": "Ghulkungens mantel", "unlock": "outfit_ghoul_king",
+		"colors": {"shirt": "#3a5a2a", "pants": "#2a2a1a", "hair": "#e8d44a"}}
+}
