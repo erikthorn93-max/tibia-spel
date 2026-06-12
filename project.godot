@@ -21,6 +21,8 @@ ItemDB="*res://autoload/item_db.gd"
 MonsterDB="*res://autoload/monster_db.gd"
 UnlockSystem="*res://autoload/unlock_system.gd"
 TaskSystem="*res://autoload/task_system.gd"
+QuestSystem="*res://autoload/quest_system.gd"
+DialogueDB="*res://autoload/dialogue_db.gd"
 World="*res://autoload/world.gd"
 SaveManager="*res://autoload/save_manager.gd"
 
