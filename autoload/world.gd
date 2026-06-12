@@ -79,3 +79,9 @@ func _spawn_world_objects() -> void:
 		var tm: Node2D = preload("res://entities/taskmaster_npc.tscn").instantiate()
 		current_zone.add_child(tm)
 		tm.setup(t)
+	for id in DialogueDB.npcs:
+		var nd: Dictionary = DialogueDB.npcs[id]
+		if String(nd["zone"]) == current_zone.zone_id:
+			var npc: Node2D = preload("res://entities/npc.tscn").instantiate()
+			npc.setup(id, Vector2i(int(nd["position"][0]), int(nd["position"][1])))
+			current_zone.add_child(npc)   # setup FÖRE add_child — _ready läser npc_id
