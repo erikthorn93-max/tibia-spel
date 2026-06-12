@@ -32,10 +32,40 @@ func test_v1_snapshot_migrates_to_all_skills():
 	assert_eq(gs.skills["mining"]["level"], 1)
 	gs.free()
 
-func test_save_version_is_4():
+func test_save_version_is_5():
 	var sm2 = load("res://autoload/save_manager.gd").new()
-	assert_eq(sm2.SAVE_VERSION, 4)
+	assert_eq(sm2.SAVE_VERSION, 5)
 	sm2.free()
+
+func test_v4_save_migrates_to_v5_standard_outfit():
+	GameState.outfit_equipped = "standard"
+	GameState.appearance_base = {}
+	sm.save_game()
+	var s: Dictionary = sm.read_snapshot()
+	s.erase("outfit_equipped")
+	s.erase("appearance_base")
+	s["version"] = 4
+	s["appearance"] = {"skin": "#aa0000", "hair": "#0000aa", "shirt": "#00aa00", "pants": "#aaaa00"}
+	sm.write_snapshot(s)
+	assert_true(sm.load_game())
+	assert_eq(GameState.outfit_equipped, "standard")
+	# basen sätts från appearance så standard alltid kan återställas
+	assert_eq(String(GameState.appearance_base["shirt"]), "#00aa00")
+
+func test_v5_roundtrip_outfit_and_base():
+	UnlockSystem.unlocked["outfit_slayer"] = true
+	GameState.appearance = {"skin": "#e0b894", "hair": "#332211", "shirt": "#2e4dc0", "pants": "#1a1a52"}
+	GameState.appearance_base = {}
+	GameState.equip_outfit("outfit_slayer")
+	sm.save_game()
+	GameState.equip_outfit("standard")
+	GameState.outfit_equipped = "standard"
+	assert_true(sm.load_game())
+	assert_eq(GameState.outfit_equipped, "outfit_slayer")
+	assert_eq(String(GameState.appearance_base["shirt"]), "#2e4dc0")
+	assert_eq(String(GameState.appearance["shirt"]), "#5a1f1f")
+	UnlockSystem.unlocked.clear()
+	GameState.equip_outfit("standard")
 
 func _clear_task_state():
 	TaskSystem.reset()
