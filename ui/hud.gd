@@ -1,8 +1,5 @@
 extends CanvasLayer
 
-const UNLOCK_NAMES := {"spindelhalan": "Spindelhålan", "kryptan": "Kryptan",
-	"morka_dungen": "Mörka dungen", "bossrummet": "Bossrummet"}
-
 @onready var hp_bar: ColorRect = $HpBar
 @onready var mana_bar: ColorRect = $ManaBar
 @onready var stats: Label = $StatsLabel
@@ -21,6 +18,7 @@ var task_panel: PanelContainer
 var bestiary_panel: PanelContainer
 var dialogue_box: PanelContainer
 var quest_log: PanelContainer
+var wardrobe: PanelContainer
 var _msg_timer := 0.0
 
 func _ready() -> void:
@@ -42,6 +40,8 @@ func _ready() -> void:
 	add_child(dialogue_box)
 	quest_log = preload("res://ui/quest_log.gd").new()
 	add_child(quest_log)
+	wardrobe = preload("res://ui/wardrobe.gd").new()
+	add_child(wardrobe)
 	QuestSystem.quest_started.connect(func(_id): _refresh_quests())
 	QuestSystem.quest_progress.connect(func(_id): _refresh_quests())
 	QuestSystem.step_advanced.connect(func(_id): _refresh_quests())
@@ -52,7 +52,7 @@ func _ready() -> void:
 	TaskSystem.task_taken.connect(func(_id): _refresh_tasks())
 	TaskSystem.task_progress.connect(func(_id): _refresh_tasks())
 	TaskSystem.task_completed.connect(func(_id): _refresh_tasks())
-	UnlockSystem.unlock_added.connect(func(id): show_message("%s har öppnats!" % UNLOCK_NAMES.get(id, id)))
+	UnlockSystem.unlock_added.connect(func(id): show_message("%s har öppnats!" % UnlockSystem.display_name(id)))
 	GameState.hp_changed.connect(func(_h, _m): _refresh())
 	GameState.mana_changed.connect(func(_v, _m): _refresh())
 	GameState.exp_changed.connect(func(_x, _n, _l): _refresh())
@@ -171,6 +171,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			show_message("Ingen hälsodryck.")
 	elif event.is_action_pressed("toggle_quest_log"):
 		quest_log.toggle()
+	elif event.is_action_pressed("toggle_wardrobe"):
+		wardrobe.toggle()
 	elif event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		recipe_panel.visible = false
 		shop_panel.visible = false
@@ -178,6 +180,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		bestiary_panel.visible = false
 		dialogue_box.close()
 		quest_log.visible = false
+		wardrobe.visible = false
 	elif death_lbl.visible and event is InputEventKey and event.pressed and event.keycode == KEY_ENTER:
 		_respawn()
 
