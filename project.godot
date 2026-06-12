@@ -19,6 +19,8 @@ config/features=PackedStringArray("4.6")
 GameState="*res://autoload/game_state.gd"
 ItemDB="*res://autoload/item_db.gd"
 MonsterDB="*res://autoload/monster_db.gd"
+UnlockSystem="*res://autoload/unlock_system.gd"
+TaskSystem="*res://autoload/task_system.gd"
 World="*res://autoload/world.gd"
 SaveManager="*res://autoload/save_manager.gd"
 
