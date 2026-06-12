@@ -56,6 +56,14 @@ offset_bottom = 102.0
 theme_override_font_sizes/font_size = 11
 modulate = Color(1, 0.85, 0.5, 1)
 
+[node name="QuestsLabel" type="Label" parent="."]
+offset_left = 16.0
+offset_top = 102.0
+offset_right = 600.0
+offset_bottom = 118.0
+theme_override_font_sizes/font_size = 11
+modulate = Color(0.7, 1, 0.7, 1)
+
 [node name="MessageLabel" type="Label" parent="."]
 visible = false
 anchors_preset = 5

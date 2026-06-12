@@ -8,6 +8,7 @@ const UNLOCK_NAMES := {"spindelhalan": "Spindelhålan", "kryptan": "Kryptan",
 @onready var stats: Label = $StatsLabel
 @onready var buffs_lbl: Label = $BuffsLabel
 @onready var tasks_lbl: Label = $TasksLabel
+@onready var quests_lbl: Label = $QuestsLabel
 @onready var msg_lbl: Label = $MessageLabel
 @onready var inv_panel: PanelContainer = $InventoryPanel
 @onready var inv_list: VBoxContainer = $InventoryPanel/InvScroll/InvList
@@ -19,6 +20,7 @@ var shop_panel: PanelContainer
 var task_panel: PanelContainer
 var bestiary_panel: PanelContainer
 var dialogue_box: PanelContainer
+var quest_log: PanelContainer
 var _msg_timer := 0.0
 
 func _ready() -> void:
@@ -38,6 +40,14 @@ func _ready() -> void:
 	add_child(bestiary_panel)
 	dialogue_box = preload("res://ui/dialogue_box.gd").new()
 	add_child(dialogue_box)
+	quest_log = preload("res://ui/quest_log.gd").new()
+	add_child(quest_log)
+	QuestSystem.quest_started.connect(func(_id): _refresh_quests())
+	QuestSystem.quest_progress.connect(func(_id): _refresh_quests())
+	QuestSystem.step_advanced.connect(func(_id): _refresh_quests())
+	QuestSystem.quest_completed.connect(func(id):
+		_refresh_quests()
+		show_message("Quest klar: %s!" % QuestSystem.quests[id]["name"]))
 	add_child(preload("res://ui/debug_console.gd").new())
 	TaskSystem.task_taken.connect(func(_id): _refresh_tasks())
 	TaskSystem.task_progress.connect(func(_id): _refresh_tasks())
@@ -55,6 +65,7 @@ func _ready() -> void:
 	_refresh_inv()
 	_refresh_buffs()
 	_refresh_tasks()
+	_refresh_quests()
 
 func _process(delta: float) -> void:
 	if _msg_timer > 0.0:
@@ -110,6 +121,13 @@ func _refresh_buffs() -> void:
 		parts.append("%s +%d (%ds)" % [String(b["stat"]).trim_prefix("skill:"), int(b["amount"]), int(ceil(b["time_left"]))])
 	buffs_lbl.text = "  ".join(parts)
 
+func _refresh_quests() -> void:
+	if QuestSystem.active.is_empty():
+		quests_lbl.text = ""
+		return
+	var id: String = QuestSystem.active.keys().back()   # senast startade
+	quests_lbl.text = "%s — %s" % [QuestSystem.quests[id]["name"], QuestSystem.hint(id)]
+
 func _refresh_inv() -> void:
 	for c in inv_list.get_children():
 		c.queue_free()
@@ -151,12 +169,15 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("hotkey_1"):
 		if not GameState.use_item("health_potion"):
 			show_message("Ingen hälsodryck.")
+	elif event.is_action_pressed("toggle_quest_log"):
+		quest_log.toggle()
 	elif event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		recipe_panel.visible = false
 		shop_panel.visible = false
 		task_panel.visible = false
 		bestiary_panel.visible = false
 		dialogue_box.close()
+		quest_log.visible = false
 	elif death_lbl.visible and event is InputEventKey and event.pressed and event.keycode == KEY_ENTER:
 		_respawn()
 
