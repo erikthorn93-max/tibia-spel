@@ -91,6 +91,37 @@ func build(id: String) -> void:
 	if not gate_points.is_empty():
 		UnlockSystem.unlock_added.connect(_on_unlock_added)
 
+	for t in portals:
+		_add_portal_marker(t)
+
+func _add_portal_marker(t: Vector2i) -> void:
+	var c := Vector2(t) * TILE + Vector2(TILE / 2.0, TILE / 2.0)
+	var swirl := Polygon2D.new()
+	swirl.polygon = PackedVector2Array([
+		Vector2(0, -11), Vector2(11, 0), Vector2(0, 11), Vector2(-11, 0)])
+	swirl.color = Color(0.62, 0.38, 0.9)
+	swirl.position = c
+	add_child(swirl)
+	var inner := Polygon2D.new()
+	inner.polygon = PackedVector2Array([
+		Vector2(0, -6), Vector2(6, 0), Vector2(0, 6), Vector2(-6, 0)])
+	inner.color = Color(0.85, 0.72, 1.0)
+	inner.position = c
+	add_child(inner)
+	var lbl := Label.new()
+	lbl.text = "→ " + _zone_display_name(String(portals[t]))
+	lbl.position = c + Vector2(-64, -32)
+	lbl.custom_minimum_size = Vector2(128, 0)
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.add_theme_font_size_override("font_size", 10)
+	lbl.modulate = Color(0.88, 0.78, 1.0)
+	add_child(lbl)
+
+func _zone_display_name(id: String) -> String:
+	var f := FileAccess.open("res://data/zones/%s.json" % id, FileAccess.READ)
+	var d = JSON.parse_string(f.get_as_text()) if f else null
+	return String(d["name"]) if d is Dictionary and d.has("name") else id
+
 func _on_unlock_added(id: String) -> void:
 	for t in gate_points:
 		if gate_points[t] == id:

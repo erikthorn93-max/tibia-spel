@@ -5,7 +5,7 @@
 		"requires": [],
 		"steps": [
 			{"type": "talk_to", "npc": "npc_blacksmith", "hint": "Introduce yourself to Brom the Blacksmith in town."},
-			{"type": "explore", "zone": "forest", "hint": "Take a walk through the old forest."},
+			{"type": "explore", "zone": "forest", "hint": "Take a walk through the old forest. (Portal at the north edge of town.)"},
 			{"type": "talk_to", "npc": "npc_elder", "hint": "Report back to Elder Rowan."}
 		],
 		"rewards": {"xp": 200, "gold": 100}

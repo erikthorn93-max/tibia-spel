@@ -5,6 +5,9 @@ extends Node2D
 const BARK_COOLDOWN := 30.0
 const BARK_SHOW_TIME := 4.0
 const BARK_RADIUS := 4
+const BARK_GLOBAL_GAP_MS := 8000   # min-tid mellan TVÅ olika NPC:ers barks
+
+static var _global_bark_gate_ms := 0   # delas av alla NPC:er — en i taget
 
 var npc_id := ""
 var tile := Vector2i.ZERO
@@ -31,11 +34,12 @@ func _process(delta: float) -> void:
 			bark_lbl.visible = false
 		return
 	var pdist := maxi(absi(GameState.player_tile.x - tile.x), absi(GameState.player_tile.y - tile.y))
-	if pdist <= BARK_RADIUS:
+	if pdist <= BARK_RADIUS and Time.get_ticks_msec() >= _global_bark_gate_ms:
 		_bark()
 
 func _bark() -> void:
 	_bark_timer = BARK_COOLDOWN
+	_global_bark_gate_ms = Time.get_ticks_msec() + BARK_GLOBAL_GAP_MS
 	var barks: Array = DialogueDB.npcs[npc_id].get("barks", [])
 	if barks.is_empty():
 		return
