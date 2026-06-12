@@ -157,8 +157,11 @@ func use_item(item_id: String) -> bool:
 		var b: Dictionary = d["buff"]
 		apply_buff(String(b["stat"]), float(b["amount"]), float(b["duration"]))
 		used = true
+	if d.get("usable", false):
+		used = true
 	if used:
 		remove_item(item_id, 1)
+		QuestSystem.record_use(item_id)
 	return used
 
 func weapon_skill() -> String:

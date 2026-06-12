@@ -100,6 +100,19 @@ func test_completion_item_reward():
 	qs.advance_talk("quest_lost_ore", "npc_blacksmith")
 	assert_eq(int(GameState.inventory.get("steel_sword", 0)), 1)
 
+func test_use_item_via_gamestate_consumes_and_records():
+	qs.completed["quest_welcome"] = true
+	qs.start("quest_crypt")
+	qs.record_position("cave", Vector2i(20, 29))   # → steg 1 (use_item)
+	GameState.add_item("warding_candle", 1)
+	# OBS: GameState.use_item anropar det GLOBALA QuestSystem — flytta state dit
+	QuestSystem.reset()
+	QuestSystem.active["quest_crypt"] = {"step": 1, "progress": 0}
+	assert_true(GameState.use_item("warding_candle"))
+	assert_eq(int(GameState.inventory.get("warding_candle", 0)), 0)
+	assert_eq(int(QuestSystem.active["quest_crypt"]["step"]), 2)
+	QuestSystem.reset()
+
 func test_hint_follows_step():
 	qs.start("quest_welcome")
 	assert_string_contains(qs.hint("quest_welcome"), "Brom")

@@ -112,6 +112,7 @@ func _die() -> void:
 	dead = true
 	GameState.gain_exp(exp_reward)
 	TaskSystem.record_kill(monster_name)   # bestiary + task-progress; boss-XP/cooldown hanteras där
+	QuestSystem.record_kill(monster_name)
 	var drops: Array = ItemDB.roll_loot(loot_table)
 	if not drops.is_empty():
 		var gi := preload("res://entities/ground_item.gd").new()

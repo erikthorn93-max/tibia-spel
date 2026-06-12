@@ -20,6 +20,7 @@ func start_game(zone_id: String, at_tile := Vector2i(-1, -1)) -> void:
 	game_root.add_child(current_zone)
 	current_zone.build(zone_id)
 	GameState.current_zone = zone_id
+	QuestSystem.record_explore(zone_id)
 
 	if player == null or not is_instance_valid(player):
 		player = PlayerScene.instantiate()

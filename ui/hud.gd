@@ -111,7 +111,7 @@ func _refresh_inv() -> void:
 		var qty := int(GameState.inventory[id])
 		if d.get("type") == "weapon":
 			inv_list.add_child(_inv_row(id, qty, "Utrusta", func(): GameState.equip_weapon(id)))
-		elif d.has("heal") or d.has("mana") or d.has("buff"):
+		elif d.has("heal") or d.has("mana") or d.has("buff") or d.get("usable", false):
 			inv_list.add_child(_inv_row(id, qty, "Använd", func(): GameState.use_item(id)))
 		else:
 			inv_list.add_child(_inv_row(id, qty, "", Callable()))

@@ -29,6 +29,7 @@ func snap_to(t: Vector2i) -> void:
 	position = zone.tile_to_world(t)
 	_move_t = 1.0
 	GameState.player_tile = t
+	QuestSystem.record_position(GameState.current_zone, t)
 
 func set_target(m: Node2D) -> void:
 	if target and is_instance_valid(target):
@@ -63,6 +64,7 @@ func _update_movement(delta: float) -> void:
 		position = _from.lerp(_to, _move_t)
 		if _move_t >= 1.0:
 			GameState.player_tile = tile
+			QuestSystem.record_position(GameState.current_zone, tile)
 			_check_portal()
 		return
 	var dir := Vector2i.ZERO
