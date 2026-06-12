@@ -50,7 +50,16 @@ func spawn_monster(monster_name: String, t: Vector2i, respawn := -1.0) -> Node2D
 	return m
 
 func _spawn_one(sp: Dictionary) -> void:
-	spawn_monster(sp["monster"], sp["tile"], sp["respawn"])
+	var mname := String(sp["monster"])
+	if bool(MonsterDB.monsters.get(mname, {}).get("boss", false)) and not TaskSystem.boss_available(mname):
+		spawn_boss_marker(mname, sp["tile"], float(sp["respawn"]))
+		return
+	spawn_monster(mname, sp["tile"], sp["respawn"])
+
+func spawn_boss_marker(mname: String, t: Vector2i, respawn: float) -> void:
+	var bm: Node2D = preload("res://entities/boss_marker.gd").new()
+	current_zone.add_child(bm)
+	bm.setup(mname, t, respawn)
 
 func _spawn_world_objects() -> void:
 	for np in current_zone.node_points:
@@ -65,3 +74,7 @@ func _spawn_world_objects() -> void:
 		var npc: Node2D = preload("res://entities/shop_npc.tscn").instantiate()
 		current_zone.add_child(npc)
 		npc.setup(t)
+	for t in current_zone.taskmaster_points:
+		var tm: Node2D = preload("res://entities/taskmaster_npc.tscn").instantiate()
+		current_zone.add_child(tm)
+		tm.setup(t)
