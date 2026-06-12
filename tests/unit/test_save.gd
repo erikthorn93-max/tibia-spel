@@ -32,9 +32,9 @@ func test_v1_snapshot_migrates_to_all_skills():
 	assert_eq(gs.skills["mining"]["level"], 1)
 	gs.free()
 
-func test_save_version_is_3():
+func test_save_version_is_4():
 	var sm2 = load("res://autoload/save_manager.gd").new()
-	assert_eq(sm2.SAVE_VERSION, 3)
+	assert_eq(sm2.SAVE_VERSION, 4)
 	sm2.free()
 
 func _clear_task_state():
@@ -70,3 +70,32 @@ func test_v3_roundtrip_preserves_task_state():
 	assert_true(UnlockSystem.is_unlocked("spindelhalan"))
 	assert_true(TaskSystem.boss_kill_times.has("Ghulkungen"))
 	_clear_task_state()
+
+func test_v3_save_migrates_to_v4_empty_quests():
+	_clear_task_state()
+	QuestSystem.reset()
+	QuestSystem.active["quest_welcome"] = {"step": 1, "progress": 0}
+	QuestSystem.completed["quest_snakes"] = true
+	sm.save_game()
+	# v3-snapshot saknar quests-fälten helt
+	var s = sm.read_snapshot()
+	s.erase("quests_active")
+	s.erase("quests_completed")
+	s["version"] = 3
+	sm.write_snapshot(s)
+	assert_true(sm.load_game())
+	assert_eq(QuestSystem.active.size(), 0)
+	assert_eq(QuestSystem.completed.size(), 0)
+	QuestSystem.reset()
+
+func test_v4_roundtrip_quests():
+	QuestSystem.reset()
+	QuestSystem.active["quest_welcome"] = {"step": 1, "progress": 0}
+	QuestSystem.completed["quest_snakes"] = true
+	sm.save_game()
+	QuestSystem.reset()
+	assert_true(sm.load_game())
+	assert_true(QuestSystem.active.has("quest_welcome"))
+	assert_eq(int(QuestSystem.active["quest_welcome"]["step"]), 1)
+	assert_true(QuestSystem.completed.has("quest_snakes"))
+	QuestSystem.reset()

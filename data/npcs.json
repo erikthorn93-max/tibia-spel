@@ -1,0 +1,42 @@
+{
+	"npc_elder": {
+		"name": "Elder Rowan",
+		"zone": "town",
+		"position": [10, 7],
+		"voice": {"model": "en_GB-alan-medium", "length_scale": 1.1},
+		"barks": ["Fine weather for the harvest.", "Stay out of trouble, now."],
+		"dialogue_root": "elder_root"
+	},
+	"npc_blacksmith": {
+		"name": "Brom the Blacksmith",
+		"zone": "town",
+		"position": [3, 15],
+		"voice": {"model": "en_US-joe-medium", "length_scale": 1.0},
+		"barks": ["Mind the sparks!", "Finest steel in town."],
+		"dialogue_root": "blacksmith_root"
+	},
+	"npc_scholar": {
+		"name": "Maelis the Scholar",
+		"zone": "town",
+		"position": [10, 10],
+		"voice": {"model": "en_US-lessac-medium", "length_scale": 1.0},
+		"barks": ["So many secrets...", "The old texts never lie. Mostly."],
+		"dialogue_root": "scholar_root"
+	},
+	"npc_fisherman": {
+		"name": "Old Finn",
+		"zone": "town",
+		"position": [24, 7],
+		"voice": {"model": "en_GB-northern_english_male-medium", "length_scale": 1.15},
+		"barks": ["Nibble... no, nothing.", "The big one got away again."],
+		"dialogue_root": "finn_root"
+	},
+	"npc_hunter": {
+		"name": "Sylva the Huntress",
+		"zone": "forest",
+		"position": [16, 19],
+		"voice": {"model": "en_US-amy-medium", "length_scale": 0.95},
+		"barks": ["Tread softly.", "Something's moving in the brush..."],
+		"dialogue_root": "hunter_root"
+	}
+}

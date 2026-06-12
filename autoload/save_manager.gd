@@ -1,7 +1,7 @@
 extends Node
 ## Autoload: SaveManager. JSON-sparfil + autosave var 60 s.
 
-const SAVE_VERSION := 3
+const SAVE_VERSION := 4
 var save_path := "user://save.json"
 var _timer := 0.0
 
@@ -44,6 +44,8 @@ func save_game() -> void:
 		"bestiary": TaskSystem.bestiary,
 		"boss_kill_times": TaskSystem.boss_kill_times,
 		"unlocked": UnlockSystem.unlocked,
+		"quests_active": QuestSystem.active,
+		"quests_completed": QuestSystem.completed,
 	})
 
 func load_game() -> bool:
@@ -68,4 +70,7 @@ func load_game() -> bool:
 	TaskSystem.bestiary = s.get("bestiary", {})
 	TaskSystem.boss_kill_times = s.get("boss_kill_times", {})
 	UnlockSystem.unlocked = s.get("unlocked", {})
+	# v3→v4: quests saknas i äldre saves — börja tomt
+	QuestSystem.active = s.get("quests_active", {})
+	QuestSystem.completed = s.get("quests_completed", {})
 	return true
