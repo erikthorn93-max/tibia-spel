@@ -13,6 +13,9 @@ var spawn_points: Array = []        # [{tile, monster, respawn}]
 var node_points: Array = []        # [{tile, node}]
 var station_points: Array = []     # [{tile, station}]
 var shop_points: Array = []        # [tile]
+var taskmaster_points: Array = []  # [tile]
+var gate_points: Dictionary = {}   # Vector2i -> unlock-id
+var _gate_terrain: Dictionary = {} # Vector2i -> terräng när gaten öppnats
 var _walkable: Dictionary = {}      # Vector2i -> bool
 var _astar := AStarGrid2D.new()
 var tilemap: TileMapLayer
@@ -63,6 +66,16 @@ func build(id: String) -> void:
 							"shop":
 								shop_points.append(t)
 								blocked = true
+							"taskmaster":
+								taskmaster_points.append(t)
+								blocked = true
+							"gate":
+								var uid := String(e["unlock"])
+								gate_points[t] = uid
+								_gate_terrain[t] = terrain if PlaceholderTiles.TERRAIN.has(terrain) else ","
+								if not UnlockSystem.is_unlocked(uid):
+									blocked = true
+									terrain = "W"   # rasmassor tills gaten öppnas
 			if not PlaceholderTiles.TERRAIN.has(terrain):
 				terrain = "."
 			tilemap.set_cell(t, 0, Vector2i(PlaceholderTiles.TERRAIN[terrain], 0))
@@ -74,6 +87,16 @@ func build(id: String) -> void:
 	for t in _walkable:
 		if not _walkable[t]:
 			_astar.set_point_solid(t, true)
+
+	if not gate_points.is_empty():
+		UnlockSystem.unlock_added.connect(_on_unlock_added)
+
+func _on_unlock_added(id: String) -> void:
+	for t in gate_points:
+		if gate_points[t] == id:
+			tilemap.set_cell(t, 0, Vector2i(PlaceholderTiles.TERRAIN[_gate_terrain[t]], 0))
+			_walkable[t] = true
+			_astar.set_point_solid(t, false)
 
 func is_walkable(t: Vector2i) -> bool:
 	return _walkable.get(t, false)

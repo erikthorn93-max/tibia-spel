@@ -2,6 +2,12 @@ extends GutTest
 
 const ZoneScript = preload("res://world/zone.gd")
 
+func before_each():
+	UnlockSystem.unlocked.clear()
+
+func after_each():
+	UnlockSystem.unlocked.clear()
+
 func _make_zone(zone_id: String):
 	var z = ZoneScript.new()
 	add_child_autofree(z)
@@ -72,3 +78,56 @@ func test_find_path_adjacent_reaches_blocked_target():
 	assert_gt(path.size(), 0)
 	var last: Vector2i = path[path.size() - 1]
 	assert_lte(maxi(absi(last.x - station_tile.x), absi(last.y - station_tile.y)), 1)
+
+func _gate_tile(z, unlock_id: String):
+	for t in z.gate_points:
+		if z.gate_points[t] == unlock_id:
+			return t
+	return null
+
+func test_cave_gates_parsed():
+	var z = _make_zone("cave")
+	assert_eq(z.gate_points.size(), 3)
+	for id in ["spindelhalan", "kryptan", "bossrummet"]:
+		assert_true(z.gate_points.values().has(id), id)
+
+func test_gate_blocked_before_unlock_opens_live_after():
+	var z = _make_zone("cave")
+	var gt = _gate_tile(z, "spindelhalan")
+	assert_not_null(gt)
+	assert_false(z.is_walkable(gt))
+	UnlockSystem.unlock("spindelhalan")
+	assert_true(z.is_walkable(gt))
+
+func test_gate_open_at_build_if_already_unlocked():
+	UnlockSystem.unlock("kryptan")
+	var z = _make_zone("cave")
+	assert_true(z.is_walkable(_gate_tile(z, "kryptan")))
+
+func test_forest_gate_morka_dungen():
+	var z = _make_zone("forest")
+	assert_true(z.gate_points.values().has("morka_dungen"))
+
+func test_town_has_taskmaster():
+	var z = _make_zone("town")
+	assert_eq(z.taskmaster_points.size(), 1)
+
+func test_new_monster_spawns_behind_gates():
+	var z = _make_zone("cave")
+	assert_gt(z.spawn_points.filter(func(s): return s["monster"] == "Jättespindel").size(), 0)
+	assert_gt(z.spawn_points.filter(func(s): return s["monster"] == "Skelettkrigare").size(), 0)
+	assert_eq(z.spawn_points.filter(func(s): return s["monster"] == "Ghulkungen").size(), 1)
+	var f = _make_zone("forest")
+	assert_gt(f.spawn_points.filter(func(s): return s["monster"] == "Fantom").size(), 0)
+
+func test_gate_ids_cover_task_unlocks_and_boss():
+	var gate_ids: Array = []
+	for id in ["town", "cave", "forest"]:
+		var z = _make_zone(id)
+		for t in z.gate_points:
+			gate_ids.append(z.gate_points[t])
+	var tasks = JSON.parse_string(FileAccess.open("res://data/tasks.json", FileAccess.READ).get_as_text())
+	for tid in tasks:
+		if tasks[tid].has("unlocks"):
+			assert_has(gate_ids, String(tasks[tid]["unlocks"]), tid)
+	assert_has(gate_ids, "bossrummet")
