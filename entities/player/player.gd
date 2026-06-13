@@ -62,6 +62,8 @@ func _process(delta: float) -> void:
 	_update_spells()
 
 func _update_movement(delta: float) -> void:
+	if GameState.has_status("stun"):
+		return   # stun-status: spelaren kan inte röra sig
 	if _move_t < 1.0:
 		_move_t = minf(_move_t + delta * move_speed, 1.0)
 		position = _from.lerp(_to, _move_t)
@@ -111,11 +113,32 @@ func _try_bump_unlock(t: Vector2i) -> void:
 func _update_attack(delta: float) -> void:
 	_attack_timer = maxf(_attack_timer - delta, 0.0)
 	if target and is_instance_valid(target) and not target.dead and _attack_timer <= 0.0:
-		if _chebyshev(target.tile) <= 1:
-			_attack_timer = ATTACK_COOLDOWN
-			var wskill := GameState.weapon_skill()
-			var weapon: Dictionary = ItemDB.items.get(GameState.equipped_weapon, {})
-			var dmg := CombatFormulas.roll_melee(GameState.level,
+		var wskill := GameState.weapon_skill()
+		var weapon: Dictionary = ItemDB.items.get(GameState.equipped_weapon, {})
+		var weapon_range := int(weapon.get("range", 1))
+		var dist := _chebyshev(target.tile)
+		if dist > weapon_range:
+			return   # utom räckvidd
+		_attack_timer = ATTACK_COOLDOWN
+		var dmg: float
+		if weapon_range > 1:
+			# Bågskjutning: kräver ammunition i inventory
+			var ammo_id := String(weapon.get("ammo", ""))
+			if ammo_id != "" and int(GameState.inventory.get(ammo_id, 0)) < 1:
+				World.hud.show_message("Inga pilar kvar!")
+				return
+			if ammo_id != "":
+				GameState.remove_item(ammo_id, 1)
+			dmg = CombatFormulas.roll_ranged(
+				GameState.effective_skill_level(wskill), int(weapon.get("atk", 5))) \
+				* TaskSystem.damage_multiplier(target.monster_name)
+			target.take_damage(dmg)
+			GameState.gain_skill_xp(wskill, 1)
+		else:
+			# Närstrid
+			if dist > 1:
+				return
+			dmg = CombatFormulas.roll_melee(GameState.level,
 				GameState.effective_skill_level(wskill), int(weapon.get("atk", 5))) \
 				* TaskSystem.damage_multiplier(target.monster_name)   # bestiary-tierbonus
 			target.take_damage(dmg)

@@ -62,6 +62,7 @@ func _load_outfits() -> void:
 	var parsed = JSON.parse_string(f.get_as_text()) if f else null
 	outfit_defs = parsed if parsed is Dictionary else {}
 
+
 func equip_outfit(id: String) -> bool:
 	if not outfit_defs.has(id):
 		return false

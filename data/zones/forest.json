@@ -122,6 +122,11 @@
 			"monster": "Spindel",
 			"count": 3,
 			"respawn": 40.0
+		},
+		{
+			"monster": "Urskogsvältaren",
+			"count": 1,
+			"respawn": 600.0
 		}
 	]
 }

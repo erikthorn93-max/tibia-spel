@@ -515,5 +515,34 @@
 		"value": 40,
 		"color": "#40c060",
 		"clears_poison": true
+	},
+	"hunting_bow": {
+		"name": "Jakstbåge",
+		"type": "weapon",
+		"slot": "weapon",
+		"skill": "distance",
+		"atk": 12,
+		"range": 4,
+		"value": 120,
+		"color": "#8B5E3C",
+		"ammo": "wooden_arrow"
+	},
+	"wooden_arrow": {
+		"name": "Träpil",
+		"type": "ammo",
+		"value": 1,
+		"color": "#a0724a"
+	},
+	"steel_bow": {
+		"name": "Stålbåge",
+		"type": "weapon",
+		"slot": "weapon",
+		"skill": "distance",
+		"atk": 20,
+		"range": 5,
+		"value": 350,
+		"color": "#7a8a9a",
+		"ammo": "wooden_arrow",
+		"level_req": 15
 	}
 }
