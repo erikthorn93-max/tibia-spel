@@ -23,6 +23,7 @@ const COL_PLAYER   := Color(1.00, 1.00, 0.78)
 const COL_MONSTER  := Color(0.90, 0.12, 0.12)
 const COL_PORTAL   := Color(0.62, 0.32, 0.94)
 const COL_DUNGEON  := Color(0.85, 0.68, 0.14)
+const COL_LOOT     := Color(0.91, 0.78, 0.18)
 const COL_BG       := Color(0.05, 0.05, 0.08, 0.90)
 const COL_BORDER   := Color(0.46, 0.46, 0.64, 0.88)
 const COL_TITLE    := Color(0.90, 0.82, 0.52)
@@ -115,6 +116,10 @@ func _draw_mini() -> void:
 	# Monster (röda prickar)
 	for mn in _monsters(zone):
 		_mini_dot(mn.tile, pt, ox, oy, COL_MONSTER, 2)
+
+	# Ground loot (gula prickar)
+	for gi in _ground_items(zone):
+		_mini_dot(gi.tile, pt, ox, oy, COL_LOOT, 2)
 
 	# Spelare – blinkar (vit prick i mitten)
 	var blink := 1.0 if fmod(_blink_t, 1.0) < 0.65 else 0.0
@@ -223,6 +228,10 @@ func _draw_full_overlay() -> void:
 	for mn in _monsters(zone):
 		_full_dot(mn.tile, mx, my, ft, COL_MONSTER)
 
+	# Ground loot (gula prickar)
+	for gi in _ground_items(zone):
+		_full_dot(gi.tile, mx, my, ft, COL_LOOT)
+
 	# Spelare (blinkar, lite större)
 	var pt := _player_tile()
 	var blink := 1.0 if fmod(_blink_t, 1.0) < 0.65 else 0.35
@@ -254,6 +263,7 @@ func _draw_legend(lx: float, ly: float) -> void:
 	var items : Array = [
 		[COL_PLAYER,  "Spelare"],
 		[COL_MONSTER, "Monster"],
+		[COL_LOOT,    "Föremål"],
 		[COL_PORTAL,  "Portal"],
 		[COL_DUNGEON, "Dungeonentré"],
 	]
@@ -290,14 +300,4 @@ func _zone() -> Node2D:
 	return World.player.zone
 
 func _player_tile() -> Vector2i:
-	if not is_instance_valid(World.player):
-		return Vector2i.ZERO
-	return World.player.tile
-
-func _monsters(zone: Node2D) -> Array:
-	var out : Array = []
-	for child in zone.get_children():
-		if child.has_method("take_damage") and child.has_method("setup"):
-			if not bool(child.get("dead")):
-				out.append(child)
-	return out
+	if not is_instance_valid(World.p
