@@ -63,3 +63,12 @@ func test_outfit_ignores_skin_in_colors():
 	GameState.equip_outfit("outfit_slayer")
 	assert_eq(String(GameState.appearance["skin"]), "#aabbcc")
 	GameState.outfit_defs["outfit_slayer"]["colors"].erase("skin")
+
+func test_pirate_outfit_unlockable_via_boss_kill():
+	assert_true(GameState.outfit_defs.has("outfit_pirate"), "outfit saknas")
+	assert_false(GameState.equip_outfit("outfit_pirate"))
+	TaskSystem.boss_kill_times["Piratkapten Svartöga"] = 1.0
+	UnlockSystem.try_unlock("outfit_pirate")
+	assert_true(GameState.equip_outfit("outfit_pirate"))
+	assert_eq(String(GameState.appearance["skin"]), "#aabbcc")
+	TaskSystem.boss_kill_times.clear()

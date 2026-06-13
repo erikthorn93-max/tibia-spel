@@ -27,5 +27,8 @@
 		"hint": "Besegra Ghulkungen."},
 	"kustvagen": {"name": "Sjövägen", "category": "area",
 		"requires": {"quest": "quest_sjovagen"},
-		"hint": "Slutför Kapten Brandts uppdrag vid hamnen i Thais."}
+		"hint": "Slutför Kapten Brandts uppdrag vid hamnen i Thais."},
+	"outfit_pirate": {"name": "Piratens mundering", "category": "outfit",
+		"requires": {"boss_killed": "Piratkapten Svartöga"},
+		"hint": "Besegra Piratkapten Svartöga i det sjunkna skeppet."}
 }
