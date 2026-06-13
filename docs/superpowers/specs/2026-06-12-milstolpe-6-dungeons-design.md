@@ -1,7 +1,7 @@
 # Milstolpe 6 — Procedurella dungeons: Designspec
 
 **Datum:** 2026-06-12
-**Status:** Utkast — väntar på godkännande
+**Status:** Godkänd av Erik
 **Bygger på:** Masterspec §Milstolpar (rad 6), milstolpe 1–5 (mergade till master)
 
 ## Mål

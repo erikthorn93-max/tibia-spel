@@ -111,6 +111,17 @@ func _on_submit(text: String) -> void:
 					_say("Spawnade %s" % parts[1])
 					return
 			_say("Ingen ledig tile intill spelaren.")
+		"dungeon":
+			var themes_f := FileAccess.open("res://data/dungeon_themes.json", FileAccess.READ)
+			var themes: Dictionary = JSON.parse_string(themes_f.get_as_text()) if themes_f else {}
+			if parts.size() < 2 or not themes.has(parts[1]):
+				_say("dungeon <tema> [seed] — teman: %s" % ", ".join(themes.keys()))
+				return
+			var dseed := int(parts[2]) if parts.size() > 2 else -1
+			visible = false
+			get_tree().paused = false
+			World.enter_dungeon(parts[1], dseed)
+			_say("Dungeon: %s (seed %d)" % [parts[1], dseed])
 		_:
 			_help()
 
@@ -119,3 +130,4 @@ func _help() -> void:
 	_say("  give <item_id> [antal]   gold <antal>    xp <skill> <mängd>")
 	_say("  kills <monster> <antal>  unlock <id>     tasklist")
 	_say("  tp <zon>                 heal            spawn <monster>")
+	_say("  dungeon <tema> [seed]")

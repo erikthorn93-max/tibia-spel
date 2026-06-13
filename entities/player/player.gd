@@ -139,6 +139,9 @@ func _update_gather(delta: float) -> void:
 			gather_target = null
 
 func _check_portal() -> void:
+	if zone.dungeon_entrances.has(tile):
+		World.enter_dungeon(zone.dungeon_entrances[tile])
+		return
 	if not zone.portals.has(tile):
 		return
 	if zone.portal_locks.has(tile):

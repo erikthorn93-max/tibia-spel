@@ -3,6 +3,7 @@ extends Node2D
 ## äger walkability-grid, AStarGrid2D, portaler och spawnpunkter.
 
 const TILE := 32
+const DungeonGen = preload("res://world/dungeon_generator.gd")
 
 var zone_id := ""
 var zone_name := ""
@@ -14,6 +15,9 @@ var node_points: Array = []        # [{tile, node}]
 var station_points: Array = []     # [{tile, station}]
 var shop_points: Array = []        # [tile]
 var taskmaster_points: Array = []  # [tile]
+var chest_points: Array = []       # [tile] (dungeons)
+var dungeon_entrances: Dictionary = {}  # Vector2i -> tema-id
+var dungeon_theme := ""            # satt för genererade dungeons
 var gate_points: Dictionary = {}   # Vector2i -> unlock-id
 var shortcut_points: Dictionary = {}  # Vector2i -> unlock-id (bump-genvägar)
 var portal_locks: Dictionary = {}     # Vector2i -> unlock-id (låsta portaler)
@@ -25,10 +29,13 @@ var _astar := AStarGrid2D.new()
 var tilemap: TileMapLayer
 
 func build(id: String) -> void:
-	zone_id = id
 	var f := FileAccess.open("res://data/zones/%s.json" % id, FileAccess.READ)
-	var data: Dictionary = JSON.parse_string(f.get_as_text())
+	build_from_data(JSON.parse_string(f.get_as_text()), id)
+
+func build_from_data(data: Dictionary, id: String) -> void:
+	zone_id = id
 	zone_name = data["name"]
+	dungeon_theme = String(data.get("theme", ""))
 	var rows: Array = data["tiles"]
 	var legend: Dictionary = data.get("legend", {})
 	grid_size = Vector2i(rows[0].length(), rows.size())
@@ -75,6 +82,11 @@ func build(id: String) -> void:
 							"taskmaster":
 								taskmaster_points.append(t)
 								blocked = true
+							"chest":
+								chest_points.append(t)
+								blocked = true
+							"dungeon_entrance":
+								dungeon_entrances[t] = String(e["theme"])
 							"gate":
 								var uid := String(e["unlock"])
 								gate_points[t] = uid
@@ -109,6 +121,8 @@ func build(id: String) -> void:
 	for t in shortcut_points:
 		if not UnlockSystem.is_unlocked(shortcut_points[t]):
 			_add_shortcut_marker(t)
+	for t in dungeon_entrances:
+		_add_entrance_marker(t)
 
 func _add_portal_marker(t: Vector2i) -> void:
 	for n in _portal_marker_nodes.get(t, []):
@@ -137,6 +151,29 @@ func _add_portal_marker(t: Vector2i) -> void:
 	lbl.modulate = Color(0.7, 0.7, 0.7) if locked else Color(0.88, 0.78, 1.0)
 	add_child(lbl)
 	_portal_marker_nodes[t] = [swirl, inner, lbl]
+
+func _add_entrance_marker(t: Vector2i) -> void:
+	var c := Vector2(t) * TILE + Vector2(TILE / 2.0, TILE / 2.0)
+	var hole := Polygon2D.new()   # mörk trappa ner
+	hole.polygon = PackedVector2Array([
+		Vector2(-12, -8), Vector2(12, -8), Vector2(8, 10), Vector2(-8, 10)])
+	hole.color = Color(0.08, 0.07, 0.1)
+	hole.position = c
+	add_child(hole)
+	var step := Polygon2D.new()
+	step.polygon = PackedVector2Array([
+		Vector2(-8, -4), Vector2(8, -4), Vector2(6, 2), Vector2(-6, 2)])
+	step.color = Color(0.25, 0.23, 0.28)
+	step.position = c
+	add_child(step)
+	var lbl := Label.new()
+	lbl.text = "Ner: " + DungeonGen.theme_name(dungeon_entrances[t])
+	lbl.position = c + Vector2(-64, -32)
+	lbl.custom_minimum_size = Vector2(128, 0)
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.add_theme_font_size_override("font_size", 10)
+	lbl.modulate = Color(0.75, 0.7, 0.8)
+	add_child(lbl)
 
 func _add_shortcut_marker(t: Vector2i) -> void:
 	var d := Polygon2D.new()

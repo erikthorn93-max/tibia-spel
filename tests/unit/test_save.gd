@@ -67,6 +67,18 @@ func test_v5_roundtrip_outfit_and_base():
 	UnlockSystem.unlocked.clear()
 	GameState.equip_outfit("standard")
 
+func test_save_in_dungeon_writes_surface_zone():
+	var prev_zone := GameState.current_zone
+	GameState.current_zone = "dungeon:katakomber"
+	World.last_surface_zone = "cave"
+	World.last_surface_tile = Vector2i(5, 10)
+	sm.save_game()
+	var s := sm.read_snapshot()
+	assert_eq(String(s["zone"]), "cave")
+	assert_eq(int(s["tile"][0]), 5)
+	assert_eq(int(s["tile"][1]), 10)
+	GameState.current_zone = prev_zone
+
 func _clear_task_state():
 	TaskSystem.reset()
 	UnlockSystem.unlocked.clear()

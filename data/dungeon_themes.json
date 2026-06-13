@@ -1,0 +1,20 @@
+{
+	"katakomber": {
+		"name": "Katakomberna",
+		"exit_zone": "cave",
+		"floor_terrain": ",",
+		"monsters": [["Skelett", 3], ["Spindel", 2], ["Ghoul", 2], ["Skelettkrigare", 1]],
+		"nodes": ["iron_vein", "gold_vein"],
+		"chest_gold": [150, 400],
+		"chest_items": [["health_potion", 0.6, 2], ["bone_chips", 0.8, 4], ["gold_ore", 0.3, 2]]
+	},
+	"sjunkna_graven": {
+		"name": "Sjunkna graven",
+		"exit_zone": "swamp",
+		"floor_terrain": "s",
+		"monsters": [["Giftpadda", 3], ["Orm", 2], ["Träskdjävul", 2]],
+		"nodes": ["marsh_patch"],
+		"chest_gold": [250, 600],
+		"chest_items": [["health_potion", 0.6, 2], ["swamp_essence", 0.7, 2], ["mana_potion", 0.4, 1]]
+	}
+}

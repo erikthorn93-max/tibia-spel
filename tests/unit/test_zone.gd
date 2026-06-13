@@ -1,6 +1,7 @@
 extends GutTest
 
 const ZoneScript = preload("res://world/zone.gd")
+const DungeonGen = preload("res://world/dungeon_generator.gd")
 
 func before_each():
 	UnlockSystem.unlocked.clear()
@@ -183,6 +184,28 @@ func test_cave_has_swamp_shortcut_portal():
 	var z = _make_zone("cave")
 	assert_true(z.portals.values().has("swamp"))
 	assert_true(z.portal_locks.values().has("genvag_grottan"))
+
+func test_build_from_generated_dungeon_data():
+	var data: Dictionary = DungeonGen.generate("katakomber", 999)
+	var z = ZoneScript.new()
+	add_child_autofree(z)
+	z.build_from_data(data, "dungeon:katakomber")
+	assert_eq(z.zone_id, "dungeon:katakomber")
+	assert_eq(z.dungeon_theme, "katakomber")
+	assert_true(z.is_walkable(z.player_start))
+	assert_eq(z.chest_points.size(), 1)
+	assert_false(z.is_walkable(z.chest_points[0]))   # kistan blockerar
+	assert_true(z.portals.values().has("cave"))
+	assert_gt(z.spawn_points.size(), 0)
+
+func test_dungeon_entrances_parsed():
+	UnlockSystem.unlock("kryptan")
+	var cave = _make_zone("cave")
+	assert_true(cave.dungeon_entrances.values().has("katakomber"))
+	assert_true(cave.is_walkable(cave.dungeon_entrances.keys()[0]))
+	UnlockSystem.unlock("traskets_hjarta")
+	var swamp = _make_zone("swamp")
+	assert_true(swamp.dungeon_entrances.values().has("sjunkna_graven"))
 
 func test_gate_ids_cover_task_unlocks_and_boss():
 	var gate_ids: Array = []
