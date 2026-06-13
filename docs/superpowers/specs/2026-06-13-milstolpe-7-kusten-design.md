@@ -32,8 +32,9 @@ Handbyggd strand-/bryggzon. Innehåll:
 |---|---|
 | Fiskhandlar-NPC | dialog + shop (fiskeutrustning, säljer råfisk) |
 | Kock-stove | `station: stove` på bryggan (cooking) |
-| Sjö-taskmaster | NPC "Greta" — egen taskmaster för sjö-tasks |
-| Fiskenoder | `deep_sea_spot`, `lobster_pot` (Fishing-nivå-gated) |
+| Sjö-taskmaster | generisk taskmaster-tile (`T`) — sjö-tasks erbjuds globalt |
+| Fiskhandlare | dialog-NPC "Saltgreta" (flavor) |
+| Fiskenoder | `deep_sea_spot`, `swordfish_spot`, `lobster_pot` (Fishing-nivå-gated) |
 | Sjömonster-spawns | Strandkrabba, Sjöorm, Pirat, Pirat Skytt |
 | Dungeoningång `D` | tema `sjunket_skepp`, exit-zon = `coast` |
 
@@ -53,7 +54,7 @@ Terräng: strand/sand + bryggor (gångbart) + vatten (blockerat, fiskbart vid no
 Loottabeller per monster; boss får unik loot (§8). Spawnplatser i `coast.json`
 och via dungeon-temats pool.
 
-## 4. Sjö-taskkedja (`data/tasks.json`, taskmaster Greta)
+## 4. Sjö-taskkedja (`data/tasks.json`, generisk taskmaster)
 
 Tre repeterbara Slayer-tasks med stigande `slayer_level_req` och belöning — parallell
 progression, samma format som befintliga tasks (inga monster-/boss-unlock-fält, vilket
@@ -112,14 +113,14 @@ efemär (M6: sparfilen skriver ytzonen `coast`), så varje nedstigning ger en f�
 
 ## 8. Outfit — `outfit_pirate` ("Piratens mundering") (`data/outfits.json`)
 
-- **Bas-unlock:** `outfit_pirate` med `requires: {"boss_killed": "Piratkapten Svartöga"}`
-  — exakt samma mekanik som `outfit_ghoul_king` idag (ingen ny kod).
-- **2 addons** med hårdare krav via `UnlockSystem`-typer som redan stöds av `can_unlock`
-  (`skill`/`task_completed`/`boss_killed` — inte "lagat item X"):
-  - `outfit_pirate_addon1`: `requires: {"skill": "cooking", "level": 35}` (samma nivå som
-    `swordfish_steak` kräver — kopplar cooking-loopen till kosmetik).
-  - `outfit_pirate_addon2`: `requires: {"skill": "fishing", "level": 40}`.
-- Matchar befintlig outfit-/unlock-struktur i `outfits.json` + `unlocks.json`.
+- **Unlock:** `outfit_pirate` med `requires: {"boss_killed": "Piratkapten Svartöga"}`
+  — exakt samma mekanik som `outfit_ghoul_king` idag (ingen ny kod, bara data).
+- Färgschema (shirt/pants/hair) som övriga outfits. Skin är alltid skyddad.
+
+**Addons utgår ur M7 (medvetet).** Tibia-addons kräver ett helt nytt delsystem
+(schema-utökning + equip-logik + garderobs-UI) som rör *alla* fem befintliga outfits,
+inte bara piraten — det är en systemfunktion, inte innehåll. Bryts ut till en egen
+framtida milstolpe. M7 håller sig till ren innehållsproduktion.
 
 ## 9. Items (`data/items.json`)
 
