@@ -1,7 +1,7 @@
 extends Node
 ## Autoload: SaveManager. JSON-sparfil + autosave var 60 s.
 
-const SAVE_VERSION := 5
+const SAVE_VERSION := 6
 var save_path := "user://save.json"
 var _timer := 0.0
 
@@ -44,7 +44,7 @@ func save_game() -> void:
 		"skills": GameState.skills, "appearance": GameState.appearance,
 		"appearance_base": GameState.appearance_base,
 		"outfit_equipped": GameState.outfit_equipped,
-		"equipped_weapon": GameState.equipped_weapon,
+		"equipment": GameState.equipment,
 		"zone": save_zone,
 		"tile": [save_tile.x, save_tile.y],
 		"tasks_active": TaskSystem.active,
@@ -68,21 +68,25 @@ func load_game() -> bool:
 	GameState.gold = int(s["gold"]); GameState.inventory = s["inventory"]
 	GameState.skills = s["skills"]; GameState.appearance = s["appearance"]
 	GameState.ensure_all_skills()   # v1→v2: fyll på skills som saknas i gamla saves
-	GameState.equipped_weapon = s.get("equipped_weapon", "rusty_sword")
+	# v5→v6: equipped_weapon → equipment["weapon"]; saknas equipment-dict → bygg från equipped_weapon
+	if s.has("equipment") and s["equipment"] is Dictionary:
+		GameState.equipment = {
+			"weapon":  String(s["equipment"].get("weapon",  "")),
+			"body":    String(s["equipment"].get("body",    "")),
+			"helmet":  String(s["equipment"].get("helmet",  "")),
+			"legs":    String(s["equipment"].get("legs",    "")),
+			"boots":   String(s["equipment"].get("boots",   "")),
+			"offhand": String(s["equipment"].get("offhand", "")),
+		}
+	else:
+		# Migrera v5-save: gamla equipped_weapon → weapon-slot
+		GameState.equipment = {
+			"weapon":  String(s.get("equipped_weapon", "rusty_sword")),
+			"body":    "", "helmet": "", "legs": "", "boots": "", "offhand": ""
+		}
 	GameState.current_zone = s.get("zone", "town")
 	var t: Array = s.get("tile", [-1, -1])
 	GameState.player_tile = Vector2i(int(t[0]), int(t[1]))
 	# v2→v3: saknade fält ger tomma defaults — tasks/bestiary börjar från noll
 	TaskSystem.active = s.get("tasks_active", {})
-	TaskSystem.completed = s.get("tasks_completed", {})
-	TaskSystem.bestiary = s.get("bestiary", {})
-	TaskSystem.boss_kill_times = s.get("boss_kill_times", {})
-	UnlockSystem.unlocked = s.get("unlocked", {})
-	# v3→v4: quests saknas i äldre saves — börja tomt
-	QuestSystem.active = s.get("quests_active", {})
-	QuestSystem.completed = s.get("quests_completed", {})
-	# v4→v5: outfit saknas — standard, basen = sparat utseende
-	GameState.outfit_equipped = s.get("outfit_equipped", "standard")
-	var base = s.get("appearance_base", {})
-	GameState.appearance_base = base if not base.is_empty() else GameState.appearance.duplicate()
-	return true
+	TaskSystem.completed = s.get("tasks_completed",

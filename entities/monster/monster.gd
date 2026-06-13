@@ -1,72 +1,89 @@
-class_name Monster
 extends Node2D
-## Monster: aggro -> A*-jakt -> melee. Fryser AI när spelaren är långt borta.
+## Monster-entity. Spawnas av World._spawn_monsters().
 
-const FREEZE_DIST := 30        # tiles; bortom detta: ingen AI alls
-const TILE := 32
+const TILE_SIZE := 32
+const BAR_W := 28.0   # bredden på HpBar i tscn (-14 .. +14)
 
 var monster_name := ""
-var hp := 0.0
-var max_hp := 0.0
-var atk := 0
-var speed := 2.0               # tiles/sek
-var cooldown := 1.5
-var aggro_range := 6
-var exp_reward := 0
-var loot_table: Array = []
+var hp := 10
+var max_hp := 10
+var atk := 3
+var exp := 5
+var aggro_range := 5
+var speed := 3.0
+var cooldown := 1.0
 var respawn_time := -1.0
-var home_tile := Vector2i.ZERO
-var is_boss := false
-
 var zone: Node2D
 var tile := Vector2i.ZERO
+
+var _path: Array = []
+var _atk_timer := 0.0
 var _move_t := 1.0
 var _from := Vector2.ZERO
-var _to := Vector2.ZERO
-var _atk_timer := 0.0
-var _path: Array = []
-var dead := false
+var _to   := Vector2.ZERO
+var dead := false          # publik — läses av player.gd
 
-@onready var body: Polygon2D = $Body
-@onready var hp_bar: ColorRect = $HpBar
-@onready var name_lbl: Label = $NameLabel
-@onready var click_area: Area2D = $ClickArea
+@onready var _hp_bar: ColorRect  = $HpBar
+@onready var _name_lbl: Label    = $NameLabel
+@onready var _click_area: Area2D = $ClickArea
+
+func _ready() -> void:
+	# Lägg till bakgrundsbar direkt bakom HpBar
+	var bg := ColorRect.new()
+	bg.offset_left   = -14.0
+	bg.offset_top    = -20.0
+	bg.offset_right  =  14.0
+	bg.offset_bottom = -17.0
+	bg.color = Color(0.3, 0.07, 0.07)
+	add_child(bg)
+	move_child(bg, _hp_bar.get_index())   # bakgrunden hamnar BAKOM hp_bar
+	# Klickhantering via Area2D
+	_click_area.input_event.connect(_on_click_area_input)
+
+func _on_click_area_input(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed \
+			and event.button_index == MOUSE_BUTTON_LEFT:
+		if World.player != null and not dead:
+			World.player.set_target(self)
 
 func setup(mname: String, t: Vector2i, z: Node2D, respawn := -1.0) -> void:
 	monster_name = mname
-	zone = z
-	home_tile = t
-	respawn_time = respawn
-	var d: Dictionary = MonsterDB.monsters[mname]
-	max_hp = float(d["hp"]); hp = max_hp
-	atk = int(d["atk"]); exp_reward = int(d["exp"])
-	speed = float(d["speed"]); cooldown = float(d["cooldown"])
-	aggro_range = int(d["aggro"]); loot_table = d["loot"]
-	is_boss = bool(d.get("boss", false))
-	if is_boss:
-		scale = Vector2(2, 2)
 	tile = t
-	position = zone.tile_to_world(t)
-	body.color = Color(d["color"])
-	name_lbl.text = mname
-	_update_hp_bar()
+	zone = z
+	respawn_time = respawn
+	var d: Dictionary = MonsterDB.monsters.get(mname, {})
+	hp = int(d.get("hp", 10)); max_hp = hp
+	atk = int(d.get("atk", 3))
+	exp = int(d.get("exp", 5))
+	aggro_range = int(d.get("aggro_range", 5))
+	speed = float(d.get("speed", 3.0))
+	cooldown = float(d.get("cooldown", 1.0))
+	position = zone.tile_to_world(tile)
+	_from = position; _to = position; _move_t = 1.0
+	_refresh_label()
 
-func _ready() -> void:
-	click_area.input_event.connect(_on_click)
-
-func _on_click(_vp, event: InputEvent, _shape) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		if not dead:
-			World.player.set_target(self)
+func _refresh_label() -> void:
+	if not is_node_ready():
+		return
+	_name_lbl.text = monster_name
+	var ratio := float(hp) / float(max_hp) if max_hp > 0 else 0.0
+	_hp_bar.offset_right = -14.0 + BAR_W * ratio
+	if ratio > 0.5:
+		_hp_bar.color = Color(0.18, 0.78, 0.18)
+	elif ratio > 0.25:
+		_hp_bar.color = Color(0.85, 0.72, 0.1)
+	else:
+		_hp_bar.color = Color(0.85, 0.12, 0.12)
 
 func _process(delta: float) -> void:
-	if dead or World.player == null:
+	if dead:
 		return
-	var player_tile: Vector2i = GameState.player_tile
-	var dist := maxi(absi(player_tile.x - tile.x), absi(player_tile.y - tile.y))
-	if dist > FREEZE_DIST:
-		return                                       # prestanda: frys helt
 	_atk_timer = maxf(_atk_timer - delta, 0.0)
+
+	if not is_instance_valid(zone) or World.player == null:
+		return
+	var player_tile: Vector2i = World.player.tile
+	var dist := maxi(absi(tile.x - player_tile.x), absi(tile.y - player_tile.y))
 
 	if _move_t < 1.0:                                # pågående steg
 		_move_t = minf(_move_t + delta * speed, 1.0)
@@ -77,7 +94,9 @@ func _process(delta: float) -> void:
 		if _atk_timer <= 0.0:
 			_atk_timer = cooldown
 			var raw := CombatFormulas.roll_monster(atk)
-			var dmg := CombatFormulas.mitigate(raw, GameState.effective_skill_level("shielding"), 2)
+			var dmg := CombatFormulas.mitigate(raw,
+				GameState.effective_skill_level("shielding") + GameState.total_shielding_bonus(),
+				GameState.total_armor())
 			if dmg > 0:
 				GameState.take_damage(dmg)
 				GameState.gain_skill_xp("shielding", 1)
@@ -99,34 +118,20 @@ func _step_to(next: Vector2i) -> void:
 func take_damage(dmg: float) -> void:
 	if dead:
 		return
-	hp = maxf(hp - dmg, 0.0)
-	_update_hp_bar()
-	if hp <= 0.0:
+	hp = maxi(hp - int(dmg), 0)
+	_refresh_label()
+	if hp <= 0:
 		_die()
-
-func _update_hp_bar() -> void:
-	hp_bar.size.x = 28.0 * (hp / max_hp)
-	hp_bar.color = Color.GREEN if hp / max_hp > 0.5 else (Color.YELLOW if hp / max_hp > 0.25 else Color.RED)
 
 func _die() -> void:
 	dead = true
-	GameState.gain_exp(exp_reward)
-	TaskSystem.record_kill(monster_name)   # bestiary + task-progress; boss-XP/cooldown hanteras där
-	QuestSystem.record_kill(monster_name)
-	var drops: Array = ItemDB.roll_loot(loot_table)
-	if not drops.is_empty():
-		var gi := preload("res://entities/ground_item.gd").new()
-		zone.add_child(gi)
-		gi.setup(drops, tile)
-	if respawn_time > 0.0:
-		if is_boss:
-			World.spawn_boss_marker(monster_name, home_tile, respawn_time)
-		else:
-			var t := get_tree().create_timer(respawn_time)
-			var mname := monster_name
-			var ht := home_tile
-			var rt := respawn_time
-			t.timeout.connect(func(): if is_instance_valid(zone): World.spawn_monster(mname, ht, rt))
-	if World.player and World.player.target == self:
-		World.player.set_target(null)
-	queue_free()
+	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
+	GameState.gain_exp(exp)
+	var wskill := GameState.weapon_skill()
+	GameState.gain_skill_xp(wskill, exp)
+	var loot_table: Array = d.get("loot", [])
+	for entry in loot_table:
+		if randf() < float(entry.get("chance", 0.0)):
+			var qty := int(entry.get("qty", 1))
+			GameState.add_item(String(entry["item"]), qty)
+	TaskSyst
