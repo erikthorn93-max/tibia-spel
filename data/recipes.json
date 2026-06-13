@@ -5,8 +5,11 @@
 		{"id": "steel_sword",  "level": 15, "skill": "smithing", "ingredients": {"iron_ore": 3, "copper_ore": 1},  "xp": 40}
 	],
 	"stove": [
-		{"id": "cooked_trout", "level": 1,  "skill": "cooking", "ingredients": {"raw_trout": 1},                                     "xp": 10},
-		{"id": "fish_stew",    "level": 10, "skill": "cooking", "ingredients": {"raw_trout": 1, "raw_pike": 1, "mint_herb": 1},      "xp": 25}
+		{"id": "cooked_trout",     "level": 1,  "skill": "cooking", "ingredients": {"raw_trout": 1},                                "xp": 10},
+		{"id": "fish_stew",        "level": 10, "skill": "cooking", "ingredients": {"raw_trout": 1, "raw_pike": 1, "mint_herb": 1}, "xp": 25},
+		{"id": "grilled_mackerel", "level": 15, "skill": "cooking", "ingredients": {"raw_mackerel": 1},                             "xp": 30},
+		{"id": "lobster_dinner",   "level": 25, "skill": "cooking", "ingredients": {"raw_lobster": 1},                              "xp": 55},
+		{"id": "swordfish_steak",  "level": 35, "skill": "cooking", "ingredients": {"raw_swordfish": 1},                            "xp": 80}
 	],
 	"alchemy_table": [
 		{"id": "health_potion", "level": 1,  "skill": "alchemy", "ingredients": {"mint_herb": 2, "empty_vial": 1},                          "xp": 12},

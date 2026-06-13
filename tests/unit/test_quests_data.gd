@@ -76,3 +76,11 @@ func test_every_quest_startable_via_dialogue():
 					started[String(a["quest"])] = true
 	for id in quests:
 		assert_true(started.has(id), "%s startas aldrig i någon dialog" % id)
+
+func test_sjovagen_quest_present():
+	assert_true(quests.has("quest_sjovagen"), "quest saknas")
+	assert_eq(String(quests["quest_sjovagen"]["giver"]), "npc_captain")
+	assert_true(npcs.has("npc_captain"), "Brandt saknas")
+	assert_true(npcs.has("npc_fishmonger"), "Saltgreta saknas")
+	assert_eq(String(npcs["npc_captain"]["zone"]), "town")
+	assert_eq(String(npcs["npc_fishmonger"]["zone"]), "coast")

@@ -36,5 +36,14 @@
 	"toad_gland":      {"name": "Paddkörtel",      "type": "junk",     "value": 18,  "color": "#8aa84a"},
 	"swamp_essence":   {"name": "Träskessens",     "type": "junk",     "value": 35,  "color": "#3a5a3e"},
 	"raw_eel":         {"name": "Rå ål",           "type": "material", "value": 30,  "color": "#4a5a52"},
-	"marsh_herb":      {"name": "Kärrört",         "type": "material", "value": 25,  "color": "#4a7a4a"}
+	"marsh_herb":      {"name": "Kärrört",         "type": "material", "value": 25,  "color": "#4a7a4a"},
+	"raw_mackerel":     {"name": "Rå makrill",      "type": "material", "value": 14,  "color": "#5a7a9a"},
+	"raw_lobster":      {"name": "Rå hummer",       "type": "material", "value": 35,  "color": "#a83a2a"},
+	"raw_swordfish":    {"name": "Rå svärdfisk",    "type": "material", "value": 55,  "color": "#8a93a0"},
+	"grilled_mackerel": {"name": "Grillad makrill", "type": "food",     "value": 30,  "color": "#c8a060", "heal": 50, "buff": {"stat": "regen", "amount": 3, "duration": 30}},
+	"lobster_dinner":   {"name": "Hummermiddag",    "type": "food",     "value": 70,  "color": "#d86048", "heal": 70, "buff": {"stat": "skill:fishing", "amount": 3, "duration": 120}},
+	"swordfish_steak":  {"name": "Svärdfiskstek",   "type": "food",     "value": 95,  "color": "#b0b8c0", "heal": 90, "buff": {"stat": "skill:sword", "amount": 3, "duration": 120}},
+	"cutlass":          {"name": "Huggare",         "type": "weapon",   "value": 260, "color": "#c0c0c8", "atk": 16, "skill": "sword"},
+	"sea_chart":        {"name": "Sjökort",         "type": "junk",     "value": 40,  "color": "#cabd8a"},
+	"captains_hat":     {"name": "Kaptenshatt",     "type": "trophy",   "value": 3000, "color": "#2a2a40"}
 }

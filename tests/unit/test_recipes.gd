@@ -46,3 +46,16 @@ func test_can_craft_false_on_missing_ingredients():
 func test_missing_ingredients_lists_shortfall():
 	var missing = Recipes.missing_ingredients(_recipe(), {"copper_ore": 1})
 	assert_eq(missing, {"copper_ore": 2})
+
+func test_coast_fishing_nodes_loaded():
+	for nid in ["deep_sea_spot", "swordfish_spot", "lobster_pot"]:
+		assert_true(db.nodes.has(nid), "saknar nod: " + nid)
+		assert_eq(db.nodes[nid]["skill"], "fishing")
+		assert_eq(db.nodes[nid]["tool"], "fishing_rod")
+
+func test_coast_cooking_recipes_added():
+	var ids := []
+	for r in db.recipes["stove"]:
+		ids.append(String(r["id"]))
+	for id in ["grilled_mackerel", "lobster_dinner", "swordfish_steak"]:
+		assert_has(ids, id, "saknar recept: " + id)

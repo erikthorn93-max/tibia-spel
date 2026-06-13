@@ -38,5 +38,21 @@
 		"voice": {"model": "en_US-amy-medium", "length_scale": 0.95},
 		"barks": ["Tread softly.", "Something's moving in the brush..."],
 		"dialogue_root": "hunter_root"
+	},
+	"npc_captain": {
+		"name": "Kapten Brandt",
+		"zone": "town",
+		"position": [28, 10],
+		"voice": {"model": "en_GB-alan-medium", "length_scale": 1.0},
+		"barks": ["Storm's brewing out west.", "Mind the tide, landlubber."],
+		"dialogue_root": "captain_root"
+	},
+	"npc_fishmonger": {
+		"name": "Saltgreta",
+		"zone": "coast",
+		"position": [8, 8],
+		"voice": {"model": "en_US-amy-medium", "length_scale": 1.0},
+		"barks": ["Fresh off the boat!", "Best catch on the whole coast."],
+		"dialogue_root": "fishmonger_root"
 	}
 }

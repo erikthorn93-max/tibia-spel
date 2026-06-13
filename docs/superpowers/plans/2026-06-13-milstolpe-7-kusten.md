@@ -759,3 +759,30 @@ git merge --no-ff m7-kusten -m "feat: Milstolpe 7 — Saltviks hamn (merge m7-ku
 - **Inga placeholders:** all data och kod är fullständig; tile-rader är 40 tecken och konnektivitetsverifierade.
 - **Typkonsistens:** monsternamn (`Piratkapten Svartöga`), item-id:n, nod-id:n, unlock-id:n (`kustvagen`, `outfit_pirate`), tema-id (`sjunket_skepp`) och quest-id (`quest_sjovagen`) används identiskt mellan data, generator-kod och tester.
 - **Räknaruppdateringar:** `test_ten_tasks`→`test_thirteen_tasks` (Task 5); `themes.size()` 2→3 (Task 7). Inga andra hårdkodade antal påverkas (övriga datatester itererar).
+
+
+---
+
+## Genomförande — KLART (2026-06-13)
+
+Alla tasks implementerade på branch `m7-kusten`. **184/184 GUT-tester gröna**, boot-check ren (inga script-fel).
+
+| Task | Commit | Not |
+|------|--------|-----|
+| 1 Items | `1cfb8fa` | |
+| 2 Monster + boss | `9fd1205` | |
+| 3 Fiskenoder | `bb55f54` | |
+| 4 Cooking-recept | `2eee9b6` | |
+| 5 Sjö-taskkedja | `fa87ab4` | befintligt `test_ten_tasks`→`test_thirteen_tasks` |
+| 6 + 8 (sammanslagna) | `ffb1a60` | se avvikelse nedan |
+| 7 Dungeon-tema + boss | `d4bc95f` | |
+| 9 Pirat-outfit | `6456594` | |
+
+### Avvikelser från planen
+- **Task 6 och Task 8 slogs ihop till en commit.** De var ömsesidigt beroende: `kustvagen`-unlocken (Task 6) kräver `quest_sjovagen` (Task 8), vars NPC Saltgreta bor i `coast` (Task 6). Att committa dem separat hade brutit `test_unlock_defs_valid` (okänd quest) mellan tasksen. Innehållet är identiskt med planen.
+- **Befintligt test `test_town_has_two_portals` → `test_town_has_three_portals`** (town fick en tredje portal mot coast). Ej förutsett i planen; uppdaterat.
+- Filändringarna gjordes via skript (Read/Edit-verktygen var blockerade av en trasig claude-mem-hook under sessionen); resultatet är validerat med GUT + boot-check.
+
+### Återstår (Erik)
+- Manuell smoke-test (se Task 10, Step 4).
+- Merge `m7-kusten` → master (se merge-instruktionen i Task 10).

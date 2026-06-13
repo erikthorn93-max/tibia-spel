@@ -7,8 +7,13 @@ func before_all():
 	var f := FileAccess.open("res://data/tasks.json", FileAccess.READ)
 	tasks = JSON.parse_string(f.get_as_text())
 
-func test_ten_tasks():
-	assert_eq(tasks.size(), 10)
+func test_thirteen_tasks():
+	assert_eq(tasks.size(), 13)
+
+func test_sea_tasks_present():
+	for id in ["task_krabbor", "task_sjoormar", "task_pirater"]:
+		assert_true(tasks.has(id), "saknar task: " + id)
+	assert_eq(String(tasks["task_pirater"]["monster"]), "Pirat")
 
 func test_task_monsters_exist_in_monsterdb():
 	for id in tasks:

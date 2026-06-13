@@ -50,5 +50,15 @@
 			{"type": "talk_to", "npc": "npc_scholar", "hint": "Bring word of your victory to Maelis."}
 		],
 		"rewards": {"xp": 3000, "gold": 1500}
+	},
+	"quest_sjovagen": {
+		"name": "Sjövägen",
+		"giver": "npc_captain",
+		"requires": [],
+		"steps": [
+			{"type": "kill", "monster": "Pirat", "count": 5, "hint": "Rensa fem pirater som plundrar hamnen i Thais."},
+			{"type": "talk_to", "npc": "npc_captain", "hint": "Återvänd till Kapten Brandt vid hamnen."}
+		],
+		"rewards": {"xp": 1500, "gold": 600}
 	}
 }

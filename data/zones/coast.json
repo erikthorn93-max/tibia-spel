@@ -1,0 +1,85 @@
+{
+	"name": "Saltviks hamn",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"W~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~W",
+		"W~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~W",
+		"W~~~~~~f~~~~~~~~~~~m~~~~~~~~~~~l~~~~~~~W",
+		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
+		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
+		"WbbbGbbbbbbbbbcbbbbbbbbbbobbbbbbbbDbbbbW",
+		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
+		"WbbHbbbbbbbbbbbbqbbbbbbbbbbkbbbbbbbbbbbW",
+		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
+		"WbbTbbbbbbbbbbbbbbbbcbbbbbbbbbbobbbbbbbW",
+		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
+		"Wbbbbbbbbbb0bbbbbbbbbbbbbbbbbbbbbbbbbbbW",
+		"WbbbbbbbbbbPbbbbbbbbbbbbbbqbbbbbbbbbbbbW",
+		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"0": {
+			"type": "portal",
+			"to": "town",
+			"terrain": "b"
+		},
+		"G": {
+			"type": "station",
+			"station": "stove",
+			"terrain": "b"
+		},
+		"H": {
+			"type": "shop",
+			"terrain": "b"
+		},
+		"T": {
+			"type": "taskmaster",
+			"terrain": "b"
+		},
+		"D": {
+			"type": "dungeon_entrance",
+			"theme": "sjunket_skepp",
+			"terrain": "b"
+		},
+		"f": {
+			"type": "node",
+			"node": "deep_sea_spot",
+			"terrain": "~"
+		},
+		"m": {
+			"type": "node",
+			"node": "swordfish_spot",
+			"terrain": "~"
+		},
+		"l": {
+			"type": "node",
+			"node": "lobster_pot",
+			"terrain": "~"
+		},
+		"c": {
+			"type": "spawn",
+			"monster": "Strandkrabba",
+			"respawn": 18.0,
+			"terrain": "b"
+		},
+		"o": {
+			"type": "spawn",
+			"monster": "Sjöorm",
+			"respawn": 25.0,
+			"terrain": "b"
+		},
+		"q": {
+			"type": "spawn",
+			"monster": "Pirat",
+			"respawn": 30.0,
+			"terrain": "b"
+		},
+		"k": {
+			"type": "spawn",
+			"monster": "Pirat Skytt",
+			"respawn": 35.0,
+			"terrain": "b"
+		}
+	}
+}
