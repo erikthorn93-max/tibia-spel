@@ -24,5 +24,8 @@
 		"hint": "Nå Fishing 30."},
 	"outfit_ghoul_king": {"name": "Ghulkungens mantel", "category": "outfit",
 		"requires": {"boss_killed": "Ghulkungen"},
-		"hint": "Besegra Ghulkungen."}
+		"hint": "Besegra Ghulkungen."},
+	"kustvagen": {"name": "Sjövägen", "category": "area",
+		"requires": {"quest": "quest_sjovagen"},
+		"hint": "Slutför Kapten Brandts uppdrag vid hamnen i Thais."}
 }

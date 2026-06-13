@@ -198,5 +198,49 @@
 		"choices": [
 			{"text": "Good luck, old man.", "next": null}
 		]
+	},
+	"captain_root": {
+		"speaker": "npc_captain", "emotion": "neutral",
+		"text": "Storm's coming, and pirates besides. No passage west today.",
+		"choices": [
+			{"text": "Who are you?", "next": "captain_who"},
+			{"text": "Can you sail me along the coast?", "next": "captain_offer",
+			 "conditions": [{"type": "quest_available", "quest": "quest_sjovagen"}]},
+			{"text": "The harbour pirates are dealt with.", "next": "captain_thanks",
+			 "conditions": [{"type": "quest_step", "quest": "quest_sjovagen", "step": 1}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_sjovagen"}]},
+			{"text": "Goodbye.", "next": null}
+		]
+	},
+	"captain_who": {
+		"speaker": "npc_captain", "emotion": "neutral",
+		"text": "Brandt. I run the only boat that'll brave the western reefs. When the harbour's safe, that is.",
+		"choices": [
+			{"text": "Back.", "next": "captain_root"},
+			{"text": "Goodbye.", "next": null}
+		]
+	},
+	"captain_offer": {
+		"speaker": "npc_captain", "emotion": "worried",
+		"text": "Pirates have been landing at my docks and helping themselves. Thin out five of them and I'll sail you to Saltvik.",
+		"choices": [
+			{"text": "Consider it done.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_sjovagen"}]},
+			{"text": "Maybe later.", "next": null}
+		]
+	},
+	"captain_thanks": {
+		"speaker": "npc_captain", "emotion": "friendly",
+		"text": "Aye, the docks are quiet again. A deal's a deal — the way west is open to you now. Mind the wrecks.",
+		"choices": [
+			{"text": "Thank you, captain.", "next": null}
+		]
+	},
+	"fishmonger_root": {
+		"speaker": "npc_fishmonger", "emotion": "friendly",
+		"text": "Fresh catch! Mackerel, lobster, swordfish — if you're bold enough for the deep water.",
+		"choices": [
+			{"text": "Just browsing.", "next": null}
+		]
 	}
 }

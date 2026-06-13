@@ -67,10 +67,11 @@ func test_node_tiles_are_blocked():
 	var z = _make_zone("forest")
 	assert_false(z.is_walkable(z.node_points[0]["tile"]))
 
-func test_town_has_two_portals():
+func test_town_has_three_portals():
 	var z = _make_zone("town")
-	assert_eq(z.portals.size(), 2)
+	assert_eq(z.portals.size(), 3)
 	assert_true(z.portals.values().has("forest"))
+	assert_true(z.portals.values().has("coast"))
 
 func test_find_path_adjacent_reaches_blocked_target():
 	var z = _make_zone("town")
@@ -218,3 +219,24 @@ func test_gate_ids_cover_task_unlocks_and_boss():
 		if tasks[tid].has("unlocks"):
 			assert_has(gate_ids, String(tasks[tid]["unlocks"]), tid)
 	assert_has(gate_ids, "bossrummet")
+
+func test_coast_builds_with_content():
+	UnlockSystem.unlock("kustvagen")
+	var z = _make_zone("coast")
+	assert_eq(z.zone_name, "Saltviks hamn")
+	assert_eq(z.node_points.size(), 3)
+	assert_true(z.station_points.any(func(s): return s["station"] == "stove"))
+	assert_eq(z.taskmaster_points.size(), 1)
+	assert_eq(z.shop_points.size(), 1)
+	assert_true(z.dungeon_entrances.values().has("sjunket_skepp"))
+	assert_true(z.portals.values().has("town"))
+
+func test_town_has_locked_coast_portal_and_pirates():
+	UnlockSystem.unlocked.clear()
+	var town = _make_zone("town")
+	assert_true(town.portals.values().has("coast"))
+	assert_true(town.portal_locks.values().has("kustvagen"))
+	assert_true(town.spawn_points.any(func(s): return s["monster"] == "Pirat"))
+
+func test_beach_terrain_registered():
+	assert_true(PlaceholderTiles.TERRAIN.has("b"))
