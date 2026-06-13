@@ -116,6 +116,11 @@ func build_from_data(data: Dictionary, id: String) -> void:
 	if not gate_points.is_empty() or not shortcut_points.is_empty() or not portal_locks.is_empty():
 		UnlockSystem.unlock_added.connect(_on_unlock_added)
 
+	# Spawn-tabell: slumpmässiga tiles för varje entry
+	var spawn_table: Array = data.get("spawn_table", [])
+	if not spawn_table.is_empty():
+		_fill_spawn_table(spawn_table)
+
 	for t in portals:
 		_add_portal_marker(t)
 	for t in shortcut_points:
@@ -123,6 +128,42 @@ func build_from_data(data: Dictionary, id: String) -> void:
 			_add_shortcut_marker(t)
 	for t in dungeon_entrances:
 		_add_entrance_marker(t)
+
+## Väljer slumpmässiga, fria walkable tiles för spawn_table-poster.
+## Undviker player_start och befintliga spawn_points.
+func _fill_spawn_table(table: Array) -> void:
+	# Samla kandidat-tiles: walkable, inte player_start, minst 3 tiles bort
+	var candidates: Array[Vector2i] = []
+	for t: Vector2i in _walkable:
+		if not _walkable[t]:
+			continue
+		if t == player_start:
+			continue
+		var dx := absi(t.x - player_start.x)
+		var dy := absi(t.y - player_start.y)
+		if maxi(dx, dy) < 4:   # Chebyshev-avstånd från start
+			continue
+		candidates.append(t)
+	candidates.shuffle()
+
+	# Reservera tiles som redan används av legend-spawn_points
+	var used: Array[Vector2i] = []
+	for sp in spawn_points:
+		used.append(sp["tile"])
+
+	for entry in table:
+		var count := int(entry.get("count", 1))
+		var mname := String(entry["monster"])
+		var respawn := float(entry.get("respawn", 30.0))
+		var placed := 0
+		for t: Vector2i in candidates:
+			if placed >= count:
+				break
+			if used.has(t):
+				continue
+			spawn_points.append({"tile": t, "monster": mname, "respawn": respawn})
+			used.append(t)
+			placed += 1
 
 func _add_portal_marker(t: Vector2i) -> void:
 	for n in _portal_marker_nodes.get(t, []):
@@ -205,42 +246,4 @@ func _on_unlock_added(id: String) -> void:
 			_add_portal_marker(t)
 
 func _open_tile(t: Vector2i) -> void:
-	tilemap.set_cell(t, 0, Vector2i(PlaceholderTiles.TERRAIN[_gate_terrain[t]], 0))
-	_walkable[t] = true
-	_astar.set_point_solid(t, false)
-
-## Unlock-id om tile är en låst gate/genväg, annars "".
-func lock_at(t: Vector2i) -> String:
-	if gate_points.has(t) and not UnlockSystem.is_unlocked(gate_points[t]):
-		return gate_points[t]
-	if shortcut_points.has(t) and not UnlockSystem.is_unlocked(shortcut_points[t]):
-		return shortcut_points[t]
-	return ""
-
-func is_walkable(t: Vector2i) -> bool:
-	return _walkable.get(t, false)
-
-func find_path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
-	if not is_walkable(to):
-		return []
-	return _astar.get_id_path(from, to)
-
-func find_path_adjacent(from: Vector2i, to: Vector2i) -> Array:
-	var best: Array = []
-	for d in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT,
-			Vector2i(1, 1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(-1, -1)]:
-		var n: Vector2i = to + d
-		if not is_walkable(n):
-			continue
-		if n == from:
-			return [from]
-		var p := find_path(from, n)
-		if p.size() > 0 and (best.is_empty() or p.size() < best.size()):
-			best = p
-	return best
-
-static func tile_to_world(t: Vector2i) -> Vector2:
-	return Vector2(t) * TILE + Vector2(TILE / 2.0, TILE / 2.0)
-
-static func world_to_tile(p: Vector2) -> Vector2i:
-	return Vector2i((p / TILE).floor())
+	tilemap.set_cell(t, 0, Vector2i(Pla

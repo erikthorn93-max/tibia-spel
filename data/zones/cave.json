@@ -32,21 +32,94 @@
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
 	],
 	"legend": {
-		"0": {"type": "portal", "to": "town"},
-		"4": {"type": "portal", "to": "swamp", "unlock": "genvag_grottan"},
-		"D": {"type": "dungeon_entrance", "theme": "katakomber"},
-		"b": {"type": "spawn", "monster": "Orm", "respawn": 15.0},
-		"c": {"type": "spawn", "monster": "Spindel", "respawn": 15.0},
-		"d": {"type": "spawn", "monster": "Skelett", "respawn": 25.0},
-		"e": {"type": "spawn", "monster": "Ghoul", "respawn": 45.0},
-		"k": {"type": "node", "node": "copper_vein"},
-		"j": {"type": "node", "node": "iron_vein"},
-		"g": {"type": "node", "node": "gold_vein"},
-		"1": {"type": "gate", "unlock": "spindelhalan"},
-		"2": {"type": "gate", "unlock": "kryptan"},
-		"3": {"type": "gate", "unlock": "bossrummet"},
-		"J": {"type": "spawn", "monster": "Jättespindel", "respawn": 30.0},
-		"S": {"type": "spawn", "monster": "Skelettkrigare", "respawn": 40.0},
-		"X": {"type": "spawn", "monster": "Ghulkungen", "respawn": 3600.0}
-	}
+		"0": {
+			"type": "portal",
+			"to": "town"
+		},
+		"4": {
+			"type": "portal",
+			"to": "swamp",
+			"unlock": "genvag_grottan"
+		},
+		"D": {
+			"type": "dungeon_entrance",
+			"theme": "katakomber"
+		},
+		"b": {
+			"type": "spawn",
+			"monster": "Orm",
+			"respawn": 15.0
+		},
+		"c": {
+			"type": "spawn",
+			"monster": "Spindel",
+			"respawn": 15.0
+		},
+		"d": {
+			"type": "spawn",
+			"monster": "Skelett",
+			"respawn": 25.0
+		},
+		"e": {
+			"type": "spawn",
+			"monster": "Ghoul",
+			"respawn": 45.0
+		},
+		"k": {
+			"type": "node",
+			"node": "copper_vein"
+		},
+		"j": {
+			"type": "node",
+			"node": "iron_vein"
+		},
+		"g": {
+			"type": "node",
+			"node": "gold_vein"
+		},
+		"1": {
+			"type": "gate",
+			"unlock": "spindelhalan"
+		},
+		"2": {
+			"type": "gate",
+			"unlock": "kryptan"
+		},
+		"3": {
+			"type": "gate",
+			"unlock": "bossrummet"
+		},
+		"J": {
+			"type": "spawn",
+			"monster": "Jättespindel",
+			"respawn": 30.0
+		},
+		"S": {
+			"type": "spawn",
+			"monster": "Skelettkrigare",
+			"respawn": 40.0
+		},
+		"X": {
+			"type": "spawn",
+			"monster": "Ghulkungen",
+			"respawn": 3600.0
+		}
+	},
+	"spawn_table": [
+		{
+			"monster": "Skelett",
+			"count": 5,
+			"respawn": 40.0
+		},
+		{
+			"monster": "Ghoul",
+			"count": 3,
+			"respawn": 50.0
+		},
+		{
+			"monster": "Skelettkrigare",
+			"count": 2,
+			"respawn": 60.0
+		}
+	]
 }

@@ -81,5 +81,32 @@
 			"respawn": 35.0,
 			"terrain": "b"
 		}
-	}
+	},
+	"spawn_table": [
+		{
+			"monster": "Strandkrabba",
+			"count": 4,
+			"respawn": 35.0
+		},
+		{
+			"monster": "Sjöorm",
+			"count": 3,
+			"respawn": 45.0
+		},
+		{
+			"monster": "Pirat",
+			"count": 3,
+			"respawn": 50.0
+		},
+		{
+			"monster": "Pirat Skytt",
+			"count": 2,
+			"respawn": 50.0
+		},
+		{
+			"monster": "Drunknad sjöman",
+			"count": 2,
+			"respawn": 55.0
+		}
+	]
 }
