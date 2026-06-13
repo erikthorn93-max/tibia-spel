@@ -6,8 +6,9 @@ extends Node2D
 const LIFETIME    := 60.0   # sekunder tills påsen försvinner
 const BLINK_START := 10.0   # sekunder kvar när blinkandet börjar
 
-var contents : Array = []   # [{item: String, qty: int}]
-var tile     : Vector2i = Vector2i.ZERO
+var contents         : Array = []   # [{item: String, qty: int}]
+var tile             : Vector2i = Vector2i.ZERO
+var lifetime_override := -1.0       # om > 0 ersätter LIFETIME
 
 var _elapsed  := 0.0
 var _icon     : Polygon2D = null
@@ -33,7 +34,8 @@ func setup(drops: Array, t: Vector2i) -> void:
 
 func _process(delta: float) -> void:
 	_elapsed += delta
-	var time_left := LIFETIME - _elapsed
+	var lifetime := lifetime_override if lifetime_override > 0.0 else LIFETIME
+	var time_left := lifetime - _elapsed
 	if time_left <= 0.0:
 		queue_free()
 		return
@@ -52,11 +54,4 @@ func _on_click(_vp: Viewport, event: InputEvent, _shape: int) -> void:
 	var pt   := GameState.player_tile
 	var dist := maxi(absi(pt.x - tile.x), absi(pt.y - tile.y))
 	if dist > 1:
-		World.hud.show_message("För långt bort.")
-		return
-	_collect()
-
-func _collect() -> void:
-	for d in contents:
-		GameState.add_item(String(d["item"]), int(d["qty"]))
-	queue_free()
+		World.hud.show_message("

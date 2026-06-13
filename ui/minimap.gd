@@ -24,6 +24,7 @@ const COL_MONSTER  := Color(0.90, 0.12, 0.12)
 const COL_PORTAL   := Color(0.62, 0.32, 0.94)
 const COL_DUNGEON  := Color(0.85, 0.68, 0.14)
 const COL_LOOT     := Color(0.91, 0.78, 0.18)
+const COL_GRAVE    := Color(0.85, 0.85, 0.85)
 const COL_BG       := Color(0.05, 0.05, 0.08, 0.90)
 const COL_BORDER   := Color(0.46, 0.46, 0.64, 0.88)
 const COL_TITLE    := Color(0.90, 0.82, 0.52)
@@ -120,6 +121,10 @@ func _draw_mini() -> void:
 	# Ground loot (gula prickar)
 	for gi in _ground_items(zone):
 		_mini_dot(gi.tile, pt, ox, oy, COL_LOOT, 2)
+
+	# Gravsten (vit prick) om spelaren dog i denna zon
+	if World.grave_zone == zone and World.grave_tile.x >= 0:
+		_mini_dot(World.grave_tile, pt, ox, oy, COL_GRAVE, 3)
 
 	# Spelare – blinkar (vit prick i mitten)
 	var blink := 1.0 if fmod(_blink_t, 1.0) < 0.65 else 0.0
@@ -232,6 +237,10 @@ func _draw_full_overlay() -> void:
 	for gi in _ground_items(zone):
 		_full_dot(gi.tile, mx, my, ft, COL_LOOT)
 
+	# Gravsten (vit prick) om spelaren dog i denna zon
+	if World.grave_zone == zone and World.grave_tile.x >= 0:
+		_full_dot(World.grave_tile, mx, my, ft, COL_GRAVE)
+
 	# Spelare (blinkar, lite större)
 	var pt := _player_tile()
 	var blink := 1.0 if fmod(_blink_t, 1.0) < 0.65 else 0.35
@@ -264,6 +273,7 @@ func _draw_legend(lx: float, ly: float) -> void:
 		[COL_PLAYER,  "Spelare"],
 		[COL_MONSTER, "Monster"],
 		[COL_LOOT,    "Föremål"],
+		[COL_GRAVE,   "Gravsten"],
 		[COL_PORTAL,  "Portal"],
 		[COL_DUNGEON, "Dungeonentré"],
 	]
@@ -290,14 +300,4 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.keycode == KEY_M:
 		_full_open = not _full_open
 		mouse_filter = Control.MOUSE_FILTER_STOP if _full_open else Control.MOUSE_FILTER_IGNORE
-		get_viewport().set_input_as_handled()
-
-# ─────────────────────────────── Helpers ───────────────────────────────
-
-func _zone() -> Node2D:
-	if not is_instance_valid(World.player):
-		return null
-	return World.player.zone
-
-func _player_tile() -> Vector2i:
-	if not is_instance_valid(World.p
+		get_
