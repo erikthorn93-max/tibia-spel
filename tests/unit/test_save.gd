@@ -130,4 +130,14 @@ func test_v3_save_migrates_to_v4_empty_quests():
 	assert_eq(QuestSystem.completed.size(), 0)
 	QuestSystem.reset()
 
-func test_v4_roundtrip_qu
+func test_v4_roundtrip_quests():
+	QuestSystem.reset()
+	QuestSystem.active["quest_welcome"] = {"step": 1, "progress": 0}
+	QuestSystem.completed["quest_snakes"] = true
+	sm.save_game()
+	QuestSystem.reset()
+	assert_true(sm.load_game())
+	assert_true(QuestSystem.active.has("quest_welcome"))
+	assert_eq(int(QuestSystem.active["quest_welcome"]["step"]), 1)
+	assert_true(QuestSystem.completed.has("quest_snakes"))
+	QuestSystem.reset()

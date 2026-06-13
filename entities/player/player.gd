@@ -147,4 +147,6 @@ func _check_portal() -> void:
 	if zone.portal_locks.has(tile):
 		var uid: String = zone.portal_locks[tile]
 		if not UnlockSystem.try_unlock(uid):
-			W
+			World.hud.show_message(UnlockSystem.hint_for(uid))
+			return
+	World.change_zone(zone.portals[tile])

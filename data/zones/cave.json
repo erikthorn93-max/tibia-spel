@@ -27,13 +27,14 @@
 		"WWWWWWWWWW1WWWWWWWWWWWW2WWWWWWWWW3WWWWWW",
 		"W,,,,J,,,,,,,,,W,,,,S,,,,,,,W,,,,,,,,,,W",
 		"W,,,,,,,,,J,,,,W,,,,,,,,S,,,W,,,,X,,,,,W",
-		"W,,,,,,,,,,,,,,W,,,,,,,,,,,,W,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,W,,,,,D,,,,,,W,,,,,,,,,,W",
 		"W,,J,,,,,,,,,,,W,,,,,,,,,,,,W,,,,,,,,,,W",
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
 	],
 	"legend": {
 		"0": {"type": "portal", "to": "town"},
 		"4": {"type": "portal", "to": "swamp", "unlock": "genvag_grottan"},
+		"D": {"type": "dungeon_entrance", "theme": "katakomber"},
 		"b": {"type": "spawn", "monster": "Orm", "respawn": 15.0},
 		"c": {"type": "spawn", "monster": "Spindel", "respawn": 15.0},
 		"d": {"type": "spawn", "monster": "Skelett", "respawn": 25.0},

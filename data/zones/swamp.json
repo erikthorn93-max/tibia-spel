@@ -22,7 +22,7 @@
   "WsssssssdsssssssssssssssssssWsssssdssssW",
   "Wssss~~sssssssssssssssssssss2ssssysssssW",
   "Wssss~E~ssssssssssssssssssssWssdsssgsssW",
-  "Ws1sssssssssssssssssssssssssWsssssssdssW",
+  "Ws1sssssssssssssssssssssssssWssDssssdssW",
   "WsssssssssssssssssssssssssssWssssssssssW",
   "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
  ],
@@ -41,6 +41,11 @@
   "2": {
    "type": "gate",
    "unlock": "traskets_hjarta",
+   "terrain": "s"
+  },
+  "D": {
+   "type": "dungeon_entrance",
+   "theme": "sjunkna_graven",
    "terrain": "s"
   },
   "E": {

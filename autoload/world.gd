@@ -87,4 +87,43 @@ func spawn_monster(monster_name: String, t: Vector2i, respawn := -1.0) -> Node2D
 
 func _spawn_one(sp: Dictionary) -> void:
 	var mname := String(sp["monster"])
-	if bool(MonsterDB.monsters.get(
+	if bool(MonsterDB.monsters.get(mname, {}).get("boss", false)) and not TaskSystem.boss_available(mname):
+		spawn_boss_marker(mname, sp["tile"], float(sp["respawn"]))
+		return
+	spawn_monster(mname, sp["tile"], sp["respawn"])
+
+func spawn_boss_marker(mname: String, t: Vector2i, respawn: float) -> void:
+	var bm: Node2D = preload("res://entities/boss_marker.gd").new()
+	current_zone.add_child(bm)
+	bm.setup(mname, t, respawn)
+
+func _spawn_world_objects() -> void:
+	for np in current_zone.node_points:
+		var n: Node2D = preload("res://entities/gather_node.tscn").instantiate()
+		current_zone.add_child(n)
+		n.setup(np["node"], np["tile"])
+	for sp in current_zone.station_points:
+		var s: Node2D = preload("res://entities/crafting_station.tscn").instantiate()
+		current_zone.add_child(s)
+		s.setup(sp["station"], sp["tile"])
+	for t in current_zone.shop_points:
+		var npc: Node2D = preload("res://entities/shop_npc.tscn").instantiate()
+		current_zone.add_child(npc)
+		npc.setup(t)
+	for t in current_zone.taskmaster_points:
+		var tm: Node2D = preload("res://entities/taskmaster_npc.tscn").instantiate()
+		current_zone.add_child(tm)
+		tm.setup(t)
+	if ResourceLoader.exists(CHEST_SCRIPT_PATH):
+		var ChestScript = load(CHEST_SCRIPT_PATH)
+		for t in current_zone.chest_points:
+			var chest := Node2D.new()
+			chest.set_script(ChestScript)
+			current_zone.add_child(chest)
+			chest.setup(t, current_zone.dungeon_theme)
+	for id in DialogueDB.npcs:
+		var nd: Dictionary = DialogueDB.npcs[id]
+		if String(nd["zone"]) == current_zone.zone_id:
+			var npc: Node2D = preload("res://entities/npc.tscn").instantiate()
+			npc.setup(id, Vector2i(int(nd["position"][0]), int(nd["position"][1])))
+			current_zone.add_child(npc)   # setup FÖRE add_child — _ready läser npc_id

@@ -68,4 +68,20 @@
 - [x] Commit: `feat: dungeoningångar i kryptan och Träskets hjärta + debugkommando`
 
 ### Task 6: Helsvit + planbock ✓ (kod klar — kör testerna lokalt)
-- [x] Kod: alla filer skrivna, grans
+- [x] Kod: alla filer skrivna, granskade, committade (Tasks 1–5).
+- [x] GUT-sviten körd headless: **172/172 gröna** (inkl. nya M6-tester). Trunkerade committade filer kompletterade i arbetsträdet och committade.
+- [x] Boot-check headless: inga script-/parse-fel i Output.
+- [ ] **Manuell smoke-test (Erik)**: debug-konsol `dungeon katakomber`, gå till kistan, öppna, gå till `0`-portalen.
+- [ ] Merge m6-dungeons → master (se instruktion nedan).
+
+#### GUT-kommando (PowerShell)
+```powershell
+& "C:\Godot\Godot_v4.6.2-stable_win64.exe" --headless --path C:\Users\Hem\tibia2d -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -gexit
+```
+
+#### Merge-instruktion
+```powershell
+cd C:\Users\Hem\tibia2d
+git checkout master
+git merge --no-ff m6-dungeons -m "feat: Milstolpe 6 — procedurella dungeons (merge m6-dungeons)"
+```

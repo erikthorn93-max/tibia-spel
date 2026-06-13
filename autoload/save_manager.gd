@@ -81,4 +81,8 @@ func load_game() -> bool:
 	# v3→v4: quests saknas i äldre saves — börja tomt
 	QuestSystem.active = s.get("quests_active", {})
 	QuestSystem.completed = s.get("quests_completed", {})
-	# v4→v5: outfit saknas — standard, basen = sparat 
+	# v4→v5: outfit saknas — standard, basen = sparat utseende
+	GameState.outfit_equipped = s.get("outfit_equipped", "standard")
+	var base = s.get("appearance_base", {})
+	GameState.appearance_base = base if not base.is_empty() else GameState.appearance.duplicate()
+	return true
