@@ -149,7 +149,7 @@ func _build_slot(idx: int) -> void:
 	cell.set_drag_forwarding(
 		func(_pos): return null,
 		func(_pos, data) -> bool: return data is Dictionary and data.has("item_id"),
-		func(_pos, data: Dictionary):
+		func(_pos, data):
 			var iid := String(data.get("item_id", ""))
 			if iid.is_empty(): return
 			_slots[_ci]["item_id"] = iid

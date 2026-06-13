@@ -86,7 +86,7 @@ func _ready() -> void:
 				var iid: String = String(data["item_id"])
 				var d: Dictionary = ItemDB.items.get(iid, {})
 				return String(d.get("slot", "")) == _slot,
-			func(_pos, data: Dictionary):
+			func(_pos, data):
 				var iid := String(data.get("item_id", ""))
 				if iid.is_empty(): return
 				# Ta av gammalt item om sloten är upptagen
