@@ -48,20 +48,23 @@ Terräng: strand/sand + bryggor (gångbart) + vatten (blockerat, fiskbart vid no
 | Pirat | Humanoid | mid, melee | kust |
 | Pirat Skytt | Humanoid | distance-anfall | kust |
 | Drunknad sjöman | Odöd | dungeon-fyllnad | dungeon |
-| **Piratkapten Svartöga** | Humanoid | **boss** (`boss: true`) | slutrum, sjunket skepp |
+| **Piratkapten Svartöga** | Humanoid | **boss** (`boss: true`) | spawnar live i sjunket skepps slutrum |
 
 Loottabeller per monster; boss får unik loot (§8). Spawnplatser i `coast.json`
 och via dungeon-temats pool.
 
 ## 4. Sjö-taskkedja (`data/tasks.json`, taskmaster Greta)
 
-Kedja med monster-unlocks och boss-unlock i slutet:
+Tre repeterbara Slayer-tasks med stigande `slayer_level_req` och belöning — parallell
+progression, samma format som befintliga tasks (inga monster-/boss-unlock-fält, vilket
+matchar hur `task_system.gd` faktiskt fungerar):
 
-- `task_krabbor` (Strandkrabba) → `unlocks_monster: Sjöorm`
-- `task_sjoormar` (Sjöorm) → `unlocks_monster: Pirat`
-- `task_pirater` (Pirat) → `boss_unlock: Piratkapten Svartöga`
+- `task_krabbor` (Strandkrabba) — lägst krav
+- `task_sjoormar` (Sjöorm) — mellan
+- `task_pirater` (Pirat) — högst
 
-Slayer-XP + guld som befintliga tasks. `repeatable: true` för grind.
+Slayer-XP + guld som befintliga tasks. `repeatable: true` för grind. Bossen nås genom
+att stiga ner i sjunket_skepp (§7), inte via taskkedjan.
 
 ## 5. Röstad quest — "Sjövägen" (`data/quests.json` + `dialogue.json` + `npcs.json`)
 
@@ -101,19 +104,22 @@ Tredje temat (efter katakomber, sjunkna_graven). Återanvänder M6-generatorn.
 - **exit_zone:** `coast`.
 - **Terräng:** träplanksdäck (gångbart) + vatten (yttermur/block).
 
-**Generator-utökning (liten):** temat kan ange ett `boss`-fält. Generatorn placerar
-boss-spawnen i **slutrummet** (samma rum som kistan) med boss-flaggan satt.
-`World._spawn_one` routar redan bossar till `spawn_boss_marker` +
-`TaskSystem.boss_available`-gate, så live-vs-markör styrs av taskkedjan (§4).
-Dungeonen är efemär (M6: sparfilen skriver ytzonen `coast`).
+**Generator-utökning (liten):** temat kan ange ett `boss`-fält (monsternamn). Generatorn
+placerar en boss-spawn på en golvtile i **slutrummet** (samma rum som kistan) och lägger
+till den i legenden. `World._spawn_one` spawnar den live (boss-flaggan true, cooldown 0 vid
+första nedstigning); efter kill ger M6:s `boss_marker` cooldown-meddelande. Dungeonen är
+efemär (M6: sparfilen skriver ytzonen `coast`), så varje nedstigning ger en färsk boss.
 
 ## 8. Outfit — `outfit_pirate` ("Piratens mundering") (`data/outfits.json`)
 
-- **Bas-unlock:** besegra Piratkapten Svartöga (boss-unlock).
-- **2 addons** (Tibia-stil, hårdare krav via `UnlockSystem`):
-  - Addon 1: laga `swordfish_steak` (kopplar cooking-loopen till kosmetik).
-  - Addon 2: X kills på Svartöga **eller** Fishing-nivå-tröskel.
-- Matchar befintlig outfit-struktur (kombinerade krav i `unlocks.json`).
+- **Bas-unlock:** `outfit_pirate` med `requires: {"boss_killed": "Piratkapten Svartöga"}`
+  — exakt samma mekanik som `outfit_ghoul_king` idag (ingen ny kod).
+- **2 addons** med hårdare krav via `UnlockSystem`-typer som redan stöds av `can_unlock`
+  (`skill`/`task_completed`/`boss_killed` — inte "lagat item X"):
+  - `outfit_pirate_addon1`: `requires: {"skill": "cooking", "level": 35}` (samma nivå som
+    `swordfish_steak` kräver — kopplar cooking-loopen till kosmetik).
+  - `outfit_pirate_addon2`: `requires: {"skill": "fishing", "level": 40}`.
+- Matchar befintlig outfit-/unlock-struktur i `outfits.json` + `unlocks.json`.
 
 ## 9. Items (`data/items.json`)
 
