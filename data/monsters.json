@@ -299,7 +299,8 @@
 				"max": 2,
 				"chance": 0.5
 			}
-		]
+		],
+		"enrage": true
 	},
 	"Strandkrabba": {
 		"hp": 60,
@@ -455,6 +456,43 @@
 				"min": 1,
 				"max": 2,
 				"chance": 0.5
+			}
+		],
+		"enrage": true
+	},
+	"Urskogsvältaren": {
+		"hp": 600,
+		"atk": 35,
+		"exp": 700,
+		"speed": 1.5,
+		"cooldown": 2.0,
+		"aggro_range": 8,
+		"color": "#2d4a1a",
+		"boss": true,
+		"enrage": true,
+		"ability": {
+			"type": "stun",
+			"chance": 0.3,
+			"duration": 2.0
+		},
+		"loot": [
+			{
+				"item": "ancient_bark_shield",
+				"min": 1,
+				"max": 1,
+				"chance": 1.0
+			},
+			{
+				"item": "iron_coin",
+				"min": 150,
+				"max": 300,
+				"chance": 1.0
+			},
+			{
+				"item": "health_potion",
+				"min": 2,
+				"max": 3,
+				"chance": 0.75
 			}
 		]
 	}

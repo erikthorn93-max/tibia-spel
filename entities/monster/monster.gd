@@ -23,7 +23,7 @@ var _from := Vector2.ZERO
 var _to   := Vector2.ZERO
 var dead := false          # publik — läses av player.gd
 var status_effects: Dictionary = {}  # id -> {tick_dmg, time_left, tick_acc}
-var _burn_pulse := 0.0    # 0..1 för orange puls under burn
+var enraged := false       # publik — enrage-fas aktiv
 
 @onready var _hp_bar: ColorRect  = $HpBar
 @onready var _name_lbl: Label    = $NameLabel
@@ -68,6 +68,10 @@ func _refresh_label() -> void:
 	if not is_node_ready():
 		return
 	_name_lbl.text = monster_name
+	if enraged:
+		_name_lbl.add_theme_color_override("font_color", Color(1.0, 0.15, 0.15))
+	else:
+		_name_lbl.remove_theme_color_override("font_color")
 	var ratio := float(hp) / float(max_hp) if max_hp > 0 else 0.0
 	_hp_bar.offset_right = -14.0 + BAR_W * ratio
 	# Färg: orange puls under burn, annars grön/gul/röd
@@ -75,6 +79,8 @@ func _refresh_label() -> void:
 		var t := Time.get_ticks_msec() / 1000.0
 		var pulse := 0.5 + 0.5 * sin(t * 6.0)   # 3 Hz puls
 		_hp_bar.color = Color(1.0, 0.45 + pulse * 0.25, 0.0)
+	elif enraged:
+		_hp_bar.color = Color(1.0, 0.2, 0.2)
 	elif ratio > 0.5:
 		_hp_bar.color = Color(0.18, 0.78, 0.18)
 	elif ratio > 0.25:
@@ -143,6 +149,20 @@ func _tick_statuses(delta: float) -> void:
 	if burn_active_before != has_status("burn"):
 		_refresh_label()
 
+## Kontrollerar om monstret ska gå in i enrage-fas (kallas från take_damage).
+func _check_enrage() -> void:
+	if enraged:
+		return   # enrage kan bara triggas en gång
+	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
+	if not bool(d.get("enrage", false)):
+		return
+	if float(hp) > float(max_hp) * 0.5:
+		return
+	enraged = true
+	speed   *= 1.5
+	atk      = int(float(atk) * 1.5)
+	_refresh_label()
+
 ## Försöker applicera monsterets ability-effekt på spelaren.
 func _try_apply_ability() -> void:
 	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
@@ -156,6 +176,9 @@ func _try_apply_ability() -> void:
 			GameState.apply_status("poison",
 				float(ab.get("duration", 10.0)),
 				float(ab.get("tick_dmg", 3.0)))
+		"stun":
+			GameState.apply_status("stun",
+				float(ab.get("duration", 2.0)), 0.0)
 
 func _step_to(next: Vector2i) -> void:
 	tile = next
@@ -167,6 +190,7 @@ func take_damage(dmg: float) -> void:
 	if dead:
 		return
 	hp = maxi(hp - int(dmg), 0)
+	_check_enrage()
 	_refresh_label()
 	if hp <= 0:
 		_die()

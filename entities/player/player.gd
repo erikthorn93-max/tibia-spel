@@ -62,6 +62,8 @@ func _process(delta: float) -> void:
 	_update_spells()
 
 func _update_movement(delta: float) -> void:
+	if GameState.has_status("stun"):
+		return   # stun-status: spelaren kan inte röra sig
 	if _move_t < 1.0:
 		_move_t = minf(_move_t + delta * move_speed, 1.0)
 		position = _from.lerp(_to, _move_t)
