@@ -24,6 +24,10 @@ var _msg_timer := 0.0
 var _qs_rune_lbl: Label   # visar aktiv runa + qty i quickslot
 var _qs_pot_lbl: Label    # visar health_potion qty i quickslot
 var _poison_lbl: Label    # "Giftig!"-chip
+var _boss_panel: PanelContainer  # boss HP-bar, synlig under bossfight
+var _boss_name_lbl: Label
+var _boss_hp_bar: ColorRect
+var _boss_hp_bg: ColorRect
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS    # måste fungera när trädet pausas vid död
@@ -70,6 +74,7 @@ func _ready() -> void:
 	GameState.inventory_changed.connect(_refresh_quickslots)
 	GameState.status_changed.connect(_refresh_status)
 	_build_status_chips()
+	_build_boss_bar()
 	GameState.buffs_changed.connect(_refresh_buffs)
 	GameState.player_died.connect(_on_death)
 	_refresh()
@@ -85,6 +90,7 @@ func _process(delta: float) -> void:
 			msg_lbl.visible = false
 	if not GameState.active_buffs.is_empty():
 		_refresh_buffs()   # nedräkning
+	_refresh_boss_bar()
 
 func show_message(text: String) -> void:
 	msg_lbl.text = text
@@ -194,3 +200,57 @@ func _unhandled_input(event: InputEvent) -> void:
 		bestiary_panel.visible = false
 		dialogue_box.close()
 		quest_
+
+## Bygger boss HP-baren nertill i mitten av skärmen.
+func _build_boss_bar() -> void:
+	_boss_panel = PanelContainer.new()
+	_boss_panel.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+	_boss_panel.offset_left   = 300.0
+	_boss_panel.offset_right  = -300.0
+	_boss_panel.offset_bottom = -8.0
+	_boss_panel.offset_top    = -70.0
+	_boss_panel.visible = false
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 4)
+	_boss_panel.add_child(vbox)
+	_boss_name_lbl = Label.new()
+	_boss_name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_boss_name_lbl.add_theme_font_size_override("font_size", 14)
+	_boss_name_lbl.add_theme_color_override("font_color", Color(1.0, 0.55, 0.1))
+	vbox.add_child(_boss_name_lbl)
+	# Bakgrundsbar
+	_boss_hp_bg = ColorRect.new()
+	_boss_hp_bg.color = Color(0.25, 0.05, 0.05)
+	_boss_hp_bg.custom_minimum_size = Vector2(0, 16)
+	vbox.add_child(_boss_hp_bg)
+	# Förgrunds-HP-bar
+	_boss_hp_bar = ColorRect.new()
+	_boss_hp_bar.color = Color(0.85, 0.15, 0.15)
+	_boss_hp_bar.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_boss_hp_bg.add_child(_boss_hp_bar)
+	add_child(_boss_panel)
+
+## Uppdaterar boss HP-baren varje frame.
+func _refresh_boss_bar() -> void:
+	if _boss_panel == null:
+		return
+	var p := World.player
+	if p == null or not is_instance_valid(p):
+		_boss_panel.visible = false
+		return
+	var tgt := p.get("target")
+	if tgt == null or not is_instance_valid(tgt) or tgt.get("dead"):
+		_boss_panel.visible = false
+		return
+	var mname := String(tgt.get("monster_name", ""))
+	var d: Dictionary = MonsterDB.monsters.get(mname, {})
+	if not bool(d.get("boss", false)):
+		_boss_panel.visible = false
+		return
+	# Boss är valt target — visa baren
+	_boss_panel.visible = true
+	var mhp := int(tgt.get("max_hp", 1))
+	var chp := int(tgt.get("hp", 0))
+	var ratio := float(chp) / float(mhp) if mhp > 0 else 0.0
+	_boss_name_lbl.text = "%s  %d / %d" % [mname, chp, mhp]
+	_boss_hp_bar.anchor_right = ratio
