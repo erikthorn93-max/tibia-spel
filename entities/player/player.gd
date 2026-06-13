@@ -5,6 +5,7 @@ extends Node2D
 const TILE := 32
 const ATTACK_COOLDOWN := 1.0
 const GATHER_INTERVAL := 2.0
+const MAGIC_RANGE := 4   # Chebyshev-avstånd för runkastning
 
 var zone: Node2D                      # sätts av World vid zonladdning
 var tile := Vector2i.ZERO
@@ -58,6 +59,7 @@ func _process(delta: float) -> void:
 	_update_movement(delta)
 	_update_attack(delta)
 	_update_gather(delta)
+	_update_spells()
 
 func _update_movement(delta: float) -> void:
 	if _move_t < 1.0:
@@ -138,15 +140,12 @@ func _update_gather(delta: float) -> void:
 		"depleted":
 			gather_target = null
 
-func _check_portal() -> void:
-	if zone.dungeon_entrances.has(tile):
-		World.enter_dungeon(zone.dungeon_entrances[tile])
-		return
-	if not zone.portals.has(tile):
-		return
-	if zone.portal_locks.has(tile):
-		var uid: String = zone.portal_locks[tile]
-		if not UnlockSystem.try_unlock(uid):
-			World.hud.show_message(UnlockSystem.hint_for(uid))
-			return
-	World.change_zone(zone.portals[tile])
+func _update_spells() -> void:
+	if Input.is_action_just_pressed("use_rune"):
+		_cast_rune()
+	if Input.is_action_just_pressed("use_potion"):
+		if not GameState.use_item("health_potion"):
+			World.hud.show_message("Ingen hälsodryck.")
+
+## Kastar aktiv runa mot target (damage) eller sig själv (heal).
+func _cas
