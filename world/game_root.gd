@@ -27,7 +27,7 @@ func _handle_world_click() -> void:
 	if World.player == null or World.current_zone == null:
 		return
 	var world_pos := get_global_mouse_position()
-	var clicked_tile := World.current_zone.world_to_tile(world_pos)
+	var clicked_tile: Vector2i = World.current_zone.world_to_tile(world_pos)
 	for child in World.current_zone.get_children():
 		if child.get("tile") == clicked_tile:
 			if child.has_method("take_damage") and not child.get("dead"):
@@ -45,5 +45,4 @@ func _debug_spawn_rats() -> void:
 			if spawned >= 50: break
 			var t := origin + Vector2i(dx, dy)
 			if World.current_zone.is_walkable(t) and t != origin:
-				World.spawn_monster("Råtta", t)
-				s
+				World.spawn_monster("Råtta",
