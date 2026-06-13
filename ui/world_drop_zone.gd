@@ -10,7 +10,7 @@ func _ready() -> void:
 func _can_drop_data(_at: Vector2, data) -> bool:
 	return data is Dictionary and data.has("item_id")
 
-func _drop_data(_at: Vector2, data: Dictionary) -> void:
+func _drop_data(_at: Vector2, data) -> void:
 	var item_id: String = String(data.get("item_id", ""))
 	var qty: int = int(data.get("qty", 1))
 	if item_id.is_empty():
