@@ -1,34 +1,102 @@
 {
-	"spindelhalan":     {"name": "Spindelhålan",      "category": "area"},
-	"kryptan":          {"name": "Kryptan",           "category": "area"},
-	"morka_dungen":     {"name": "Mörka dungen",      "category": "area"},
-	"bossrummet":       {"name": "Bossrummet",        "category": "area"},
-	"trasket":          {"name": "Träsket",           "category": "area",
-		"requires": {"quest": "quest_crypt"},
-		"hint": "Stigen in i träsket öppnas för den som utforskat kryptan åt Maelis."},
-	"traskets_hjarta":  {"name": "Träskets hjärta",   "category": "area"},
-	"genvag_stenarna":  {"name": "Stenarna",          "category": "shortcut",
-		"requires": {"skill": "agility", "level": 10},
-		"hint": "Hala stenar över floden. Kräver Agility 10."},
-	"genvag_grottan":   {"name": "Grottgenvägen",     "category": "shortcut",
-		"requires": {"skill": "agility", "level": 15},
-		"hint": "En trång klippskreva mellan grottan och träsket. Kräver Agility 15."},
-	"outfit_explorer":  {"name": "Vandrarens kläder", "category": "outfit",
-		"requires": {"quest": "quest_welcome"},
-		"hint": "Klara questen Welcome to Town."},
-	"outfit_slayer":    {"name": "Slayer's Garb",     "category": "outfit",
-		"requires": {"task_completed": "task_ghoul"},
-		"hint": "Slutför ghoul-tasken hos taskmastern."},
-	"outfit_angler":    {"name": "Fiskarens ställ",   "category": "outfit",
-		"requires": {"skill": "fishing", "level": 30},
-		"hint": "Nå Fishing 30."},
-	"outfit_ghoul_king": {"name": "Ghulkungens mantel", "category": "outfit",
-		"requires": {"boss_killed": "Ghulkungen"},
-		"hint": "Besegra Ghulkungen."},
-	"kustvagen": {"name": "Sjövägen", "category": "area",
-		"requires": {"quest": "quest_sjovagen"},
-		"hint": "Slutför Kapten Brandts uppdrag vid hamnen i Thais."},
-	"outfit_pirate": {"name": "Piratens mundering", "category": "outfit",
-		"requires": {"boss_killed": "Piratkapten Svartöga"},
-		"hint": "Besegra Piratkapten Svartöga i det sjunkna skeppet."}
+  "spindelhalan": {
+    "name": "Spindelhålan",
+    "category": "area"
+  },
+  "kryptan": {
+    "name": "Kryptan",
+    "category": "area"
+  },
+  "morka_dungen": {
+    "name": "Mörka dungen",
+    "category": "area"
+  },
+  "bossrummet": {
+    "name": "Bossrummet",
+    "category": "area"
+  },
+  "trasket": {
+    "name": "Träsket",
+    "category": "area",
+    "requires": {
+      "quest": "quest_crypt"
+    },
+    "hint": "Stigen in i träsket öppnas för den som utforskat kryptan åt Maelis."
+  },
+  "traskets_hjarta": {
+    "name": "Träskets hjärta",
+    "category": "area"
+  },
+  "genvag_stenarna": {
+    "name": "Stenarna",
+    "category": "shortcut",
+    "requires": {
+      "skill": "agility",
+      "level": 10
+    },
+    "hint": "Hala stenar över floden. Kräver Agility 10."
+  },
+  "genvag_grottan": {
+    "name": "Grottgenvägen",
+    "category": "shortcut",
+    "requires": {
+      "skill": "agility",
+      "level": 15
+    },
+    "hint": "En trång klippskreva mellan grottan och träsket. Kräver Agility 15."
+  },
+  "outfit_explorer": {
+    "name": "Vandrarens kläder",
+    "category": "outfit",
+    "requires": {
+      "quest": "quest_welcome"
+    },
+    "hint": "Klara questen Welcome to Town."
+  },
+  "outfit_slayer": {
+    "name": "Slayer's Garb",
+    "category": "outfit",
+    "requires": {
+      "task_completed": "task_ghoul"
+    },
+    "hint": "Slutför ghoul-tasken hos taskmastern."
+  },
+  "outfit_angler": {
+    "name": "Fiskarens ställ",
+    "category": "outfit",
+    "requires": {
+      "skill": "fishing",
+      "level": 30
+    },
+    "hint": "Nå Fishing 30."
+  },
+  "outfit_ghoul_king": {
+    "name": "Ghulkungens mantel",
+    "category": "outfit",
+    "requires": {
+      "boss_killed": "Ghulkungen"
+    },
+    "hint": "Besegra Ghulkungen."
+  },
+  "kustvagen": {
+    "name": "Sjövägen",
+    "category": "area",
+    "requires": {
+      "quest": "quest_sjovagen"
+    },
+    "hint": "Slutför Kapten Brandts uppdrag vid hamnen i Thais."
+  },
+  "outfit_pirate": {
+    "name": "Piratens mundering",
+    "category": "outfit",
+    "requires": {
+      "boss_killed": "Piratkapten Svartöga"
+    },
+    "hint": "Besegra Piratkapten Svartöga i det sjunkna skeppet."
+  },
+  "oknen": {
+    "name": "Ökenvägen",
+    "desc": "Vägen till Ökenruinerna har öppnats.",
+    "requires": []
+  }
 }

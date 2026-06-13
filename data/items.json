@@ -615,5 +615,29 @@
     "ammo": "wooden_arrow",
     "level_req": 15,
     "sprite": "res://assets/sprites/items/steel_bow.png"
+  },
+  "sand_scale": {
+    "name": "Sandfjäll",
+    "value": 8,
+    "desc": "En hård fjäll från en Sandorm."
+  },
+  "ancient_bandage": {
+    "name": "Urgammal bindel",
+    "value": 25,
+    "desc": "Inlindad i torkad papyrus. Användbar för crafting.",
+    "usable": false
+  },
+  "scarab_shell": {
+    "name": "Skarabéskal",
+    "value": 60,
+    "desc": "Iriseras i ökenljuset. Sällan förekommande."
+  },
+  "pharaohs_scepter": {
+    "name": "Faraos spira",
+    "slot": "weapon",
+    "atk_bonus": 18,
+    "speed_bonus": 0.3,
+    "value": 2000,
+    "desc": "En urgammal spira tillhörande Farao Khem-Ra."
   }
 }

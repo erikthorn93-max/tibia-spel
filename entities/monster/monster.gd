@@ -214,9 +214,11 @@ func _die() -> void:
 	var drops: Array = []
 	for entry in loot_table:
 		if randf() < float(entry.get("chance", 0.0)):
+			var qty_min := int(entry.get("min", int(entry.get("qty", 1))))
+			var qty_max := int(entry.get("max", qty_min))
 			drops.append({
 				"item": String(entry["item"]),
-				"qty":  int(entry.get("qty", 1))
+				"qty":  randi_range(qty_min, qty_max)
 			})
 	if not drops.is_empty():
 		var gi := preload("res://entities/ground_item.gd").new()
@@ -230,6 +232,4 @@ func _die() -> void:
 		var mn := monster_name
 		var rt := respawn_time
 		var zref := zone
-		get_tree().create_timer(rt).timeout.connect(
-			func(): if is_instance_valid(zref): World.spawn_monster(mn, t, rt))
-	queue_free()
+		get_tree()
