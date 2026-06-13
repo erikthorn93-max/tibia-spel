@@ -89,8 +89,9 @@ func spawn_monster(monster_name: String, t: Vector2i, respawn := -1.0) -> Node2D
 	var m: Node2D = load(MONSTER_SCENE_PATH).instantiate()
 	current_zone.add_child(m)
 	m.setup(monster_name, t, current_zone, respawn)
-	# 5 % chans att bli ett elite-monster (starkare, mer exp, orange namn)
-	if randf() < 0.05:
+	# Elite-chans: 5 % dag, 15 % natt
+	var elite_chance := 0.15 if TimeOfDay.is_night else 0.05
+	if randf() < elite_chance:
 		_make_elite(m)
 	return m
 

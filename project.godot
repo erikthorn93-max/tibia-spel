@@ -25,6 +25,7 @@ QuestSystem="*res://autoload/quest_system.gd"
 DialogueDB="*res://autoload/dialogue_db.gd"
 World="*res://autoload/world.gd"
 SaveManager="*res://autoload/save_manager.gd"
+TimeOfDay="*res://autoload/time_of_day.gd"
 
 [display]
 

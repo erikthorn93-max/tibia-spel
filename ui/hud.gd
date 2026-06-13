@@ -23,6 +23,8 @@ var wardrobe: PanelContainer
 var equipment_panel: PanelContainer
 var hotkey_bar: Node
 var _msg_timer := 0.0
+var _night_overlay: ColorRect  # dag/natt-mörkläggning
+var _clock_lbl: Label          # spelklocka HH:MM
 var _poison_lbl: Label    # "Giftig!"-chip
 var _boss_panel: PanelContainer  # boss HP-bar, synlig under bossfight
 var _boss_name_lbl: Label
@@ -68,6 +70,8 @@ func _ready() -> void:
 	add_child(preload("res://ui/debug_console.gd").new())
 	add_child(preload("res://ui/death_screen.gd").new())
 	_build_boss_bar()
+	_build_night_overlay()
+	TimeOfDay.hour_changed.connect(_on_hour_changed)
 	TaskSystem.task_taken.connect(func(_id): _refresh_tasks())
 	TaskSystem.task_progress.connect(func(_id): _refresh_tasks())
 	TaskSystem.task_completed.connect(func(_id): _refresh_tasks())
@@ -97,6 +101,7 @@ func _process(delta: float) -> void:
 	if not GameState.active_buffs.is_empty():
 		_refresh_buffs()   # nedräkning
 	_refresh_boss_bar()
+	_update_night_overlay()
 
 func show_message(text: String) -> void:
 	msg_lbl.text = text
@@ -271,6 +276,43 @@ func _on_death() -> void:
 	pass   # DeathScreen hanterar sin egen synlighet via player_died-signalen
 
 ## Bygger boss HP-bar längst ner i mitten — dold tills target är en boss
+func _build_night_overlay() -> void:
+	_night_overlay = ColorRect.new()
+	_night_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_night_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_night_overlay.color = Color(0.02, 0.04, 0.18, 0.0)
+	add_child(_night_overlay)
+	move_child(_night_overlay, 1)   # precis ovanför world_drop_zone
+	_clock_lbl = Label.new()
+	_clock_lbl.add_theme_font_size_override("font_size", 11)
+	_clock_lbl.add_theme_color_override("font_color", Color(0.88, 0.84, 0.62))
+	_clock_lbl.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	_clock_lbl.offset_left = -120.0
+	_clock_lbl.offset_top  = 130.0
+	_clock_lbl.offset_right = -6.0
+	_clock_lbl.offset_bottom = 148.0
+	_clock_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	add_child(_clock_lbl)
+	_update_night_overlay()
+
+func _on_hour_changed(_h: int) -> void:
+	_update_night_overlay()
+
+func _update_night_overlay() -> void:
+	if _night_overlay == null or _clock_lbl == null:
+		return
+	var h := TimeOfDay.hour
+	var frac := TimeOfDay.day_fraction   # 0.0–1.0
+	# Beräkna alpha: max mörkhet 0.52 klockan 00:00, 0.0 klockan 12:00
+	# Sinuskurva: mörkt 22:00–06:00, ljust 08:00–20:00
+	var angle := frac * TAU   # 0 = midnatt, PI = middag
+	var raw_alpha := (-cos(angle) + 1.0) * 0.5   # 0..1, topp vid midnatt
+	var alpha := raw_alpha * 0.52
+	_night_overlay.color = Color(0.02, 0.04, 0.18, alpha)
+	# Klocka + ikon
+	var icon := "☀" if not TimeOfDay.is_night else "🌙"
+	_clock_lbl.text = "%s %02d:00" % [icon, h]
+
 func _build_boss_bar() -> void:
 	_boss_panel = PanelContainer.new()
 	_boss_panel.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)

@@ -60,6 +60,10 @@ func setup(mname: String, t: Vector2i, z: Node2D, respawn := -1.0) -> void:
 	aggro_range = int(d.get("aggro_range", 5))
 	speed = float(d.get("speed", 3.0))
 	cooldown = float(d.get("cooldown", 1.0))
+	# Natt-buff: +20 % atk och exp vid spawn under natten
+	if TimeOfDay.is_night:
+		atk = int(float(atk) * 1.2)
+		exp = int(float(exp) * 1.2)
 	position = zone.tile_to_world(tile)
 	_from = position; _to = position; _move_t = 1.0
 	_refresh_label()
