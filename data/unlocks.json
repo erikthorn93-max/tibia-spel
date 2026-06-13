@@ -103,5 +103,9 @@
     "name": "Vulkanpasset",
     "desc": "Vägen till Vulkankratern har öppnats.",
     "requires": []
+  },
+  "isfjorden": {
+    "name": "Isfjordvägen",
+    "requires": []
   }
 }

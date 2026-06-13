@@ -229,5 +229,86 @@
       "xp": 1500,
       "gold": 800
     }
+  },
+  "quest_ice_1": {
+    "name": "Köldens Välkomnande",
+    "giver": "npc_elder",
+    "requires": [],
+    "steps": [
+      {
+        "type": "explore",
+        "zone": "ice",
+        "hint": "Bege dig till Isfjorden. (Portalen vid bytets södra del.)"
+      },
+      {
+        "type": "kill",
+        "monster": "Istroll",
+        "count": 8,
+        "hint": "Döda 8 Istroll i Isfjorden."
+      },
+      {
+        "type": "talk_to",
+        "npc": "npc_elder",
+        "hint": "Rapportera tillbaka till Äldsten."
+      }
+    ],
+    "rewards": {
+      "xp": 500,
+      "gold": 300
+    }
+  },
+  "quest_ice_2": {
+    "name": "Frostörnarnas Tid",
+    "giver": "npc_elder",
+    "requires": [
+      "quest_ice_1"
+    ],
+    "steps": [
+      {
+        "type": "collect",
+        "item": "frostfjäder",
+        "count": 5,
+        "hint": "Samla 5 Frostfjädrar från Frostörnar."
+      },
+      {
+        "type": "talk_to",
+        "npc": "npc_elder",
+        "hint": "Lämna in fjädrarna till Äldsten."
+      }
+    ],
+    "rewards": {
+      "xp": 700,
+      "gold": 400,
+      "items": [
+        {
+          "item": "is_kristall",
+          "qty": 2
+        }
+      ]
+    }
+  },
+  "quest_ice_3": {
+    "name": "Isdraken Faller",
+    "giver": "npc_elder",
+    "requires": [
+      "quest_ice_2"
+    ],
+    "steps": [
+      {
+        "type": "kill",
+        "monster": "Isdraken",
+        "count": 1,
+        "hint": "Sök upp och döda Isdraken i Isfjordens djupaste kammare."
+      },
+      {
+        "type": "talk_to",
+        "npc": "npc_elder",
+        "hint": "Rapportera segern till Äldsten."
+      }
+    ],
+    "rewards": {
+      "xp": 2000,
+      "gold": 1200
+    }
   }
 }

@@ -696,5 +696,100 @@
         "chance": 0.9
       }
     ]
+  },
+  "Istroll": {
+    "hp": 280,
+    "atk": 45,
+    "exp": 250,
+    "speed": 1.6,
+    "cooldown": 1.5,
+    "aggro_range": 5,
+    "color": "#88ccff",
+    "ability": {
+      "type": "slow",
+      "chance": 0.25,
+      "duration": 3.0,
+      "tick_dmg": 0.0
+    },
+    "loot": [
+      {
+        "item": "is_kristall",
+        "min": 1,
+        "max": 2,
+        "chance": 0.6
+      },
+      {
+        "item": "iron_coin",
+        "min": 30,
+        "max": 80,
+        "chance": 1.0
+      }
+    ]
+  },
+  "Frostörn": {
+    "hp": 150,
+    "atk": 38,
+    "exp": 200,
+    "speed": 3.2,
+    "cooldown": 1.0,
+    "aggro_range": 10,
+    "color": "#aaddff",
+    "loot": [
+      {
+        "item": "frostfjäder",
+        "min": 1,
+        "max": 2,
+        "chance": 0.55
+      },
+      {
+        "item": "iron_coin",
+        "min": 20,
+        "max": 60,
+        "chance": 1.0
+      }
+    ]
+  },
+  "Isdraken": {
+    "hp": 3500,
+    "atk": 90,
+    "exp": 5000,
+    "speed": 1.4,
+    "cooldown": 2.0,
+    "aggro_range": 14,
+    "color": "#66bbff",
+    "boss": true,
+    "enrage": true,
+    "ability": {
+      "type": "stun",
+      "chance": 0.3,
+      "duration": 3.0,
+      "tick_dmg": 0.0
+    },
+    "loot": [
+      {
+        "item": "drakvapen",
+        "min": 1,
+        "max": 1,
+        "chance": 1.0
+      },
+      {
+        "item": "is_kristall",
+        "min": 8,
+        "max": 15,
+        "chance": 1.0
+      },
+      {
+        "item": "iron_coin",
+        "min": 1000,
+        "max": 2000,
+        "chance": 1.0
+      },
+      {
+        "item": "health_potion",
+        "min": 3,
+        "max": 5,
+        "chance": 0.9
+      }
+    ]
   }
 }

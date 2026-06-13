@@ -657,5 +657,24 @@
     "speed_bonus": 0.2,
     "value": 4500,
     "desc": "Smitt av Smältkonungen ur rent vulkanglas. Skärper sig aldrig."
+  },
+  "is_kristall": {
+    "name": "Iskristall",
+    "value": 50,
+    "description": "Ett glittrande kristallklart isblock."
+  },
+  "frostfjäder": {
+    "name": "Frostfjäder",
+    "value": 35,
+    "description": "En iskall fjäder från en frostörn."
+  },
+  "drakvapen": {
+    "name": "Drakklinga",
+    "slot": "weapon",
+    "atk_bonus": 38,
+    "speed_bonus": 0.2,
+    "skill": "sword",
+    "value": 8000,
+    "description": "En vapen smiddt av isdrake-tänder."
   }
 }
