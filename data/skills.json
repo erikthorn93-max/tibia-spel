@@ -1,20 +1,128 @@
 {
-	"sword":        {"name": "Sword",        "category": "combat",    "xp_base": 50, "xp_growth": 1.1, "start_level": 10},
-	"axe":          {"name": "Axe",          "category": "combat",    "xp_base": 50, "xp_growth": 1.1, "start_level": 1},
-	"club":         {"name": "Club",         "category": "combat",    "xp_base": 50, "xp_growth": 1.1, "start_level": 1},
-	"fist":         {"name": "Fist",         "category": "combat",    "xp_base": 50, "xp_growth": 1.1, "start_level": 1},
-	"distance":     {"name": "Distance",     "category": "combat",    "xp_base": 50, "xp_growth": 1.1, "start_level": 1},
-	"shielding":    {"name": "Shielding",    "category": "combat",    "xp_base": 50, "xp_growth": 1.1, "start_level": 10},
-	"magic":        {"name": "Magic Level",  "category": "combat",    "xp_base": 50, "xp_growth": 1.1, "start_level": 1},
-	"mining":       {"name": "Mining",       "category": "gathering", "xp_base": 50, "xp_growth": 1.1, "start_level": 1},
-	"fishing":      {"name": "Fishing",      "category": "gathering", "xp_base": 50, "xp_growth": 1.1, "start_level": 1},
-	"woodcutting":  {"name": "Woodcutting",  "category": "gathering", "xp_base": 50, "xp_growth": 1.1, "start_level": 1},
-	"herbalism":    {"name": "Herbalism",    "category": "gathering", "xp_base": 50, "xp_growth": 1.1, "start_level": 1},
-	"smithing":     {"name": "Smithing",     "category": "crafting",  "xp_base": 50, "xp_growth": 1.1, "start_level": 1},
-	"cooking":      {"name": "Cooking",      "category": "crafting",  "xp_base": 50, "xp_growth": 1.1, "start_level": 1},
-	"alchemy":      {"name": "Alchemy",      "category": "crafting",  "xp_base": 50, "xp_growth": 1.1, "start_level": 1},
-	"runecrafting": {"name": "Runecrafting", "category": "crafting",  "xp_base": 50, "xp_growth": 1.1, "start_level": 1},
-	"agility":      {"name": "Agility",      "category": "utility",   "xp_base": 50, "xp_growth": 1.1, "start_level": 1},
-	"thieving":     {"name": "Thieving",     "category": "utility",   "xp_base": 50, "xp_growth": 1.1, "start_level": 1},
-	"slayer":       {"name": "Slayer",       "category": "utility",   "xp_base": 50, "xp_growth": 1.1, "start_level": 1}
+	"sword": {
+		"name": "Sword",
+		"category": "combat",
+		"xp_base": 50,
+		"xp_growth": 1.1,
+		"start_level": 10
+	},
+	"axe": {
+		"name": "Axe",
+		"category": "combat",
+		"xp_base": 50,
+		"xp_growth": 1.1,
+		"start_level": 1
+	},
+	"club": {
+		"name": "Club",
+		"category": "combat",
+		"xp_base": 50,
+		"xp_growth": 1.1,
+		"start_level": 1
+	},
+	"fist": {
+		"name": "Fist",
+		"category": "combat",
+		"xp_base": 50,
+		"xp_growth": 1.1,
+		"start_level": 1
+	},
+	"distance": {
+		"name": "Distance",
+		"category": "combat",
+		"xp_base": 50,
+		"xp_growth": 1.1,
+		"start_level": 1
+	},
+	"shielding": {
+		"name": "Shielding",
+		"category": "combat",
+		"xp_base": 50,
+		"xp_growth": 1.1,
+		"start_level": 10
+	},
+	"magic": {
+		"name": "Magic Level",
+		"category": "combat",
+		"xp_base": 50,
+		"xp_growth": 1.1,
+		"start_level": 1
+	},
+	"mining": {
+		"name": "Mining",
+		"category": "gathering",
+		"xp_base": 50,
+		"xp_growth": 1.1,
+		"start_level": 1
+	},
+	"fishing": {
+		"name": "Fishing",
+		"category": "gathering",
+		"xp_base": 50,
+		"xp_growth": 1.1,
+		"start_level": 1
+	},
+	"woodcutting": {
+		"name": "Woodcutting",
+		"category": "gathering",
+		"xp_base": 50,
+		"xp_growth": 1.1,
+		"start_level": 1
+	},
+	"herbalism": {
+		"name": "Herbalism",
+		"category": "gathering",
+		"xp_base": 50,
+		"xp_growth": 1.1,
+		"start_level": 1
+	},
+	"smithing": {
+		"name": "Smithing",
+		"category": "crafting",
+		"xp_base": 50,
+		"xp_growth": 1.1,
+		"start_level": 1
+	},
+	"cooking": {
+		"name": "Cooking",
+		"category": "crafting",
+		"xp_base": 50,
+		"xp_growth": 1.1,
+		"start_level": 1
+	},
+	"alchemy": {
+		"name": "Alchemy",
+		"category": "crafting",
+		"xp_base": 50,
+		"xp_growth": 1.1,
+		"start_level": 1
+	},
+	"runecrafting": {
+		"name": "Runecrafting",
+		"category": "crafting",
+		"xp_base": 50,
+		"xp_growth": 1.1,
+		"start_level": 1
+	},
+	"agility": {
+		"name": "Agility",
+		"category": "utility",
+		"xp_base": 50,
+		"xp_growth": 1.1,
+		"start_level": 1
+	},
+	"thieving": {
+		"name": "Thieving",
+		"category": "utility",
+		"xp_base": 50,
+		"xp_growth": 1.1,
+		"start_level": 1
+	},
+	"slayer": {
+		"name": "Slayer",
+		"category": "utility",
+		"xp_base": 50,
+		"xp_growth": 1.1,
+		"start_level": 1
+	}
 }

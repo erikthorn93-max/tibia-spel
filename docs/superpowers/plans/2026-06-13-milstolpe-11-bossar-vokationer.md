@@ -1,59 +1,53 @@
-# Milstolpe 11 — Bossar & Vokationer
+# Milstolpe 11 — Bossar & OSRS-stil Progression
 **Branch:** `m11-bossar-vokationer`  
 **Datum:** 2026-06-13
 
-## Mål
-Bossfighter med flera faser, ny boss i skogen, och spelarklasser (vokationer)
-som ger olika statistillväxt och spelstil.
+## Designfilosofi: OSRS-stil
+Inga klasser eller vokationer — alla spelare har tillgång till alla skills.
+Skills ökar genom användning. Högre nivå låser upp starkare vapen, runor,
+recept och zoner. Spelaren specialiserar sig organiskt via vad de tränar.
 
 ## Uppgifter
 
-### Task 1: Boss-enrage vid 50% HP (TDD)
-- `monster.gd`: `var enraged := false`, `_check_enrage()`
-- Vid `hp <= max_hp * 0.5` (första gången): `enraged = true`, `speed *= 1.5`, `atk = int(atk * 1.5)`
-- Namnlabel blinkar rött (Color(1.0, 0.1, 0.1))
-- `monsters.json`: Ghulkungen + Piratkapten Svartöga får `"enrage": true`
-- TDD: test_boss_enrage.gd (enrage-tröskel, stat-ändring, ingen dubbel-enrage)
+### Task 1-3: Boss-enrage + stun + Urskogsvältaren ✅ KLAR
+- monster.gd: enrage vid ≤50% HP (speed×1.5, atk×1.5, röd namnlabel)
+- Urskogsvältaren: boss i skogen, stun-ability
+- player.gd: rörelseblock under stun-status
 
-### Task 2: Boss HP-bar i HUD
-- `hud.gd`: `_boss_bar_panel` (PanelContainer, mitten nedtill, dold normalt)
-- Visar när `World.player.target` är ett boss-monster (har `boss`-flagga i MonsterDB)
-- Uppdateras i `_process()` via `_refresh_boss_bar()`
-- Bossnamn + stor orange/röd HP-bar
-- TDD: (visuell feature — smoke test)
+### Task 4: Bågskjutning (ranged combat)
+- `data/items.json`: `hunting_bow` (skill:"archery", atk:12, range:4, slot:"weapon")
+  `wooden_arrow` (ammunition, qty-förbrukas per skott)
+- `data/skills.json`: "archery" skill (om ej redan finns)
+- `player.gd _update_attack()`: om equipped weapon har `range` > 1 →
+  attack på distans (Chebyshev 1..range) — ingen närstrid krävs
+- `combat_formulas.gd`: `roll_ranged(level, atk)` (liknande roll_melee)
+- TDD: test_ranged.gd
 
-### Task 3: Ny boss — Urskogsvältaren (skogen)
-- `monsters.json`: `"Urskogsvältaren"` HP=600, ATK=35, boss:true, ability: stun
-- `ability: {"type":"stun","chance":0.3,"duration":2.0}`
-- `monster.gd _try_apply_ability()`: stun → `GameState.apply_status("stun", 2.0, 0.0)`
-- `player.gd _update_movement()`: om `GameState.has_status("stun")` → skippa rörelse
-- `data/zones/forest.json`: lägg till Urskogsvältaren i spawn_table (respawn 600s)
-- TDD: test_stun_status.gd
+### Task 5: Boss HP-bar i HUD
+- `hud.gd`: `_boss_bar` PanelContainer, mitten-botten, dolt normalt
+- Visar när `World.player.target` är ett boss-monster
+- Stor HP-bar med bossens namn + HP-procent
+- Uppdateras i `_process()` via monster-referens
 
-### Task 4: Spelarklasser (Vokationer)
-- `data/vocations.json`: Riddare, Magiker, Bågman, Druid
-  - `hp_per_level`, `mana_per_level`, `skill_bonuses: {}`
-- `autoload/game_state.gd`: `var vocation := "riddare"`, `apply_vocation(id)`
-  - `apply_vocation()` justerar `max_health`, `max_mana`, tillämpar skill_bonuses
-- `ui/vocation_select.gd`: väljs vid nytt spel (om save saknas)
-- SaveManager: spara/ladda vocation (SAVE_VERSION 7→8)
-- TDD: test_vocations.gd
+### Task 6: Fishing + Cooking (ny gather-skill)
+- `data/items.json`: raw_fish, cooked_fish, burnt_fish
+- `data/gather_nodes.json`: fishing_spot (tool:"fishing_rod", skill:"fishing", level:1)
+  loot: raw_fish (chans 0.9)
+- `data/skills.json`: "fishing", "cooking" skills
+- `data/recipes.json`: campfire: [{id:"cooked_fish", skill:"cooking", level:1,
+  ingredients:{raw_fish:1}, xp:10}]
+- `data/zones/coast.json`: fishing_spot-noder nära vattnet
+- TDD: test_fishing.gd
 
-### Task 5: Vokation-HUD + startbonus
-- HUD visar vocationnamn i stats-raden
-- Riddare startar med rusty_sword + wooden_shield
-- Magiker startar med attack_rune ×3, mana_potion ×1
-- Bågman startar med hunting_bow (nytt vapen, range 1-4)
-- Druid startar med healing_rune ×3
-- TDD: test_vocation_start.gd
+### Task 7: Helsvit + smoke test + merge m11→master
 
-### Task 6: Helsvit + smoke test + merge m11→master
-- Alla GUT-tester gröna (28 + nya)
-- Smoke test: spela igenom town → forest → boss
-- Merge
-
-## Tekniska noter
-- Stun-status: `GameState.apply_status("stun", duration, 0.0)` — tick_dmg=0 (ingen skada)
-- `player.gd` kollar `GameState.has_status("stun")` i `_update_movement()` — skippar all input
-- Boss HP-bar: uppdateras i `_process()` → ingen signal behövs
-- Hunting bow: `"skill":"archery"`, `"range":4`, `"atk":12` — ny skill i skills.json
+## OSRS-paralleller implementerade
+| OSRS | Tibia2D |
+|------|---------|
+| Attack/Strength/Defence | sword/fist/shielding |
+| Magic | magic |
+| Ranged | archery (Task 4) |
+| Fishing | fishing (Task 6) |
+| Cooking | cooking (Task 6) |
+| Herblore | alchemy |
+| Agility | agility |

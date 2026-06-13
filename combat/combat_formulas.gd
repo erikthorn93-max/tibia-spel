@@ -18,3 +18,7 @@ static func mitigate(raw_dmg: int, shielding: int, armor: int) -> int:
 static func roll_magic(magic_level: int, rune_power: int) -> float:
 	var base := rune_power + magic_level * 0.5
 	return base * randf_range(0.85, 1.15)
+## Bågskjutning: distance-skill + vapnets ATK, ±15% variation.
+static func roll_ranged(distance_level: int, weapon_atk: int) -> float:
+	var base := weapon_atk + distance_level * 0.4
+	return base * randf_range(0.85, 1.15)
