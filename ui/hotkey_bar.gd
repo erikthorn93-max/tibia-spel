@@ -1,36 +1,40 @@
 extends PanelContainer
-## Tibia-stil hotkey-bar — 10 draggbara rutor med item-use och konfigurerbara tangenter.
-## Vänsterklick / tangent → använd item.  Högerklick → konfigurera slot.
+## Tibia-stil hotkey-bar — 30 konfigurerbara rutor i 3 rader om 10.
+## Draggbar via handtaget. Högerklick → konfigurera. Vänsterklick/tangent → använd.
 
-const SLOT_COUNT := 10
+const SLOT_COUNT := 30
 const CFG_FILE   := "user://hotkeys.json"
 
-# Standardtangenter F1–F10 (vi reserverar F1/F2 för runa/potion i hud.gd, men
-# användaren kan binda om dem här också om de vill)
 const DEFAULT_KEYS: Array = [
+	# Rad 1: F1–F10
 	KEY_F1, KEY_F2, KEY_F3, KEY_F4, KEY_F5,
-	KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_F10
+	KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_F10,
+	# Rad 2: F11, F12, 1–8
+	KEY_F11, KEY_F12,
+	KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6, KEY_7, KEY_8,
+	# Rad 3: 9, 0, Q, W, E, R, T, Y, U, I
+	KEY_9, KEY_0,
+	KEY_Q, KEY_W, KEY_E, KEY_R, KEY_T, KEY_Y, KEY_U, KEY_I,
 ]
-const DEFAULT_NAMES: Array = ["F1","F2","F3","F4","F5","F6","F7","F8","F9","F10"]
+const DEFAULT_NAMES: Array = [
+	"F1","F2","F3","F4","F5","F6","F7","F8","F9","F10",
+	"F11","F12","1","2","3","4","5","6","7","8",
+	"9","0","Q","W","E","R","T","Y","U","I",
+]
 
-# Slot-data: [{key_name, keycode, item_id}]
 var _slots: Array = []
-
-# UI-refs
 var _slot_panels: Array = []
 var _slot_icons:  Array = []
 var _slot_name_lbls: Array = []
 var _slot_key_lbls:  Array = []
 
-# Drag
 var _dragging    := false
 var _drag_offset := Vector2.ZERO
 
-# Konfig-popup
-var _popup:       Control  = null
+var _popup:       Control   = null
 var _cfg_idx      := -1
 var _wait_key     := false
-var _cfg_key_btn:  Button  = null
+var _cfg_key_btn:  Button   = null
 var _cfg_item_lst: ItemList = null
 var _pending_kname := ""
 var _pending_kcode := 0
@@ -79,11 +83,12 @@ func _build_bar() -> void:
 	sb.content_margin_bottom = 3.0
 	add_theme_stylebox_override("panel", sb)
 
+	# Förankrad längst ner — bredd för 10 rutor × 58px + marginaler
 	set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	offset_left   =  180.0
-	offset_right  = -180.0
-	offset_top    =  -86.0
-	offset_bottom =   -4.0
+	offset_left   =  80.0
+	offset_right  = -80.0
+	offset_top    = -196.0
+	offset_bottom =  -4.0
 
 	var vbox := VBoxContainer.new()
 	vbox.add_theme_constant_override("separation", 1)
@@ -99,17 +104,21 @@ func _build_bar() -> void:
 	handle.gui_input.connect(_on_handle_gui_input)
 	vbox.add_child(handle)
 
-	# Slot-rad
-	var hbox := HBoxContainer.new()
-	hbox.add_theme_constant_override("separation", 2)
-	vbox.add_child(hbox)
+	# Grid: 3 rader × 10 kolumner
+	var grid := GridContainer.new()
+	grid.columns = 10
+	grid.add_theme_constant_override("h_separation", 2)
+	grid.add_theme_constant_override("v_separation", 2)
+	vbox.add_child(grid)
+
 	for i in SLOT_COUNT:
-		hbox.add_child(_make_slot(i))
+		grid.add_child(_make_slot(i))
 
 func _make_slot(idx: int) -> PanelContainer:
 	var cell := PanelContainer.new()
 	cell.custom_minimum_size = Vector2(56, 56)
 	cell.mouse_filter = Control.MOUSE_FILTER_STOP
+
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = Color(0.11, 0.11, 0.14)
 	sb.border_color = Color(0.40, 0.40, 0.50)
@@ -119,17 +128,20 @@ func _make_slot(idx: int) -> PanelContainer:
 	sb.content_margin_top    = 2.0
 	sb.content_margin_bottom = 2.0
 	cell.add_theme_stylebox_override("panel", sb)
+
 	var vbox := VBoxContainer.new()
 	vbox.add_theme_constant_override("separation", 1)
 	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	cell.add_child(vbox)
-	# Ikon-ruta
+
+	# Ikon
 	var icon := ColorRect.new()
 	icon.color = Color(0.18, 0.18, 0.22)
 	icon.custom_minimum_size = Vector2(0, 24)
 	icon.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	vbox.add_child(icon)
 	_slot_icons.append(icon)
+
 	# Item-namn
 	var nlbl := Label.new()
 	nlbl.add_theme_font_size_override("font_size", 8)
@@ -139,13 +151,15 @@ func _make_slot(idx: int) -> PanelContainer:
 	nlbl.custom_minimum_size = Vector2(52, 0)
 	vbox.add_child(nlbl)
 	_slot_name_lbls.append(nlbl)
-	# Tangent-label
+
+	# Tangent
 	var klbl := Label.new()
 	klbl.add_theme_font_size_override("font_size", 10)
 	klbl.add_theme_color_override("font_color", Color(0.55, 0.80, 1.00))
 	klbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(klbl)
 	_slot_key_lbls.append(klbl)
+
 	_slot_panels.append(cell)
 	cell.gui_input.connect(func(ev): _on_slot_gui_input(ev, idx))
 	return cell
@@ -155,8 +169,7 @@ func _build_popup() -> void:
 	_popup = PanelContainer.new()
 	_popup.visible = false
 	_popup.z_index = 100
-	# Centreras i skärmen
-	_popup.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = Color(0.10, 0.10, 0.14, 0.97)
 	sb.border_color = Color(0.50, 0.50, 0.65)
@@ -179,9 +192,7 @@ func _build_popup() -> void:
 	title.add_theme_color_override("font_color", Color(1.0, 0.9, 0.5))
 	title.add_theme_font_size_override("font_size", 13)
 	vbox.add_child(title)
-
-	var sep := HSeparator.new()
-	vbox.add_child(sep)
+	vbox.add_child(HSeparator.new())
 
 	var item_lbl := Label.new()
 	item_lbl.text = "Välj föremål (från inventory):"
@@ -247,10 +258,9 @@ func _build_popup() -> void:
 func _open_config(idx: int) -> void:
 	_cfg_idx = idx
 	_wait_key = false
-	_pending_kname = _slots[idx]["key_name"]
-	_pending_kcode = int(_slots[idx]["keycode"])
+	_pending_kname = String(_slots[idx].get("key_name", ""))
+	_pending_kcode = int(_slots[idx].get("keycode", 0))
 
-	# Bygg item-lista från nuvarande inventory
 	_cfg_item_lst.clear()
 	_cfg_item_lst.add_item("— Ingen —")
 	var current_id: String = String(_slots[idx].get("item_id", ""))
@@ -267,9 +277,8 @@ func _open_config(idx: int) -> void:
 			sel_index = row
 		row += 1
 	_cfg_item_lst.select(sel_index)
-	_cfg_key_btn.text = _pending_kname
+	_cfg_key_btn.text = _pending_kname if _pending_kname != "" else "—"
 	_popup.visible = true
-	# Centrera popup
 	var vp := get_viewport_rect().size
 	_popup.position = (vp - _popup.size) * 0.5
 
@@ -280,7 +289,6 @@ func _on_key_btn_pressed() -> void:
 func _on_ok_pressed() -> void:
 	if _cfg_idx < 0:
 		return
-	# Hämta valt item
 	var sel := _cfg_item_lst.get_selected_items()
 	var item_id := ""
 	if sel.size() > 0 and sel[0] > 0:
@@ -303,20 +311,18 @@ func _on_clear_pressed() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo:
 		return
-	# Tangentbindning pågår?
 	if _wait_key and _popup != null and _popup.visible:
 		var kname := OS.get_keycode_string(event.keycode)
 		if kname.is_empty():
-			kname = "Key%d" % event.keycode
+			kname = "K%d" % event.keycode
 		_pending_kname = kname
 		_pending_kcode = int(event.keycode)
 		_cfg_key_btn.text = kname
 		_wait_key = false
 		get_viewport().set_input_as_handled()
 		return
-	# Kör slot om tangent matchar
 	for i in SLOT_COUNT:
-		if int(_slots[i]["keycode"]) == int(event.keycode):
+		if int(_slots[i].get("keycode", 0)) == int(event.keycode):
 			_use_slot(i)
 			get_viewport().set_input_as_handled()
 			return
@@ -330,11 +336,10 @@ func _use_slot(idx: int) -> void:
 
 # ─────────────────────────────────────────────
 func _on_handle_gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			_dragging = event.pressed
-			if event.pressed:
-				_drag_offset = get_global_mouse_position() - global_position
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		_dragging = event.pressed
+		if event.pressed:
+			_drag_offset = get_global_mouse_position() - global_position
 	elif event is InputEventMouseMotion and _dragging:
 		global_position = get_global_mouse_position() - _drag_offset
 
@@ -362,7 +367,7 @@ func _refresh_slot(idx: int) -> void:
 		_slot_name_lbls[idx].text = ""
 	else:
 		var col_str: String = String(d.get("color", "#888888"))
-		_slot_icons[idx].color    = Color.html(col_str) if col_str.begins_with("#") else Color(0.4, 0.4, 0.5)
+		_slot_icons[idx].color = Color.html(col_str) if col_str.begins_with("#") else Color(0.4, 0.4, 0.5)
 		var qty := int(GameState.inventory.get(item_id, 0))
 		_slot_name_lbls[idx].text = "%s\nx%d" % [String(d.get("name", item_id)), qty]
 	_slot_key_lbls[idx].text = String(slot.get("key_name", ""))
