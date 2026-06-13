@@ -52,3 +52,10 @@ func test_coast_fishing_nodes_loaded():
 		assert_true(db.nodes.has(nid), "saknar nod: " + nid)
 		assert_eq(db.nodes[nid]["skill"], "fishing")
 		assert_eq(db.nodes[nid]["tool"], "fishing_rod")
+
+func test_coast_cooking_recipes_added():
+	var ids := []
+	for r in db.recipes["stove"]:
+		ids.append(String(r["id"]))
+	for id in ["grilled_mackerel", "lobster_dinner", "swordfish_steak"]:
+		assert_has(ids, id, "saknar recept: " + id)
