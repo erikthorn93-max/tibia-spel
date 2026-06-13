@@ -118,29 +118,24 @@ func _build_slot(idx: int) -> void:
 
 	# Sprite-ikon
 	var icon := TextureRect.new()
-	icon.custom_minimum_size = Vector2(28, 28)
+	icon.custom_minimum_size = Vector2(26, 26)
 	icon.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	vbox.add_child(icon)
 	_slot_icons.append(icon)
 
-	# Item-namn
+	# Item-namn (dold, behålls för kompatibilitet med _refresh_slot)
 	var nlbl := Label.new()
-	nlbl.add_theme_font_size_override("font_size", 7)
-	nlbl.add_theme_color_override("font_color", Color(0.90, 0.88, 0.70))
-	nlbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	nlbl.clip_text = true
-	nlbl.custom_minimum_size = Vector2(0, 0)
 	nlbl.visible = false
 	vbox.add_child(nlbl)
 	_slot_name_lbls.append(nlbl)
 
-	# Tangent-label
+	# Tangent-label (liten, hörnet)
 	var klbl := Label.new()
 	klbl.add_theme_font_size_override("font_size", 8)
 	klbl.add_theme_color_override("font_color", Color(0.75, 0.90, 1.00))
 	klbl.add_theme_constant_override("outline_size", 1)
-	klbl.add_theme_color_override("font_outline_color", Color(0,0,0,0.9))
+	klbl.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.9))
 	klbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(klbl)
 	_slot_key_lbls.append(klbl)
@@ -179,9 +174,7 @@ func _on_slot_input(ev: InputEvent, idx: int, node: Control) -> void:
 						_slots[idx]["pos_x"] = node.position.x
 						_slots[idx]["pos_y"] = node.position.y
 						_save_config()
-						# Återställ kantfärg
 						_set_border(node, Color(0.55, 0.55, 0.70, 0.55))
-				node.modulate = Color(1,1,1,1)
 					_drag_slot  = -1
 					_drag_moved = false
 			MOUSE_BUTTON_RIGHT:
@@ -191,7 +184,6 @@ func _on_slot_input(ev: InputEvent, idx: int, node: Control) -> void:
 		if not _drag_moved and ev.global_position.distance_to(_drag_start) > DRAG_THRESHOLD:
 			_drag_moved = true
 			_set_border(node, Color(0.90, 0.70, 0.20))  # gul kant under drag
-				node.modulate = Color(1,1,1,0.9)
 		if _drag_moved:
 			node.global_position = ev.global_position + _drag_offset
 
@@ -364,10 +356,7 @@ func _refresh_slot(idx: int) -> void:
 	var d: Dictionary = ItemDB.items.get(item_id, {}) if item_id != "" else {}
 	if d.is_empty():
 		_slot_icons[idx].texture  = null
-		_slot_name_lbls[idx].text = ""
 	else:
 		var sp := "res://assets/sprites/items/%s.png" % item_id
 		_slot_icons[idx].texture = load(sp) if ResourceLoader.exists(sp) else null
-		var qty := int(GameState.inventory.get(item_id, 0))
-		_slot_name_lbls[idx].text = "%s\nx%d" % [String(d.get("name", item_id)), qty]
 	_slot_key_lbls[idx].text = String(slot.get("key_name", ""))
