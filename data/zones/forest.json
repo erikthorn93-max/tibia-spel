@@ -1,142 +1,157 @@
 {
-  "name": "Gamla skogen",
-  "tiles": [
-    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-    "W..........................~~..........W",
-    "W..t......t.......o........GG...m......W",
-    "W..........................~~..........W",
-    "W....t........y............~~......n...W",
-    "W...t......................f~..........W",
-    "W.........o.............t..~~..b.......W",
-    "W..........................~~..........W",
-    "W..t...t...................~~....m.....W",
-    "W..........................~~..........W",
-    "W............y.............~~..........W",
-    "W....................................2.W",
-    "W......................................W",
-    "W..........................~~..........W",
-    "W....o....t................~~.....c....W",
-    "W..........................~q...n......W",
-    "W..t.......................~~..........W",
-    "W..........................~~..........W",
-    "W..........t.....o.........~~..m.......W",
-    "W..........................~~......b...W",
-    "W....t.....................~~..........W",
-    "W..................P.......~~..........W",
-    "W....................0.....~~..........W",
-    "WWWWWWWWWWWWWWWWWW1WWWWWWWWWWWWWWWWWWWWW",
-    "W,,,,,F,,,,,,,,,,,,,,,,,,F,,,,,,,,,,,,,W",
-    "W,,,,,,,,,,,,,,,,,,F,,,,,,,,,,,,,,,,,,,W",
-    "W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
-    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
-  ],
-  "legend": {
-    "0": {
-      "type": "portal",
-      "to": "town",
-      "terrain": "."
-    },
-    "2": {
-      "type": "portal",
-      "to": "swamp",
-      "unlock": "trasket",
-      "terrain": "."
-    },
-    "G": {
-      "type": "shortcut",
-      "unlock": "genvag_stenarna",
-      "terrain": ",",
-      "locked_terrain": "~"
-    },
-    "t": {
-      "type": "node",
-      "node": "tree",
-      "terrain": "."
-    },
-    "o": {
-      "type": "node",
-      "node": "oak_tree",
-      "terrain": "."
-    },
-    "y": {
-      "type": "node",
-      "node": "willow_tree",
-      "terrain": "."
-    },
-    "f": {
-      "type": "node",
-      "node": "fishing_spot",
-      "terrain": "~"
-    },
-    "q": {
-      "type": "node",
-      "node": "pike_spot",
-      "terrain": "~"
-    },
-    "m": {
-      "type": "node",
-      "node": "mint_patch",
-      "terrain": "."
-    },
-    "n": {
-      "type": "node",
-      "node": "nightshade_patch",
-      "terrain": "."
-    },
-    "b": {
-      "type": "spawn",
-      "monster": "Orm",
-      "respawn": 20.0,
-      "terrain": "."
-    },
-    "c": {
-      "type": "spawn",
-      "monster": "Spindel",
-      "respawn": 20.0,
-      "terrain": "."
-    },
-    "1": {
-      "type": "gate",
-      "unlock": "morka_dungen",
-      "terrain": ","
-    },
-    "F": {
-      "type": "spawn",
-      "monster": "Fantom",
-      "respawn": 40.0,
-      "terrain": ","
-    }
-  },
-  "spawn_table": [
-    {
-      "monster": "Råtta",
-      "count": 6,
-      "respawn": 30.0
-    },
-    {
-      "monster": "Orm",
-      "count": 4,
-      "respawn": 35.0
-    },
-    {
-      "monster": "Spindel",
-      "count": 3,
-      "respawn": 40.0
-    },
-    {
-      "monster": "Urskogsvältaren",
-      "count": 1,
-      "respawn": 600.0
-    },
-    {
-      "monster": "Skogsvargen",
-      "count": 5,
-      "respawn": 25.0
-    },
-    {
-      "monster": "Skogsbjörn",
-      "count": 4,
-      "respawn": 40.0
-    }
-  ]
+	"name": "Gamla skogen",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"W..........................~~..........W",
+		"W..t......t.......o........GG...m......W",
+		"W....J........J............~~..........W",
+		"W....t........y............~~......n...W",
+		"W...t......................f~..........W",
+		"W.........o.............t..~~..b.......W",
+		"W....h..............h......~~..........W",
+		"W..t...t...................~~....m.....W",
+		"W....k..............k......~~..........W",
+		"W............y.............~~..........W",
+		"W....................................2.W",
+		"W.........J............................W",
+		"W....h.....................~~..........W",
+		"W....o....t................~~.....c....W",
+		"W..........................~q...n......W",
+		"W..t.......................~~..........W",
+		"W.........k................~~..........W",
+		"W..........t.....o.........~~..m.......W",
+		"W..........................~~......b...W",
+		"W....t.....................~~..........W",
+		"W..................P.......~~..........W",
+		"W....................0.....~~..........W",
+		"WWWWWWWWWWWWWWWWWW1WWWWWWWWWWWWWWWWWWWWW",
+		"W,,,,,F,,,,,,,,,,,,,,,,,,F,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,F,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"0": {
+			"type": "portal",
+			"to": "town",
+			"terrain": "."
+		},
+		"2": {
+			"type": "portal",
+			"to": "swamp",
+			"unlock": "trasket",
+			"terrain": "."
+		},
+		"G": {
+			"type": "shortcut",
+			"unlock": "genvag_stenarna",
+			"terrain": ",",
+			"locked_terrain": "~"
+		},
+		"t": {
+			"type": "node",
+			"node": "tree",
+			"terrain": "."
+		},
+		"o": {
+			"type": "node",
+			"node": "oak_tree",
+			"terrain": "."
+		},
+		"y": {
+			"type": "node",
+			"node": "willow_tree",
+			"terrain": "."
+		},
+		"f": {
+			"type": "node",
+			"node": "fishing_spot",
+			"terrain": "~"
+		},
+		"q": {
+			"type": "node",
+			"node": "pike_spot",
+			"terrain": "~"
+		},
+		"m": {
+			"type": "node",
+			"node": "mint_patch",
+			"terrain": "."
+		},
+		"n": {
+			"type": "node",
+			"node": "nightshade_patch",
+			"terrain": "."
+		},
+		"b": {
+			"type": "spawn",
+			"monster": "Orm",
+			"respawn": 20.0,
+			"terrain": "."
+		},
+		"c": {
+			"type": "spawn",
+			"monster": "Spindel",
+			"respawn": 20.0,
+			"terrain": "."
+		},
+		"1": {
+			"type": "gate",
+			"unlock": "morka_dungen",
+			"terrain": ","
+		},
+		"F": {
+			"type": "spawn",
+			"monster": "Fantom",
+			"respawn": 40.0,
+			"terrain": ","
+		},
+		"J": {
+			"type": "node",
+			"node": "farm_patch",
+			"terrain": "."
+		},
+		"h": {
+			"type": "node",
+			"node": "hunting_trap",
+			"terrain": "."
+		},
+		"k": {
+			"type": "node",
+			"node": "campfire_spot",
+			"terrain": "."
+		}
+	},
+	"spawn_table": [
+		{
+			"monster": "Råtta",
+			"count": 6,
+			"respawn": 30.0
+		},
+		{
+			"monster": "Orm",
+			"count": 4,
+			"respawn": 35.0
+		},
+		{
+			"monster": "Spindel",
+			"count": 3,
+			"respawn": 40.0
+		},
+		{
+			"monster": "Urskogsvältaren",
+			"count": 1,
+			"respawn": 600.0
+		},
+		{
+			"monster": "Skogsvargen",
+			"count": 5,
+			"respawn": 25.0
+		},
+		{
+			"monster": "Skogsbjörn",
+			"count": 4,
+			"respawn": 40.0
+		}
+	]
 }

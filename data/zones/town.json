@@ -1,97 +1,105 @@
 {
-  "name": "Thais",
-  "tiles": [
-    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-    "W..................1...................W",
-    "W..WWWW....WWWW........................W",
-    "W..W..W....W..W.....a..................W",
-    "W..W..W....W..W........................W",
-    "W..WWWW....WWWW..............a.........W",
-    "W.............................p........W",
-    "W...P....................~~~..2........W",
-    "W........................~~~....p......W",
-    "W......................................W",
-    "W............a.........................W",
-    "W........................WWWWW.........W",
-    "W........................W,,,W.........W",
-    "W........................W,0,W.........W",
-    "W........................W,,,W.........W",
-    "W........................WW,WW.........W",
-    "W..A.G.L.R..H..T.B.D.V.I.................W",
-    "W.....a................................W",
-    "W......................................W",
-    "W..........a...........................W",
-    "W......................................W",
-    "W................a.....................W",
-    "W......................................W",
-    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
-  ],
-  "legend": {
-    "0": {
-      "type": "portal",
-      "to": "cave"
-    },
-    "1": {
-      "type": "portal",
-      "to": "forest"
-    },
-    "a": {
-      "type": "spawn",
-      "monster": "Råtta",
-      "respawn": 12.0
-    },
-    "A": {
-      "type": "station",
-      "station": "anvil"
-    },
-    "G": {
-      "type": "station",
-      "station": "stove"
-    },
-    "L": {
-      "type": "station",
-      "station": "alchemy_table"
-    },
-    "R": {
-      "type": "station",
-      "station": "rune_altar"
-    },
-    "H": {
-      "type": "shop"
-    },
-    "T": {
-      "type": "taskmaster"
-    },
-    "2": {
-      "type": "portal",
-      "to": "coast",
-      "unlock": "kustvagen"
-    },
-    "p": {
-      "type": "spawn",
-      "monster": "Pirat",
-      "respawn": 28.0
-    },
-    "D": {
-      "type": "portal",
-      "to": "desert",
-      "unlock": "oknen",
-      "terrain": "."
-    },
-    "V": {
-      "type": "portal",
-      "to": "volcano",
-      "unlock": "vulkanen",
-      "terrain": "."
-    },
-    "B": {
-      "type": "bank"
-    },
-    "I": {
-      "type": "portal",
-      "to": "ice",
-      "unlock": "isfjorden",
-      "terrain": "."
-    }
-  }
+	"name": "Thais",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"W..................1...................W",
+		"W..WWWW....WWWW........................W",
+		"W..W..W....W..W.....a..................W",
+		"W..W..W....W..W........................W",
+		"W..WWWW....WWWW..............a.........W",
+		"W.............................p........W",
+		"W...P....................~~~..2........W",
+		"W........................~~~....p......W",
+		"W......................................W",
+		"W............a.........................W",
+		"W........................WWWWW.........W",
+		"W........................W,,,W.........W",
+		"W........................W,0,W.........W",
+		"W........................W,,,W.........W",
+		"W........................WW,WW.........W",
+		"W..A.G.L.R..H..T.B.D.V.I..C.P...........W",
+		"W.....a................................W",
+		"W......................................W",
+		"W..........a...........................W",
+		"W......................................W",
+		"W................a.....................W",
+		"W......................................W",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"0": {
+			"type": "portal",
+			"to": "cave"
+		},
+		"1": {
+			"type": "portal",
+			"to": "forest"
+		},
+		"a": {
+			"type": "spawn",
+			"monster": "Råtta",
+			"respawn": 12.0
+		},
+		"A": {
+			"type": "station",
+			"station": "anvil"
+		},
+		"G": {
+			"type": "station",
+			"station": "stove"
+		},
+		"L": {
+			"type": "station",
+			"station": "alchemy_table"
+		},
+		"R": {
+			"type": "station",
+			"station": "rune_altar"
+		},
+		"H": {
+			"type": "shop"
+		},
+		"T": {
+			"type": "taskmaster"
+		},
+		"2": {
+			"type": "portal",
+			"to": "coast",
+			"unlock": "kustvagen"
+		},
+		"p": {
+			"type": "spawn",
+			"monster": "Pirat",
+			"respawn": 28.0
+		},
+		"D": {
+			"type": "portal",
+			"to": "desert",
+			"unlock": "oknen",
+			"terrain": "."
+		},
+		"V": {
+			"type": "portal",
+			"to": "volcano",
+			"unlock": "vulkanen",
+			"terrain": "."
+		},
+		"B": {
+			"type": "bank"
+		},
+		"I": {
+			"type": "portal",
+			"to": "ice",
+			"unlock": "isfjorden",
+			"terrain": "."
+		},
+		"C": {
+			"type": "station",
+			"station": "crafting_bench"
+		},
+		"P": {
+			"type": "station",
+			"station": "prayer_altar"
+		}
+	}
 }

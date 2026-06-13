@@ -1,17 +1,269 @@
 {
-	"copper_vein":      {"skill": "mining",      "level": 1,  "tool": "pickaxe",     "yields": "copper_ore",      "xp": 15, "charges": [3, 5], "respawn": 30, "color": "#b87333", "label": "Kopparådra"},
-	"iron_vein":        {"skill": "mining",      "level": 15, "tool": "pickaxe",     "yields": "iron_ore",        "xp": 30, "charges": [3, 5], "respawn": 45, "color": "#8c8c94", "label": "Järnådra"},
-	"gold_vein":        {"skill": "mining",      "level": 30, "tool": "pickaxe",     "yields": "gold_ore",        "xp": 60, "charges": [3, 4], "respawn": 60, "color": "#e8c84a", "label": "Guldådra"},
-	"tree":             {"skill": "woodcutting", "level": 1,  "tool": "hatchet",     "yields": "log",             "xp": 15, "charges": [4, 6], "respawn": 20, "color": "#2e6b1e", "label": "Träd"},
-	"oak_tree":         {"skill": "woodcutting", "level": 15, "tool": "hatchet",     "yields": "oak_log",         "xp": 30, "charges": [4, 6], "respawn": 35, "color": "#1e4b14", "label": "Ek"},
-	"willow_tree":      {"skill": "woodcutting", "level": 30, "tool": "hatchet",     "yields": "willow_log",      "xp": 60, "charges": [3, 5], "respawn": 50, "color": "#5a7a3c", "label": "Pil"},
-	"fishing_spot":     {"skill": "fishing",     "level": 1,  "tool": "fishing_rod", "yields": "raw_trout",       "xp": 15, "charges": [5, 8], "respawn": 25, "color": "#4a90c8", "label": "Fiskestim"},
-	"pike_spot":        {"skill": "fishing",     "level": 15, "tool": "fishing_rod", "yields": "raw_pike",        "xp": 30, "charges": [4, 6], "respawn": 40, "color": "#3a70a8", "label": "Gäddstim"},
-	"mint_patch":       {"skill": "herbalism",   "level": 1,  "tool": "sickle",      "yields": "mint_herb",       "xp": 15, "charges": [3, 4], "respawn": 25, "color": "#58b868", "label": "Mynta"},
-	"nightshade_patch": {"skill": "herbalism",   "level": 15, "tool": "sickle",      "yields": "nightshade_herb", "xp": 30, "charges": [2, 4], "respawn": 45, "color": "#6a4a8a", "label": "Nattskatta"},
-	"eel_spot":         {"skill": "fishing",     "level": 25, "tool": "fishing_rod", "yields": "raw_eel",         "xp": 45, "charges": [4, 6], "respawn": 50, "color": "#2a4a3e", "label": "Ålstim"},
-	"marsh_patch":      {"skill": "herbalism",   "level": 25, "tool": "sickle",      "yields": "marsh_herb",      "xp": 45, "charges": [2, 4], "respawn": 50, "color": "#4a7a4a", "label": "Kärrört"},
-	"deep_sea_spot":    {"skill": "fishing", "level": 20, "tool": "fishing_rod", "yields": "raw_mackerel",  "xp": 40, "charges": [4, 6], "respawn": 45, "color": "#2a5a8a", "label": "Djuphavsstim"},
-	"swordfish_spot":   {"skill": "fishing", "level": 35, "tool": "fishing_rod", "yields": "raw_swordfish", "xp": 75, "charges": [3, 5], "respawn": 60, "color": "#3a4a6a", "label": "Svärdfiskstim"},
-	"lobster_pot":      {"skill": "fishing", "level": 30, "tool": "fishing_rod", "yields": "raw_lobster",   "xp": 60, "charges": [3, 5], "respawn": 55, "color": "#8a3a2a", "label": "Hummertina"}
+	"copper_vein": {
+		"skill": "mining",
+		"level": 1,
+		"tool": "pickaxe",
+		"yields": "copper_ore",
+		"xp": 15,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 30,
+		"color": "#b87333",
+		"label": "Kopparådra"
+	},
+	"iron_vein": {
+		"skill": "mining",
+		"level": 15,
+		"tool": "pickaxe",
+		"yields": "iron_ore",
+		"xp": 30,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 45,
+		"color": "#8c8c94",
+		"label": "Järnådra"
+	},
+	"gold_vein": {
+		"skill": "mining",
+		"level": 30,
+		"tool": "pickaxe",
+		"yields": "gold_ore",
+		"xp": 60,
+		"charges": [
+			3,
+			4
+		],
+		"respawn": 60,
+		"color": "#e8c84a",
+		"label": "Guldådra"
+	},
+	"tree": {
+		"skill": "woodcutting",
+		"level": 1,
+		"tool": "hatchet",
+		"yields": "log",
+		"xp": 15,
+		"charges": [
+			4,
+			6
+		],
+		"respawn": 20,
+		"color": "#2e6b1e",
+		"label": "Träd"
+	},
+	"oak_tree": {
+		"skill": "woodcutting",
+		"level": 15,
+		"tool": "hatchet",
+		"yields": "oak_log",
+		"xp": 30,
+		"charges": [
+			4,
+			6
+		],
+		"respawn": 35,
+		"color": "#1e4b14",
+		"label": "Ek"
+	},
+	"willow_tree": {
+		"skill": "woodcutting",
+		"level": 30,
+		"tool": "hatchet",
+		"yields": "willow_log",
+		"xp": 60,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 50,
+		"color": "#5a7a3c",
+		"label": "Pil"
+	},
+	"fishing_spot": {
+		"skill": "fishing",
+		"level": 1,
+		"tool": "fishing_rod",
+		"yields": "raw_trout",
+		"xp": 15,
+		"charges": [
+			5,
+			8
+		],
+		"respawn": 25,
+		"color": "#4a90c8",
+		"label": "Fiskestim"
+	},
+	"pike_spot": {
+		"skill": "fishing",
+		"level": 15,
+		"tool": "fishing_rod",
+		"yields": "raw_pike",
+		"xp": 30,
+		"charges": [
+			4,
+			6
+		],
+		"respawn": 40,
+		"color": "#3a70a8",
+		"label": "Gäddstim"
+	},
+	"mint_patch": {
+		"skill": "herbalism",
+		"level": 1,
+		"tool": "sickle",
+		"yields": "mint_herb",
+		"xp": 15,
+		"charges": [
+			3,
+			4
+		],
+		"respawn": 25,
+		"color": "#58b868",
+		"label": "Mynta"
+	},
+	"nightshade_patch": {
+		"skill": "herbalism",
+		"level": 15,
+		"tool": "sickle",
+		"yields": "nightshade_herb",
+		"xp": 30,
+		"charges": [
+			2,
+			4
+		],
+		"respawn": 45,
+		"color": "#6a4a8a",
+		"label": "Nattskatta"
+	},
+	"eel_spot": {
+		"skill": "fishing",
+		"level": 25,
+		"tool": "fishing_rod",
+		"yields": "raw_eel",
+		"xp": 45,
+		"charges": [
+			4,
+			6
+		],
+		"respawn": 50,
+		"color": "#2a4a3e",
+		"label": "Ålstim"
+	},
+	"marsh_patch": {
+		"skill": "herbalism",
+		"level": 25,
+		"tool": "sickle",
+		"yields": "marsh_herb",
+		"xp": 45,
+		"charges": [
+			2,
+			4
+		],
+		"respawn": 50,
+		"color": "#4a7a4a",
+		"label": "Kärrört"
+	},
+	"deep_sea_spot": {
+		"skill": "fishing",
+		"level": 20,
+		"tool": "fishing_rod",
+		"yields": "raw_mackerel",
+		"xp": 40,
+		"charges": [
+			4,
+			6
+		],
+		"respawn": 45,
+		"color": "#2a5a8a",
+		"label": "Djuphavsstim"
+	},
+	"swordfish_spot": {
+		"skill": "fishing",
+		"level": 35,
+		"tool": "fishing_rod",
+		"yields": "raw_swordfish",
+		"xp": 75,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 60,
+		"color": "#3a4a6a",
+		"label": "Svärdfiskstim"
+	},
+	"lobster_pot": {
+		"skill": "fishing",
+		"level": 30,
+		"tool": "fishing_rod",
+		"yields": "raw_lobster",
+		"xp": 60,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 55,
+		"color": "#8a3a2a",
+		"label": "Hummertina"
+	},
+	"farm_patch": {
+		"skill": "farming",
+		"level": 1,
+		"tool": "sickle",
+		"yields": "wheat_grain",
+		"xp": 20,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 35,
+		"color": "#c8a83c",
+		"label": "Åkerlapp"
+	},
+	"hunting_trap": {
+		"skill": "hunting",
+		"level": 1,
+		"tool": "",
+		"yields": "raw_meat",
+		"xp": 20,
+		"charges": [
+			2,
+			4
+		],
+		"respawn": 40,
+		"color": "#8a6a4a",
+		"label": "Jaktmark"
+	},
+	"bird_trap": {
+		"skill": "hunting",
+		"level": 10,
+		"tool": "",
+		"yields": "feathers",
+		"xp": 30,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 45,
+		"color": "#6a8a4a",
+		"label": "Fågelfälla"
+	},
+	"campfire_spot": {
+		"skill": "firemaking",
+		"level": 1,
+		"tool": "log",
+		"consumes_tool": true,
+		"yields": "charcoal",
+		"xp": 20,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 50,
+		"color": "#c85a1a",
+		"label": "Eldplats"
+	}
 }
