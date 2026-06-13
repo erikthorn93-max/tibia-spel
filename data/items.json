@@ -1,548 +1,661 @@
 {
-	"iron_coin": {
-		"name": "Järnmynt",
-		"type": "currency",
-		"value": 1,
-		"color": "#c8a838"
-	},
-	"health_potion": {
-		"name": "Hälsodryck",
-		"type": "potion",
-		"value": 45,
-		"color": "#d03030",
-		"heal": 60
-	},
-	"snake_skin": {
-		"name": "Ormskinn",
-		"type": "junk",
-		"value": 8,
-		"color": "#608830"
-	},
-	"spider_silk": {
-		"name": "Spindelsilke",
-		"type": "junk",
-		"value": 12,
-		"color": "#d8d8e8"
-	},
-	"bone_chips": {
-		"name": "Benbitar",
-		"type": "junk",
-		"value": 10,
-		"color": "#e0dcc8"
-	},
-	"ghoul_hand": {
-		"name": "Ghoulhand",
-		"type": "junk",
-		"value": 25,
-		"color": "#5a7848"
-	},
-	"rusty_sword": {
-		"name": "Rostigt svärd",
-		"type": "weapon",
-		"value": 30,
-		"color": "#907860",
-		"atk": 8,
-		"skill": "sword",
-		"slot": "weapon"
-	},
-	"iron_sword": {
-		"name": "Järnsvärd",
-		"type": "weapon",
-		"value": 150,
-		"color": "#b0b8c0",
-		"atk": 14,
-		"skill": "sword",
-		"slot": "weapon"
-	},
-	"steel_sword": {
-		"name": "Stålsvärd",
-		"type": "weapon",
-		"value": 320,
-		"color": "#dce4ec",
-		"atk": 18,
-		"skill": "sword",
-		"slot": "weapon"
-	},
-	"bronze_axe": {
-		"name": "Bronsyxa",
-		"type": "weapon",
-		"value": 40,
-		"color": "#a87444",
-		"atk": 7,
-		"skill": "axe",
-		"slot": "weapon"
-	},
-	"iron_axe": {
-		"name": "Järnyxa",
-		"type": "weapon",
-		"value": 160,
-		"color": "#8c8c94",
-		"atk": 13,
-		"skill": "axe",
-		"slot": "weapon"
-	},
-	"steel_axe": {
-		"name": "Stålyxa",
-		"type": "weapon",
-		"value": 330,
-		"color": "#dce4ec",
-		"atk": 17,
-		"skill": "axe",
-		"slot": "weapon"
-	},
-	"wooden_club": {
-		"name": "Träklubba",
-		"type": "weapon",
-		"value": 25,
-		"color": "#8a6a3c",
-		"atk": 6,
-		"skill": "club",
-		"slot": "weapon"
-	},
-	"iron_club": {
-		"name": "Järnklubb",
-		"type": "weapon",
-		"value": 140,
-		"color": "#8c8c94",
-		"atk": 12,
-		"skill": "club",
-		"slot": "weapon"
-	},
-	"steel_club": {
-		"name": "Stålklubb",
-		"type": "weapon",
-		"value": 300,
-		"color": "#dce4ec",
-		"atk": 16,
-		"skill": "club",
-		"slot": "weapon"
-	},
-	"cutlass": {
-		"name": "Huggare",
-		"type": "weapon",
-		"value": 260,
-		"color": "#c0c0c8",
-		"atk": 16,
-		"skill": "sword",
-		"slot": "weapon"
-	},
-	"pickaxe": {
-		"name": "Hacka",
-		"type": "tool",
-		"value": 75,
-		"color": "#9a9aa2",
-		"tool": true
-	},
-	"hatchet": {
-		"name": "Yxa (verktyg)",
-		"type": "tool",
-		"value": 75,
-		"color": "#b09060",
-		"tool": true
-	},
-	"fishing_rod": {
-		"name": "Fiskespo",
-		"type": "tool",
-		"value": 60,
-		"color": "#c0a878",
-		"tool": true
-	},
-	"sickle": {
-		"name": "Skära",
-		"type": "tool",
-		"value": 60,
-		"color": "#c8c8d0",
-		"tool": true
-	},
-	"copper_ore": {
-		"name": "Kopparmalm",
-		"type": "material",
-		"value": 12,
-		"color": "#b87333"
-	},
-	"iron_ore": {
-		"name": "Järnmalm",
-		"type": "material",
-		"value": 25,
-		"color": "#8c8c94"
-	},
-	"gold_ore": {
-		"name": "Guldmalm",
-		"type": "material",
-		"value": 60,
-		"color": "#e8c84a"
-	},
-	"log": {
-		"name": "Stock",
-		"type": "material",
-		"value": 8,
-		"color": "#7a5a34"
-	},
-	"oak_log": {
-		"name": "Ekstock",
-		"type": "material",
-		"value": 20,
-		"color": "#6a4a28"
-	},
-	"willow_log": {
-		"name": "Pilstock",
-		"type": "material",
-		"value": 45,
-		"color": "#8a7a4c"
-	},
-	"raw_trout": {
-		"name": "Rå öring",
-		"type": "material",
-		"value": 10,
-		"color": "#c08898"
-	},
-	"raw_pike": {
-		"name": "Rå gädda",
-		"type": "material",
-		"value": 22,
-		"color": "#90a878"
-	},
-	"mint_herb": {
-		"name": "Mynta",
-		"type": "material",
-		"value": 9,
-		"color": "#58b868"
-	},
-	"nightshade_herb": {
-		"name": "Nattskatta",
-		"type": "material",
-		"value": 18,
-		"color": "#6a4a8a"
-	},
-	"empty_vial": {
-		"name": "Tom flaska",
-		"type": "material",
-		"value": 5,
-		"color": "#c8d8e0"
-	},
-	"copper_plate": {
-		"name": "Kopparharnesk",
-		"type": "armor",
-		"value": 90,
-		"color": "#b87333",
-		"armor": 4,
-		"slot": "body"
-	},
-	"copper_helmet": {
-		"name": "Kopparhjälm",
-		"type": "armor",
-		"value": 50,
-		"color": "#b87333",
-		"armor": 2,
-		"slot": "helmet"
-	},
-	"copper_legs": {
-		"name": "Kopparbenskydd",
-		"type": "armor",
-		"value": 70,
-		"color": "#b87333",
-		"armor": 3,
-		"slot": "legs"
-	},
-	"copper_boots": {
-		"name": "Kopparskor",
-		"type": "armor",
-		"value": 35,
-		"color": "#b87333",
-		"armor": 1,
-		"slot": "boots"
-	},
-	"iron_platebody": {
-		"name": "Järnharnesk",
-		"type": "armor",
-		"value": 200,
-		"color": "#8c8c94",
-		"armor": 8,
-		"slot": "body"
-	},
-	"iron_helmet": {
-		"name": "Järnhjälm",
-		"type": "armor",
-		"value": 110,
-		"color": "#8c8c94",
-		"armor": 4,
-		"slot": "helmet"
-	},
-	"iron_legs": {
-		"name": "Järnbenskydd",
-		"type": "armor",
-		"value": 160,
-		"color": "#8c8c94",
-		"armor": 6,
-		"slot": "legs"
-	},
-	"iron_boots": {
-		"name": "Järnskor",
-		"type": "armor",
-		"value": 75,
-		"color": "#8c8c94",
-		"armor": 2,
-		"slot": "boots"
-	},
-	"steel_platebody": {
-		"name": "Stålharnesk",
-		"type": "armor",
-		"value": 380,
-		"color": "#dce4ec",
-		"armor": 12,
-		"slot": "body"
-	},
-	"steel_helmet": {
-		"name": "Stålhjälm",
-		"type": "armor",
-		"value": 220,
-		"color": "#dce4ec",
-		"armor": 6,
-		"slot": "helmet"
-	},
-	"steel_legs": {
-		"name": "Stålbenskydd",
-		"type": "armor",
-		"value": 300,
-		"color": "#dce4ec",
-		"armor": 9,
-		"slot": "legs"
-	},
-	"steel_boots": {
-		"name": "Stålskor",
-		"type": "armor",
-		"value": 120,
-		"color": "#dce4ec",
-		"armor": 3,
-		"slot": "boots"
-	},
-	"wooden_shield": {
-		"name": "Träsköld",
-		"type": "armor",
-		"value": 45,
-		"color": "#8a6a3c",
-		"shielding_bonus": 3,
-		"slot": "offhand"
-	},
-	"iron_shield": {
-		"name": "Järnsköld",
-		"type": "armor",
-		"value": 130,
-		"color": "#8c8c94",
-		"shielding_bonus": 6,
-		"slot": "offhand"
-	},
-	"steel_shield": {
-		"name": "Stålsköld",
-		"type": "armor",
-		"value": 290,
-		"color": "#dce4ec",
-		"shielding_bonus": 9,
-		"slot": "offhand"
-	},
-	"cooked_trout": {
-		"name": "Stekt öring",
-		"type": "food",
-		"value": 18,
-		"color": "#d8a878",
-		"heal": 40
-	},
-	"fish_stew": {
-		"name": "Fiskgryta",
-		"type": "food",
-		"value": 35,
-		"color": "#c89868",
-		"heal": 30,
-		"buff": {
-			"stat": "regen",
-			"amount": 2,
-			"duration": 30
-		}
-	},
-	"mana_potion": {
-		"name": "Manadryck",
-		"type": "potion",
-		"value": 55,
-		"color": "#3050d0",
-		"mana": 50
-	},
-	"mining_brew": {
-		"name": "Gruvbrygd",
-		"type": "potion",
-		"value": 70,
-		"color": "#a88030",
-		"buff": {
-			"stat": "skill:mining",
-			"amount": 2,
-			"duration": 60
-		}
-	},
-	"attack_rune": {
-		"name": "Attackruna",
-		"type": "rune",
-		"value": 30,
-		"color": "#d04848",
-		"rune_power": 8,
-		"mana_cost": 5,
-		"magic_lvl": 1,
-		"effect": "damage"
-	},
-	"fire_rune": {
-		"name": "Eldruna",
-		"type": "rune",
-		"value": 35,
-		"color": "#e07820",
-		"rune_power": 14,
-		"mana_cost": 12,
-		"magic_lvl": 8,
-		"effect": "damage"
-	},
-	"healing_rune": {
-		"name": "Helande runa",
-		"type": "rune",
-		"value": 25,
-		"color": "#30b840",
-		"rune_power": 20,
-		"mana_cost": 8,
-		"magic_lvl": 5,
-		"effect": "heal"
-	},
-	"boss_crown": {
-		"name": "Ghulkungens krona",
-		"type": "trophy",
-		"value": 2500,
-		"color": "#e8d44a"
-	},
-	"warding_candle": {
-		"name": "Warding Candle",
-		"type": "quest",
-		"value": 0,
-		"usable": true
-	},
-	"toad_gland": {
-		"name": "Paddkörtel",
-		"type": "junk",
-		"value": 18,
-		"color": "#8aa84a"
-	},
-	"swamp_essence": {
-		"name": "Träskessens",
-		"type": "junk",
-		"value": 35,
-		"color": "#3a5a3e"
-	},
-	"raw_eel": {
-		"name": "Rå ål",
-		"type": "material",
-		"value": 30,
-		"color": "#4a5a52"
-	},
-	"marsh_herb": {
-		"name": "Kärrört",
-		"type": "material",
-		"value": 25,
-		"color": "#4a7a4a"
-	},
-	"raw_mackerel": {
-		"name": "Rå makrill",
-		"type": "material",
-		"value": 14,
-		"color": "#5a7a9a"
-	},
-	"raw_lobster": {
-		"name": "Rå hummer",
-		"type": "material",
-		"value": 35,
-		"color": "#a83a2a"
-	},
-	"raw_swordfish": {
-		"name": "Rå svärdfisk",
-		"type": "material",
-		"value": 55,
-		"color": "#8a93a0"
-	},
-	"grilled_mackerel": {
-		"name": "Grillad makrill",
-		"type": "food",
-		"value": 30,
-		"color": "#c8a060",
-		"heal": 50,
-		"buff": {
-			"stat": "regen",
-			"amount": 3,
-			"duration": 30
-		}
-	},
-	"lobster_dinner": {
-		"name": "Hummermiddag",
-		"type": "food",
-		"value": 70,
-		"color": "#d86048",
-		"heal": 70,
-		"buff": {
-			"stat": "skill:fishing",
-			"amount": 3,
-			"duration": 120
-		}
-	},
-	"swordfish_steak": {
-		"name": "Svärdfiskstek",
-		"type": "food",
-		"value": 95,
-		"color": "#b0b8c0",
-		"heal": 90,
-		"buff": {
-			"stat": "skill:sword",
-			"amount": 3,
-			"duration": 120
-		}
-	},
-	"sea_chart": {
-		"name": "Sjökort",
-		"type": "junk",
-		"value": 40,
-		"color": "#cabd8a"
-	},
-	"captains_hat": {
-		"name": "Kaptenshatt",
-		"type": "trophy",
-		"value": 3000,
-		"color": "#2a2a40"
-	},
-	"antidote_potion": {
-		"name": "Motgift",
-		"type": "potion",
-		"value": 40,
-		"color": "#40c060",
-		"clears_poison": true
-	},
-	"hunting_bow": {
-		"name": "Jakstbåge",
-		"type": "weapon",
-		"slot": "weapon",
-		"skill": "distance",
-		"atk": 12,
-		"range": 4,
-		"value": 120,
-		"color": "#8B5E3C",
-		"ammo": "wooden_arrow"
-	},
-	"wooden_arrow": {
-		"name": "Träpil",
-		"type": "ammo",
-		"value": 1,
-		"color": "#a0724a"
-	},
-	"steel_bow": {
-		"name": "Stålbåge",
-		"type": "weapon",
-		"slot": "weapon",
-		"skill": "distance",
-		"atk": 20,
-		"range": 5,
-		"value": 350,
-		"color": "#7a8a9a",
-		"ammo": "wooden_arrow",
-		"level_req": 15
-	}
+  "iron_coin": {
+    "name": "Järnmynt",
+    "type": "currency",
+    "value": 1,
+    "color": "#c8a838",
+    "sprite": "res://assets/sprites/items/iron_coin.png"
+  },
+  "health_potion": {
+    "name": "Hälsodryck",
+    "type": "potion",
+    "value": 45,
+    "color": "#d03030",
+    "heal": 60,
+    "sprite": "res://assets/sprites/items/health_potion.png"
+  },
+  "snake_skin": {
+    "name": "Ormskinn",
+    "type": "junk",
+    "value": 8,
+    "color": "#608830",
+    "sprite": "res://assets/sprites/items/snake_skin.png"
+  },
+  "spider_silk": {
+    "name": "Spindelsilke",
+    "type": "junk",
+    "value": 12,
+    "color": "#d8d8e8",
+    "sprite": "res://assets/sprites/items/spider_silk.png"
+  },
+  "bone_chips": {
+    "name": "Benbitar",
+    "type": "junk",
+    "value": 10,
+    "color": "#e0dcc8",
+    "sprite": "res://assets/sprites/items/bone_chips.png"
+  },
+  "ghoul_hand": {
+    "name": "Ghoulhand",
+    "type": "junk",
+    "value": 25,
+    "color": "#5a7848",
+    "sprite": "res://assets/sprites/items/ghoul_hand.png"
+  },
+  "rusty_sword": {
+    "name": "Rostigt svärd",
+    "type": "weapon",
+    "value": 30,
+    "color": "#907860",
+    "atk": 8,
+    "skill": "sword",
+    "slot": "weapon",
+    "sprite": "res://assets/sprites/items/rusty_sword.png"
+  },
+  "iron_sword": {
+    "name": "Järnsvärd",
+    "type": "weapon",
+    "value": 150,
+    "color": "#b0b8c0",
+    "atk": 14,
+    "skill": "sword",
+    "slot": "weapon",
+    "sprite": "res://assets/sprites/items/iron_sword.png"
+  },
+  "steel_sword": {
+    "name": "Stålsvärd",
+    "type": "weapon",
+    "value": 320,
+    "color": "#dce4ec",
+    "atk": 18,
+    "skill": "sword",
+    "slot": "weapon",
+    "sprite": "res://assets/sprites/items/steel_sword.png"
+  },
+  "bronze_axe": {
+    "name": "Bronsyxa",
+    "type": "weapon",
+    "value": 40,
+    "color": "#a87444",
+    "atk": 7,
+    "skill": "axe",
+    "slot": "weapon",
+    "sprite": "res://assets/sprites/items/bronze_axe.png"
+  },
+  "iron_axe": {
+    "name": "Järnyxa",
+    "type": "weapon",
+    "value": 160,
+    "color": "#8c8c94",
+    "atk": 13,
+    "skill": "axe",
+    "slot": "weapon",
+    "sprite": "res://assets/sprites/items/iron_axe.png"
+  },
+  "steel_axe": {
+    "name": "Stålyxa",
+    "type": "weapon",
+    "value": 330,
+    "color": "#dce4ec",
+    "atk": 17,
+    "skill": "axe",
+    "slot": "weapon",
+    "sprite": "res://assets/sprites/items/steel_axe.png"
+  },
+  "wooden_club": {
+    "name": "Träklubba",
+    "type": "weapon",
+    "value": 25,
+    "color": "#8a6a3c",
+    "atk": 6,
+    "skill": "club",
+    "slot": "weapon",
+    "sprite": "res://assets/sprites/items/wooden_club.png"
+  },
+  "iron_club": {
+    "name": "Järnklubb",
+    "type": "weapon",
+    "value": 140,
+    "color": "#8c8c94",
+    "atk": 12,
+    "skill": "club",
+    "slot": "weapon",
+    "sprite": "res://assets/sprites/items/iron_club.png"
+  },
+  "steel_club": {
+    "name": "Stålklubb",
+    "type": "weapon",
+    "value": 300,
+    "color": "#dce4ec",
+    "atk": 16,
+    "skill": "club",
+    "slot": "weapon",
+    "sprite": "res://assets/sprites/items/steel_club.png"
+  },
+  "cutlass": {
+    "name": "Huggare",
+    "type": "weapon",
+    "value": 260,
+    "color": "#c0c0c8",
+    "atk": 16,
+    "skill": "sword",
+    "slot": "weapon",
+    "sprite": "res://assets/sprites/items/cutlass.png"
+  },
+  "pickaxe": {
+    "name": "Hacka",
+    "type": "tool",
+    "value": 75,
+    "color": "#9a9aa2",
+    "tool": true,
+    "sprite": "res://assets/sprites/items/pickaxe.png"
+  },
+  "hatchet": {
+    "name": "Yxa (verktyg)",
+    "type": "tool",
+    "value": 75,
+    "color": "#b09060",
+    "tool": true,
+    "sprite": "res://assets/sprites/items/hatchet.png"
+  },
+  "fishing_rod": {
+    "name": "Fiskespo",
+    "type": "tool",
+    "value": 60,
+    "color": "#c0a878",
+    "tool": true,
+    "sprite": "res://assets/sprites/items/fishing_rod.png"
+  },
+  "sickle": {
+    "name": "Skära",
+    "type": "tool",
+    "value": 60,
+    "color": "#c8c8d0",
+    "tool": true,
+    "sprite": "res://assets/sprites/items/sickle.png"
+  },
+  "copper_ore": {
+    "name": "Kopparmalm",
+    "type": "material",
+    "value": 12,
+    "color": "#b87333",
+    "sprite": "res://assets/sprites/items/copper_ore.png"
+  },
+  "iron_ore": {
+    "name": "Järnmalm",
+    "type": "material",
+    "value": 25,
+    "color": "#8c8c94",
+    "sprite": "res://assets/sprites/items/iron_ore.png"
+  },
+  "gold_ore": {
+    "name": "Guldmalm",
+    "type": "material",
+    "value": 60,
+    "color": "#e8c84a",
+    "sprite": "res://assets/sprites/items/gold_ore.png"
+  },
+  "log": {
+    "name": "Stock",
+    "type": "material",
+    "value": 8,
+    "color": "#7a5a34",
+    "sprite": "res://assets/sprites/items/log.png"
+  },
+  "oak_log": {
+    "name": "Ekstock",
+    "type": "material",
+    "value": 20,
+    "color": "#6a4a28",
+    "sprite": "res://assets/sprites/items/oak_log.png"
+  },
+  "willow_log": {
+    "name": "Pilstock",
+    "type": "material",
+    "value": 45,
+    "color": "#8a7a4c",
+    "sprite": "res://assets/sprites/items/willow_log.png"
+  },
+  "raw_trout": {
+    "name": "Rå öring",
+    "type": "material",
+    "value": 10,
+    "color": "#c08898",
+    "sprite": "res://assets/sprites/items/raw_trout.png"
+  },
+  "raw_pike": {
+    "name": "Rå gädda",
+    "type": "material",
+    "value": 22,
+    "color": "#90a878",
+    "sprite": "res://assets/sprites/items/raw_pike.png"
+  },
+  "mint_herb": {
+    "name": "Mynta",
+    "type": "material",
+    "value": 9,
+    "color": "#58b868",
+    "sprite": "res://assets/sprites/items/mint_herb.png"
+  },
+  "nightshade_herb": {
+    "name": "Nattskatta",
+    "type": "material",
+    "value": 18,
+    "color": "#6a4a8a",
+    "sprite": "res://assets/sprites/items/nightshade_herb.png"
+  },
+  "empty_vial": {
+    "name": "Tom flaska",
+    "type": "material",
+    "value": 5,
+    "color": "#c8d8e0",
+    "sprite": "res://assets/sprites/items/empty_vial.png"
+  },
+  "copper_plate": {
+    "name": "Kopparharnesk",
+    "type": "armor",
+    "value": 90,
+    "color": "#b87333",
+    "armor": 4,
+    "slot": "body",
+    "sprite": "res://assets/sprites/items/copper_plate.png"
+  },
+  "copper_helmet": {
+    "name": "Kopparhjälm",
+    "type": "armor",
+    "value": 50,
+    "color": "#b87333",
+    "armor": 2,
+    "slot": "helmet",
+    "sprite": "res://assets/sprites/items/copper_helmet.png"
+  },
+  "copper_legs": {
+    "name": "Kopparbenskydd",
+    "type": "armor",
+    "value": 70,
+    "color": "#b87333",
+    "armor": 3,
+    "slot": "legs",
+    "sprite": "res://assets/sprites/items/copper_legs.png"
+  },
+  "copper_boots": {
+    "name": "Kopparskor",
+    "type": "armor",
+    "value": 35,
+    "color": "#b87333",
+    "armor": 1,
+    "slot": "boots",
+    "sprite": "res://assets/sprites/items/copper_boots.png"
+  },
+  "iron_platebody": {
+    "name": "Järnharnesk",
+    "type": "armor",
+    "value": 200,
+    "color": "#8c8c94",
+    "armor": 8,
+    "slot": "body",
+    "sprite": "res://assets/sprites/items/iron_platebody.png"
+  },
+  "iron_helmet": {
+    "name": "Järnhjälm",
+    "type": "armor",
+    "value": 110,
+    "color": "#8c8c94",
+    "armor": 4,
+    "slot": "helmet",
+    "sprite": "res://assets/sprites/items/iron_helmet.png"
+  },
+  "iron_legs": {
+    "name": "Järnbenskydd",
+    "type": "armor",
+    "value": 160,
+    "color": "#8c8c94",
+    "armor": 6,
+    "slot": "legs",
+    "sprite": "res://assets/sprites/items/iron_legs.png"
+  },
+  "iron_boots": {
+    "name": "Järnskor",
+    "type": "armor",
+    "value": 75,
+    "color": "#8c8c94",
+    "armor": 2,
+    "slot": "boots",
+    "sprite": "res://assets/sprites/items/iron_boots.png"
+  },
+  "steel_platebody": {
+    "name": "Stålharnesk",
+    "type": "armor",
+    "value": 380,
+    "color": "#dce4ec",
+    "armor": 12,
+    "slot": "body",
+    "sprite": "res://assets/sprites/items/steel_platebody.png"
+  },
+  "steel_helmet": {
+    "name": "Stålhjälm",
+    "type": "armor",
+    "value": 220,
+    "color": "#dce4ec",
+    "armor": 6,
+    "slot": "helmet",
+    "sprite": "res://assets/sprites/items/steel_helmet.png"
+  },
+  "steel_legs": {
+    "name": "Stålbenskydd",
+    "type": "armor",
+    "value": 300,
+    "color": "#dce4ec",
+    "armor": 9,
+    "slot": "legs",
+    "sprite": "res://assets/sprites/items/steel_legs.png"
+  },
+  "steel_boots": {
+    "name": "Stålskor",
+    "type": "armor",
+    "value": 120,
+    "color": "#dce4ec",
+    "armor": 3,
+    "slot": "boots",
+    "sprite": "res://assets/sprites/items/steel_boots.png"
+  },
+  "wooden_shield": {
+    "name": "Träsköld",
+    "type": "armor",
+    "value": 45,
+    "color": "#8a6a3c",
+    "shielding_bonus": 3,
+    "slot": "offhand",
+    "sprite": "res://assets/sprites/items/wooden_shield.png"
+  },
+  "iron_shield": {
+    "name": "Järnsköld",
+    "type": "armor",
+    "value": 130,
+    "color": "#8c8c94",
+    "shielding_bonus": 6,
+    "slot": "offhand",
+    "sprite": "res://assets/sprites/items/iron_shield.png"
+  },
+  "steel_shield": {
+    "name": "Stålsköld",
+    "type": "armor",
+    "value": 290,
+    "color": "#dce4ec",
+    "shielding_bonus": 9,
+    "slot": "offhand",
+    "sprite": "res://assets/sprites/items/steel_shield.png"
+  },
+  "cooked_trout": {
+    "name": "Stekt öring",
+    "type": "food",
+    "value": 18,
+    "color": "#d8a878",
+    "heal": 40,
+    "sprite": "res://assets/sprites/items/cooked_trout.png"
+  },
+  "fish_stew": {
+    "name": "Fiskgryta",
+    "type": "food",
+    "value": 35,
+    "color": "#c89868",
+    "heal": 30,
+    "buff": {
+      "stat": "regen",
+      "amount": 2,
+      "duration": 30
+    },
+    "sprite": "res://assets/sprites/items/fish_stew.png"
+  },
+  "mana_potion": {
+    "name": "Manadryck",
+    "type": "potion",
+    "value": 55,
+    "color": "#3050d0",
+    "mana": 50,
+    "sprite": "res://assets/sprites/items/mana_potion.png"
+  },
+  "mining_brew": {
+    "name": "Gruvbrygd",
+    "type": "potion",
+    "value": 70,
+    "color": "#a88030",
+    "buff": {
+      "stat": "skill:mining",
+      "amount": 2,
+      "duration": 60
+    },
+    "sprite": "res://assets/sprites/items/mining_brew.png"
+  },
+  "attack_rune": {
+    "name": "Attackruna",
+    "type": "rune",
+    "value": 30,
+    "color": "#d04848",
+    "rune_power": 8,
+    "mana_cost": 5,
+    "magic_lvl": 1,
+    "effect": "damage",
+    "sprite": "res://assets/sprites/items/attack_rune.png"
+  },
+  "fire_rune": {
+    "name": "Eldruna",
+    "type": "rune",
+    "value": 35,
+    "color": "#e07820",
+    "rune_power": 14,
+    "mana_cost": 12,
+    "magic_lvl": 8,
+    "effect": "damage",
+    "sprite": "res://assets/sprites/items/fire_rune.png"
+  },
+  "healing_rune": {
+    "name": "Helande runa",
+    "type": "rune",
+    "value": 25,
+    "color": "#30b840",
+    "rune_power": 20,
+    "mana_cost": 8,
+    "magic_lvl": 5,
+    "effect": "heal",
+    "sprite": "res://assets/sprites/items/healing_rune.png"
+  },
+  "boss_crown": {
+    "name": "Ghulkungens krona",
+    "type": "trophy",
+    "value": 2500,
+    "color": "#e8d44a",
+    "sprite": "res://assets/sprites/items/boss_crown.png"
+  },
+  "warding_candle": {
+    "name": "Warding Candle",
+    "type": "quest",
+    "value": 0,
+    "usable": true,
+    "sprite": "res://assets/sprites/items/warding_candle.png"
+  },
+  "toad_gland": {
+    "name": "Paddkörtel",
+    "type": "junk",
+    "value": 18,
+    "color": "#8aa84a",
+    "sprite": "res://assets/sprites/items/toad_gland.png"
+  },
+  "swamp_essence": {
+    "name": "Träskessens",
+    "type": "junk",
+    "value": 35,
+    "color": "#3a5a3e",
+    "sprite": "res://assets/sprites/items/swamp_essence.png"
+  },
+  "raw_eel": {
+    "name": "Rå ål",
+    "type": "material",
+    "value": 30,
+    "color": "#4a5a52",
+    "sprite": "res://assets/sprites/items/raw_eel.png"
+  },
+  "marsh_herb": {
+    "name": "Kärrört",
+    "type": "material",
+    "value": 25,
+    "color": "#4a7a4a",
+    "sprite": "res://assets/sprites/items/marsh_herb.png"
+  },
+  "raw_mackerel": {
+    "name": "Rå makrill",
+    "type": "material",
+    "value": 14,
+    "color": "#5a7a9a",
+    "sprite": "res://assets/sprites/items/raw_mackerel.png"
+  },
+  "raw_lobster": {
+    "name": "Rå hummer",
+    "type": "material",
+    "value": 35,
+    "color": "#a83a2a",
+    "sprite": "res://assets/sprites/items/raw_lobster.png"
+  },
+  "raw_swordfish": {
+    "name": "Rå svärdfisk",
+    "type": "material",
+    "value": 55,
+    "color": "#8a93a0",
+    "sprite": "res://assets/sprites/items/raw_swordfish.png"
+  },
+  "grilled_mackerel": {
+    "name": "Grillad makrill",
+    "type": "food",
+    "value": 30,
+    "color": "#c8a060",
+    "heal": 50,
+    "buff": {
+      "stat": "regen",
+      "amount": 3,
+      "duration": 30
+    },
+    "sprite": "res://assets/sprites/items/grilled_mackerel.png"
+  },
+  "lobster_dinner": {
+    "name": "Hummermiddag",
+    "type": "food",
+    "value": 70,
+    "color": "#d86048",
+    "heal": 70,
+    "buff": {
+      "stat": "skill:fishing",
+      "amount": 3,
+      "duration": 120
+    },
+    "sprite": "res://assets/sprites/items/lobster_dinner.png"
+  },
+  "swordfish_steak": {
+    "name": "Svärdfiskstek",
+    "type": "food",
+    "value": 95,
+    "color": "#b0b8c0",
+    "heal": 90,
+    "buff": {
+      "stat": "skill:sword",
+      "amount": 3,
+      "duration": 120
+    },
+    "sprite": "res://assets/sprites/items/swordfish_steak.png"
+  },
+  "sea_chart": {
+    "name": "Sjökort",
+    "type": "junk",
+    "value": 40,
+    "color": "#cabd8a",
+    "sprite": "res://assets/sprites/items/sea_chart.png"
+  },
+  "captains_hat": {
+    "name": "Kaptenshatt",
+    "type": "trophy",
+    "value": 3000,
+    "color": "#2a2a40",
+    "sprite": "res://assets/sprites/items/captains_hat.png"
+  },
+  "antidote_potion": {
+    "name": "Motgift",
+    "type": "potion",
+    "value": 40,
+    "color": "#40c060",
+    "clears_poison": true,
+    "sprite": "res://assets/sprites/items/antidote_potion.png"
+  },
+  "hunting_bow": {
+    "name": "Jakstbåge",
+    "type": "weapon",
+    "slot": "weapon",
+    "skill": "distance",
+    "atk": 12,
+    "range": 4,
+    "value": 120,
+    "color": "#8B5E3C",
+    "ammo": "wooden_arrow",
+    "sprite": "res://assets/sprites/items/hunting_bow.png"
+  },
+  "wooden_arrow": {
+    "name": "Träpil",
+    "type": "ammo",
+    "value": 1,
+    "color": "#a0724a",
+    "sprite": "res://assets/sprites/items/wooden_arrow.png"
+  },
+  "steel_bow": {
+    "name": "Stålbåge",
+    "type": "weapon",
+    "slot": "weapon",
+    "skill": "distance",
+    "atk": 20,
+    "range": 5,
+    "value": 350,
+    "color": "#7a8a9a",
+    "ammo": "wooden_arrow",
+    "level_req": 15,
+    "sprite": "res://assets/sprites/items/steel_bow.png"
+  },
+  "sand_scale": {
+    "name": "Sandfjäll",
+    "value": 8,
+    "desc": "En hård fjäll från en Sandorm."
+  },
+  "ancient_bandage": {
+    "name": "Urgammal bindel",
+    "value": 25,
+    "desc": "Inlindad i torkad papyrus. Användbar för crafting.",
+    "usable": false
+  },
+  "scarab_shell": {
+    "name": "Skarabéskal",
+    "value": 60,
+    "desc": "Iriseras i ökenljuset. Sällan förekommande."
+  },
+  "pharaohs_scepter": {
+    "name": "Faraos spira",
+    "slot": "weapon",
+    "atk_bonus": 18,
+    "speed_bonus": 0.3,
+    "value": 2000,
+    "desc": "En urgammal spira tillhörande Farao Khem-Ra."
+  },
+  "lava_shard": {
+    "name": "Lavabit",
+    "value": 30,
+    "desc": "En glasig splitter av stelnad lava. Mycket het."
+  },
+  "ash_feather": {
+    "name": "Askfjäder",
+    "value": 20,
+    "desc": "En stel fjäder täckt av vulkansk aska."
+  },
+  "obsidian_blade": {
+    "name": "Obsidiansvärd",
+    "slot": "weapon",
+    "atk_bonus": 28,
+    "speed_bonus": 0.2,
+    "value": 4500,
+    "desc": "Smitt av Smältkonungen ur rent vulkanglas. Skärper sig aldrig."
+  }
 }

@@ -14,6 +14,12 @@ var game_root: Node2D    # sätts av game.tscn vid _ready
 var hud: CanvasLayer     # sätts av hud.gd vid _ready
 var last_surface_zone := ""
 var last_surface_tile := Vector2i(-1, -1)
+## Gravsten — sätts när spelaren dör, visas på minimap tills hen plockar upp loot
+var grave_tile  := Vector2i(-1, -1)
+var grave_zone  : Node2D = null   # vilken zon graven finns i
+
+func _ready() -> void:
+	GameState.player_died.connect(_on_player_died)
 
 func start_game(zone_id: String, at_tile := Vector2i(-1, -1)) -> void:
 	if current_zone:
@@ -143,3 +149,6 @@ func _spawn_world_objects() -> void:
 			var npc: Node2D = preload("res://entities/npc.tscn").instantiate()
 			npc.setup(id, Vector2i(int(nd["position"][0]), int(nd["position"][1])))
 			current_zone.add_child(npc)   # setup FÖRE add_child — _ready läser npc_id
+
+## Tappar döds-loot + placerar gravsten när spelaren dör.
+## Kastar 30 % av v

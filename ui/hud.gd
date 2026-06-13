@@ -20,10 +20,8 @@ var dialogue_box: PanelContainer
 var quest_log: PanelContainer
 var wardrobe: PanelContainer
 var equipment_panel: PanelContainer
-var hotkey_bar: PanelContainer
+var hotkey_bar: Node
 var _msg_timer := 0.0
-var _qs_rune_lbl: Label   # visar aktiv runa + qty i quickslot
-var _qs_pot_lbl: Label    # visar health_potion qty i quickslot
 var _poison_lbl: Label    # "Giftig!"-chip
 var _boss_panel: PanelContainer  # boss HP-bar, synlig under bossfight
 var _boss_name_lbl: Label
@@ -55,6 +53,9 @@ func _ready() -> void:
 	add_child(equipment_panel)
 	hotkey_bar = preload("res://ui/hotkey_bar.gd").new()
 	add_child(hotkey_bar)
+	var _wdz := preload("res://ui/world_drop_zone.gd").new()
+	add_child(_wdz)
+	move_child(_wdz, 0)   # bakom allt
 	QuestSystem.quest_started.connect(func(_id): _refresh_quests())
 	QuestSystem.quest_progress.connect(func(_id): _refresh_quests())
 	QuestSystem.step_advanced.connect(func(_id): _refresh_quests())
@@ -63,7 +64,6 @@ func _ready() -> void:
 		show_message("Quest klar: %s!" % QuestSystem.quests[id]["name"]))
 	add_child(preload("res://ui/debug_console.gd").new())
 	add_child(preload("res://ui/death_screen.gd").new())
-	_build_quickslots()
 	_build_boss_bar()
 	TaskSystem.task_taken.connect(func(_id): _refresh_tasks())
 	TaskSystem.task_progress.connect(func(_id): _refresh_tasks())
@@ -76,7 +76,6 @@ func _ready() -> void:
 	GameState.skill_changed.connect(func(_s): _refresh())
 	GameState.inventory_changed.connect(_refresh_inv)
 	GameState.inventory_changed.connect(func(): if hotkey_bar: hotkey_bar._refresh_all())
-	GameState.inventory_changed.connect(_refresh_quickslots)
 	GameState.status_changed.connect(_refresh_status)
 	_build_status_chips()
 	GameState.buffs_changed.connect(_refresh_buffs)
@@ -165,12 +164,48 @@ func _refresh_inv() -> void:
 		else:
 			inv_list.add_child(_inv_row(id, qty, "", Callable()))
 
+func _load_item_sprite(item_id: String) -> Texture2D:
+	var path := "res://assets/sprites/items/%s.png" % item_id
+	if ResourceLoader.exists(path):
+		return load(path) as Texture2D
+	return null
+
+func _make_drag_preview(item_id: String) -> Control:
+	var p := Control.new()
+	p.custom_minimum_size = Vector2(40, 40)
+	var t := TextureRect.new()
+	t.texture = _load_item_sprite(item_id)
+	t.custom_minimum_size = Vector2(40, 40)
+	t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	p.add_child(t)
+	return p
+
 func _inv_row(id: String, qty: int, action: String, cb: Callable) -> HBoxContainer:
 	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 4)
+	row.mouse_filter = Control.MOUSE_FILTER_STOP
+	# Sprite (drag-källa)
+	var tex := TextureRect.new()
+	tex.custom_minimum_size = Vector2(36, 36)
+	tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	tex.texture = _load_item_sprite(id)
+	tex.mouse_filter = Control.MOUSE_FILTER_STOP
+	var _id := id; var _qty := qty
+	tex.set_drag_forwarding(
+		func(_pos: Vector2):
+			tex.set_drag_preview(_make_drag_preview(_id))
+			return {"item_id": _id, "qty": _qty, "source": "inventory"},
+		func(_pos, _data) -> bool: return false,
+		func(_pos, _data): pass
+	)
+	row.add_child(tex)
+	# Namn + antal
 	var lbl := Label.new()
-	lbl.text = "%s x%d" % [ItemDB.items.get(id, {}).get("name", id), qty]
+	var d: Dictionary = ItemDB.items.get(id, {})
+	lbl.text = "%s  x%d" % [String(d.get("name", id)), qty]
 	lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	lbl.add_theme_font_size_override("font_size", 12)
+	lbl.add_theme_font_size_override("font_size", 11)
+	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	row.add_child(lbl)
 	if action != "":
 		var btn := Button.new()
@@ -205,41 +240,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		quest_log.visible = false
 		wardrobe.visible = false
 		equipment_panel.visible = false
-
-## Bygger quickslots-raden längst ner till vänster (F1=runa, F2=hälsodryck)
-func _build_quickslots() -> void:
-	var qs := HBoxContainer.new()
-	qs.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
-	qs.offset_top    = -40.0
-	qs.offset_bottom = -8.0
-	qs.offset_left   = 8.0
-	qs.offset_right  = 300.0
-	add_child(qs)
-	var rune_slot := PanelContainer.new()
-	_qs_rune_lbl = Label.new()
-	_qs_rune_lbl.text = "F1: —"
-	_qs_rune_lbl.add_theme_font_size_override("font_size", 11)
-	rune_slot.add_child(_qs_rune_lbl)
-	qs.add_child(rune_slot)
-	var pot_slot := PanelContainer.new()
-	_qs_pot_lbl = Label.new()
-	_qs_pot_lbl.text = "F2: 0× hälsodryck"
-	_qs_pot_lbl.add_theme_font_size_override("font_size", 11)
-	pot_slot.add_child(_qs_pot_lbl)
-	qs.add_child(pot_slot)
-
-func _refresh_quickslots() -> void:
-	if _qs_rune_lbl == null or _qs_pot_lbl == null:
-		return
-	var rid := GameState.active_rune
-	if rid.is_empty():
-		_qs_rune_lbl.text = "F1: —"
-	else:
-		var rname := String(ItemDB.items.get(rid, {}).get("name", rid))
-		var qty := int(GameState.inventory.get(rid, 0))
-		_qs_rune_lbl.text = "F1: %s x%d" % [rname, qty]
-	var pot_qty := int(GameState.inventory.get("health_potion", 0))
-	_qs_pot_lbl.text = "F2: %d× hälsodryck" % pot_qty
 
 ## Bygger gift/stun-status chip (övre högra hörnet)
 func _build_status_chips() -> void:

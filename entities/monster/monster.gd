@@ -142,7 +142,7 @@ func _tick_statuses(delta: float) -> void:
 		s["tick_acc"]  += delta
 		if s["tick_acc"] >= 1.0:
 			s["tick_acc"] -= 1.0
-			take_damage(float(s["tick_dmg"]))
+			take_damage(float(s["tick_dmg"]), false)
 		if s["time_left"] <= 0.0:
 			status_effects.erase(id)
 	# Uppdatera HP-baren om burn-status ändrades (puls → normal)
@@ -186,14 +186,22 @@ func _step_to(next: Vector2i) -> void:
 	_to = zone.tile_to_world(next)
 	_move_t = 0.0
 
-func take_damage(dmg: float) -> void:
+func take_damage(dmg: float, crit := false) -> void:
 	if dead:
 		return
 	hp = maxi(hp - int(dmg), 0)
 	_check_enrage()
 	_refresh_label()
+	_spawn_damage_number(dmg, crit)
 	if hp <= 0:
 		_die()
+
+func _spawn_damage_number(dmg: float, crit := false) -> void:
+	var dn: Node2D = preload("res://entities/damage_number.gd").new()
+	var parent := get_parent() if get_parent() != null else self
+	parent.add_child(dn)
+	dn.global_position = global_position + Vector2(randf_range(-6, 6), -8)
+	dn.setup(dmg, crit)
 
 func _die() -> void:
 	dead = true
@@ -201,18 +209,27 @@ func _die() -> void:
 	GameState.gain_exp(exp)
 	var wskill := GameState.weapon_skill()
 	GameState.gain_skill_xp(wskill, exp)
+	# Rulla loot → samla drops, spawna som GroundItem i zonen
 	var loot_table: Array = d.get("loot", [])
+	var drops: Array = []
 	for entry in loot_table:
 		if randf() < float(entry.get("chance", 0.0)):
-			var qty := int(entry.get("qty", 1))
-			GameState.add_item(String(entry["item"]), qty)
+			var qty_min := int(entry.get("min", int(entry.get("qty", 1))))
+			var qty_max := int(entry.get("max", qty_min))
+			drops.append({
+				"item": String(entry["item"]),
+				"qty":  randi_range(qty_min, qty_max)
+			})
+	if not drops.is_empty():
+		var gi := preload("res://entities/ground_item.gd").new()
+		var parent := get_parent() if get_parent() != null else self
+		parent.add_child(gi)
+		gi.setup(drops, tile)
 	TaskSystem.record_kill(monster_name)
 	QuestSystem.record_kill(monster_name)
 	if respawn_time > 0.0:
-		var t := tile
+		var t  := tile
 		var mn := monster_name
 		var rt := respawn_time
 		var zref := zone
-		get_tree().create_timer(rt).timeout.connect(
-			func(): if is_instance_valid(zref): World.spawn_monster(mn, t, rt))
-	queue_free()
+		get_tree()
