@@ -148,4 +148,56 @@ func _update_spells() -> void:
 			World.hud.show_message("Ingen hälsodryck.")
 
 ## Kastar aktiv runa mot target (damage) eller sig själv (heal).
-func _cas
+func _cast_rune() -> void:
+	var rid := GameState.active_rune
+	if rid.is_empty():
+		World.hud.show_message("Ingen runa vald.")
+		return
+	if int(GameState.inventory.get(rid, 0)) < 1:
+		World.hud.show_message("Du har inga runor av den typen.")
+		return
+	var d: Dictionary = ItemDB.items.get(rid, {})
+	var rune_power := int(d.get("rune_power", 0))
+	var mana_cost  := float(d.get("mana_cost", 0.0))
+	var req_lvl    := int(d.get("magic_lvl", 1))
+	var effect     := String(d.get("effect", "damage"))
+	var magic_lvl  := GameState.effective_skill_level("magic")
+	if magic_lvl < req_lvl:
+		World.hud.show_message("Kräver magic %d." % req_lvl)
+		return
+	# Damage-runor kräver giltigt target — kontrollera INNAN mana/runa förbrukas
+	if effect != "heal":
+		if target == null or not is_instance_valid(target) or target.dead:
+			World.hud.show_message("Inget mål att attackera.")
+			return
+		if _chebyshev(target.tile) > MAGIC_RANGE:
+			World.hud.show_message("För långt bort.")
+			return
+	if not GameState.use_mana(mana_cost):
+		World.hud.show_message("Inte tillräckligt med mana.")
+		return
+	GameState.remove_item(rid, 1)
+	var dmg := CombatFormulas.roll_magic(magic_lvl, rune_power)
+	if effect == "heal":
+		GameState.heal(dmg)
+		GameState.gain_skill_xp("magic", 2)
+		World.hud.show_message("Du helar %.0f HP!" % dmg)
+	else:
+		target.take_damage(dmg)
+		GameState.gain_skill_xp("magic", 3)
+		# Eldrunor tänder eld på monstret
+		if rid == "fire_rune" and target.has_method("apply_status"):
+			target.apply_status("burn", 8.0, 4.0)
+
+func _check_portal() -> void:
+	if zone.dungeon_entrances.has(tile):
+		World.enter_dungeon(zone.dungeon_entrances[tile])
+		return
+	if not zone.portals.has(tile):
+		return
+	if zone.portal_locks.has(tile):
+		var uid: String = zone.portal_locks[tile]
+		if not UnlockSystem.try_unlock(uid):
+			World.hud.show_message(UnlockSystem.hint_for(uid))
+			return
+	World.change_zone(zone.portals[tile])

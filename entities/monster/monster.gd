@@ -22,6 +22,8 @@ var _move_t := 1.0
 var _from := Vector2.ZERO
 var _to   := Vector2.ZERO
 var dead := false          # publik — läses av player.gd
+var status_effects: Dictionary = {}  # id -> {tick_dmg, time_left, tick_acc}
+var _burn_pulse := 0.0    # 0..1 för orange puls under burn
 
 @onready var _hp_bar: ColorRect  = $HpBar
 @onready var _name_lbl: Label    = $NameLabel
@@ -68,7 +70,12 @@ func _refresh_label() -> void:
 	_name_lbl.text = monster_name
 	var ratio := float(hp) / float(max_hp) if max_hp > 0 else 0.0
 	_hp_bar.offset_right = -14.0 + BAR_W * ratio
-	if ratio > 0.5:
+	# Färg: orange puls under burn, annars grön/gul/röd
+	if has_status("burn"):
+		var t := Time.get_ticks_msec() / 1000.0
+		var pulse := 0.5 + 0.5 * sin(t * 6.0)   # 3 Hz puls
+		_hp_bar.color = Color(1.0, 0.45 + pulse * 0.25, 0.0)
+	elif ratio > 0.5:
 		_hp_bar.color = Color(0.18, 0.78, 0.18)
 	elif ratio > 0.25:
 		_hp_bar.color = Color(0.85, 0.72, 0.1)
@@ -79,6 +86,7 @@ func _process(delta: float) -> void:
 	if dead:
 		return
 	_atk_timer = maxf(_atk_timer - delta, 0.0)
+	_tick_statuses(delta)
 
 	if not is_instance_valid(zone) or World.player == null:
 		return
@@ -110,6 +118,31 @@ func _process(delta: float) -> void:
 			if next != player_tile and zone.is_walkable(next):
 				_step_to(next)
 
+## Applicerar en statuseffekt på monstret (skriver över om samma id redan finns).
+func apply_status(id: String, duration: float, tick_dmg: float) -> void:
+	status_effects[id] = {"tick_dmg": tick_dmg, "time_left": duration, "tick_acc": 0.0}
+
+func has_status(id: String) -> bool:
+	return status_effects.has(id)
+
+## Tickar burn/andra statuseffekter på monstret (1 tick/s).
+func _tick_statuses(delta: float) -> void:
+	if status_effects.is_empty():
+		return
+	var burn_active_before := has_status("burn")
+	for id in status_effects.keys():
+		var s: Dictionary = status_effects[id]
+		s["time_left"] -= delta
+		s["tick_acc"]  += delta
+		if s["tick_acc"] >= 1.0:
+			s["tick_acc"] -= 1.0
+			take_damage(float(s["tick_dmg"]))
+		if s["time_left"] <= 0.0:
+			status_effects.erase(id)
+	# Uppdatera HP-baren om burn-status ändrades (puls → normal)
+	if burn_active_before != has_status("burn"):
+		_refresh_label()
+
 ## Försöker applicera monsterets ability-effekt på spelaren.
 func _try_apply_ability() -> void:
 	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
@@ -133,4 +166,29 @@ func _step_to(next: Vector2i) -> void:
 func take_damage(dmg: float) -> void:
 	if dead:
 		return
-	hp = maxi(hp - i
+	hp = maxi(hp - int(dmg), 0)
+	_refresh_label()
+	if hp <= 0:
+		_die()
+
+func _die() -> void:
+	dead = true
+	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
+	GameState.gain_exp(exp)
+	var wskill := GameState.weapon_skill()
+	GameState.gain_skill_xp(wskill, exp)
+	var loot_table: Array = d.get("loot", [])
+	for entry in loot_table:
+		if randf() < float(entry.get("chance", 0.0)):
+			var qty := int(entry.get("qty", 1))
+			GameState.add_item(String(entry["item"]), qty)
+	TaskSystem.record_kill(monster_name)
+	QuestSystem.record_kill(monster_name)
+	if respawn_time > 0.0:
+		var t := tile
+		var mn := monster_name
+		var rt := respawn_time
+		var zref := zone
+		get_tree().create_timer(rt).timeout.connect(
+			func(): if is_instance_valid(zref): World.spawn_monster(mn, t, rt))
+	queue_free()

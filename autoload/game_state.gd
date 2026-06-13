@@ -13,6 +13,7 @@ signal buffs_changed
 signal appearance_changed
 signal equipment_changed
 signal player_respawned
+signal status_changed
 
 const SKILL_XP_BASE := 50.0
 const SKILL_XP_GROWTH := 1.1
@@ -49,7 +50,6 @@ var player_tile := Vector2i.ZERO
 var active_buffs: Array = []   # [{stat, amount, time_left}]
 var active_rune := ""          # id för aktiv runa (F1 kastar)
 var status_effects: Dictionary = {}  # id -> {tick_dmg, time_left, tick_acc}
-signal status_changed
 
 ## _init (inte _ready): skills måste finnas direkt vid .new() i tester,
 ## och innan andra autoloads läser GameState.skills.
@@ -229,4 +229,131 @@ func _tick_buffs(delta: float) -> void:
 	if changed:
 		buffs_changed.emit()
 
-func 
+func effective_skill_level(skill: String) -> int:
+	var lvl := int(skills.get(skill, {"level": 1})["level"])
+	for b in active_buffs:
+		if String(b["stat"]) == "skill:" + skill:
+			lvl += int(b["amount"])
+	return lvl
+
+func use_item(item_id: String) -> bool:
+	if int(inventory.get(item_id, 0)) < 1:
+		return false
+	var d: Dictionary = ItemDB.items.get(item_id, {})
+	var used := false
+	if d.has("heal"):
+		heal(float(d["heal"]))
+		used = true
+	if d.has("mana"):
+		mana = minf(mana + float(d["mana"]), max_mana)
+		mana_changed.emit(mana, max_mana)
+		used = true
+	if d.has("buff"):
+		var b: Dictionary = d["buff"]
+		apply_buff(String(b["stat"]), float(b["amount"]), float(b["duration"]))
+		used = true
+	if d.has("clears_poison"):
+		clear_status("poison")
+		used = true
+	if d.get("usable", false):
+		used = true
+	if used:
+		remove_item(item_id, 1)
+		QuestSystem.record_use(item_id)
+	return used
+
+func weapon_skill() -> String:
+	var w: Dictionary = ItemDB.items.get(String(equipment.get("weapon", "")), {})
+	return String(w.get("skill", "fist"))
+
+## Utrusta ett föremål i given slot. Kräver att item finns i inventory och
+## att item.slot matchar slot-argumentet. Eventuellt befintligt föremål i
+## sloten returneras till inventory automatiskt.
+func equip(slot: String, item_id: String) -> bool:
+	if not EQUIPMENT_SLOTS.has(slot):
+		return false
+	var d: Dictionary = ItemDB.items.get(item_id, {})
+	if d.is_empty():
+		return false
+	if String(d.get("slot", "")) != slot:
+		return false
+	if int(inventory.get(item_id, 0)) < 1:
+		return false
+	# Returnera eventuellt befintligt föremål
+	var current := String(equipment.get(slot, ""))
+	if current != "":
+		add_item(current, 1)
+	remove_item(item_id, 1)
+	equipment[slot] = item_id
+	equipment_changed.emit()
+	inventory_changed.emit()
+	return true
+
+## Ta av föremål i given slot och lägg tillbaka i inventory.
+func unequip(slot: String) -> void:
+	if not EQUIPMENT_SLOTS.has(slot):
+		return
+	var current := String(equipment.get(slot, ""))
+	if current == "":
+		return
+	equipment[slot] = ""
+	add_item(current, 1)
+	equipment_changed.emit()
+
+## Summan av armor-värden från body/helmet/legs/boots.
+func total_armor() -> int:
+	var total := 0
+	for slot in ["body", "helmet", "legs", "boots"]:
+		var id := String(equipment.get(slot, ""))
+		if id != "":
+			total += int(ItemDB.items.get(id, {}).get("armor", 0))
+	return total
+
+## shielding_bonus från offhand (sköld).
+func total_shielding_bonus() -> int:
+	var id := String(equipment.get("offhand", ""))
+	if id == "":
+		return 0
+	return int(ItemDB.items.get(id, {}).get("shielding_bonus", 0))
+
+## Bakåtkompatibel wrapper — anropar equip("weapon", item_id).
+func equip_weapon(item_id: String) -> bool:
+	if String(equipment.get("weapon", "")) == item_id:
+		return true   # redan utrustat
+	return equip("weapon", item_id)
+
+## Bakåtkompatibel wrapper — anropar unequip("weapon").
+func unequip_weapon() -> void:
+	unequip("weapon")
+
+func buy_item(item_id: String) -> bool:
+	var d: Dictionary = ItemDB.items.get(item_id, {})
+	if d.is_empty():
+		return false
+	var price := int(d["value"])
+	if gold < price:
+		return false
+	gold -= price
+	gold_changed.emit(gold)
+	add_item(item_id, 1)
+	return true
+
+func sell_item(item_id: String) -> bool:
+	var d: Dictionary = ItemDB.items.get(item_id, {})
+	if d.is_empty():
+		return false
+	if not remove_item(item_id, 1):
+		return false
+	gold += int(int(d["value"]) * 0.5)
+	gold_changed.emit(gold)
+	return true
+
+func craft(recipe: Dictionary) -> bool:
+	var skill := String(recipe["skill"])
+	if not Recipes.can_craft(recipe, inventory, effective_skill_level(skill)):
+		return false
+	for ing in recipe["ingredients"]:
+		remove_item(ing, int(recipe["ingredients"][ing]))
+	add_item(String(recipe["id"]), 1)
+	gain_skill_xp(skill, int(recipe["xp"]))
+	return true
