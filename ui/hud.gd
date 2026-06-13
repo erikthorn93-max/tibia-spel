@@ -312,4 +312,3 @@ func _refresh_boss_bar() -> void:
 	var ratio  := clampf(hp / maxf(max_hp, 1.0), 0.0, 1.0)
 	_boss_name_lbl.text    = "%s   %d / %d" % [mname, int(hp), int(max_hp)]
 	_boss_hp_bar.anchor_right = ratio
-          
