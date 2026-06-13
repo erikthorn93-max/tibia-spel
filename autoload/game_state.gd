@@ -12,6 +12,7 @@ signal skill_changed(skill: String)
 signal buffs_changed
 signal appearance_changed
 signal equipment_changed
+signal player_respawned
 
 const SKILL_XP_BASE := 50.0
 const SKILL_XP_GROWTH := 1.1
@@ -46,6 +47,7 @@ var skill_defs: Dictionary = {}
 var current_zone := "town"
 var player_tile := Vector2i.ZERO
 var active_buffs: Array = []   # [{stat, amount, time_left}]
+var active_rune := ""          # id för aktiv runa (F1 kastar)
 
 ## _init (inte _ready): skills måste finnas direkt vid .new() i tester,
 ## och innan andra autoloads läser GameState.skills.
@@ -129,6 +131,31 @@ func heal(amount: float) -> void:
 	health = minf(health + amount, max_health)
 	hp_changed.emit(health, max_health)
 
+## Drar mana. Returnerar false om otillräcklig mana (inget dras av).
+func use_mana(amount: float) -> bool:
+	if mana < amount:
+		return false
+	mana -= amount
+	mana_changed.emit(mana, max_mana)
+	return true
+
+## Återställer mana, clampar på max_mana.
+func restore_mana(amount: float) -> void:
+	mana = minf(mana + amount, max_mana)
+	mana_changed.emit(mana, max_mana)
+
+## Tibia-stil dödsåterkomst: 50% XP-förlust, full HP/mana, tillbaka till town.
+func respawn() -> void:
+	var penalty := int(float(xp_to_next) * 0.5)
+	experience = maxi(experience - penalty, 0)
+	health = max_health
+	mana = max_mana
+	current_zone = "town"
+	player_tile = Vector2i(-1, -1)
+	hp_changed.emit(health, max_health)
+	mana_changed.emit(mana, max_mana)
+	player_respawned.emit()
+
 func add_item(item_id: String, qty: int) -> void:
 	if item_id == "iron_coin":
 		gold += qty
@@ -204,30 +231,4 @@ func weapon_skill() -> String:
 	return String(w.get("skill", "fist"))
 
 ## Utrusta ett föremål i given slot. Kräver att item finns i inventory och
-## att item.slot matchar slot-argumentet. Eventuellt befintligt föremål i
-## sloten returneras till inventory automatiskt.
-func equip(slot: String, item_id: String) -> bool:
-	if not EQUIPMENT_SLOTS.has(slot):
-		return false
-	var d: Dictionary = ItemDB.items.get(item_id, {})
-	if d.is_empty():
-		return false
-	if String(d.get("slot", "")) != slot:
-		return false
-	if int(inventory.get(item_id, 0)) < 1:
-		return false
-	# Returnera eventuellt befintligt föremål
-	var current := String(equipment.get(slot, ""))
-	if current != "":
-		add_item(current, 1)
-	remove_item(item_id, 1)
-	equipment[slot] = item_id
-	equipment_changed.emit()
-	inventory_changed.emit()
-	return true
-
-## Ta av föremål i given slot och lägg tillbaka i inventory.
-func unequip(slot: String) -> void:
-	if not EQUIPMENT_SLOTS.has(slot):
-		return
-	var current := String(equipme
+## a

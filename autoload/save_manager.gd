@@ -1,7 +1,7 @@
 extends Node
 ## Autoload: SaveManager. JSON-sparfil + autosave var 60 s.
 
-const SAVE_VERSION := 6
+const SAVE_VERSION := 7
 var save_path := "user://save.json"
 var _timer := 0.0
 
@@ -54,6 +54,7 @@ func save_game() -> void:
 		"unlocked": UnlockSystem.unlocked,
 		"quests_active": QuestSystem.active,
 		"quests_completed": QuestSystem.completed,
+		"active_rune": GameState.active_rune,
 	})
 
 func load_game() -> bool:
@@ -89,4 +90,4 @@ func load_game() -> bool:
 	GameState.player_tile = Vector2i(int(t[0]), int(t[1]))
 	# v2→v3: saknade fält ger tomma defaults — tasks/bestiary börjar från noll
 	TaskSystem.active = s.get("tasks_active", {})
-	TaskSystem.completed = s.get("tasks_completed",
+	TaskSys

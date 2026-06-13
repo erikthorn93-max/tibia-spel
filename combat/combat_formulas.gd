@@ -13,3 +13,8 @@ static func roll_monster(monster_atk: int) -> int:
 static func mitigate(raw_dmg: int, shielding: int, armor: int) -> int:
 	var reduction := randi_range(armor / 2, armor) + shielding / 3
 	return maxi(raw_dmg - reduction, 0)
+
+## Magiskada: runans kraft + magic-skill skalning, ±15% variation.
+static func roll_magic(magic_level: int, rune_power: int) -> float:
+	var base := rune_power + magic_level * 0.5
+	return base * randf_range(0.85, 1.15)
