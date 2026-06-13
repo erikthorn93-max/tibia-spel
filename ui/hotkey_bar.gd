@@ -4,8 +4,8 @@ extends Node
 
 const SLOT_COUNT    := 30
 const CFG_FILE      := "user://hotkeys.json"
-const SLOT_W        := 58.0
-const SLOT_H        := 68.0
+const SLOT_W        := 42.0
+const SLOT_H        := 52.0
 const DRAG_THRESHOLD := 5.0
 
 const DEFAULT_KEYS: Array = [
@@ -59,7 +59,7 @@ func _default_pos(i: int) -> Vector2:
 	var vp := get_viewport().get_visible_rect().size
 	var col := i % 10
 	var row := i / 10
-	return Vector2(80.0 + col * (SLOT_W + 2.0), vp.y - 220.0 + row * (SLOT_H + 2.0))
+	return Vector2(80.0 + col * (SLOT_W + 2.0), vp.y - 170.0 + row * (SLOT_H + 2.0))
 
 func _init_slots() -> void:
 	_slots.clear()
@@ -118,7 +118,7 @@ func _build_slot(idx: int) -> void:
 
 	# Sprite-ikon
 	var icon := TextureRect.new()
-	icon.custom_minimum_size = Vector2(0, 30)
+	icon.custom_minimum_size = Vector2(0, 22)
 	icon.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	vbox.add_child(icon)
@@ -126,7 +126,7 @@ func _build_slot(idx: int) -> void:
 
 	# Item-namn
 	var nlbl := Label.new()
-	nlbl.add_theme_font_size_override("font_size", 8)
+	nlbl.add_theme_font_size_override("font_size", 7)
 	nlbl.add_theme_color_override("font_color", Color(0.90, 0.88, 0.70))
 	nlbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	nlbl.clip_text = true
@@ -136,7 +136,7 @@ func _build_slot(idx: int) -> void:
 
 	# Tangent-label
 	var klbl := Label.new()
-	klbl.add_theme_font_size_override("font_size", 11)
+	klbl.add_theme_font_size_override("font_size", 9)
 	klbl.add_theme_color_override("font_color", Color(0.55, 0.80, 1.00))
 	klbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(klbl)
