@@ -207,8 +207,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	for i in SLOT_COUNT:
 		if int(_slots[i].get("keycode", 0)) == int(event.keycode):
-			_use_slot(i)
-			get_viewport().set_input_as_handled()
+			# Konsumera bara om sloten har ett item — annars låt HUD-tangenter gå igenom
+			var item_id: String = String(_slots[i].get("item_id", ""))
+			if not item_id.is_empty():
+				_use_slot(i)
+				get_viewport().set_input_as_handled()
 			return
 
 # ─────────────────────────────────────────────
