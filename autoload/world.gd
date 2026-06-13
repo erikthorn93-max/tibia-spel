@@ -83,7 +83,23 @@ func spawn_monster(monster_name: String, t: Vector2i, respawn := -1.0) -> Node2D
 	var m: Node2D = load(MONSTER_SCENE_PATH).instantiate()
 	current_zone.add_child(m)
 	m.setup(monster_name, t, current_zone, respawn)
+	# 5 % chans att bli ett elite-monster (starkare, mer exp, orange namn)
+	if randf() < 0.05:
+		_make_elite(m)
 	return m
+
+## Förvandlar ett monster till en elite-variant.
+func _make_elite(m: Node2D) -> void:
+	m.hp     = m.hp * 2
+	m.max_hp = m.max_hp * 2
+	m.atk    = int(float(m.atk) * 1.5)
+	m.exp    = m.exp * 3
+	# Orange namnlabel (tillgänglig efter add_child → _ready)
+	if m.has_node("NameLabel"):
+		var lbl: Label = m.get_node("NameLabel")
+		lbl.text = "★ " + lbl.text
+		lbl.add_theme_color_override("font_color", Color(1.0, 0.5, 0.0))
+	m._refresh_label()
 
 func _spawn_one(sp: Dictionary) -> void:
 	var mname := String(sp["monster"])
