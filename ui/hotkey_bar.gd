@@ -116,11 +116,11 @@ func _build_slot(idx: int) -> void:
 	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	cell.add_child(vbox)
 
-	# Ikon-ruta
-	var icon := ColorRect.new()
-	icon.color = Color(0.18, 0.18, 0.22)
-	icon.custom_minimum_size = Vector2(0, 26)
+	# Sprite-ikon
+	var icon := TextureRect.new()
+	icon.custom_minimum_size = Vector2(0, 30)
 	icon.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	vbox.add_child(icon)
 	_slot_icons.append(icon)
 
@@ -346,11 +346,11 @@ func _refresh_slot(idx: int) -> void:
 	var item_id: String = String(slot.get("item_id", ""))
 	var d: Dictionary = ItemDB.items.get(item_id, {}) if item_id != "" else {}
 	if d.is_empty():
-		_slot_icons[idx].color    = Color(0.18, 0.18, 0.22)
+		_slot_icons[idx].texture  = null
 		_slot_name_lbls[idx].text = ""
 	else:
-		var col_str := String(d.get("color", "#888888"))
-		_slot_icons[idx].color = Color.html(col_str) if col_str.begins_with("#") else Color(0.4, 0.4, 0.5)
+		var sp := "res://assets/sprites/items/%s.png" % item_id
+		_slot_icons[idx].texture = load(sp) if ResourceLoader.exists(sp) else null
 		var qty := int(GameState.inventory.get(item_id, 0))
 		_slot_name_lbls[idx].text = "%s\nx%d" % [String(d.get("name", item_id)), qty]
 	_slot_key_lbls[idx].text = String(slot.get("key_name", ""))

@@ -161,12 +161,28 @@ func _refresh_inv() -> void:
 		else:
 			inv_list.add_child(_inv_row(id, qty, "", Callable()))
 
+func _load_item_sprite(item_id: String) -> Texture2D:
+	var path := "res://assets/sprites/items/%s.png" % item_id
+	if ResourceLoader.exists(path):
+		return load(path) as Texture2D
+	return null
+
 func _inv_row(id: String, qty: int, action: String, cb: Callable) -> HBoxContainer:
 	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 4)
+	# Sprite
+	var tex := TextureRect.new()
+	tex.custom_minimum_size = Vector2(32, 32)
+	tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	tex.texture = _load_item_sprite(id)
+	row.add_child(tex)
+	# Namn + antal
 	var lbl := Label.new()
-	lbl.text = "%s x%d" % [ItemDB.items.get(id, {}).get("name", id), qty]
+	var d: Dictionary = ItemDB.items.get(id, {})
+	lbl.text = "%s  x%d" % [String(d.get("name", id)), qty]
 	lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	lbl.add_theme_font_size_override("font_size", 12)
+	lbl.add_theme_font_size_override("font_size", 11)
+	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	row.add_child(lbl)
 	if action != "":
 		var btn := Button.new()
