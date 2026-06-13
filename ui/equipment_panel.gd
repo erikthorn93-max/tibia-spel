@@ -66,7 +66,7 @@ func _ready() -> void:
 		icon.mouse_filter = Control.MOUSE_FILTER_STOP
 		_icons[slot] = icon
 
-		var _slot := slot   # fånga
+		var _slot: String = slot   # fånga
 		# Drag UT utrustat item
 		icon.set_drag_forwarding(
 			func(_pos: Vector2):
