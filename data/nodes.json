@@ -10,5 +10,8 @@
 	"mint_patch":       {"skill": "herbalism",   "level": 1,  "tool": "sickle",      "yields": "mint_herb",       "xp": 15, "charges": [3, 4], "respawn": 25, "color": "#58b868", "label": "Mynta"},
 	"nightshade_patch": {"skill": "herbalism",   "level": 15, "tool": "sickle",      "yields": "nightshade_herb", "xp": 30, "charges": [2, 4], "respawn": 45, "color": "#6a4a8a", "label": "Nattskatta"},
 	"eel_spot":         {"skill": "fishing",     "level": 25, "tool": "fishing_rod", "yields": "raw_eel",         "xp": 45, "charges": [4, 6], "respawn": 50, "color": "#2a4a3e", "label": "Ålstim"},
-	"marsh_patch":      {"skill": "herbalism",   "level": 25, "tool": "sickle",      "yields": "marsh_herb",      "xp": 45, "charges": [2, 4], "respawn": 50, "color": "#4a7a4a", "label": "Kärrört"}
+	"marsh_patch":      {"skill": "herbalism",   "level": 25, "tool": "sickle",      "yields": "marsh_herb",      "xp": 45, "charges": [2, 4], "respawn": 50, "color": "#4a7a4a", "label": "Kärrört"},
+	"deep_sea_spot":    {"skill": "fishing", "level": 20, "tool": "fishing_rod", "yields": "raw_mackerel",  "xp": 40, "charges": [4, 6], "respawn": 45, "color": "#2a5a8a", "label": "Djuphavsstim"},
+	"swordfish_spot":   {"skill": "fishing", "level": 35, "tool": "fishing_rod", "yields": "raw_swordfish", "xp": 75, "charges": [3, 5], "respawn": 60, "color": "#3a4a6a", "label": "Svärdfiskstim"},
+	"lobster_pot":      {"skill": "fishing", "level": 30, "tool": "fishing_rod", "yields": "raw_lobster",   "xp": 60, "charges": [3, 5], "respawn": 55, "color": "#8a3a2a", "label": "Hummertina"}
 }
