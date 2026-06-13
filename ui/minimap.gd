@@ -156,7 +156,7 @@ func _draw_full_overlay() -> void:
 	var zone := _zone()
 	if zone == null:
 		return
-	var gs  := zone.grid_size
+	var gs  : Vector2i = zone.get("grid_size") if zone.get("grid_size") != null else Vector2i.ZERO
 	var vp  := get_viewport().get_visible_rect().size
 	var font := ThemeDB.fallback_font
 
