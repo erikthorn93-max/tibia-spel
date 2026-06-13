@@ -639,5 +639,23 @@
     "speed_bonus": 0.3,
     "value": 2000,
     "desc": "En urgammal spira tillhörande Farao Khem-Ra."
+  },
+  "lava_shard": {
+    "name": "Lavabit",
+    "value": 30,
+    "desc": "En glasig splitter av stelnad lava. Mycket het."
+  },
+  "ash_feather": {
+    "name": "Askfjäder",
+    "value": 20,
+    "desc": "En stel fjäder täckt av vulkansk aska."
+  },
+  "obsidian_blade": {
+    "name": "Obsidiansvärd",
+    "slot": "weapon",
+    "atk_bonus": 28,
+    "speed_bonus": 0.2,
+    "value": 4500,
+    "desc": "Smitt av Smältkonungen ur rent vulkanglas. Skärper sig aldrig."
   }
 }

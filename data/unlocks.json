@@ -98,5 +98,10 @@
     "name": "Ökenvägen",
     "desc": "Vägen till Ökenruinerna har öppnats.",
     "requires": []
+  },
+  "vulkanen": {
+    "name": "Vulkanpasset",
+    "desc": "Vägen till Vulkankratern har öppnats.",
+    "requires": []
   }
 }

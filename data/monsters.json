@@ -601,5 +601,100 @@
         "chance": 0.8
       }
     ]
+  },
+  "Lavavarelse": {
+    "hp": 200,
+    "atk": 35,
+    "exp": 180,
+    "speed": 1.8,
+    "cooldown": 1.5,
+    "aggro_range": 6,
+    "color": "#cc4400",
+    "ability": {
+      "type": "burn",
+      "chance": 0.25,
+      "duration": 6.0,
+      "tick_dmg": 6.0
+    },
+    "loot": [
+      {
+        "item": "lava_shard",
+        "min": 1,
+        "max": 3,
+        "chance": 0.7
+      },
+      {
+        "item": "iron_coin",
+        "min": 20,
+        "max": 50,
+        "chance": 0.75
+      }
+    ]
+  },
+  "Askhök": {
+    "hp": 120,
+    "atk": 30,
+    "exp": 140,
+    "speed": 2.8,
+    "cooldown": 1.0,
+    "aggro_range": 9,
+    "color": "#888888",
+    "loot": [
+      {
+        "item": "ash_feather",
+        "min": 1,
+        "max": 2,
+        "chance": 0.65
+      },
+      {
+        "item": "iron_coin",
+        "min": 10,
+        "max": 30,
+        "chance": 0.6
+      }
+    ]
+  },
+  "Smältkonungen": {
+    "hp": 2000,
+    "atk": 75,
+    "exp": 3000,
+    "speed": 1.5,
+    "cooldown": 1.8,
+    "aggro_range": 12,
+    "color": "#ff6600",
+    "boss": true,
+    "enrage": true,
+    "ability": {
+      "type": "burn",
+      "chance": 0.4,
+      "duration": 8.0,
+      "tick_dmg": 12.0
+    },
+    "loot": [
+      {
+        "item": "obsidian_blade",
+        "min": 1,
+        "max": 1,
+        "chance": 1.0
+      },
+      {
+        "item": "lava_shard",
+        "min": 5,
+        "max": 10,
+        "chance": 1.0
+      },
+      {
+        "item": "iron_coin",
+        "min": 800,
+        "max": 1500,
+        "chance": 1.0
+      },
+      {
+        "item": "health_potion",
+        "min": 3,
+        "max": 5,
+        "chance": 0.9
+      }
+    ]
   }
 }
