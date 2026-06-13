@@ -11,9 +11,11 @@ signal player_died
 signal skill_changed(skill: String)
 signal buffs_changed
 signal appearance_changed
+signal equipment_changed
 
 const SKILL_XP_BASE := 50.0
 const SKILL_XP_GROWTH := 1.1
+const EQUIPMENT_SLOTS := ["weapon", "body", "helmet", "legs", "boots", "offhand"]
 
 var player_name := "Hjälte"
 var level := 1
@@ -25,7 +27,14 @@ var mana := 100.0
 var max_mana := 100.0
 var gold := 0
 var inventory: Dictionary = {}        # item_id -> qty
-var equipped_weapon := "rusty_sword"
+## 6 utrustningsplatser. weapon startar med rusty_sword (gratis startitem).
+var equipment: Dictionary = {
+	"weapon": "rusty_sword", "body": "", "helmet": "", "legs": "", "boots": "", "offhand": ""
+}
+## Bakåtkompatibel property: läser/skriver equipment["weapon"].
+var equipped_weapon: String:
+	get: return String(equipment.get("weapon", ""))
+	set(v): equipment["weapon"] = v
 var appearance := {                   # character creation (M1: färger)
 	"skin": "#e0b894", "hair": "#332211", "shirt": "#2e4dc0", "pants": "#1a1a52",
 }
@@ -191,58 +200,34 @@ func use_item(item_id: String) -> bool:
 	return used
 
 func weapon_skill() -> String:
-	var w: Dictionary = ItemDB.items.get(equipped_weapon, {})
+	var w: Dictionary = ItemDB.items.get(String(equipment.get("weapon", "")), {})
 	return String(w.get("skill", "fist"))
 
-func equip_weapon(item_id: String) -> bool:
-	if item_id == equipped_weapon:
-		return true   # redan utrustat
+## Utrusta ett föremål i given slot. Kräver att item finns i inventory och
+## att item.slot matchar slot-argumentet. Eventuellt befintligt föremål i
+## sloten returneras till inventory automatiskt.
+func equip(slot: String, item_id: String) -> bool:
+	if not EQUIPMENT_SLOTS.has(slot):
+		return false
+	var d: Dictionary = ItemDB.items.get(item_id, {})
+	if d.is_empty():
+		return false
+	if String(d.get("slot", "")) != slot:
+		return false
 	if int(inventory.get(item_id, 0)) < 1:
 		return false
-	if ItemDB.items.get(item_id, {}).get("type") != "weapon":
-		return false
+	# Returnera eventuellt befintligt föremål
+	var current := String(equipment.get(slot, ""))
+	if current != "":
+		add_item(current, 1)
 	remove_item(item_id, 1)
-	if equipped_weapon != "":
-		add_item(equipped_weapon, 1)
-	equipped_weapon = item_id
+	equipment[slot] = item_id
+	equipment_changed.emit()
 	inventory_changed.emit()
 	return true
 
-func unequip_weapon() -> void:
-	if equipped_weapon == "":
+## Ta av föremål i given slot och lägg tillbaka i inventory.
+func unequip(slot: String) -> void:
+	if not EQUIPMENT_SLOTS.has(slot):
 		return
-	add_item(equipped_weapon, 1)
-	equipped_weapon = ""
-	inventory_changed.emit()
-
-func buy_item(item_id: String) -> bool:
-	var d: Dictionary = ItemDB.items.get(item_id, {})
-	if d.is_empty():
-		return false
-	var price := int(d["value"])
-	if gold < price:
-		return false
-	gold -= price
-	gold_changed.emit(gold)
-	add_item(item_id, 1)
-	return true
-
-func sell_item(item_id: String) -> bool:
-	var d: Dictionary = ItemDB.items.get(item_id, {})
-	if d.is_empty():
-		return false
-	if not remove_item(item_id, 1):
-		return false
-	gold += int(int(d["value"]) * 0.5)
-	gold_changed.emit(gold)
-	return true
-
-func craft(recipe: Dictionary) -> bool:
-	var skill := String(recipe["skill"])
-	if not Recipes.can_craft(recipe, inventory, effective_skill_level(skill)):
-		return false
-	for ing in recipe["ingredients"]:
-		remove_item(ing, int(recipe["ingredients"][ing]))
-	add_item(String(recipe["id"]), 1)
-	gain_skill_xp(skill, int(recipe["xp"]))
-	return true
+	var current := String(equipme
