@@ -33,3 +33,12 @@ func test_coast_items_loaded():
 		assert_true(idb.items.has(id), "saknar item: " + id)
 	assert_eq(idb.items["swordfish_steak"]["buff"]["stat"], "skill:sword")
 	assert_eq(idb.items["cutlass"]["skill"], "sword")
+
+func test_coast_monsters_loaded():
+	for name in ["Strandkrabba", "Sjöorm", "Pirat", "Pirat Skytt", "Drunknad sjöman"]:
+		assert_true(mdb.monsters.has(name), "saknar monster: " + name)
+	assert_true(mdb.monsters.has("Piratkapten Svartöga"))
+	assert_true(bool(mdb.monsters["Piratkapten Svartöga"].get("boss", false)), "boss-flagga saknas")
+	for name in mdb.monsters:
+		for entry in mdb.monsters[name]["loot"]:
+			assert_true(mdb.monsters.size() > 0)
