@@ -25,3 +25,11 @@ func test_roll_loot_returns_valid_items():
 		for entry in idb.roll_loot(mdb.monsters["Skelett"]["loot"]):
 			assert_true(idb.items.has(entry["item"]))
 			assert_gt(int(entry["qty"]), 0)
+
+func test_coast_items_loaded():
+	for id in ["raw_mackerel", "raw_lobster", "raw_swordfish",
+			"grilled_mackerel", "lobster_dinner", "swordfish_steak",
+			"cutlass", "sea_chart", "captains_hat"]:
+		assert_true(idb.items.has(id), "saknar item: " + id)
+	assert_eq(idb.items["swordfish_steak"]["buff"]["stat"], "skill:sword")
+	assert_eq(idb.items["cutlass"]["skill"], "sword")
