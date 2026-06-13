@@ -4,8 +4,8 @@ extends Node
 
 const SLOT_COUNT    := 30
 const CFG_FILE      := "user://hotkeys.json"
-const SLOT_W        := 42.0
-const SLOT_H        := 52.0
+const SLOT_W        := 36.0
+const SLOT_H        := 36.0
 const DRAG_THRESHOLD := 5.0
 
 const DEFAULT_KEYS: Array = [
@@ -59,7 +59,7 @@ func _default_pos(i: int) -> Vector2:
 	var vp := get_viewport().get_visible_rect().size
 	var col := i % 10
 	var row := i / 10
-	return Vector2(80.0 + col * (SLOT_W + 2.0), vp.y - 170.0 + row * (SLOT_H + 2.0))
+	return Vector2(80.0 + col * (SLOT_W + 2.0), vp.y - 130.0 + row * (SLOT_H + 2.0))
 
 func _init_slots() -> void:
 	_slots.clear()
@@ -101,24 +101,24 @@ func _build_slot(idx: int) -> void:
 	cell.z_index = 10
 
 	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.11, 0.11, 0.14, 0.95)
-	sb.border_color = Color(0.42, 0.42, 0.52)
+	sb.bg_color = Color(0.05, 0.05, 0.08, 0.35)
+	sb.border_color = Color(0.55, 0.55, 0.70, 0.55)
 	sb.set_border_width_all(1)
 	sb.set_corner_radius_all(3)
-	sb.content_margin_left   = 3.0
-	sb.content_margin_right  = 3.0
-	sb.content_margin_top    = 3.0
-	sb.content_margin_bottom = 3.0
+	sb.content_margin_left   = 2.0
+	sb.content_margin_right  = 2.0
+	sb.content_margin_top    = 2.0
+	sb.content_margin_bottom = 2.0
 	cell.add_theme_stylebox_override("panel", sb)
 
 	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 1)
+	vbox.add_theme_constant_override("separation", 0)
 	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	cell.add_child(vbox)
 
 	# Sprite-ikon
 	var icon := TextureRect.new()
-	icon.custom_minimum_size = Vector2(0, 22)
+	icon.custom_minimum_size = Vector2(28, 28)
 	icon.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	vbox.add_child(icon)
@@ -130,14 +130,17 @@ func _build_slot(idx: int) -> void:
 	nlbl.add_theme_color_override("font_color", Color(0.90, 0.88, 0.70))
 	nlbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	nlbl.clip_text = true
-	nlbl.custom_minimum_size = Vector2(SLOT_W - 6.0, 0.0)
+	nlbl.custom_minimum_size = Vector2(0, 0)
+	nlbl.visible = false
 	vbox.add_child(nlbl)
 	_slot_name_lbls.append(nlbl)
 
 	# Tangent-label
 	var klbl := Label.new()
-	klbl.add_theme_font_size_override("font_size", 9)
-	klbl.add_theme_color_override("font_color", Color(0.55, 0.80, 1.00))
+	klbl.add_theme_font_size_override("font_size", 8)
+	klbl.add_theme_color_override("font_color", Color(0.75, 0.90, 1.00))
+	klbl.add_theme_constant_override("outline_size", 1)
+	klbl.add_theme_color_override("font_outline_color", Color(0,0,0,0.9))
 	klbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(klbl)
 	_slot_key_lbls.append(klbl)
@@ -177,7 +180,8 @@ func _on_slot_input(ev: InputEvent, idx: int, node: Control) -> void:
 						_slots[idx]["pos_y"] = node.position.y
 						_save_config()
 						# Återställ kantfärg
-						_set_border(node, Color(0.42, 0.42, 0.52))
+						_set_border(node, Color(0.55, 0.55, 0.70, 0.55))
+				node.modulate = Color(1,1,1,1)
 					_drag_slot  = -1
 					_drag_moved = false
 			MOUSE_BUTTON_RIGHT:
@@ -187,6 +191,7 @@ func _on_slot_input(ev: InputEvent, idx: int, node: Control) -> void:
 		if not _drag_moved and ev.global_position.distance_to(_drag_start) > DRAG_THRESHOLD:
 			_drag_moved = true
 			_set_border(node, Color(0.90, 0.70, 0.20))  # gul kant under drag
+				node.modulate = Color(1,1,1,0.9)
 		if _drag_moved:
 			node.global_position = ev.global_position + _drag_offset
 
