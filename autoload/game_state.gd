@@ -128,6 +128,9 @@ func gain_skill_xp(skill: String, amount: int) -> void:
 func take_damage(dmg: float) -> void:
 	health = maxf(health - dmg, 0.0)
 	hp_changed.emit(health, max_health)
+	gain_skill_xp("constitution", 1)   # skada tränar constitution
+	if World.player and World.player.visual:
+		World.player.visual.play_hurt()   # röd blink på spelaren
 	if health <= 0.0:
 		player_died.emit()
 
@@ -354,8 +357,4 @@ func craft(recipe: Dictionary) -> bool:
 	var skill := String(recipe["skill"])
 	if not Recipes.can_craft(recipe, inventory, effective_skill_level(skill)):
 		return false
-	for ing in recipe["ingredients"]:
-		remove_item(ing, int(recipe["ingredients"][ing]))
-	add_item(String(recipe["id"]), 1)
-	gain_skill_xp(skill, int(recipe["xp"]))
-	return true
+	for in

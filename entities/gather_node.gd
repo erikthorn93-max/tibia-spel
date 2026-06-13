@@ -34,7 +34,8 @@ func _on_click(_vp, event: InputEvent, _shape) -> void:
 func attempt() -> String:
 	if depleted:
 		return "depleted"
-	if int(GameState.inventory.get(String(def["tool"]), 0)) < 1:
+	var tool_id := String(def.get("tool", ""))
+	if tool_id != "" and int(GameState.inventory.get(tool_id, 0)) < 1:
 		return "no_tool"
 	if GameState.effective_skill_level(String(def["skill"])) < int(def["level"]):
 		return "low_level"
@@ -44,19 +45,13 @@ func attempt() -> String:
 	return "miss"
 
 func _on_success() -> void:
+	# Konsumera verktyget om noden kräver det (t.ex. campfire_spot bränner loggar)
+	if bool(def.get("consumes_tool", false)):
+		var tool_id := String(def.get("tool", ""))
+		if tool_id != "":
+			GameState.remove_item(tool_id, 1)
 	GameState.add_item(String(def["yields"]), 1)
 	GameState.gain_skill_xp(String(def["skill"]), int(def["xp"]))
-	charges -= 1
-	if charges <= 0:
-		_deplete()
-
-func _deplete() -> void:
-	depleted = true
-	modulate = Color(0.45, 0.45, 0.45)
-	if is_inside_tree():
-		get_tree().create_timer(float(def["respawn"])).timeout.connect(_respawn)
-
-func _respawn() -> void:
-	depleted = false
-	modulate = Color.WHITE
-	charges = randi_range(int(def["charges"][0]), int(def["charges"][1]))
+	# ANIMATION: puls-skalning vid lyckad insamling
+	var tw := create_tween()
+	tw.twee

@@ -101,7 +101,17 @@ func _step(dir: Vector2i) -> void:
 	_to = zone.tile_to_world(next)
 	tile = next
 	_move_t = 0.0
-	GameState.gain_skill_xp("agility", 1)   # gång tränar agility (genvägskrav)
+	GameState.gain_skill_xp("agility", 1)   # gång tränar agility
+	# Agility-bonus: rörelsehastighetsmultiplikator baserad på agility-nivå
+	var ag := GameState.effective_skill_level("agility")
+	if ag >= 60:
+		move_speed = 5.2
+	elif ag >= 40:
+		move_speed = 4.8
+	elif ag >= 20:
+		move_speed = 4.4
+	else:
+		move_speed = 4.0
 
 ## Gå mot låst gate/genväg: lås upp om kraven är uppfyllda, annars visa hint.
 func _try_bump_unlock(t: Vector2i) -> void:
@@ -135,6 +145,7 @@ func _update_attack(delta: float) -> void:
 				* TaskSystem.damage_multiplier(target.monster_name)
 			target.take_damage(dmg)
 			GameState.gain_skill_xp(wskill, 1)
+			visual.play_attack(facing)
 		else:
 			# Närstrid
 			if dist > 1:
@@ -144,6 +155,7 @@ func _update_attack(delta: float) -> void:
 				* TaskSystem.damage_multiplier(target.monster_name)   # bestiary-tierbonus
 			target.take_damage(dmg)
 			GameState.gain_skill_xp(wskill, 1)
+			visual.play_attack(facing)
 
 func _update_gather(delta: float) -> void:
 	if gather_target == null or not is_instance_valid(gather_target):
@@ -215,13 +227,4 @@ func _cast_rune() -> void:
 
 func _check_portal() -> void:
 	if zone.dungeon_entrances.has(tile):
-		World.enter_dungeon(zone.dungeon_entrances[tile])
-		return
-	if not zone.portals.has(tile):
-		return
-	if zone.portal_locks.has(tile):
-		var uid: String = zone.portal_locks[tile]
-		if not UnlockSystem.try_unlock(uid):
-			World.hud.show_message(UnlockSystem.hint_for(uid))
-			return
-	World.change_zone(zone.portals[tile])
+		World.enter_dun

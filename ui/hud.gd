@@ -15,6 +15,7 @@ var skill_panel: PanelContainer
 var recipe_panel: PanelContainer
 var shop_panel: PanelContainer
 var bank_panel: PanelContainer
+var prayer_panel: PanelContainer
 var task_panel: PanelContainer
 var bestiary_panel: PanelContainer
 var dialogue_box: PanelContainer
@@ -30,6 +31,12 @@ var _boss_panel: PanelContainer  # boss HP-bar, synlig under bossfight
 var _boss_name_lbl: Label
 var _boss_hp_bar: ColorRect
 var _boss_hp_bg: ColorRect
+# ANIMATIONER
+var _damage_flash: ColorRect   # röd skärmöverläggning vid skada
+var _levelup_lbl: Label        # "★ LEVEL UP!" popup
+var _skillup_lbl: Label        # "+Skill nivå X" popup
+var _prev_hp := 150.0          # för att detektera rikting av HP-förändring
+var _prev_skill_levels: Dictionary = {}  # skill -> nivå (för level-up-detektion)
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS    # måste fungera när trädet pausas vid död
@@ -44,6 +51,8 @@ func _ready() -> void:
 	add_child(shop_panel)
 	bank_panel = preload("res://ui/bank_panel.gd").new()
 	add_child(bank_panel)
+	prayer_panel = preload("res://ui/prayer_panel.gd").new()
+	add_child(prayer_panel)
 	task_panel = preload("res://ui/task_panel.gd").new()
 	add_child(task_panel)
 	bestiary_panel = preload("res://ui/bestiary_panel.gd").new()
@@ -71,16 +80,19 @@ func _ready() -> void:
 	add_child(preload("res://ui/death_screen.gd").new())
 	_build_boss_bar()
 	_build_night_overlay()
+	_build_damage_flash()
+	_build_levelup_labels()
 	TimeOfDay.hour_changed.connect(_on_hour_changed)
 	TaskSystem.task_taken.connect(func(_id): _refresh_tasks())
 	TaskSystem.task_progress.connect(func(_id): _refresh_tasks())
 	TaskSystem.task_completed.connect(func(_id): _refresh_tasks())
 	UnlockSystem.unlock_added.connect(func(id): show_message("%s har öppnats!" % UnlockSystem.display_name(id)))
-	GameState.hp_changed.connect(func(_h, _m): _refresh())
+	GameState.hp_changed.connect(func(h, m): _refresh(); _on_hp_changed_anim(h, m))
 	GameState.mana_changed.connect(func(_v, _m): _refresh())
 	GameState.exp_changed.connect(func(_x, _n, _l): _refresh())
 	GameState.gold_changed.connect(func(_g): _refresh())
-	GameState.skill_changed.connect(func(_s): _refresh())
+	GameState.skill_changed.connect(func(s): _refresh(); _on_skill_changed_anim(s))
+	GameState.level_up.connect(_on_level_up_anim)
 	GameState.inventory_changed.connect(_refresh_inv)
 	GameState.inventory_changed.connect(func(): if hotkey_bar: hotkey_bar._refresh_all())
 	GameState.status_changed.connect(_refresh_status)
@@ -122,6 +134,13 @@ func open_bank() -> void:
 	shop_panel.visible = false
 	task_panel.visible = false
 	bank_panel.open()
+
+func open_prayer_altar() -> void:
+	recipe_panel.visible = false
+	shop_panel.visible = false
+	task_panel.visible = false
+	bank_panel.visible = false
+	prayer_panel.open()
 
 func open_tasks() -> void:
 	recipe_panel.visible = false
@@ -341,25 +360,5 @@ func _build_boss_bar() -> void:
 	_boss_hp_bar.anchor_right  = 1.0
 	_boss_hp_bg.add_child(_boss_hp_bar)
 
-func _refresh_boss_bar() -> void:
-	if _boss_panel == null:
-		return
-	var p: Node2D = World.player
-	if p == null or not is_instance_valid(p):
-		_boss_panel.visible = false
-		return
-	var t = p.target
-	if t == null or not is_instance_valid(t) or bool(t.get("dead")):
-		_boss_panel.visible = false
-		return
-	var mname: String = String(t.get("monster_name") if t.get("monster_name") != null else "")
-	var mdata: Dictionary = MonsterDB.monsters.get(mname, {})
-	if not bool(mdata.get("boss", false)):
-		_boss_panel.visible = false
-		return
-	_boss_panel.visible = true
-	var hp     := float(t.get("hp")     if t.get("hp")     != null else 0)
-	var max_hp := float(t.get("max_hp") if t.get("max_hp") != null else 1)
-	var ratio  := clampf(hp / maxf(max_hp, 1.0), 0.0, 1.0)
-	_boss_name_lbl.text    = "%s   %d / %d" % [mname, int(hp), int(max_hp)]
-	_boss_hp_bar.anchor_right = ratio
+## Bygger röd skärm-overlay för skadanimation
+func _build_damage_flash() -> v

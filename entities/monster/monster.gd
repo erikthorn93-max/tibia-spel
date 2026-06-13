@@ -193,6 +193,9 @@ func _step_to(next: Vector2i) -> void:
 	_to = zone.tile_to_world(next)
 	_move_t = 0.0
 
+func _make_elite(m: Node2D) -> void:
+	pass   # kallas inte härifrån, finns i world.gd
+
 func take_damage(dmg: float, crit := false) -> void:
 	if dead:
 		return
@@ -200,8 +203,16 @@ func take_damage(dmg: float, crit := false) -> void:
 	_check_enrage()
 	_refresh_label()
 	_spawn_damage_number(dmg, crit)
+	# --- ANIMATION: röd blink vid träff ---
+	_flash_hit()
 	if hp <= 0:
 		_die()
+
+## Kort röd blink när monstret tar skada.
+func _flash_hit() -> void:
+	var tw := create_tween()
+	tw.tween_property(self, "modulate", Color(2.0, 0.3, 0.3), 0.05)
+	tw.tween_property(self, "modulate", Color.WHITE, 0.15)
 
 func _spawn_damage_number(dmg: float, crit := false) -> void:
 	var dn: Node2D = preload("res://entities/damage_number.gd").new()
@@ -239,4 +250,12 @@ func _die() -> void:
 		var mn := monster_name
 		var rt := respawn_time
 		var zref := zone
-		get_tree()
+		get_tree().create_timer(rt).timeout.connect(
+			func(): if is_instance_valid(zref): World.spawn_monster(mn, t, rt))
+	# --- ANIMATION: krymper och tonar ut innan queue_free ---
+	var tw := create_tween()
+	tw.set_parallel(true)
+	tw.tween_property(self, "scale", Vector2(0.0, 0.0), 0.35).set_ease(Tween.EASE_IN)
+	tw.tween_property(self, "modulate:a", 0.0, 0.3)
+	tw.set_parallel(false)
+	tw.tween_callback(queue_free)

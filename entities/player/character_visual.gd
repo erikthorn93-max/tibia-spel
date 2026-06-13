@@ -25,3 +25,18 @@ func apply_appearance(appearance: Dictionary) -> void:
 
 func face(dir: Vector2i) -> void:
 	scale.x = -1.0 if dir.x < 0 else 1.0
+
+## Squish-animation vid attack: sträck ut i attackriktningen, studsa tillbaka.
+func play_attack(dir: Vector2i) -> void:
+	var sx := 1.3 if dir.x != 0 else 0.75
+	var sy := 0.75 if dir.x != 0 else 1.3
+	var flip := scale.x   # bevara vänster/höger-riktning
+	var tw := create_tween()
+	tw.tween_property(self, "scale", Vector2(flip * sx, sy), 0.07).set_ease(Tween.EASE_OUT)
+	tw.tween_property(self, "scale", Vector2(flip * 1.0, 1.0), 0.14).set_ease(Tween.EASE_IN_OUT)
+
+## Blink-flash vid skada: röd tona → vit.
+func play_hurt() -> void:
+	var tw := create_tween()
+	tw.tween_property(self, "modulate", Color(2.0, 0.4, 0.4), 0.04)
+	tw.tween_property(self, "modulate", Color.WHITE, 0.18)
