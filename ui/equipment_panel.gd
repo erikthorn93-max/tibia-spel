@@ -47,7 +47,7 @@ func _ready() -> void:
 		btn.text = "Ta av"
 		btn.add_theme_font_size_override("font_size", 10)
 		btn.visible = false
-		var s := slot   # capture för lambda
+		var s: String = slot   # capture för lambda
 		btn.pressed.connect(func(): _on_unequip(s))
 		_btns[slot] = btn
 		hbox.add_child(btn)
@@ -94,4 +94,4 @@ func _on_unequip(slot: String) -> void:
 func toggle() -> void:
 	visible = not visible
 	if visible:
-		_refresh()
+		_ref
