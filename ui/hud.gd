@@ -24,6 +24,10 @@ var _msg_timer := 0.0
 var _qs_rune_lbl: Label   # visar aktiv runa + qty i quickslot
 var _qs_pot_lbl: Label    # visar health_potion qty i quickslot
 var _poison_lbl: Label    # "Giftig!"-chip
+var _boss_panel: PanelContainer  # boss HP-bar, synlig under bossfight
+var _boss_name_lbl: Label
+var _boss_hp_bar: ColorRect
+var _boss_hp_bg: ColorRect
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS    # måste fungera när trädet pausas vid död
@@ -57,6 +61,7 @@ func _ready() -> void:
 	add_child(preload("res://ui/debug_console.gd").new())
 	add_child(preload("res://ui/death_screen.gd").new())
 	_build_quickslots()
+	_build_boss_bar()
 	TaskSystem.task_taken.connect(func(_id): _refresh_tasks())
 	TaskSystem.task_progress.connect(func(_id): _refresh_tasks())
 	TaskSystem.task_completed.connect(func(_id): _refresh_tasks())
@@ -85,6 +90,7 @@ func _process(delta: float) -> void:
 			msg_lbl.visible = false
 	if not GameState.active_buffs.is_empty():
 		_refresh_buffs()   # nedräkning
+	_refresh_boss_bar()
 
 func show_message(text: String) -> void:
 	msg_lbl.text = text
@@ -148,7 +154,6 @@ func _refresh_inv() -> void:
 			continue
 		var qty := int(GameState.inventory[id])
 		if d.has("slot"):
-			# Vapentyp/rustning/sköld — utrusta i korrekt slot
 			var slot := String(d["slot"])
 			inv_list.add_child(_inv_row(id, qty, "Utrusta", func(): GameState.equip(slot, id)))
 		elif d.has("heal") or d.has("mana") or d.has("buff") or d.get("usable", false):
@@ -193,4 +198,113 @@ func _unhandled_input(event: InputEvent) -> void:
 		task_panel.visible = false
 		bestiary_panel.visible = false
 		dialogue_box.close()
-		quest_
+		quest_log.visible = false
+		wardrobe.visible = false
+		equipment_panel.visible = false
+
+## Bygger quickslots-raden längst ner till vänster (F1=runa, F2=hälsodryck)
+func _build_quickslots() -> void:
+	var qs := HBoxContainer.new()
+	qs.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
+	qs.offset_top    = -40.0
+	qs.offset_bottom = -8.0
+	qs.offset_left   = 8.0
+	qs.offset_right  = 300.0
+	add_child(qs)
+	var rune_slot := PanelContainer.new()
+	_qs_rune_lbl = Label.new()
+	_qs_rune_lbl.text = "F1: —"
+	_qs_rune_lbl.add_theme_font_size_override("font_size", 11)
+	rune_slot.add_child(_qs_rune_lbl)
+	qs.add_child(rune_slot)
+	var pot_slot := PanelContainer.new()
+	_qs_pot_lbl = Label.new()
+	_qs_pot_lbl.text = "F2: 0× hälsodryck"
+	_qs_pot_lbl.add_theme_font_size_override("font_size", 11)
+	pot_slot.add_child(_qs_pot_lbl)
+	qs.add_child(pot_slot)
+
+func _refresh_quickslots() -> void:
+	if _qs_rune_lbl == null or _qs_pot_lbl == null:
+		return
+	var rid := GameState.active_rune
+	if rid.is_empty():
+		_qs_rune_lbl.text = "F1: —"
+	else:
+		var rname := String(ItemDB.items.get(rid, {}).get("name", rid))
+		var qty := int(GameState.inventory.get(rid, 0))
+		_qs_rune_lbl.text = "F1: %s x%d" % [rname, qty]
+	var pot_qty := int(GameState.inventory.get("health_potion", 0))
+	_qs_pot_lbl.text = "F2: %d× hälsodryck" % pot_qty
+
+## Bygger gift/stun-status chip (övre högra hörnet)
+func _build_status_chips() -> void:
+	_poison_lbl = Label.new()
+	_poison_lbl.text = "☠ Giftig!"
+	_poison_lbl.add_theme_color_override("font_color", Color(0.2, 0.9, 0.2))
+	_poison_lbl.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	_poison_lbl.offset_left   = -160.0
+	_poison_lbl.offset_top    =   80.0
+	_poison_lbl.offset_right  =   -8.0
+	_poison_lbl.offset_bottom =  100.0
+	_poison_lbl.visible = false
+	add_child(_poison_lbl)
+
+func _refresh_status() -> void:
+	if _poison_lbl:
+		_poison_lbl.visible = GameState.has_status("poison")
+
+func _on_death() -> void:
+	pass   # DeathScreen hanterar sin egen synlighet via player_died-signalen
+
+## Bygger boss HP-bar längst ner i mitten — dold tills target är en boss
+func _build_boss_bar() -> void:
+	_boss_panel = PanelContainer.new()
+	_boss_panel.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	_boss_panel.offset_left   =  300.0
+	_boss_panel.offset_right  = -300.0
+	_boss_panel.offset_top    =  -70.0
+	_boss_panel.offset_bottom =   -8.0
+	_boss_panel.visible = false
+	add_child(_boss_panel)
+	var vbox := VBoxContainer.new()
+	_boss_panel.add_child(vbox)
+	_boss_name_lbl = Label.new()
+	_boss_name_lbl.add_theme_color_override("font_color", Color(1.0, 0.6, 0.0))
+	_boss_name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_boss_name_lbl.add_theme_font_size_override("font_size", 13)
+	vbox.add_child(_boss_name_lbl)
+	_boss_hp_bg = ColorRect.new()
+	_boss_hp_bg.color = Color(0.15, 0.05, 0.05)
+	_boss_hp_bg.custom_minimum_size = Vector2(0.0, 14.0)
+	vbox.add_child(_boss_hp_bg)
+	_boss_hp_bar = ColorRect.new()
+	_boss_hp_bar.color = Color(0.85, 0.1, 0.1)
+	_boss_hp_bar.anchor_left   = 0.0
+	_boss_hp_bar.anchor_top    = 0.0
+	_boss_hp_bar.anchor_bottom = 1.0
+	_boss_hp_bar.anchor_right  = 1.0
+	_boss_hp_bg.add_child(_boss_hp_bar)
+
+func _refresh_boss_bar() -> void:
+	if _boss_panel == null:
+		return
+	var p: Node2D = World.player
+	if p == null or not is_instance_valid(p):
+		_boss_panel.visible = false
+		return
+	var t = p.target
+	if t == null or not is_instance_valid(t) or bool(t.get("dead")):
+		_boss_panel.visible = false
+		return
+	var mname: String = String(t.get("monster_name") if t.get("monster_name") != null else "")
+	var mdata: Dictionary = MonsterDB.monsters.get(mname, {})
+	if not bool(mdata.get("boss", false)):
+		_boss_panel.visible = false
+		return
+	_boss_panel.visible = true
+	var hp     := float(t.get("hp")     if t.get("hp")     != null else 0)
+	var max_hp := float(t.get("max_hp") if t.get("max_hp") != null else 1)
+	var ratio  := clampf(hp / maxf(max_hp, 1.0), 0.0, 1.0)
+	_boss_name_lbl.text    = "%s   %d / %d" % [mname, int(hp), int(max_hp)]
+	_boss_hp_bar.anchor_right = ratio
