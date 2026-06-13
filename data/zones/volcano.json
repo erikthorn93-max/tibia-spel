@@ -63,6 +63,16 @@
       "monster": "Smältkonungen",
       "count": 1,
       "respawn": 600.0
+    },
+    {
+      "monster": "Glödmask",
+      "count": 5,
+      "respawn": 28.0
+    },
+    {
+      "monster": "Sotdemon",
+      "count": 3,
+      "respawn": 50.0
     }
   ]
 }

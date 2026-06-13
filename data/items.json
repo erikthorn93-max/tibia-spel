@@ -676,5 +676,20 @@
     "skill": "sword",
     "value": 8000,
     "description": "En vapen smiddt av isdrake-tänder."
+  },
+  "wolf_pelt": {
+    "name": "Vargskinn",
+    "value": 18,
+    "description": "Ett tjockt vargskinn."
+  },
+  "bear_claw": {
+    "name": "Björnklo",
+    "value": 22,
+    "description": "En skarp björnklo."
+  },
+  "swamp_moss": {
+    "name": "Sumpsmossa",
+    "value": 12,
+    "description": "Klibbig smuts från träsket."
   }
 }

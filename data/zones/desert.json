@@ -62,6 +62,16 @@
       "monster": "Farao Khem-Ra",
       "count": 1,
       "respawn": 300.0
+    },
+    {
+      "monster": "Ökengam",
+      "count": 5,
+      "respawn": 22.0
+    },
+    {
+      "monster": "Sandvaranen",
+      "count": 4,
+      "respawn": 40.0
     }
   ]
 }

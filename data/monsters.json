@@ -791,5 +791,271 @@
         "chance": 0.9
       }
     ]
+  },
+  "Skogsvargen": {
+    "hp": 80,
+    "atk": 16,
+    "exp": 55,
+    "speed": 2.8,
+    "cooldown": 1.1,
+    "aggro_range": 8,
+    "color": "#886644",
+    "loot": [
+      {
+        "item": "wolf_pelt",
+        "min": 1,
+        "max": 1,
+        "chance": 0.5
+      },
+      {
+        "item": "iron_coin",
+        "min": 5,
+        "max": 20,
+        "chance": 1.0
+      }
+    ]
+  },
+  "Skogsbjörn": {
+    "hp": 220,
+    "atk": 29,
+    "exp": 165,
+    "speed": 1.9,
+    "cooldown": 1.6,
+    "aggro_range": 5,
+    "color": "#664422",
+    "ability": {
+      "type": "stun",
+      "chance": 0.12,
+      "duration": 1.5,
+      "tick_dmg": 0.0
+    },
+    "loot": [
+      {
+        "item": "bear_claw",
+        "min": 1,
+        "max": 2,
+        "chance": 0.55
+      },
+      {
+        "item": "iron_coin",
+        "min": 25,
+        "max": 70,
+        "chance": 1.0
+      }
+    ]
+  },
+  "Sumpkräla": {
+    "hp": 35,
+    "atk": 8,
+    "exp": 22,
+    "speed": 1.8,
+    "cooldown": 1.4,
+    "aggro_range": 4,
+    "color": "#4a6640",
+    "ability": {
+      "type": "poison",
+      "chance": 0.15,
+      "duration": 6.0,
+      "tick_dmg": 2.0
+    },
+    "loot": [
+      {
+        "item": "iron_coin",
+        "min": 2,
+        "max": 10,
+        "chance": 1.0
+      }
+    ]
+  },
+  "Sumpvarelse": {
+    "hp": 175,
+    "atk": 28,
+    "exp": 155,
+    "speed": 1.6,
+    "cooldown": 1.5,
+    "aggro_range": 6,
+    "color": "#3a5530",
+    "ability": {
+      "type": "poison",
+      "chance": 0.2,
+      "duration": 8.0,
+      "tick_dmg": 3.0
+    },
+    "loot": [
+      {
+        "item": "swamp_moss",
+        "min": 1,
+        "max": 2,
+        "chance": 0.55
+      },
+      {
+        "item": "iron_coin",
+        "min": 20,
+        "max": 60,
+        "chance": 1.0
+      }
+    ]
+  },
+  "Ökengam": {
+    "hp": 65,
+    "atk": 14,
+    "exp": 50,
+    "speed": 2.8,
+    "cooldown": 1.0,
+    "aggro_range": 9,
+    "color": "#c8a050",
+    "loot": [
+      {
+        "item": "iron_coin",
+        "min": 5,
+        "max": 18,
+        "chance": 1.0
+      }
+    ]
+  },
+  "Sandvaranen": {
+    "hp": 230,
+    "atk": 36,
+    "exp": 180,
+    "speed": 2.0,
+    "cooldown": 1.4,
+    "aggro_range": 6,
+    "color": "#d4a040",
+    "ability": {
+      "type": "poison",
+      "chance": 0.22,
+      "duration": 8.0,
+      "tick_dmg": 4.0
+    },
+    "loot": [
+      {
+        "item": "sand_scale",
+        "min": 1,
+        "max": 3,
+        "chance": 0.6
+      },
+      {
+        "item": "iron_coin",
+        "min": 30,
+        "max": 80,
+        "chance": 1.0
+      }
+    ]
+  },
+  "Glödmask": {
+    "hp": 80,
+    "atk": 20,
+    "exp": 90,
+    "speed": 1.5,
+    "cooldown": 1.6,
+    "aggro_range": 4,
+    "color": "#ff4400",
+    "ability": {
+      "type": "burn",
+      "chance": 0.18,
+      "duration": 4.0,
+      "tick_dmg": 4.0
+    },
+    "loot": [
+      {
+        "item": "lava_shard",
+        "min": 1,
+        "max": 1,
+        "chance": 0.3
+      },
+      {
+        "item": "iron_coin",
+        "min": 8,
+        "max": 25,
+        "chance": 1.0
+      }
+    ]
+  },
+  "Sotdemon": {
+    "hp": 320,
+    "atk": 50,
+    "exp": 300,
+    "speed": 1.7,
+    "cooldown": 1.5,
+    "aggro_range": 7,
+    "color": "#221100",
+    "ability": {
+      "type": "burn",
+      "chance": 0.3,
+      "duration": 6.0,
+      "tick_dmg": 8.0
+    },
+    "loot": [
+      {
+        "item": "ash_feather",
+        "min": 1,
+        "max": 2,
+        "chance": 0.45
+      },
+      {
+        "item": "lava_shard",
+        "min": 1,
+        "max": 2,
+        "chance": 0.4
+      },
+      {
+        "item": "iron_coin",
+        "min": 50,
+        "max": 120,
+        "chance": 1.0
+      }
+    ]
+  },
+  "Snöuggla": {
+    "hp": 70,
+    "atk": 16,
+    "exp": 75,
+    "speed": 2.6,
+    "cooldown": 1.0,
+    "aggro_range": 9,
+    "color": "#ddeeff",
+    "loot": [
+      {
+        "item": "frostfjäder",
+        "min": 1,
+        "max": 1,
+        "chance": 0.4
+      },
+      {
+        "item": "iron_coin",
+        "min": 6,
+        "max": 20,
+        "chance": 1.0
+      }
+    ]
+  },
+  "Isvarelse": {
+    "hp": 185,
+    "atk": 35,
+    "exp": 165,
+    "speed": 1.7,
+    "cooldown": 1.5,
+    "aggro_range": 6,
+    "color": "#99ccee",
+    "ability": {
+      "type": "slow",
+      "chance": 0.2,
+      "duration": 2.5,
+      "tick_dmg": 0.0
+    },
+    "loot": [
+      {
+        "item": "is_kristall",
+        "min": 1,
+        "max": 1,
+        "chance": 0.35
+      },
+      {
+        "item": "iron_coin",
+        "min": 22,
+        "max": 60,
+        "chance": 1.0
+      }
+    ]
   }
 }

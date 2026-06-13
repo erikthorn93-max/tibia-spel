@@ -88,6 +88,16 @@
       "monster": "Isdraken",
       "count": 1,
       "respawn": 600.0
+    },
+    {
+      "monster": "Snöuggla",
+      "count": 5,
+      "respawn": 25.0
+    },
+    {
+      "monster": "Isvarelse",
+      "count": 4,
+      "respawn": 42.0
     }
   ]
 }

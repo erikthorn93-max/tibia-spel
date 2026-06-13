@@ -183,6 +183,9 @@ func _try_apply_ability() -> void:
 		"stun":
 			GameState.apply_status("stun",
 				float(ab.get("duration", 2.0)), 0.0)
+		"slow":
+			GameState.apply_status("slow",
+				float(ab.get("duration", 3.0)), 0.0)
 
 func _step_to(next: Vector2i) -> void:
 	tile = next
