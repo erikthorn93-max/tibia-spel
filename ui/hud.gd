@@ -53,6 +53,9 @@ func _ready() -> void:
 	add_child(equipment_panel)
 	hotkey_bar = preload("res://ui/hotkey_bar.gd").new()
 	add_child(hotkey_bar)
+	var _wdz := preload("res://ui/world_drop_zone.gd").new()
+	add_child(_wdz)
+	move_child(_wdz, 0)   # bakom allt
 	QuestSystem.quest_started.connect(func(_id): _refresh_quests())
 	QuestSystem.quest_progress.connect(func(_id): _refresh_quests())
 	QuestSystem.step_advanced.connect(func(_id): _refresh_quests())
@@ -167,14 +170,34 @@ func _load_item_sprite(item_id: String) -> Texture2D:
 		return load(path) as Texture2D
 	return null
 
+func _make_drag_preview(item_id: String) -> Control:
+	var p := Control.new()
+	p.custom_minimum_size = Vector2(40, 40)
+	var t := TextureRect.new()
+	t.texture = _load_item_sprite(item_id)
+	t.custom_minimum_size = Vector2(40, 40)
+	t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	p.add_child(t)
+	return p
+
 func _inv_row(id: String, qty: int, action: String, cb: Callable) -> HBoxContainer:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 4)
-	# Sprite
+	row.mouse_filter = Control.MOUSE_FILTER_STOP
+	# Sprite (drag-källa)
 	var tex := TextureRect.new()
-	tex.custom_minimum_size = Vector2(32, 32)
+	tex.custom_minimum_size = Vector2(36, 36)
 	tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	tex.texture = _load_item_sprite(id)
+	tex.mouse_filter = Control.MOUSE_FILTER_STOP
+	var _id := id; var _qty := qty
+	tex.set_drag_forwarding(
+		func(_pos: Vector2):
+			tex.set_drag_preview(_make_drag_preview(_id))
+			return {"item_id": _id, "qty": _qty, "source": "inventory"},
+		func(_pos, _data) -> bool: return false,
+		func(_pos, _data): pass
+	)
 	row.add_child(tex)
 	# Namn + antal
 	var lbl := Label.new()

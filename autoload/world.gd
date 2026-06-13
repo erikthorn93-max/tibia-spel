@@ -143,3 +143,12 @@ func _spawn_world_objects() -> void:
 			var npc: Node2D = preload("res://entities/npc.tscn").instantiate()
 			npc.setup(id, Vector2i(int(nd["position"][0]), int(nd["position"][1])))
 			current_zone.add_child(npc)   # setup FÖRE add_child — _ready läser npc_id
+
+## Tappar ett item på marken vid spelarens nuvarande tile.
+func drop_item(item_id: String, qty: int = 1) -> void:
+	if current_zone == null:
+		return
+	var gi = preload("res://entities/ground_item.gd").new()
+	current_zone.add_child(gi)
+	gi.setup([{"item": item_id, "qty": qty}], GameState.player_tile)
+	GameState.remove_item(item_id, qty)
