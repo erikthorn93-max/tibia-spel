@@ -20,10 +20,8 @@ var dialogue_box: PanelContainer
 var quest_log: PanelContainer
 var wardrobe: PanelContainer
 var equipment_panel: PanelContainer
-var hotkey_bar: PanelContainer
+var hotkey_bar: Node
 var _msg_timer := 0.0
-var _qs_rune_lbl: Label   # visar aktiv runa + qty i quickslot
-var _qs_pot_lbl: Label    # visar health_potion qty i quickslot
 var _poison_lbl: Label    # "Giftig!"-chip
 var _boss_panel: PanelContainer  # boss HP-bar, synlig under bossfight
 var _boss_name_lbl: Label
@@ -63,7 +61,6 @@ func _ready() -> void:
 		show_message("Quest klar: %s!" % QuestSystem.quests[id]["name"]))
 	add_child(preload("res://ui/debug_console.gd").new())
 	add_child(preload("res://ui/death_screen.gd").new())
-	_build_quickslots()
 	_build_boss_bar()
 	TaskSystem.task_taken.connect(func(_id): _refresh_tasks())
 	TaskSystem.task_progress.connect(func(_id): _refresh_tasks())
@@ -76,7 +73,6 @@ func _ready() -> void:
 	GameState.skill_changed.connect(func(_s): _refresh())
 	GameState.inventory_changed.connect(_refresh_inv)
 	GameState.inventory_changed.connect(func(): if hotkey_bar: hotkey_bar._refresh_all())
-	GameState.inventory_changed.connect(_refresh_quickslots)
 	GameState.status_changed.connect(_refresh_status)
 	_build_status_chips()
 	GameState.buffs_changed.connect(_refresh_buffs)
@@ -206,41 +202,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		wardrobe.visible = false
 		equipment_panel.visible = false
 
-## Bygger quickslots-raden längst ner till vänster (F1=runa, F2=hälsodryck)
-func _build_quickslots() -> void:
-	var qs := HBoxContainer.new()
-	qs.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
-	qs.offset_top    = -40.0
-	qs.offset_bottom = -8.0
-	qs.offset_left   = 8.0
-	qs.offset_right  = 300.0
-	add_child(qs)
-	var rune_slot := PanelContainer.new()
-	_qs_rune_lbl = Label.new()
-	_qs_rune_lbl.text = "F1: —"
-	_qs_rune_lbl.add_theme_font_size_override("font_size", 11)
-	rune_slot.add_child(_qs_rune_lbl)
-	qs.add_child(rune_slot)
-	var pot_slot := PanelContainer.new()
-	_qs_pot_lbl = Label.new()
-	_qs_pot_lbl.text = "F2: 0× hälsodryck"
-	_qs_pot_lbl.add_theme_font_size_override("font_size", 11)
-	pot_slot.add_child(_qs_pot_lbl)
-	qs.add_child(pot_slot)
-
-func _refresh_quickslots() -> void:
-	if _qs_rune_lbl == null or _qs_pot_lbl == null:
-		return
-	var rid := GameState.active_rune
-	if rid.is_empty():
-		_qs_rune_lbl.text = "F1: —"
-	else:
-		var rname := String(ItemDB.items.get(rid, {}).get("name", rid))
-		var qty := int(GameState.inventory.get(rid, 0))
-		_qs_rune_lbl.text = "F1: %s x%d" % [rname, qty]
-	var pot_qty := int(GameState.inventory.get("health_potion", 0))
-	_qs_pot_lbl.text = "F2: %d× hälsodryck" % pot_qty
-
 ## Bygger gift/stun-status chip (övre högra hörnet)
 func _build_status_chips() -> void:
 	_poison_lbl = Label.new()
@@ -312,3 +273,4 @@ func _refresh_boss_bar() -> void:
 	var ratio  := clampf(hp / maxf(max_hp, 1.0), 0.0, 1.0)
 	_boss_name_lbl.text    = "%s   %d / %d" % [mname, int(hp), int(max_hp)]
 	_boss_hp_bar.anchor_right = ratio
+          
