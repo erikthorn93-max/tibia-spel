@@ -46,11 +46,11 @@
 - [ ] Implementera `world/dungeon_generator.gd`.
 - [ ] Commit: `feat: dungeongenerator — seedade rum+korridorer med kista och temapooler (TDD)`
 
-### Task 2: Zone — build_from_data + nya legendtyper (TDD)
-- [ ] Refaktor `build(id)` → läser JSON, delegerar till `build_from_data(data, id)`.
-- [ ] Legendtyp `chest` (→ `chest_points`, blockerad) och `dungeon_entrance` (→ `dungeon_entrances[t]=tema`, gångbar, mörk trappmarkör med temanamn).
-- [ ] Tester: generatordata bygger zon; cave/swamp-entréer parsas.
-- [ ] Commit: `feat: zoner byggs från data — kist- och dungeoningångs-tiles (TDD)`
+### Task 2: Zone — build_from_data + nya legendtyper (TDD) ✓
+- [x] Refaktor `build(id)` → läser JSON, delegerar till `build_from_data(data, id)`.
+- [x] Legendtyp `chest` (→ `chest_points`, blockerad) och `dungeon_entrance` (→ `dungeon_entrances[t]=tema`, gångbar, mörk trappmarkör med temanamn).
+- [x] Tester: generatordata bygger zon; cave/swamp-entréer parsas.
+- [x] Commit: `feat: zoner byggs från data — kist- och dungeoningångs-tiles (TDD)`
 
 ### Task 3: World + save — enter_dungeon, ytzonsspårning
 - [ ] `World.enter_dungeon(theme, seed=-1)`, `last_surface_zone/tile` (sätts i start_game för ytzoner), exit-retur till entrétilen, kistspawn i `_spawn_world_objects`.
@@ -68,4 +68,4 @@
 - [ ] Full svit + boot. Commit: `feat: dungeoningångar i kryptan och Träskets hjärta + debugkommando`
 
 ### Task 6: Helsvit + planbock
-- [ ] Full GUT-svit grön, boot-check ren, bocka av, commit docs.
+- [ ] Full GUT-svit grön, boot-check ren, bocka av, commit do
