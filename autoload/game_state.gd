@@ -48,6 +48,8 @@ var current_zone := "town"
 var player_tile := Vector2i.ZERO
 var active_buffs: Array = []   # [{stat, amount, time_left}]
 var active_rune := ""          # id för aktiv runa (F1 kastar)
+var status_effects: Dictionary = {}  # id -> {tick_dmg, time_left, tick_acc}
+signal status_changed
 
 ## _init (inte _ready): skills måste finnas direkt vid .new() i tester,
 ## och innan andra autoloads läser GameState.skills.
@@ -173,8 +175,39 @@ func remove_item(item_id: String, qty: int) -> bool:
 	inventory_changed.emit()
 	return true
 
+## Applicerar en statuseffekt (skriver över om samma id redan finns).
+func apply_status(id: String, duration: float, tick_dmg: float) -> void:
+	status_effects[id] = {"tick_dmg": tick_dmg, "time_left": duration, "tick_acc": 0.0}
+	status_changed.emit()
+
+## Tar bort en statuseffekt (t.ex. motgift tar bort "poison").
+func clear_status(id: String) -> void:
+	if status_effects.erase(id):
+		status_changed.emit()
+
+func has_status(id: String) -> bool:
+	return status_effects.has(id)
+
 func _process(delta: float) -> void:
 	_tick_buffs(delta)
+	_tick_statuses(delta)
+
+func _tick_statuses(delta: float) -> void:
+	if status_effects.is_empty():
+		return
+	var changed := false
+	for id in status_effects.keys():
+		var s: Dictionary = status_effects[id]
+		s["time_left"] -= delta
+		s["tick_acc"]  += delta
+		if s["tick_acc"] >= 1.0:   # en tick per sekund
+			s["tick_acc"] -= 1.0
+			take_damage(s["tick_dmg"])
+		if s["time_left"] <= 0.0:
+			status_effects.erase(id)
+			changed = true
+	if changed:
+		status_changed.emit()
 
 func apply_buff(stat: String, amount: float, duration: float) -> void:
 	for i in range(active_buffs.size() - 1, -1, -1):
@@ -196,39 +229,4 @@ func _tick_buffs(delta: float) -> void:
 	if changed:
 		buffs_changed.emit()
 
-func effective_skill_level(skill: String) -> int:
-	var lvl := int(skills.get(skill, {"level": 1})["level"])
-	for b in active_buffs:
-		if String(b["stat"]) == "skill:" + skill:
-			lvl += int(b["amount"])
-	return lvl
-
-func use_item(item_id: String) -> bool:
-	if int(inventory.get(item_id, 0)) < 1:
-		return false
-	var d: Dictionary = ItemDB.items.get(item_id, {})
-	var used := false
-	if d.has("heal"):
-		heal(float(d["heal"]))
-		used = true
-	if d.has("mana"):
-		mana = minf(mana + float(d["mana"]), max_mana)
-		mana_changed.emit(mana, max_mana)
-		used = true
-	if d.has("buff"):
-		var b: Dictionary = d["buff"]
-		apply_buff(String(b["stat"]), float(b["amount"]), float(b["duration"]))
-		used = true
-	if d.get("usable", false):
-		used = true
-	if used:
-		remove_item(item_id, 1)
-		QuestSystem.record_use(item_id)
-	return used
-
-func weapon_skill() -> String:
-	var w: Dictionary = ItemDB.items.get(String(equipment.get("weapon", "")), {})
-	return String(w.get("skill", "fist"))
-
-## Utrusta ett föremål i given slot. Kräver att item finns i inventory och
-## a
+func 

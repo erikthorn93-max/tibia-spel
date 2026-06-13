@@ -23,6 +23,7 @@ var equipment_panel: PanelContainer
 var _msg_timer := 0.0
 var _qs_rune_lbl: Label   # visar aktiv runa + qty i quickslot
 var _qs_pot_lbl: Label    # visar health_potion qty i quickslot
+var _poison_lbl: Label    # "Giftig!"-chip
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS    # måste fungera när trädet pausas vid död
@@ -67,6 +68,8 @@ func _ready() -> void:
 	GameState.skill_changed.connect(func(_s): _refresh())
 	GameState.inventory_changed.connect(_refresh_inv)
 	GameState.inventory_changed.connect(_refresh_quickslots)
+	GameState.status_changed.connect(_refresh_status)
+	_build_status_chips()
 	GameState.buffs_changed.connect(_refresh_buffs)
 	GameState.player_died.connect(_on_death)
 	_refresh()
@@ -190,8 +193,4 @@ func _unhandled_input(event: InputEvent) -> void:
 		task_panel.visible = false
 		bestiary_panel.visible = false
 		dialogue_box.close()
-		quest_log.visible = false
-		wardrobe.visible = false
-		equipment_panel.visible = false
-
-## Skapar F1/F2 quick-slot-baren l�
+		quest_

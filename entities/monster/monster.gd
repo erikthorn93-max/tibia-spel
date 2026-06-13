@@ -100,6 +100,7 @@ func _process(delta: float) -> void:
 			if dmg > 0:
 				GameState.take_damage(dmg)
 				GameState.gain_skill_xp("shielding", 1)
+			_try_apply_ability()
 		return
 
 	if dist <= aggro_range:                          # jaga
@@ -108,6 +109,20 @@ func _process(delta: float) -> void:
 			var next: Vector2i = _path[1]
 			if next != player_tile and zone.is_walkable(next):
 				_step_to(next)
+
+## Försöker applicera monsterets ability-effekt på spelaren.
+func _try_apply_ability() -> void:
+	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
+	var ab: Dictionary = d.get("ability", {})
+	if ab.is_empty():
+		return
+	if randf() >= float(ab.get("chance", 0.0)):
+		return
+	match String(ab.get("type", "")):
+		"poison":
+			GameState.apply_status("poison",
+				float(ab.get("duration", 10.0)),
+				float(ab.get("tick_dmg", 3.0)))
 
 func _step_to(next: Vector2i) -> void:
 	tile = next
@@ -118,20 +133,4 @@ func _step_to(next: Vector2i) -> void:
 func take_damage(dmg: float) -> void:
 	if dead:
 		return
-	hp = maxi(hp - int(dmg), 0)
-	_refresh_label()
-	if hp <= 0:
-		_die()
-
-func _die() -> void:
-	dead = true
-	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
-	GameState.gain_exp(exp)
-	var wskill := GameState.weapon_skill()
-	GameState.gain_skill_xp(wskill, exp)
-	var loot_table: Array = d.get("loot", [])
-	for entry in loot_table:
-		if randf() < float(entry.get("chance", 0.0)):
-			var qty := int(entry.get("qty", 1))
-			GameState.add_item(String(entry["item"]), qty)
-	TaskSyst
+	hp = maxi(hp - i
