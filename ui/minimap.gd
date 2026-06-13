@@ -97,11 +97,11 @@ func _draw_mini() -> void:
 	for dy in range(-MINI_RADIUS, MINI_RADIUS + 1):
 		for dx in range(-MINI_RADIUS, MINI_RADIUS + 1):
 			var t := Vector2i(pt.x + dx, pt.y + dy)
-			var col := _tile_cache.get(t, COL_UNKNOWN)
+			var col: Color = _tile_cache.get(t, COL_UNKNOWN)
 			draw_rect(
 				Rect2(Vector2(ox + (dx + MINI_RADIUS) * MINI_TILE,
-				              oy + (dy + MINI_RADIUS) * MINI_TILE),
-				      Vector2(MINI_TILE, MINI_TILE)),
+							  oy + (dy + MINI_RADIUS) * MINI_TILE),
+					  Vector2(MINI_TILE, MINI_TILE)),
 				col)
 
 	# Portaler
@@ -120,8 +120,8 @@ func _draw_mini() -> void:
 	var blink := 1.0 if fmod(_blink_t, 1.0) < 0.65 else 0.0
 	draw_rect(
 		Rect2(Vector2(ox + MINI_RADIUS * MINI_TILE,
-		              oy + MINI_RADIUS * MINI_TILE),
-		      Vector2(MINI_TILE, MINI_TILE)),
+					  oy + MINI_RADIUS * MINI_TILE),
+			  Vector2(MINI_TILE, MINI_TILE)),
 		Color(COL_PLAYER.r, COL_PLAYER.g, COL_PLAYER.b, blink))
 
 	# Kompassrosa – liten "N" längst upp
@@ -138,7 +138,7 @@ func _draw_mini() -> void:
 		Color(0.45, 0.45, 0.55, 0.70))
 
 func _mini_dot(tile: Vector2i, player_tile: Vector2i,
-               ox: float, oy: float, col: Color, size: int) -> void:
+			   ox: float, oy: float, col: Color, size: int) -> void:
 	var dx := tile.x - player_tile.x
 	var dy := tile.y - player_tile.y
 	if absi(dx) > MINI_RADIUS or absi(dy) > MINI_RADIUS:
@@ -146,8 +146,8 @@ func _mini_dot(tile: Vector2i, player_tile: Vector2i,
 	var off := float(MINI_TILE - size) * 0.5
 	draw_rect(
 		Rect2(Vector2(ox + (dx + MINI_RADIUS) * MINI_TILE + off,
-		              oy + (dy + MINI_RADIUS) * MINI_TILE + off),
-		      Vector2(size, size)),
+					  oy + (dy + MINI_RADIUS) * MINI_TILE + off),
+			  Vector2(size, size)),
 		col)
 
 # ────────────── Fullskärmskarta (M-tangent) ────────────────
@@ -162,7 +162,7 @@ func _draw_full_overlay() -> void:
 
 	# Beräkna tile-storlek som ryms i max-dimensionerna
 	var ft := int(min(FULL_MAX_W / maxf(float(gs.x), 1.0),
-	                  FULL_MAX_H / maxf(float(gs.y), 1.0)))
+					  FULL_MAX_H / maxf(float(gs.y), 1.0)))
 	ft = clampi(ft, 2, 8)
 
 	var map_w   := gs.x * ft
@@ -229,7 +229,7 @@ func _draw_full_overlay() -> void:
 	var ps := maxi(ft + 1, 3)
 	draw_rect(
 		Rect2(Vector2(mx + pt.x * ft - 1.0, my + pt.y * ft - 1.0),
-		      Vector2(ps, ps)),
+			  Vector2(ps, ps)),
 		Color(COL_PLAYER.r, COL_PLAYER.g, COL_PLAYER.b, blink))
 
 	# Statusrad längst ner
@@ -246,7 +246,7 @@ func _full_dot(tile: Vector2i, mx: float, my: float, ft: int, col: Color) -> voi
 	var off := float(ft - ds) * 0.5
 	draw_rect(
 		Rect2(Vector2(mx + tile.x * ft + off, my + tile.y * ft + off),
-		      Vector2(ds, ds)),
+			  Vector2(ds, ds)),
 		col)
 
 func _draw_legend(lx: float, ly: float) -> void:
@@ -285,16 +285,14 @@ func _unhandled_input(event: InputEvent) -> void:
 # ─────────────────────────────── Helpers ───────────────────────────────
 
 func _zone() -> Node2D:
-	var p := World.player if World.get("player") != null else null
-	if p == null or not is_instance_valid(p):
+	if not is_instance_valid(World.player):
 		return null
-	return p.zone
+	return World.player.zone
 
 func _player_tile() -> Vector2i:
-	var p := World.player if World.get("player") != null else null
-	if p == null or not is_instance_valid(p):
+	if not is_instance_valid(World.player):
 		return Vector2i.ZERO
-	return p.tile
+	return World.player.tile
 
 func _monsters(zone: Node2D) -> Array:
 	var out : Array = []
