@@ -20,6 +20,7 @@ var dialogue_box: PanelContainer
 var quest_log: PanelContainer
 var wardrobe: PanelContainer
 var equipment_panel: PanelContainer
+var hotkey_bar: PanelContainer
 var _msg_timer := 0.0
 var _qs_rune_lbl: Label   # visar aktiv runa + qty i quickslot
 var _qs_pot_lbl: Label    # visar health_potion qty i quickslot
@@ -52,6 +53,8 @@ func _ready() -> void:
 	add_child(wardrobe)
 	equipment_panel = preload("res://ui/equipment_panel.gd").new()
 	add_child(equipment_panel)
+	hotkey_bar = preload("res://ui/hotkey_bar.gd").new()
+	add_child(hotkey_bar)
 	QuestSystem.quest_started.connect(func(_id): _refresh_quests())
 	QuestSystem.quest_progress.connect(func(_id): _refresh_quests())
 	QuestSystem.step_advanced.connect(func(_id): _refresh_quests())
@@ -72,6 +75,7 @@ func _ready() -> void:
 	GameState.gold_changed.connect(func(_g): _refresh())
 	GameState.skill_changed.connect(func(_s): _refresh())
 	GameState.inventory_changed.connect(_refresh_inv)
+	GameState.inventory_changed.connect(func(): if hotkey_bar: hotkey_bar._refresh_all())
 	GameState.inventory_changed.connect(_refresh_quickslots)
 	GameState.status_changed.connect(_refresh_status)
 	_build_status_chips()
