@@ -14,6 +14,7 @@ var spawn_points: Array = []        # [{tile, monster, respawn}]
 var node_points: Array = []        # [{tile, node}]
 var station_points: Array = []     # [{tile, station}]
 var shop_points: Array = []        # [tile]
+var bank_points: Array = []        # [tile]
 var taskmaster_points: Array = []  # [tile]
 var chest_points: Array = []       # [tile] (dungeons)
 var dungeon_entrances: Dictionary = {}  # Vector2i -> tema-id
@@ -78,6 +79,9 @@ func build_from_data(data: Dictionary, id: String) -> void:
 								blocked = true
 							"shop":
 								shop_points.append(t)
+								blocked = true
+							"bank":
+								bank_points.append(t)
 								blocked = true
 							"taskmaster":
 								taskmaster_points.append(t)

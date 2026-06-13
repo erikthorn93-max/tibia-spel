@@ -132,6 +132,10 @@ func _spawn_world_objects() -> void:
 		var npc: Node2D = preload("res://entities/shop_npc.tscn").instantiate()
 		current_zone.add_child(npc)
 		npc.setup(t)
+	for t in current_zone.bank_points:
+		var bnpc: Node2D = preload("res://entities/bank_npc.tscn").instantiate()
+		current_zone.add_child(bnpc)
+		bnpc.setup(t)
 	for t in current_zone.taskmaster_points:
 		var tm: Node2D = preload("res://entities/taskmaster_npc.tscn").instantiate()
 		current_zone.add_child(tm)

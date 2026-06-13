@@ -1,7 +1,7 @@
 extends Node
 ## Autoload: SaveManager. JSON-sparfil + autosave var 60 s.
 
-const SAVE_VERSION := 7
+const SAVE_VERSION := 8
 var save_path := "user://save.json"
 var _timer := 0.0
 
@@ -55,6 +55,7 @@ func save_game() -> void:
 		"quests_active": QuestSystem.active,
 		"quests_completed": QuestSystem.completed,
 		"active_rune": GameState.active_rune,
+		"bank": GameState.bank,
 	})
 
 func load_game() -> bool:
@@ -90,4 +91,19 @@ func load_game() -> bool:
 	GameState.player_tile = Vector2i(int(t[0]), int(t[1]))
 	# v2→v3: saknade fält ger tomma defaults — tasks/bestiary börjar från noll
 	TaskSystem.active = s.get("tasks_active", {})
-	TaskSys
+	TaskSystem.completed = s.get("tasks_completed", {})
+	TaskSystem.bestiary = s.get("bestiary", {})
+	TaskSystem.boss_kill_times = s.get("boss_kill_times", {})
+	UnlockSystem.unlocked = s.get("unlocked", [])
+	QuestSystem.active = s.get("quests_active", {})
+	QuestSystem.completed = s.get("quests_completed", [])
+	GameState.active_rune = String(s.get("active_rune", ""))
+	# v8: bankförvar
+	var bank_raw = s.get("bank", {})
+	GameState.bank = bank_raw if bank_raw is Dictionary else {}
+	# Utseende-data — bakåtkompatibelt
+	if s.has("appearance_base"):
+		GameState.appearance_base = s["appearance_base"]
+	if s.has("outfit_equipped"):
+		GameState.outfit_equipped = String(s["outfit_equipped"])
+	return true

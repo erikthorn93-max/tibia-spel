@@ -50,6 +50,7 @@ var player_tile := Vector2i.ZERO
 var active_buffs: Array = []   # [{stat, amount, time_left}]
 var active_rune := ""          # id för aktiv runa (F1 kastar)
 var status_effects: Dictionary = {}  # id -> {tick_dmg, time_left, tick_acc}
+var bank: Dictionary = {}            # item_id -> qty (bankförvar, sparas i save)
 
 ## _init (inte _ready): skills måste finnas direkt vid .new() i tester,
 ## och innan andra autoloads läser GameState.skills.

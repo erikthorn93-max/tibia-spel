@@ -14,6 +14,7 @@ extends CanvasLayer
 var skill_panel: PanelContainer
 var recipe_panel: PanelContainer
 var shop_panel: PanelContainer
+var bank_panel: PanelContainer
 var task_panel: PanelContainer
 var bestiary_panel: PanelContainer
 var dialogue_box: PanelContainer
@@ -39,6 +40,8 @@ func _ready() -> void:
 	add_child(recipe_panel)
 	shop_panel = preload("res://ui/shop_panel.gd").new()
 	add_child(shop_panel)
+	bank_panel = preload("res://ui/bank_panel.gd").new()
+	add_child(bank_panel)
 	task_panel = preload("res://ui/task_panel.gd").new()
 	add_child(task_panel)
 	bestiary_panel = preload("res://ui/bestiary_panel.gd").new()
@@ -108,6 +111,12 @@ func open_shop() -> void:
 	recipe_panel.visible = false
 	task_panel.visible = false
 	shop_panel.open()
+
+func open_bank() -> void:
+	recipe_panel.visible = false
+	shop_panel.visible = false
+	task_panel.visible = false
+	bank_panel.open()
 
 func open_tasks() -> void:
 	recipe_panel.visible = false
