@@ -2,6 +2,7 @@ extends Node2D
 ## Monster-entity. Spawnas av World._spawn_monsters().
 
 const TILE_SIZE := 32
+const BAR_W := 28.0   # bredden på HpBar i tscn (-14 .. +14)
 
 var monster_name := ""
 var hp := 10
@@ -21,9 +22,29 @@ var _move_t := 1.0
 var _from := Vector2.ZERO
 var _to   := Vector2.ZERO
 var dead := false          # publik — läses av player.gd
-var _lbl: Label
-var _bar_bg: ColorRect
-var _bar_fg: ColorRect
+
+@onready var _hp_bar: ColorRect  = $HpBar
+@onready var _name_lbl: Label    = $NameLabel
+@onready var _click_area: Area2D = $ClickArea
+
+func _ready() -> void:
+	# Lägg till bakgrundsbar direkt bakom HpBar
+	var bg := ColorRect.new()
+	bg.offset_left   = -14.0
+	bg.offset_top    = -20.0
+	bg.offset_right  =  14.0
+	bg.offset_bottom = -17.0
+	bg.color = Color(0.3, 0.07, 0.07)
+	add_child(bg)
+	move_child(bg, _hp_bar.get_index())   # bakgrunden hamnar BAKOM hp_bar
+	# Klickhantering via Area2D
+	_click_area.input_event.connect(_on_click_area_input)
+
+func _on_click_area_input(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed \
+			and event.button_index == MOUSE_BUTTON_LEFT:
+		if World.player != null and not dead:
+			World.player.set_target(self)
 
 func setup(mname: String, t: Vector2i, z: Node2D, respawn := -1.0) -> void:
 	monster_name = mname
@@ -39,38 +60,20 @@ func setup(mname: String, t: Vector2i, z: Node2D, respawn := -1.0) -> void:
 	cooldown = float(d.get("cooldown", 1.0))
 	position = zone.tile_to_world(tile)
 	_from = position; _to = position; _move_t = 1.0
-	# HP-bar bakgrund (svart)
-	_bar_bg = ColorRect.new()
-	_bar_bg.size = Vector2(32, 4)
-	_bar_bg.position = Vector2(-16, -26)
-	_bar_bg.color = Color(0.1, 0.1, 0.1)
-	add_child(_bar_bg)
-	# HP-bar förgrund (grön)
-	_bar_fg = ColorRect.new()
-	_bar_fg.size = Vector2(32, 4)
-	_bar_fg.position = Vector2(-16, -26)
-	_bar_fg.color = Color(0.2, 0.8, 0.2)
-	add_child(_bar_fg)
-	# Textlabel under baren
-	_lbl = Label.new()
-	_lbl.add_theme_font_size_override("font_size", 9)
-	_lbl.position = Vector2(-16, -18)
-	add_child(_lbl)
 	_refresh_label()
 
 func _refresh_label() -> void:
-	if _lbl:
-		_lbl.text = "%s  %d/%d" % [monster_name, hp, max_hp]
-	if _bar_fg:
-		var ratio := float(hp) / float(max_hp) if max_hp > 0 else 0.0
-		_bar_fg.size.x = 32.0 * ratio
-		# Färg: grön → gul → röd beroende på hp
-		if ratio > 0.5:
-			_bar_fg.color = Color(0.2, 0.8, 0.2)
-		elif ratio > 0.25:
-			_bar_fg.color = Color(0.85, 0.75, 0.1)
-		else:
-			_bar_fg.color = Color(0.85, 0.15, 0.15)
+	if not is_node_ready():
+		return
+	_name_lbl.text = monster_name
+	var ratio := float(hp) / float(max_hp) if max_hp > 0 else 0.0
+	_hp_bar.offset_right = -14.0 + BAR_W * ratio
+	if ratio > 0.5:
+		_hp_bar.color = Color(0.18, 0.78, 0.18)
+	elif ratio > 0.25:
+		_hp_bar.color = Color(0.85, 0.72, 0.1)
+	else:
+		_hp_bar.color = Color(0.85, 0.12, 0.12)
 
 func _process(delta: float) -> void:
 	if dead:
@@ -91,7 +94,9 @@ func _process(delta: float) -> void:
 		if _atk_timer <= 0.0:
 			_atk_timer = cooldown
 			var raw := CombatFormulas.roll_monster(atk)
-			var dmg := CombatFormulas.mitigate(raw, GameState.effective_skill_level("shielding") + GameState.total_shielding_bonus(), GameState.total_armor())
+			var dmg := CombatFormulas.mitigate(raw,
+				GameState.effective_skill_level("shielding") + GameState.total_shielding_bonus(),
+				GameState.total_armor())
 			if dmg > 0:
 				GameState.take_damage(dmg)
 				GameState.gain_skill_xp("shielding", 1)
@@ -121,23 +126,12 @@ func take_damage(dmg: float) -> void:
 func _die() -> void:
 	dead = true
 	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
-	# XP
 	GameState.gain_exp(exp)
 	var wskill := GameState.weapon_skill()
 	GameState.gain_skill_xp(wskill, exp)
-	# Loot
 	var loot_table: Array = d.get("loot", [])
 	for entry in loot_table:
 		if randf() < float(entry.get("chance", 0.0)):
 			var qty := int(entry.get("qty", 1))
 			GameState.add_item(String(entry["item"]), qty)
-	# Bestiary / task
-	TaskSystem.record_kill(monster_name)
-	QuestSystem.record_kill(monster_name)
-	# Respawn
-	if respawn_time > 0.0:
-		var t := tile
-		var mn := monster_name
-		var rt := respawn_time
-		var zref := zone
-		get_tree().create_timer(rt).
+	TaskSyst
