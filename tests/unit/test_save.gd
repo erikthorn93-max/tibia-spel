@@ -67,6 +67,18 @@ func test_v5_roundtrip_outfit_and_base():
 	UnlockSystem.unlocked.clear()
 	GameState.equip_outfit("standard")
 
+func test_save_in_dungeon_writes_surface_zone():
+	var prev_zone := GameState.current_zone
+	GameState.current_zone = "dungeon:katakomber"
+	World.last_surface_zone = "cave"
+	World.last_surface_tile = Vector2i(5, 10)
+	sm.save_game()
+	var s := sm.read_snapshot()
+	assert_eq(String(s["zone"]), "cave")
+	assert_eq(int(s["tile"][0]), 5)
+	assert_eq(int(s["tile"][1]), 10)
+	GameState.current_zone = prev_zone
+
 func _clear_task_state():
 	TaskSystem.reset()
 	UnlockSystem.unlocked.clear()
@@ -118,14 +130,4 @@ func test_v3_save_migrates_to_v4_empty_quests():
 	assert_eq(QuestSystem.completed.size(), 0)
 	QuestSystem.reset()
 
-func test_v4_roundtrip_quests():
-	QuestSystem.reset()
-	QuestSystem.active["quest_welcome"] = {"step": 1, "progress": 0}
-	QuestSystem.completed["quest_snakes"] = true
-	sm.save_game()
-	QuestSystem.reset()
-	assert_true(sm.load_game())
-	assert_true(QuestSystem.active.has("quest_welcome"))
-	assert_eq(int(QuestSystem.active["quest_welcome"]["step"]), 1)
-	assert_true(QuestSystem.completed.has("quest_snakes"))
-	QuestSystem.reset()
+func test_v4_roundtrip_qu

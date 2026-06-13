@@ -27,6 +27,12 @@ func read_snapshot() -> Dictionary:
 	return parsed if parsed is Dictionary else {}
 
 func save_game() -> void:
+	# Dungeonzoner är efemära — spara alltid ytzonen istället
+	var save_zone := GameState.current_zone
+	var save_tile := GameState.player_tile
+	if save_zone.begins_with("dungeon:"):
+		save_zone = World.last_surface_zone
+		save_tile = World.last_surface_tile
 	write_snapshot({
 		"version": SAVE_VERSION,
 		"name": GameState.player_name,
@@ -39,8 +45,8 @@ func save_game() -> void:
 		"appearance_base": GameState.appearance_base,
 		"outfit_equipped": GameState.outfit_equipped,
 		"equipped_weapon": GameState.equipped_weapon,
-		"zone": GameState.current_zone,
-		"tile": [GameState.player_tile.x, GameState.player_tile.y],
+		"zone": save_zone,
+		"tile": [save_tile.x, save_tile.y],
 		"tasks_active": TaskSystem.active,
 		"tasks_completed": TaskSystem.completed,
 		"bestiary": TaskSystem.bestiary,
@@ -75,8 +81,4 @@ func load_game() -> bool:
 	# v3→v4: quests saknas i äldre saves — börja tomt
 	QuestSystem.active = s.get("quests_active", {})
 	QuestSystem.completed = s.get("quests_completed", {})
-	# v4→v5: outfit saknas — standard, basen = sparat utseende
-	GameState.outfit_equipped = s.get("outfit_equipped", "standard")
-	var base = s.get("appearance_base", {})
-	GameState.appearance_base = base if not base.is_empty() else GameState.appearance.duplicate()
-	return true
+	# v4→v5: outfit saknas — standard, basen = sparat 
