@@ -1,5 +1,6 @@
 {
 	"anvil": [
+		{"id": "wooden_shield",   "level": 1,  "skill": "smithing", "ingredients": {"log": 2},                        "xp": 8},
 		{"id": "copper_boots",    "level": 2,  "skill": "smithing", "ingredients": {"copper_ore": 1},                 "xp": 10},
 		{"id": "copper_helmet",   "level": 3,  "skill": "smithing", "ingredients": {"copper_ore": 2},                 "xp": 15},
 		{"id": "copper_legs",     "level": 4,  "skill": "smithing", "ingredients": {"copper_ore": 2},                 "xp": 18},
@@ -12,5 +13,4 @@
 		{"id": "iron_club",       "level": 9,  "skill": "smithing", "ingredients": {"iron_ore": 2},                   "xp": 28},
 		{"id": "iron_legs",       "level": 11, "skill": "smithing", "ingredients": {"iron_ore": 3},                   "xp": 35},
 		{"id": "iron_platebody",  "level": 12, "skill": "smithing", "ingredients": {"iron_ore": 4},                   "xp": 40},
-		{"id": "steel_boots",     "level": 15, "skill": "smithing", "ingredients": {"iron_ore": 2, "copper_ore": 1},  "xp": 45},
-		{"id": "steel_club",      "level": 16, "skill": "smithing", "ingr
+		{"id": "steel_boots",     "level": 15, "skill": "smithing", "ingre
