@@ -94,7 +94,7 @@ func test_chest_in_legend():
 func test_themes_integrity():
 	var f := FileAccess.open("res://data/dungeon_themes.json", FileAccess.READ)
 	var themes: Dictionary = JSON.parse_string(f.get_as_text())
-	assert_eq(themes.size(), 2)
+	assert_eq(themes.size(), 3)
 	var nodes: Dictionary = JSON.parse_string(FileAccess.open("res://data/nodes.json", FileAccess.READ).get_as_text())
 	for tid in themes:
 		var th: Dictionary = themes[tid]
@@ -107,3 +107,15 @@ func test_themes_integrity():
 		for it in th["chest_items"]:
 			assert_true(ItemDB.items.has(String(it[0])), "%s: okänt item %s" % [tid, it[0]])
 		assert_eq(th["chest_gold"].size(), 2)
+
+func test_sunken_ship_exit_to_coast():
+	var d := _gen("sjunket_skepp", 3)
+	assert_eq(String(d["exit_zone"]), "coast")
+
+func test_sunken_ship_places_boss_in_end_room():
+	var d := _gen("sjunket_skepp", 7)
+	assert_true(d["legend"].has("B"), "boss-tile saknas i legenden")
+	assert_eq(String(d["legend"]["B"]["type"]), "spawn")
+	assert_eq(String(d["legend"]["B"]["monster"]), "Piratkapten Svartöga")
+	assert_eq(_count_in_tiles(d["tiles"], "B"), 1)
+	assert_true(MonsterDB.monsters.has("Piratkapten Svartöga"))

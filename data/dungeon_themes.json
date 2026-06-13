@@ -16,5 +16,15 @@
 		"nodes": ["marsh_patch"],
 		"chest_gold": [250, 600],
 		"chest_items": [["health_potion", 0.6, 2], ["swamp_essence", 0.7, 2], ["mana_potion", 0.4, 1]]
+	},
+	"sjunket_skepp": {
+		"name": "Sjunket skepp",
+		"exit_zone": "coast",
+		"floor_terrain": ",",
+		"monsters": [["Drunknad sjöman", 3], ["Sjöorm", 2], ["Pirat", 2]],
+		"nodes": [],
+		"boss": "Piratkapten Svartöga",
+		"chest_gold": [300, 700],
+		"chest_items": [["cutlass", 0.5, 1], ["sea_chart", 0.7, 1], ["health_potion", 0.6, 2]]
 	}
 }

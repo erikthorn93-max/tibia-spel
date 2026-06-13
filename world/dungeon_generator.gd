@@ -96,6 +96,14 @@ static func generate(theme_id: String, dseed: int) -> Dictionary:
 	var chest := _center_i(rooms[far_room])
 	grid[chest.y][chest.x] = "C"
 
+	# --- boss (valfritt tema-fält): golvtile intill kistan i slutrummet ---
+	if th.has("boss"):
+		for d in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
+			var bt: Vector2i = chest + d
+			if grid[bt.y][bt.x] == floor_ch:
+				grid[bt.y][bt.x] = "B"
+				break
+
 	# --- spawns: 1–3 per rum (ej ingångsrummet), viktade ur poolen ---
 	var pool: Array = []   # monsterindex viktat
 	for mi in th["monsters"].size():
@@ -135,6 +143,9 @@ static func generate(theme_id: String, dseed: int) -> Dictionary:
 		"0": {"type": "portal", "to": String(th["exit_zone"]), "terrain": floor_ch},
 		"C": {"type": "chest", "terrain": floor_ch},
 	}
+	if th.has("boss"):
+		legend["B"] = {"type": "spawn", "monster": String(th["boss"]),
+			"respawn": 9999.0, "terrain": floor_ch}
 	for mi in used_monsters:
 		legend[SPAWN_CHARS[mi]] = {"type": "spawn", "monster": String(th["monsters"][mi][0]),
 			"respawn": 9999.0, "terrain": floor_ch}   # ingen respawn i efemära dungeons
