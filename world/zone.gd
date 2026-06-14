@@ -288,7 +288,7 @@ func find_path_adjacent(from: Vector2i, to: Vector2i) -> Array:
 static func tile_to_world(t: Vector2i) -> Vector2:
 	return Vector2(t) * TILE + Vector2(TILE / 2.0, TILE / 2.0)
 
-nc world_to_tile(p: Vector2) -> Vector2i:
+static func world_to_tile(p: Vector2) -> Vector2i:
 	return Vector2i((p / TILE).floor())
 
 ## Monster-kollision: registrera ett monster på en tile.
