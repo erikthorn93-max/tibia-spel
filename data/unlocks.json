@@ -97,15 +97,15 @@
   "oknen": {
     "name": "Ökenvägen",
     "desc": "Vägen till Ökenruinerna har öppnats.",
-    "requires": []
+    "requires": {}
   },
   "vulkanen": {
     "name": "Vulkanpasset",
     "desc": "Vägen till Vulkankratern har öppnats.",
-    "requires": []
+    "requires": {}
   },
   "isfjorden": {
     "name": "Isfjordvägen",
-    "requires": []
+    "requires": {}
   }
 }
