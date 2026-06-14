@@ -94,16 +94,17 @@ func load_game() -> bool:
 	TaskSystem.completed = s.get("tasks_completed", {})
 	TaskSystem.bestiary = s.get("bestiary", {})
 	TaskSystem.boss_kill_times = s.get("boss_kill_times", {})
-	UnlockSystem.unlocked = s.get("unlocked", [])
+	# v9: unlocked sparas som Dictionary {id: true}; gamla saves kan ha Array [id, ...]
+	var _ul_raw = s.get("unlocked", {})
+	if _ul_raw is Dictionary:
+		UnlockSystem.unlocked = _ul_raw
+	else:
+		UnlockSystem.unlocked = {}
+		for _uid in _ul_raw:
+			UnlockSystem.unlocked[str(_uid)] = true
 	QuestSystem.active = s.get("quests_active", {})
 	QuestSystem.completed = s.get("quests_completed", [])
 	GameState.active_rune = String(s.get("active_rune", ""))
 	# v8: bankförvar
 	var bank_raw = s.get("bank", {})
 	GameState.bank = bank_raw if bank_raw is Dictionary else {}
-	# Utseende-data — bakåtkompatibelt
-	if s.has("appearance_base"):
-		GameState.appearance_base = s["appearance_base"]
-	if s.has("outfit_equipped"):
-		GameState.outfit_equipped = String(s["outfit_equipped"])
-	return true
