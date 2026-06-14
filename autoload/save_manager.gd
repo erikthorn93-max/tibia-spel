@@ -108,3 +108,4 @@ func load_game() -> bool:
 	# v8: bankförvar
 	var bank_raw = s.get("bank", {})
 	GameState.bank = bank_raw if bank_raw is Dictionary else {}
+	return true
