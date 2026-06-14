@@ -103,7 +103,14 @@ func load_game() -> bool:
 		for _uid in _ul_raw:
 			UnlockSystem.unlocked[str(_uid)] = true
 	QuestSystem.active = s.get("quests_active", {})
-	QuestSystem.completed = s.get("quests_completed", [])
+	# quests_completed: gamla saves kan ha Array [id, ...], nya har Dictionary {id: true}
+	var _qc_raw = s.get("quests_completed", {})
+	if _qc_raw is Dictionary:
+		QuestSystem.completed = _qc_raw
+	else:
+		QuestSystem.completed = {}
+		for _qid in _qc_raw:
+			QuestSystem.completed[str(_qid)] = true
 	GameState.active_rune = String(s.get("active_rune", ""))
 	# v8: bankförvar
 	var bank_raw = s.get("bank", {})
