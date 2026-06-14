@@ -18,6 +18,7 @@ var bank_points: Array = []        # [tile]
 var taskmaster_points: Array = []  # [tile]
 var chest_points: Array = []       # [tile] (dungeons)
 var dungeon_entrances: Dictionary = {}  # Vector2i -> tema-id
+var _monster_tiles: Dictionary = {}    # Vector2i -> Monster (kollisionskarta)
 var dungeon_theme := ""            # satt för genererade dungeons
 var gate_points: Dictionary = {}   # Vector2i -> unlock-id
 var shortcut_points: Dictionary = {}  # Vector2i -> unlock-id (bump-genvägar)
@@ -250,4 +251,54 @@ func _on_unlock_added(id: String) -> void:
 			_add_portal_marker(t)
 
 func _open_tile(t: Vector2i) -> void:
-	tilemap.set_cell(t, 0, Vector2i(Pla
+	tilemap.set_cell(t, 0, Vector2i(PlaceholderTiles.TERRAIN[_gate_terrain[t]], 0))
+	_walkable[t] = true
+	_astar.set_point_solid(t, false)
+
+## Unlock-id om tile är en låst gate/genväg, annars "".
+func lock_at(t: Vector2i) -> String:
+	if gate_points.has(t) and not UnlockSystem.is_unlocked(gate_points[t]):
+		return gate_points[t]
+	if shortcut_points.has(t) and not UnlockSystem.is_unlocked(shortcut_points[t]):
+		return shortcut_points[t]
+	return ""
+
+func is_walkable(t: Vector2i) -> bool:
+	return _walkable.get(t, false)
+
+func find_path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
+	if not is_walkable(to):
+		return []
+	return _astar.get_id_path(from, to)
+
+func find_path_adjacent(from: Vector2i, to: Vector2i) -> Array:
+	var best: Array = []
+	for d in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT,
+			Vector2i(1, 1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(-1, -1)]:
+		var n: Vector2i = to + d
+		if not is_walkable(n):
+			continue
+		if n == from:
+			return [from]
+		var p := find_path(from, n)
+		if p.size() > 0 and (best.is_empty() or p.size() < best.size()):
+			best = p
+	return best
+
+static func tile_to_world(t: Vector2i) -> Vector2:
+	return Vector2(t) * TILE + Vector2(TILE / 2.0, TILE / 2.0)
+
+nc world_to_tile(p: Vector2) -> Vector2i:
+	return Vector2i((p / TILE).floor())
+
+## Monster-kollision: registrera ett monster på en tile.
+func occupy(t: Vector2i, monster: Node) -> void:
+	_monster_tiles[t] = monster
+
+## Monster-kollision: frigör en tile när monstret lämnar eller dör.
+func vacate(t: Vector2i) -> void:
+	_monster_tiles.erase(t)
+
+## Returnerar true om en annan enhet redan står på tile t.
+func is_occupied(t: Vector2i) -> bool:
+	return _monster_tiles.has(t)

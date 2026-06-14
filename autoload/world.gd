@@ -155,5 +155,31 @@ func _spawn_world_objects() -> void:
 			npc.setup(id, Vector2i(int(nd["position"][0]), int(nd["position"][1])))
 			current_zone.add_child(npc)   # setup FÖRE add_child — _ready läser npc_id
 
+## Tappar ett item på marken vid spelarens nuvarande tile.
+func drop_item(item_id: String, qty: int = 1) -> void:
+	if current_zone == null:
+		return
+	var gi = preload("res://entities/ground_item.gd").new()
+	current_zone.add_child(gi)
+	gi.setup([{"item": item_id, "qty": qty}], GameState.player_tile)
+	GameState.remove_item(item_id, qty)
+
 ## Tappar döds-loot + placerar gravsten när spelaren dör.
-## Kastar 30 % av v
+## Kastar 30 % av varje stack som ett GroundItem på spelarens tile.
+func _on_player_died() -> void:
+	if current_zone == null:
+		return
+	grave_tile = GameState.player_tile
+	grave_zone = current_zone
+	var drops: Array = []
+	for item_id in GameState.inventory.keys():
+		var qty: int = int(GameState.inventory[item_id])
+		var drop_qty: int = max(1, int(qty * 0.3))
+		drops.append({"item": item_id, "qty": drop_qty})
+		GameState.remove_item(item_id, drop_qty)
+	if drops.is_empty():
+		return
+	var gi = preload("res://entities/ground_item.gd").new()
+	current_zone.add_child(gi)
+	gi.setup(drops, grave_tile)
+	gi.lifetime_override = 300.0   # 5 minuter för gravsten-loot

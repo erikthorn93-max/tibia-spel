@@ -25,6 +25,20 @@ var _auto_path: Array = []
 func _ready() -> void:
 	visual.apply_appearance(GameState.appearance)
 	GameState.appearance_changed.connect(func(): visual.apply_appearance(GameState.appearance))
+	GameState.player_hit.connect(_on_player_hit)
+
+func _on_player_hit(dmg: float, dmg_type: String) -> void:
+	if dmg <= 0:
+		return
+	var color: Color
+	match dmg_type:
+		"poison": color = Color(0.35, 0.95, 0.35)   # grön
+		"burn":   color = Color(1.00, 0.50, 0.10)   # orange
+		_:        color = Color(1.00, 0.22, 0.22)   # röd (fysisk)
+	var dn: Node2D = preload("res://entities/damage_number.gd").new()
+	add_child(dn)
+	dn.setup(dmg, false, color)
+	dn.position = Vector2(0, -20)   # lite ovanför spelarens mittpunkt
 
 func snap_to(t: Vector2i) -> void:
 	tile = t
@@ -155,7 +169,6 @@ func _update_attack(delta: float) -> void:
 				* TaskSystem.damage_multiplier(target.monster_name)   # bestiary-tierbonus
 			target.take_damage(dmg)
 			GameState.gain_skill_xp(wskill, 1)
-			visual.play_attack(facing)
 
 func _update_gather(delta: float) -> void:
 	if gather_target == null or not is_instance_valid(gather_target):
@@ -227,4 +240,13 @@ func _cast_rune() -> void:
 
 func _check_portal() -> void:
 	if zone.dungeon_entrances.has(tile):
-		World.enter_dun
+		World.enter_dungeon(zone.dungeon_entrances[tile])
+		return
+	if not zone.portals.has(tile):
+		return
+	if zone.portal_locks.has(tile):
+		var uid: String = zone.portal_locks[tile]
+		if not UnlockSystem.try_unlock(uid):
+			World.hud.show_message(UnlockSystem.hint_for(uid))
+			return
+	World.change_zone(zone.portals[tile])

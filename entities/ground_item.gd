@@ -54,4 +54,11 @@ func _on_click(_vp: Viewport, event: InputEvent, _shape: int) -> void:
 	var pt   := GameState.player_tile
 	var dist := maxi(absi(pt.x - tile.x), absi(pt.y - tile.y))
 	if dist > 1:
-		World.hud.show_message("
+		World.hud.show_message("För långt bort.")
+		return
+	_collect()
+
+func _collect() -> void:
+	for d in contents:
+		GameState.add_item(String(d["item"]), int(d["qty"]))
+	queue_free()

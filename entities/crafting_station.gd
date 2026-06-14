@@ -2,8 +2,14 @@ class_name CraftingStation
 extends Node2D
 ## Klickbar crafting-station. Öppnar receptpanelen för sin stationstyp.
 
-const LABELS := {"anvil": "Städ", "stove": "Gryta", "alchemy_table": "Alkemibord", "rune_altar": "Runaltare"}
-const COLORS := {"anvil": "#5a5a62", "stove": "#8a4a2a", "alchemy_table": "#4a7a5a", "rune_altar": "#6a4a8a"}
+const LABELS := {
+	"anvil": "Städ", "stove": "Gryta", "alchemy_table": "Alkemibord",
+	"rune_altar": "Runaltare", "crafting_bench": "Hantverksbord", "prayer_altar": "Bönaltare"
+}
+const COLORS := {
+	"anvil": "#5a5a62", "stove": "#8a4a2a", "alchemy_table": "#4a7a5a",
+	"rune_altar": "#6a4a8a", "crafting_bench": "#8a6a3a", "prayer_altar": "#d4b84a"
+}
 
 var station_type := ""
 var tile := Vector2i.ZERO
@@ -26,6 +32,9 @@ func _on_click(_vp, event: InputEvent, _shape) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var pdist: int = maxi(absi(GameState.player_tile.x - tile.x), absi(GameState.player_tile.y - tile.y))
 		if pdist <= 1:
-			World.hud.open_recipes(station_type)
+			if station_type == "prayer_altar":
+				World.hud.open_prayer_altar()
+			else:
+				World.hud.open_recipes(station_type)
 		else:
 			World.hud.show_message("Gå närmare %s." % LABELS[station_type])

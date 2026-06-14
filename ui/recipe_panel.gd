@@ -23,8 +23,11 @@ func _rebuild() -> void:
 	for c in _list.get_children():
 		c.queue_free()
 	var title := Label.new()
-	title.text = {"anvil": "Städ — Smithing", "stove": "Gryta — Cooking",
-		"alchemy_table": "Alkemibord — Alchemy", "rune_altar": "Runaltare — Runecrafting"}[station_type]
+	title.text = {
+		"anvil": "Städ — Smithing", "stove": "Gryta — Cooking",
+		"alchemy_table": "Alkemibord — Alchemy", "rune_altar": "Runaltare — Runecrafting",
+		"crafting_bench": "Hantverksbord — Crafting & Fletching"
+	}[station_type]
 	title.add_theme_font_size_override("font_size", 16)
 	_list.add_child(title)
 	for r in ItemDB.recipes[station_type]:

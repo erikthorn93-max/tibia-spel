@@ -300,4 +300,31 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.keycode == KEY_M:
 		_full_open = not _full_open
 		mouse_filter = Control.MOUSE_FILTER_STOP if _full_open else Control.MOUSE_FILTER_IGNORE
-		get_
+		get_viewport().set_input_as_handled()
+
+# ─────────────────────────────── Helpers ───────────────────────────────
+
+func _zone() -> Node2D:
+	if not is_instance_valid(World.player):
+		return null
+	return World.player.zone
+
+func _player_tile() -> Vector2i:
+	if not is_instance_valid(World.player):
+		return Vector2i.ZERO
+	return World.player.tile
+
+func _monsters(zone: Node2D) -> Array:
+	var out : Array = []
+	for child in zone.get_children():
+		if child.has_method("take_damage") and child.has_method("setup"):
+			if not bool(child.get("dead")):
+				out.append(child)
+	return out
+
+func _ground_items(zone: Node2D) -> Array:
+	var out : Array = []
+	for child in zone.get_children():
+		if child.get("contents") != null:
+			out.append(child)
+	return out

@@ -32,10 +32,9 @@ var _boss_name_lbl: Label
 var _boss_hp_bar: ColorRect
 var _boss_hp_bg: ColorRect
 # ANIMATIONER
-var _damage_flash: ColorRect   # röd skärmöverläggning vid skada
 var _levelup_lbl: Label        # "★ LEVEL UP!" popup
 var _skillup_lbl: Label        # "+Skill nivå X" popup
-var _prev_hp := 150.0          # för att detektera rikting av HP-förändring
+var _prev_hp := 150.0          # för att detektera riktning av HP-förändring
 var _prev_skill_levels: Dictionary = {}  # skill -> nivå (för level-up-detektion)
 
 func _ready() -> void:
@@ -76,11 +75,11 @@ func _ready() -> void:
 	QuestSystem.quest_completed.connect(func(id):
 		_refresh_quests()
 		show_message("Quest klar: %s!" % QuestSystem.quests[id]["name"]))
+	add_child(preload("res://ui/minimap.gd").new())
 	add_child(preload("res://ui/debug_console.gd").new())
 	add_child(preload("res://ui/death_screen.gd").new())
 	_build_boss_bar()
 	_build_night_overlay()
-	_build_damage_flash()
 	_build_levelup_labels()
 	TimeOfDay.hour_changed.connect(_on_hour_changed)
 	TaskSystem.task_taken.connect(func(_id): _refresh_tasks())
@@ -360,5 +359,64 @@ func _build_boss_bar() -> void:
 	_boss_hp_bar.anchor_right  = 1.0
 	_boss_hp_bg.add_child(_boss_hp_bar)
 
-## Bygger röd skärm-overlay för skadanimation
-func _build_damage_flash() -> v
+func _refresh_boss_bar() -> void:
+	if _boss_panel == null:
+		return
+	var p: Node2D = World.player
+	if p == null or not is_instance_valid(p):
+		_boss_panel.visible = false
+		return
+	var t = p.target
+	if t == null or not is_instance_valid(t) or bool(t.get("dead")):
+		_boss_panel.visible = false
+		return
+	var mname: String = String(t.get("monster_name") if t.get("monster_name") != null else "")
+	var mdata: Dictionary = MonsterDB.monsters.get(mname, {})
+	if not bool(mdata.get("boss", false)):
+		_boss_panel.visible = false
+		return
+	_boss_panel.visible = true
+	var hp     := float(t.get("hp")     if t.get("hp")     != null else 0)
+	var max_hp := float(t.get("max_hp") if t.get("max_hp") != null else 1)
+	var ratio  := clampf(hp / maxf(max_hp, 1.0), 0.0, 1.0)
+	_boss_name_lbl.text    = "%s   %d / %d" % [mname, int(hp), int(max_hp)]
+	_boss_hp_bar.anchor_right = ratio
+
+## Bygger level-up och skill-up popup-labels
+func _build_levelup_labels() -> void:
+	_levelup_lbl = Label.new()
+	_levelup_lbl.text = "★ LEVEL UP!"
+	_levelup_lbl.add_theme_color_override("font_color", Color(1.0, 0.9, 0.2))
+	_levelup_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_levelup_lbl.set_anchors_preset(Control.PRESET_CENTER)
+	_levelup_lbl.visible = false
+	add_child(_levelup_lbl)
+	_skillup_lbl = Label.new()
+	_skillup_lbl.add_theme_color_override("font_color", Color(0.6, 1.0, 0.6))
+	_skillup_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_skillup_lbl.set_anchors_preset(Control.PRESET_CENTER)
+	_skillup_lbl.visible = false
+	add_child(_skillup_lbl)
+	_prev_skill_levels = GameState.skills.duplicate()
+
+func _on_hp_changed_anim(h: float, _m: float) -> void:
+	_prev_hp = h
+
+func _on_skill_changed_anim(s: String) -> void:
+	var cur := GameState.effective_skill_level(s)
+	var prev := int(_prev_skill_levels.get(s, {}).get("level", 0)) if typeof(_prev_skill_levels.get(s)) == TYPE_DICTIONARY else int(_prev_skill_levels.get(s, 0))
+	if cur > prev and _skillup_lbl != null:
+		_skillup_lbl.text = "+%s nivå %d" % [s.capitalize(), cur]
+		_skillup_lbl.visible = true
+		var tw := create_tween()
+		tw.tween_interval(1.5)
+		tw.tween_callback(func(): _skillup_lbl.visible = false)
+	_prev_skill_levels = GameState.skills.duplicate()
+
+func _on_level_up_anim() -> void:
+	if _levelup_lbl == null:
+		return
+	_levelup_lbl.visible = true
+	var tw := create_tween()
+	tw.tween_interval(2.0)
+	tw.tween_callback(func(): _levelup_lbl.visible = false)

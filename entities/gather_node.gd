@@ -52,6 +52,17 @@ func _on_success() -> void:
 			GameState.remove_item(tool_id, 1)
 	GameState.add_item(String(def["yields"]), 1)
 	GameState.gain_skill_xp(String(def["skill"]), int(def["xp"]))
-	# ANIMATION: puls-skalning vid lyckad insamling
-	var tw := create_tween()
-	tw.twee
+	charges -= 1
+	if charges <= 0:
+		_deplete()
+
+func _deplete() -> void:
+	depleted = true
+	modulate = Color(0.45, 0.45, 0.45)
+	if is_inside_tree():
+		get_tree().create_timer(float(def["respawn"])).timeout.connect(_respawn)
+
+func _respawn() -> void:
+	depleted = false
+	modulate = Color.WHITE
+	charges = randi_range(int(def["charges"][0]), int(def["charges"][1]))

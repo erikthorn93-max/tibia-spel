@@ -8,6 +8,7 @@ signal gold_changed(gold: int)
 signal inventory_changed
 signal level_up(new_level: int)
 signal player_died
+signal player_hit(dmg: float, dmg_type: String)
 signal skill_changed(skill: String)
 signal buffs_changed
 signal appearance_changed
@@ -125,9 +126,10 @@ func gain_skill_xp(skill: String, amount: int) -> void:
 		s["level"] += 1
 	skill_changed.emit(skill)
 
-func take_damage(dmg: float) -> void:
+func take_damage(dmg: float, dmg_type: String = "physical") -> void:
 	health = maxf(health - dmg, 0.0)
 	hp_changed.emit(health, max_health)
+	player_hit.emit(dmg, dmg_type)
 	gain_skill_xp("constitution", 1)   # skada tränar constitution
 	if World.player and World.player.visual:
 		World.player.visual.play_hurt()   # röd blink på spelaren
@@ -207,7 +209,7 @@ func _tick_statuses(delta: float) -> void:
 		s["tick_acc"]  += delta
 		if s["tick_acc"] >= 1.0:   # en tick per sekund
 			s["tick_acc"] -= 1.0
-			take_damage(s["tick_dmg"])
+			take_damage(s["tick_dmg"], id)   # id = "poison", "burn" etc.
 		if s["time_left"] <= 0.0:
 			status_effects.erase(id)
 			changed = true
@@ -357,4 +359,8 @@ func craft(recipe: Dictionary) -> bool:
 	var skill := String(recipe["skill"])
 	if not Recipes.can_craft(recipe, inventory, effective_skill_level(skill)):
 		return false
-	for in
+	for ing in recipe["ingredients"]:
+		remove_item(ing, int(recipe["ingredients"][ing]))
+	add_item(String(recipe["id"]), 1)
+	gain_skill_xp(skill, int(recipe["xp"]))
+	return true
