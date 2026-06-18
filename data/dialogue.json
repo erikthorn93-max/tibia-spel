@@ -818,5 +818,71 @@
 			{"text": "My thanks.", "next": null},
 			{"text": "Is there more?", "next": "hermit_root"}
 		]
+	},
+	"woodward_root": {
+		"speaker": "npc_woodward", "emotion": "neutral",
+		"text": "Well met. These woods were quiet once — now goblins squat in the heights and the wolves run hungry. A steady hand would be welcome up here.",
+		"choices": [
+			{"text": "Who are you?", "next": "woodward_who"},
+			{"text": "Goblins, you said?", "next": "woodward_h1",
+			 "conditions": [{"type": "quest_available", "quest": "quest_heights_1"}]},
+			{"text": "The goblins are routed.", "next": "woodward_reward",
+			 "conditions": [{"type": "quest_step", "quest": "quest_heights_1", "step": 1}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_heights_1"}]},
+			{"text": "What of the wolves?", "next": "woodward_h2",
+			 "conditions": [{"type": "quest_available", "quest": "quest_heights_2"}]},
+			{"text": "I have the wolf pelts.", "next": "woodward_reward",
+			 "conditions": [{"type": "quest_step", "quest": "quest_heights_2", "step": 1}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_heights_2"}]},
+			{"text": "And the goblin warband?", "next": "woodward_h3",
+			 "conditions": [{"type": "quest_available", "quest": "quest_heights_3"}]},
+			{"text": "The warband is broken.", "next": "woodward_reward",
+			 "conditions": [{"type": "quest_step", "quest": "quest_heights_3", "step": 1}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_heights_3"}]},
+			{"text": "Goodbye.", "next": null}
+		]
+	},
+	"woodward_who": {
+		"speaker": "npc_woodward", "emotion": "neutral",
+		"text": "Garamir. I ward these heights for the town — clear the trails, mark the trees, keep count of what moves in the dark. Lonely work, but honest.",
+		"choices": [
+			{"text": "Back.", "next": "woodward_root"},
+			{"text": "Goodbye.", "next": null}
+		]
+	},
+	"woodward_h1": {
+		"speaker": "npc_woodward", "emotion": "worried",
+		"text": "A goblin warren has dug into the western slopes. They raid the trails and steal what they can carry. Cull eight of them and they'll think twice.",
+		"choices": [
+			{"text": "I'll clear them out.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_heights_1"}]},
+			{"text": "Not yet.", "next": "woodward_root"}
+		]
+	},
+	"woodward_h2": {
+		"speaker": "npc_woodward", "emotion": "neutral",
+		"text": "The wolves have grown bold with the goblins stirring everything up. Bring me five good pelts — I'll see they're put to use, and you rewarded.",
+		"choices": [
+			{"text": "I'll hunt them.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_heights_2"}]},
+			{"text": "Not yet.", "next": "woodward_root"}
+		]
+	},
+	"woodward_h3": {
+		"speaker": "npc_woodward", "emotion": "worried",
+		"text": "The warren has roused its soldiers — armoured, drilled, dangerous. If they march on the trails we'll lose the heights. Break six of them before that day.",
+		"choices": [
+			{"text": "They'll not march.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_heights_3"}]},
+			{"text": "I must prepare.", "next": "woodward_root"}
+		]
+	},
+	"woodward_reward": {
+		"speaker": "npc_woodward", "emotion": "friendly",
+		"text": "Cleanly done. The heights breathe easier for it — and you've earned every coin. My thanks, traveller.",
+		"choices": [
+			{"text": "Glad to help.", "next": null},
+			{"text": "Anything more?", "next": "woodward_root"}
+		]
 	}
 }

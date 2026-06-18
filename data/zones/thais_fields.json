@@ -24,6 +24,11 @@
 			"type": "node",
 			"node": "mint_patch",
 			"terrain": "g"
+		},
+		"H": {
+			"type": "portal",
+			"to": "thais_heights",
+			"terrain": "c"
 		}
 	},
 	"name": "Norra landsbygden",
@@ -90,7 +95,7 @@
 		"Wggg.....g..gg.gggggg....g..g..gggggg..gg..ggggggggggg...g.gcggg.g..gggg....ggggggggggggg.g.ggggggg..ggg.ggg.ggggggg.ggW",
 		"W.ggggggggggggggg..g.ggggg..gg.gggggg..g...ggggg.gggg.ggg.g.cg.g..gggggggg.gg.gggg.gggg.gg...gg.ggg..gggggg.g.gggg..gggW",
 		"Wgg.gg.g.gg.ggg.g.gg.ggggggggggg.gggggggggg.gggggg..g.g...ggc.g.g.ggg..gg.ggg.ggggg..gggg...ggggg.g.g..gggg.g..ggggggggW",
-		"Wgg.g.gg.ggg.g.g.gggg.ggggg..gg.g..gg.ggggggggg.g..gggg.ggg.cg..gg.gg.gg.ggg..g.gg.g.gggggggggggg.gg.g..g.gggg.gg.ggggDW",
+		"WHg.g.gg.ggg.g.g.gggg.ggggg..gg.g..gg.ggggggggg.g..gggg.ggg.cg..gg.gg.gg.ggg..g.gg.g.gggggggggggg.gg.g..g.gggg.gg.ggggDW",
 		"Wgggggggggggg.gggggggggg..ggg.gggggggg.gg.gg.g.g.ggggg.ggg.gcgggggg.ggggggggg...g..g..gggggg.ggg.g.gg.ggggg.g.g...gggggW",
 		"Wgggggggggggg.gg.g.gggggggg.ggggggg.gg.g...gg.ggggggg.....ggc..ggg...g..ggg.ggggggg.g.g.ggg.gggggg..g..gggg.gggggggg.ggW",
 		"W.gggg.g..gggggggg..g.g.gg.ggggggg.gggggggg.g.gg.ggg.gg.ggg.cgg..g.ggg.g.ggg..g.ggg.gggggggggg.ggggggggg.gggg.gggg..g.gW",

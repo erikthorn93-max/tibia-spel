@@ -406,5 +406,81 @@
         "antidote_potion": 3
       }
     }
+  },
+  "quest_heights_1": {
+    "name": "Goblinhotet",
+    "giver": "npc_woodward",
+    "requires": [],
+    "steps": [
+      {
+        "type": "kill",
+        "monster": "Goblin",
+        "count": 8,
+        "hint": "Driv tillbaka gobliner i Skogshöjderna — döda 8 stycken."
+      },
+      {
+        "type": "talk_to",
+        "npc": "npc_woodward",
+        "hint": "Återvänd till Garamir vid skogsbrynet."
+      }
+    ],
+    "rewards": {
+      "xp": 700,
+      "gold": 300
+    }
+  },
+  "quest_heights_2": {
+    "name": "Vargarna i höjderna",
+    "giver": "npc_woodward",
+    "requires": [
+      "quest_heights_1"
+    ],
+    "steps": [
+      {
+        "type": "collect",
+        "item": "wolf_pelt",
+        "count": 5,
+        "hint": "Samla 5 vargskinn från vargarna i höjderna."
+      },
+      {
+        "type": "talk_to",
+        "npc": "npc_woodward",
+        "hint": "Lämna skinnen till Garamir."
+      }
+    ],
+    "rewards": {
+      "xp": 900,
+      "gold": 400,
+      "items": {
+        "leather_legs": 1
+      }
+    }
+  },
+  "quest_heights_3": {
+    "name": "Krigsbandet",
+    "giver": "npc_woodward",
+    "requires": [
+      "quest_heights_2"
+    ],
+    "steps": [
+      {
+        "type": "kill",
+        "monster": "Goblinsoldat",
+        "count": 6,
+        "hint": "Krossa goblinernas krigsband — döda 6 goblinsoldater."
+      },
+      {
+        "type": "talk_to",
+        "npc": "npc_woodward",
+        "hint": "Berätta för Garamir att krigsbandet är brutet."
+      }
+    ],
+    "rewards": {
+      "xp": 1300,
+      "gold": 600,
+      "items": {
+        "great_health_potion": 3
+      }
+    }
   }
 }

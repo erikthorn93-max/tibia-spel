@@ -406,5 +406,22 @@
 			"Mind where you step, child."
 		],
 		"dialogue_root": "hermit_root"
+	},
+	"npc_woodward": {
+		"name": "Garamir the Woodward",
+		"zone": "thais_heights",
+		"position": [
+			112,
+			52
+		],
+		"voice": {
+			"model": "en_GB-alan-medium",
+			"length_scale": 1.0
+		},
+		"barks": [
+			"The goblins grow bolder by the week.",
+			"Keep to the path, friend."
+		],
+		"dialogue_root": "woodward_root"
 	}
 }
