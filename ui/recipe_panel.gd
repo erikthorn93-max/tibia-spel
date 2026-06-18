@@ -26,7 +26,8 @@ func _rebuild() -> void:
 	title.text = {
 		"anvil": "Städ — Smithing", "stove": "Gryta — Cooking",
 		"alchemy_table": "Alkemibord — Alchemy", "rune_altar": "Runaltare — Runecrafting",
-		"crafting_bench": "Hantverksbord — Crafting & Fletching"
+		"crafting_bench": "Hantverksbord — Crafting & Fletching",
+		"workbench": "Verkstadsbänk — Construction"
 	}[station_type]
 	title.add_theme_font_size_override("font_size", 16)
 	_list.add_child(title)

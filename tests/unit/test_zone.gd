@@ -76,6 +76,7 @@ func test_depot_has_smithing_and_crafting_stations():
 	var stations = z.station_points.map(func(s): return s["station"])
 	assert_has(stations, "anvil")
 	assert_has(stations, "crafting_bench")
+	assert_has(stations, "workbench")   # construction
 
 func test_sorcerer_guild_has_alchemy_and_rune_stations():
 	var z = _make_zone("sorcerer_guild")

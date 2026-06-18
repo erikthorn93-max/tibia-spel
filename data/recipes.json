@@ -567,5 +567,70 @@
 			}
 		}
 	],
-	"prayer_altar": []
+	"prayer_altar": [],
+	"workbench": [
+		{
+			"id": "plank",
+			"skill": "construction",
+			"level": 1,
+			"xp": 8,
+			"ingredients": {
+				"log": 1
+			}
+		},
+		{
+			"id": "oak_plank",
+			"skill": "construction",
+			"level": 15,
+			"xp": 18,
+			"ingredients": {
+				"oak_log": 1
+			}
+		},
+		{
+			"id": "wooden_chair",
+			"skill": "construction",
+			"level": 1,
+			"xp": 15,
+			"ingredients": {
+				"plank": 2
+			}
+		},
+		{
+			"id": "wooden_table",
+			"skill": "construction",
+			"level": 5,
+			"xp": 25,
+			"ingredients": {
+				"plank": 3
+			}
+		},
+		{
+			"id": "oak_bench",
+			"skill": "construction",
+			"level": 18,
+			"xp": 40,
+			"ingredients": {
+				"oak_plank": 2
+			}
+		},
+		{
+			"id": "bookshelf",
+			"skill": "construction",
+			"level": 22,
+			"xp": 60,
+			"ingredients": {
+				"oak_plank": 3
+			}
+		},
+		{
+			"id": "oak_door",
+			"skill": "construction",
+			"level": 28,
+			"xp": 80,
+			"ingredients": {
+				"oak_plank": 4
+			}
+		}
+	]
 }

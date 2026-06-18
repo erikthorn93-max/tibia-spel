@@ -42,3 +42,19 @@ func test_inventory_add_stacks():
 	gs.add_item("bone_chips", 2)
 	gs.add_item("bone_chips", 3)
 	assert_eq(gs.inventory["bone_chips"], 5)
+
+# ── Thieving ──
+
+func test_steal_blocked_below_required_level():
+	gs.skill_defs = {"thieving": {"start_level": 1}}
+	gs.ensure_all_skills()
+	var ok = gs.attempt_steal({"level": 99, "xp": 50})
+	assert_false(ok, "stöld ska misslyckas under nivåkravet")
+	assert_eq(int(gs.skills["thieving"]["xp"]), 0, "ingen XP vid för hög svårighet")
+
+func test_steal_trains_thieving_when_allowed():
+	gs.skill_defs = {"thieving": {"start_level": 1}}
+	gs.ensure_all_skills()
+	gs.attempt_steal({"level": 1, "xp": 40})
+	var prog := int(gs.skills["thieving"]["level"]) * 1000000 + int(gs.skills["thieving"]["xp"])
+	assert_gt(prog, 1000000, "thieving ska tränas av ett tillåtet försök")

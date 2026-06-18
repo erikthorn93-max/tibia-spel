@@ -4,7 +4,8 @@ extends Node2D
 
 const LABELS := {
 	"anvil": "Städ", "stove": "Gryta", "alchemy_table": "Alkemibord",
-	"rune_altar": "Runaltare", "crafting_bench": "Hantverksbord", "prayer_altar": "Bönaltare"
+	"rune_altar": "Runaltare", "crafting_bench": "Hantverksbord", "prayer_altar": "Bönaltare",
+	"workbench": "Verkstadsbänk"
 }
 
 var station_type := ""
@@ -29,7 +30,8 @@ func setup(type: String, t: Vector2i) -> void:
 		fb.polygon = PackedVector2Array([Vector2(-14,-10), Vector2(14,-10), Vector2(14,12), Vector2(-14,12)])
 		const COLORS := {
 			"anvil": "#5a5a62", "stove": "#8a4a2a", "alchemy_table": "#4a7a5a",
-			"rune_altar": "#6a4a8a", "crafting_bench": "#8a6a3a", "prayer_altar": "#d4b84a"
+			"rune_altar": "#6a4a8a", "crafting_bench": "#8a6a3a", "prayer_altar": "#d4b84a",
+			"workbench": "#7a5a2a"
 		}
 		fb.color = Color(String(COLORS.get(type, "#888888")))
 		add_child(fb)

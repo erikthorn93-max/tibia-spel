@@ -182,6 +182,25 @@ func remove_item(item_id: String, qty: int) -> bool:
 	inventory_changed.emit()
 	return true
 
+## Thieving: försök att bestjäla. spec: {level, xp, gold:[min,max], item?,
+## item_chance?, item_count?}. Tränar thieving så fort försöket är tillåtet
+## (nivåkravet uppfyllt). Returnerar true om bytet faktiskt togs.
+func attempt_steal(spec: Dictionary) -> bool:
+	var req := int(spec.get("level", 1))
+	var lvl := effective_skill_level("thieving")
+	if lvl < req:
+		return false   # för svår måltavla — inget försök, ingen XP
+	gain_skill_xp("thieving", int(spec.get("xp", 10)))
+	var chance: float = clampf(0.45 + 0.04 * float(lvl - req), 0.45, 0.95)
+	if randf() > chance:
+		return false   # ertappad — inget byte
+	var g: Array = spec.get("gold", [])
+	if g.size() == 2:
+		add_item("iron_coin", randi_range(int(g[0]), int(g[1])))
+	if spec.has("item") and randf() < float(spec.get("item_chance", 1.0)):
+		add_item(String(spec["item"]), int(spec.get("item_count", 1)))
+	return true
+
 ## Applicerar en statuseffekt (skriver över om samma id redan finns).
 func apply_status(id: String, duration: float, tick_dmg: float) -> void:
 	status_effects[id] = {"tick_dmg": tick_dmg, "time_left": duration, "tick_acc": 0.0}

@@ -10,9 +10,16 @@ func after_each():
 	db.free()
 
 func test_recipes_loaded_for_all_station_types():
-	for station in ["anvil", "stove", "alchemy_table", "rune_altar"]:
+	for station in ["anvil", "stove", "alchemy_table", "rune_altar", "workbench"]:
 		assert_true(db.recipes.has(station), station)
 		assert_gt(db.recipes[station].size(), 0, station)
+
+func test_workbench_has_construction_recipes():
+	var has_constr := false
+	for r in db.recipes.get("workbench", []):
+		if String(r["skill"]) == "construction":
+			has_constr = true
+	assert_true(has_constr, "verkstadsbänken saknar construction-recept")
 
 func test_all_recipe_outputs_and_ingredients_exist_as_items():
 	for station in db.recipes:

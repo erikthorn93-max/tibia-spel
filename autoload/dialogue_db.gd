@@ -58,3 +58,11 @@ func run_actions(actions: Array, npc_id: String) -> void:
 				GameState.add_item(String(a["item"]), int(a.get("count", 1)))
 			"take_item":
 				GameState.remove_item(String(a["item"]), int(a.get("count", 1)))
+			"steal":
+				var who := String(npcs.get(npc_id, {}).get("name", "någon"))
+				if GameState.effective_skill_level("thieving") < int(a.get("level", 1)):
+					if World.hud: World.hud.show_message("Du är inte skicklig nog att bestjäla %s." % who)
+				elif GameState.attempt_steal(a):
+					if World.hud: World.hud.show_message("Du lyckas bestjäla %s!" % who)
+				else:
+					if World.hud: World.hud.show_message("%s ertappar dig!" % who)

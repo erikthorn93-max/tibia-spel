@@ -1,888 +1,2168 @@
 {
 	"elder_root": {
-		"speaker": "npc_elder", "emotion": "friendly",
+		"speaker": "npc_elder",
+		"emotion": "friendly",
 		"text": "Welcome, stranger. Our little town could use a helping hand.",
 		"choices": [
-			{"text": "Who are you?", "next": "elder_who"},
-			{"text": "Is there anything I can do?", "next": "elder_offer",
-			 "conditions": [{"type": "quest_available", "quest": "quest_welcome"}]},
-			{"text": "I've seen the forest, as you asked.", "next": "elder_thanks",
-			 "conditions": [{"type": "quest_step", "quest": "quest_welcome", "step": 2}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_welcome"}]},
-			{"text": "What troubles the lands beyond town?", "next": "elder_tasks"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Who are you?",
+				"next": "elder_who"
+			},
+			{
+				"text": "Is there anything I can do?",
+				"next": "elder_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_welcome"
+					}
+				]
+			},
+			{
+				"text": "I've seen the forest, as you asked.",
+				"next": "elder_thanks",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_welcome",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_welcome"
+					}
+				]
+			},
+			{
+				"text": "What troubles the lands beyond town?",
+				"next": "elder_tasks"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"elder_tasks": {
-		"speaker": "npc_elder", "emotion": "neutral",
+		"speaker": "npc_elder",
+		"emotion": "neutral",
 		"text": "The wilds press close these days. There is always work for a brave soul — if you've the stomach for it.",
 		"choices": [
-			{"text": "The southern desert?", "next": "elder_desert1",
-			 "conditions": [{"type": "quest_available", "quest": "quest_desert_1"}]},
-			{"text": "More work in the desert?", "next": "elder_desert2",
-			 "conditions": [{"type": "quest_available", "quest": "quest_desert_2"}]},
-			{"text": "What of the pharaoh's tomb?", "next": "elder_desert3",
-			 "conditions": [{"type": "quest_available", "quest": "quest_desert_3"}]},
-			{"text": "The frozen fjord to the south?", "next": "elder_ice1",
-			 "conditions": [{"type": "quest_available", "quest": "quest_ice_1"}]},
-			{"text": "More to do on the ice?", "next": "elder_ice2",
-			 "conditions": [{"type": "quest_available", "quest": "quest_ice_2"}]},
-			{"text": "And the ice dragon?", "next": "elder_ice3",
-			 "conditions": [{"type": "quest_available", "quest": "quest_ice_3"}]},
-			{"text": "The desert sandworms are culled.", "next": "elder_reward",
-			 "conditions": [{"type": "quest_step", "quest": "quest_desert_1", "step": 2}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_desert_1"}]},
-			{"text": "I have the scarab shells.", "next": "elder_reward",
-			 "conditions": [{"type": "quest_step", "quest": "quest_desert_2", "step": 1}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_desert_2"}]},
-			{"text": "The pharaoh has fallen.", "next": "elder_reward",
-			 "conditions": [{"type": "quest_step", "quest": "quest_desert_3", "step": 1}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_desert_3"}]},
-			{"text": "The ice trolls are dealt with.", "next": "elder_reward",
-			 "conditions": [{"type": "quest_step", "quest": "quest_ice_1", "step": 2}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_ice_1"}]},
-			{"text": "I gathered the frost feathers.", "next": "elder_reward",
-			 "conditions": [{"type": "quest_step", "quest": "quest_ice_2", "step": 1}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_ice_2"}]},
-			{"text": "The ice dragon is slain.", "next": "elder_reward",
-			 "conditions": [{"type": "quest_step", "quest": "quest_ice_3", "step": 1}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_ice_3"}]},
-			{"text": "Back.", "next": "elder_root"}
+			{
+				"text": "The southern desert?",
+				"next": "elder_desert1",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_desert_1"
+					}
+				]
+			},
+			{
+				"text": "More work in the desert?",
+				"next": "elder_desert2",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_desert_2"
+					}
+				]
+			},
+			{
+				"text": "What of the pharaoh's tomb?",
+				"next": "elder_desert3",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_desert_3"
+					}
+				]
+			},
+			{
+				"text": "The frozen fjord to the south?",
+				"next": "elder_ice1",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_ice_1"
+					}
+				]
+			},
+			{
+				"text": "More to do on the ice?",
+				"next": "elder_ice2",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_ice_2"
+					}
+				]
+			},
+			{
+				"text": "And the ice dragon?",
+				"next": "elder_ice3",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_ice_3"
+					}
+				]
+			},
+			{
+				"text": "The desert sandworms are culled.",
+				"next": "elder_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_desert_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_desert_1"
+					}
+				]
+			},
+			{
+				"text": "I have the scarab shells.",
+				"next": "elder_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_desert_2",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_desert_2"
+					}
+				]
+			},
+			{
+				"text": "The pharaoh has fallen.",
+				"next": "elder_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_desert_3",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_desert_3"
+					}
+				]
+			},
+			{
+				"text": "The ice trolls are dealt with.",
+				"next": "elder_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_ice_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_ice_1"
+					}
+				]
+			},
+			{
+				"text": "I gathered the frost feathers.",
+				"next": "elder_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_ice_2",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_ice_2"
+					}
+				]
+			},
+			{
+				"text": "The ice dragon is slain.",
+				"next": "elder_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_ice_3",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_ice_3"
+					}
+				]
+			},
+			{
+				"text": "Back.",
+				"next": "elder_root"
+			}
 		]
 	},
 	"elder_desert1": {
-		"speaker": "npc_elder", "emotion": "worried",
+		"speaker": "npc_elder",
+		"emotion": "worried",
 		"text": "Sandworms have overrun the desert ruins south of here. Find the way there and thin them out — ten should remind them whose land this is.",
 		"choices": [
-			{"text": "I'll hunt them.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_desert_1"}]},
-			{"text": "Not yet.", "next": "elder_tasks"}
+			{
+				"text": "I'll hunt them.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_desert_1"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "elder_tasks"
+			}
 		]
 	},
 	"elder_desert2": {
-		"speaker": "npc_elder", "emotion": "neutral",
+		"speaker": "npc_elder",
+		"emotion": "neutral",
 		"text": "The mummies in the ruins carry scarab shells — old relics worth studying. Bring me five and I'll see you rewarded.",
 		"choices": [
-			{"text": "Consider it done.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_desert_2"}]},
-			{"text": "Not yet.", "next": "elder_tasks"}
+			{
+				"text": "Consider it done.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_desert_2"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "elder_tasks"
+			}
 		]
 	},
 	"elder_desert3": {
-		"speaker": "npc_elder", "emotion": "worried",
+		"speaker": "npc_elder",
+		"emotion": "worried",
 		"text": "At the heart of the ruins rests Pharaoh Khem-Ra, and he does not rest quietly. End him, and the desert will trouble us no more.",
 		"choices": [
-			{"text": "He will fall.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_desert_3"}]},
-			{"text": "I must prepare.", "next": "elder_tasks"}
+			{
+				"text": "He will fall.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_desert_3"
+					}
+				]
+			},
+			{
+				"text": "I must prepare.",
+				"next": "elder_tasks"
+			}
 		]
 	},
 	"elder_ice1": {
-		"speaker": "npc_elder", "emotion": "worried",
+		"speaker": "npc_elder",
+		"emotion": "worried",
 		"text": "The ice fjord has grown bitter and the trolls bolder. Travel there and put down eight of them before they reach the road.",
 		"choices": [
-			{"text": "I'll go north.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_ice_1"}]},
-			{"text": "Not yet.", "next": "elder_tasks"}
+			{
+				"text": "I'll go north.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_ice_1"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "elder_tasks"
+			}
 		]
 	},
 	"elder_ice2": {
-		"speaker": "npc_elder", "emotion": "neutral",
+		"speaker": "npc_elder",
+		"emotion": "neutral",
 		"text": "The frost eagles up there moult feathers that hold the cold itself. Bring me five and the guild druids will know what to make of them.",
 		"choices": [
-			{"text": "I'll gather them.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_ice_2"}]},
-			{"text": "Not yet.", "next": "elder_tasks"}
+			{
+				"text": "I'll gather them.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_ice_2"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "elder_tasks"
+			}
 		]
 	},
 	"elder_ice3": {
-		"speaker": "npc_elder", "emotion": "worried",
+		"speaker": "npc_elder",
+		"emotion": "worried",
 		"text": "Deep in the fjord's coldest chamber sleeps the ice dragon. While it lives, the winters will only worsen. Be sure before you wake it.",
 		"choices": [
-			{"text": "I am ready.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_ice_3"}]},
-			{"text": "Not yet.", "next": "elder_tasks"}
+			{
+				"text": "I am ready.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_ice_3"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "elder_tasks"
+			}
 		]
 	},
 	"elder_reward": {
-		"speaker": "npc_elder", "emotion": "friendly",
+		"speaker": "npc_elder",
+		"emotion": "friendly",
 		"text": "Well done, truly. Thais is the safer for it — and you've earned your reward. The town owes you a debt.",
 		"choices": [
-			{"text": "Glad to help.", "next": null},
-			{"text": "Is there more to do?", "next": "elder_tasks"}
+			{
+				"text": "Glad to help.",
+				"next": null
+			},
+			{
+				"text": "Is there more to do?",
+				"next": "elder_tasks"
+			}
 		]
 	},
 	"elder_who": {
-		"speaker": "npc_elder", "emotion": "neutral",
+		"speaker": "npc_elder",
+		"emotion": "neutral",
 		"text": "I am Rowan, elder of this town. I have watched over it for forty years.",
 		"choices": [
-			{"text": "Back.", "next": "elder_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "elder_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"elder_offer": {
-		"speaker": "npc_elder", "emotion": "friendly",
+		"speaker": "npc_elder",
+		"emotion": "friendly",
 		"text": "Get to know the place. Meet Brom at the forge, and take a look at the old forest north of here.",
 		"choices": [
-			{"text": "I'll do that.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_welcome"}]},
-			{"text": "Maybe later.", "next": null}
+			{
+				"text": "I'll do that.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_welcome"
+					}
+				]
+			},
+			{
+				"text": "Maybe later.",
+				"next": null
+			}
 		]
 	},
 	"elder_thanks": {
-		"speaker": "npc_elder", "emotion": "friendly",
+		"speaker": "npc_elder",
+		"emotion": "friendly",
 		"text": "Good. You'll do fine here. Take this for your trouble.",
 		"choices": [
-			{"text": "Thank you.", "next": null}
+			{
+				"text": "Thank you.",
+				"next": null
+			}
 		]
 	},
 	"blacksmith_root": {
-		"speaker": "npc_blacksmith", "emotion": "friendly",
+		"speaker": "npc_blacksmith",
+		"emotion": "friendly",
 		"text": "Ah, a new face! Need something forged?",
 		"choices": [
-			{"text": "Rowan sent me to introduce myself.", "next": "blacksmith_welcome",
-			 "conditions": [{"type": "quest_step", "quest": "quest_welcome", "step": 0}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_welcome"}]},
-			{"text": "Need any help?", "next": "blacksmith_offer",
-			 "conditions": [{"type": "quest_available", "quest": "quest_lost_ore"}]},
-			{"text": "I have your iron ore.", "next": "blacksmith_thanks",
-			 "conditions": [{"type": "quest_step", "quest": "quest_lost_ore", "step": 1},
-			                {"type": "has_item", "item": "iron_ore", "count": 3}],
-			 "actions": [{"type": "take_item", "item": "iron_ore", "count": 3},
-			             {"type": "advance_quest", "quest": "quest_lost_ore"}]},
-			{"text": "Who are you?", "next": "blacksmith_who"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Rowan sent me to introduce myself.",
+				"next": "blacksmith_welcome",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_welcome",
+						"step": 0
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_welcome"
+					}
+				]
+			},
+			{
+				"text": "Need any help?",
+				"next": "blacksmith_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_lost_ore"
+					}
+				]
+			},
+			{
+				"text": "I have your iron ore.",
+				"next": "blacksmith_thanks",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_lost_ore",
+						"step": 1
+					},
+					{
+						"type": "has_item",
+						"item": "iron_ore",
+						"count": 3
+					}
+				],
+				"actions": [
+					{
+						"type": "take_item",
+						"item": "iron_ore",
+						"count": 3
+					},
+					{
+						"type": "advance_quest",
+						"quest": "quest_lost_ore"
+					}
+				]
+			},
+			{
+				"text": "Who are you?",
+				"next": "blacksmith_who"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"blacksmith_who": {
-		"speaker": "npc_blacksmith", "emotion": "neutral",
+		"speaker": "npc_blacksmith",
+		"emotion": "neutral",
 		"text": "Brom. Best smith in town. Only smith, too.",
 		"choices": [
-			{"text": "Back.", "next": "blacksmith_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "blacksmith_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"blacksmith_welcome": {
-		"speaker": "npc_blacksmith", "emotion": "friendly",
+		"speaker": "npc_blacksmith",
+		"emotion": "friendly",
 		"text": "Rowan's taken a liking to you, eh? Good. Come back once you've seen the forest.",
 		"choices": [
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"blacksmith_offer": {
-		"speaker": "npc_blacksmith", "emotion": "neutral",
+		"speaker": "npc_blacksmith",
+		"emotion": "neutral",
 		"text": "My ore shipment never arrived. Bring me three iron ore from the cave and I'll make it worth your while.",
 		"choices": [
-			{"text": "Consider it done.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_lost_ore"}]},
-			{"text": "Not right now.", "next": null}
+			{
+				"text": "Consider it done.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_lost_ore"
+					}
+				]
+			},
+			{
+				"text": "Not right now.",
+				"next": null
+			}
 		]
 	},
 	"blacksmith_thanks": {
-		"speaker": "npc_blacksmith", "emotion": "friendly",
+		"speaker": "npc_blacksmith",
+		"emotion": "friendly",
 		"text": "Fine ore! Here, a steel sword, forged while you wait. Well, almost.",
 		"choices": [
-			{"text": "Thank you.", "next": null}
+			{
+				"text": "Thank you.",
+				"next": null
+			}
 		]
 	},
 	"scholar_root": {
-		"speaker": "npc_scholar", "emotion": "neutral",
+		"speaker": "npc_scholar",
+		"emotion": "neutral",
 		"text": "Fascinating ruins in that cave. Simply fascinating...",
 		"choices": [
-			{"text": "What do you study?", "next": "scholar_who"},
-			{"text": "Need help with your research?", "next": "scholar_offer",
-			 "conditions": [{"type": "quest_available", "quest": "quest_crypt"}]},
-			{"text": "I lost the candle you gave me.", "next": "scholar_candle",
-			 "conditions": [{"type": "quest_step", "quest": "quest_crypt", "step": 1},
-			                {"type": "has_item", "item": "warding_candle", "not": true}],
-			 "actions": [{"type": "give_item", "item": "warding_candle", "count": 1}]},
-			{"text": "I lit the candle in the crypt.", "next": "scholar_crypt_done",
-			 "conditions": [{"type": "quest_step", "quest": "quest_crypt", "step": 2}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_crypt"}]},
-			{"text": "Is there more to be done?", "next": "scholar_offer2",
-			 "conditions": [{"type": "quest_available", "quest": "quest_ghoul_king"}]},
-			{"text": "The Ghoul King is dead.", "next": "scholar_king_done",
-			 "conditions": [{"type": "quest_step", "quest": "quest_ghoul_king", "step": 1}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_ghoul_king"}]},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "What do you study?",
+				"next": "scholar_who"
+			},
+			{
+				"text": "Need help with your research?",
+				"next": "scholar_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_crypt"
+					}
+				]
+			},
+			{
+				"text": "I lost the candle you gave me.",
+				"next": "scholar_candle",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_crypt",
+						"step": 1
+					},
+					{
+						"type": "has_item",
+						"item": "warding_candle",
+						"not": true
+					}
+				],
+				"actions": [
+					{
+						"type": "give_item",
+						"item": "warding_candle",
+						"count": 1
+					}
+				]
+			},
+			{
+				"text": "I lit the candle in the crypt.",
+				"next": "scholar_crypt_done",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_crypt",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_crypt"
+					}
+				]
+			},
+			{
+				"text": "Is there more to be done?",
+				"next": "scholar_offer2",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_ghoul_king"
+					}
+				]
+			},
+			{
+				"text": "The Ghoul King is dead.",
+				"next": "scholar_king_done",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_ghoul_king",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_ghoul_king"
+					}
+				]
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"scholar_who": {
-		"speaker": "npc_scholar", "emotion": "neutral",
+		"speaker": "npc_scholar",
+		"emotion": "neutral",
 		"text": "Maelis. I study the old crypt beneath the cave. Or I would, if it weren't crawling with the dead.",
 		"choices": [
-			{"text": "Back.", "next": "scholar_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "scholar_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"scholar_offer": {
-		"speaker": "npc_scholar", "emotion": "neutral",
+		"speaker": "npc_scholar",
+		"emotion": "neutral",
 		"text": "Take this warding candle to the crypt behind the cave's south passage, and light it there. It should reveal whatever lingers.",
 		"choices": [
-			{"text": "I'll light it.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_crypt"},
-			             {"type": "give_item", "item": "warding_candle", "count": 1}]},
-			{"text": "Sounds dangerous. Maybe later.", "next": null}
+			{
+				"text": "I'll light it.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_crypt"
+					},
+					{
+						"type": "give_item",
+						"item": "warding_candle",
+						"count": 1
+					}
+				]
+			},
+			{
+				"text": "Sounds dangerous. Maybe later.",
+				"next": null
+			}
 		]
 	},
 	"scholar_candle": {
-		"speaker": "npc_scholar", "emotion": "annoyed",
+		"speaker": "npc_scholar",
+		"emotion": "annoyed",
 		"text": "Careless! Here is another. Do be careful with this one.",
 		"choices": [
-			{"text": "Thank you.", "next": null}
+			{
+				"text": "Thank you.",
+				"next": null
+			}
 		]
 	},
 	"scholar_crypt_done": {
-		"speaker": "npc_scholar", "emotion": "worried",
+		"speaker": "npc_scholar",
+		"emotion": "worried",
 		"text": "A shadow, you say? Then it is as I feared. The Ghoul King stirs. We are not done, you and I.",
 		"choices": [
-			{"text": "I'll be ready.", "next": null}
+			{
+				"text": "I'll be ready.",
+				"next": null
+			}
 		]
 	},
 	"scholar_offer2": {
-		"speaker": "npc_scholar", "emotion": "worried",
+		"speaker": "npc_scholar",
+		"emotion": "worried",
 		"text": "The candle revealed his shadow. The Ghoul King must be destroyed. Finish the slayer tasks to open his lair, then end him.",
 		"choices": [
-			{"text": "He's as good as dead.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_ghoul_king"}]},
-			{"text": "I need to prepare.", "next": null}
+			{
+				"text": "He's as good as dead.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_ghoul_king"
+					}
+				]
+			},
+			{
+				"text": "I need to prepare.",
+				"next": null
+			}
 		]
 	},
 	"scholar_king_done": {
-		"speaker": "npc_scholar", "emotion": "friendly",
+		"speaker": "npc_scholar",
+		"emotion": "friendly",
 		"text": "Then it is over. The crypt can finally rest. And so can I. You have my deepest thanks.",
 		"choices": [
-			{"text": "Farewell, Maelis.", "next": null}
+			{
+				"text": "Farewell, Maelis.",
+				"next": null
+			}
 		]
 	},
 	"hunter_root": {
-		"speaker": "npc_hunter", "emotion": "neutral",
+		"speaker": "npc_hunter",
+		"emotion": "neutral",
 		"text": "Quiet... you'll scare the game.",
 		"choices": [
-			{"text": "Who are you?", "next": "hunter_who"},
-			{"text": "Need a hand with anything?", "next": "hunter_offer",
-			 "conditions": [{"type": "quest_available", "quest": "quest_snakes"}]},
-			{"text": "The snakes are dealt with.", "next": "hunter_thanks",
-			 "conditions": [{"type": "quest_step", "quest": "quest_snakes", "step": 1}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_snakes"}]},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Who are you?",
+				"next": "hunter_who"
+			},
+			{
+				"text": "Need a hand with anything?",
+				"next": "hunter_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_snakes"
+					}
+				]
+			},
+			{
+				"text": "The snakes are dealt with.",
+				"next": "hunter_thanks",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_snakes",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_snakes"
+					}
+				]
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"hunter_who": {
-		"speaker": "npc_hunter", "emotion": "neutral",
+		"speaker": "npc_hunter",
+		"emotion": "neutral",
 		"text": "Sylva. I hunt these woods. The snakes have grown bold lately.",
 		"choices": [
-			{"text": "Back.", "next": "hunter_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "hunter_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"hunter_offer": {
-		"speaker": "npc_hunter", "emotion": "neutral",
+		"speaker": "npc_hunter",
+		"emotion": "neutral",
 		"text": "Snakes everywhere this season. Cull eight of them and the forest paths will be safe again.",
 		"choices": [
-			{"text": "I'm on it.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_snakes"}]},
-			{"text": "Not my problem.", "next": null}
+			{
+				"text": "I'm on it.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_snakes"
+					}
+				]
+			},
+			{
+				"text": "Not my problem.",
+				"next": null
+			}
 		]
 	},
 	"hunter_thanks": {
-		"speaker": "npc_hunter", "emotion": "friendly",
+		"speaker": "npc_hunter",
+		"emotion": "friendly",
 		"text": "Well done. The paths are safer already. Here, your share of the bounty.",
 		"choices": [
-			{"text": "Thank you.", "next": null}
+			{
+				"text": "Thank you.",
+				"next": null
+			}
 		]
 	},
 	"finn_root": {
-		"speaker": "npc_fisherman", "emotion": "neutral",
+		"speaker": "npc_fisherman",
+		"emotion": "neutral",
 		"text": "The fish aren't biting today. They never are.",
 		"choices": [
-			{"text": "Good luck, old man.", "next": null}
+			{
+				"text": "[Stjäl ur fickan]",
+				"next": null,
+				"actions": [
+					{
+						"type": "steal",
+						"level": 1,
+						"xp": 8,
+						"gold": [
+							3,
+							15
+						]
+					}
+				]
+			},
+			{
+				"text": "Good luck, old man.",
+				"next": null
+			}
 		]
 	},
 	"captain_root": {
-		"speaker": "npc_captain", "emotion": "neutral",
+		"speaker": "npc_captain",
+		"emotion": "neutral",
 		"text": "Storm's coming, and pirates besides. No passage west today.",
 		"choices": [
-			{"text": "Who are you?", "next": "captain_who"},
-			{"text": "Can you sail me along the coast?", "next": "captain_offer",
-			 "conditions": [{"type": "quest_available", "quest": "quest_sjovagen"}]},
-			{"text": "The harbour pirates are dealt with.", "next": "captain_thanks",
-			 "conditions": [{"type": "quest_step", "quest": "quest_sjovagen", "step": 1}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_sjovagen"}]},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Who are you?",
+				"next": "captain_who"
+			},
+			{
+				"text": "Can you sail me along the coast?",
+				"next": "captain_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_sjovagen"
+					}
+				]
+			},
+			{
+				"text": "The harbour pirates are dealt with.",
+				"next": "captain_thanks",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_sjovagen",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_sjovagen"
+					}
+				]
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"captain_who": {
-		"speaker": "npc_captain", "emotion": "neutral",
+		"speaker": "npc_captain",
+		"emotion": "neutral",
 		"text": "Brandt. I run the only boat that'll brave the western reefs. When the harbour's safe, that is.",
 		"choices": [
-			{"text": "Back.", "next": "captain_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "captain_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"captain_offer": {
-		"speaker": "npc_captain", "emotion": "worried",
+		"speaker": "npc_captain",
+		"emotion": "worried",
 		"text": "Pirates have been landing at my docks and helping themselves. Thin out five of them and I'll sail you to Saltvik.",
 		"choices": [
-			{"text": "Consider it done.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_sjovagen"}]},
-			{"text": "Maybe later.", "next": null}
+			{
+				"text": "Consider it done.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_sjovagen"
+					}
+				]
+			},
+			{
+				"text": "Maybe later.",
+				"next": null
+			}
 		]
 	},
 	"captain_thanks": {
-		"speaker": "npc_captain", "emotion": "friendly",
+		"speaker": "npc_captain",
+		"emotion": "friendly",
 		"text": "Aye, the docks are quiet again. A deal's a deal — the way west is open to you now. Mind the wrecks.",
 		"choices": [
-			{"text": "Thank you, captain.", "next": null}
+			{
+				"text": "Thank you, captain.",
+				"next": null
+			}
 		]
 	},
 	"fishmonger_root": {
-		"speaker": "npc_fishmonger", "emotion": "friendly",
+		"speaker": "npc_fishmonger",
+		"emotion": "friendly",
 		"text": "Fresh catch! Mackerel, lobster, swordfish — if you're bold enough for the deep water.",
 		"choices": [
-			{"text": "Just browsing.", "next": null}
+			{
+				"text": "[Stjäl ur fickan]",
+				"next": null,
+				"actions": [
+					{
+						"type": "steal",
+						"level": 3,
+						"xp": 14,
+						"gold": [
+							8,
+							28
+						]
+					}
+				]
+			},
+			{
+				"text": "Just browsing.",
+				"next": null
+			}
 		]
 	},
-
 	"gregor_root": {
-		"speaker": "npc_knight_guild_master", "emotion": "neutral",
+		"speaker": "npc_knight_guild_master",
+		"emotion": "neutral",
 		"text": "So you'd carry a blade in Thais. Strength without discipline is just a tantrum with a sword.",
 		"choices": [
-			{"text": "Teach me to fight.", "next": "gregor_train"},
-			{"text": "What is this place?", "next": "gregor_about"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Teach me to fight.",
+				"next": "gregor_train"
+			},
+			{
+				"text": "What is this place?",
+				"next": "gregor_about"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"gregor_train": {
-		"speaker": "npc_knight_guild_master", "emotion": "friendly",
+		"speaker": "npc_knight_guild_master",
+		"emotion": "friendly",
 		"text": "The dummy in the inner hall doesn't hit back — start there. When your arm tires and you swing on anyway, that's where the knight begins.",
 		"choices": [
-			{"text": "I'll train.", "next": "gregor_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "I'll train.",
+				"next": "gregor_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"gregor_about": {
-		"speaker": "npc_knight_guild_master", "emotion": "neutral",
+		"speaker": "npc_knight_guild_master",
+		"emotion": "neutral",
 		"text": "The Knights' Guild. We hold the wall when the monsters come down from the mountains. We've held it a hundred years. We'll hold it a hundred more.",
 		"choices": [
-			{"text": "Back.", "next": "gregor_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "gregor_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
-
 	"elane_root": {
-		"speaker": "npc_elane", "emotion": "neutral",
+		"speaker": "npc_elane",
+		"emotion": "neutral",
 		"text": "A bow is honesty made of wood and string. It tells you exactly how steady your hands really are.",
 		"choices": [
-			{"text": "Show me how to shoot.", "next": "elane_train"},
-			{"text": "Who are you?", "next": "elane_who"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Show me how to shoot.",
+				"next": "elane_train"
+			},
+			{
+				"text": "Who are you?",
+				"next": "elane_who"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"elane_train": {
-		"speaker": "npc_elane", "emotion": "friendly",
+		"speaker": "npc_elane",
+		"emotion": "friendly",
 		"text": "Breathe out, then loose between heartbeats. The target down the hall is yours. Don't rush it — the arrow goes where your patience does.",
 		"choices": [
-			{"text": "I'll practise.", "next": "elane_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "I'll practise.",
+				"next": "elane_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"elane_who": {
-		"speaker": "npc_elane", "emotion": "neutral",
+		"speaker": "npc_elane",
+		"emotion": "neutral",
 		"text": "Elane. I train the paladins in the bow. Galuna handles the upper hall — but you'll earn your way up there, not talk your way.",
 		"choices": [
-			{"text": "Back.", "next": "elane_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "elane_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
-
 	"galuna_root": {
-		"speaker": "npc_galuna", "emotion": "neutral",
+		"speaker": "npc_galuna",
+		"emotion": "neutral",
 		"text": "The upper hall. Few reach it and fewer belong here. Show me you're more than a steady hand and we'll talk.",
 		"choices": [
-			{"text": "What's trained up here?", "next": "galuna_about"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "What's trained up here?",
+				"next": "galuna_about"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"galuna_about": {
-		"speaker": "npc_galuna", "emotion": "neutral",
+		"speaker": "npc_galuna",
+		"emotion": "neutral",
 		"text": "Faith and steel together — the paladin's true craft. Elane teaches the bow. I teach what comes after, when the bow isn't enough.",
 		"choices": [
-			{"text": "Back.", "next": "galuna_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "galuna_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
-
 	"muriel_root": {
-		"speaker": "npc_muriel", "emotion": "neutral",
+		"speaker": "npc_muriel",
+		"emotion": "neutral",
 		"text": "Magic is discipline, not power. Anyone can shout a rune. The trick is meaning it without burning the room down.",
 		"choices": [
-			{"text": "Tell me about the runes.", "next": "muriel_runes"},
-			{"text": "What's below the guild?", "next": "muriel_below"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Tell me about the runes.",
+				"next": "muriel_runes"
+			},
+			{
+				"text": "What's below the guild?",
+				"next": "muriel_below"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"muriel_runes": {
-		"speaker": "npc_muriel", "emotion": "friendly",
+		"speaker": "npc_muriel",
+		"emotion": "friendly",
 		"text": "Each rune is a sentence the world already knows. We only learn to pronounce it. Study slowly — the impatient sorcerers are the ones we bury.",
 		"choices": [
-			{"text": "Back.", "next": "muriel_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "muriel_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"muriel_below": {
-		"speaker": "npc_muriel", "emotion": "worried",
+		"speaker": "npc_muriel",
+		"emotion": "worried",
 		"text": "The druids keep the lower chamber, close to the earth and its green tempers. Mind your manners down there — they answer to no king, only to growing things.",
 		"choices": [
-			{"text": "Back.", "next": "muriel_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "muriel_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
-
 	"guildmaster_root": {
-		"speaker": "npc_guildmaster", "emotion": "friendly",
+		"speaker": "npc_guildmaster",
+		"emotion": "friendly",
 		"text": "Welcome to the Adventurers' Guild! Glory, coin, and a fair chance of dying horribly — it's all on the board behind me.",
 		"choices": [
-			{"text": "What's on the board?", "next": "guildmaster_board"},
-			{"text": "What is this guild?", "next": "guildmaster_about"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "What's on the board?",
+				"next": "guildmaster_board"
+			},
+			{
+				"text": "What is this guild?",
+				"next": "guildmaster_about"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"guildmaster_board": {
-		"speaker": "npc_guildmaster", "emotion": "neutral",
+		"speaker": "npc_guildmaster",
+		"emotion": "neutral",
 		"text": "Bounties, lost caravans, beasts that need fewer heads. Check the quest board whenever you're between troubles — there's always more trouble.",
 		"choices": [
-			{"text": "Back.", "next": "guildmaster_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "guildmaster_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"guildmaster_about": {
-		"speaker": "npc_guildmaster", "emotion": "friendly",
+		"speaker": "npc_guildmaster",
+		"emotion": "friendly",
 		"text": "We're the ones who go where the guards won't and the army can't. No oaths, no banners — just nerve and a share of the spoils.",
 		"choices": [
-			{"text": "Back.", "next": "guildmaster_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "guildmaster_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
-
 	"arena_master_root": {
-		"speaker": "npc_arena_master", "emotion": "neutral",
+		"speaker": "npc_arena_master",
+		"emotion": "neutral",
 		"text": "Torben, master of this arena. Step onto the sand and the sand decides what you're worth. Care to find out?",
 		"choices": [
-			{"text": "How does the arena work?", "next": "arena_master_rules"},
-			{"text": "Not today.", "next": null}
+			{
+				"text": "How does the arena work?",
+				"next": "arena_master_rules"
+			},
+			{
+				"text": "Not today.",
+				"next": null
+			}
 		]
 	},
 	"arena_master_rules": {
-		"speaker": "npc_arena_master", "emotion": "friendly",
+		"speaker": "npc_arena_master",
+		"emotion": "friendly",
 		"text": "Foes come in waves, each meaner than the last. Survive and the crowd remembers your name. Fall and... well, we sweep the sand and call the next fool.",
 		"choices": [
-			{"text": "Back.", "next": "arena_master_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "arena_master_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
-
 	"tibianus_root": {
-		"speaker": "npc_tibianus", "emotion": "neutral",
+		"speaker": "npc_tibianus",
+		"emotion": "neutral",
 		"text": "We are King Tibianus the Third, and Thais stands eternal beneath our rule. State your business, citizen, and waste none of our time.",
 		"choices": [
-			{"text": "I serve the city, your Majesty.", "next": "tibianus_serve"},
-			{"text": "Tell me of Thais.", "next": "tibianus_thais"},
-			{"text": "Forgive the intrusion.", "next": null}
+			{
+				"text": "I serve the city, your Majesty.",
+				"next": "tibianus_serve"
+			},
+			{
+				"text": "Tell me of Thais.",
+				"next": "tibianus_thais"
+			},
+			{
+				"text": "Forgive the intrusion.",
+				"next": null
+			}
 		]
 	},
 	"tibianus_serve": {
-		"speaker": "npc_tibianus", "emotion": "friendly",
+		"speaker": "npc_tibianus",
+		"emotion": "friendly",
 		"text": "Loyalty. How rare and how cheap all at once. Prove it with deeds, not words — the guilds and the guard always have need of able hands.",
 		"choices": [
-			{"text": "Back.", "next": "tibianus_root"},
-			{"text": "By your leave.", "next": null}
+			{
+				"text": "Back.",
+				"next": "tibianus_root"
+			},
+			{
+				"text": "By your leave.",
+				"next": null
+			}
 		]
 	},
 	"tibianus_thais": {
-		"speaker": "npc_tibianus", "emotion": "neutral",
+		"speaker": "npc_tibianus",
+		"emotion": "neutral",
 		"text": "The oldest free city on the continent. We have weathered plague, siege, and worse things crawling from the deep. We endure. We always endure.",
 		"choices": [
-			{"text": "Back.", "next": "tibianus_root"},
-			{"text": "By your leave.", "next": null}
+			{
+				"text": "Back.",
+				"next": "tibianus_root"
+			},
+			{
+				"text": "By your leave.",
+				"next": null
+			}
 		]
 	},
-
 	"priest_root": {
-		"speaker": "npc_priest", "emotion": "friendly",
+		"speaker": "npc_priest",
+		"emotion": "friendly",
 		"text": "Peace be upon you, traveller. The temple of Uman is open to all who carry no malice through its doors.",
 		"choices": [
-			{"text": "Who is Uman?", "next": "priest_uman"},
-			{"text": "I seek a blessing.", "next": "priest_bless"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Who is Uman?",
+				"next": "priest_uman"
+			},
+			{
+				"text": "I seek a blessing.",
+				"next": "priest_bless"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"priest_uman": {
-		"speaker": "npc_priest", "emotion": "neutral",
+		"speaker": "npc_priest",
+		"emotion": "neutral",
 		"text": "Uman the Wise, who taught the first kings to read the stars and the seasons. We light the altar in his name so the dark stays where it belongs.",
 		"choices": [
-			{"text": "Back.", "next": "priest_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "priest_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"priest_bless": {
-		"speaker": "npc_priest", "emotion": "friendly",
+		"speaker": "npc_priest",
+		"emotion": "friendly",
 		"text": "Kneel at the altar and let your burdens rest a moment. The gods give no swords — but a clear heart has won fights that steel could not.",
 		"choices": [
-			{"text": "Thank you, Father.", "next": "priest_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Thank you, Father.",
+				"next": "priest_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
-
 	"frodo_root": {
-		"speaker": "npc_frodo", "emotion": "friendly",
+		"speaker": "npc_frodo",
+		"emotion": "friendly",
 		"text": "Welcome to my inn! Warm hearth, cold ale, and the softest beds this side of the harbour. What'll it be?",
 		"choices": [
-			{"text": "What's the word around town?", "next": "frodo_rumours"},
-			{"text": "Tell me about the inn.", "next": "frodo_inn"},
-			{"text": "Just passing through.", "next": null}
+			{
+				"text": "What's the word around town?",
+				"next": "frodo_rumours"
+			},
+			{
+				"text": "Tell me about the inn.",
+				"next": "frodo_inn"
+			},
+			{
+				"text": "Just passing through.",
+				"next": null
+			}
 		]
 	},
 	"frodo_rumours": {
-		"speaker": "npc_frodo", "emotion": "neutral",
+		"speaker": "npc_frodo",
+		"emotion": "neutral",
 		"text": "They say something's gone foul down at the docks, and the jail's been busier than a market day. But you didn't hear that from me — I just pour the ale.",
 		"choices": [
-			{"text": "Back.", "next": "frodo_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "frodo_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"frodo_inn": {
-		"speaker": "npc_frodo", "emotion": "friendly",
+		"speaker": "npc_frodo",
+		"emotion": "friendly",
 		"text": "Three generations my family's kept this place. Every adventurer in Thais has wet their throat at this bar — and a fair few never came back to settle their tab.",
 		"choices": [
-			{"text": "Back.", "next": "frodo_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "frodo_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
-
 	"black_bert_root": {
-		"speaker": "npc_black_bert", "emotion": "neutral",
+		"speaker": "npc_black_bert",
+		"emotion": "neutral",
 		"text": "Keep your voice down. I deal in things that don't have papers, if you follow me. Rare things. Quiet things.",
 		"choices": [
-			{"text": "What sort of things?", "next": "bert_goods"},
-			{"text": "Are you a smuggler?", "next": "bert_smuggler"},
-			{"text": "I'll leave you to it.", "next": null}
+			{
+				"text": "What sort of things?",
+				"next": "bert_goods"
+			},
+			{
+				"text": "Are you a smuggler?",
+				"next": "bert_smuggler"
+			},
+			{
+				"text": "[Stjäl ur fickan]",
+				"next": null,
+				"actions": [
+					{
+						"type": "steal",
+						"level": 1,
+						"xp": 15,
+						"gold": [
+							12,
+							45
+						],
+						"item": "gem",
+						"item_chance": 0.04
+					}
+				]
+			},
+			{
+				"text": "I'll leave you to it.",
+				"next": null
+			}
 		]
 	},
 	"bert_goods": {
-		"speaker": "npc_black_bert", "emotion": "neutral",
+		"speaker": "npc_black_bert",
+		"emotion": "neutral",
 		"text": "The kind that fall off a ship and into my cellar. Don't ask where I got it and I won't ask where you're taking it. That's good business.",
 		"choices": [
-			{"text": "Back.", "next": "black_bert_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "black_bert_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"bert_smuggler": {
-		"speaker": "npc_black_bert", "emotion": "annoyed",
+		"speaker": "npc_black_bert",
+		"emotion": "annoyed",
 		"text": "I'm an importer of unusual goods. Say 'smuggler' again where Henricus the jailer can hear and we'll both be sharing a cell. Understood?",
 		"choices": [
-			{"text": "Understood.", "next": "black_bert_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Understood.",
+				"next": "black_bert_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
-
 	"gamel_root": {
-		"speaker": "npc_gamel", "emotion": "neutral",
+		"speaker": "npc_gamel",
+		"emotion": "neutral",
 		"text": "...You lost? Nobody comes down to the lower docks on purpose. Damp gets in your bones down here.",
 		"choices": [
-			{"text": "Why do you stay down here?", "next": "gamel_why"},
-			{"text": "Seen anything strange?", "next": "gamel_strange"},
-			{"text": "I'll leave you be.", "next": null}
+			{
+				"text": "Why do you stay down here?",
+				"next": "gamel_why"
+			},
+			{
+				"text": "Seen anything strange?",
+				"next": "gamel_strange"
+			},
+			{
+				"text": "[Stjäl ur fickan]",
+				"next": null,
+				"actions": [
+					{
+						"type": "steal",
+						"level": 1,
+						"xp": 10,
+						"gold": [
+							6,
+							22
+						]
+					}
+				]
+			},
+			{
+				"text": "I'll leave you be.",
+				"next": null
+			}
 		]
 	},
 	"gamel_why": {
-		"speaker": "npc_gamel", "emotion": "neutral",
+		"speaker": "npc_gamel",
+		"emotion": "neutral",
 		"text": "Quiet suits me. Up top it's all captains shouting and Bert and his 'business'. Down here it's just me, the tide, and the rats. I prefer the rats.",
 		"choices": [
-			{"text": "Back.", "next": "gamel_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "gamel_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"gamel_strange": {
-		"speaker": "npc_gamel", "emotion": "worried",
+		"speaker": "npc_gamel",
+		"emotion": "worried",
 		"text": "Strange? Heard scratching from below the waterline three nights running. Wasn't rats. Rats I know. This was... bigger. I keep to meself, like I said.",
 		"choices": [
-			{"text": "Back.", "next": "gamel_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "gamel_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
-
 	"henricus_root": {
-		"speaker": "npc_henricus", "emotion": "neutral",
+		"speaker": "npc_henricus",
+		"emotion": "neutral",
 		"text": "This is the Thais jail, and I'm the one with the keys. Break no laws under my watch and we'll get along fine.",
 		"choices": [
-			{"text": "Who's locked up?", "next": "henricus_prisoner"},
-			{"text": "How is justice done here?", "next": "henricus_justice"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Who's locked up?",
+				"next": "henricus_prisoner"
+			},
+			{
+				"text": "How is justice done here?",
+				"next": "henricus_justice"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"henricus_prisoner": {
-		"speaker": "npc_henricus", "emotion": "annoyed",
+		"speaker": "npc_henricus",
+		"emotion": "annoyed",
 		"text": "One Jack Springer, down in the lower cells. Swears he's innocent. They all swear they're innocent. He'll have his hearing when the magistrate's good and ready.",
 		"choices": [
-			{"text": "Back.", "next": "henricus_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "henricus_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"henricus_justice": {
-		"speaker": "npc_henricus", "emotion": "neutral",
+		"speaker": "npc_henricus",
+		"emotion": "neutral",
 		"text": "Swiftly and by the book. The King's law is plain: no theft, no blood, no trouble. Cross it and the cells are cold and the magistrate is colder.",
 		"choices": [
-			{"text": "Back.", "next": "henricus_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "henricus_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
-
 	"jack_springer_root": {
-		"speaker": "npc_jack_springer", "emotion": "worried",
+		"speaker": "npc_jack_springer",
+		"emotion": "worried",
 		"text": "Psst! You there — you've got a kind face. Get me outta here, eh? I didn't do nothin', I swear on my mother!",
 		"choices": [
-			{"text": "What are you in for?", "next": "jack_charge"},
-			{"text": "What's your mother got to do with it?", "next": "jack_mother"},
-			{"text": "Sounds like a you problem.", "next": null}
+			{
+				"text": "What are you in for?",
+				"next": "jack_charge"
+			},
+			{
+				"text": "What's your mother got to do with it?",
+				"next": "jack_mother"
+			},
+			{
+				"text": "[Stjäl ur fickan]",
+				"next": null,
+				"actions": [
+					{
+						"type": "steal",
+						"level": 5,
+						"xp": 20,
+						"gold": [
+							10,
+							35
+						]
+					}
+				]
+			},
+			{
+				"text": "Sounds like a you problem.",
+				"next": null
+			}
 		]
 	},
 	"jack_charge": {
-		"speaker": "npc_jack_springer", "emotion": "worried",
+		"speaker": "npc_jack_springer",
+		"emotion": "worried",
 		"text": "Henricus says I lifted a purse at the market. Lies! ...Mostly lies. It was a very small purse and I gave most of it back. Mostly.",
 		"choices": [
-			{"text": "Back.", "next": "jack_springer_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "jack_springer_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"jack_mother": {
-		"speaker": "npc_jack_springer", "emotion": "neutral",
+		"speaker": "npc_jack_springer",
+		"emotion": "neutral",
 		"text": "Nothin', really. Sounds better than swearing on my own word, don't it? Nobody trusts Jack Springer's word. Can't think why.",
 		"choices": [
-			{"text": "Back.", "next": "jack_springer_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "jack_springer_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
-
 	"guard_castle_root": {
-		"speaker": "npc_guard_castle", "emotion": "neutral",
+		"speaker": "npc_guard_castle",
+		"emotion": "neutral",
 		"text": "Halt. This is the royal keep of King Tibianus. State your business or move along.",
 		"choices": [
-			{"text": "I wish to see the King.", "next": "guard_castle_king"},
-			{"text": "Just admiring the castle.", "next": "guard_castle_castle"},
-			{"text": "I'll move along.", "next": null}
+			{
+				"text": "I wish to see the King.",
+				"next": "guard_castle_king"
+			},
+			{
+				"text": "Just admiring the castle.",
+				"next": "guard_castle_castle"
+			},
+			{
+				"text": "I'll move along.",
+				"next": null
+			}
 		]
 	},
 	"guard_castle_king": {
-		"speaker": "npc_guard_castle", "emotion": "neutral",
+		"speaker": "npc_guard_castle",
+		"emotion": "neutral",
 		"text": "His Majesty holds court on the upper floor. Mind your tongue up there — the King has a long memory and a short patience.",
 		"choices": [
-			{"text": "Understood.", "next": "guard_castle_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Understood.",
+				"next": "guard_castle_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"guard_castle_castle": {
-		"speaker": "npc_guard_castle", "emotion": "friendly",
+		"speaker": "npc_guard_castle",
+		"emotion": "friendly",
 		"text": "Oldest stone in Thais, this keep. Stood before the walls, before the harbour, before any of us. It'll stand after too.",
 		"choices": [
-			{"text": "Back.", "next": "guard_castle_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "guard_castle_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
-
 	"druid_root": {
-		"speaker": "npc_druid", "emotion": "neutral",
+		"speaker": "npc_druid",
+		"emotion": "neutral",
 		"text": "You come from Muriel's hall above? Good. Up there they bend the world to their will. Down here, we learn to ask it nicely.",
 		"choices": [
-			{"text": "What do druids do?", "next": "druid_about"},
-			{"text": "Why beneath the sorcerers?", "next": "druid_below"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "What do druids do?",
+				"next": "druid_about"
+			},
+			{
+				"text": "Why beneath the sorcerers?",
+				"next": "druid_below"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"druid_about": {
-		"speaker": "npc_druid", "emotion": "friendly",
+		"speaker": "npc_druid",
+		"emotion": "friendly",
 		"text": "We tend the wounded and call on root, rain, and frost. A sorcerer burns; a druid mends. The city needs both, though it remembers only the fire.",
 		"choices": [
-			{"text": "Back.", "next": "druid_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "druid_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"druid_below": {
-		"speaker": "npc_druid", "emotion": "neutral",
+		"speaker": "npc_druid",
+		"emotion": "neutral",
 		"text": "Closer to the earth, closer to the source. Let the sorcerers have the high windows and the glory. The deep roots were here long before their towers.",
 		"choices": [
-			{"text": "Back.", "next": "druid_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "druid_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"ranger_root": {
-		"speaker": "npc_ranger", "emotion": "neutral",
+		"speaker": "npc_ranger",
+		"emotion": "neutral",
 		"text": "Hold there, traveller. The north road's no place to wander idle — bandits and worse roam these fields.",
 		"choices": [
-			{"text": "Who are you?", "next": "ranger_who"},
-			{"text": "Bandits, you say?", "next": "ranger_fields1",
-			 "conditions": [{"type": "quest_available", "quest": "quest_fields_1"}]},
-			{"text": "The bandits are dealt with.", "next": "ranger_reward",
-			 "conditions": [{"type": "quest_step", "quest": "quest_fields_1", "step": 1}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_fields_1"}]},
-			{"text": "What else stalks these fields?", "next": "ranger_fields2",
-			 "conditions": [{"type": "quest_available", "quest": "quest_fields_2"}]},
-			{"text": "I have the bear claws you wanted.", "next": "ranger_reward",
-			 "conditions": [{"type": "quest_step", "quest": "quest_fields_2", "step": 1}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_fields_2"}]},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Who are you?",
+				"next": "ranger_who"
+			},
+			{
+				"text": "Bandits, you say?",
+				"next": "ranger_fields1",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_fields_1"
+					}
+				]
+			},
+			{
+				"text": "The bandits are dealt with.",
+				"next": "ranger_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_fields_1",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_fields_1"
+					}
+				]
+			},
+			{
+				"text": "What else stalks these fields?",
+				"next": "ranger_fields2",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_fields_2"
+					}
+				]
+			},
+			{
+				"text": "I have the bear claws you wanted.",
+				"next": "ranger_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_fields_2",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_fields_2"
+					}
+				]
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"ranger_who": {
-		"speaker": "npc_ranger", "emotion": "neutral",
+		"speaker": "npc_ranger",
+		"emotion": "neutral",
 		"text": "Aldric. I scout the northern marches for the town watch. Someone has to keep the road open.",
 		"choices": [
-			{"text": "Back.", "next": "ranger_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "ranger_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"ranger_fields1": {
-		"speaker": "npc_ranger", "emotion": "worried",
+		"speaker": "npc_ranger",
+		"emotion": "worried",
 		"text": "A band of cutthroats has been waylaying merchants along the north road. Thin them out — six should break their nerve.",
 		"choices": [
-			{"text": "Consider it done.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_fields_1"}]},
-			{"text": "Not yet.", "next": "ranger_root"}
+			{
+				"text": "Consider it done.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_fields_1"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "ranger_root"
+			}
 		]
 	},
 	"ranger_fields2": {
-		"speaker": "npc_ranger", "emotion": "neutral",
+		"speaker": "npc_ranger",
+		"emotion": "neutral",
 		"text": "The forest bears have grown bold and come down into the fields. Bring me five bear claws and I'll know the worst of them are dealt with.",
 		"choices": [
-			{"text": "I'll hunt them.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_fields_2"}]},
-			{"text": "Not yet.", "next": "ranger_root"}
+			{
+				"text": "I'll hunt them.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_fields_2"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "ranger_root"
+			}
 		]
 	},
 	"ranger_reward": {
-		"speaker": "npc_ranger", "emotion": "friendly",
+		"speaker": "npc_ranger",
+		"emotion": "friendly",
 		"text": "Good work. The road's a little safer for it — and you've my thanks, and your reward.",
 		"choices": [
-			{"text": "Glad to help.", "next": null},
-			{"text": "Anything more?", "next": "ranger_root"}
+			{
+				"text": "Glad to help.",
+				"next": null
+			},
+			{
+				"text": "Anything more?",
+				"next": "ranger_root"
+			}
 		]
 	},
 	"hermit_root": {
-		"speaker": "npc_hermit", "emotion": "neutral",
+		"speaker": "npc_hermit",
+		"emotion": "neutral",
 		"text": "Few come this deep into the Trollmarken, and fewer leave. Speak quickly, child — the marsh listens.",
 		"choices": [
-			{"text": "Who are you?", "next": "hermit_who"},
-			{"text": "Can I be of use?", "next": "hermit_wilds1",
-			 "conditions": [{"type": "quest_available", "quest": "quest_wilds_1"}]},
-			{"text": "I've gathered the toad glands.", "next": "hermit_reward",
-			 "conditions": [{"type": "quest_step", "quest": "quest_wilds_1", "step": 1}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_wilds_1"}]},
-			{"text": "What else troubles the marsh?", "next": "hermit_wilds2",
-			 "conditions": [{"type": "quest_available", "quest": "quest_wilds_2"}]},
-			{"text": "The orcs are scattered.", "next": "hermit_reward",
-			 "conditions": [{"type": "quest_step", "quest": "quest_wilds_2", "step": 1}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_wilds_2"}]},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Who are you?",
+				"next": "hermit_who"
+			},
+			{
+				"text": "Can I be of use?",
+				"next": "hermit_wilds1",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_wilds_1"
+					}
+				]
+			},
+			{
+				"text": "I've gathered the toad glands.",
+				"next": "hermit_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_wilds_1",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_wilds_1"
+					}
+				]
+			},
+			{
+				"text": "What else troubles the marsh?",
+				"next": "hermit_wilds2",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_wilds_2"
+					}
+				]
+			},
+			{
+				"text": "The orcs are scattered.",
+				"next": "hermit_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_wilds_2",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_wilds_2"
+					}
+				]
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"hermit_who": {
-		"speaker": "npc_hermit", "emotion": "neutral",
+		"speaker": "npc_hermit",
+		"emotion": "neutral",
 		"text": "Morwenna, some call me. Witch, hermit, madwoman — names mean little out here. I tend what the marsh remembers.",
 		"choices": [
-			{"text": "Back.", "next": "hermit_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "hermit_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"hermit_wilds1": {
-		"speaker": "npc_hermit", "emotion": "neutral",
+		"speaker": "npc_hermit",
+		"emotion": "neutral",
 		"text": "The poison toads carry glands rich with venom — and with cure, in the right hands. Bring me five and I'll brew something worth your trouble.",
 		"choices": [
-			{"text": "I'll gather them.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_wilds_1"}]},
-			{"text": "Not yet.", "next": "hermit_root"}
+			{
+				"text": "I'll gather them.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_wilds_1"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "hermit_root"
+			}
 		]
 	},
 	"hermit_wilds2": {
-		"speaker": "npc_hermit", "emotion": "worried",
+		"speaker": "npc_hermit",
+		"emotion": "worried",
 		"text": "Orcs have crossed into the Trollmarken from the rift, fouling the water and the old ways. Break their warband — six at least — before they take root.",
 		"choices": [
-			{"text": "They'll fall.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_wilds_2"}]},
-			{"text": "Not yet.", "next": "hermit_root"}
+			{
+				"text": "They'll fall.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_wilds_2"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "hermit_root"
+			}
 		]
 	},
 	"hermit_reward": {
-		"speaker": "npc_hermit", "emotion": "friendly",
+		"speaker": "npc_hermit",
+		"emotion": "friendly",
 		"text": "So. You return, and breathing. The marsh will remember that — and so will I. Take what you've earned.",
 		"choices": [
-			{"text": "My thanks.", "next": null},
-			{"text": "Is there more?", "next": "hermit_root"}
+			{
+				"text": "My thanks.",
+				"next": null
+			},
+			{
+				"text": "Is there more?",
+				"next": "hermit_root"
+			}
 		]
 	},
 	"woodward_root": {
-		"speaker": "npc_woodward", "emotion": "neutral",
+		"speaker": "npc_woodward",
+		"emotion": "neutral",
 		"text": "Well met. These woods were quiet once — now goblins squat in the heights and the wolves run hungry. A steady hand would be welcome up here.",
 		"choices": [
-			{"text": "Who are you?", "next": "woodward_who"},
-			{"text": "Goblins, you said?", "next": "woodward_h1",
-			 "conditions": [{"type": "quest_available", "quest": "quest_heights_1"}]},
-			{"text": "The goblins are routed.", "next": "woodward_reward",
-			 "conditions": [{"type": "quest_step", "quest": "quest_heights_1", "step": 1}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_heights_1"}]},
-			{"text": "What of the wolves?", "next": "woodward_h2",
-			 "conditions": [{"type": "quest_available", "quest": "quest_heights_2"}]},
-			{"text": "I have the wolf pelts.", "next": "woodward_reward",
-			 "conditions": [{"type": "quest_step", "quest": "quest_heights_2", "step": 1}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_heights_2"}]},
-			{"text": "And the goblin warband?", "next": "woodward_h3",
-			 "conditions": [{"type": "quest_available", "quest": "quest_heights_3"}]},
-			{"text": "The warband is broken.", "next": "woodward_reward",
-			 "conditions": [{"type": "quest_step", "quest": "quest_heights_3", "step": 1}],
-			 "actions": [{"type": "advance_quest", "quest": "quest_heights_3"}]},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Who are you?",
+				"next": "woodward_who"
+			},
+			{
+				"text": "Goblins, you said?",
+				"next": "woodward_h1",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_heights_1"
+					}
+				]
+			},
+			{
+				"text": "The goblins are routed.",
+				"next": "woodward_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_heights_1",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_heights_1"
+					}
+				]
+			},
+			{
+				"text": "What of the wolves?",
+				"next": "woodward_h2",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_heights_2"
+					}
+				]
+			},
+			{
+				"text": "I have the wolf pelts.",
+				"next": "woodward_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_heights_2",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_heights_2"
+					}
+				]
+			},
+			{
+				"text": "And the goblin warband?",
+				"next": "woodward_h3",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_heights_3"
+					}
+				]
+			},
+			{
+				"text": "The warband is broken.",
+				"next": "woodward_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_heights_3",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_heights_3"
+					}
+				]
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"woodward_who": {
-		"speaker": "npc_woodward", "emotion": "neutral",
+		"speaker": "npc_woodward",
+		"emotion": "neutral",
 		"text": "Garamir. I ward these heights for the town — clear the trails, mark the trees, keep count of what moves in the dark. Lonely work, but honest.",
 		"choices": [
-			{"text": "Back.", "next": "woodward_root"},
-			{"text": "Goodbye.", "next": null}
+			{
+				"text": "Back.",
+				"next": "woodward_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
 		]
 	},
 	"woodward_h1": {
-		"speaker": "npc_woodward", "emotion": "worried",
+		"speaker": "npc_woodward",
+		"emotion": "worried",
 		"text": "A goblin warren has dug into the western slopes. They raid the trails and steal what they can carry. Cull eight of them and they'll think twice.",
 		"choices": [
-			{"text": "I'll clear them out.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_heights_1"}]},
-			{"text": "Not yet.", "next": "woodward_root"}
+			{
+				"text": "I'll clear them out.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_heights_1"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "woodward_root"
+			}
 		]
 	},
 	"woodward_h2": {
-		"speaker": "npc_woodward", "emotion": "neutral",
+		"speaker": "npc_woodward",
+		"emotion": "neutral",
 		"text": "The wolves have grown bold with the goblins stirring everything up. Bring me five good pelts — I'll see they're put to use, and you rewarded.",
 		"choices": [
-			{"text": "I'll hunt them.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_heights_2"}]},
-			{"text": "Not yet.", "next": "woodward_root"}
+			{
+				"text": "I'll hunt them.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_heights_2"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "woodward_root"
+			}
 		]
 	},
 	"woodward_h3": {
-		"speaker": "npc_woodward", "emotion": "worried",
+		"speaker": "npc_woodward",
+		"emotion": "worried",
 		"text": "The warren has roused its soldiers — armoured, drilled, dangerous. If they march on the trails we'll lose the heights. Break six of them before that day.",
 		"choices": [
-			{"text": "They'll not march.", "next": null,
-			 "actions": [{"type": "start_quest", "quest": "quest_heights_3"}]},
-			{"text": "I must prepare.", "next": "woodward_root"}
+			{
+				"text": "They'll not march.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_heights_3"
+					}
+				]
+			},
+			{
+				"text": "I must prepare.",
+				"next": "woodward_root"
+			}
 		]
 	},
 	"woodward_reward": {
-		"speaker": "npc_woodward", "emotion": "friendly",
+		"speaker": "npc_woodward",
+		"emotion": "friendly",
 		"text": "Cleanly done. The heights breathe easier for it — and you've earned every coin. My thanks, traveller.",
 		"choices": [
-			{"text": "Glad to help.", "next": null},
-			{"text": "Anything more?", "next": "woodward_root"}
+			{
+				"text": "Glad to help.",
+				"next": null
+			},
+			{
+				"text": "Anything more?",
+				"next": "woodward_root"
+			}
 		]
 	}
 }

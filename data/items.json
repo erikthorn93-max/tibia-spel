@@ -1147,5 +1147,54 @@
 		"color": "#2040ff",
 		"mana": 220,
 		"sprite": "res://assets/sprites/items/super_mana_potion.png"
+	},
+	"plank": {
+		"name": "Planka",
+		"type": "material",
+		"value": 8,
+		"color": "#b08040",
+		"sprite": "res://assets/sprites/items/plank.png"
+	},
+	"oak_plank": {
+		"name": "Ekplanka",
+		"type": "material",
+		"value": 18,
+		"color": "#8a5a28",
+		"sprite": "res://assets/sprites/items/oak_plank.png"
+	},
+	"wooden_chair": {
+		"name": "Trästol",
+		"type": "furniture",
+		"value": 25,
+		"color": "#a07038",
+		"sprite": "res://assets/sprites/items/wooden_chair.png"
+	},
+	"wooden_table": {
+		"name": "Träbord",
+		"type": "furniture",
+		"value": 40,
+		"color": "#a07038",
+		"sprite": "res://assets/sprites/items/wooden_table.png"
+	},
+	"oak_bench": {
+		"name": "Ekbänk",
+		"type": "furniture",
+		"value": 70,
+		"color": "#8a5a28",
+		"sprite": "res://assets/sprites/items/oak_bench.png"
+	},
+	"bookshelf": {
+		"name": "Bokhylla",
+		"type": "furniture",
+		"value": 90,
+		"color": "#8a5a28",
+		"sprite": "res://assets/sprites/items/bookshelf.png"
+	},
+	"oak_door": {
+		"name": "Ekdörr",
+		"type": "furniture",
+		"value": 120,
+		"color": "#7a4a20",
+		"sprite": "res://assets/sprites/items/oak_door.png"
 	}
 }
