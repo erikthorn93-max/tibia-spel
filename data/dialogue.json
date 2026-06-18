@@ -9,7 +9,107 @@
 			{"text": "I've seen the forest, as you asked.", "next": "elder_thanks",
 			 "conditions": [{"type": "quest_step", "quest": "quest_welcome", "step": 2}],
 			 "actions": [{"type": "advance_quest", "quest": "quest_welcome"}]},
+			{"text": "What troubles the lands beyond town?", "next": "elder_tasks"},
 			{"text": "Goodbye.", "next": null}
+		]
+	},
+	"elder_tasks": {
+		"speaker": "npc_elder", "emotion": "neutral",
+		"text": "The wilds press close these days. There is always work for a brave soul — if you've the stomach for it.",
+		"choices": [
+			{"text": "The southern desert?", "next": "elder_desert1",
+			 "conditions": [{"type": "quest_available", "quest": "quest_desert_1"}]},
+			{"text": "More work in the desert?", "next": "elder_desert2",
+			 "conditions": [{"type": "quest_available", "quest": "quest_desert_2"}]},
+			{"text": "What of the pharaoh's tomb?", "next": "elder_desert3",
+			 "conditions": [{"type": "quest_available", "quest": "quest_desert_3"}]},
+			{"text": "The frozen fjord to the south?", "next": "elder_ice1",
+			 "conditions": [{"type": "quest_available", "quest": "quest_ice_1"}]},
+			{"text": "More to do on the ice?", "next": "elder_ice2",
+			 "conditions": [{"type": "quest_available", "quest": "quest_ice_2"}]},
+			{"text": "And the ice dragon?", "next": "elder_ice3",
+			 "conditions": [{"type": "quest_available", "quest": "quest_ice_3"}]},
+			{"text": "The desert sandworms are culled.", "next": "elder_reward",
+			 "conditions": [{"type": "quest_step", "quest": "quest_desert_1", "step": 2}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_desert_1"}]},
+			{"text": "I have the scarab shells.", "next": "elder_reward",
+			 "conditions": [{"type": "quest_step", "quest": "quest_desert_2", "step": 1}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_desert_2"}]},
+			{"text": "The pharaoh has fallen.", "next": "elder_reward",
+			 "conditions": [{"type": "quest_step", "quest": "quest_desert_3", "step": 1}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_desert_3"}]},
+			{"text": "The ice trolls are dealt with.", "next": "elder_reward",
+			 "conditions": [{"type": "quest_step", "quest": "quest_ice_1", "step": 2}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_ice_1"}]},
+			{"text": "I gathered the frost feathers.", "next": "elder_reward",
+			 "conditions": [{"type": "quest_step", "quest": "quest_ice_2", "step": 1}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_ice_2"}]},
+			{"text": "The ice dragon is slain.", "next": "elder_reward",
+			 "conditions": [{"type": "quest_step", "quest": "quest_ice_3", "step": 1}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_ice_3"}]},
+			{"text": "Back.", "next": "elder_root"}
+		]
+	},
+	"elder_desert1": {
+		"speaker": "npc_elder", "emotion": "worried",
+		"text": "Sandworms have overrun the desert ruins south of here. Find the way there and thin them out — ten should remind them whose land this is.",
+		"choices": [
+			{"text": "I'll hunt them.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_desert_1"}]},
+			{"text": "Not yet.", "next": "elder_tasks"}
+		]
+	},
+	"elder_desert2": {
+		"speaker": "npc_elder", "emotion": "neutral",
+		"text": "The mummies in the ruins carry scarab shells — old relics worth studying. Bring me five and I'll see you rewarded.",
+		"choices": [
+			{"text": "Consider it done.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_desert_2"}]},
+			{"text": "Not yet.", "next": "elder_tasks"}
+		]
+	},
+	"elder_desert3": {
+		"speaker": "npc_elder", "emotion": "worried",
+		"text": "At the heart of the ruins rests Pharaoh Khem-Ra, and he does not rest quietly. End him, and the desert will trouble us no more.",
+		"choices": [
+			{"text": "He will fall.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_desert_3"}]},
+			{"text": "I must prepare.", "next": "elder_tasks"}
+		]
+	},
+	"elder_ice1": {
+		"speaker": "npc_elder", "emotion": "worried",
+		"text": "The ice fjord has grown bitter and the trolls bolder. Travel there and put down eight of them before they reach the road.",
+		"choices": [
+			{"text": "I'll go north.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_ice_1"}]},
+			{"text": "Not yet.", "next": "elder_tasks"}
+		]
+	},
+	"elder_ice2": {
+		"speaker": "npc_elder", "emotion": "neutral",
+		"text": "The frost eagles up there moult feathers that hold the cold itself. Bring me five and the guild druids will know what to make of them.",
+		"choices": [
+			{"text": "I'll gather them.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_ice_2"}]},
+			{"text": "Not yet.", "next": "elder_tasks"}
+		]
+	},
+	"elder_ice3": {
+		"speaker": "npc_elder", "emotion": "worried",
+		"text": "Deep in the fjord's coldest chamber sleeps the ice dragon. While it lives, the winters will only worsen. Be sure before you wake it.",
+		"choices": [
+			{"text": "I am ready.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_ice_3"}]},
+			{"text": "Not yet.", "next": "elder_tasks"}
+		]
+	},
+	"elder_reward": {
+		"speaker": "npc_elder", "emotion": "friendly",
+		"text": "Well done, truly. Thais is the safer for it — and you've earned your reward. The town owes you a debt.",
+		"choices": [
+			{"text": "Glad to help.", "next": null},
+			{"text": "Is there more to do?", "next": "elder_tasks"}
 		]
 	},
 	"elder_who": {

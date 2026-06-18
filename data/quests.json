@@ -202,8 +202,9 @@
     "rewards": {
       "xp": 600,
       "gold": 350,
-      "item": "ancient_bandage",
-      "item_qty": 3
+      "items": {
+        "ancient_bandage": 3
+      }
     }
   },
   "quest_desert_3": {
@@ -279,12 +280,9 @@
     "rewards": {
       "xp": 700,
       "gold": 400,
-      "items": [
-        {
-          "item": "is_kristall",
-          "qty": 2
-        }
-      ]
+      "items": {
+        "is_kristall": 2
+      }
     }
   },
   "quest_ice_3": {
