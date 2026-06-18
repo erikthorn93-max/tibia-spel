@@ -69,6 +69,20 @@ func test_town_has_stations_and_shop():
 	assert_eq(z.station_points.size(), 0)
 	assert_eq(z.shop_points.size(), 2)
 
+func test_depot_has_smithing_and_crafting_stations():
+	# Städ + hantverksbord placerade i depån så smithing/crafting/fletching
+	# blir nåbart (malm, skinn och loggar har annars ingen station).
+	var z = _make_zone("thais_depot_int")
+	var stations = z.station_points.map(func(s): return s["station"])
+	assert_has(stations, "anvil")
+	assert_has(stations, "crafting_bench")
+
+func test_sorcerer_guild_has_alchemy_and_rune_stations():
+	var z = _make_zone("sorcerer_guild")
+	var stations = z.station_points.map(func(s): return s["station"])
+	assert_has(stations, "alchemy_table")
+	assert_has(stations, "rune_altar")
+
 func test_cave_has_ore_veins():
 	var z = _make_zone("cave")
 	var veins = z.node_points.filter(func(n): return n["node"].ends_with("_vein"))

@@ -4,7 +4,7 @@
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 		"WwWWWWWWWWWWWWWWWWWWWWWWWWWWWWwW",
 		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
-		"W,,,,,,,M,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,M,,,,,,,,,,,A,R,,,,,,,,W",
 		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
 		"W,,,,,,,,,,,,,P,,,,,,,,,,,,,,,,W",
 		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
@@ -34,6 +34,14 @@
 			"type": "stair_down",
 			"to": "druid_guild",
 			"terrain": "n"
+		},
+		"A": {
+			"type": "station",
+			"station": "alchemy_table"
+		},
+		"R": {
+			"type": "station",
+			"station": "rune_altar"
 		}
 	}
 }
