@@ -24,6 +24,21 @@
 			"terrain": ",",
 			"to": "volcano",
 			"type": "portal"
+		},
+		"h": {
+			"type": "node",
+			"node": "marsh_patch",
+			"terrain": "s"
+		},
+		"n": {
+			"type": "node",
+			"node": "nightshade_patch",
+			"terrain": "s"
+		},
+		"y": {
+			"type": "node",
+			"node": "willow_tree",
+			"terrain": "s"
 		}
 	},
 	"name": "Trollmarken",
@@ -31,17 +46,17 @@
 		{
 			"count": 5,
 			"monster": "Sumpkräla",
-			"respawn": 28.0
+			"respawn": 28
 		},
 		{
 			"count": 4,
 			"monster": "Ork",
-			"respawn": 35.0
+			"respawn": 35
 		},
 		{
 			"count": 3,
 			"monster": "Giftpadda",
-			"respawn": 30.0
+			"respawn": 30
 		}
 	],
 	"tiles": [
@@ -67,27 +82,27 @@
 		"Wss.s..sss..s.s.sss..ssss..s.ssss.sss....s.s..s.s.....s....sc......s...ss..sss.ss..ssss.s.s.s.ss.sssss.s.ss.s..sss..s..W",
 		"W..ssss.s...s.ssssss.s..sssss....s.ss...s.s.ss.ss..s.sssss..cs...s.ssss..sss..s.s...s.....s.s.....ss.ss.s....s...s..sssW",
 		"Wsssssss.ss.ss..s.s...sssss.s..ssss...s.s.ss..ss.s..s.sssss.c...ss.sss..s...ss.s.ssss.s.s.ss..s.s.s.ss.ss.s.s..s....sssW",
-		"Wssss.s.s..s.ss.ssssssss.s.s.s.s..ss.ss.s.s.s..s..s.ssss.sssc..ss.sss.s...ss...ss..s.s.s.ssss.s..sssssss.ssss..sss...s.W",
+		"Wssss.s.s..s.sh.ssssssss.s.s.s.s..ss.ss.s.s.s..s..s.ssss.sssc..ss.sss.s...ss...ss..s.s.s.ssss.s..sssssss.ssss..sss...s.W",
 		"W..ss.ss.ss.ss...ss...ss.s.s.sssss.s..sss.s.ss.s.sss.s...s..cs.ssssss.s.sss.s..s.sss..s.sss....ss.ss...sss..s..s....s..W",
 		"W.sssss.sss.s..s.ss..ss.sss.s.s..s.ssss.sss..sss.s....s..s..c..ss....s.ss.sss.sssssss..ssss.sss.s..s.s.ssssss.sss.ss.ssW",
 		"W.ss.ssssss...sss......ss...ss.ss.sssss.s..sss...sssss.s..s.c.s..sss..s.ss....ssss...s.s..s..ss..s.........ss.s....s..sW",
 		"W.s.sss..s.s...s.s.ss.s.ss..ss....s.s.s..sss.s..ss.ss..s.s..c.ssss..ss.ss..sssss..ss.sss.s....s..s..s.ss...ss.s...s....W",
 		"Wss.s.s..ssss..ssssss..sssssss....ss..sss...s....s.s....s.ssc..ss..sss.s..sss.ssssss.s.sss..sss...sss..s.s....s...ss..sW",
 		"Wsssssss.sss.sssss.s..sss..s....ss.sssss.......s..ss..ssss.scsss...s.s..sss..sss.ss.....ss...s...ss..sss.s..s.ss.s.s..sW",
-		"W...ssssss....ss.sss.sss...s...sssss.ss.ssssss.ssss.s..ssss.c.ss..sss..s.ss.s..s...s.ss.s...s.s...s....sssss...sss.....W",
+		"W...ssssss....hs.sss.sss...s...sssss.ss.ssssss.ssss.s..ssss.c.ss..sss..s.ss.s..s...s.ss.s...s.s...s....sssss...sss.....W",
 		"W..s.ss.s..s..s.....ss..s..ss.ssssss.s.s.s..ss...s..ss.ssssscss..s.s..s..sss.s.ss.ss...s.....sssss.ss...s.s.ss.sss..ss.W",
 		"W..ss.s.s.s.s.sss.s.ss..s.sss....s..s.sssssss..ss.....ss.ssscss.sss..ss.s..s.sss..sss.ssssss..ssss.ss..s..ss.s..ss.s.ssW",
 		"W....s..sss..s.s...ssss.ssss...ss.ss.ss.ssss..ss.s..sssss...css..ssssss.ss..sss..s..ssss.sss....s....s.sss.sssss.ssss.sW",
 		"Ws....ssssssss..ss.ss..ssss..s.sss.....sss..s......sssss.s.scs.s.ssss.ssssssssss.s.ssssssss...s..s.ss..s.ss.sssss..ss..W",
 		"Ws.s.s.sss...s.ss..s.s.ss.ss....ss..ss.....sss.ssss.s.ss..ssc.ssss...s.ssssssss.s.s.ss.ss.sss..ss.sssss..ss..s.ssss.ss.W",
 		"Wssssss.....ss.sssss..ssssssssss.s.sss.sss.sss...s.ss...ss..cs...ss...ssss.ssss.....ss.sss.s.s.ss...s.s...s...sssss.sssW",
-		"Wssss.s....ssss...s.ssss......sss..s.....ss.s.s..sss..ss.s..cs...ss.ss.ss...s..ss.ssss.ss.s.s.s.....s.s.s.s..s.s.ss...sW",
+		"Wssss.s....sssh...s.ssss......sss..s.....ss.s.s..sss..ss.s..cs...ss.ss.ss...s..ss.ssss.ss.s.s.s.....s.s.s.s..s.s.ss...sW",
 		"Wss..s.s.....s.....sssss.ss..s.sss...s..s..s....s....s.s.sssc.s...s...ss.s..s.sss....ssss..s.sss.ss.s..sss.sss.s.ss.s..W",
 		"W.sss.ss.s....ss.sss..s...sssss.....ssss.ss..ss..s..sssssss.cs.ssssss..s.ss..ss.s.sss..ss.s..sss.ss..s..ss.ssss.ss.s.ssW",
 		"Wssss..ss....s......ssss..s...sss.ss.s.s.s..s..sss..s.s...s.cs.ss.s.........ss.s.ss...ssss..s..s..s...s.ss.ss.s.sssssssW",
 		"Ws.ss......ss..ss.ssssssss.ss..s..s..s........s...ss.ssssss.c.ssss..s.ss..ss.ss.s.s.sssssss....s...s.s....sss.s..s...ssW",
 		"W.ssss..s...ss.s....s.s.ss.ss.s.sssss.ssss..ss.s.s..s..s..s.c..s.....s.sssss.s.s.ssssss.sssssss..s.s..ss..s...s.s.ss..sW",
-		"W..s...sss.ss.s.ss..s.s..ssss.ss.sss.s.s.ssss.ss.ssss.s.ss.sc.ssssssss..s....s..ss..s.ss..ssss.s....ss.sss.ss.s.sss.sssW",
+		"W..s...sss.ss.h.ss..s.s..ssss.ss.sss.s.s.ssss.ss.ssss.s.ss.sc.ssssssss..s....s..ss..s.ss..ssss.s....ss.sss.ss.s.sss.sssW",
 		"W...ss.sss..ss...s.sss.s..ssssssss..ss.....s.s.sss.ssss.ssssc...s.s.s.ss.sss..s....s..s.sssss...s.sss.ss.sss...ssss.s.sW",
 		"W.s...s.sss.sss.sss.s.ss.ssss..s..sss.ss.s...s..ss...ss.s...css.sssss...sss.s..s..s..s.sssss....sssss..ss..s.s.s...ssssW",
 		"Ws.s..ssss..ssss..sssss.....ss.s...s.s.ss..sss.s.s......s.s.cssss.....s.s..ss.ssss...ss.sssssssss..s.s....s.s.ss.s..s..W",
@@ -103,17 +118,17 @@
 		"W.s.s..s...sssss..s.s.ss.ss.ss.s..s.sssssssss.ss.sss.s.s..sscs....ss..sssss.s.s.ss..s.s.sss..s...s..ss.....s..ss.ss.ss.W",
 		"Ws.ss.ssssss.ssss...sssss...s.s....ss..s.s.s...ss.s.s...sssscs....s.s.ssss.sss.ss.sss......s..sss...sss...s..s...sssss.W",
 		"W...sss.ss.ss...ss.ss.sss.sss.ssssss...s.s..s.ss...ss.ssssssc.s..s..ss..sss..sssss.sss.sss.sssss.ss.sss...s..s...ss..s.W",
-		"Wsssss.ssss..s..ss....sss...s....ss.ssssss.s..sss.ss.s.ssss.c.ss.sss..s......ssss..sss.ss...ssss.s.s.sssss..ss...ss.ss.W",
+		"Wsssss.ssss..s..ss....sss...n....ss.ssssss.s..sss.ss.s.ssss.c.ss.sss..s......ssss..sss.ss...ssss.s.s.sssss..ss...ss.ss.W",
 		"Ws.sss.ssss.s.ssss.s.ss.ssss.ssss.ss.ss.sssss.ss.sss.s.s.ssscssss.sssss.sss.........s.s.s......ss.....sssssss..ssssss..W",
 		"W..sssssss.s..ssss..ss.s.s..ssss.ss.sss.s.s.ssssssssss..sss.css.sss...s.s.s.....s.sss.s...s.s..s.ss........sss.s...ss.sW",
 		"Ws.s.ssssssss...sssss.ssss.s........ss..sss..sss..s.ssss.s..c.s...ss..s.s....s...s.sssss..s.ss........sssss..s..s..sss.W",
 		"Wss..s.sssss..s..s.ssss.s.s..sss.s.s.s...ssss......s...s.s.sc.s...ss.ss.s...s.ss..s.ssss.ss..ss.s.ss.ss...s.ss.s.s.....W",
-		"W...sssss..ss.s..ss.s.s.sssss...s..ss.sss...sss.ss...s...sssc.s..s..s.s.s.ssss.s....ss.ss..sss.s.s..s.ss.sss.ssss..s.ssW",
+		"W...sssss..ss.s..ss.s.s.ssssn...s..ss.sss...sss.ss...s...sssc.s..s..s.s.s.ssss.s....ss.ss..sss.s.s..s.ss.sss.ssss..s.ssW",
 		"Ws.s.sss....sss.ss...ss.ssss..sss.s.ss.sssssss.ssss.s.ss...sc.sssss.ssss.sssssssss.ss.ss...ss...s..s...ss...ssssss.ssssW",
 		"W.....ss.sss.s.sss.ssssss.s......s..ss.s..ss...ssssss.ss.s.sc.......s.ss..s..s.ss...s...s...sssss.ss..s...s.ssssss.s.s.W",
 		"Ws.s..sss.ss..sss.ss.sss...s....sss.s..s...s...ssssss......sc.s.s.ss.ss.....ssss.ss...s.s.....s...ssss..ssss..ss.s..ss.W",
 		"Wsss.sss..s.ss.s.sss..ss.ss.sss...sss.ssss.ssssss....sss...sc.........ss.sss.ssss.sss..s..s..s.sss.s.sss.ss..ssssss.sssW",
-		"Ws.s.s.sss.ss.ssss.s.sss..s.sss.ss.s...ssss..ss.s..ssss.s.s.cssss.s.ss.ss.ss.s...s.ssss...s....ss..ss.ss.sss.s..sss..ssW",
+		"Ws.s.s.sss.ss.ssss.s.sss..s.sns.ss.s...ssss..ss.s..ssss.s.s.cssss.s.ss.ss.ss.s...s.ssss...s....ss..ss.ss.sss.s..sss..ssW",
 		"Ws.s..s..sssssss.......s.s..s..ss...s.s.s.s.ss....s..ssss.sscsssss.ssss.sss.s...ss..ss.ss.s.....sssssssss.s..s.s.s.ss..W",
 		"Ws.s.s..ss..ss....s...sssssss.s.ssssssssss..ss.sss..sss.s.ssc......ss.sssss..ssss..s.ss..s..s.s.s.s..s..ss..s.sssss..ssW",
 		"Ws.ssss...s..s.s.s..s..s.s.ss.......s...sss.s..sss..s..ss...c.sss.ss.s.s.s..ss.s....s.....s.s.s.ss.s....sssss.sssss..s.W",
@@ -121,18 +136,18 @@
 		"Ws.sss..sss...ss...ssssss.s.ssssss.s..s..sss.s..sss.s....ss.cssss.s.ss...ss...ss..s..sss.ss.s...s.s....ssss..s.s.s..s.sW",
 		"Wssss..sss.ss.ss.s.sssssss..s...ssss.ss.ss..s.s.sss.sss..s..csss..s.s...ss..ssss..ss..s........sss.ss...sss.s.ssss..ss.W",
 		"Wssss.ss...ssssssss.sss...ss..ssss.s.s.s.s.sss.s.ss.s.s..s..css...s.ss.ssss...s...s..sss.sss......sss.sss.ss..sss.s..s.W",
-		"W.s.s.s..sss..ss..ss..ss.sssss...s.s.s.s...ss.ss.....ssssss.css.s.s.s.s..ssss.ss.ssss..s.ss...s..sssss....sss...ss.ssssW",
+		"W.s.s.s..sss..ss..ss..ss.sssss...s.s.s.s...ss.ss.....ssssss.css.s.s.s.s..ssss.ys.ssss..s.ss...s..sssss....sss...ss.ssssW",
 		"Ws...s.....sssss..ss.ss.s..ss.ssssss.s.ss.s..ssss.sss.....sscss....sssss...ss..s.ssss..ssss..s...s..ssss.s.s.ss..sssss.W",
 		"Wssss.ssss...s.s..ss.s.s....ss.s.ss...sssss..s.ss...sss.sss.cs.ssssss.ss.sss.s...ss..ss.s..ssss.ssss...s.sss.s.ss.s...sW",
 		"Ws...ss.sssss.sss.sssss...ss.ss..ss.s.s.sss.s.ss....s...s.ssc.sssss..s..ssss.ss.s.s..s...s.s.s..ssssss.s.....sssss.s..sW",
 		"Wss.....sssss.ss..sssssss...sss..sss.s.s.sss.ss.ss.ss..ss.ssc..s.s.s..s.ss...s.ssssss.sssss...sss...sssss.s.sssssss...sW",
 		"W...ss.ss.ss...sss.....ss.s...ss.s..sss..s..s.ssssss.s..s.s.c..ss.s...ss.ss.ssss.s.ssss...ss..s.ss...s.s...s...sss.ssssW",
 		"Ws.ss....s..s.....sss.....s.sss.sssss..s...s.s..s..ss..s.s.sc.s..ssss..sssss.s.s.s..ss.s..s.ss..s.s.ss.ssss.s.ss.....s.W",
-		"W.s...s..ss..s.s..ssss.s.ss.s.ss.sss..sssss.ssssss..ss...ss.c.ssss.sss....sss..sssss.s.s....ss..ssss...sssssss.s.....ssW",
+		"W.s...s..ss..s.s..ssss.s.ss.s.ss.sss..sssss.ssssss..ss...ss.c.ssss.sss....sss..yssss.s.s....ss..ssss...sssssss.s.....ssW",
 		"Wsssss.ssss..sssss..sssss..ss...s..s...s.sss....s.s.ssss.s.sc.ss..s..ss.ssss.....ssssss.ss.....sss..s.ss.ss...ss...ss.sW",
 		"W.ss..ssssssssss.....ss.sss.sss.ss..ssss.ssss.....sssss.sssscs......ss.s.ssssss.ss.ssss.s.sssssss.sss.ss.ss..s..s...s.sW",
 		"Wss..ss..s.s.ss.ssss..s.s...sss.ss..s.ss.ssss.....s...ss.s.scss..s...s..s..ss.ssss.s.s.s...ssssssss.sss...s.sss.ss.ss..W",
-		"Wsss....sss.s.ss..s.s...ssss.s.s.s.ss..s....ss..s.s.sss.ss..c.s...s.ss.ss...sss.sss..s..s..s.s.ss.s..ssss....ss.ssssss.W",
+		"Wsss....sss.s.ss..s.s...ssss.s.s.s.ss..s....ss..s.s.sss.ss..c.s...s.ss.ss...sss.sys..s..s..s.s.ss.s..ssss....ss.ssssss.W",
 		"W...s.sss.s.s.ss.s..sssss.s..s.s.s.s.s.ss....sss.ss....sss.scs.s..ss...s.sss..s.ssss.s..s.....ss..ssss..ssssss.s..s....W",
 		"Ws.s...s.sssss.....ss.ssss....s.s..ss..s.sss.sss.s.....ss.sscsss.ss..s...s....ss..sss.ss.....s...s...s.ss.ss.s.ssss..s.W",
 		"W..s.ssss.s..ss.s.sss.ss.sssssss.ss.ss.ss...ssss..s...ss.s.scss.s...s.ss.ssss....ssss.ss...s....ssssssss.s.ss..ssss.ss.W",

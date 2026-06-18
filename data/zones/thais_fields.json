@@ -14,6 +14,16 @@
 			"terrain": "c",
 			"to": "ice",
 			"type": "portal"
+		},
+		"F": {
+			"type": "node",
+			"node": "farm_patch",
+			"terrain": "."
+		},
+		"m": {
+			"type": "node",
+			"node": "mint_patch",
+			"terrain": "g"
 		}
 	},
 	"name": "Norra landsbygden",
@@ -21,12 +31,12 @@
 		{
 			"count": 5,
 			"monster": "Bandit",
-			"respawn": 30.0
+			"respawn": 30
 		},
 		{
 			"count": 3,
 			"monster": "Skogsbjörn",
-			"respawn": 40.0
+			"respawn": 40
 		}
 	],
 	"tiles": [
@@ -48,7 +58,7 @@
 		"Wg.ggg....gg.ggg.gg.g.g...gg.g.ggggggggggg.ggggg.gggg.g...ggcggggggg.ggg.g.ggggggg.g.ggg..g.ggggggggggggggg..gg.gggggggW",
 		"Wgg.gg..gggggg..gggg.gg.gg...gg...ggg.ggggggggggggg.gggg.gg.cg..g.g..g.ggggg.ggggggg.gg...ggg.ggg.g.ggggggg.gggggggggggW",
 		"Wg..g.ggg.g.ggg.ggg.g..gggggg...gg.gggg.ggggg..ggg.g.g.gg.ggcg.ggggggg.ggg.gg...ggggggg.g.gggg.gggggg....g..gg..ggg..ggW",
-		"Wgggggggggggggggg.g.g.gggg.gggggggg.gggggggg..ggggg.gg.gg.ggc..gg..g.g.ggggggg.g..ggggggggggg...ggggggggg.gggg.ggggggg.W",
+		"WgggggggggggFgggg.g.g.gggg.gggggggg.gggggggg..ggggg.gg.gg.ggc..gg..g.g.ggggggg.g..ggggggggggg...ggggggggg.gggg.ggggggg.W",
 		"Wgggggg..g..g.g.g.g.ggg.g.ggggggg...g.gggggggg.ggg.gg.ggg..gcg.g.gggggg.gggg.g.gg.g..g.gg.g.ggg..ggggggg..ggggg.gggggggW",
 		"Wg..ggg.gggg..ggggg.g.gggg.gggggggg..g..g.gg.ggggggg.ggg.gggcgg.g....g.gg.ggggggg.gg.g...gg.ggggggg..ggg.ggg.gg.ggg.gggW",
 		"Wgggggggggggggg..gggg.ggggggg.ggg.g.gg..gg.gg..g.gg.gg.gggg.cgggggg.gggggggggg...g..gg.g.gggggg.gg.g...g....g.gggggggggW",
@@ -58,19 +68,19 @@
 		"Wgggg.gggggg....ggggg.gg..g.ggg.g.ggggggg...g..ggggg.ggg..ggcg.g.gggggg.ggg.gggggg...gggggg.gg.ggggggg..ggg.g.g.ggggg.gW",
 		"Wg.gggggg.gg.gggg.ggg.gggggggg.g.ggg.g.ggggg..gg.g.ggg.gggggc.gg..gg.ggg.gggg.g.g.g.ggggggg.g.ggggg.g.gggg.gggg..gg..ggW",
 		"Wg.gg...ggg.gg.ggggg.ggggg.gggg.g...ggg.ggg.ggggggggggggggggcgggg.gg.ggggg.gg.g.ggg.g.gg.gggg.gg.g.g.ggg.gg.ggggg.g.g.gW",
-		"W...g.ggggg..ggggg.gggggg.gg.ggg..gggggg..gggggg.ggg.gggggggc...gggggggg.ggg.g..ggggggggg...gggggg.g.g.g..g.g...g.gggg.W",
+		"W...g.ggggg..Fgggg.gggggg.gg.ggg..gggggg..gggggg.ggg.gggggggc...gggggggg.ggg.g..ggggggggg...gggggg.g.g.g..g.g...g.gggg.W",
 		"W.g..gggg.ggggg..ggg.gg..g.gggg.gg.ggggggggg.gggg.gg.gg..gggcgg.gggggggggggg.gggg...gg.gggggggg.gg.ggg..g.ggggg..gggg.gW",
 		"Wgg..ggg.g.g.gggg.gg...gg.gggggg..gggggg..ggggggggggg.ggggggcg...ggg.g.gg.g.g.ggggggggg.ggg..gggggggg.g..ggggg...g.gg..W",
 		"Wggggg..ggg..g..gg.ggggggggg.g.ggg.gggggggg.ggggg.ggggggg..gcggggggg..gggggggg.g.gggggg.g.ggggggggggg.g.ggggggggg.g.g.gW",
-		"Wgg.ggggg.ggg.ggg.gggg..gg.g.gg..g.g.gggg.ggg..gg.ggg...ggggc.gg.ggggggggggggg......g...ggggg..g.ggg..ggggg..g..g.gggg.W",
+		"Wgg.ggggg.ggF.ggg.gggg..gg.g.gg..g.g.gggg.ggg..gg.ggg...ggggc.gg.ggggggggggggg......g...ggggg..g.ggg..ggggg..g..g.gggg.W",
 		"Wg.ggggg.gg.ggg..ggg..gg..ggg.gg.gg.gg.g.ggg.g........gg.gg.cgggggg...gg.gggg..g.ggggggg...ggggg..gg.g..ggggggg.gg..g.gW",
 		"Wg.gggg.gg.ggggg.ggg...gg...gggggggg...ggggg.gggg.ggggggg.ggc.g...gggg.ggg..g.ggggggg.g..ggggggggg.g.gggggggg.ggggg.gggW",
 		"Wgggg.g...ggg.ggggggg...gg.ggg.ggg....gg.gggg..gg.ggggg.ggggcggg.gggg..ggggggg.gggg.gggg..gggg.gggggggg.gggggg.ggg.ggggW",
-		"Wggggggg..ggggggggggg.gggggggggg.ggg..g.g.ggg.g....g.gg.ggggcggg.ggggg.ggg..ggg.gg.ggggggggggggg.gggggg.gg.gggggggg.g.gW",
+		"Wggggggg..gggFggggggg.gggggggggg.ggg..g.g.ggg.g....g.gg.ggggcggg.ggggg.ggg..ggg.gg.ggggggggggggg.gggggg.gg.gggggggg.g.gW",
 		"Wgg.gggggggg...ggggg.g.ggggggg.ggggg..ggggg.g.gg.gggggg..g.gc.g.ggggg..ggg..gg.gggggg.g...g.g.g.gg.g.ggggg..g.g.gg.gg.gW",
 		"Wgggg..gg..ggggg.ggggg.gggggggg.g.gggg.g..gg.gg.g..ggg......cg..gg.g.ggg.gg..ggg.gggg..gg.ggggggg.g.g..ggg.g.gg.gggggggW",
 		"W.gg.g.gg..g.ggg.ggggg.ggggg.g.ggg.gggggg..gg.gggggg.ggg.g.gc.gg.ggggggggggg.gg...gggggg..ggggggg...gg.gg.gg.ggggggg..gW",
-		"Wgg..gg...g..gggg.g.ggg..ggg..ggg.gg.g..gg.gg.gggg...gggggg.cggggggg.g.gggg.ggg.gg...ggggg..gggg...ggg.ggggg.g.gg.g..ggW",
+		"Wgg..gg...g..gFgg.g.ggg..ggg..ggg.gg.g..gg.gg.gggg...gggggg.cggggggg.g.gggg.ggg.gg...ggggg..gggg...ggg.ggggg.g.gg.g..ggW",
 		"Wg.ggggggg.g.ggggg.ggg.g.ggggggggg.ggggggggggg.ggggg..ggggg.cg.gggg.ggg..g.ggg..g.ggggg.g..gggggggg...g.gggggg..gggggg.W",
 		"W.g.gggggggggggggggggg...ggggg..ggggg.ggggg.gg.gg.ggggg..gg.c.g.ggg...g.gg.g..gggggg.g.g.gggg.gggggg.gg.gggg.g..gg.g.g.W",
 		"Wg..gg.gggg..g.gg..gggggggggg.ggg.ggg....g.g..gg.g.gggg...ggcggggggggggg..gggg.g..gg.g.g.gggggggg.ggg...gg.g.gggggggg.gW",
@@ -90,16 +100,16 @@
 		"Wg.gg.gggggggg.ggg.gggg.gg...gg....gg.gggg.ggg..gg.....gg.ggcg...gggggg.g..gg.g.g...g..gg..g.ggg...gg.g.g.g..gg.g.gggggW",
 		"Wgg.gggg.g.g.gg..ggggggggggg.g..g.g.g......gggggg.ggggggggggc..gg..gggg..g.g.ggggggg.g.gggggggg..g..ggg.ggg.ggg.g.gg.g.W",
 		"Wg.ggg..ggg.ggggggg...ggggg....gggggg.ggggggg.ggggggg..g.gggc.gggggggg..g..gg.gg..g.gg.ggggggggg.g..gg.gggggg.gg.gg.gggW",
-		"W.ggggg.gggg.ggggggg.ggggggggg..g.ggggg.gg..g.g.gggggggg.gggc..ggggggggggggggg..g.gg...ggg.ggggg...g.gg.ggg.gggggg..gggW",
+		"W.ggggg.gggg.ggggggg.ggggggggg..g.ggggg.gg..g.g.gggggggg.gggc..gggggggggggmggg..g.gg...ggg.ggggg...g.gg.ggg.gggggg..gggW",
 		"Wggggggg.gg...ggg.ggggggg..gggggggggg..gg.gg.gg.g.gg.gg..gggcggg....g.gggggggggg.gggggg.gggg.ggggg.gg....ggg.g...ggggggW",
 		"W..g.g.gg.ggg..g..gg.ggggg.gg.gg.gg.ggg.gggg.gggg..gg.ggg.ggc.ggggg...gg.gg..ggggggg.ggg.gggg.gggg.gggggggg..ggg.ggg.g.W",
 		"W.gg.g.ggggg.ggggggggggggggggggggg..gggggggg..ggg.ggg.g..gggcgg.ggg...g..g..gg..ggggg.ggggggggggg.gg...g.gg...gggg..g.gW",
 		"W.gggg..gg.g..gggggggg..ggggg.gggggggggg...g.g.g.ggg.gg.gg.gcg...ggggggg...ggggg.g....g.ggggggg.gg.ggggggggg..ggg...g..W",
-		"Wg.ggg.ggggggg.gg.g...gg.g..ggg.ggg.gg.gg..g.ggggggggg.gg.ggcg.gg.ggggg.gg.gg.gggggg..gg..g.gg.g.gggggg..ggg.gggggg.gggW",
+		"Wg.ggg.ggggggg.gg.g...gg.g..ggg.ggg.gg.gg..g.ggggggggg.gg.ggcg.gg.ggggg.gg.mg.gggggg..gg..g.gg.g.gggggg..ggg.gggggg.gggW",
 		"W.ggg.ggg.ggggg.gg.gggg..ggg.g..g...ggg....gggggg.ggg..g.gggcgg..g.gg..g...ggggggggggggg.gggggg.....g..g..ggggg..gg.gggW",
 		"Wgggggg..g.g..g.gggg.gggg.gggggggg.gggggg.gg.gg.gg.....gg.ggcg.g.gggggg.g.g.ggggg.g.g..ggggg.gg.gg.g.gg.gggggg.gg...g.gW",
 		"Wggg...g.ggggg...g.gggg...g.ggggggg.gggggg.g..g.ggg.gg.g.g.gc..gg.g.g.g.g..gggg.gg.ggg..g.gg.gg..gg..gggg.ggg..gg..ggggW",
-		"Wgg..ggg.g.gg.gg.gg...g.ggggggg.gg.ggggg.gg.gg.g...ggggg..g.c.ggg.gg.gggg.ggggggg..g.g....ggg.gg....gg.ggggg.gg.g.gggg.W",
+		"Wgg..ggg.g.gg.gg.gg...g.ggggggg.gg.ggggg.gg.gg.g...ggggg..g.c.ggg.gg.gggg.ggmgggg..g.g....ggg.gg....gg.ggggg.gg.g.gggg.W",
 		"W....gg.gg.gg..gggg.g..ggg..gggggg.g.gggg.ggg..gggg.gg.gg.ggc.ggg..ggggggg..ggggg.gg.ggg.ggg..g.ggggg.gggggggg..gggg.ggW",
 		"W.gg.gg..gggg.gg...gggggg.g.ggg...gggggggggg..g.g.gggg.gg..gcg..gg.g.g.g.g...g.g.ggg..ggggggggg.g.gggg..gg.gggggg..ggggW",
 		"W...ggggggggg..gg.gggggggg.ggggggg.gggggg......gg.ggggggg..gc..ggg.gg..gg.ggggggggg...g....gg.ggggg.ggggggggggg..gg..g.W",
@@ -114,7 +124,7 @@
 		"W.ggggg.gg...ggggg.gggggg.g.g..ggggg.gg.ggggggggg.ggggg.g.g.cgggg..g..gggg..gggg..ggg..ggg.ggggg..g.g.gggg..g.gg...ggggW",
 		"Wg.gg.gggg.g.g..gg.gg.ggggg.g.ggggg.gggg.ggg.ggg.g..gg.gggg.c...gggggggg...ggg.g.gg.gg..gg..ggg.g.ggg.gg.gg.gg....gggg.W",
 		"Wg.ggggg.ggggg..gg...gg.g.g.ggggggg..g....ggg.ggg.ggg.gg..ggc.g.gg..gg..gg.gggggggggggg.ggg.g.ggg.g.gggggggg..gg.g.ggggW",
-		"Wggg...gggggggggggggggggg.g...gg..gg...ggg.gg.ggggggggg.gg.gc....ggggggg..g.ggggg.ggg.g...g.gggggggggggggg..gggg.g.ggg.W",
+		"Wggg...gggggggggggggggggg.g...gg..gg...ggg.gg.ggggggggg.gg.gc....ggggggg..g.ggggm.ggg.g...g.gggggggggggggg..gggg.g.ggg.W",
 		"Wg.ggggggg.g.ggg.g.ggg.ggggggggg.gg...ggg...gg.gg..gg..gggggcg..g.g..gg.gg.g...gg..ggggg.gggggggg.ggg.gggggg..gggg.ggggW",
 		"Wggggg.gg.g..g.gg.gg.ggg.ggg.g.ggggggg.gggggg.g.g.ggg.....ggcg.g.gggg..gggg.gg.gggggggg.g..gg.ggggggg.g.gggg.ggg.ggggggW",
 		"W.ggggggggg.g..ggg..gg.g..g.g.gggg...gg.g.gggg.gggg.gggggg.gcggg.ggggggggggg.ggg.gggg..ggg...g..gg.ggggg.g.g.g..gggg..gW",
