@@ -2,6 +2,8 @@
 *.import
 
 gut_output.txt
+godot_log.txt
+*.bak
 
 # Piper-röstmodeller (~300 MB, laddas ner av tools/generate_voices.py)
 tools/voices/
