@@ -140,5 +140,15 @@
     "category": "outfit",
     "requires": {},
     "desc": "Belönas för att ha klarat Gillets Mästarprov."
+  },
+  "kristallgrottan": {
+    "name": "Kristallgrottan",
+    "category": "area",
+    "requires": {
+      "quest": "quest_trial_3",
+      "skill": "mining",
+      "level": 40
+    },
+    "hint": "Bevisa dig som Gillets Mästare och nå Mining 40 — då öppnas grottans sigill."
   }
 }

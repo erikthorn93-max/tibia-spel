@@ -92,6 +92,21 @@ func test_mountains_loads_and_returns():
 func test_mountains_portal_reachable():
 	_assert_dests_reachable(_make_zone("thais_mountains"), ["thais_heights"], "thais_mountains")
 
+func test_mountains_has_locked_gemcavern_portal():
+	var m = _make_zone("thais_mountains")
+	assert_true(m.portals.values().has("thais_gemcavern"), "mountains saknar portal till kristallgrottan")
+
+func test_gemcavern_loads_and_returns():
+	UnlockSystem.unlock("kristallgrottan")   # bygg som upplåst så portalen finns
+	var c = _make_zone("thais_gemcavern")
+	assert_true(c.portals.values().has("thais_mountains"), "grottan saknar retur till bergspasset")
+	assert_ne(c.player_start, Vector2i.ZERO, "grottans player_start saknas")
+	assert_true(c.is_walkable(c.player_start), "grottans player_start ej gångbar")
+
+func test_gemcavern_portal_reachable():
+	UnlockSystem.unlock("kristallgrottan")
+	_assert_dests_reachable(_make_zone("thais_gemcavern"), ["thais_mountains"], "thais_gemcavern")
+
 # ── Nåbarhet: portaler featuren placerar i utkanterna/landsbygd ska gå att
 # nå från spelarens start. (Interiöra byggnadsingångar — gillen, arena,
 # trappor — testas inte här; deras nåbarhet ärvs oförändrat från kärnan.) ──

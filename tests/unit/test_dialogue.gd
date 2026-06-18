@@ -81,3 +81,13 @@ func test_quest_reward_grants_skill_xp_and_unlock():
 	assert_true(UnlockSystem.is_unlocked("outfit_champion"), "unlocks-belöning gav inte outfit_champion")
 	var prog := int(GameState.skills["constitution"]["level"]) * 1000000 + int(GameState.skills["constitution"]["xp"])
 	assert_gt(prog, 1000000, "skill_xp-belöning tränade inte constitution")
+
+func test_gemcavern_unlock_requires_quest_and_skill():
+	# Kristallgrottan kräver BÅDE Mästarprovet (quest_trial_3) OCH Mining 40.
+	UnlockSystem.unlocked.erase("kristallgrottan")
+	GameState.skills["mining"] = {"level": 50, "xp": 0}
+	assert_false(UnlockSystem.can_unlock("kristallgrottan"), "utan questen ska den vara låst")
+	QuestSystem.completed["quest_trial_3"] = true
+	assert_true(UnlockSystem.can_unlock("kristallgrottan"), "quest + Mining 50 → upplåsbar")
+	GameState.skills["mining"]["level"] = 10
+	assert_false(UnlockSystem.can_unlock("kristallgrottan"), "Mining 10 < 40 → fortsatt låst")

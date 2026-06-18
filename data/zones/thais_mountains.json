@@ -25,6 +25,12 @@
 			"type": "node",
 			"node": "oak_tree",
 			"terrain": "g"
+		},
+		"C": {
+			"type": "portal",
+			"to": "thais_gemcavern",
+			"unlock": "kristallgrottan",
+			"terrain": "c"
 		}
 	},
 	"spawn_table": [
@@ -95,7 +101,7 @@
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
-		"WgggggggggggcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccPccc>",
+		"WgCgggggggggcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccPccc>",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
