@@ -63,3 +63,24 @@ func test_fields_and_wilds_load():
 	for d in ["volcano", "demon_temple", "minotaur_maze", "orc_rift"]:
 		assert_true(wilds.portals.values().has(d), "wilds saknar %s" % d)
 	assert_true(wilds.is_walkable(wilds.player_start), "wilds player_start ej gångbar")
+
+# ── Nåbarhet: portaler featuren placerar i utkanterna/landsbygd ska gå att
+# nå från spelarens start. (Interiöra byggnadsingångar — gillen, arena,
+# trappor — testas inte här; deras nåbarhet ärvs oförändrat från kärnan.) ──
+
+func _assert_dests_reachable(z, dests: Array, label: String) -> void:
+	for t in z.portals:
+		if not dests.has(z.portals[t]):
+			continue
+		var path = z.find_path(z.player_start, t)
+		assert_gt(path.size(), 0, "%s: portal till %s vid %s ej nåbar från player_start" % [label, z.portals[t], str(t)])
+
+func test_town_outdoor_portals_reachable():
+	var dests = ["cave", "forest", "coast", "troll_cave", "vampire_crypt", "dwarf_mine", "thais_fields", "thais_wilds"]
+	_assert_dests_reachable(_make_zone("town"), dests, "town")
+
+func test_fields_portals_reachable():
+	_assert_dests_reachable(_make_zone("thais_fields"), ["town", "ice", "desert"], "thais_fields")
+
+func test_wilds_portals_reachable():
+	_assert_dests_reachable(_make_zone("thais_wilds"), ["town", "volcano", "demon_temple", "minotaur_maze", "orc_rift"], "thais_wilds")
