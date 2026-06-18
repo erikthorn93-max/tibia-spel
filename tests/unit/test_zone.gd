@@ -38,8 +38,9 @@ func test_portal_found():
 
 func test_spawns_parsed():
 	var z = _make_zone("cave")
+	# 2 fasta Ghoul-tiles i legend + 3 från spawn_table (M10-featuren).
 	var ghouls = z.spawn_points.filter(func(s): return s["monster"] == "Ghoul")
-	assert_eq(ghouls.size(), 2)
+	assert_eq(ghouls.size(), 5)
 
 func test_pathfinding_finds_path():
 	var z = _make_zone("town")
