@@ -1,0 +1,37 @@
+{
+	"name": "Thais Jail",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWW",
+		"W,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,H,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,W",
+		"WWWWWWWWWWWWWWWWWWWW",
+		"W,,,,,W,,,,,W,,,,,WW",
+		"W,,,,,W,,,,,W,,,,,WW",
+		"W,,,,,W,,,,,W,,,,,WW",
+		"WWWWWWWWWWWWWWWWWWWW",
+		"W,,,,,,,,,,,,,,,n,,W",
+		"W,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,P,,,,,,,,,W",
+		"W,,,,,,,,dd,,,,,,,,W"
+	],
+	"legend": {
+		"d": {
+			"type": "portal",
+			"to": "town",
+			"terrain": ","
+		},
+		"H": {
+			"type": "npc_spawn",
+			"npc": "npc_henricus"
+		},
+		"n": {
+			"type": "stair_down",
+			"to": "thais_jail_lower",
+			"terrain": "n"
+		}
+	}
+}

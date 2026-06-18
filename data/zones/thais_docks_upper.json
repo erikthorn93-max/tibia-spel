@@ -1,0 +1,28 @@
+{
+	"name": "Docks – Upper Office",
+	"tiles": [
+		"WWWWWWWWWWWWWWWW",
+		"WwWWWWWWWWWWWWwW",
+		"W,,,,,,,,,,,,,,W",
+		"W,,,,B,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,W",
+		"W,,,,,,,P,,,,,,W",
+		"W,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,nW",
+		"WWWWWWWWWWWWWWWW",
+		"WWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"B": {
+			"type": "npc_spawn",
+			"npc": "npc_black_bert"
+		},
+		"n": {
+			"type": "stair_down",
+			"to": "thais_docks",
+			"terrain": "n"
+		}
+	}
+}

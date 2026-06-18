@@ -2,33 +2,33 @@
 	"name": "Thais-grottan",
 	"tiles": [
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-		"W,k,,,,,k,WWWWWWW,,,,,,,,,,,,,,,,,,,,,,W",
-		"W,P,,0,,,,,,,,,,W,,,b,,,,,WWW,,,,,,,,,,W",
-		"W,,,,,,,,,,,,,,,W,,,,,,,,,,,W,,,,c,,,,,W",
-		"WWWWWW,,,,,b,,,,W,,,,,,,,,,,W,,,,,,,,,,W",
-		"W,,,,,,,,,,,,,,,WWWWW,,WWWWWW,,,,,,,,,,W",
-		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,c,,,,,W",
-		"W,,,b,,,,WWWWW,,,,,,,,,,,,,,,,,,,,,,,,,W",
-		"W,,,,,,,,W,,,W,,,,,c,,,,,,WWWWWW,,,,,,,W",
-		"W,,,,,,,,W,,,W,,,,,,,,,,,,W,,,,,,,,,,,,W",
-		"W,,,,,,,,WW,WW,,,,,,,,,,,,W,,,d,,,,,,,,W",
-		"W,,,,,,,,,,,,,,,,,j,j,,,,,W,,,,,,,,,,,,W",
-		"W,,b,,,,,,,,,,,,WWWW,,,,,,W,,,,,,d,,,,,W",
-		"W,,,,,,,,,,,,,,,W,,,,,,,,,WWWW,,,,,,,,,W",
-		"W,,,,,,,,,,,,,,,W,,c,,,,,,,,,,,,,,,,,,,W",
-		"W,,,,,WWWWWW,,,,W,,,,,,,,,,,,,,,,,,,,,,W",
-		"W,,,,,,,,,,,,,,,W,,,,,,,,,,,,,,e,,,,4,,W",
-		"W,,,,,,,,,,,,,,,WWWWWWWW,,,,,,,,,,,,,,,W",
-		"W,,,,c,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
-		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,WWWW,,,,,,W",
-		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,W,g,g,e,,,W",
-		"W,,,,,,,,b,,,,,,,,,,,,,,,,,,,W,,,,,,,,,W",
-		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,W,,,,,,,,,W",
-		"WWWWWWWWWW1WWWWWWWWWWWW2WWWWWWWWW3WWWWWW",
-		"W,,,,J,,,,,,,,,W,,,,S,,,,,,,W,,,,,,,,,,W",
-		"W,,,,,,,,,J,,,,W,,,,,,,,S,,,W,,,,X,,,,,W",
-		"W,,,,,,,,,,,,,,W,,,,,D,,,,,,W,,,,,,,,,,W",
-		"W,,J,,,,,,,,,,,W,,,,,,,,,,,,W,,,,,,,,,,W",
+		"W,c,,c,,WWWWWWWWW,d,,d,,d,,WWW,e,,e,e,,W",
+		"W,,P0,,,,,,,,,,,W,,,,,,,,,,W,,,,,,,,,,,,",
+		"W,c,,,,c,,b,,b,,W,d,,d,,,d,W,e,,,e,,,,,W",
+		"WWWWWWW,,,,,,,,,,W,,,,,,,,,W,,,,,,,,,,,W",
+		"W,,,,,,c,,,,b,,,WWWWWWWWWWWWW,e,,e,e,,,W",
+		"W,c,,,,,,,,,,,,,,,,,d,d,,,,,,,,,,,,,,,,,",
+		"W,,,,,,,,WWWWWWW,,d,,,,,d,,,,,,e,e,,,,,,",
+		"W,c,,c,,,W,j,j,W,,,d,,,,,,WWWWWW,,e,,,,,",
+		"W,,,,,,,,W,,,,,W,,,,,d,,,,,W,,,,,,,,,e,,",
+		"W,c,,,,,,WW,k,WW,,d,,,,d,,,W,,,,e,,e,,,W",
+		"W,,,c,,,,,,,,,,,,,,,,,,,,,,W,e,,,,,,,,,,",
+		"W,b,,,,b,,d,,d,,WWWWWW,,,,,W,,,e,,e,,,,W",
+		"W,,,b,,,,,,,,,,,W,,,,,,d,,,WWWWWW,,,,,,,",
+		"W,b,,,,,,,,,,,,,W,,d,,d,,,,,,,,,,,,e,,,W",
+		"W,,,,,WWWWWWWWWWW,,,,,,,,d,,,,,,e,,,e,,W",
+		"W,b,,b,,,,,,,,,,,d,,d,,,,,,,,,,,,,e,,4,,",
+		"W,,,,,,,,,,,,,,,WWWWWWWW,,,d,,,,,,,e,,,W",
+		"W,b,,,,,,,,b,,,,,,,,,,,,,d,,,,,,e,,,,e,,",
+		"W,,,,,,,,,,,,,,,,,,d,d,,,,,WWWWWW,,,,,,,",
+		"W,b,,b,,,,,,,,,,,,,,,,,d,,,,W,g,g,,,,,,,",
+		"W,,,,,b,,,b,,,,,,d,,,,,,,,,W,,e,,e,,,,,,",
+		"W,b,,,,,,,,,,,,,,,,,d,,d,,,W,,,,,,e,,,,,",
+		"WWWWWWWWWWW1WWWWWWWWWWWW2WWWWWWWWWW3WWWW",
+		"W,J,,J,,,J,,,,,W,,S,,S,,,S,,W,,,,,,,X,,,",
+		"W,,,J,,J,,,J,,,W,,,,S,,S,,,,W,,X,,,,,,X,",
+		"W,J,,,,,,J,,,,,W,,S,,,,S,,,,W,,,,X,,,,,,",
+		"W,,,J,,,,,,J,,,W,,,,S,,S,,,,W,,,,,X,,,,,",
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
 	],
 	"legend": {
@@ -41,41 +41,21 @@
 			"to": "swamp",
 			"unlock": "genvag_grottan"
 		},
-		"D": {
-			"type": "dungeon_entrance",
-			"theme": "katakomber"
-		},
-		"b": {
-			"type": "spawn",
-			"monster": "Orm",
-			"respawn": 15.0
-		},
-		"c": {
-			"type": "spawn",
-			"monster": "Spindel",
-			"respawn": 15.0
-		},
-		"d": {
-			"type": "spawn",
-			"monster": "Skelett",
-			"respawn": 25.0
-		},
-		"e": {
-			"type": "spawn",
-			"monster": "Ghoul",
-			"respawn": 45.0
-		},
-		"k": {
+		"P": {
 			"type": "node",
 			"node": "copper_vein"
 		},
-		"j": {
+		"k": {
 			"type": "node",
 			"node": "iron_vein"
 		},
 		"g": {
 			"type": "node",
 			"node": "gold_vein"
+		},
+		"j": {
+			"type": "node",
+			"node": "gem_vein"
 		},
 		"1": {
 			"type": "gate",
@@ -89,15 +69,35 @@
 			"type": "gate",
 			"unlock": "bossrummet"
 		},
+		"b": {
+			"type": "spawn",
+			"monster": "Orm",
+			"respawn": 18.0
+		},
+		"c": {
+			"type": "spawn",
+			"monster": "Spindel",
+			"respawn": 18.0
+		},
+		"d": {
+			"type": "spawn",
+			"monster": "Skelett",
+			"respawn": 25.0
+		},
+		"e": {
+			"type": "spawn",
+			"monster": "Ghoul",
+			"respawn": 35.0
+		},
 		"J": {
 			"type": "spawn",
 			"monster": "Jättespindel",
-			"respawn": 30.0
+			"respawn": 60.0
 		},
 		"S": {
 			"type": "spawn",
 			"monster": "Skelettkrigare",
-			"respawn": 40.0
+			"respawn": 60.0
 		},
 		"X": {
 			"type": "spawn",
@@ -105,21 +105,5 @@
 			"respawn": 3600.0
 		}
 	},
-	"spawn_table": [
-		{
-			"monster": "Skelett",
-			"count": 5,
-			"respawn": 40.0
-		},
-		{
-			"monster": "Ghoul",
-			"count": 3,
-			"respawn": 50.0
-		},
-		{
-			"monster": "Skelettkrigare",
-			"count": 2,
-			"respawn": 60.0
-		}
-	]
+	"spawn_table": []
 }

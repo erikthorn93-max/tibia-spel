@@ -1,0 +1,28 @@
+{
+	"name": "Thais Jail – Deep",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWW",
+		"W,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,W",
+		"W,WWWWW,WWWWW,WWWWWW",
+		"W,W,,,W,W,,,W,W,,,WW",
+		"W,W,J,W,W,,,W,W,,,WW",
+		"W,W,,,W,W,,,W,W,,,WW",
+		"W,WWWWW,WWWWW,WWWWWW",
+		"W,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,PnW",
+		"W,,,,,,,,,,,,,,,,,,W",
+		"WWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"J": {
+			"type": "npc_spawn",
+			"npc": "npc_jack_springer"
+		},
+		"n": {
+			"type": "stair_up",
+			"to": "thais_jail",
+			"terrain": "n"
+		}
+	}
+}

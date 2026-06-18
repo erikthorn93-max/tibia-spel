@@ -63,7 +63,7 @@ func _blank_grid() -> Array:
 		grid.append(row)
 	return grid
 
-func _set(grid: Array, x: int, y: int, ch: String) -> void:
+func _cell(grid: Array, x: int, y: int, ch: String) -> void:
 	if x >= 0 and x < MAP_W and y >= 0 and y < MAP_H:
 		grid[y][x] = ch
 
@@ -90,13 +90,13 @@ func _paint_base(grid: Array) -> void:
 			grid[y][x] = ch
 	# Flod i norr (bro fylls i av vägdragningen)
 	for x in range(OFF_X, OFF_X + CORE_W):
-		_set(grid, x, 18, "~")
-		_set(grid, x, 19, "~")
+		_cell(grid, x, 18, "~")
+		_cell(grid, x, 19, "~")
 	# Skogsbryn (träd) i nordost, söder om floden så det nås utan bro
 	for y in range(22, OFF_Y):
 		for x in range(OFF_X + CORE_W - 36, OFF_X + CORE_W):
 			if rng.randf() < 0.35:
-				_set(grid, x, y, "t")
+				_cell(grid, x, y, "t")
 
 # ──────────────────────────── Stämpla kärna ────────────────────────────
 
@@ -113,28 +113,28 @@ func _stamp_core(grid: Array, core: Array) -> void:
 
 func _road_v(grid: Array, x: int, y0: int, y1: int) -> void:
 	for y in range(min(y0, y1), max(y0, y1) + 1):
-		_set(grid, x, y, "f" if grid[y][x] == "~" else "c")   # bro över vatten
+		_cell(grid, x, y, "f" if grid[y][x] == "~" else "c")   # bro över vatten
 
 func _road_h(grid: Array, y: int, x0: int, x1: int) -> void:
 	for x in range(min(x0, x1), max(x0, x1) + 1):
-		_set(grid, x, y, "f" if grid[y][x] == "~" else "c")
+		_cell(grid, x, y, "f" if grid[y][x] == "~" else "c")
 
 func _carve_gates_and_roads(grid: Array) -> void:
 	# Norra porten → väg upp över bron till kartens topp
 	var gn := Vector2i(OFF_X + GATE_N.x, OFF_Y + GATE_N.y)
-	_set(grid, gn.x, gn.y, "c")
+	_cell(grid, gn.x, gn.y, "c")
 	_road_v(grid, gn.x, 1, gn.y)
 	# Södra porten → väg ner till kartens botten
 	var gs := Vector2i(OFF_X + GATE_S.x, OFF_Y + GATE_S.y)
-	_set(grid, gs.x, gs.y, "c")
+	_cell(grid, gs.x, gs.y, "c")
 	_road_v(grid, gs.x, gs.y, MAP_H - 2)
 	# Östra porten → stig in i berget
 	var ge := Vector2i(OFF_X + GATE_E.x, OFF_Y + GATE_E.y)
-	_set(grid, ge.x, ge.y, "c")
+	_cell(grid, ge.x, ge.y, "c")
 	_road_h(grid, ge.y, ge.x, OFF_X + CORE_W + 5)
 	# Västra porten → strandväg ut mot havet
 	var gw := Vector2i(OFF_X + GATE_W.x, OFF_Y + GATE_W.y)
-	_set(grid, gw.x, gw.y, "c")
+	_cell(grid, gw.x, gw.y, "c")
 	_road_h(grid, gw.y, 52, gw.x)
 
 # ───────────────────────── Omflyttade portaler ─────────────────────────
@@ -144,18 +144,18 @@ func _place_town_portals(grid: Array) -> void:
 	var ex := OFF_X + CORE_W + 5            # strax in i berget
 	# Östra berget: cave, dwarf_mine, vampire_crypt — korridor + portaler
 	_road_v(grid, ex, ge_y - 40, ge_y + 40)
-	_road_h(grid, ge_y - 40, ex, ex + 6); _set(grid, ex + 6, ge_y - 40, "0")  # cave
-	_road_h(grid, ge_y,      ex, ex + 6); _set(grid, ex + 6, ge_y,      "G")  # dwarf_mine
-	_road_h(grid, ge_y + 40, ex, ex + 6); _set(grid, ex + 6, ge_y + 40, "C")  # vampire_crypt
+	_road_h(grid, ge_y - 40, ex, ex + 6); _cell(grid, ex + 6, ge_y - 40, "0")  # cave
+	_road_h(grid, ge_y,      ex, ex + 6); _cell(grid, ex + 6, ge_y,      "G")  # dwarf_mine
+	_road_h(grid, ge_y + 40, ex, ex + 6); _cell(grid, ex + 6, ge_y + 40, "C")  # vampire_crypt
 	# Södra träsket: troll_cave (på södra vägen)
-	_set(grid, OFF_X + GATE_S.x, OFF_Y + CORE_H + 8, "T")
+	_cell(grid, OFF_X + GATE_S.x, OFF_Y + CORE_H + 8, "T")
 	# Nordöstra skogsbrynet: forest (söder om floden, nås via fältbandet)
-	_set(grid, OFF_X + CORE_W - 12, 42, "1")
+	_cell(grid, OFF_X + CORE_W - 12, 42, "1")
 	# Västra stranden: coast (på strandvägens ände)
-	_set(grid, 52, OFF_Y + GATE_W.y, "2")
+	_cell(grid, 52, OFF_Y + GATE_W.y, "2")
 	# Landsbygdsportaler vid vägändarna
-	_set(grid, OFF_X + GATE_N.x, 1, ">")          # → thais_fields (norra bron)
-	_set(grid, OFF_X + GATE_S.x, MAP_H - 2, "<")  # → thais_wilds (södra vägen)
+	_cell(grid, OFF_X + GATE_N.x, 1, ">")          # → thais_fields (norra bron)
+	_cell(grid, OFF_X + GATE_S.x, MAP_H - 2, "<")  # → thais_wilds (södra vägen)
 
 # ───────────────────────────── Serialisering ───────────────────────────
 

@@ -8,7 +8,7 @@ var tile := Vector2i.ZERO
 var charges := 0
 var depleted := false
 
-@onready var body: Polygon2D = $Body
+@onready var _sprite: Sprite2D = $Sprite2D
 @onready var name_lbl: Label = $NameLabel
 @onready var click_area: Area2D = $ClickArea
 
@@ -17,12 +17,25 @@ static func success_chance(level: int, req_level: int) -> float:
 
 func setup(type: String, t: Vector2i) -> void:
 	node_type = type
-	def = ItemDB.nodes[type]
+	def = ItemDB.nodes.get(type, {})
+	if def.is_empty():
+		push_error("GatherNode: okänd nodtyp '%s' — saknas i data/nodes.json" % type)
+		queue_free()
+		return
 	tile = t
 	position = Vector2(t) * 32 + Vector2(16, 16)
 	charges = randi_range(int(def["charges"][0]), int(def["charges"][1]))
-	body.color = Color(String(def["color"]))
 	name_lbl.text = String(def["label"])
+	# Ladda Tibia-stil sprite för denna nodtyp
+	var tex_path := "res://assets/sprites/nodes/%s.png" % type
+	if ResourceLoader.exists(tex_path):
+		_sprite.texture = load(tex_path)
+	else:
+		# Fallback: färgad Polygon2D om sprite saknas
+		var fb := Polygon2D.new()
+		fb.polygon = PackedVector2Array([Vector2(0,-13), Vector2(12,0), Vector2(0,13), Vector2(-12,0)])
+		fb.color = Color(String(def["color"]))
+		add_child(fb)
 
 func _ready() -> void:
 	click_area.input_event.connect(_on_click)

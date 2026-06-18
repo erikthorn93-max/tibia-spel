@@ -1,4 +1,4 @@
-extends PanelContainer
+extends DraggablePanelContainer
 ## Garderob (U): bär upplåsta outfits; låsta visas gråtonade med krav-hint.
 
 var _list: VBoxContainer

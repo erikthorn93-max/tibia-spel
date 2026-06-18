@@ -1,77 +1,65 @@
 {
-  "name": "Ökenruinerna",
-  "tiles": [
-    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-    "WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-    "WbbbbbWWWbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-    "WbbbbbW.WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-    "WbbbbbWWWbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-    "WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-    "WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-    "WbbbbWWWWWbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-    "WbbbbWbbbWbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-    "WbbbbWbKbWbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-    "WbbbbWbbbWbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-    "WbbbbWWWWWbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-    "WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-    "WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-    "WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-    "WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-    "WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-    "WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-    "Wbbbbbbbbbbbbbbbbbbbbbbb0bbbbbbbbbbbbbbbbbbbbbbbbbW",
-    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
-  ],
-  "legend": {
-    "0": {
-      "type": "portal",
-      "to": "town",
-      "terrain": "b"
-    },
-    "K": {
-      "type": "spawn",
-      "monster": "Farao Khem-Ra",
-      "respawn": 300.0,
-      "terrain": "b"
-    },
-    "a": {
-      "type": "spawn",
-      "monster": "Sandorm",
-      "respawn": 30.0,
-      "terrain": "b"
-    },
-    "m": {
-      "type": "spawn",
-      "monster": "Ökenmumie",
-      "respawn": 45.0,
-      "terrain": "b"
-    }
-  },
-  "spawn_table": [
-    {
-      "monster": "Sandorm",
-      "count": 6,
-      "respawn": 30.0
-    },
-    {
-      "monster": "Ökenmumie",
-      "count": 4,
-      "respawn": 45.0
-    },
-    {
-      "monster": "Farao Khem-Ra",
-      "count": 1,
-      "respawn": 300.0
-    },
-    {
-      "monster": "Ökengam",
-      "count": 5,
-      "respawn": 22.0
-    },
-    {
-      "monster": "Sandvaranen",
-      "count": 4,
-      "respawn": 40.0
-    }
-  ]
+	"name": "Ökenruinerna",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
+		"WbbbWWWbgbbgbbbgbbbbbbbbbbbbbabbbabbbabbbbabbW",
+		"WbbbWbWgbbgbbgbbgbbbbbbbbbbbabbabbbabbbbbabbbW",
+		"WbbbWWWbgbbbgbbbgbbbbbbbbbbbbabbbabbbabbbbbabW",
+		"WbgbbbbgbbbgbbbgbbbbbbbbbbbbabbbabbbabbbbbabbW",
+		"WbbgbbbbgbbbgbbbbbbbbbbbbbbbbabbbabbbaWWWbbbbW",
+		"WbgbbbgbbbgbbbgbbbbbbbbbbbbbabbbabbbabWbWabbbW",
+		"WbbgbbbgbbbgbbbbgbbbbbbbbbbbbabbbbabbbWWWbbabW",
+		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
+		"WbmbbbmbbbmbbbmbbbmbbbbbbsbbbsbbbsbbbsbbbbsbbW",
+		"WbbmbbbmbbbbmbbbmbbbbbbbsbbbsbbbsbbbsbbbbsbbbW",
+		"WbmbbbbbmbbbbbmbbbmbWWWbbsbbbbsbbbsbbbsbbbbsbW",
+		"WbbmbbbbbmbbbbbmbbbbWbWbsbbbbsbbbsbbbbbsbbbbbW",
+		"WbmbbbmbbbmbbbbbmbmbWWWbbsbbbbsbbbbsbbbbbsbbbW",
+		"WbbmbbbbmbbbbmbbbmbbbbbbsbbbsbbbbbsbbbbbsbbbsW",
+		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
+		"WbbbbbbbbbbbbbbWWWWbbbbbbbbbbWWbbbbbbbbbbbbbbW",
+		"WbbbbbbbbbbbbbWbbbbKbbKbbbKbbbWbbbbbbbbbbbbbbW",
+		"WbbbbbbbbbbbbbWbbbbbKbPbKbbbKbWbbbbbbbbbbbbbbW",
+		"WbbbbbbbbbbbbbbWWWWbbb0bbbbbbWWbbbbbbbbbbbbbbW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"0": {
+			"type": "portal",
+			"to": "town",
+			"terrain": "b"
+		},
+		"g": {
+			"type": "spawn",
+			"monster": "Ökengam",
+			"respawn": 20.0,
+			"terrain": "b"
+		},
+		"a": {
+			"type": "spawn",
+			"monster": "Sandorm",
+			"respawn": 25.0,
+			"terrain": "b"
+		},
+		"m": {
+			"type": "spawn",
+			"monster": "Ökenmumie",
+			"respawn": 30.0,
+			"terrain": "b"
+		},
+		"s": {
+			"type": "spawn",
+			"monster": "Sandvaranen",
+			"respawn": 35.0,
+			"terrain": "b"
+		},
+		"K": {
+			"type": "spawn",
+			"monster": "Farao Khem-Ra",
+			"respawn": 3600.0,
+			"terrain": "b"
+		}
+	},
+	"spawn_table": []
 }

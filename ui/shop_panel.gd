@@ -1,4 +1,4 @@
-extends PanelContainer
+﻿extends DraggablePanelContainer
 ## Butikspanel: köp basvaror, sälj inventory för halva värdet.
 
 const STOCK := ["pickaxe", "hatchet", "fishing_rod", "sickle", "bronze_axe", "wooden_club", "empty_vial"]
@@ -41,16 +41,20 @@ func _rebuild() -> void:
 
 func _trade_row(id: String, price: int, action: String, cb: Callable) -> HBoxContainer:
 	var row := HBoxContainer.new()
+	row.mouse_filter = Control.MOUSE_FILTER_STOP
+	var _row_id := id
+	row.mouse_entered.connect(func():
+		var tip_pos := row.get_global_rect().position + Vector2(row.size.x + 4, 0)
+		ItemTooltip.show_for(_row_id, tip_pos))
+	row.mouse_exited.connect(func(): ItemTooltip.hide_tooltip())
 	var lbl := Label.new()
 	var qty := int(GameState.inventory.get(id, 0))
 	var qty_txt := " x%d" % qty if action == "Sälj" else ""
 	lbl.text = "%s%s — %d guld" % [ItemDB.items[id]["name"], qty_txt, price]
 	lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	lbl.add_theme_font_size_override("font_size", 12)
 	row.add_child(lbl)
 	var btn := Button.new()
 	btn.text = action
-	btn.add_theme_font_size_override("font_size", 10)
 	btn.pressed.connect(cb)
 	row.add_child(btn)
 	return row

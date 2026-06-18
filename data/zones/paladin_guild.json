@@ -1,0 +1,39 @@
+{
+	"name": "Paladin Guild",
+	"tiles": [
+		"WWdWWWWWWWWWWWWW",
+		"W,P,,,,,,,,,,,,W",
+		"W,,,,A,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,W",
+		"W,WWWWWWWWWWWW,W",
+		"W,W,,,,,,,,,,W,W",
+		"W,W,,,G,,,,,,W,W",
+		"W,W,,,,,,,,,,W,W",
+		"W,W,,,,,,,,,,nW,",
+		"W,WWWWWWWWWWWW,W",
+		"W,,,,,,,,,,,,,,W",
+		"WwWWWWWWWWWWWwWW",
+		"WWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"d": {
+			"type": "portal",
+			"to": "town",
+			"terrain": ","
+		},
+		"G": {
+			"type": "npc_spawn",
+			"npc": "npc_elane"
+		},
+		"A": {
+			"type": "decoration",
+			"station": "archery_target"
+		},
+		"n": {
+			"type": "stair_up",
+			"to": "paladin_guild_f2",
+			"terrain": "n"
+		}
+	}
+}

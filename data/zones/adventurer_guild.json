@@ -1,0 +1,38 @@
+{
+	"name": "Adventurer's Guild",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WwWWWWWWWWWWWWWWWWWWWWWWWWwW",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,L,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,NNNNN,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,P,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,WWWWWWWWWWWWWWW,,,,,,,,W",
+		"W,,,W,,,,,,,,,,,,,,,W,,,,,,,",
+		"W,,,W,,,,,,,,,,,,,,,W,,,,,,,",
+		"W,,,W,,,,,,,,,,,,,,,W,,,,,,,",
+		"W,,,WWWWWWWWW,WWWWW,,,,,,,,W",
+		"W,,,,,,,,,,,,dd,,,,,,,,,,,,W",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"d": {
+			"type": "portal",
+			"to": "town",
+			"terrain": ","
+		},
+		"L": {
+			"type": "npc_spawn",
+			"npc": "npc_guildmaster"
+		},
+		"N": {
+			"type": "decoration",
+			"station": "quest_board"
+		}
+	}
+}

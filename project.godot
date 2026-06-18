@@ -26,11 +26,13 @@ DialogueDB="*res://autoload/dialogue_db.gd"
 World="*res://autoload/world.gd"
 SaveManager="*res://autoload/save_manager.gd"
 TimeOfDay="*res://autoload/time_of_day.gd"
+ItemTooltip="*res://autoload/item_tooltip.gd"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [editor_plugins]

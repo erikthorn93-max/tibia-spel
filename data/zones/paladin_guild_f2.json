@@ -1,0 +1,29 @@
+{
+	"name": "Paladin Guild – Upper Floor",
+	"tiles": [
+		"WWWWWWWWWWWWWWWW",
+		"WwWWWWWWWWWWWWwW",
+		"W,,,,,,,,,,,,,,W",
+		"W,,,,G,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,W",
+		"W,,,,,,,P,,,,,,W",
+		"W,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,nW",
+		"W,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,W",
+		"WWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"G": {
+			"type": "npc_spawn",
+			"npc": "npc_galuna"
+		},
+		"n": {
+			"type": "stair_down",
+			"to": "paladin_guild",
+			"terrain": "n"
+		}
+	}
+}

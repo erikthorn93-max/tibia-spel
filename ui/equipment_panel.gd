@@ -1,4 +1,4 @@
-extends PanelContainer
+﻿extends DraggablePanelContainer
 ## Utrustningspanel med drag-drop. Dra item från inventory → slot för att utrusta.
 ## Dra utrustat item → världen för att ta av och tappa.
 
@@ -67,6 +67,12 @@ func _ready() -> void:
 		_icons[slot] = icon
 
 		var _slot: String = slot   # fånga
+		icon.mouse_entered.connect(func():
+			var eid := String(GameState.equipment.get(_slot, ""))
+			if eid != "":
+				var tip_pos := icon.get_global_rect().position + Vector2(-210, 0)
+				ItemTooltip.show_for(eid, tip_pos))
+		icon.mouse_exited.connect(func(): ItemTooltip.hide_tooltip())
 		# Drag UT utrustat item
 		icon.set_drag_forwarding(
 			func(_pos: Vector2):
@@ -152,11 +158,4 @@ func _refresh() -> void:
 		var id := String(GameState.equipment.get(slot, ""))
 		_labels[slot].text = ItemDB.items.get(id, {}).get("name", "–") if id != "" else "–"
 		_icons[slot].texture  = _load_sprite(id) if id != "" else null
-		_btns[slot].visible   = id != ""
-	var armor_lbl := find_child("ArmorLbl", true, false) as Label
-	if armor_lbl:
-		armor_lbl.text = "Rustning: %d   Sköld: +%d" % [GameState.total_armor(), GameState.total_shielding_bonus()]
-
-func toggle() -> void:
-	visible = not visible
-	if visible: _refresh()
+		_btns[slot].visible = id != ""

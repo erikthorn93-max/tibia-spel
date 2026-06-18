@@ -1,0 +1,46 @@
+{
+	"name": "Temple of Tibianus",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WwWWWWWWWWWWWWWWWWWWWWWWWWWWWWwW",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,W,,,,,,,,,,,,,,,,,,,,,,,,,,W,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,W,,,,,,,,,,,,,,,,,,,,,,,,,,W,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,WWAWWW,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,P,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,bbbbbbbbbbbb,,,,bbbbbbbbbbbb,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,bbbbbbbbbbbb,,,,bbbbbbbbbbbb,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,bbbbbbbbbbbb,,,,bbbbbbbbbbbb,W",
+		"W,,,,,,,,,,,,,,P,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,dd,,,,,,,,,,,,,,W",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"d": {
+			"type": "portal",
+			"to": "town",
+			"terrain": ","
+		},
+		"A": {
+			"type": "decoration",
+			"station": "prayer_altar"
+		},
+		"P": {
+			"type": "npc_spawn",
+			"npc": "npc_priest"
+		},
+		"b": {
+			"type": "decoration",
+			"terrain": "f"
+		}
+	}
+}

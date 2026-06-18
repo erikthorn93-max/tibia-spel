@@ -1,4 +1,4 @@
-extends PanelContainer
+extends DraggablePanelContainer
 ## Bönpanel: begrav ben vid altaret för Prayer XP.
 ## XP per ben: 25 (ben) — Prayer höjer max-mana och ger passiv bonus i framtiden.
 

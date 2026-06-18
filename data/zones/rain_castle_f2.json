@@ -1,0 +1,36 @@
+{
+	"name": "Rain Castle – Throne Room",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WwWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWwW",
+		"WwWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWwW",
+		"WffffffffffffffffffffffffffffffffW",
+		"WffffffffffffffTfffTffffffffffffff",
+		"WffffffffffffffffffffffffffffffffW",
+		"WffffffffffffffffffffffffffffffffW",
+		"WfWffffffffffffffffffffffffffWffWW",
+		"WfWffffffffffffffffffffffffffWffWW",
+		"WfWffffffffffffffffffffffffffWffWW",
+		"WfWffffffffffffffPfffffffffffWffWW",
+		"WfffffffffffffnffffffffffffffffffW",
+		"WffffffffffffffffffffffffffffffffW",
+		"WffffffffffffffffffffffffffffffffW",
+		"WffffffffffffffffffffffffffffffffW",
+		"WffffffffffffffffffffffffffffffffW",
+		"WffffffffffffffffffffffffffffffffW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"n": {
+			"type": "stair_down",
+			"to": "rain_castle",
+			"terrain": "n"
+		},
+		"T": {
+			"type": "npc_spawn",
+			"npc": "npc_tibianus"
+		}
+	}
+}

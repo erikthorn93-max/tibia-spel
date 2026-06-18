@@ -1,0 +1,61 @@
+{
+	"name": "Trollgrottan",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WsssssssssssssssssssssssnssssssssssssssssssssssW",
+		"WsssssssssssssssssssssssPssssssssssssssssssssssW",
+		"WssssssssssssssssssssssssssssssssssssssssssssssW",
+		"WssssssssssssssssssssssssssssssssssssssssssssssW",
+		"WsssssssWWssssssWWssssssssssssWWssssssssWWsssssW",
+		"WssssstsWsssssssWsssssssssssssWsssstssssWssssssW",
+		"WsssssssssssssWssssssssssssssssssssssssssssssssW",
+		"WsssssssssssssWssssssssssssssssssssssssssssssssW",
+		"WsssssssssssssWssssssssssssssssssssssssssssssssW",
+		"WsssssssssssssWssssstssssssssssssssssssssssssssW",
+		"WssssssssssssssssssssssssssssssssssssssssssssssW",
+		"WsssssssWWssssssWWssssssssssssWWssssssssWWsssssW",
+		"WsssssssWsssssssWsssssssssssssWsssssssssWssssssW",
+		"WsssssssssssssssssssssssssssWssssssssssssssssssW",
+		"WssssssssstsssssssssssssssssWssssssssstssssssssW",
+		"WsssssssssssssssssssssssssssWssssssssssssssssssW",
+		"WsssssssssssssssssssssssssssWssssssssssssssssssW",
+		"WsssssssWWssssssWWssssssssssssWWssssssssWWsssssW",
+		"WsssssssWsssssssWsssssssssssssWsssssssssWssssssW",
+		"WsssssssssssssssssssWWWWsWWWsssssssssstssssssssW",
+		"WssssssssssssssssssssssssssssssssssssssssssssssW",
+		"WsssssssssssssssssssssssssssssssssWWWWWWWWWWWWWW",
+		"WsssssssssssssssssssssssssssssssssWsssssssssssWW",
+		"WsssssssssssssssssssssssssssssssssWsssssssssssWW",
+		"WssssssssssssssssssstsssssssssssssssssssssssssWW",
+		"WsssssssWWssssssWWssssssssssssWWssWsssssssssssWW",
+		"WsssssssWsssssssWsssssssssssssWsssWsssssssssssWW",
+		"WssssssssstsssssssssssssssssssssssWsssssBsssssWW",
+		"WsssssssssssssssssssssssssssssssssWssssssssxssWW",
+		"WdssssssssssssssssssssssssssssssssWWWWWWWWWWWWWW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"n": {
+			"type": "stair_up",
+			"to": "town",
+			"terrain": "n"
+		},
+		"d": {
+			"type": "portal",
+			"to": "town",
+			"terrain": ","
+		},
+		"t": {
+			"type": "spawn",
+			"monster": "Troll"
+		},
+		"B": {
+			"type": "spawn",
+			"monster": "Trollhövding"
+		},
+		"x": {
+			"type": "decoration",
+			"id": "chest_wood"
+		}
+	}
+}

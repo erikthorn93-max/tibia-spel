@@ -1,0 +1,34 @@
+{
+	"name": "Frodo's Inn",
+	"tiles": [
+		"WWWWWWWWWWWWWWWW",
+		"WwWWWWWWWWWWWWwW",
+		"Wfffffffffffffff",
+		"Wf,,,,f,f,,,,ffW",
+		"Wf,,,,f,f,,,,ffW",
+		"WfWWWWfWfWWWWffW",
+		"Wffffffffffffffw",
+		"WfFfffffffFfffff",
+		"Wfffffffffffffff",
+		"Wf,,,,,,,,,,,,fW",
+		"Wf,,,,,,,,,,,,fW",
+		"WffffffPffffffff",
+		"WWWWWWWdWWWWWWWW",
+		"WWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"d": {
+			"type": "portal",
+			"to": "town",
+			"terrain": ","
+		},
+		"F": {
+			"type": "npc_spawn",
+			"npc": "npc_frodo"
+		},
+		"f": {
+			"type": "terrain",
+			"terrain": "f"
+		}
+	}
+}

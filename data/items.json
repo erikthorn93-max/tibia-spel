@@ -174,6 +174,13 @@
 		"tool": true,
 		"sprite": "res://assets/sprites/items/sickle.png"
 	},
+	"gem": {
+		"name": "Ädelsten",
+		"type": "material",
+		"value": 250,
+		"color": "#c084fc",
+		"sprite": "res://assets/sprites/items/gem.png"
+	},
 	"copper_ore": {
 		"name": "Kopparmalm",
 		"type": "material",
@@ -795,5 +802,238 @@
 		"mana_cost": 8,
 		"magic_lvl": 25,
 		"effect": "damage"
+	},
+	"goblin_ear": {
+		"name": "Gobliöra",
+		"type": "junk",
+		"value": 8,
+		"color": "#4a7a28"
+	},
+	"troll_bone": {
+		"name": "Trollben",
+		"type": "material",
+		"value": 35,
+		"color": "#8a9a70"
+	},
+	"orc_tooth": {
+		"name": "Orktand",
+		"type": "material",
+		"value": 30,
+		"color": "#9aaa80"
+	},
+	"minotaur_horn": {
+		"name": "Minotaurhorn",
+		"type": "material",
+		"value": 80,
+		"color": "#8a6840"
+	},
+	"vampire_dust": {
+		"name": "Vampyrstoft",
+		"type": "material",
+		"value": 120,
+		"color": "#7a3a5a"
+	},
+	"dwarf_beard": {
+		"name": "Dvärgsätta",
+		"type": "junk",
+		"value": 20,
+		"color": "#8a7060"
+	},
+	"death_scroll": {
+		"name": "Dödscroll",
+		"type": "rune",
+		"value": 200,
+		"color": "#2a1a4a"
+	},
+	"dragon_scale": {
+		"name": "Drakfjäll",
+		"type": "material",
+		"value": 300,
+		"color": "#cc3300"
+	},
+	"demon_heart": {
+		"name": "Demonhjärta",
+		"type": "material",
+		"value": 500,
+		"color": "#880000"
+	},
+	"troll_club": {
+		"name": "Trollklubba",
+		"type": "weapon",
+		"value": 450,
+		"color": "#6a8848",
+		"atk": 28,
+		"skill": "club",
+		"slot": "weapon",
+		"sprite": "res://assets/sprites/items/troll_club.png"
+	},
+	"shaman_staff": {
+		"name": "Shamanstav",
+		"type": "weapon",
+		"value": 380,
+		"color": "#3a5a1a",
+		"atk": 22,
+		"skill": "club",
+		"slot": "weapon",
+		"level_req": 15,
+		"sprite": "res://assets/sprites/items/shaman_staff.png"
+	},
+	"orc_blade": {
+		"name": "Orcklinga",
+		"type": "weapon",
+		"value": 600,
+		"color": "#1a4010",
+		"atk": 36,
+		"skill": "sword",
+		"slot": "weapon",
+		"level_req": 20,
+		"sprite": "res://assets/sprites/items/orc_blade.png"
+	},
+	"minotaur_axe": {
+		"name": "Minotauryxa",
+		"type": "weapon",
+		"value": 900,
+		"color": "#4a2800",
+		"atk": 44,
+		"skill": "axe",
+		"slot": "weapon",
+		"level_req": 25,
+		"sprite": "res://assets/sprites/items/minotaur_axe.png"
+	},
+	"fire_sword": {
+		"name": "Eldsvärd",
+		"type": "weapon",
+		"value": 1500,
+		"color": "#ff4400",
+		"atk": 55,
+		"skill": "sword",
+		"slot": "weapon",
+		"level_req": 35,
+		"ability": {
+			"type": "burn",
+			"chance": 0.2,
+			"duration": 4.0,
+			"tick_dmg": 6.0
+		},
+		"sprite": "res://assets/sprites/items/fire_sword.png"
+	},
+	"hellfire_rod": {
+		"name": "Helvedets Stav",
+		"type": "weapon",
+		"value": 2000,
+		"color": "#cc0000",
+		"atk": 60,
+		"skill": "club",
+		"slot": "weapon",
+		"level_req": 40,
+		"sprite": "res://assets/sprites/items/hellfire_rod.png"
+	},
+	"vampire_cape": {
+		"name": "Vampyrmantel",
+		"type": "armor",
+		"value": 1200,
+		"color": "#3a0020",
+		"armor": 16,
+		"slot": "body",
+		"level_req": 30,
+		"ability": {
+			"type": "drain",
+			"chance": 0.1,
+			"duration": 0.0,
+			"tick_dmg": 8.0
+		},
+		"sprite": "res://assets/sprites/items/vampire_cape.png"
+	},
+	"lich_crown": {
+		"name": "Lich-krona",
+		"type": "armor",
+		"value": 1400,
+		"color": "#1a0a2e",
+		"armor": 10,
+		"slot": "helmet",
+		"level_req": 35,
+		"sprite": "res://assets/sprites/items/lich_crown.png"
+	},
+	"golden_platebody": {
+		"name": "Guldharnesk",
+		"type": "armor",
+		"value": 700,
+		"color": "#d4a000",
+		"armor": 18,
+		"slot": "body",
+		"level_req": 25,
+		"sprite": "res://assets/sprites/items/golden_platebody.png"
+	},
+	"golden_helmet": {
+		"name": "Guldhjälm",
+		"type": "armor",
+		"value": 400,
+		"color": "#d4a000",
+		"armor": 10,
+		"slot": "helmet",
+		"level_req": 25,
+		"sprite": "res://assets/sprites/items/golden_helmet.png"
+	},
+	"golden_legs": {
+		"name": "Guldbenskydd",
+		"type": "armor",
+		"value": 550,
+		"color": "#d4a000",
+		"armor": 14,
+		"slot": "legs",
+		"level_req": 25,
+		"sprite": "res://assets/sprites/items/golden_legs.png"
+	},
+	"dragon_platebody": {
+		"name": "Drakharnesk",
+		"type": "armor",
+		"value": 2000,
+		"color": "#cc3300",
+		"armor": 28,
+		"slot": "body",
+		"level_req": 40,
+		"sprite": "res://assets/sprites/items/dragon_platebody.png"
+	},
+	"dragon_helmet": {
+		"name": "Drakhjälm",
+		"type": "armor",
+		"value": 1200,
+		"color": "#cc3300",
+		"armor": 18,
+		"slot": "helmet",
+		"level_req": 40,
+		"sprite": "res://assets/sprites/items/dragon_helmet.png"
+	},
+	"great_health_potion": {
+		"name": "Stor hälsodryck",
+		"type": "potion",
+		"value": 120,
+		"color": "#cc0000",
+		"heal": 150,
+		"sprite": "res://assets/sprites/items/great_health_potion.png"
+	},
+	"great_mana_potion": {
+		"name": "Stor manadryck",
+		"type": "potion",
+		"value": 120,
+		"color": "#0000cc",
+		"mana": 150,
+		"sprite": "res://assets/sprites/items/great_mana_potion.png"
+	},
+	"fire_bomb_rune": {
+		"name": "Eldbordruna",
+		"type": "rune",
+		"value": 80,
+		"color": "#ff4400",
+		"effect": "fire_bomb",
+		"sprite": "res://assets/sprites/items/fire_bomb_rune.png"
+	},
+	"ice_wave_rune": {
+		"name": "Isvågsruna",
+		"type": "rune",
+		"value": 80,
+		"color": "#88ccff",
+		"effect": "ice_wave",
+		"sprite": "res://assets/sprites/items/ice_wave_rune.png"
 	}
 }

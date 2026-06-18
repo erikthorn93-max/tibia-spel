@@ -1,4 +1,4 @@
-extends PanelContainer
+extends DraggablePanelContainer
 ## OSRS-stil skillpanel (K) — exakt OSRS-layout med 26 skills.
 ## Kolumner speglar OSRS-gridens ordning: vänster=strid, mitten=support, höger=gathering.
 

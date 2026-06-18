@@ -1057,5 +1057,731 @@
 				"chance": 1.0
 			}
 		]
+	},
+	"Varg": {
+		"hp": 40,
+		"atk": 12,
+		"exp": 28,
+		"speed": 3.0,
+		"cooldown": 1.0,
+		"aggro_range": 8,
+		"color": "#7a6040",
+		"loot": [
+			{
+				"item": "wolf_pelt",
+				"min": 1,
+				"max": 1,
+				"chance": 0.55
+			},
+			{
+				"item": "iron_coin",
+				"min": 3,
+				"max": 14,
+				"chance": 1.0
+			}
+		]
+	},
+	"Goblin": {
+		"hp": 55,
+		"atk": 10,
+		"exp": 32,
+		"speed": 2.5,
+		"cooldown": 1.1,
+		"aggro_range": 7,
+		"color": "#4a7a28",
+		"loot": [
+			{
+				"item": "iron_coin",
+				"min": 4,
+				"max": 18,
+				"chance": 1.0
+			},
+			{
+				"item": "goblin_ear",
+				"min": 1,
+				"max": 1,
+				"chance": 0.65
+			},
+			{
+				"item": "wooden_club",
+				"min": 1,
+				"max": 1,
+				"chance": 0.04
+			}
+		]
+	},
+	"Goblinsoldat": {
+		"hp": 90,
+		"atk": 16,
+		"exp": 60,
+		"speed": 2.3,
+		"cooldown": 1.2,
+		"aggro_range": 7,
+		"color": "#3a6020",
+		"loot": [
+			{
+				"item": "iron_coin",
+				"min": 8,
+				"max": 25,
+				"chance": 1.0
+			},
+			{
+				"item": "goblin_ear",
+				"min": 1,
+				"max": 1,
+				"chance": 0.7
+			},
+			{
+				"item": "bronze_axe",
+				"min": 1,
+				"max": 1,
+				"chance": 0.05
+			}
+		]
+	},
+	"Bandit": {
+		"hp": 80,
+		"atk": 15,
+		"exp": 55,
+		"speed": 2.2,
+		"cooldown": 1.2,
+		"aggro_range": 7,
+		"color": "#5a4a3a",
+		"loot": [
+			{
+				"item": "iron_coin",
+				"min": 10,
+				"max": 35,
+				"chance": 1.0
+			},
+			{
+				"item": "health_potion",
+				"min": 1,
+				"max": 1,
+				"chance": 0.07
+			},
+			{
+				"item": "rusty_sword",
+				"min": 1,
+				"max": 1,
+				"chance": 0.06
+			}
+		]
+	},
+	"Troll": {
+		"hp": 250,
+		"atk": 32,
+		"exp": 195,
+		"speed": 1.7,
+		"cooldown": 1.8,
+		"aggro_range": 6,
+		"color": "#6a8848",
+		"ability": {
+			"type": "stun",
+			"chance": 0.18,
+			"duration": 1.8,
+			"tick_dmg": 0.0
+		},
+		"loot": [
+			{
+				"item": "troll_bone",
+				"min": 1,
+				"max": 2,
+				"chance": 0.7
+			},
+			{
+				"item": "iron_coin",
+				"min": 30,
+				"max": 80,
+				"chance": 1.0
+			},
+			{
+				"item": "health_potion",
+				"min": 1,
+				"max": 1,
+				"chance": 0.08
+			}
+		]
+	},
+	"Trollhövding": {
+		"hp": 480,
+		"atk": 42,
+		"exp": 420,
+		"speed": 1.6,
+		"cooldown": 1.9,
+		"aggro_range": 8,
+		"color": "#4a6a30",
+		"boss": true,
+		"enrage": true,
+		"ability": {
+			"type": "stun",
+			"chance": 0.25,
+			"duration": 2.5,
+			"tick_dmg": 0.0
+		},
+		"loot": [
+			{
+				"item": "troll_bone",
+				"min": 2,
+				"max": 4,
+				"chance": 1.0
+			},
+			{
+				"item": "iron_coin",
+				"min": 120,
+				"max": 250,
+				"chance": 1.0
+			},
+			{
+				"item": "troll_club",
+				"min": 1,
+				"max": 1,
+				"chance": 1.0
+			},
+			{
+				"item": "health_potion",
+				"min": 1,
+				"max": 2,
+				"chance": 0.6
+			}
+		]
+	},
+	"Ork": {
+		"hp": 190,
+		"atk": 27,
+		"exp": 150,
+		"speed": 2.0,
+		"cooldown": 1.4,
+		"aggro_range": 7,
+		"color": "#4a6a28",
+		"loot": [
+			{
+				"item": "orc_tooth",
+				"min": 1,
+				"max": 1,
+				"chance": 0.6
+			},
+			{
+				"item": "iron_coin",
+				"min": 20,
+				"max": 55,
+				"chance": 1.0
+			},
+			{
+				"item": "iron_axe",
+				"min": 1,
+				"max": 1,
+				"chance": 0.04
+			}
+		]
+	},
+	"Orkshamanen": {
+		"hp": 160,
+		"atk": 24,
+		"exp": 175,
+		"speed": 1.9,
+		"cooldown": 1.5,
+		"aggro_range": 8,
+		"color": "#3a5a1a",
+		"ability": {
+			"type": "poison",
+			"chance": 0.28,
+			"duration": 10.0,
+			"tick_dmg": 5.0
+		},
+		"loot": [
+			{
+				"item": "orc_tooth",
+				"min": 1,
+				"max": 1,
+				"chance": 0.5
+			},
+			{
+				"item": "iron_coin",
+				"min": 18,
+				"max": 50,
+				"chance": 1.0
+			},
+			{
+				"item": "mana_potion",
+				"min": 1,
+				"max": 1,
+				"chance": 0.1
+			},
+			{
+				"item": "shaman_staff",
+				"min": 1,
+				"max": 1,
+				"chance": 0.04
+			}
+		]
+	},
+	"Orköverherre": {
+		"hp": 900,
+		"atk": 50,
+		"exp": 900,
+		"speed": 1.7,
+		"cooldown": 1.7,
+		"aggro_range": 10,
+		"color": "#1a4010",
+		"boss": true,
+		"enrage": true,
+		"loot": [
+			{
+				"item": "orc_blade",
+				"min": 1,
+				"max": 1,
+				"chance": 1.0
+			},
+			{
+				"item": "orc_tooth",
+				"min": 3,
+				"max": 6,
+				"chance": 1.0
+			},
+			{
+				"item": "iron_coin",
+				"min": 300,
+				"max": 600,
+				"chance": 1.0
+			},
+			{
+				"item": "health_potion",
+				"min": 2,
+				"max": 3,
+				"chance": 0.8
+			}
+		]
+	},
+	"Minotaur": {
+		"hp": 350,
+		"atk": 38,
+		"exp": 290,
+		"speed": 1.8,
+		"cooldown": 1.6,
+		"aggro_range": 7,
+		"color": "#8a6840",
+		"ability": {
+			"type": "stun",
+			"chance": 0.2,
+			"duration": 2.0,
+			"tick_dmg": 0.0
+		},
+		"loot": [
+			{
+				"item": "minotaur_horn",
+				"min": 1,
+				"max": 1,
+				"chance": 0.55
+			},
+			{
+				"item": "iron_coin",
+				"min": 40,
+				"max": 100,
+				"chance": 1.0
+			},
+			{
+				"item": "health_potion",
+				"min": 1,
+				"max": 1,
+				"chance": 0.1
+			}
+		]
+	},
+	"MinotaurVakt": {
+		"hp": 480,
+		"atk": 46,
+		"exp": 380,
+		"speed": 1.7,
+		"cooldown": 1.7,
+		"aggro_range": 7,
+		"color": "#6a4820",
+		"ability": {
+			"type": "stun",
+			"chance": 0.25,
+			"duration": 2.5,
+			"tick_dmg": 0.0
+		},
+		"loot": [
+			{
+				"item": "minotaur_horn",
+				"min": 1,
+				"max": 2,
+				"chance": 0.65
+			},
+			{
+				"item": "iron_coin",
+				"min": 60,
+				"max": 140,
+				"chance": 1.0
+			},
+			{
+				"item": "iron_platebody",
+				"min": 1,
+				"max": 1,
+				"chance": 0.04
+			},
+			{
+				"item": "health_potion",
+				"min": 1,
+				"max": 1,
+				"chance": 0.12
+			}
+		]
+	},
+	"MinotaurKungen": {
+		"hp": 1400,
+		"atk": 60,
+		"exp": 1600,
+		"speed": 1.6,
+		"cooldown": 1.8,
+		"aggro_range": 12,
+		"color": "#4a2800",
+		"boss": true,
+		"enrage": true,
+		"ability": {
+			"type": "stun",
+			"chance": 0.3,
+			"duration": 3.0,
+			"tick_dmg": 0.0
+		},
+		"loot": [
+			{
+				"item": "minotaur_axe",
+				"min": 1,
+				"max": 1,
+				"chance": 1.0
+			},
+			{
+				"item": "minotaur_horn",
+				"min": 3,
+				"max": 5,
+				"chance": 1.0
+			},
+			{
+				"item": "iron_coin",
+				"min": 500,
+				"max": 900,
+				"chance": 1.0
+			},
+			{
+				"item": "health_potion",
+				"min": 2,
+				"max": 4,
+				"chance": 0.9
+			}
+		]
+	},
+	"Dvärg": {
+		"hp": 160,
+		"atk": 24,
+		"exp": 120,
+		"speed": 1.9,
+		"cooldown": 1.4,
+		"aggro_range": 6,
+		"color": "#8a7060",
+		"loot": [
+			{
+				"item": "iron_coin",
+				"min": 15,
+				"max": 45,
+				"chance": 1.0
+			},
+			{
+				"item": "dwarf_beard",
+				"min": 1,
+				"max": 1,
+				"chance": 0.5
+			},
+			{
+				"item": "iron_axe",
+				"min": 1,
+				"max": 1,
+				"chance": 0.05
+			}
+		]
+	},
+	"DvärgenSmeden": {
+		"hp": 280,
+		"atk": 35,
+		"exp": 220,
+		"speed": 1.8,
+		"cooldown": 1.5,
+		"aggro_range": 6,
+		"color": "#6a5040",
+		"loot": [
+			{
+				"item": "iron_coin",
+				"min": 30,
+				"max": 80,
+				"chance": 1.0
+			},
+			{
+				"item": "dwarf_beard",
+				"min": 1,
+				"max": 1,
+				"chance": 0.65
+			},
+			{
+				"item": "steel_axe",
+				"min": 1,
+				"max": 1,
+				"chance": 0.05
+			},
+			{
+				"item": "health_potion",
+				"min": 1,
+				"max": 1,
+				"chance": 0.1
+			}
+		]
+	},
+	"Vampyr": {
+		"hp": 550,
+		"atk": 55,
+		"exp": 500,
+		"speed": 2.2,
+		"cooldown": 1.4,
+		"aggro_range": 8,
+		"color": "#5a1a3a",
+		"ability": {
+			"type": "drain",
+			"chance": 0.3,
+			"duration": 0.0,
+			"tick_dmg": 15.0
+		},
+		"loot": [
+			{
+				"item": "vampire_dust",
+				"min": 1,
+				"max": 1,
+				"chance": 0.7
+			},
+			{
+				"item": "iron_coin",
+				"min": 80,
+				"max": 200,
+				"chance": 1.0
+			},
+			{
+				"item": "health_potion",
+				"min": 1,
+				"max": 2,
+				"chance": 0.15
+			}
+		]
+	},
+	"VampyrHerre": {
+		"hp": 1800,
+		"atk": 72,
+		"exp": 2200,
+		"speed": 2.0,
+		"cooldown": 1.5,
+		"aggro_range": 12,
+		"color": "#3a0020",
+		"boss": true,
+		"enrage": true,
+		"ability": {
+			"type": "drain",
+			"chance": 0.35,
+			"duration": 0.0,
+			"tick_dmg": 20.0
+		},
+		"loot": [
+			{
+				"item": "vampire_cape",
+				"min": 1,
+				"max": 1,
+				"chance": 1.0
+			},
+			{
+				"item": "vampire_dust",
+				"min": 3,
+				"max": 6,
+				"chance": 1.0
+			},
+			{
+				"item": "iron_coin",
+				"min": 600,
+				"max": 1200,
+				"chance": 1.0
+			},
+			{
+				"item": "health_potion",
+				"min": 2,
+				"max": 4,
+				"chance": 0.8
+			}
+		]
+	},
+	"Nekromant": {
+		"hp": 480,
+		"atk": 52,
+		"exp": 460,
+		"speed": 1.8,
+		"cooldown": 1.6,
+		"aggro_range": 9,
+		"color": "#2a1a4a",
+		"ability": {
+			"type": "stun",
+			"chance": 0.2,
+			"duration": 2.0,
+			"tick_dmg": 0.0
+		},
+		"loot": [
+			{
+				"item": "death_scroll",
+				"min": 1,
+				"max": 1,
+				"chance": 0.4
+			},
+			{
+				"item": "bone_chips",
+				"min": 2,
+				"max": 4,
+				"chance": 0.8
+			},
+			{
+				"item": "iron_coin",
+				"min": 70,
+				"max": 180,
+				"chance": 1.0
+			},
+			{
+				"item": "mana_potion",
+				"min": 1,
+				"max": 1,
+				"chance": 0.12
+			}
+		]
+	},
+	"Lich": {
+		"hp": 1000,
+		"atk": 68,
+		"exp": 1100,
+		"speed": 1.7,
+		"cooldown": 1.7,
+		"aggro_range": 10,
+		"color": "#1a0a2e",
+		"boss": true,
+		"enrage": true,
+		"ability": {
+			"type": "stun",
+			"chance": 0.25,
+			"duration": 2.5,
+			"tick_dmg": 0.0
+		},
+		"loot": [
+			{
+				"item": "lich_crown",
+				"min": 1,
+				"max": 1,
+				"chance": 1.0
+			},
+			{
+				"item": "death_scroll",
+				"min": 1,
+				"max": 2,
+				"chance": 1.0
+			},
+			{
+				"item": "iron_coin",
+				"min": 400,
+				"max": 800,
+				"chance": 1.0
+			},
+			{
+				"item": "mana_potion",
+				"min": 2,
+				"max": 3,
+				"chance": 0.8
+			}
+		]
+	},
+	"Elddraken": {
+		"hp": 4500,
+		"atk": 95,
+		"exp": 6000,
+		"speed": 1.5,
+		"cooldown": 2.0,
+		"aggro_range": 14,
+		"color": "#cc3300",
+		"boss": true,
+		"enrage": true,
+		"ability": {
+			"type": "burn",
+			"chance": 0.45,
+			"duration": 8.0,
+			"tick_dmg": 15.0
+		},
+		"loot": [
+			{
+				"item": "fire_sword",
+				"min": 1,
+				"max": 1,
+				"chance": 1.0
+			},
+			{
+				"item": "dragon_scale",
+				"min": 5,
+				"max": 10,
+				"chance": 1.0
+			},
+			{
+				"item": "iron_coin",
+				"min": 1500,
+				"max": 3000,
+				"chance": 1.0
+			},
+			{
+				"item": "health_potion",
+				"min": 3,
+				"max": 5,
+				"chance": 0.9
+			}
+		]
+	},
+	"Ärkedemonen": {
+		"hp": 6000,
+		"atk": 110,
+		"exp": 10000,
+		"speed": 1.6,
+		"cooldown": 1.8,
+		"aggro_range": 16,
+		"color": "#880000",
+		"boss": true,
+		"enrage": true,
+		"ability": {
+			"type": "burn",
+			"chance": 0.4,
+			"duration": 10.0,
+			"tick_dmg": 18.0
+		},
+		"loot": [
+			{
+				"item": "demon_heart",
+				"min": 1,
+				"max": 1,
+				"chance": 1.0
+			},
+			{
+				"item": "hellfire_rod",
+				"min": 1,
+				"max": 1,
+				"chance": 1.0
+			},
+			{
+				"item": "iron_coin",
+				"min": 3000,
+				"max": 6000,
+				"chance": 1.0
+			},
+			{
+				"item": "health_potion",
+				"min": 4,
+				"max": 6,
+				"chance": 1.0
+			}
+		]
 	}
 }

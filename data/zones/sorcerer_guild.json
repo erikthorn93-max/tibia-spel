@@ -1,0 +1,39 @@
+{
+	"name": "Sorcerer's Guild",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WwWWWWWWWWWWWWWWWWWWWWWWWWWWWWwW",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,M,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,P,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,WWWWWWWWWWWWWWWWWW,,,,,,,,W",
+		"W,,,,W,,,,,,,,,,,,,,,,,,W,,,,,,,",
+		"W,,,,W,,,,,,,,,,,,,,,,,,W,,,,,,,",
+		"W,,,,W,,,,,,,,,,,,,,,,,,W,,,,,,,",
+		"W,,,,W,,,,,,,,,,,,,,,,,,W,,,,nW,",
+		"W,,,,WWWWWWWWWWWWWWWWWW,,,,,,,,W",
+		"W,,,,WWWWWWWWW,WWWWWWWW,,,,,,,,W",
+		"W,,,,,,,,,,,,,dd,,,,,,,,,,,,,,,W",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"d": {
+			"type": "portal",
+			"to": "town",
+			"terrain": ","
+		},
+		"M": {
+			"type": "npc_spawn",
+			"npc": "npc_muriel"
+		},
+		"n": {
+			"type": "stair_down",
+			"to": "druid_guild",
+			"terrain": "n"
+		}
+	}
+}

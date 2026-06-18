@@ -1,0 +1,67 @@
+{
+	"name": "Demontemplet",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WssssssssssssssssssssssnsssssssssssssssssssssW",
+		"WssssssssssssssssssssssPsssssssssssssssssssssW",
+		"WssssssssssssssssssssssssssssssssssssssssssssW",
+		"WsssWsssssssWsssssssWsssssssWsssssssWssssssssW",
+		"WssssNssssssssssssssNsssssssssssssssssNssssssW",
+		"WssssssssssssssssssssssssssssssssssssssssssssW",
+		"WssssssssssssssssssssssssssssssssssssssssssssW",
+		"WsssssssssssssssssssssLssssssssssssssssssssssW",
+		"WssssssssssssssssssssssssssssssssssssssssssssW",
+		"WsssWsssssNsWsssssssWsssssssWsssssssWssssssssW",
+		"WssssssssssssssssssssssssssssssssssssssssssssW",
+		"WssssssssssssssssssssssssssssssssssssssssssssW",
+		"WsssssssssssssWWWWWWWWWsWWWWWWWWWssssssssssssW",
+		"WsssssssssssssWsssssssssssssssssWssssssssssssW",
+		"WsssssssLsssssWsssssssssssssssssWsssssLssssssW",
+		"WsssWsssssssWsWsssssssssssssssssWsssWssssssssW",
+		"WsssssssssssssWsssssssssssssssssWssssssssssssW",
+		"WsssssssssssssWsssssssssssssssssWssssssssssssW",
+		"WsssssssssssssWsssssssssssssssssWssssssssssssW",
+		"WssssNssssssssWsssssssssssssssssWsssssssNssssW",
+		"WsssssssssssssWsssssssssssssssssWssssssssssssW",
+		"WsssWsssssssWsWsssssssssssssssssWsssWssssssssW",
+		"WsssssssssssssWsssssssssssssssssWssssssssssssW",
+		"WsssssssssssssWsssssssssssssssssWssssssssssssW",
+		"WsssssssLsssssWsssssssssssssssssWsssssLssssssW",
+		"WsssssssssssssWssssssssKssssssssWssssssssssssW",
+		"WsssssssssssssWsssssssssssssssssWssssssssssssW",
+		"WsssWsssssssWsWsssssssssssssssssWsssWssssssssW",
+		"WsssssssssssssWsssssssssssssssssWssssssssssssW",
+		"WssssNssssssssWsssssssssssssssssWsssssssNssssW",
+		"WsssssssssssssWsssssssssssssssssWssssssssssssW",
+		"WsssssssssssssWsssssssssssssssssWssssssssssssW",
+		"WsssssssssssssWsssssssssssssssssWssssssssssssW",
+		"WsssssssssssssWWWWWWWWWWWWWWWWWWWssssssssssssW",
+		"WsssssssssssssssssssNssssssssssssssssssssssssW",
+		"WdsssssssssssssssssssssssssssssssssssssssssssW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"n": {
+			"type": "stair_up",
+			"to": "town",
+			"terrain": "n"
+		},
+		"d": {
+			"type": "portal",
+			"to": "town",
+			"terrain": ","
+		},
+		"N": {
+			"type": "spawn",
+			"monster": "Nekromant"
+		},
+		"L": {
+			"type": "spawn",
+			"monster": "Lich"
+		},
+		"K": {
+			"type": "spawn",
+			"monster": "Ärkedemonen"
+		}
+	}
+}

@@ -10,10 +10,12 @@ var _lbl:    Label
 var _elapsed := 0.0
 var _dmg:    float = 0.0
 var _is_crit := false
+var _force_color: Color = Color(-1, -1, -1)   # negativ = ingen override
 
-func setup(dmg: float, crit := false) -> void:
+func setup(dmg: float, crit := false, force_color: Color = Color(-1, -1, -1)) -> void:
 	_dmg    = dmg
 	_is_crit = crit
+	_force_color = force_color
 	_build_label()
 
 func _build_label() -> void:
@@ -25,7 +27,9 @@ func _build_label() -> void:
 	# Tibia-stil: kritisk = stor gul, normal = vit, miss = grå
 	var fsize  := 14
 	var color  := Color(1.0, 1.0, 1.0)
-	if _is_crit:
+	if _force_color.r >= 0.0:
+		color = _force_color   # spelarhit-färg (röd/grön/orange)
+	elif _is_crit:
 		fsize  = 18
 		color  = Color(1.0, 0.92, 0.15)   # gulvit
 		text   = str(int(_dmg)) + "!"

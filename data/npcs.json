@@ -2,57 +2,341 @@
 	"npc_elder": {
 		"name": "Elder Rowan",
 		"zone": "town",
-		"position": [10, 7],
-		"voice": {"model": "en_GB-alan-medium", "length_scale": 1.1},
-		"barks": ["Fine weather for the harvest.", "Stay out of trouble, now."],
+		"position": [
+			9,
+			42
+		],
+		"voice": {
+			"model": "en_GB-alan-medium",
+			"length_scale": 1.1
+		},
+		"barks": [
+			"Fine weather for the harvest.",
+			"Stay out of trouble, now."
+		],
 		"dialogue_root": "elder_root"
 	},
 	"npc_blacksmith": {
 		"name": "Brom the Blacksmith",
 		"zone": "town",
-		"position": [3, 15],
-		"voice": {"model": "en_US-joe-medium", "length_scale": 1.0},
-		"barks": ["Mind the sparks!", "Finest steel in town."],
+		"position": [
+			6,
+			44
+		],
+		"voice": {
+			"model": "en_US-joe-medium",
+			"length_scale": 1.0
+		},
+		"barks": [
+			"Mind the sparks!",
+			"Finest steel in town."
+		],
 		"dialogue_root": "blacksmith_root"
 	},
 	"npc_scholar": {
 		"name": "Maelis the Scholar",
-		"zone": "town",
-		"position": [10, 10],
-		"voice": {"model": "en_US-lessac-medium", "length_scale": 1.0},
-		"barks": ["So many secrets...", "The old texts never lie. Mostly."],
+		"zone": "thais_depot_int",
+		"position": [
+			13,
+			11
+		],
+		"voice": {
+			"model": "en_US-lessac-medium",
+			"length_scale": 1.0
+		},
+		"barks": [
+			"So many secrets...",
+			"The old texts never lie. Mostly."
+		],
 		"dialogue_root": "scholar_root"
 	},
 	"npc_fisherman": {
 		"name": "Old Finn",
 		"zone": "town",
-		"position": [24, 7],
-		"voice": {"model": "en_GB-northern_english_male-medium", "length_scale": 1.15},
-		"barks": ["Nibble... no, nothing.", "The big one got away again."],
+		"position": [
+			13,
+			55
+		],
+		"voice": {
+			"model": "en_GB-northern_english_male-medium",
+			"length_scale": 1.15
+		},
+		"barks": [
+			"Nibble... no, nothing.",
+			"The big one got away again."
+		],
 		"dialogue_root": "finn_root"
 	},
 	"npc_hunter": {
 		"name": "Sylva the Huntress",
 		"zone": "forest",
-		"position": [16, 19],
-		"voice": {"model": "en_US-amy-medium", "length_scale": 0.95},
-		"barks": ["Tread softly.", "Something's moving in the brush..."],
+		"position": [
+			16,
+			19
+		],
+		"voice": {
+			"model": "en_US-amy-medium",
+			"length_scale": 0.95
+		},
+		"barks": [
+			"Tread softly.",
+			"Something's moving in the brush..."
+		],
 		"dialogue_root": "hunter_root"
 	},
 	"npc_captain": {
 		"name": "Kapten Brandt",
-		"zone": "town",
-		"position": [28, 10],
-		"voice": {"model": "en_GB-alan-medium", "length_scale": 1.0},
-		"barks": ["Storm's brewing out west.", "Mind the tide, landlubber."],
+		"zone": "thais_docks",
+		"position": [
+			5,
+			3
+		],
+		"voice": {
+			"model": "en_GB-alan-medium",
+			"length_scale": 1.0
+		},
+		"barks": [
+			"Storm's brewing out west.",
+			"Mind the tide, landlubber."
+		],
 		"dialogue_root": "captain_root"
 	},
 	"npc_fishmonger": {
 		"name": "Saltgreta",
 		"zone": "coast",
-		"position": [8, 8],
-		"voice": {"model": "en_US-amy-medium", "length_scale": 1.0},
-		"barks": ["Fresh off the boat!", "Best catch on the whole coast."],
+		"position": [
+			8,
+			8
+		],
+		"voice": {
+			"model": "en_US-amy-medium",
+			"length_scale": 1.0
+		},
+		"barks": [
+			"Fresh off the boat!",
+			"Best catch on the whole coast."
+		],
 		"dialogue_root": "fishmonger_root"
+	},
+	"npc_frodo": {
+		"name": "Frodo",
+		"zone": "frodo_inn",
+		"position": [
+			4,
+			7
+		],
+		"voice": {
+			"model": "en_GB-alan-medium",
+			"length_scale": 1.0
+		},
+		"barks": [
+			"Welcome to my inn!",
+			"Rooms by the night, ale by the mug."
+		],
+		"dialogue_root": "frodo_root"
+	},
+	"npc_tibianus": {
+		"name": "King Tibianus III",
+		"zone": "rain_castle_f2",
+		"position": [
+			14,
+			4
+		],
+		"voice": {
+			"model": "en_GB-alan-medium",
+			"length_scale": 0.9
+		},
+		"barks": [
+			"Thais stands eternal.",
+			"Approach, citizen."
+		],
+		"dialogue_root": "tibianus_root"
+	},
+	"npc_priest": {
+		"name": "Father Quentin",
+		"zone": "tibianus_temple",
+		"position": [
+			13,
+			7
+		],
+		"voice": {
+			"model": "en_US-lessac-medium",
+			"length_scale": 1.05
+		},
+		"barks": [
+			"May Uman guide your path.",
+			"The gods watch over Thais."
+		],
+		"dialogue_root": "priest_root"
+	},
+	"npc_elane": {
+		"name": "Elane",
+		"zone": "paladin_guild",
+		"position": [
+			7,
+			7
+		],
+		"voice": {
+			"model": "en_US-amy-medium",
+			"length_scale": 0.95
+		},
+		"barks": [
+			"The bow demands patience.",
+			"Aim true, breathe slow."
+		],
+		"dialogue_root": "elane_root"
+	},
+	"npc_galuna": {
+		"name": "Galuna",
+		"zone": "paladin_guild_f2",
+		"position": [
+			5,
+			3
+		],
+		"voice": {
+			"model": "en_US-amy-medium",
+			"length_scale": 1.0
+		},
+		"barks": [
+			"The upper hall is for advanced training only.",
+			"Show me your form."
+		],
+		"dialogue_root": "galuna_root"
+	},
+	"npc_muriel": {
+		"name": "Muriel",
+		"zone": "sorcerer_guild",
+		"position": [
+			7,
+			3
+		],
+		"voice": {
+			"model": "en_US-lessac-medium",
+			"length_scale": 0.95
+		},
+		"barks": [
+			"Magic is discipline, not power.",
+			"Study the runes carefully."
+		],
+		"dialogue_root": "muriel_root"
+	},
+	"npc_black_bert": {
+		"name": "Black Bert",
+		"zone": "thais_docks_upper",
+		"position": [
+			5,
+			3
+		],
+		"voice": {
+			"model": "en_GB-northern_english_male-medium",
+			"length_scale": 1.0
+		},
+		"barks": [
+			"I trade in rare things... very rare.",
+			"Don't ask where I got it."
+		],
+		"dialogue_root": "black_bert_root"
+	},
+	"npc_gamel": {
+		"name": "Gamel",
+		"zone": "thais_docks_lower",
+		"position": [
+			5,
+			3
+		],
+		"voice": {
+			"model": "en_GB-alan-medium",
+			"length_scale": 1.1
+		},
+		"barks": [
+			"Damp down here, innit.",
+			"I keep to meself."
+		],
+		"dialogue_root": "gamel_root"
+	},
+	"npc_henricus": {
+		"name": "Henricus",
+		"zone": "thais_jail",
+		"position": [
+			5,
+			2
+		],
+		"voice": {
+			"model": "en_US-joe-medium",
+			"length_scale": 1.0
+		},
+		"barks": [
+			"Break no laws in Thais.",
+			"Justice is swift here."
+		],
+		"dialogue_root": "henricus_root"
+	},
+	"npc_jack_springer": {
+		"name": "Jack Springer",
+		"zone": "thais_jail_lower",
+		"position": [
+			4,
+			5
+		],
+		"voice": {
+			"model": "en_GB-northern_english_male-medium",
+			"length_scale": 1.0
+		},
+		"barks": [
+			"Get me outta here!",
+			"I didn't do nothin', I swear."
+		],
+		"dialogue_root": "jack_springer_root"
+	},
+	"npc_knight_guild_master": {
+		"name": "Gregor",
+		"zone": "knight_guild",
+		"position": [
+			7,
+			5
+		],
+		"voice": {
+			"model": "en_US-joe-medium",
+			"length_scale": 0.9
+		},
+		"barks": [
+			"Strength through discipline.",
+			"The sword is an extension of your will."
+		],
+		"dialogue_root": "gregor_root"
+	},
+	"npc_guildmaster": {
+		"name": "Adventurers Guildmaster",
+		"zone": "adventurer_guild",
+		"position": [
+			10,
+			3
+		],
+		"voice": {
+			"model": "en_GB-alan-medium",
+			"length_scale": 1.0
+		},
+		"barks": [
+			"Adventure awaits beyond these walls.",
+			"Check the quest board for work."
+		],
+		"dialogue_root": "guildmaster_root"
+	},
+	"npc_arena_master": {
+		"name": "Arena Master Torben",
+		"zone": "knight_arena",
+		"position": [
+			5,
+			3
+		],
+		"voice": {
+			"model": "en_US-joe-medium",
+			"length_scale": 0.95
+		},
+		"barks": [
+			"Only the strong survive the arena.",
+			"Step in if you dare."
+		],
+		"dialogue_root": "arena_master_root"
 	}
 }

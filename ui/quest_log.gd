@@ -1,4 +1,4 @@
-extends PanelContainer
+extends DraggablePanelContainer
 ## Questlogg (J): aktiva quests med hint + progress, samt klarade.
 
 var _list: VBoxContainer

@@ -13,6 +13,7 @@ var npc_id := ""
 var tile := Vector2i.ZERO
 var _bark_timer := 0.0
 
+@onready var _sprite: Sprite2D = $Sprite2D
 @onready var click_area: Area2D = $ClickArea
 @onready var name_lbl: Label = $NameLabel
 @onready var bark_lbl: Label = $BarkLabel
@@ -25,6 +26,12 @@ func setup(id: String, t: Vector2i) -> void:
 
 func _ready() -> void:
 	name_lbl.text = String(DialogueDB.npcs[npc_id]["name"])
+	# Ladda NPC-specifik sprite, annars generisk dialogue_npc sprite
+	var spec_path := "res://assets/sprites/npcs/%s.png" % npc_id
+	if ResourceLoader.exists(spec_path):
+		_sprite.texture = load(spec_path)
+	else:
+		_sprite.texture = load("res://assets/sprites/npcs/dialogue_npc.png")
 	click_area.input_event.connect(_on_click)
 
 func _process(delta: float) -> void:

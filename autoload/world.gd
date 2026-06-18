@@ -23,8 +23,13 @@ func _ready() -> void:
 
 func start_game(zone_id: String, at_tile := Vector2i(-1, -1)) -> void:
 	if current_zone:
+		# Rädda spelaren ur den gamla zonen innan vi river den
+		if player and is_instance_valid(player) and player.get_parent() == current_zone:
+			current_zone.remove_child(player)
+		# Ta bort gamla zonen ur scen-trädet omedelbart (undviker await-hängning)
+		if current_zone.get_parent():
+			current_zone.get_parent().remove_child(current_zone)
 		current_zone.queue_free()
-		await current_zone.tree_exited
 	current_zone = Node2D.new()
 	current_zone.set_script(ZoneScript)
 	game_root.add_child(current_zone)
@@ -53,8 +58,11 @@ func enter_dungeon(theme: String, dseed: int = -1) -> void:
 	var data := DungeonGen.generate(theme, dseed)
 	SaveManager.save_game()   # spara med ytzon INNAN vi byter
 	if current_zone:
+		if player and is_instance_valid(player) and player.get_parent() == current_zone:
+			current_zone.remove_child(player)
+		if current_zone.get_parent():
+			current_zone.get_parent().remove_child(current_zone)
 		current_zone.queue_free()
-		await current_zone.tree_exited
 	current_zone = Node2D.new()
 	current_zone.set_script(ZoneScript)
 	game_root.add_child(current_zone)

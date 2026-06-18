@@ -59,7 +59,6 @@ func _process(delta: float) -> void:
 	if _perftest:
 		_perftest_elapsed += delta
 		if _perftest_elapsed >= 14.0:
-			# första samplet är uppstartsskevt — rapportera resten
 			var rest: Array = _fps_samples.slice(1)
 			print("PERFTEST: samples=%s min=%d" % [str(rest), rest.min() if rest else 0])
 			get_tree().quit()

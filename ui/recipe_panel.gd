@@ -1,4 +1,4 @@
-extends PanelContainer
+extends DraggablePanelContainer
 ## Receptpanel: visar stationens recept, craftar via GameState.craft.
 
 var station_type := ""

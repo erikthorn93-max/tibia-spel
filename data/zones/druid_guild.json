@@ -1,0 +1,21 @@
+{
+	"name": "Druid Guild",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWW",
+		"WffffffffffffffffffffffW",
+		"WffffffffffffffffffffffW",
+		"WffffffPfffffffffffffffW",
+		"WfffffffnffffffffffffffW",
+		"WffffffffffffffffffffffW",
+		"WffffffffffffffffffffffW",
+		"WffffffffffffffffffffffW",
+		"WWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"n": {
+			"type": "stair_up",
+			"to": "sorcerer_guild",
+			"terrain": "n"
+		}
+	}
+}

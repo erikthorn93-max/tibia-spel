@@ -251,6 +251,17 @@
 		"color": "#6a8a4a",
 		"label": "Fågelfälla"
 	},
+	"gem_vein": {
+		"skill": "mining",
+		"level": 50,
+		"tool": "pickaxe",
+		"yields": "gem",
+		"xp": 120,
+		"charges": [2, 3],
+		"respawn": 120,
+		"color": "#c084fc",
+		"label": "Ädelstensådra"
+	},
 	"campfire_spot": {
 		"skill": "firemaking",
 		"level": 1,

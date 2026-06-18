@@ -1,0 +1,61 @@
+{
+	"name": "Vampyrkryptan",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WsssssssssssssssssssssnssssssssssssssssssssW",
+		"WsWWWWWWWWWWWWsssWWWWWWWWWWsssWWWWWWWWWWWWWW",
+		"WsWsssssssssssssssssssPsssssssWsssssssssssWW",
+		"WsWsssssssssssssssssssssssssssWsssssssssssWW",
+		"WsWssssVsssssssssssssVssssssssWsssssVsssssWW",
+		"WsWsssssvsssssssssssssvsssssssWsssssvsssssWW",
+		"WsWsssssssssssssssssssssssssssWsssssssssssWW",
+		"WsWsssssssssssssssssssssssssssWsssssssssssWW",
+		"WsWsssssssssssssssssssssssssssWsssssssssssWW",
+		"WssssssssssssssssssssssssssssssssssssssssssW",
+		"WssssssssssssssssssssssssssssssssssssssssssW",
+		"WssssssssssssssssssssssssssssssssssssssssssW",
+		"WsWsssssssssssssssssssssssssssWsssssssssssWW",
+		"WsWsssssssssssssssssssssssssssWsssssssssssWW",
+		"WsWssssVssssssssssssssssssssssWsssssVsssssWW",
+		"WsWsssssvsssssssssssssssssssssWsssssvsssssWW",
+		"WsWsssssssssssssssssssssssssssWsssssssssssWW",
+		"WsWsssssssssssssssssssssssssssWsssssssssssWW",
+		"WsWsssssssssssssssssssssssssssWsssssssssssWW",
+		"WssssssssssssssssssssssssssssssssssssssssssW",
+		"WssssssssssssssssssssssssssssssssssssssssssW",
+		"WsssssssssssssWWWWWWWWsWWWWWWWWssssssssssssW",
+		"WsWsssssssssssWsssssssssssssssWsssssssssssWW",
+		"WsWsssssssssssWsssssssssssssssWsssssssssssWW",
+		"WsWssVssssssssWsssssssssssssssWsssssssVsssWW",
+		"WsWsssssssssssWsssssssssssssssWsssssssssssWW",
+		"WsWsssssssssssWsssssssssssssssWsssssssssssWW",
+		"WsWsssssssssssWsssssssssssssssWsssssssssssWW",
+		"WsWsssssssssssWsssssssKsssssssWsssssssssssWW",
+		"WsWWWWsWWWWWWWWsssssssssssssssWWWWWWWWWWWWWW",
+		"WsssssssssssssWsssssssssssssssWssssssssssssW",
+		"WsssssssssssssWsssssssssssssssWssssssssssssW",
+		"WsssssssssssssWsssssssssssssssWssssssssssssW",
+		"WdssssssssssssWWWWWWWWWWWWWWWWWssssssssssssW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"n": {
+			"type": "stair_up",
+			"to": "town",
+			"terrain": "n"
+		},
+		"d": {
+			"type": "portal",
+			"to": "town",
+			"terrain": ","
+		},
+		"V": {
+			"type": "spawn",
+			"monster": "Vampyr"
+		},
+		"K": {
+			"type": "spawn",
+			"monster": "VampyrHerre"
+		}
+	}
+}

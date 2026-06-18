@@ -1,0 +1,38 @@
+{
+	"name": "Knight's Arena",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WwWWWWWWWWWWWWWWWWWWWWWWWWWWwW",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,A,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,WWWWWWWWWWWWWWWWWWWW,,,,",
+		"W,,,,,W,,,,,,,,,,,,,,,,,,W,,,,",
+		"W,,,,,W,,,,,,,,T,,,,,,,,,W,,,,",
+		"W,,,,,W,,,,,,,,,,,,,,,,,,W,,,,",
+		"W,,,,,W,,,,,,,,,,,,,,,,,,W,,,,",
+		"W,,,,,WWWWWWWWWWWWWWWWWWWW,,,,",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,P,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,dd,,,,,,,,,,,,,W",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"d": {
+			"type": "portal",
+			"to": "town",
+			"terrain": ","
+		},
+		"A": {
+			"type": "npc_spawn",
+			"npc": "npc_arena_master"
+		},
+		"T": {
+			"type": "decoration",
+			"station": "training_dummy"
+		}
+	}
+}

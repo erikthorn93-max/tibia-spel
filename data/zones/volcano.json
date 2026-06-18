@@ -1,78 +1,64 @@
 {
-  "name": "Vulkankratern",
-  "tiles": [
-    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-    "W..........................................W",
-    "W....WWW....WW.............................W",
-    "W....W.W....WW........a....................W",
-    "W....WWW...........................a.......W",
-    "W..........................................W",
-    "W....a.........~~~~........................W",
-    "W...........~~~~~~~~~~~....................W",
-    "W..........~~~~~~~~~~~~~~~~~~~~~~~~~~......W",
-    "W.........~~~~~~~~~~~~~~~~~~~~~~~~~~~......W",
-    "W..........~~~~K~~~~~~~~~~~~~~~~~~~~~......W",
-    "W...........~~~~~~~~~~~~~~~~~~~~~~~~~~~....W",
-    "W............~~~~~~~~~~~~~~~~~~~~~~~~~~~...W",
-    "W.............~~~~~~~~~~~~~~~~~~~~~~~~~....W",
-    "W..............~~~~~~~~~~~~~~~~~~~~~~......W",
-    "W.................~~~~~~~~~~~~~~~~~........W",
-    "W..........a................a..............W",
-    "W..........................................W",
-    "W.h.......h....................h............W",
-    "W0.........................................W",
-    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
-  ],
-  "legend": {
-    "0": {
-      "type": "portal",
-      "to": "town",
-      "terrain": "."
-    },
-    "K": {
-      "type": "spawn",
-      "monster": "Smältkonungen",
-      "respawn": 600.0,
-      "terrain": "~"
-    },
-    "a": {
-      "type": "spawn",
-      "monster": "Lavavarelse",
-      "respawn": 35.0,
-      "terrain": "."
-    },
-    "h": {
-      "type": "spawn",
-      "monster": "Askhök",
-      "respawn": 25.0,
-      "terrain": "."
-    }
-  },
-  "spawn_table": [
-    {
-      "monster": "Lavavarelse",
-      "count": 6,
-      "respawn": 35.0
-    },
-    {
-      "monster": "Askhök",
-      "count": 4,
-      "respawn": 25.0
-    },
-    {
-      "monster": "Smältkonungen",
-      "count": 1,
-      "respawn": 600.0
-    },
-    {
-      "monster": "Glödmask",
-      "count": 5,
-      "respawn": 28.0
-    },
-    {
-      "monster": "Sotdemon",
-      "count": 3,
-      "respawn": 50.0
-    }
-  ]
+	"name": "Vulkankratern",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"W..h...h....h....h....h....h....h....h...h.W",
+		"W....WWW.h....h.....h....h....h....h....h..W",
+		"W..h.W.W..h.....h.....h.....h.....h.....h..W",
+		"W....WWW.h.....h.....h.....h.....h.....h...W",
+		"W..h.....h.....h.....h.....h.....h.....h..hW",
+		"W.l..l...l...l..............l....l...l...l.W",
+		"W..l...l...l..................l....l....l..W",
+		"W.l..l...l...l..~~~~~~~~~~~....l....l....l.W",
+		"W.a..a...a.a.~~~~s~~~~~~~~~~~a.a...a....a..W",
+		"W..a...a.a.~~~~~~~~~s~~~~~~~~~~a.a...a...a.W",
+		"W.a...a.a.~~~~~~~~s~~K~~~~~~~~~~.a.a...a..aW",
+		"W..a...a.a.~~~~~~~~~~~s~~~~~~~~~.a...a..a..W",
+		"W.a...a...a.~~~~~s~~~~~~~~~~~~~a...a.....a.W",
+		"W..a...a....a.~~~~~~s~~~~~~~~a...a......a..W",
+		"W..a...a.....a..~~~~~~~~~~~a...a.......a...W",
+		"W..........................................W",
+		"W..........................................W",
+		"W.P........................................W",
+		"W.0........................................W",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"0": {
+			"type": "portal",
+			"to": "town",
+			"terrain": "."
+		},
+		"h": {
+			"type": "spawn",
+			"monster": "Askhök",
+			"respawn": 22.0,
+			"terrain": "."
+		},
+		"l": {
+			"type": "spawn",
+			"monster": "Glödmask",
+			"respawn": 25.0,
+			"terrain": "."
+		},
+		"a": {
+			"type": "spawn",
+			"monster": "Lavavarelse",
+			"respawn": 30.0,
+			"terrain": "."
+		},
+		"s": {
+			"type": "spawn",
+			"monster": "Sotdemon",
+			"respawn": 45.0,
+			"terrain": "~"
+		},
+		"K": {
+			"type": "spawn",
+			"monster": "Smältkonungen",
+			"respawn": 3600.0,
+			"terrain": "~"
+		}
+	},
+	"spawn_table": []
 }

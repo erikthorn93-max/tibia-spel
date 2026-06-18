@@ -166,7 +166,6 @@ func _refresh() -> void:
 	stats.text = "Lv %d  XP %d/%d  Guld %d  %s %d" % [
 		GameState.level, GameState.experience, GameState.xp_to_next, GameState.gold,
 		GameState.skill_defs[wskill]["name"], GameState.effective_skill_level(wskill)]
-
 func _refresh_buffs() -> void:
 	var parts: Array = []
 	for b in GameState.active_buffs:
@@ -216,6 +215,10 @@ func _inv_row(id: String, qty: int, action: String, cb: Callable) -> HBoxContain
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 4)
 	row.mouse_filter = Control.MOUSE_FILTER_STOP
+	var _row_id := id
+	row.mouse_entered.connect(func():
+		ItemTooltip.show_for(_row_id, row.get_global_rect().position + Vector2(row.size.x + 4, 0)))
+	row.mouse_exited.connect(func(): ItemTooltip.hide_tooltip())
 	# Sprite (drag-källa)
 	var tex := TextureRect.new()
 	tex.custom_minimum_size = Vector2(36, 36)

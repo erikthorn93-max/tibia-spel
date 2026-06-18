@@ -1,0 +1,21 @@
+{
+	"name": "Thais Depot – Källare",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWW",
+		"WffffffffffffffffffffffW",
+		"WffffffffffffffffffffffW",
+		"WffffffPfffffffffffffffW",
+		"WfffffffnffffffffffffffW",
+		"WffffffffffffffffffffffW",
+		"WffffffffffffffffffffffW",
+		"WffffffffffffffffffffffW",
+		"WWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"n": {
+			"type": "stair_up",
+			"to": "thais_depot_int",
+			"terrain": "n"
+		}
+	}
+}

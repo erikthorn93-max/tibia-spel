@@ -1,0 +1,69 @@
+{
+	"name": "Orcklyftan",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"W,,,,,,,,,,,,,,,,,,,,,P,n,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,WWWWWWWWW,WWWWWWWWW,WWWWWWWWW,WWWWWWWWW,,,,,,W",
+		"W,WrrrrrrrW,WrrrrrrrW,WrrrrrrrW,WrrrrrrrW,,,,,,W",
+		"W,WrrrrrrrW,WrrrrrrrW,WrrrrrrrW,WrrrrrrrW,o,,,,W",
+		"W,WrrrrrrrW,WrrrrrrrW,WrrrrrrrW,WrrrrrrrW,,,,,,W",
+		"W,WrrrrrrrW,WrrrrrrrW,WrrrrrrrW,WrrrrrrrW,,,,,,W",
+		"W,WWWeWWWWW,WWWeWWWWW,WWWeWWWWW,WWWeWWWWW,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,s,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,WWWWWWWWW,,,,,,,,,,,,,,,,,,,,,WWWWWWWWW,o,,,,W",
+		"W,WrrrrrrrW,,,WWWWWWWWWWWWWWWWWWWWWrrrrrW,,,,,,W",
+		"W,WrrrrrrrW,,,WrrrrrrrrrrrrrrrrrrrWrrrrrW,,,,,,W",
+		"W,WrrrrrrrW,,,WrrrrrrrrrrrrrrrrrrrWrrrrrW,,,,,,W",
+		"W,WrrrrrrrW,,,WrrrrrrrrrrrrrrrrrrrWrrrrrW,,,,,,W",
+		"W,WWWeWWWWW,,,WrrrrrrrrrrrrrrrrrrrWeWWWWW,,,,,,W",
+		"W,,,,s,,,,,,,,WrrrrrrrrrrrrrrrrrrrW,,,,,,,,s,,,W",
+		"W,,,,,,,,,,,,,WrrrrrrrrrrrrrrrrrrrW,,,,,,,,,,,,W",
+		"W,WWWWWWWWW,,,WrrrrrrrrrKrrrrrrrrrWWWWWWW,o,,,,W",
+		"W,WrrrrrrrW,,,WrrrrrrrrrrrrrrrrrrrWrrrrrW,,,,,,W",
+		"W,WrrrrrrrW,,,WrrrrrrrrrrrrrrrrrrrWrrrrrW,,,,,,W",
+		"W,WrrrrrrrW,,,WrrrrrrrrrrrrrrrrrrrWrrrrrW,,,,,,W",
+		"W,WrrrrrrrW,,,WrrrrrrrrrrrrrrrrrrrWrrrrrW,,,,,,W",
+		"W,WWWeWWWWW,,,WrrrrrrrrrrrrrrrrrrrWeWWWWW,,,,,,W",
+		"W,,,,,,,,,,,,,WrrrrrrrrrrrrrrrrrrrW,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,WWWWWWWWWW,WWWWWWWWWW,,,,,,,o,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,o,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,o,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,s,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,d,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"n": {
+			"type": "stair_up",
+			"to": "town",
+			"terrain": "n"
+		},
+		"d": {
+			"type": "portal",
+			"to": "town",
+			"terrain": ","
+		},
+		"e": {
+			"type": "entrance",
+			"terrain": ","
+		},
+		"o": {
+			"type": "spawn",
+			"monster": "Ork"
+		},
+		"s": {
+			"type": "spawn",
+			"monster": "Orkshamanen"
+		},
+		"K": {
+			"type": "spawn",
+			"monster": "Orköverherre"
+		}
+	}
+}

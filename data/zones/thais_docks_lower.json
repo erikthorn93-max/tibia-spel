@@ -1,0 +1,28 @@
+{
+	"name": "Docks – Basement",
+	"tiles": [
+		"WWWWWWWWWWWWWWWW",
+		"W,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,W",
+		"W,,,,G,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,W",
+		"W,,,,,,,P,,,,,,W",
+		"W,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,nW",
+		"W,,,,,,,,,,,,,,W",
+		"WWWWWWWWWWWWWWWW",
+		"WWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"G": {
+			"type": "npc_spawn",
+			"npc": "npc_gamel"
+		},
+		"n": {
+			"type": "stair_up",
+			"to": "thais_docks",
+			"terrain": "n"
+		}
+	}
+}

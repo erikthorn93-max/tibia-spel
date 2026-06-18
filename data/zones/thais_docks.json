@@ -1,0 +1,44 @@
+{
+	"name": "Thais Docks",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWW",
+		"WwWWWWWWWWWWWWWWWWWWWWwW",
+		"W,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,C,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,n,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,g,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,P,,,,,,,,,,,W",
+		"W,,,,,,,,,,dd,,,,,,,,,,W",
+		"WWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"d": {
+			"type": "portal",
+			"to": "town",
+			"terrain": ","
+		},
+		"C": {
+			"type": "npc_spawn",
+			"npc": "npc_captain"
+		},
+		"n": {
+			"type": "stair_up",
+			"to": "thais_docks_upper",
+			"terrain": "n"
+		},
+		"g": {
+			"type": "stair_down",
+			"to": "thais_docks_lower",
+			"terrain": "n"
+		}
+	}
+}

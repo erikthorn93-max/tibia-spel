@@ -1,0 +1,69 @@
+{
+	"name": "Minotaurlabyrinten",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WWn,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,WW",
+		"WWP,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,WW",
+		"WW,WWWWWWWWWWWW,,,,,,,,,,,,,,WWWWWWWWWWWWWWWWWWWW,WW",
+		"WW,WWWWWWWWWWWW,,,,,m,,,,,,,,WWWWWWWWWWWWWWWWWWWW,WW",
+		"WW,WWWWWWWWWWWW,,,,,,,,,,,,,,WWWWWWWWWWWWWWWWWWWW,WW",
+		"WW,WWWWWWWWWWWW,,,,,,,,,,,,,,WWWWWWWWWWWWWWWWWWWW,WW",
+		"WW,WWWWWWWWWWWW,,,,,,,,,g,,,,WWWWWWWWWWWWWWWWWWWW,WW",
+		"WW,WWWWWWWWWWWW,WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW,WW",
+		"WW,,,,,,,,,,,,,,,,,,,,,,,,,,,,,WWWWWWWWWWWWWWWWWW,WW",
+		"WW,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,WW,WW",
+		"WW,WWWWWWWWWWWW,WWWWWWWWWWWWWW,,,,,,,,m,,,,,,,,WW,WW",
+		"WW,WWWWWWWWWWWW,WWWWWWWWWWWWWW,,,,,,,,,,,,,,,,,WW,WW",
+		"WW,WWWWWWWWWWWW,WWWWWWWWWWWWWW,,,,,,,,,,,,,,,,,WW,WW",
+		"WW,WWWWWWWWWWWW,WWWWWWWWWWWWWW,,,,,,,,,,,,,,,,,WW,WW",
+		"WW,WWWWWWWWWWWW,WWWWWWWWWWWWWW,,,,,,,,,,,,,,,,,WW,WW",
+		"WW,WWWWWWWWWWWW,WWWWWWW,WWWWWW,,,,,,,,,,,,,,,,,WW,WW",
+		"WW,WWWWWWWWWWWW,WW,,,,,,,,,,,W,,,,,,,,,,g,,,,,,WW,WW",
+		"WW,WWWWWWWWWWWW,WW,,,,,,,,,,,W,WWWWWWWWWWWWWWWWWW,WW",
+		"WW,WWWWW,WWWWWW,WW,,,,,,,,,,,W,,,,,,,,,,,,,,,m,,,,WW",
+		"WW,,,,,,,,,,,WW,WW,,,,,,,,,,,W,,,,,,,,,,,,,,,,,,,,WW",
+		"WW,,,,,,,,,,,WWWWW,,,,,,,,,,,W,WWWWWWWWWWWWWWWWWW,WW",
+		"WW,,,,,,,,,,,WWWWW,,,,,K,,,,,W,WWWWWWWWWWWWWWWWWW,WW",
+		"WW,,,,,,,,,,,WWWWW,,,,,,,,,,,W,WWWWWWWWWWWWWWWWWW,WW",
+		"WW,,,,m,,,,,,WWWWW,,,,,,,,,,,W,WWWWWWWWWWWWWWWWWW,WW",
+		"WW,,,,,,,,,,,WWWWW,,,,,,,,,,,W,WWWWWWWWWWWWWWWWWW,WW",
+		"WW,,,,,,,,,,,WWWWW,,,,,,,,,,,W,WWWWWWWWWWWWWWWWWW,WW",
+		"WW,,,,,,g,,,,WWWWW,,,,,,,,,,,W,WWWWWWWWWWWWWWWWWW,WW",
+		"WW,WWWWW,WWWWWWWWWWWWWWWWWWWWW,WWWWWWWWWWWWWWWWWW,WW",
+		"WW,WWWWW,WWWWWW,,,,,,,,,,,,,,,,,,,,,,,,,,WWWWWWWW,WW",
+		"WW,WWWWW,WWWWWW,,,,,,,,,,,,,,,,,,,,,,,,,,WWWWWWWW,WW",
+		"WW,WWWWW,WWWWWWW,,,,,,,,,,,,,W,WWWWWWWWWWWWWWWWWW,WW",
+		"WW,WWWWW,WWWWWWW,,,,,,m,,,,,,W,WWWWWWWWWWWWWWWWWW,WW",
+		"WW,WWWWW,WWWWWWW,,,,,,,,,,,,,W,WWWWWWWWWWWWWWWWWW,WW",
+		"WW,WWWWW,WWWWWWW,,,,,,,,g,,,,W,WWWWWWWWWWWWWWWWWW,WW",
+		"WW,WWWWW,WWWWWWW,,,,,,,,,,,,,W,WWWWWWWWWWWWWWWWWW,WW",
+		"WW,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,dWW",
+		"WW,,,,,,,,,,,,,m,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,WW",
+		"WWWWWWWW,WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"n": {
+			"type": "stair_up",
+			"to": "town",
+			"terrain": "n"
+		},
+		"d": {
+			"type": "portal",
+			"to": "town",
+			"terrain": ","
+		},
+		"m": {
+			"type": "spawn",
+			"monster": "Minotaur"
+		},
+		"g": {
+			"type": "spawn",
+			"monster": "MinotaurVakt"
+		},
+		"K": {
+			"type": "spawn",
+			"monster": "MinotaurKungen"
+		}
+	}
+}

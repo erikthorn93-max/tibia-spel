@@ -28,6 +28,69 @@ var enraged := false       # publik — enrage-fas aktiv
 @onready var _hp_bar: ColorRect  = $HpBar
 @onready var _name_lbl: Label    = $NameLabel
 @onready var _click_area: Area2D = $ClickArea
+@onready var _sprite: Sprite2D   = $Sprite2D
+
+## Namn → sprite-filnamn (utan .png). Används i _load_sprite().
+const SPRITE_MAP: Dictionary = {
+	"Råtta":                   "ratta",
+	"Orm":                     "orm",
+	"Spindel":                 "spindel",
+	"Skelett":                 "skelett",
+	"Skogsvargen":             "skogsvargen",
+	"Skogsbjörn":              "skogsbjorn",
+	"Ghoul":                   "ghoul",
+	"Pirat":                   "pirat",
+	"Pirat Skytt":             "pirat_skytt",
+	"Strandkrabba":            "strandkrabba",
+	"Giftpadda":               "giftpadda",
+	"Sumpvarelse":             "sumpvarelse",
+	"Sumpkräla":               "sumpkrala",
+	"Träskdjävul":             "traskdjavul",
+	"Isvarelse":               "isvarelse",
+	"Istroll":                 "istroll",
+	"Isdraken":                "isdraken",
+	"Frostörn":                "frostorn",
+	"Snöuggla":                "snouggla",
+	"Ökengam":                 "okengam",
+	"Ökenmumie":               "okenmumie",
+	"Sandorm":                 "sandorm",
+	"Sandvaranen":             "sandvaranen",
+	"Sjöorm":                  "sjoorm",
+	"Skelettkrigare":          "skelettkrigare",
+	"Glödmask":                "glodmask",
+	"Lavavarelse":             "lavavarelse",
+	"Sotdemon":                "sotdemon",
+	"Askhök":                  "askhok",
+	"Fantom":                  "fantom",
+	"Jättespindel":            "jattespindel",
+	"Drunknad sjöman":         "drunknad_sjoman",
+	"Farao Khem-Ra":           "farao_khem-ra",
+	"Ghulkungen":              "ghulkungen",
+	"Piratkapten Svartöga":    "piratkapten_svartoga",
+	"Smältkonungen":           "smaltkonungen",
+	"Urskogsvältaren":         "urskogsvaltaren",
+	# Nya monster
+	"Varg":                    "Varg",
+	"Goblin":                  "Goblin",
+	"Goblinsoldat":            "Goblinsoldat",
+	"Bandit":                  "Bandit",
+	"Troll":                   "Troll",
+	"Trollhövding":            "Trollhövding",
+	"Ork":                     "Ork",
+	"Orkshamanen":             "Orkshamanen",
+	"Orköverherre":            "Orköverherre",
+	"Minotaur":                "Minotaur",
+	"MinotaurVakt":            "MinotaurVakt",
+	"MinotaurKungen":          "MinotaurKungen",
+	"Dvärg":                   "Dvärg",
+	"DvärgenSmeden":           "DvärgenSmeden",
+	"Vampyr":                  "Vampyr",
+	"VampyrHerre":             "VampyrHerre",
+	"Nekromant":               "Nekromant",
+	"Lich":                    "Lich",
+	"Elddraken":               "Elddraken",
+	"Ärkedemonen":             "Ärkedemonen",
+}
 
 func _ready() -> void:
 	# Lägg till bakgrundsbar direkt bakom HpBar
@@ -48,6 +111,17 @@ func _on_click_area_input(_viewport: Node, event: InputEvent, _shape_idx: int) -
 		if World.player != null and not dead:
 			World.player.set_target(self)
 
+func _load_sprite() -> void:
+	var key: String = str(SPRITE_MAP.get(monster_name, ""))
+	if key.is_empty():
+		return
+	var path: String = "res://assets/sprites/monsters/%s.png" % key
+	var tex: Texture2D = load(path) as Texture2D
+	if tex != null:
+		_sprite.texture = tex
+	else:
+		push_warning("Monster sprite saknas: %s" % path)
+
 func setup(mname: String, t: Vector2i, z: Node2D, respawn := -1.0) -> void:
 	monster_name = mname
 	tile = t
@@ -66,6 +140,8 @@ func setup(mname: String, t: Vector2i, z: Node2D, respawn := -1.0) -> void:
 		exp = int(float(exp) * 1.2)
 	position = zone.tile_to_world(tile)
 	_from = position; _to = position; _move_t = 1.0
+	zone.occupy(tile, self)
+	_load_sprite()
 	_refresh_label()
 
 func _refresh_label() -> void:
@@ -125,7 +201,7 @@ func _process(delta: float) -> void:
 		_path = zone.find_path(tile, player_tile)
 		if _path.size() > 1:
 			var next: Vector2i = _path[1]
-			if next != player_tile and zone.is_walkable(next):
+			if next != player_tile and zone.is_walkable(next) and not zone.is_occupied(next):
 				_step_to(next)
 
 ## Applicerar en statuseffekt på monstret (skriver över om samma id redan finns).
@@ -188,6 +264,8 @@ func _try_apply_ability() -> void:
 				float(ab.get("duration", 3.0)), 0.0)
 
 func _step_to(next: Vector2i) -> void:
+	zone.vacate(tile)
+	zone.occupy(next, self)
 	tile = next
 	_from = position
 	_to = zone.tile_to_world(next)
@@ -223,6 +301,8 @@ func _spawn_damage_number(dmg: float, crit := false) -> void:
 
 func _die() -> void:
 	dead = true
+	if is_instance_valid(zone):
+		zone.vacate(tile)
 	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
 	GameState.gain_exp(exp)
 	var wskill := GameState.weapon_skill()

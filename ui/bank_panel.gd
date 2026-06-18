@@ -1,4 +1,4 @@
-extends PanelContainer
+extends DraggablePanelContainer
 ## Bankpanel: sätt in föremål från inventory → bank, ta ut från bank → inventory.
 ## Tvåkolumns-layout: Inventering (vänster) | Bankförvar (höger).
 ## Klick på föremål = flytta hela stacken. Shift+klick = flytta 1 st.

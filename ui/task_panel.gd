@@ -1,4 +1,4 @@
-extends PanelContainer
+extends DraggablePanelContainer
 ## Taskpanel hos Taskmastern: Tillgängliga / Aktiva / Klara tasks.
 
 var _list: VBoxContainer

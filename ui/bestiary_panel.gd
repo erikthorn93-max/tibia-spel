@@ -1,4 +1,4 @@
-extends PanelContainer
+extends DraggablePanelContainer
 ## Bestiary-panel (B): kills, tier-stjärnor och skadebonus per monster.
 ## Odödade monster visas som "???".
 

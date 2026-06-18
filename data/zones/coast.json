@@ -4,18 +4,18 @@
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 		"W~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~W",
 		"W~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~W",
-		"W~~~~~~f~~~~~~~~~~~m~~~~~~~~~~~l~~~~~~~W",
-		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-		"WbbbGbbbbbbbbbcbbbbbbbbbbobbbbbbbbDbbbbW",
-		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-		"WbbHbbbbbbbbbbbbqbbbbbbbbbbkbbbbbbbbbbbW",
-		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-		"WbbTbbbbbbbbbbbbbbbbcbbbbbbbbbbobbbbbbbW",
-		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-		"Wbbbbbbbbbb0bbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-		"WbbbbbbbbbbPbbbbbbbbbbbbbbqbbbbbbbbbbbbW",
-		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
+		"W~~~~~~f~~~~~~~~~~~m~~~~~l~~~~~~~~~~~~~W",
+		"Wccccccccccccccccccccccccccccccccccccccc",
+		"Wbcbcbbcbcbbbbbbcbbbcbbbbbcbbcbbbcbbbcbb",
+		"Wbbqqbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+		"Wbbbbbbqbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+		"WbbHbbbbbbbbbbbbqbbbbbbbbkbbbbbbbbbbbbbb",
+		"Wbbbbqbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+		"WbbTbbbbbbbqbbbbbbbbbbbbbbkkbbbbbbobbbbb",
+		"Wbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+		"Wbbbbbbbbbbobbbbbbbqbbbbbbbbbbbbbobbbbbb",
+		"WbbbbbbbbbbbPbbbbbbbbbbbbbDbbbbbbbbbbbbb",
+		"Wbbbbbbbbbbb0bbbbbbbbbbbbbbbbbbbbbbbbbbb",
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
 	],
 	"legend": {
@@ -24,22 +24,12 @@
 			"to": "town",
 			"terrain": "b"
 		},
-		"G": {
-			"type": "station",
-			"station": "stove",
-			"terrain": "b"
-		},
 		"H": {
 			"type": "shop",
 			"terrain": "b"
 		},
 		"T": {
 			"type": "taskmaster",
-			"terrain": "b"
-		},
-		"D": {
-			"type": "dungeon_entrance",
-			"theme": "sjunket_skepp",
 			"terrain": "b"
 		},
 		"f": {
@@ -72,41 +62,21 @@
 		"q": {
 			"type": "spawn",
 			"monster": "Pirat",
-			"respawn": 30.0,
+			"respawn": 28.0,
 			"terrain": "b"
 		},
 		"k": {
 			"type": "spawn",
 			"monster": "Pirat Skytt",
-			"respawn": 35.0,
+			"respawn": 32.0,
+			"terrain": "b"
+		},
+		"D": {
+			"type": "spawn",
+			"monster": "Drunknad sjöman",
+			"respawn": 42.0,
 			"terrain": "b"
 		}
 	},
-	"spawn_table": [
-		{
-			"monster": "Strandkrabba",
-			"count": 4,
-			"respawn": 35.0
-		},
-		{
-			"monster": "Sjöorm",
-			"count": 3,
-			"respawn": 45.0
-		},
-		{
-			"monster": "Pirat",
-			"count": 3,
-			"respawn": 50.0
-		},
-		{
-			"monster": "Pirat Skytt",
-			"count": 2,
-			"respawn": 50.0
-		},
-		{
-			"monster": "Drunknad sjöman",
-			"count": 2,
-			"respawn": 55.0
-		}
-	]
+	"spawn_table": []
 }

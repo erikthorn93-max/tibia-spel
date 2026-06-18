@@ -1,0 +1,47 @@
+{
+	"name": "Rain Castle",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WfffffffffffffffWffffffffffffffWWW",
+		"WfffffffffffffffWffffffffffffffWWW",
+		"WfffffffffffffffffffffffffffffffWW",
+		"WfffffffffffffffffffffffffffffffWW",
+		"WfffffffffffffffffffffffffffffffWW",
+		"WfWWWWWWWW,WWWWWWWWW,WWWWWWWWWFWWW",
+		"WfffffffffffffffffffffffffffffffWW",
+		"WfffffffffffffffffffffffffffffffWW",
+		"WfffffffffffffffffffffffffffffffWW",
+		"WfffffffffffffffffffffffffffffffWW",
+		"WfffffffffffnfffffffffffffffffffWW",
+		"WfffffffffffffffffffffffffffffffWW",
+		"WfffffffffffffffffffffffffffffffWW",
+		"WfffffffffffffffffffffffffffffffWW",
+		"WfffffffffffffffffffffffffffffffWW",
+		"WfWWWWWWWW,WWWWWWWWW,WWWWWWWWWFWWW",
+		"WfffffffffffffffffffffffffffffffWW",
+		"WfffffffffffffffffffffffffffffffWW",
+		"WfffffffffffffffffffffffffffffffWW",
+		"WfffffffffffffffffffffffffffffffWW",
+		"WfffffffffffffffffffffffffffffffWW",
+		"WfffffffffffffffWffffffffffffffWWW",
+		"WffffffffffffffPWffffffffffffffWWW",
+		"WWWWWWWWWWWWWWWdWWWWWWWWWWWWWWWWWW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"n": {
+			"type": "stair_up",
+			"to": "rain_castle_f2",
+			"terrain": "n"
+		},
+		"d": {
+			"type": "portal",
+			"to": "town",
+			"terrain": ","
+		},
+		"A": {
+			"type": "npc_spawn",
+			"npc": "npc_guard_castle"
+		}
+	}
+}
