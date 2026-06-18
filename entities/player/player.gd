@@ -79,14 +79,33 @@ func _update_movement(delta: float) -> void:
 	if GameState.has_status("stun"):
 		return   # stun-status: spelaren kan inte röra sig
 	var effective_speed := move_speed * (0.5 if GameState.has_status("slow") else 1.0)
-	if _move_t < 1.0:
-		_move_t = minf(_move_t + delta * effective_speed, 1.0)
-		position = _from.lerp(_to, _move_t)
-		if _move_t >= 1.0:
+	# Förbruka hela frame-budgeten: avsluta pågående steg och fortsätt sömlöst in
+	# i nästa (carry-over) så det inte uppstår en stillastående frame vid varje
+	# tile-gräns — det är det som ger den synliga hackningen.
+	var budget := delta
+	while budget > 0.0:
+		if _move_t < 1.0:
+			var need := (1.0 - _move_t) / effective_speed   # tid kvar för steget
+			if budget < need:
+				_move_t += budget * effective_speed
+				position = _from.lerp(_to, _move_t)
+				return
+			# Steget hinner bli klart denna frame — förbruka exakt så mycket tid.
+			budget -= need
+			_move_t = 1.0
+			position = _to
+			var prev_zone := zone
 			GameState.player_tile = tile
 			QuestSystem.record_position(GameState.current_zone, tile)
 			_check_portal()
-		return
+			if zone != prev_zone:
+				return   # zonbyte skedde — ny zon/position hanterar resten
+		elif not _begin_next_step():
+			return        # ingen input/auto-path — stå stilla
+
+## Väljer nästa rörelseriktning (manuell input > auto-walk). Returnerar true
+## om ett steg faktiskt startades.
+func _begin_next_step() -> bool:
 	var dir := Vector2i.ZERO
 	if Input.is_action_pressed("move_up"): dir = Vector2i.UP
 	elif Input.is_action_pressed("move_down"): dir = Vector2i.DOWN
@@ -95,22 +114,22 @@ func _update_movement(delta: float) -> void:
 	if dir != Vector2i.ZERO:
 		_auto_path = []          # manuell rörelse avbryter auto-walk
 		gather_target = null
-		_step(dir)
-		return
+		return _step(dir)
 	if _auto_path.size() > 1:    # auto-walk mot gather-mål
 		var next: Vector2i = _auto_path[1]
 		_auto_path.remove_at(0)
 		var d := next - tile
 		if d != Vector2i.ZERO and zone.is_walkable(next):
-			_step(d)
+			return _step(d)
+	return false
 
-func _step(dir: Vector2i) -> void:
+func _step(dir: Vector2i) -> bool:
 	facing = dir
 	visual.face(dir)
 	var next := tile + dir
 	if not zone.is_walkable(next):
 		_try_bump_unlock(next)
-		return
+		return false
 	_from = position
 	_to = zone.tile_to_world(next)
 	tile = next
@@ -126,6 +145,7 @@ func _step(dir: Vector2i) -> void:
 		move_speed = 4.4
 	else:
 		move_speed = 4.0
+	return true
 
 ## Gå mot låst gate/genväg: lås upp om kraven är uppfyllda, annars visa hint.
 func _try_bump_unlock(t: Vector2i) -> void:
