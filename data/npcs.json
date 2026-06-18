@@ -3,8 +3,8 @@
 		"name": "Elder Rowan",
 		"zone": "town",
 		"position": [
-			9,
-			42
+			69,
+			87
 		],
 		"voice": {
 			"model": "en_GB-alan-medium",
@@ -20,8 +20,8 @@
 		"name": "Brom the Blacksmith",
 		"zone": "town",
 		"position": [
-			6,
-			44
+			67,
+			87
 		],
 		"voice": {
 			"model": "en_US-joe-medium",
@@ -54,8 +54,8 @@
 		"name": "Old Finn",
 		"zone": "town",
 		"position": [
-			13,
-			55
+			73,
+			100
 		],
 		"voice": {
 			"model": "en_GB-northern_english_male-medium",
@@ -156,8 +156,8 @@
 		"name": "Father Quentin",
 		"zone": "tibianus_temple",
 		"position": [
-			13,
-			7
+			14,
+			8
 		],
 		"voice": {
 			"model": "en_US-lessac-medium",
@@ -338,5 +338,39 @@
 			"Step in if you dare."
 		],
 		"dialogue_root": "arena_master_root"
+	},
+	"npc_guard_castle": {
+		"name": "Castle Guard",
+		"zone": "rain_castle",
+		"position": [
+			7,
+			3
+		],
+		"voice": {
+			"model": "en_US-joe-medium",
+			"length_scale": 0.95
+		},
+		"barks": [
+			"Halt. State your business.",
+			"None pass to the King unannounced."
+		],
+		"dialogue_root": "guard_castle_root"
+	},
+	"npc_druid": {
+		"name": "Elathriel",
+		"zone": "druid_guild",
+		"position": [
+			12,
+			5
+		],
+		"voice": {
+			"model": "en_US-lessac-medium",
+			"length_scale": 1.05
+		},
+		"barks": [
+			"The roots remember what stone forgets.",
+			"Hush — can you hear the green growing?"
+		],
+		"dialogue_root": "druid_root"
 	}
 }

@@ -82,5 +82,5 @@ func test_sjovagen_quest_present():
 	assert_eq(String(quests["quest_sjovagen"]["giver"]), "npc_captain")
 	assert_true(npcs.has("npc_captain"), "Brandt saknas")
 	assert_true(npcs.has("npc_fishmonger"), "Saltgreta saknas")
-	assert_eq(String(npcs["npc_captain"]["zone"]), "town")
+	assert_eq(String(npcs["npc_captain"]["zone"]), "thais_docks")
 	assert_eq(String(npcs["npc_fishmonger"]["zone"]), "coast")
