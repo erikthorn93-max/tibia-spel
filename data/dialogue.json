@@ -714,5 +714,109 @@
 			{"text": "Back.", "next": "druid_root"},
 			{"text": "Goodbye.", "next": null}
 		]
+	},
+	"ranger_root": {
+		"speaker": "npc_ranger", "emotion": "neutral",
+		"text": "Hold there, traveller. The north road's no place to wander idle — bandits and worse roam these fields.",
+		"choices": [
+			{"text": "Who are you?", "next": "ranger_who"},
+			{"text": "Bandits, you say?", "next": "ranger_fields1",
+			 "conditions": [{"type": "quest_available", "quest": "quest_fields_1"}]},
+			{"text": "The bandits are dealt with.", "next": "ranger_reward",
+			 "conditions": [{"type": "quest_step", "quest": "quest_fields_1", "step": 1}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_fields_1"}]},
+			{"text": "What else stalks these fields?", "next": "ranger_fields2",
+			 "conditions": [{"type": "quest_available", "quest": "quest_fields_2"}]},
+			{"text": "I have the bear claws you wanted.", "next": "ranger_reward",
+			 "conditions": [{"type": "quest_step", "quest": "quest_fields_2", "step": 1}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_fields_2"}]},
+			{"text": "Goodbye.", "next": null}
+		]
+	},
+	"ranger_who": {
+		"speaker": "npc_ranger", "emotion": "neutral",
+		"text": "Aldric. I scout the northern marches for the town watch. Someone has to keep the road open.",
+		"choices": [
+			{"text": "Back.", "next": "ranger_root"},
+			{"text": "Goodbye.", "next": null}
+		]
+	},
+	"ranger_fields1": {
+		"speaker": "npc_ranger", "emotion": "worried",
+		"text": "A band of cutthroats has been waylaying merchants along the north road. Thin them out — six should break their nerve.",
+		"choices": [
+			{"text": "Consider it done.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_fields_1"}]},
+			{"text": "Not yet.", "next": "ranger_root"}
+		]
+	},
+	"ranger_fields2": {
+		"speaker": "npc_ranger", "emotion": "neutral",
+		"text": "The forest bears have grown bold and come down into the fields. Bring me five bear claws and I'll know the worst of them are dealt with.",
+		"choices": [
+			{"text": "I'll hunt them.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_fields_2"}]},
+			{"text": "Not yet.", "next": "ranger_root"}
+		]
+	},
+	"ranger_reward": {
+		"speaker": "npc_ranger", "emotion": "friendly",
+		"text": "Good work. The road's a little safer for it — and you've my thanks, and your reward.",
+		"choices": [
+			{"text": "Glad to help.", "next": null},
+			{"text": "Anything more?", "next": "ranger_root"}
+		]
+	},
+	"hermit_root": {
+		"speaker": "npc_hermit", "emotion": "neutral",
+		"text": "Few come this deep into the Trollmarken, and fewer leave. Speak quickly, child — the marsh listens.",
+		"choices": [
+			{"text": "Who are you?", "next": "hermit_who"},
+			{"text": "Can I be of use?", "next": "hermit_wilds1",
+			 "conditions": [{"type": "quest_available", "quest": "quest_wilds_1"}]},
+			{"text": "I've gathered the toad glands.", "next": "hermit_reward",
+			 "conditions": [{"type": "quest_step", "quest": "quest_wilds_1", "step": 1}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_wilds_1"}]},
+			{"text": "What else troubles the marsh?", "next": "hermit_wilds2",
+			 "conditions": [{"type": "quest_available", "quest": "quest_wilds_2"}]},
+			{"text": "The orcs are scattered.", "next": "hermit_reward",
+			 "conditions": [{"type": "quest_step", "quest": "quest_wilds_2", "step": 1}],
+			 "actions": [{"type": "advance_quest", "quest": "quest_wilds_2"}]},
+			{"text": "Goodbye.", "next": null}
+		]
+	},
+	"hermit_who": {
+		"speaker": "npc_hermit", "emotion": "neutral",
+		"text": "Morwenna, some call me. Witch, hermit, madwoman — names mean little out here. I tend what the marsh remembers.",
+		"choices": [
+			{"text": "Back.", "next": "hermit_root"},
+			{"text": "Goodbye.", "next": null}
+		]
+	},
+	"hermit_wilds1": {
+		"speaker": "npc_hermit", "emotion": "neutral",
+		"text": "The poison toads carry glands rich with venom — and with cure, in the right hands. Bring me five and I'll brew something worth your trouble.",
+		"choices": [
+			{"text": "I'll gather them.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_wilds_1"}]},
+			{"text": "Not yet.", "next": "hermit_root"}
+		]
+	},
+	"hermit_wilds2": {
+		"speaker": "npc_hermit", "emotion": "worried",
+		"text": "Orcs have crossed into the Trollmarken from the rift, fouling the water and the old ways. Break their warband — six at least — before they take root.",
+		"choices": [
+			{"text": "They'll fall.", "next": null,
+			 "actions": [{"type": "start_quest", "quest": "quest_wilds_2"}]},
+			{"text": "Not yet.", "next": "hermit_root"}
+		]
+	},
+	"hermit_reward": {
+		"speaker": "npc_hermit", "emotion": "friendly",
+		"text": "So. You return, and breathing. The marsh will remember that — and so will I. Take what you've earned.",
+		"choices": [
+			{"text": "My thanks.", "next": null},
+			{"text": "Is there more?", "next": "hermit_root"}
+		]
 	}
 }

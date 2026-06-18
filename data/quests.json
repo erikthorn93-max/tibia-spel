@@ -308,5 +308,103 @@
       "xp": 2000,
       "gold": 1200
     }
+  },
+  "quest_fields_1": {
+    "name": "Vägens väktare",
+    "giver": "npc_ranger",
+    "requires": [],
+    "steps": [
+      {
+        "type": "kill",
+        "monster": "Bandit",
+        "count": 6,
+        "hint": "Slå ner 6 banditer som plundrar norra vägen."
+      },
+      {
+        "type": "talk_to",
+        "npc": "npc_ranger",
+        "hint": "Återvänd till Aldric i Norra landsbygden."
+      }
+    ],
+    "rewards": {
+      "xp": 600,
+      "gold": 250
+    }
+  },
+  "quest_fields_2": {
+    "name": "Björnens hjärta",
+    "giver": "npc_ranger",
+    "requires": [
+      "quest_fields_1"
+    ],
+    "steps": [
+      {
+        "type": "collect",
+        "item": "bear_claw",
+        "count": 5,
+        "hint": "Samla 5 björnklor från Skogsbjörnar i landsbygden."
+      },
+      {
+        "type": "talk_to",
+        "npc": "npc_ranger",
+        "hint": "Lämna klorna till Aldric."
+      }
+    ],
+    "rewards": {
+      "xp": 900,
+      "gold": 400,
+      "items": {
+        "leather_vest": 1
+      }
+    }
+  },
+  "quest_wilds_1": {
+    "name": "Paddans gift",
+    "giver": "npc_hermit",
+    "requires": [],
+    "steps": [
+      {
+        "type": "collect",
+        "item": "toad_gland",
+        "count": 5,
+        "hint": "Samla 5 paddkörtlar från Giftpaddor i Trollmarken."
+      },
+      {
+        "type": "talk_to",
+        "npc": "npc_hermit",
+        "hint": "Ge körtlarna till Morwenna."
+      }
+    ],
+    "rewards": {
+      "xp": 700,
+      "gold": 350
+    }
+  },
+  "quest_wilds_2": {
+    "name": "Orkernas framfart",
+    "giver": "npc_hermit",
+    "requires": [
+      "quest_wilds_1"
+    ],
+    "steps": [
+      {
+        "type": "kill",
+        "monster": "Ork",
+        "count": 6,
+        "hint": "Bryt orkernas krigsband — döda 6 orker i Trollmarken."
+      },
+      {
+        "type": "talk_to",
+        "npc": "npc_hermit",
+        "hint": "Berätta för Morwenna att orkerna är skingrade."
+      }
+    ],
+    "rewards": {
+      "xp": 1100,
+      "gold": 500,
+      "items": {
+        "antidote_potion": 3
+      }
+    }
   }
 }

@@ -372,5 +372,39 @@
 			"Hush — can you hear the green growing?"
 		],
 		"dialogue_root": "druid_root"
+	},
+	"npc_ranger": {
+		"name": "Aldric the Ranger",
+		"zone": "thais_fields",
+		"position": [
+			62,
+			97
+		],
+		"voice": {
+			"model": "en_GB-northern_english_male-medium",
+			"length_scale": 1.0
+		},
+		"barks": [
+			"The road's quiet... too quiet.",
+			"Keep your blade loose out here."
+		],
+		"dialogue_root": "ranger_root"
+	},
+	"npc_hermit": {
+		"name": "Morwenna the Marsh-Witch",
+		"zone": "thais_wilds",
+		"position": [
+			58,
+			3
+		],
+		"voice": {
+			"model": "en_US-lessac-medium",
+			"length_scale": 1.05
+		},
+		"barks": [
+			"The marsh whispers your name.",
+			"Mind where you step, child."
+		],
+		"dialogue_root": "hermit_root"
 	}
 }
