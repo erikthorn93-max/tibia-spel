@@ -2164,5 +2164,194 @@
 				"next": "woodward_root"
 			}
 		]
+	},
+	"prospector_root": {
+		"speaker": "npc_prospector",
+		"emotion": "neutral",
+		"text": "Down from the heights, are ye? This pass is no easy road — trolls on the cliffs, spiders in the dark, and worse the deeper ye go.",
+		"choices": [
+			{
+				"text": "Who are you?",
+				"next": "prospector_who"
+			},
+			{
+				"text": "Trolls, you say?",
+				"next": "prospector_m1",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_mountains_1"
+					}
+				]
+			},
+			{
+				"text": "The trolls are cleared.",
+				"next": "prospector_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_mountains_1",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_mountains_1"
+					}
+				]
+			},
+			{
+				"text": "What's in the dark?",
+				"next": "prospector_m2",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_mountains_2"
+					}
+				]
+			},
+			{
+				"text": "I have the spider silk.",
+				"next": "prospector_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_mountains_2",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_mountains_2"
+					}
+				]
+			},
+			{
+				"text": "And the dwarves up here?",
+				"next": "prospector_m3",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_mountains_3"
+					}
+				]
+			},
+			{
+				"text": "I gathered the dwarf beards.",
+				"next": "prospector_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_mountains_3",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_mountains_3"
+					}
+				]
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
+		]
+	},
+	"prospector_who": {
+		"speaker": "npc_prospector",
+		"emotion": "neutral",
+		"text": "Durin Stonebreaker, last of a prospecting clan. I read these rocks for iron, gold, and the rare gem the mountain hides. Hard work, honest stone.",
+		"choices": [
+			{
+				"text": "Back.",
+				"next": "prospector_root"
+			},
+			{
+				"text": "Goodbye.",
+				"next": null
+			}
+		]
+	},
+	"prospector_m1": {
+		"speaker": "npc_prospector",
+		"emotion": "worried",
+		"text": "Mountain trolls have come down onto the pass, hurling rocks at any who climb. Put six of them down and a man might mine in peace again.",
+		"choices": [
+			{
+				"text": "I'll break them.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_mountains_1"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "prospector_root"
+			}
+		]
+	},
+	"prospector_m2": {
+		"speaker": "npc_prospector",
+		"emotion": "neutral",
+		"text": "Giant spiders nest in the old shafts — their silk is strong as steel cord, worth a fortune to the right smith. Bring me five skeins.",
+		"choices": [
+			{
+				"text": "I'll fetch the silk.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_mountains_2"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "prospector_root"
+			}
+		]
+	},
+	"prospector_m3": {
+		"speaker": "npc_prospector",
+		"emotion": "neutral",
+		"text": "A few of my kin wandered up here and lost their wits to the deep. I'll not harm them — but a lock of beard from four of them tells me who still lives. Bring them, gently.",
+		"choices": [
+			{
+				"text": "I'll find them.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_mountains_3"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "prospector_root"
+			}
+		]
+	},
+	"prospector_reward": {
+		"speaker": "npc_prospector",
+		"emotion": "friendly",
+		"text": "Aye, that's the spirit of the mountain in ye. Take your due — ye've earned it twice over. The pass is the better for your back.",
+		"choices": [
+			{
+				"text": "Glad to help.",
+				"next": null
+			},
+			{
+				"text": "Anything more?",
+				"next": "prospector_root"
+			}
+		]
 	}
 }

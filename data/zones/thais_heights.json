@@ -50,6 +50,11 @@
 			"type": "node",
 			"node": "farm_patch",
 			"terrain": "."
+		},
+		"M": {
+			"type": "portal",
+			"to": "thais_mountains",
+			"terrain": "c"
 		}
 	},
 	"spawn_table": [
@@ -120,7 +125,7 @@
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggAgggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggFgggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
-		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcccccccccccccccccccccccccccccccccccccccccccccccccccccccPccc>",
+		"WMggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcccccccccccccccccccccccccccccccccccccccccccccccccccccccPccc>",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",

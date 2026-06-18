@@ -1,486 +1,563 @@
 {
-  "quest_welcome": {
-    "name": "Welcome to Town",
-    "giver": "npc_elder",
-    "requires": [],
-    "steps": [
-      {
-        "type": "talk_to",
-        "npc": "npc_blacksmith",
-        "hint": "Introduce yourself to Brom the Blacksmith in town."
-      },
-      {
-        "type": "explore",
-        "zone": "forest",
-        "hint": "Take a walk through the old forest. (Portal at the north edge of town.)"
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_elder",
-        "hint": "Report back to Elder Rowan."
-      }
-    ],
-    "rewards": {
-      "xp": 200,
-      "gold": 100
-    }
-  },
-  "quest_lost_ore": {
-    "name": "The Lost Ore",
-    "giver": "npc_blacksmith",
-    "requires": [
-      "quest_welcome"
-    ],
-    "steps": [
-      {
-        "type": "collect",
-        "item": "iron_ore",
-        "count": 3,
-        "hint": "Mine 3 iron ore in the cave."
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_blacksmith",
-        "hint": "Bring the ore back to Brom."
-      }
-    ],
-    "rewards": {
-      "xp": 500,
-      "gold": 200,
-      "items": {
-        "steel_sword": 1
-      }
-    }
-  },
-  "quest_snakes": {
-    "name": "Serpents in the Grass",
-    "giver": "npc_hunter",
-    "requires": [],
-    "steps": [
-      {
-        "type": "kill",
-        "monster": "Orm",
-        "count": 8,
-        "hint": "Cull 8 snakes in the forest."
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_hunter",
-        "hint": "Return to Sylva the Huntress."
-      }
-    ],
-    "rewards": {
-      "xp": 800,
-      "gold": 300
-    }
-  },
-  "quest_crypt": {
-    "name": "Into the Crypt",
-    "giver": "npc_scholar",
-    "requires": [
-      "quest_welcome"
-    ],
-    "steps": [
-      {
-        "type": "explore",
-        "zone": "cave",
-        "tile": [
-          20,
-          29
-        ],
-        "radius": 3,
-        "hint": "Find the old crypt behind the cave's south passage."
-      },
-      {
-        "type": "use_item",
-        "item": "warding_candle",
-        "hint": "Light the warding candle inside the crypt."
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_scholar",
-        "hint": "Tell Maelis what you saw."
-      }
-    ],
-    "rewards": {
-      "xp": 1200,
-      "gold": 400
-    }
-  },
-  "quest_ghoul_king": {
-    "name": "The Ghoul King's Shadow",
-    "giver": "npc_scholar",
-    "requires": [
-      "quest_crypt"
-    ],
-    "steps": [
-      {
-        "type": "kill",
-        "monster": "Ghulkungen",
-        "count": 1,
-        "hint": "Slay the Ghoul King in his lair. (Finish the ghoul and phantom slayer tasks to open it.)"
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_scholar",
-        "hint": "Bring word of your victory to Maelis."
-      }
-    ],
-    "rewards": {
-      "xp": 3000,
-      "gold": 1500
-    }
-  },
-  "quest_sjovagen": {
-    "name": "Sjövägen",
-    "giver": "npc_captain",
-    "requires": [],
-    "steps": [
-      {
-        "type": "kill",
-        "monster": "Pirat",
-        "count": 5,
-        "hint": "Rensa fem pirater som plundrar hamnen i Thais."
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_captain",
-        "hint": "Återvänd till Kapten Brandt vid hamnen."
-      }
-    ],
-    "rewards": {
-      "xp": 1500,
-      "gold": 600
-    }
-  },
-  "quest_desert_1": {
-    "name": "Sandormsjägaren",
-    "giver": "npc_elder",
-    "requires": [],
-    "steps": [
-      {
-        "type": "explore",
-        "zone": "desert",
-        "hint": "Hitta vägen till Ökenruinerna. (Portalen vid bytets södra del.)"
-      },
-      {
-        "type": "kill",
-        "monster": "Sandorm",
-        "count": 10,
-        "hint": "Döda 10 Sandormar i Ökenruinerna."
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_elder",
-        "hint": "Rapportera tillbaka till Äldsten."
-      }
-    ],
-    "rewards": {
-      "xp": 400,
-      "gold": 200
-    }
-  },
-  "quest_desert_2": {
-    "name": "Skarabéernas hemlighet",
-    "giver": "npc_elder",
-    "requires": [
-      "quest_desert_1"
-    ],
-    "steps": [
-      {
-        "type": "collect",
-        "item": "scarab_shell",
-        "count": 5,
-        "hint": "Samla 5 Skarabéskal från Ökenmumier."
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_elder",
-        "hint": "Lämna skalen till Äldsten."
-      }
-    ],
-    "rewards": {
-      "xp": 600,
-      "gold": 350,
-      "items": {
-        "ancient_bandage": 3
-      }
-    }
-  },
-  "quest_desert_3": {
-    "name": "Faraos fall",
-    "giver": "npc_elder",
-    "requires": [
-      "quest_desert_2"
-    ],
-    "steps": [
-      {
-        "type": "kill",
-        "monster": "Farao Khem-Ra",
-        "count": 1,
-        "hint": "Besegra Farao Khem-Ra i hjärtat av ruinerna."
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_elder",
-        "hint": "Berätta för Äldsten om seger."
-      }
-    ],
-    "rewards": {
-      "xp": 1500,
-      "gold": 800
-    }
-  },
-  "quest_ice_1": {
-    "name": "Köldens Välkomnande",
-    "giver": "npc_elder",
-    "requires": [],
-    "steps": [
-      {
-        "type": "explore",
-        "zone": "ice",
-        "hint": "Bege dig till Isfjorden. (Portalen vid bytets södra del.)"
-      },
-      {
-        "type": "kill",
-        "monster": "Istroll",
-        "count": 8,
-        "hint": "Döda 8 Istroll i Isfjorden."
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_elder",
-        "hint": "Rapportera tillbaka till Äldsten."
-      }
-    ],
-    "rewards": {
-      "xp": 500,
-      "gold": 300
-    }
-  },
-  "quest_ice_2": {
-    "name": "Frostörnarnas Tid",
-    "giver": "npc_elder",
-    "requires": [
-      "quest_ice_1"
-    ],
-    "steps": [
-      {
-        "type": "collect",
-        "item": "frostfjäder",
-        "count": 5,
-        "hint": "Samla 5 Frostfjädrar från Frostörnar."
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_elder",
-        "hint": "Lämna in fjädrarna till Äldsten."
-      }
-    ],
-    "rewards": {
-      "xp": 700,
-      "gold": 400,
-      "items": {
-        "is_kristall": 2
-      }
-    }
-  },
-  "quest_ice_3": {
-    "name": "Isdraken Faller",
-    "giver": "npc_elder",
-    "requires": [
-      "quest_ice_2"
-    ],
-    "steps": [
-      {
-        "type": "kill",
-        "monster": "Isdraken",
-        "count": 1,
-        "hint": "Sök upp och döda Isdraken i Isfjordens djupaste kammare."
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_elder",
-        "hint": "Rapportera segern till Äldsten."
-      }
-    ],
-    "rewards": {
-      "xp": 2000,
-      "gold": 1200
-    }
-  },
-  "quest_fields_1": {
-    "name": "Vägens väktare",
-    "giver": "npc_ranger",
-    "requires": [],
-    "steps": [
-      {
-        "type": "kill",
-        "monster": "Bandit",
-        "count": 6,
-        "hint": "Slå ner 6 banditer som plundrar norra vägen."
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_ranger",
-        "hint": "Återvänd till Aldric i Norra landsbygden."
-      }
-    ],
-    "rewards": {
-      "xp": 600,
-      "gold": 250
-    }
-  },
-  "quest_fields_2": {
-    "name": "Björnens hjärta",
-    "giver": "npc_ranger",
-    "requires": [
-      "quest_fields_1"
-    ],
-    "steps": [
-      {
-        "type": "collect",
-        "item": "bear_claw",
-        "count": 5,
-        "hint": "Samla 5 björnklor från Skogsbjörnar i landsbygden."
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_ranger",
-        "hint": "Lämna klorna till Aldric."
-      }
-    ],
-    "rewards": {
-      "xp": 900,
-      "gold": 400,
-      "items": {
-        "leather_vest": 1
-      }
-    }
-  },
-  "quest_wilds_1": {
-    "name": "Paddans gift",
-    "giver": "npc_hermit",
-    "requires": [],
-    "steps": [
-      {
-        "type": "collect",
-        "item": "toad_gland",
-        "count": 5,
-        "hint": "Samla 5 paddkörtlar från Giftpaddor i Trollmarken."
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_hermit",
-        "hint": "Ge körtlarna till Morwenna."
-      }
-    ],
-    "rewards": {
-      "xp": 700,
-      "gold": 350
-    }
-  },
-  "quest_wilds_2": {
-    "name": "Orkernas framfart",
-    "giver": "npc_hermit",
-    "requires": [
-      "quest_wilds_1"
-    ],
-    "steps": [
-      {
-        "type": "kill",
-        "monster": "Ork",
-        "count": 6,
-        "hint": "Bryt orkernas krigsband — döda 6 orker i Trollmarken."
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_hermit",
-        "hint": "Berätta för Morwenna att orkerna är skingrade."
-      }
-    ],
-    "rewards": {
-      "xp": 1100,
-      "gold": 500,
-      "items": {
-        "antidote_potion": 3
-      }
-    }
-  },
-  "quest_heights_1": {
-    "name": "Goblinhotet",
-    "giver": "npc_woodward",
-    "requires": [],
-    "steps": [
-      {
-        "type": "kill",
-        "monster": "Goblin",
-        "count": 8,
-        "hint": "Driv tillbaka gobliner i Skogshöjderna — döda 8 stycken."
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_woodward",
-        "hint": "Återvänd till Garamir vid skogsbrynet."
-      }
-    ],
-    "rewards": {
-      "xp": 700,
-      "gold": 300
-    }
-  },
-  "quest_heights_2": {
-    "name": "Vargarna i höjderna",
-    "giver": "npc_woodward",
-    "requires": [
-      "quest_heights_1"
-    ],
-    "steps": [
-      {
-        "type": "collect",
-        "item": "wolf_pelt",
-        "count": 5,
-        "hint": "Samla 5 vargskinn från vargarna i höjderna."
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_woodward",
-        "hint": "Lämna skinnen till Garamir."
-      }
-    ],
-    "rewards": {
-      "xp": 900,
-      "gold": 400,
-      "items": {
-        "leather_legs": 1
-      }
-    }
-  },
-  "quest_heights_3": {
-    "name": "Krigsbandet",
-    "giver": "npc_woodward",
-    "requires": [
-      "quest_heights_2"
-    ],
-    "steps": [
-      {
-        "type": "kill",
-        "monster": "Goblinsoldat",
-        "count": 6,
-        "hint": "Krossa goblinernas krigsband — döda 6 goblinsoldater."
-      },
-      {
-        "type": "talk_to",
-        "npc": "npc_woodward",
-        "hint": "Berätta för Garamir att krigsbandet är brutet."
-      }
-    ],
-    "rewards": {
-      "xp": 1300,
-      "gold": 600,
-      "items": {
-        "great_health_potion": 3
-      }
-    }
-  }
+	"quest_welcome": {
+		"name": "Welcome to Town",
+		"giver": "npc_elder",
+		"requires": [],
+		"steps": [
+			{
+				"type": "talk_to",
+				"npc": "npc_blacksmith",
+				"hint": "Introduce yourself to Brom the Blacksmith in town."
+			},
+			{
+				"type": "explore",
+				"zone": "forest",
+				"hint": "Take a walk through the old forest. (Portal at the north edge of town.)"
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_elder",
+				"hint": "Report back to Elder Rowan."
+			}
+		],
+		"rewards": {
+			"xp": 200,
+			"gold": 100
+		}
+	},
+	"quest_lost_ore": {
+		"name": "The Lost Ore",
+		"giver": "npc_blacksmith",
+		"requires": [
+			"quest_welcome"
+		],
+		"steps": [
+			{
+				"type": "collect",
+				"item": "iron_ore",
+				"count": 3,
+				"hint": "Mine 3 iron ore in the cave."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_blacksmith",
+				"hint": "Bring the ore back to Brom."
+			}
+		],
+		"rewards": {
+			"xp": 500,
+			"gold": 200,
+			"items": {
+				"steel_sword": 1
+			}
+		}
+	},
+	"quest_snakes": {
+		"name": "Serpents in the Grass",
+		"giver": "npc_hunter",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Orm",
+				"count": 8,
+				"hint": "Cull 8 snakes in the forest."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_hunter",
+				"hint": "Return to Sylva the Huntress."
+			}
+		],
+		"rewards": {
+			"xp": 800,
+			"gold": 300
+		}
+	},
+	"quest_crypt": {
+		"name": "Into the Crypt",
+		"giver": "npc_scholar",
+		"requires": [
+			"quest_welcome"
+		],
+		"steps": [
+			{
+				"type": "explore",
+				"zone": "cave",
+				"tile": [
+					20,
+					29
+				],
+				"radius": 3,
+				"hint": "Find the old crypt behind the cave's south passage."
+			},
+			{
+				"type": "use_item",
+				"item": "warding_candle",
+				"hint": "Light the warding candle inside the crypt."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_scholar",
+				"hint": "Tell Maelis what you saw."
+			}
+		],
+		"rewards": {
+			"xp": 1200,
+			"gold": 400
+		}
+	},
+	"quest_ghoul_king": {
+		"name": "The Ghoul King's Shadow",
+		"giver": "npc_scholar",
+		"requires": [
+			"quest_crypt"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Ghulkungen",
+				"count": 1,
+				"hint": "Slay the Ghoul King in his lair. (Finish the ghoul and phantom slayer tasks to open it.)"
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_scholar",
+				"hint": "Bring word of your victory to Maelis."
+			}
+		],
+		"rewards": {
+			"xp": 3000,
+			"gold": 1500
+		}
+	},
+	"quest_sjovagen": {
+		"name": "Sjövägen",
+		"giver": "npc_captain",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Pirat",
+				"count": 5,
+				"hint": "Rensa fem pirater som plundrar hamnen i Thais."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_captain",
+				"hint": "Återvänd till Kapten Brandt vid hamnen."
+			}
+		],
+		"rewards": {
+			"xp": 1500,
+			"gold": 600
+		}
+	},
+	"quest_desert_1": {
+		"name": "Sandormsjägaren",
+		"giver": "npc_elder",
+		"requires": [],
+		"steps": [
+			{
+				"type": "explore",
+				"zone": "desert",
+				"hint": "Hitta vägen till Ökenruinerna. (Portalen vid bytets södra del.)"
+			},
+			{
+				"type": "kill",
+				"monster": "Sandorm",
+				"count": 10,
+				"hint": "Döda 10 Sandormar i Ökenruinerna."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_elder",
+				"hint": "Rapportera tillbaka till Äldsten."
+			}
+		],
+		"rewards": {
+			"xp": 400,
+			"gold": 200
+		}
+	},
+	"quest_desert_2": {
+		"name": "Skarabéernas hemlighet",
+		"giver": "npc_elder",
+		"requires": [
+			"quest_desert_1"
+		],
+		"steps": [
+			{
+				"type": "collect",
+				"item": "scarab_shell",
+				"count": 5,
+				"hint": "Samla 5 Skarabéskal från Ökenmumier."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_elder",
+				"hint": "Lämna skalen till Äldsten."
+			}
+		],
+		"rewards": {
+			"xp": 600,
+			"gold": 350,
+			"items": {
+				"ancient_bandage": 3
+			}
+		}
+	},
+	"quest_desert_3": {
+		"name": "Faraos fall",
+		"giver": "npc_elder",
+		"requires": [
+			"quest_desert_2"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Farao Khem-Ra",
+				"count": 1,
+				"hint": "Besegra Farao Khem-Ra i hjärtat av ruinerna."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_elder",
+				"hint": "Berätta för Äldsten om seger."
+			}
+		],
+		"rewards": {
+			"xp": 1500,
+			"gold": 800
+		}
+	},
+	"quest_ice_1": {
+		"name": "Köldens Välkomnande",
+		"giver": "npc_elder",
+		"requires": [],
+		"steps": [
+			{
+				"type": "explore",
+				"zone": "ice",
+				"hint": "Bege dig till Isfjorden. (Portalen vid bytets södra del.)"
+			},
+			{
+				"type": "kill",
+				"monster": "Istroll",
+				"count": 8,
+				"hint": "Döda 8 Istroll i Isfjorden."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_elder",
+				"hint": "Rapportera tillbaka till Äldsten."
+			}
+		],
+		"rewards": {
+			"xp": 500,
+			"gold": 300
+		}
+	},
+	"quest_ice_2": {
+		"name": "Frostörnarnas Tid",
+		"giver": "npc_elder",
+		"requires": [
+			"quest_ice_1"
+		],
+		"steps": [
+			{
+				"type": "collect",
+				"item": "frostfjäder",
+				"count": 5,
+				"hint": "Samla 5 Frostfjädrar från Frostörnar."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_elder",
+				"hint": "Lämna in fjädrarna till Äldsten."
+			}
+		],
+		"rewards": {
+			"xp": 700,
+			"gold": 400,
+			"items": {
+				"is_kristall": 2
+			}
+		}
+	},
+	"quest_ice_3": {
+		"name": "Isdraken Faller",
+		"giver": "npc_elder",
+		"requires": [
+			"quest_ice_2"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Isdraken",
+				"count": 1,
+				"hint": "Sök upp och döda Isdraken i Isfjordens djupaste kammare."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_elder",
+				"hint": "Rapportera segern till Äldsten."
+			}
+		],
+		"rewards": {
+			"xp": 2000,
+			"gold": 1200
+		}
+	},
+	"quest_fields_1": {
+		"name": "Vägens väktare",
+		"giver": "npc_ranger",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Bandit",
+				"count": 6,
+				"hint": "Slå ner 6 banditer som plundrar norra vägen."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_ranger",
+				"hint": "Återvänd till Aldric i Norra landsbygden."
+			}
+		],
+		"rewards": {
+			"xp": 600,
+			"gold": 250
+		}
+	},
+	"quest_fields_2": {
+		"name": "Björnens hjärta",
+		"giver": "npc_ranger",
+		"requires": [
+			"quest_fields_1"
+		],
+		"steps": [
+			{
+				"type": "collect",
+				"item": "bear_claw",
+				"count": 5,
+				"hint": "Samla 5 björnklor från Skogsbjörnar i landsbygden."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_ranger",
+				"hint": "Lämna klorna till Aldric."
+			}
+		],
+		"rewards": {
+			"xp": 900,
+			"gold": 400,
+			"items": {
+				"leather_vest": 1
+			}
+		}
+	},
+	"quest_wilds_1": {
+		"name": "Paddans gift",
+		"giver": "npc_hermit",
+		"requires": [],
+		"steps": [
+			{
+				"type": "collect",
+				"item": "toad_gland",
+				"count": 5,
+				"hint": "Samla 5 paddkörtlar från Giftpaddor i Trollmarken."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_hermit",
+				"hint": "Ge körtlarna till Morwenna."
+			}
+		],
+		"rewards": {
+			"xp": 700,
+			"gold": 350
+		}
+	},
+	"quest_wilds_2": {
+		"name": "Orkernas framfart",
+		"giver": "npc_hermit",
+		"requires": [
+			"quest_wilds_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Ork",
+				"count": 6,
+				"hint": "Bryt orkernas krigsband — döda 6 orker i Trollmarken."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_hermit",
+				"hint": "Berätta för Morwenna att orkerna är skingrade."
+			}
+		],
+		"rewards": {
+			"xp": 1100,
+			"gold": 500,
+			"items": {
+				"antidote_potion": 3
+			}
+		}
+	},
+	"quest_heights_1": {
+		"name": "Goblinhotet",
+		"giver": "npc_woodward",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Goblin",
+				"count": 8,
+				"hint": "Driv tillbaka gobliner i Skogshöjderna — döda 8 stycken."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_woodward",
+				"hint": "Återvänd till Garamir vid skogsbrynet."
+			}
+		],
+		"rewards": {
+			"xp": 700,
+			"gold": 300
+		}
+	},
+	"quest_heights_2": {
+		"name": "Vargarna i höjderna",
+		"giver": "npc_woodward",
+		"requires": [
+			"quest_heights_1"
+		],
+		"steps": [
+			{
+				"type": "collect",
+				"item": "wolf_pelt",
+				"count": 5,
+				"hint": "Samla 5 vargskinn från vargarna i höjderna."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_woodward",
+				"hint": "Lämna skinnen till Garamir."
+			}
+		],
+		"rewards": {
+			"xp": 900,
+			"gold": 400,
+			"items": {
+				"leather_legs": 1
+			}
+		}
+	},
+	"quest_heights_3": {
+		"name": "Krigsbandet",
+		"giver": "npc_woodward",
+		"requires": [
+			"quest_heights_2"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Goblinsoldat",
+				"count": 6,
+				"hint": "Krossa goblinernas krigsband — döda 6 goblinsoldater."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_woodward",
+				"hint": "Berätta för Garamir att krigsbandet är brutet."
+			}
+		],
+		"rewards": {
+			"xp": 1300,
+			"gold": 600,
+			"items": {
+				"great_health_potion": 3
+			}
+		}
+	},
+	"quest_mountains_1": {
+		"name": "Bergspassets plåga",
+		"giver": "npc_prospector",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Troll",
+				"count": 6,
+				"hint": "Rensa 6 troll som spärrar bergspasset."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_prospector",
+				"hint": "Återvänd till Durin vid passets mynning."
+			}
+		],
+		"rewards": {
+			"xp": 1200,
+			"gold": 500
+		}
+	},
+	"quest_mountains_2": {
+		"name": "Spindelnästet",
+		"giver": "npc_prospector",
+		"requires": [
+			"quest_mountains_1"
+		],
+		"steps": [
+			{
+				"type": "collect",
+				"item": "spider_silk",
+				"count": 5,
+				"hint": "Samla 5 spindelsilke från jättespindlarna."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_prospector",
+				"hint": "Lämna silket till Durin."
+			}
+		],
+		"rewards": {
+			"xp": 1500,
+			"gold": 600,
+			"items": {
+				"steel_platebody": 1
+			}
+		}
+	},
+	"quest_mountains_3": {
+		"name": "Dvärgarnas vrede",
+		"giver": "npc_prospector",
+		"requires": [
+			"quest_mountains_2"
+		],
+		"steps": [
+			{
+				"type": "collect",
+				"item": "dwarf_beard",
+				"count": 4,
+				"hint": "Samla 4 dvärgskägg från de vilsna dvärgarna."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_prospector",
+				"hint": "Berätta för Durin vad du funnit."
+			}
+		],
+		"rewards": {
+			"xp": 1800,
+			"gold": 800,
+			"items": {
+				"great_health_potion": 3,
+				"gem": 1
+			}
+		}
+	}
 }

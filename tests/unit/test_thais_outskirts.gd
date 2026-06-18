@@ -78,6 +78,20 @@ func test_heights_loads_and_returns():
 func test_heights_portal_reachable():
 	_assert_dests_reachable(_make_zone("thais_heights"), ["thais_fields"], "thais_heights")
 
+func test_heights_links_to_mountains():
+	var heights = _make_zone("thais_heights")
+	assert_true(heights.portals.values().has("thais_mountains"), "heights saknar portal till mountains")
+
+func test_mountains_loads_and_returns():
+	var m = _make_zone("thais_mountains")
+	assert_eq(m.grid_size, Vector2i(120, 100))
+	assert_true(m.portals.values().has("thais_heights"), "mountains saknar retur till heights")
+	assert_ne(m.player_start, Vector2i.ZERO, "mountains player_start saknas")
+	assert_true(m.is_walkable(m.player_start), "mountains player_start ej gångbar")
+
+func test_mountains_portal_reachable():
+	_assert_dests_reachable(_make_zone("thais_mountains"), ["thais_heights"], "thais_mountains")
+
 # ── Nåbarhet: portaler featuren placerar i utkanterna/landsbygd ska gå att
 # nå från spelarens start. (Interiöra byggnadsingångar — gillen, arena,
 # trappor — testas inte här; deras nåbarhet ärvs oförändrat från kärnan.) ──

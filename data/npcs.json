@@ -25,7 +25,7 @@
 		],
 		"voice": {
 			"model": "en_US-joe-medium",
-			"length_scale": 1.0
+			"length_scale": 1
 		},
 		"barks": [
 			"Mind the sparks!",
@@ -42,7 +42,7 @@
 		],
 		"voice": {
 			"model": "en_US-lessac-medium",
-			"length_scale": 1.0
+			"length_scale": 1
 		},
 		"barks": [
 			"So many secrets...",
@@ -93,7 +93,7 @@
 		],
 		"voice": {
 			"model": "en_GB-alan-medium",
-			"length_scale": 1.0
+			"length_scale": 1
 		},
 		"barks": [
 			"Storm's brewing out west.",
@@ -110,7 +110,7 @@
 		],
 		"voice": {
 			"model": "en_US-amy-medium",
-			"length_scale": 1.0
+			"length_scale": 1
 		},
 		"barks": [
 			"Fresh off the boat!",
@@ -127,7 +127,7 @@
 		],
 		"voice": {
 			"model": "en_GB-alan-medium",
-			"length_scale": 1.0
+			"length_scale": 1
 		},
 		"barks": [
 			"Welcome to my inn!",
@@ -195,7 +195,7 @@
 		],
 		"voice": {
 			"model": "en_US-amy-medium",
-			"length_scale": 1.0
+			"length_scale": 1
 		},
 		"barks": [
 			"The upper hall is for advanced training only.",
@@ -229,7 +229,7 @@
 		],
 		"voice": {
 			"model": "en_GB-northern_english_male-medium",
-			"length_scale": 1.0
+			"length_scale": 1
 		},
 		"barks": [
 			"I trade in rare things... very rare.",
@@ -263,7 +263,7 @@
 		],
 		"voice": {
 			"model": "en_US-joe-medium",
-			"length_scale": 1.0
+			"length_scale": 1
 		},
 		"barks": [
 			"Break no laws in Thais.",
@@ -280,7 +280,7 @@
 		],
 		"voice": {
 			"model": "en_GB-northern_english_male-medium",
-			"length_scale": 1.0
+			"length_scale": 1
 		},
 		"barks": [
 			"Get me outta here!",
@@ -314,7 +314,7 @@
 		],
 		"voice": {
 			"model": "en_GB-alan-medium",
-			"length_scale": 1.0
+			"length_scale": 1
 		},
 		"barks": [
 			"Adventure awaits beyond these walls.",
@@ -382,7 +382,7 @@
 		],
 		"voice": {
 			"model": "en_GB-northern_english_male-medium",
-			"length_scale": 1.0
+			"length_scale": 1
 		},
 		"barks": [
 			"The road's quiet... too quiet.",
@@ -416,12 +416,29 @@
 		],
 		"voice": {
 			"model": "en_GB-alan-medium",
-			"length_scale": 1.0
+			"length_scale": 1
 		},
 		"barks": [
 			"The goblins grow bolder by the week.",
 			"Keep to the path, friend."
 		],
 		"dialogue_root": "woodward_root"
+	},
+	"npc_prospector": {
+		"name": "Durin Stenbrytare",
+		"zone": "thais_mountains",
+		"position": [
+			112,
+			52
+		],
+		"voice": {
+			"model": "en_GB-northern_english_male-medium",
+			"length_scale": 1.05
+		},
+		"barks": [
+			"The mountain gives, if you've the back for it.",
+			"Mind the trolls up the pass."
+		],
+		"dialogue_root": "prospector_root"
 	}
 }
