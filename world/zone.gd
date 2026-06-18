@@ -26,6 +26,8 @@ var portal_locks: Dictionary = {}     # Vector2i -> unlock-id (låsta portaler)
 var _gate_terrain: Dictionary = {} # Vector2i -> terräng när gaten/genvägen öppnats
 var _shortcut_markers: Dictionary = {}    # Vector2i -> Node2D
 var _portal_marker_nodes: Dictionary = {} # Vector2i -> Array[Node]
+var entrance_points: Dictionary = {}   # Vector2i -> zon-id (husportaler, dörrar)
+var stair_points: Dictionary = {}      # Vector2i -> {"to": zon-id, "up": bool}
 var _walkable: Dictionary = {}      # Vector2i -> bool
 var _astar := AStarGrid2D.new()
 var tilemap: TileMapLayer
@@ -70,14 +72,27 @@ func build_from_data(data: Dictionary, id: String) -> void:
 								portals[t] = e["to"]
 								if e.has("unlock") and not UnlockSystem.is_unlocked(String(e["unlock"])):
 									portal_locks[t] = String(e["unlock"])
+							"entrance":
+								portals[t] = e["to"]
+								entrance_points[t] = String(e["to"])
+								if e.has("unlock") and not UnlockSystem.is_unlocked(String(e["unlock"])):
+									portal_locks[t] = String(e["unlock"])
+							"stair_up":
+								portals[t] = e["to"]
+								stair_points[t] = {"to": String(e["to"]), "up": true}
+							"stair_down":
+								portals[t] = e["to"]
+								stair_points[t] = {"to": String(e["to"]), "up": false}
 							"spawn":
-								spawn_points.append({"tile": t, "monster": e["monster"], "respawn": float(e["respawn"])})
+								spawn_points.append({"tile": t, "monster": e["monster"], "respawn": float(e.get("respawn", 30.0))})
 							"node":
 								node_points.append({"tile": t, "node": e["node"]})
 								blocked = true
 							"station":
 								station_points.append({"tile": t, "station": e["station"]})
 								blocked = true
+							"decoration":
+								blocked = true   # blockerar rörelse, öppnar ingen panel
 							"shop":
 								shop_points.append(t)
 								blocked = true
@@ -109,7 +124,7 @@ func build_from_data(data: Dictionary, id: String) -> void:
 			if not PlaceholderTiles.TERRAIN.has(terrain):
 				terrain = "."
 			tilemap.set_cell(t, 0, Vector2i(PlaceholderTiles.TERRAIN[terrain], 0))
-			_walkable[t] = terrain != "W" and terrain != "~" and not blocked
+			_walkable[t] = terrain != "W" and terrain != "w" and terrain != "r" and terrain != "~" and terrain != "t" and not blocked
 
 	_astar.region = Rect2i(Vector2i.ZERO, grid_size)
 	_astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
@@ -127,7 +142,12 @@ func build_from_data(data: Dictionary, id: String) -> void:
 		_fill_spawn_table(spawn_table)
 
 	for t in portals:
-		_add_portal_marker(t)
+		if entrance_points.has(t):
+			_add_door_marker(t)
+		elif stair_points.has(t):
+			_add_stair_marker(t, stair_points[t]["up"])
+		else:
+			_add_portal_marker(t)
 	for t in shortcut_points:
 		if not UnlockSystem.is_unlocked(shortcut_points[t]):
 			_add_shortcut_marker(t)
@@ -220,6 +240,52 @@ func _add_entrance_marker(t: Vector2i) -> void:
 	lbl.add_theme_font_size_override("font_size", 10)
 	lbl.modulate = Color(0.75, 0.7, 0.8)
 	add_child(lbl)
+
+func _add_door_marker(t: Vector2i) -> void:
+	## Ritar en brun dörröppning (husportal).
+	var c := Vector2(t) * TILE + Vector2(TILE / 2.0, TILE / 2.0)
+	# Ytterkarm
+	var frame := Polygon2D.new()
+	frame.polygon = PackedVector2Array([
+		Vector2(-8, -11), Vector2(8, -11),
+		Vector2(8,  9),  Vector2(5,  9),
+		Vector2(5, -8),  Vector2(-5, -8),
+		Vector2(-5,  9), Vector2(-8,  9)])
+	frame.color = Color(0.30, 0.16, 0.05)
+	frame.position = c
+	add_child(frame)
+	# Dörrpanel
+	var panel := Polygon2D.new()
+	panel.polygon = PackedVector2Array([
+		Vector2(-5, -8), Vector2(5, -8), Vector2(5, 9), Vector2(-5, 9)])
+	panel.color = Color(0.52, 0.30, 0.10)
+	panel.position = c
+	add_child(panel)
+	# Handtag
+	var knob := Polygon2D.new()
+	knob.polygon = PackedVector2Array([
+		Vector2(2, -1), Vector2(4, -1), Vector2(4, 1), Vector2(2, 1)])
+	knob.color = Color(0.85, 0.72, 0.20)
+	knob.position = c
+	add_child(knob)
+
+func _add_stair_marker(t: Vector2i, going_up: bool) -> void:
+	## Ritar en trappil (upp eller ned).
+	var c := Vector2(t) * TILE + Vector2(TILE / 2.0, TILE / 2.0)
+	var arrow := Polygon2D.new()
+	if going_up:
+		arrow.polygon = PackedVector2Array([
+			Vector2(0, -10), Vector2(7, -2), Vector2(3, -2),
+			Vector2(3, 8),   Vector2(-3, 8), Vector2(-3, -2),
+			Vector2(-7, -2)])
+	else:
+		arrow.polygon = PackedVector2Array([
+			Vector2(0, 10),  Vector2(7, 2),  Vector2(3, 2),
+			Vector2(3, -8),  Vector2(-3, -8),Vector2(-3, 2),
+			Vector2(-7, 2)])
+	arrow.color = Color(0.80, 0.74, 0.48)
+	arrow.position = c
+	add_child(arrow)
 
 func _add_shortcut_marker(t: Vector2i) -> void:
 	var d := Polygon2D.new()
