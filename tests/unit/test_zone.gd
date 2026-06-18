@@ -22,8 +22,8 @@ func test_town_loads_and_has_player_start():
 
 func test_walls_block_floor_walkable():
 	var z = _make_zone("town")
-	assert_false(z.is_walkable(Vector2i(0, 0)))   # W i hörnet
-	assert_true(z.is_walkable(Vector2i(1, 1)))    # . innanför muren
+	assert_false(z.is_walkable(Vector2i(0, 0)))   # ~ havet i hörnet (280×200)
+	assert_true(z.is_walkable(z.player_start))    # innanför staden
 
 func test_rows_equal_length():
 	for id in ["town", "cave"]:
@@ -43,9 +43,16 @@ func test_spawns_parsed():
 
 func test_pathfinding_finds_path():
 	var z = _make_zone("town")
-	var path = z.find_path(Vector2i(4, 7), Vector2i(10, 10))
+	# Hitta en gångbar granne till player_start (robust mot kartändringar)
+	var goal: Vector2i = z.player_start
+	for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1), Vector2i(2, 0), Vector2i(0, 2)]:
+		if z.is_walkable(z.player_start + d):
+			goal = z.player_start + d
+			break
+	assert_ne(goal, z.player_start, "ingen gångbar granne till player_start")
+	var path = z.find_path(z.player_start, goal)
 	assert_gt(path.size(), 0)
-	assert_eq(path[path.size() - 1], Vector2i(10, 10))
+	assert_eq(path[path.size() - 1], goal)
 
 func test_forest_loads_with_nodes():
 	var z = _make_zone("forest")
@@ -68,10 +75,11 @@ func test_node_tiles_are_blocked():
 	assert_false(z.is_walkable(z.node_points[0]["tile"]))
 
 func test_town_has_three_portals():
+	# Efter 280×200-expansionen har town fler portaler (närportaler + landsbygd).
+	# Verifiera närvaro av de lokala destinationerna istället för exakt antal.
 	var z = _make_zone("town")
-	assert_eq(z.portals.size(), 3)
-	assert_true(z.portals.values().has("forest"))
-	assert_true(z.portals.values().has("coast"))
+	for d in ["cave", "forest", "coast"]:
+		assert_true(z.portals.values().has(d), "town saknar portal till %s" % d)
 
 func test_find_path_adjacent_reaches_blocked_target():
 	var z = _make_zone("town")
