@@ -111,6 +111,12 @@ func _complete(id: String) -> void:
 		GameState.add_item("iron_coin", int(r["gold"]))
 	for item_id in r.get("items", {}):
 		GameState.add_item(String(item_id), int(r["items"][item_id]))
+	# Skill-XP-belöning: driver upp skillnivåer direkt.
+	for sk in r.get("skill_xp", {}):
+		GameState.gain_skill_xp(String(sk), int(r["skill_xp"][sk]))
+	# Unlock-belöning: låser upp content (områden/outfits) vid slutförande.
+	for uid in r.get("unlocks", []):
+		UnlockSystem.unlock(String(uid))
 	active.erase(id)
 	completed[id] = true
 	quest_completed.emit(id)

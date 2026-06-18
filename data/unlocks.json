@@ -110,5 +110,35 @@
     "name": "Isfjordvägen",
     "category": "area",
     "requires": {}
+  },
+  "outfit_ranger": {
+    "name": "Väktarens grönt",
+    "category": "outfit",
+    "requires": {
+      "quest": "quest_fields_2"
+    },
+    "hint": "Slutför Aldrics questkedja i Norra landsbygden."
+  },
+  "outfit_warden": {
+    "name": "Skogvaktarens dräkt",
+    "category": "outfit",
+    "requires": {
+      "quest": "quest_heights_3"
+    },
+    "hint": "Slutför Garamirs questkedja i Skogshöjderna."
+  },
+  "outfit_prospector": {
+    "name": "Stenbrytarens mundering",
+    "category": "outfit",
+    "requires": {
+      "quest": "quest_mountains_3"
+    },
+    "hint": "Slutför Durins questkedja i Bergspasset."
+  },
+  "outfit_champion": {
+    "name": "Mästarens regalier",
+    "category": "outfit",
+    "requires": {},
+    "desc": "Belönas för att ha klarat Gillets Mästarprov."
   }
 }

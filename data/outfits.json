@@ -1,13 +1,83 @@
 {
-	"standard":          {"name": "Standard",           "colors": {}},
-	"outfit_explorer":   {"name": "Vandrarens kläder",  "unlock": "outfit_explorer",
-		"colors": {"shirt": "#7a5a34", "pants": "#4a3a24"}},
-	"outfit_slayer":     {"name": "Slayer's Garb",      "unlock": "outfit_slayer",
-		"colors": {"shirt": "#5a1f1f", "pants": "#1a1a1a"}},
-	"outfit_angler":     {"name": "Fiskarens ställ",    "unlock": "outfit_angler",
-		"colors": {"shirt": "#2e5f9e", "pants": "#3a4a5a"}},
-	"outfit_ghoul_king": {"name": "Ghulkungens mantel", "unlock": "outfit_ghoul_king",
-		"colors": {"shirt": "#3a5a2a", "pants": "#2a2a1a", "hair": "#e8d44a"}},
-	"outfit_pirate": {"name": "Piratens mundering", "unlock": "outfit_pirate",
-		"colors": {"shirt": "#7a1f1f", "pants": "#1a1a22", "hair": "#2a2a2a"}}
+	"standard": {
+		"name": "Standard",
+		"colors": {}
+	},
+	"outfit_explorer": {
+		"name": "Vandrarens kläder",
+		"unlock": "outfit_explorer",
+		"colors": {
+			"shirt": "#7a5a34",
+			"pants": "#4a3a24"
+		}
+	},
+	"outfit_slayer": {
+		"name": "Slayer's Garb",
+		"unlock": "outfit_slayer",
+		"colors": {
+			"shirt": "#5a1f1f",
+			"pants": "#1a1a1a"
+		}
+	},
+	"outfit_angler": {
+		"name": "Fiskarens ställ",
+		"unlock": "outfit_angler",
+		"colors": {
+			"shirt": "#2e5f9e",
+			"pants": "#3a4a5a"
+		}
+	},
+	"outfit_ghoul_king": {
+		"name": "Ghulkungens mantel",
+		"unlock": "outfit_ghoul_king",
+		"colors": {
+			"shirt": "#3a5a2a",
+			"pants": "#2a2a1a",
+			"hair": "#e8d44a"
+		}
+	},
+	"outfit_pirate": {
+		"name": "Piratens mundering",
+		"unlock": "outfit_pirate",
+		"colors": {
+			"shirt": "#7a1f1f",
+			"pants": "#1a1a22",
+			"hair": "#2a2a2a"
+		}
+	},
+	"outfit_ranger": {
+		"name": "Väktarens grönt",
+		"unlock": "outfit_ranger",
+		"colors": {
+			"shirt": "#3a6b2a",
+			"pants": "#2a3a1a"
+		}
+	},
+	"outfit_warden": {
+		"name": "Skogvaktarens dräkt",
+		"unlock": "outfit_warden",
+		"colors": {
+			"shirt": "#2e5a3a",
+			"pants": "#243a28",
+			"hair": "#5a4a2a"
+		}
+	},
+	"outfit_prospector": {
+		"name": "Stenbrytarens mundering",
+		"unlock": "outfit_prospector",
+		"colors": {
+			"shirt": "#6a5a4a",
+			"pants": "#3a3028",
+			"hair": "#8a5a2a"
+		}
+	},
+	"outfit_champion": {
+		"name": "Mästarens regalier",
+		"unlock": "outfit_champion",
+		"colors": {
+			"shirt": "#8a2a2a",
+			"pants": "#2a2a3a",
+			"hair": "#e8c84a"
+		}
+	}
 }

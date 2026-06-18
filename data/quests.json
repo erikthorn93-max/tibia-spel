@@ -355,6 +355,9 @@
 			"gold": 400,
 			"items": {
 				"leather_vest": 1
+			},
+			"skill_xp": {
+				"crafting": 300
 			}
 		}
 	},
@@ -480,6 +483,9 @@
 			"gold": 600,
 			"items": {
 				"great_health_potion": 3
+			},
+			"skill_xp": {
+				"slayer": 400
 			}
 		}
 	},
@@ -557,7 +563,92 @@
 			"items": {
 				"great_health_potion": 3,
 				"gem": 1
+			},
+			"skill_xp": {
+				"mining": 600
 			}
+		}
+	},
+	"quest_trial_1": {
+		"name": "Gruvarbetarens prov",
+		"giver": "npc_guildmaster",
+		"requires": [],
+		"steps": [
+			{
+				"type": "collect",
+				"item": "iron_ore",
+				"count": 8,
+				"hint": "Bryt 8 järnmalm och visa gillet att du behärskar gruvan."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_guildmaster",
+				"hint": "Återvänd till Gillesmästaren."
+			}
+		],
+		"rewards": {
+			"xp": 400,
+			"gold": 200,
+			"skill_xp": {
+				"smithing": 500
+			}
+		}
+	},
+	"quest_trial_2": {
+		"name": "Smedens prov",
+		"giver": "npc_guildmaster",
+		"requires": [
+			"quest_trial_1"
+		],
+		"steps": [
+			{
+				"type": "collect",
+				"item": "iron_sword",
+				"count": 1,
+				"hint": "Smid ett järnsvärd vid städet och bär det till gillet."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_guildmaster",
+				"hint": "Visa svärdet för Gillesmästaren."
+			}
+		],
+		"rewards": {
+			"xp": 600,
+			"gold": 300,
+			"skill_xp": {
+				"smithing": 1000
+			}
+		}
+	},
+	"quest_trial_3": {
+		"name": "Mästarens prov",
+		"giver": "npc_guildmaster",
+		"requires": [
+			"quest_trial_2"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Troll",
+				"count": 3,
+				"hint": "Bevisa ditt mod — fäll 3 troll i Bergspasset."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_guildmaster",
+				"hint": "Gör anspråk på mästartiteln hos Gillesmästaren."
+			}
+		],
+		"rewards": {
+			"xp": 1500,
+			"gold": 800,
+			"skill_xp": {
+				"constitution": 600
+			},
+			"unlocks": [
+				"outfit_champion"
+			]
 		}
 	}
 }

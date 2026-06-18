@@ -1141,6 +1141,10 @@
 				"next": "guildmaster_about"
 			},
 			{
+				"text": "I would face the Guild's trials.",
+				"next": "guildmaster_trials"
+			},
+			{
 				"text": "Goodbye.",
 				"next": null
 			}
@@ -2351,6 +2355,186 @@
 			{
 				"text": "Anything more?",
 				"next": "prospector_root"
+			}
+		]
+	},
+	"guildmaster_trials": {
+		"speaker": "npc_guildmaster",
+		"emotion": "neutral",
+		"text": "The Master's Trial tests blade AND craft. Prove yourself a miner, a smith, and a warrior, and the Guild names you Champion. The trials open to you as your skills grow — return when you're ready.",
+		"choices": [
+			{
+				"text": "The miner's trial.",
+				"next": "guildmaster_t1",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_trial_1"
+					},
+					{
+						"type": "skill_level",
+						"skill": "mining",
+						"level": 10
+					}
+				]
+			},
+			{
+				"text": "I've mined the iron ore.",
+				"next": "guildmaster_treward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_trial_1",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_trial_1"
+					}
+				]
+			},
+			{
+				"text": "The smith's trial.",
+				"next": "guildmaster_t2",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_trial_2"
+					},
+					{
+						"type": "skill_level",
+						"skill": "smithing",
+						"level": 15
+					}
+				]
+			},
+			{
+				"text": "Here is the sword I forged.",
+				"next": "guildmaster_treward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_trial_2",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_trial_2"
+					}
+				]
+			},
+			{
+				"text": "The master's trial.",
+				"next": "guildmaster_t3",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_trial_3"
+					}
+				]
+			},
+			{
+				"text": "The trolls are slain.",
+				"next": "guildmaster_treward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_trial_3",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_trial_3"
+					}
+				]
+			},
+			{
+				"text": "Back.",
+				"next": "guildmaster_root"
+			}
+		]
+	},
+	"guildmaster_t1": {
+		"speaker": "npc_guildmaster",
+		"emotion": "neutral",
+		"text": "A Guild champion knows the worth of honest stone. Mine eight iron ore — show me you've the skill and the back for it.",
+		"choices": [
+			{
+				"text": "I'll mine it.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_trial_1"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "guildmaster_trials"
+			}
+		]
+	},
+	"guildmaster_t2": {
+		"speaker": "npc_guildmaster",
+		"emotion": "neutral",
+		"text": "Ore is nothing without the forge. Smith a proper iron sword at the anvil and bring it here — let me judge your craft.",
+		"choices": [
+			{
+				"text": "I'll forge it.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_trial_2"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "guildmaster_trials"
+			}
+		]
+	},
+	"guildmaster_t3": {
+		"speaker": "npc_guildmaster",
+		"emotion": "worried",
+		"text": "Now the steel meets the foe. Climb the mountain pass and fell three trolls. Do that, and the title of Champion is yours.",
+		"choices": [
+			{
+				"text": "It will be done.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_trial_3"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "guildmaster_trials"
+			}
+		]
+	},
+	"guildmaster_treward": {
+		"speaker": "npc_guildmaster",
+		"emotion": "friendly",
+		"text": "Well struck! The Guild has watched your skills sharpen with every trial — and now they bear fruit. Take your reward, and wear it with pride.",
+		"choices": [
+			{
+				"text": "My thanks.",
+				"next": null
+			},
+			{
+				"text": "What else?",
+				"next": "guildmaster_trials"
 			}
 		]
 	}

@@ -59,3 +59,25 @@ func test_run_actions_take_and_advance_completes():
 	], "npc_blacksmith")
 	assert_true(QuestSystem.completed.has("quest_lost_ore"))
 	assert_eq(int(GameState.inventory.get("iron_ore", 0)), 0)
+
+# ── Questlines som låser upp content/skills/skillnivåer ──
+
+func test_trial_choice_gated_by_skill_level():
+	# Mästarprovets gruvprov syns bara när Mining-kravet är uppfyllt.
+	GameState.skills["mining"]["level"] = 1
+	assert_does_not_have(_texts("guildmaster_trials"), "The miner's trial.")
+	GameState.skills["mining"]["level"] = 15
+	assert_has(_texts("guildmaster_trials"), "The miner's trial.")
+
+func test_quest_reward_grants_skill_xp_and_unlock():
+	UnlockSystem.unlocked.erase("outfit_champion")
+	GameState.skills["constitution"] = {"level": 1, "xp": 0}
+	QuestSystem.completed["quest_trial_2"] = true   # förkrav klart
+	QuestSystem.start("quest_trial_3")
+	for i in 3:
+		QuestSystem.record_kill("Troll")
+	QuestSystem.advance_talk("quest_trial_3", "npc_guildmaster")
+	assert_true(QuestSystem.completed.has("quest_trial_3"), "trial_3 slutfördes inte")
+	assert_true(UnlockSystem.is_unlocked("outfit_champion"), "unlocks-belöning gav inte outfit_champion")
+	var prog := int(GameState.skills["constitution"]["level"]) * 1000000 + int(GameState.skills["constitution"]["xp"])
+	assert_gt(prog, 1000000, "skill_xp-belöning tränade inte constitution")
