@@ -83,6 +83,25 @@ func test_sorcerer_guild_has_alchemy_and_rune_stations():
 	assert_has(stations, "alchemy_table")
 	assert_has(stations, "rune_altar")
 
+func test_temple_prayer_altar_is_usable_station():
+	# Bönaltaret var 'decoration' (öppnade ingen panel) — nu en riktig station.
+	var z = _make_zone("tibianus_temple")
+	var stations = z.station_points.map(func(s): return s["station"])
+	assert_has(stations, "prayer_altar")
+
+func test_heights_has_minor_skill_nodes():
+	# Skogshöjderna försörjer hunting/firemaking/farming som annars är tunna.
+	var z = _make_zone("thais_heights")
+	var nodes = z.node_points.map(func(n): return n["node"])
+	for nid in ["hunting_trap", "bird_trap", "campfire_spot", "farm_patch"]:
+		assert_has(nodes, nid)
+
+func test_undead_drop_bones_for_prayer():
+	# Prayer tränas genom att begrava ben — odöda måste droppa dem.
+	for name in ["Skelett", "Ghoul", "Fantom"]:
+		var loot: Array = MonsterDB.monsters[name].get("loot", [])
+		assert_true(loot.any(func(l): return String(l["item"]) == "bones"), name + " saknar bens-drop")
+
 func test_cave_has_ore_veins():
 	var z = _make_zone("cave")
 	var veins = z.node_points.filter(func(n): return n["node"].ends_with("_vein"))

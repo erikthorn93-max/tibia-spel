@@ -31,7 +31,7 @@
 			"terrain": ","
 		},
 		"A": {
-			"type": "decoration",
+			"type": "station",
 			"station": "prayer_altar"
 		},
 		"P": {

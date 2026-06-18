@@ -196,6 +196,44 @@
 				"iron_ore": 6,
 				"gold_ore": 2
 			}
+		},
+		{
+			"id": "brass_knuckles",
+			"skill": "smithing",
+			"level": 1,
+			"xp": 20,
+			"ingredients": {
+				"copper_ore": 3
+			}
+		},
+		{
+			"id": "iron_knuckles",
+			"skill": "smithing",
+			"level": 15,
+			"xp": 40,
+			"ingredients": {
+				"iron_ore": 3
+			}
+		},
+		{
+			"id": "steel_knuckles",
+			"skill": "smithing",
+			"level": 30,
+			"xp": 70,
+			"ingredients": {
+				"iron_ore": 4,
+				"gold_ore": 1
+			}
+		},
+		{
+			"id": "guardian_shield",
+			"skill": "smithing",
+			"level": 35,
+			"xp": 100,
+			"ingredients": {
+				"iron_ore": 6,
+				"gold_ore": 2
+			}
 		}
 	],
 	"stove": [
@@ -262,6 +300,25 @@
 			"ingredients": {
 				"raw_swordfish": 1
 			}
+		},
+		{
+			"id": "cooked_eel",
+			"skill": "cooking",
+			"level": 10,
+			"xp": 25,
+			"ingredients": {
+				"raw_eel": 1
+			}
+		},
+		{
+			"id": "hearty_stew",
+			"skill": "cooking",
+			"level": 18,
+			"xp": 45,
+			"ingredients": {
+				"raw_meat": 2,
+				"marsh_herb": 1
+			}
 		}
 	],
 	"alchemy_table": [
@@ -313,6 +370,26 @@
 				"nightshade_herb": 2,
 				"gold_ore": 1
 			}
+		},
+		{
+			"id": "super_health_potion",
+			"skill": "alchemy",
+			"level": 30,
+			"xp": 70,
+			"ingredients": {
+				"mint_herb": 3,
+				"gold_ore": 1
+			}
+		},
+		{
+			"id": "super_mana_potion",
+			"skill": "alchemy",
+			"level": 35,
+			"xp": 85,
+			"ingredients": {
+				"nightshade_herb": 2,
+				"mint_herb": 2
+			}
 		}
 	],
 	"rune_altar": [
@@ -352,6 +429,26 @@
 			"ingredients": {
 				"willow_log": 3,
 				"is_kristall": 1
+			}
+		},
+		{
+			"id": "energy_rune",
+			"skill": "runecrafting",
+			"level": 18,
+			"xp": 50,
+			"ingredients": {
+				"oak_log": 2,
+				"mint_herb": 1
+			}
+		},
+		{
+			"id": "death_rune",
+			"skill": "runecrafting",
+			"level": 38,
+			"xp": 95,
+			"ingredients": {
+				"willow_log": 3,
+				"nightshade_herb": 2
 			}
 		}
 	],
@@ -447,6 +544,26 @@
 			"xp": 80,
 			"ingredients": {
 				"oak_log": 3
+			}
+		},
+		{
+			"id": "willow_bow",
+			"skill": "fletching",
+			"level": 30,
+			"xp": 90,
+			"ingredients": {
+				"willow_log": 3
+			}
+		},
+		{
+			"id": "willow_arrow",
+			"skill": "fletching",
+			"level": 25,
+			"xp": 24,
+			"ingredients": {
+				"arrow_shaft": 1,
+				"feathers": 1,
+				"willow_log": 1
 			}
 		}
 	],

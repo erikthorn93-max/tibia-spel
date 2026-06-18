@@ -794,7 +794,7 @@
 		"heal": 0,
 		"buff_stat": "atk",
 		"buff_amount": 5,
-		"buff_duration": 60.0
+		"buff_duration": 60
 	},
 	"ice_rune": {
 		"name": "Isruna",
@@ -914,8 +914,8 @@
 		"ability": {
 			"type": "burn",
 			"chance": 0.2,
-			"duration": 4.0,
-			"tick_dmg": 6.0
+			"duration": 4,
+			"tick_dmg": 6
 		},
 		"sprite": "res://assets/sprites/items/fire_sword.png"
 	},
@@ -941,8 +941,8 @@
 		"ability": {
 			"type": "drain",
 			"chance": 0.1,
-			"duration": 0.0,
-			"tick_dmg": 8.0
+			"duration": 0,
+			"tick_dmg": 8
 		},
 		"sprite": "res://assets/sprites/items/vampire_cape.png"
 	},
@@ -1037,5 +1037,115 @@
 		"color": "#88ccff",
 		"effect": "ice_wave",
 		"sprite": "res://assets/sprites/items/ice_wave_rune.png"
+	},
+	"brass_knuckles": {
+		"name": "Mässingsknogar",
+		"type": "weapon",
+		"value": 60,
+		"color": "#b8860b",
+		"atk": 10,
+		"skill": "fist",
+		"slot": "weapon",
+		"sprite": "res://assets/sprites/items/brass_knuckles.png"
+	},
+	"iron_knuckles": {
+		"name": "Järnknogar",
+		"type": "weapon",
+		"value": 140,
+		"color": "#9a9aa2",
+		"atk": 16,
+		"skill": "fist",
+		"slot": "weapon",
+		"sprite": "res://assets/sprites/items/iron_knuckles.png"
+	},
+	"steel_knuckles": {
+		"name": "Stålknogar",
+		"type": "weapon",
+		"value": 320,
+		"color": "#c0c0c8",
+		"atk": 22,
+		"skill": "fist",
+		"slot": "weapon",
+		"sprite": "res://assets/sprites/items/steel_knuckles.png"
+	},
+	"willow_bow": {
+		"name": "Pilbåge av pil",
+		"type": "weapon",
+		"value": 180,
+		"color": "#5a7a3c",
+		"atk": 16,
+		"skill": "distance",
+		"slot": "weapon",
+		"sprite": "res://assets/sprites/items/willow_bow.png"
+	},
+	"willow_arrow": {
+		"name": "Pilpil",
+		"type": "ammo",
+		"value": 2,
+		"color": "#5a7a3c",
+		"sprite": "res://assets/sprites/items/willow_arrow.png"
+	},
+	"guardian_shield": {
+		"name": "Väktarsköld",
+		"type": "armor",
+		"value": 450,
+		"color": "#8898b0",
+		"shielding_bonus": 10,
+		"slot": "offhand",
+		"sprite": "res://assets/sprites/items/guardian_shield.png"
+	},
+	"energy_rune": {
+		"name": "Energiruna",
+		"type": "rune",
+		"value": 45,
+		"color": "#ffd24a",
+		"rune_power": 18,
+		"mana_cost": 10,
+		"magic_lvl": 15,
+		"effect": "damage",
+		"sprite": "res://assets/sprites/items/energy_rune.png"
+	},
+	"death_rune": {
+		"name": "Dödsruna",
+		"type": "rune",
+		"value": 90,
+		"color": "#6a2a8a",
+		"rune_power": 30,
+		"mana_cost": 18,
+		"magic_lvl": 40,
+		"effect": "damage",
+		"sprite": "res://assets/sprites/items/death_rune.png"
+	},
+	"cooked_eel": {
+		"name": "Stekt ål",
+		"type": "food",
+		"value": 22,
+		"color": "#6a7a4a",
+		"heal": 50,
+		"sprite": "res://assets/sprites/items/cooked_eel.png"
+	},
+	"hearty_stew": {
+		"name": "Mustig gryta",
+		"type": "food",
+		"value": 40,
+		"color": "#a8602a",
+		"heal": 90,
+		"sprite": "res://assets/sprites/items/hearty_stew.png"
+	},
+	"super_health_potion": {
+		"name": "Superhälsodryck",
+		"type": "potion",
+		"value": 160,
+		"color": "#ff2040",
+		"heal": 130,
+		"sprite": "res://assets/sprites/items/super_health_potion.png"
+	},
+	"super_mana_potion": {
+		"name": "Supermanadryck",
+		"type": "potion",
+		"value": 200,
+		"color": "#2040ff",
+		"mana": 220,
+		"sprite": "res://assets/sprites/items/super_mana_potion.png"
 	}
 }
