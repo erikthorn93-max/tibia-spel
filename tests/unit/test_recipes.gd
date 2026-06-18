@@ -24,7 +24,10 @@ func test_all_recipe_outputs_and_ingredients_exist_as_items():
 func test_all_node_yields_and_tools_exist_as_items():
 	for nid in db.nodes:
 		assert_true(db.items.has(db.nodes[nid]["yields"]), nid)
-		assert_true(db.items.has(db.nodes[nid]["tool"]), nid)
+		# Tomt tool = inget verktyg krävs (t.ex. hunting-fällor); se gather_node.attempt().
+		var tool_id := String(db.nodes[nid]["tool"])
+		if tool_id != "":
+			assert_true(db.items.has(tool_id), nid)
 
 func test_weapons_have_skill_field():
 	for id in db.items:

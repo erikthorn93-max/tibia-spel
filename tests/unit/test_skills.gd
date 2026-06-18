@@ -9,8 +9,8 @@ func after_each():
 	gs.free()
 
 func test_loads_18_skills_from_json():
-	assert_eq(gs.skills.size(), 18)
-	assert_eq(gs.skill_defs.size(), 18)
+	assert_eq(gs.skills.size(), 26)
+	assert_eq(gs.skill_defs.size(), 26)
 
 func test_start_levels():
 	assert_eq(gs.skills["sword"]["level"], 10)
@@ -30,7 +30,7 @@ func test_gain_skill_xp_emits_skill_changed():
 func test_ensure_all_skills_preserves_existing():
 	gs.skills = {"sword": {"level": 25, "xp": 7}}
 	gs.ensure_all_skills()
-	assert_eq(gs.skills.size(), 18)
+	assert_eq(gs.skills.size(), 26)
 	assert_eq(gs.skills["sword"]["level"], 25)
 	assert_eq(gs.skills["sword"]["xp"], 7)
 

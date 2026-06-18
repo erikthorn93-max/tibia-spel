@@ -96,16 +96,19 @@
   },
   "oknen": {
     "name": "Ökenvägen",
+    "category": "area",
     "desc": "Vägen till Ökenruinerna har öppnats.",
     "requires": {}
   },
   "vulkanen": {
     "name": "Vulkanpasset",
+    "category": "area",
     "desc": "Vägen till Vulkankratern har öppnats.",
     "requires": {}
   },
   "isfjorden": {
     "name": "Isfjordvägen",
+    "category": "area",
     "requires": {}
   }
 }
