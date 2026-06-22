@@ -32,7 +32,18 @@ func _rebuild() -> void:
 		if kills <= 0:
 			lbl.text = "???"
 			lbl.modulate = Color(0.5, 0.5, 0.5)
+			_list.add_child(lbl)
 		else:
 			var t := TaskSystem.tier(mname)
 			lbl.text = "%s   %d kills   %s   +%d %% skada" % [mname, kills, "★".repeat(t), t * 2]
-		_list.add_child(lbl)
+			_list.add_child(lbl)
+			# Bestiary-text visas när monstret väl är upptäckt
+			var desc := String(MonsterDB.monsters[mname].get("desc", ""))
+			if desc != "":
+				var dlbl := Label.new()
+				dlbl.text = "   " + desc
+				dlbl.add_theme_font_size_override("font_size", 10)
+				dlbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+				dlbl.custom_minimum_size = Vector2(330, 0)
+				dlbl.modulate = Color(0.75, 0.72, 0.6)
+				_list.add_child(dlbl)

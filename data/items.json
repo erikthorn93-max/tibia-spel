@@ -148,7 +148,8 @@
 		"value": 75,
 		"color": "#9a9aa2",
 		"tool": true,
-		"sprite": "res://assets/sprites/items/pickaxe.png"
+		"sprite": "res://assets/sprites/items/pickaxe.png",
+		"slot": "tool"
 	},
 	"hatchet": {
 		"name": "Yxa (verktyg)",
@@ -156,7 +157,8 @@
 		"value": 75,
 		"color": "#b09060",
 		"tool": true,
-		"sprite": "res://assets/sprites/items/hatchet.png"
+		"sprite": "res://assets/sprites/items/hatchet.png",
+		"slot": "tool"
 	},
 	"fishing_rod": {
 		"name": "Fiskespo",
@@ -164,7 +166,8 @@
 		"value": 60,
 		"color": "#c0a878",
 		"tool": true,
-		"sprite": "res://assets/sprites/items/fishing_rod.png"
+		"sprite": "res://assets/sprites/items/fishing_rod.png",
+		"slot": "tool"
 	},
 	"sickle": {
 		"name": "Skära",
@@ -172,7 +175,8 @@
 		"value": 60,
 		"color": "#c8c8d0",
 		"tool": true,
-		"sprite": "res://assets/sprites/items/sickle.png"
+		"sprite": "res://assets/sprites/items/sickle.png",
+		"slot": "tool"
 	},
 	"gem": {
 		"name": "Ädelsten",
@@ -596,7 +600,8 @@
 		"type": "ammo",
 		"value": 1,
 		"color": "#a0724a",
-		"sprite": "res://assets/sprites/items/wooden_arrow.png"
+		"sprite": "res://assets/sprites/items/wooden_arrow.png",
+		"slot": "ammo"
 	},
 	"steel_bow": {
 		"name": "Stålbåge",
@@ -753,7 +758,8 @@
 	"oak_arrow": {
 		"name": "Ekpil",
 		"type": "ammo",
-		"value": 3
+		"value": 3,
+		"slot": "ammo"
 	},
 	"wooden_bow": {
 		"name": "Träbåge",
@@ -1083,7 +1089,8 @@
 		"type": "ammo",
 		"value": 2,
 		"color": "#5a7a3c",
-		"sprite": "res://assets/sprites/items/willow_arrow.png"
+		"sprite": "res://assets/sprites/items/willow_arrow.png",
+		"slot": "ammo"
 	},
 	"guardian_shield": {
 		"name": "Väktarsköld",
@@ -1196,5 +1203,210 @@
 		"value": 120,
 		"color": "#7a4a20",
 		"sprite": "res://assets/sprites/items/oak_door.png"
+	},
+	"raw_tuna": {
+		"name": "Rå tonfisk",
+		"type": "material",
+		"value": 30
+	},
+	"raw_shark": {
+		"name": "Rå haj",
+		"type": "material",
+		"value": 55
+	},
+	"cooked_tuna": {
+		"name": "Grillad tonfisk",
+		"type": "food",
+		"value": 90,
+		"color": "#c88858",
+		"heal": 110,
+		"buff": {
+			"stat": "skill:fishing",
+			"amount": 4,
+			"duration": 150
+		}
+	},
+	"cooked_shark": {
+		"name": "Hajbiff",
+		"type": "food",
+		"value": 150,
+		"color": "#9aa6b0",
+		"heal": 170,
+		"buff": {
+			"stat": "skill:fishing",
+			"amount": 5,
+			"duration": 180
+		}
+	},
+	"bronze_amulet": {
+		"name": "Bronshalsband",
+		"type": "armor",
+		"value": 120,
+		"color": "#b0843c",
+		"armor": 3,
+		"slot": "amulet"
+	},
+	"steel_amulet": {
+		"name": "Stålhalsband",
+		"type": "armor",
+		"value": 320,
+		"color": "#c0c4cc",
+		"armor": 6,
+		"slot": "amulet"
+	},
+	"ring_of_protection": {
+		"name": "Skyddsring",
+		"type": "armor",
+		"value": 150,
+		"color": "#6ec0d8",
+		"armor": 2,
+		"slot": "ring"
+	},
+	"ring_of_vigor": {
+		"name": "Kraftring",
+		"type": "armor",
+		"value": 360,
+		"color": "#d86060",
+		"armor": 4,
+		"slot": "ring"
+	},
+	"torch": {
+		"name": "Fackla",
+		"type": "light",
+		"value": 15,
+		"color": "#e08a30",
+		"light": 0.55,
+		"slot": "light"
+	},
+	"lantern": {
+		"name": "Lykta",
+		"type": "light",
+		"value": 140,
+		"color": "#f0c850",
+		"light": 0.8,
+		"slot": "light"
+	},
+	"leather_backpack": {
+		"name": "Lädersäck",
+		"type": "container",
+		"value": 60,
+		"color": "#8a5a30",
+		"drop_protection": 0.1,
+		"slot": "backpack"
+	},
+	"explorer_backpack": {
+		"name": "Äventyrarsäck",
+		"type": "container",
+		"value": 280,
+		"color": "#b07840",
+		"drop_protection": 0.2,
+		"slot": "backpack"
+	},
+	"spider_fang": {
+		"name": "Spindelhugg",
+		"type": "material",
+		"value": 22,
+		"color": "#cfc7b0"
+	},
+	"venom_gland": {
+		"name": "Giftkörtel",
+		"type": "material",
+		"value": 45,
+		"color": "#6aa83a"
+	},
+	"shadow_silk": {
+		"name": "Skuggsilke",
+		"type": "material",
+		"value": 70,
+		"color": "#2a2440"
+	},
+	"spider_queen_silk": {
+		"name": "Drottningsilke",
+		"type": "material",
+		"value": 220,
+		"color": "#b060c0"
+	},
+	"venom_blade": {
+		"name": "Giftklinga",
+		"type": "weapon",
+		"value": 700,
+		"color": "#6aa83a",
+		"atk": 30,
+		"skill": "sword",
+		"slot": "weapon",
+		"level_req": 25,
+		"ability": {
+			"type": "poison",
+			"chance": 0.25,
+			"duration": 6,
+			"tick_dmg": 6
+		}
+	},
+	"venomfang_blade": {
+		"name": "Gifthuggsklingan",
+		"type": "weapon",
+		"value": 4000,
+		"color": "#8a20a0",
+		"atk": 50,
+		"skill": "sword",
+		"slot": "weapon",
+		"level_req": 35,
+		"ability": {
+			"type": "poison",
+			"chance": 0.35,
+			"duration": 8,
+			"tick_dmg": 12
+		}
+	},
+	"web_boots": {
+		"name": "Nätstövlar",
+		"type": "armor",
+		"value": 220,
+		"color": "#cfc7b0",
+		"armor": 4,
+		"slot": "boots",
+		"level_req": 15
+	},
+	"venom_hood": {
+		"name": "Gifthuva",
+		"type": "armor",
+		"value": 350,
+		"color": "#5a2a6a",
+		"armor": 7,
+		"slot": "helmet",
+		"level_req": 20
+	},
+	"spider_amulet": {
+		"name": "Spindelamulett",
+		"type": "armor",
+		"value": 600,
+		"color": "#b060c0",
+		"armor": 5,
+		"slot": "amulet",
+		"level_req": 20
+	},
+	"silk_robe": {
+		"name": "Silkesrustning",
+		"type": "armor",
+		"value": 900,
+		"color": "#2a2440",
+		"armor": 15,
+		"slot": "body",
+		"level_req": 25
+	},
+	"venom_brew": {
+		"name": "Giftbrygd",
+		"type": "potion",
+		"value": 60,
+		"color": "#6aa83a",
+		"buff_stat": "atk",
+		"buff_amount": 6,
+		"buff_duration": 90
+	},
+	"boar_hide": {
+		"name": "Vildsvinshud",
+		"type": "material",
+		"value": 14,
+		"color": "#7a5a3c"
 	}
 }

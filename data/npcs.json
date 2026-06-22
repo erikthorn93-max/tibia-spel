@@ -440,5 +440,22 @@
 			"Mind the trolls up the pass."
 		],
 		"dialogue_root": "prospector_root"
+	},
+	"npc_fishmaster": {
+		"name": "Fiskemästare Silja",
+		"zone": "thais_fishing_isle",
+		"position": [
+			6,
+			7
+		],
+		"barks": [
+			"Revet föder den som respekterar det.",
+			"De stora nappar i skymningen."
+		],
+		"dialogue_root": "fishmaster_root",
+		"voice": {
+			"model": "en_US-amy-medium",
+			"length_scale": 1
+		}
 	}
 }

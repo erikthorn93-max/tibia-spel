@@ -34,6 +34,8 @@ const COL_PORTAL   := Color(0.62, 0.32, 0.94)
 const COL_DUNGEON  := Color(0.85, 0.68, 0.14)
 const COL_LOOT     := Color(0.91, 0.78, 0.18)
 const COL_GRAVE    := Color(0.85, 0.85, 0.85)
+const COL_QUEST_START  := Color(1.00, 0.85, 0.10)   # gul ! — startbar quest
+const COL_QUEST_ACTIVE := Color(0.70, 0.75, 0.85)   # grå ? — pågående quest
 const COL_BG       := Color(0.05, 0.05, 0.08, 0.90)
 const COL_BORDER   := Color(0.46, 0.46, 0.64, 0.88)
 const COL_TITLE    := Color(0.90, 0.82, 0.52)
@@ -165,6 +167,11 @@ func _draw_mini() -> void:
 	# Gravsten (vit prick) om spelaren dog i denna zon
 	if World.grave_zone == zone and World.grave_tile.x >= 0:
 		_mini_dot(World.grave_tile, pt, ox, oy, COL_GRAVE, 3)
+
+	# Quest-markörer (gul/grå prickar)
+	for q in _quest_givers(zone):
+		_mini_dot(q["tile"], pt, ox, oy,
+			COL_QUEST_START if q["status"] == "start" else COL_QUEST_ACTIVE, 3)
 
 	# Spelare – blinkar (vit prick i mitten)
 	var blink := 1.0 if fmod(_blink_t, 1.0) < 0.65 else 0.0
@@ -312,6 +319,10 @@ func _draw_full_overlay() -> void:
 	if World.grave_zone == zone and World.grave_tile.x >= 0:
 		_full_dot_clipped(World.grave_tile, clip, COL_GRAVE, ft)
 
+	# Quest-markörer (gul ! = startbar, grå ? = pågående) — ovanpå allt annat
+	for q in _quest_givers(zone):
+		_full_quest_marker(q["tile"], clip, ft, font, String(q["status"]))
+
 	# Spelare (blinkar)
 	var pt    := _player_tile()
 	var blink := 1.0 if fmod(_blink_t, 1.0) < 0.65 else 0.35
@@ -329,7 +340,27 @@ func _draw_full_overlay() -> void:
 		HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color(0.38, 0.38, 0.44))
 
 	# Teckenförklaring
-	_draw_legend(panel_x + panel_w - 92.0, panel_y + panel_h - 76.0)
+	_draw_legend(panel_x + panel_w - 122.0, panel_y + panel_h - 130.0)
+
+## Ritar en quest-markör (! / ?) med mörk bakgrund vid en NPC-tile på fullkartan.
+func _full_quest_marker(tile: Vector2i, clip: Rect2, ft: int, font: Font, status: String) -> void:
+	var p := Vector2(_full_map_origin.x + tile.x * ft, _full_map_origin.y + tile.y * ft)
+	if not clip.has_point(p):
+		return
+	var col   := COL_QUEST_START if status == "start" else COL_QUEST_ACTIVE
+	var glyph := "!" if status == "start" else "?"
+	var fs    := 14
+	var size  := font.get_string_size(glyph, HORIZONTAL_ALIGNMENT_LEFT, -1, fs)
+	# Centrera glyfen över tilen men håll den innanför kartytan
+	var gx := clampf(p.x + ft * 0.5 - size.x * 0.5,
+					 clip.position.x + 1.0, clip.position.x + clip.size.x - size.x - 1.0)
+	var gy := clampf(p.y - 2.0,
+					 clip.position.y + size.y, clip.position.y + clip.size.y - 2.0)
+	var bg := Rect2(Vector2(gx - 3.0, gy - size.y - 1.0).round(), Vector2(size.x + 6.0, size.y + 5.0).round())
+	draw_rect(bg, Color(0.04, 0.03, 0.07, 0.88))
+	draw_rect(bg, col, false, 1.0)
+	draw_string(font, Vector2(roundf(gx), roundf(gy)), glyph,
+		HORIZONTAL_ALIGNMENT_LEFT, -1, fs, col)
 
 func _full_dot_clipped(tile: Vector2i, clip: Rect2, col: Color, ft: int) -> void:
 	var ds  := maxi(ft - 1, 1)
@@ -395,6 +426,8 @@ func _draw_legend(lx: float, ly: float) -> void:
 		[COL_GRAVE,   "Gravsten"],
 		[COL_PORTAL,  "Portal"],
 		[COL_DUNGEON, "Dungeonentré"],
+		[COL_QUEST_START,  "Quest (! starta)"],
+		[COL_QUEST_ACTIVE, "Quest (? pågår)"],
 	]
 	for i in items.size():
 		var c   : Color  = items[i][0]
@@ -574,4 +607,14 @@ func _ground_items(zone: Node2D) -> Array:
 	for child in zone.get_children():
 		if child.get("contents") != null:
 			out.append(child)
+	return out
+
+## NPC-questgivare med aktiv markör: [{tile, status}] där status = "start"/"active".
+func _quest_givers(zone: Node2D) -> Array:
+	var out : Array = []
+	for child in zone.get_children():
+		if child is DialogueNpc:
+			var status := QuestSystem.giver_marker(child.npc_id)
+			if status != "":
+				out.append({"tile": child.tile, "status": status})
 	return out

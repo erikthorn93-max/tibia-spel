@@ -81,6 +81,8 @@ Varje spell/runa har en `target`-typ:
 - `target` — en fiende; aim-cursorn måste landa på en varelse inom `range`.
 - `area` — AoE; aim-cursorn väljer valfri ruta inom `range`, träffar den + alla
   varelser inom `radius` (Chebyshev).
+- `area_self` — självcentrerad AoE-burst; kastas **direkt utan aim**, träffar alla
+  varelser inom `radius` runt spelaren (t.ex. Berserk / exori).
 
 AimController läser `range` och `radius` från spell-/rune-datan och ritar både
 räckvidden (dimmar out-of-range) och AoE-previewen under cursorn. Ogiltigt klick
@@ -110,7 +112,7 @@ Planerad startuppsättning (~16 spells, exakta värden sätts i plan/implementat
 | exori mort | Death Strike | attack | target | 16 |
 | exevo flam hur | Fire Wave | attack | area | 18 |
 | exevo frigo hur | Ice Wave | attack | area | 20 |
-| exori | Berserk | attack | area (self-centrerad) | 35 |
+| exori | Berserk | attack | area_self | 35 |
 | adori vis | Conjure Energy | conjure | self | 13 |
 | adori flam | Conjure Fire | conjure | self | 15 |
 | adori frigo | Conjure Ice | conjure | self | 15 |

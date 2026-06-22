@@ -18,7 +18,13 @@ signal status_changed
 
 const SKILL_XP_BASE := 50.0
 const SKILL_XP_GROWTH := 1.1
-const EQUIPMENT_SLOTS := ["weapon", "body", "helmet", "legs", "boots", "offhand"]
+const EQUIPMENT_SLOTS := ["weapon", "body", "helmet", "legs", "boots", "offhand",
+	"amulet", "ring", "ring2", "ammo", "tool", "light", "backpack"]
+## Andel av varje stack som tappas vid död utan ryggsäck.
+const BASE_DEATH_DROP := 0.30
+## Slots vars föremål ligger kvar i ryggsäcken — sloten är bara en aktiv-markör
+## (du behåller dina verktyg/pilar och använder dem därifrån).
+const REFERENCE_SLOTS := ["ammo", "tool"]
 
 var player_name := "Hjälte"
 var level := 1
@@ -32,7 +38,8 @@ var gold := 0
 var inventory: Dictionary = {}        # item_id -> qty
 ## 6 utrustningsplatser. weapon startar med rusty_sword (gratis startitem).
 var equipment: Dictionary = {
-	"weapon": "rusty_sword", "body": "", "helmet": "", "legs": "", "boots": "", "offhand": ""
+	"weapon": "rusty_sword", "body": "", "helmet": "", "legs": "", "boots": "", "offhand": "",
+	"amulet": "", "ring": "", "ring2": "", "ammo": "", "tool": "", "light": "", "backpack": ""
 }
 ## Bakåtkompatibel property: läser/skriver equipment["weapon"].
 var equipped_weapon: String:
@@ -102,6 +109,39 @@ func skill_xp_next(skill_level: int, skill_id := "") -> int:
 		base = float(skill_defs[skill_id].get("xp_base", SKILL_XP_BASE))
 		growth = float(skill_defs[skill_id].get("xp_growth", SKILL_XP_GROWTH))
 	return int(base * pow(growth, skill_level))
+
+## ── Skill-XP-avläsning (för OSRS-stil XP-bar + hover) ──
+
+func skill_base_level(skill_id: String) -> int:
+	return int(skills.get(skill_id, {}).get("level", 1))
+
+## XP intjänad inom nuvarande nivå (nollställs vid level-up).
+func skill_xp_in_level(skill_id: String) -> int:
+	return int(skills.get(skill_id, {}).get("xp", 0))
+
+## XP kvar tills nästa nivå.
+func skill_xp_to_next(skill_id: String) -> int:
+	if not skills.has(skill_id):
+		return 0
+	var need := skill_xp_next(skill_base_level(skill_id), skill_id)
+	return maxi(need - skill_xp_in_level(skill_id), 0)
+
+## Andel av vägen till nästa nivå (0.0–1.0).
+func skill_xp_progress(skill_id: String) -> float:
+	if not skills.has(skill_id):
+		return 0.0
+	var need := skill_xp_next(skill_base_level(skill_id), skill_id)
+	return clampf(float(skill_xp_in_level(skill_id)) / float(need), 0.0, 1.0) if need > 0 else 0.0
+
+## Total ackumulerad XP i skillen (summan över alla klarade nivåer + nuvarande).
+func skill_total_xp(skill_id: String) -> int:
+	if not skills.has(skill_id):
+		return 0
+	var start := int(skill_defs.get(skill_id, {}).get("start_level", 1))
+	var total := skill_xp_in_level(skill_id)
+	for l in range(start, skill_base_level(skill_id)):
+		total += skill_xp_next(l, skill_id)
+	return total
 
 func gain_exp(amount: int) -> void:
 	experience += amount
@@ -301,10 +341,15 @@ func equip(slot: String, item_id: String) -> bool:
 	var d: Dictionary = ItemDB.items.get(item_id, {})
 	if d.is_empty():
 		return false
-	if String(d.get("slot", "")) != slot:
+	if not slot_accepts(slot, String(d.get("slot", ""))):
 		return false
 	if int(inventory.get(item_id, 0)) < 1:
 		return false
+	# Markör-slots (verktyg/pilar): föremålet stannar i ryggsäcken.
+	if slot in REFERENCE_SLOTS:
+		equipment[slot] = item_id
+		equipment_changed.emit()
+		return true
 	# Returnera eventuellt befintligt föremål
 	var current := String(equipment.get(slot, ""))
 	if current != "":
@@ -323,17 +368,64 @@ func unequip(slot: String) -> void:
 	if current == "":
 		return
 	equipment[slot] = ""
-	add_item(current, 1)
+	if slot not in REFERENCE_SLOTS:   # markör-slots tog aldrig något ur ryggsäcken
+		add_item(current, 1)
 	equipment_changed.emit()
 
-## Summan av armor-värden från body/helmet/legs/boots.
+## Summan av armor-värden från body/helmet/legs/boots + halsband/ringar.
 func total_armor() -> int:
 	var total := 0
-	for slot in ["body", "helmet", "legs", "boots"]:
+	for slot in ["body", "helmet", "legs", "boots", "amulet", "ring", "ring2"]:
 		var id := String(equipment.get(slot, ""))
 		if id != "":
 			total += int(ItemDB.items.get(id, {}).get("armor", 0))
 	return total
+
+## True om ett föremål med item_slot får utrustas i slot.
+## Ringar passar i både "ring" och "ring2".
+func slot_accepts(slot: String, item_slot: String) -> bool:
+	if item_slot == slot:
+		return true
+	return slot == "ring2" and item_slot == "ring"
+
+## Ljusstyrka från utrustad ljuskälla (0.0 = ingen). Minskar nattmörkret.
+func light_level() -> float:
+	var id := String(equipment.get("light", ""))
+	if id == "":
+		return 0.0
+	return float(ItemDB.items.get(id, {}).get("light", 0.0))
+
+## Andel av varje stack som tappas vid död. En utrustad ryggsäck skyddar
+## innehållet (drop_protection) och sänker andelen, dock aldrig under 5 %.
+func death_drop_fraction() -> float:
+	var id := String(equipment.get("backpack", ""))
+	var protection := float(ItemDB.items.get(id, {}).get("drop_protection", 0.0)) if id != "" else 0.0
+	return clampf(BASE_DEATH_DROP - protection, 0.05, BASE_DEATH_DROP)
+
+## True om verktyget är tillgängligt — antingen i ryggsäcken eller i verktygssloten.
+func has_tool(tool_id: String) -> bool:
+	if tool_id == "":
+		return true
+	return int(inventory.get(tool_id, 0)) >= 1 or String(equipment.get("tool", "")) == tool_id
+
+## True om ammunitionen finns — i ryggsäcken eller i pilsloten.
+func has_ammo(ammo_id: String) -> bool:
+	if ammo_id == "":
+		return true
+	return int(inventory.get(ammo_id, 0)) >= 1 or String(equipment.get("ammo", "")) == ammo_id
+
+## Förbrukar en ammunition från ryggsäcken. Töms pilsloten-markören när sista
+## pilen av den typen skjuts. Returnerar true om något förbrukades.
+func consume_ammo(ammo_id: String) -> bool:
+	if ammo_id == "":
+		return true
+	if int(inventory.get(ammo_id, 0)) < 1:
+		return false
+	remove_item(ammo_id, 1)
+	if int(inventory.get(ammo_id, 0)) < 1 and String(equipment.get("ammo", "")) == ammo_id:
+		equipment["ammo"] = ""
+		equipment_changed.emit()
+	return true
 
 ## shielding_bonus från offhand (sköld).
 func total_shielding_bonus() -> int:

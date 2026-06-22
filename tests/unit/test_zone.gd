@@ -34,7 +34,8 @@ func test_portal_found():
 	var z = _make_zone("town")
 	assert_true(z.portals.values().has("cave"))
 	var cave = _make_zone("cave")
-	assert_eq(cave.portals.values()[0], "town")
+	assert_true(cave.portals.values().has("town"))
+	assert_true(cave.portals.values().has("spider_crypt"))
 
 func test_spawns_parsed():
 	var z = _make_zone("cave")
@@ -310,3 +311,127 @@ func test_town_has_coast_portal_and_pirates():
 
 func test_beach_terrain_registered():
 	assert_true(PlaceholderTiles.TERRAIN.has("b"))
+
+# ── Spindelkryptan: nytt innehållsflöde (monster → material → utrustning) ──
+
+func test_spider_crypt_loads_with_content():
+	var z = _make_zone("spider_crypt")
+	assert_true(z.is_walkable(z.player_start))
+	# Portal tillbaka till grottan
+	assert_true(z.portals.values().has("cave"))
+	# Crafting-stationer på plats (självförsörjande loop)
+	var stations = z.station_points.map(func(s): return s["station"])
+	assert_has(stations, "anvil")
+	assert_has(stations, "crafting_bench")
+	assert_has(stations, "alchemy_table")
+	# Spindelfiender + boss
+	assert_gt(z.spawn_points.filter(func(s): return s["monster"] == "Grottspindel").size(), 0)
+	assert_gt(z.spawn_points.filter(func(s): return s["monster"] == "Giftvävare").size(), 0)
+	assert_eq(z.spawn_points.filter(func(s): return s["monster"] == "Spindeldrottningen Morwena").size(), 1)
+	# Gather-noder för självförsörjande alkemi-loop (nattskatta → giftbrygd)
+	assert_gt(z.node_points.filter(func(n): return n["node"] == "nightshade_patch").size(), 0)
+
+func test_shop_stock_items_are_real():
+	var stock: Array = (load("res://ui/shop_panel.gd") as GDScript).get_script_constant_map()["STOCK"]
+	for id in stock:
+		assert_true(ItemDB.items.has(id), "shop säljer okänt item " + id)
+	# Drycker + motgift ska gå att köpa
+	for id in ["health_potion", "antidote_potion", "venom_brew"]:
+		assert_has(stock, id)
+
+func test_cave_links_to_spider_crypt():
+	var z = _make_zone("cave")
+	assert_true(z.portals.values().has("spider_crypt"))
+
+func test_spider_monsters_drop_craft_materials():
+	for name in ["Grottspindel", "Giftvävare", "Skuggspindel"]:
+		assert_true(MonsterDB.monsters.has(name), "saknar monster " + name)
+	var queen: Dictionary = MonsterDB.monsters["Spindeldrottningen Morwena"]
+	assert_true(queen.get("boss", false))
+	var queen_loot: Array = queen["loot"]
+	assert_true(queen_loot.any(func(l): return String(l["item"]) == "venomfang_blade"))
+
+func test_new_spider_items_registered():
+	for id in ["spider_fang", "venom_gland", "shadow_silk", "spider_queen_silk",
+			"venom_blade", "venomfang_blade", "silk_robe", "venom_hood",
+			"spider_amulet", "web_boots", "venom_brew"]:
+		assert_true(ItemDB.items.has(id), "saknar item " + id)
+
+func test_new_spider_recipes_exist():
+	var anvil_ids: Array = ItemDB.recipes["anvil"].map(func(r): return r["id"])
+	assert_has(anvil_ids, "venom_blade")
+	var bench_ids: Array = ItemDB.recipes["crafting_bench"].map(func(r): return r["id"])
+	for id in ["web_boots", "venom_hood", "spider_amulet", "silk_robe"]:
+		assert_has(bench_ids, id)
+	var alch_ids: Array = ItemDB.recipes["alchemy_table"].map(func(r): return r["id"])
+	assert_has(alch_ids, "venom_brew")
+
+func test_spider_recipe_ingredients_are_real_items():
+	for station in ["anvil", "crafting_bench", "alchemy_table"]:
+		for r in ItemDB.recipes[station]:
+			for ing in r["ingredients"]:
+				assert_true(ItemDB.items.has(ing), "recept %s saknar item %s" % [r["id"], ing])
+
+func test_spider_quest_chain_loads():
+	for qid in ["quest_spider_crypt_1", "quest_spider_crypt_2"]:
+		assert_true(QuestSystem.quests.has(qid), "saknar quest " + qid)
+	# Kedjan: quest 2 kräver quest 1
+	assert_has(QuestSystem.quests["quest_spider_crypt_2"]["requires"], "quest_spider_crypt_1")
+
+func test_spider_quests_reference_valid_content():
+	for qid in ["quest_spider_crypt_1", "quest_spider_crypt_2"]:
+		var q: Dictionary = QuestSystem.quests[qid]
+		assert_true(MonsterDB.monsters.has(q["giver"]) == false)   # giver är en NPC, inte monster
+		for step in q["steps"]:
+			match String(step["type"]):
+				"kill":
+					assert_true(MonsterDB.monsters.has(step["monster"]), qid + " dödar okänt monster")
+				"collect":
+					assert_true(ItemDB.items.has(step["item"]), qid + " samlar okänt item")
+		for item_id in q.get("rewards", {}).get("items", {}):
+			assert_true(ItemDB.items.has(item_id), qid + " belönar okänt item " + item_id)
+
+func test_new_monsters_have_bestiary_text():
+	for name in ["Grottspindel", "Giftvävare", "Skuggspindel", "Spindeldrottningen Morwena"]:
+		assert_ne(String(MonsterDB.monsters[name].get("desc", "")), "", name + " saknar bestiary-text")
+
+func test_spiders_spawn_in_other_zones():
+	var cave = _make_zone("cave")
+	assert_gt(cave.spawn_points.filter(func(s): return s["monster"] == "Grottspindel").size(), 0)
+	var forest = _make_zone("forest")
+	assert_gt(forest.spawn_points.filter(func(s): return s["monster"] == "Grottspindel").size(), 0)
+
+# ── Brett low-level-innehåll: landsbygdens fauna ──
+
+func test_low_level_critters_exist():
+	for name in ["Fältmus", "Vildkanin", "Åkerkråka", "Vildsvin"]:
+		assert_true(MonsterDB.monsters.has(name), "saknar monster " + name)
+		assert_lt(int(MonsterDB.monsters[name]["hp"]), 50, name + " är inte low-level")
+		assert_ne(String(MonsterDB.monsters[name].get("desc", "")), "", name + " saknar bestiary-text")
+
+func test_fields_have_beginner_fauna():
+	var z = _make_zone("thais_fields")
+	for name in ["Fältmus", "Vildkanin", "Åkerkråka", "Vildsvin"]:
+		assert_gt(z.spawn_points.filter(func(s): return s["monster"] == name).size(), 0,
+			"landsbygden saknar " + name)
+
+func test_apprentice_skilling_questline():
+	for qid in ["quest_appr_mining", "quest_appr_woodcutting", "quest_appr_cooking"]:
+		assert_true(QuestSystem.quests.has(qid), "saknar " + qid)
+	# Kedja: woodcutting kräver mining, cooking kräver woodcutting
+	assert_has(QuestSystem.quests["quest_appr_woodcutting"]["requires"], "quest_appr_mining")
+	assert_has(QuestSystem.quests["quest_appr_cooking"]["requires"], "quest_appr_woodcutting")
+	# Introducerar gathering via collect-steg mot riktiga items
+	for qid in ["quest_appr_mining", "quest_appr_woodcutting", "quest_appr_cooking"]:
+		var first = QuestSystem.quests[qid]["steps"][0]
+		assert_eq(String(first["type"]), "collect", qid + " börjar inte med ett samlingssteg")
+		assert_true(ItemDB.items.has(String(first["item"])), qid + " samlar okänt item")
+	# Belönar skill-XP för att jumpstarta den introducerade skillen
+	assert_true(QuestSystem.quests["quest_appr_mining"]["rewards"].has("skill_xp"))
+
+func test_boar_hide_tans_to_leather():
+	assert_true(ItemDB.items.has("boar_hide"))
+	var bench: Array = ItemDB.recipes["crafting_bench"]
+	var tan := bench.filter(func(r): return r["id"] == "leather_strips" \
+		and r["ingredients"].has("boar_hide"))
+	assert_gt(tan.size(), 0, "saknar garvningsrecept boar_hide → leather_strips")

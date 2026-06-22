@@ -3,7 +3,7 @@
 	"tiles": [
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 		"W,k,,,,,k,WWWWWWW,,,,,,,,,,,,,,,,,,,,,,W",
-		"W,P,,0,,,,,,,,,,W,,,b,,,,,WWW,,,,,,,,,,W",
+		"W,P,M0,,,,,,,,,,W,,,b,,,,,WWW,,,,,,,,,,W",
 		"W,,,,,,,,,,,,,,,W,,,,,,,,,,,W,,,,c,,,,,W",
 		"WWWWWW,,,,,b,,,,W,,,,,,,,,,,W,,,,,,,,,,W",
 		"W,,,,,,,,,,,,,,,WWWWW,,WWWWWW,,,,,,,,,,W",
@@ -35,6 +35,10 @@
 		"0": {
 			"type": "portal",
 			"to": "town"
+		},
+		"M": {
+			"type": "portal",
+			"to": "spider_crypt"
 		},
 		"4": {
 			"type": "portal",
@@ -120,6 +124,11 @@
 			"monster": "Skelettkrigare",
 			"count": 2,
 			"respawn": 60.0
+		},
+		{
+			"monster": "Grottspindel",
+			"count": 3,
+			"respawn": 25.0
 		}
 	]
 }

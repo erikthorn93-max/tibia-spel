@@ -82,6 +82,7 @@ func _ready() -> void:
 	_build_night_overlay()
 	_build_levelup_labels()
 	TimeOfDay.hour_changed.connect(_on_hour_changed)
+	GameState.equipment_changed.connect(_update_night_overlay)   # ljuskälla på/av
 	TaskSystem.task_taken.connect(func(_id): _refresh_tasks())
 	TaskSystem.task_progress.connect(func(_id): _refresh_tasks())
 	TaskSystem.task_completed.connect(func(_id): _refresh_tasks())
@@ -329,6 +330,8 @@ func _update_night_overlay() -> void:
 	var angle := frac * TAU   # 0 = midnatt, PI = middag
 	var raw_alpha := (-cos(angle) + 1.0) * 0.5   # 0..1, topp vid midnatt
 	var alpha := raw_alpha * 0.52
+	# Utrustad ljuskälla (fackla/lykta) lättar upp mörkret runt spelaren.
+	alpha *= clampf(1.0 - GameState.light_level(), 0.15, 1.0)
 	_night_overlay.color = Color(0.02, 0.04, 0.18, alpha)
 	# Klocka + ikon
 	var icon := "☀" if not TimeOfDay.is_night else "🌙"

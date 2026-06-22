@@ -650,5 +650,223 @@
 				"outfit_champion"
 			]
 		}
+	},
+	"quest_fiskemastaren": {
+		"name": "Fiskemästarens prov",
+		"giver": "npc_captain",
+		"requires": [
+			"quest_sjovagen"
+		],
+		"steps": [
+			{
+				"type": "collect",
+				"item": "raw_swordfish",
+				"count": 3,
+				"hint": "Fånga 3 svärdfiskar för att visa att du behärskar djuphavsfiske."
+			},
+			{
+				"type": "collect",
+				"item": "raw_lobster",
+				"count": 3,
+				"hint": "Fånga 3 humrar längs revet."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_captain",
+				"hint": "Visa fångsten för Kapten Brandt vid hamnen."
+			}
+		],
+		"rewards": {
+			"xp": 2500,
+			"gold": 800,
+			"skill_xp": {
+				"fishing": 4000
+			},
+			"items": {
+				"lobster_dinner": 3
+			}
+		}
+	},
+	"quest_spider_crypt_1": {
+		"name": "Väven i Mörkret",
+		"giver": "npc_scholar",
+		"requires": [
+			"quest_crypt"
+		],
+		"steps": [
+			{
+				"type": "explore",
+				"zone": "spider_crypt",
+				"hint": "Hitta Spindelkryptan via portalen intill ingången i Thais-grottan."
+			},
+			{
+				"type": "kill",
+				"monster": "Giftvävare",
+				"count": 6,
+				"hint": "Rensa 6 Giftvävare i kryptan."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_scholar",
+				"hint": "Berätta för Maelis vad som väver i mörkret."
+			}
+		],
+		"rewards": {
+			"xp": 1800,
+			"gold": 700,
+			"skill_xp": {
+				"crafting": 1500
+			},
+			"items": {
+				"web_boots": 1
+			}
+		}
+	},
+	"quest_spider_crypt_2": {
+		"name": "Drottningens Fall",
+		"giver": "npc_scholar",
+		"requires": [
+			"quest_spider_crypt_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Spindeldrottningen Morwena",
+				"count": 1,
+				"hint": "Besegra Spindeldrottningen Morwena längst in i kryptan."
+			},
+			{
+				"type": "collect",
+				"item": "spider_queen_silk",
+				"count": 2,
+				"hint": "Samla 2 Drottningsilke från drottningen."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_scholar",
+				"hint": "Återvänd till Maelis med drottningens silke."
+			}
+		],
+		"rewards": {
+			"xp": 4000,
+			"gold": 2000,
+			"skill_xp": {
+				"crafting": 3000
+			},
+			"items": {
+				"silk_robe": 1
+			}
+		}
+	},
+	"quest_fields_pests": {
+		"name": "Skadedjur på åkrarna",
+		"giver": "npc_ranger",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Fältmus",
+				"count": 8,
+				"hint": "Jaga bort 8 fältmöss som härjar i böndernas säd."
+			},
+			{
+				"type": "kill",
+				"monster": "Åkerkråka",
+				"count": 6,
+				"hint": "Skjut ner 6 åkerkråkor över fälten."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_ranger",
+				"hint": "Återvänd till Aldric i Norra landsbygden."
+			}
+		],
+		"rewards": {
+			"xp": 250,
+			"gold": 100,
+			"items": {
+				"leather_cap": 1
+			}
+		}
+	},
+	"quest_appr_mining": {
+		"name": "Lärling: Gruvan",
+		"giver": "npc_elder",
+		"requires": [],
+		"steps": [
+			{
+				"type": "collect",
+				"item": "copper_ore",
+				"count": 5,
+				"hint": "Bryt 5 kopparmalm med en hacka vid kopparådrorna i Thais-grottan."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_elder",
+				"hint": "Visa malmen för Äldsten Rowan."
+			}
+		],
+		"rewards": {
+			"xp": 150,
+			"gold": 60,
+			"skill_xp": {
+				"mining": 200
+			}
+		}
+	},
+	"quest_appr_woodcutting": {
+		"name": "Lärling: Skogen",
+		"giver": "npc_elder",
+		"requires": [
+			"quest_appr_mining"
+		],
+		"steps": [
+			{
+				"type": "collect",
+				"item": "log",
+				"count": 5,
+				"hint": "Hugg 5 stockar med en yxa vid träden i skogen."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_elder",
+				"hint": "Lämna stockarna till Äldsten Rowan."
+			}
+		],
+		"rewards": {
+			"xp": 150,
+			"gold": 60,
+			"skill_xp": {
+				"woodcutting": 200
+			}
+		}
+	},
+	"quest_appr_cooking": {
+		"name": "Lärling: Härden",
+		"giver": "npc_elder",
+		"requires": [
+			"quest_appr_woodcutting"
+		],
+		"steps": [
+			{
+				"type": "collect",
+				"item": "cooked_trout",
+				"count": 3,
+				"hint": "Fånga abborrar med ett spö och stek dem på en spis."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_elder",
+				"hint": "Bjud Äldsten Rowan på din fångst."
+			}
+		],
+		"rewards": {
+			"xp": 250,
+			"gold": 100,
+			"skill_xp": {
+				"fishing": 200,
+				"cooking": 200
+			}
+		}
 	}
 }

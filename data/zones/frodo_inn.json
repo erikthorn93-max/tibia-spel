@@ -10,7 +10,7 @@
 		"Wffffffffffffffw",
 		"WfFfffffffFfffff",
 		"Wfffffffffffffff",
-		"Wf,,,,,,,,,,,,fW",
+		"Wf,S,,,,,,,,,,fW",
 		"Wf,,,,,,,,,,,,fW",
 		"WffffffPffffffff",
 		"WWWWWWWdWWWWWWWW",
@@ -28,6 +28,11 @@
 		},
 		"f": {
 			"type": "terrain",
+			"terrain": "f"
+		},
+		"S": {
+			"type": "station",
+			"station": "stove",
 			"terrain": "f"
 		}
 	}

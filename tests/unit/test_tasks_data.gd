@@ -7,8 +7,19 @@ func before_all():
 	var f := FileAccess.open("res://data/tasks.json", FileAccess.READ)
 	tasks = JSON.parse_string(f.get_as_text())
 
-func test_thirteen_tasks():
-	assert_eq(tasks.size(), 13)
+func test_task_count():
+	assert_eq(tasks.size(), 19)
+
+func test_low_level_tasks_present():
+	for id in ["task_faltmus", "task_krakor", "task_vildsvin"]:
+		assert_true(tasks.has(id), "saknar task: " + id)
+	# Nybörjarvänliga: slayer-krav 1
+	assert_eq(int(tasks["task_faltmus"]["slayer_level_req"]), 1)
+
+func test_spider_slayer_tasks_present():
+	for id in ["task_grottspindel", "task_giftvavare", "task_skuggspindel"]:
+		assert_true(tasks.has(id), "saknar task: " + id)
+	assert_eq(String(tasks["task_skuggspindel"]["monster"]), "Skuggspindel")
 
 func test_sea_tasks_present():
 	for id in ["task_krabbor", "task_sjoormar", "task_pirater"]:

@@ -4,7 +4,7 @@
 		"WWWWWWWWWWWWWWWWWWWWWWWW",
 		"WwWWWWWWWWWWWWWWWWWWWWwW",
 		"W,,,,,,,,,,,,,,,,,,,,,,W",
-		"W,,,,C,,,,,,,,,,,,,,,,,W",
+		"W,F,,C,,,,,,,,,,,,,,,,,W",
 		"W,,,,,,,,,,,,,,,,,,,,,,W",
 		"W,,,,,,,,,,,,,,,,,,,,,,W",
 		"W,,,,,,,,,,,,,,,,,,,,,,W",
@@ -39,6 +39,12 @@
 			"type": "stair_down",
 			"to": "thais_docks_lower",
 			"terrain": "n"
+		},
+		"F": {
+			"type": "portal",
+			"to": "thais_fishing_isle",
+			"terrain": "f",
+			"unlock": "fiskeon"
 		}
 	}
 }

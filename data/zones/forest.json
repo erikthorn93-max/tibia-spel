@@ -115,5 +115,21 @@
 			"terrain": ","
 		}
 	},
-	"spawn_table": []
+	"spawn_table": [
+		{
+			"monster": "Grottspindel",
+			"count": 2,
+			"respawn": 30.0
+		},
+		{
+			"monster": "Vildkanin",
+			"count": 4,
+			"respawn": 18.0
+		},
+		{
+			"monster": "Åkerkråka",
+			"count": 3,
+			"respawn": 20.0
+		}
+	]
 }

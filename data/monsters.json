@@ -1813,5 +1813,259 @@
 				"chance": 1
 			}
 		]
+	},
+	"Grottspindel": {
+		"hp": 110,
+		"atk": 20,
+		"exp": 75,
+		"speed": 2.5,
+		"cooldown": 1.1,
+		"aggro_range": 6,
+		"color": "#3a2f26",
+		"desc": "En hårig grottspindel som lurar i Spindelkryptans skuggor. Dess huggtänder är eftertraktade av smeder.",
+		"loot": [
+			{
+				"item": "spider_fang",
+				"min": 1,
+				"max": 2,
+				"chance": 0.6
+			},
+			{
+				"item": "spider_silk",
+				"min": 1,
+				"max": 2,
+				"chance": 0.5
+			},
+			{
+				"item": "iron_coin",
+				"min": 6,
+				"max": 18,
+				"chance": 0.9
+			}
+		]
+	},
+	"Giftvävare": {
+		"hp": 175,
+		"atk": 28,
+		"exp": 145,
+		"speed": 2.3,
+		"cooldown": 1.2,
+		"aggro_range": 7,
+		"color": "#5a2a6a",
+		"desc": "Väver giftiga nät djupt i kryptan. Dess körtlar sprutar en frätande gift som långsamt tär på offret.",
+		"ability": {
+			"type": "poison",
+			"chance": 0.3,
+			"duration": 10,
+			"tick_dmg": 5
+		},
+		"loot": [
+			{
+				"item": "venom_gland",
+				"min": 1,
+				"max": 1,
+				"chance": 0.55
+			},
+			{
+				"item": "spider_silk",
+				"min": 1,
+				"max": 3,
+				"chance": 0.6
+			},
+			{
+				"item": "iron_coin",
+				"min": 14,
+				"max": 38,
+				"chance": 0.85
+			}
+		]
+	},
+	"Skuggspindel": {
+		"hp": 250,
+		"atk": 35,
+		"exp": 220,
+		"speed": 2.6,
+		"cooldown": 1.1,
+		"aggro_range": 8,
+		"color": "#1a1426",
+		"desc": "En nästan osynlig rovspindel som rör sig blixtsnabbt i mörkret. Dess silke är svart som natten och starkare än stål.",
+		"loot": [
+			{
+				"item": "shadow_silk",
+				"min": 1,
+				"max": 2,
+				"chance": 0.5
+			},
+			{
+				"item": "spider_fang",
+				"min": 1,
+				"max": 2,
+				"chance": 0.5
+			},
+			{
+				"item": "iron_coin",
+				"min": 25,
+				"max": 70,
+				"chance": 1
+			},
+			{
+				"item": "health_potion",
+				"min": 1,
+				"max": 1,
+				"chance": 0.06
+			}
+		]
+	},
+	"Spindeldrottningen Morwena": {
+		"hp": 1700,
+		"atk": 64,
+		"exp": 1900,
+		"speed": 1.8,
+		"cooldown": 1.5,
+		"aggro_range": 12,
+		"color": "#4a1040",
+		"boss": true,
+		"enrage": true,
+		"desc": "Kryptans urgamla härskarinna. Hennes gift kan fälla en fullrustad riddare på ett ögonblick — och hennes silke är legendariskt.",
+		"ability": {
+			"type": "poison",
+			"chance": 0.4,
+			"duration": 12,
+			"tick_dmg": 14
+		},
+		"loot": [
+			{
+				"item": "venomfang_blade",
+				"min": 1,
+				"max": 1,
+				"chance": 1
+			},
+			{
+				"item": "spider_queen_silk",
+				"min": 2,
+				"max": 4,
+				"chance": 1
+			},
+			{
+				"item": "venom_gland",
+				"min": 3,
+				"max": 6,
+				"chance": 1
+			},
+			{
+				"item": "iron_coin",
+				"min": 600,
+				"max": 1200,
+				"chance": 1
+			},
+			{
+				"item": "great_health_potion",
+				"min": 2,
+				"max": 3,
+				"chance": 0.8
+			}
+		]
+	},
+	"Fältmus": {
+		"hp": 10,
+		"atk": 3,
+		"exp": 5,
+		"speed": 2.6,
+		"cooldown": 1.2,
+		"aggro_range": 4,
+		"color": "#8a7a5a",
+		"desc": "En fräck åkermus som gnager på böndernas säd. Ofarlig men talrik — perfekt byte för nya äventyrare.",
+		"loot": [
+			{
+				"item": "iron_coin",
+				"min": 1,
+				"max": 3,
+				"chance": 0.8
+			},
+			{
+				"item": "raw_meat",
+				"min": 1,
+				"max": 1,
+				"chance": 0.15
+			}
+		]
+	},
+	"Vildkanin": {
+		"hp": 8,
+		"atk": 2,
+		"exp": 4,
+		"speed": 3.0,
+		"cooldown": 1.0,
+		"aggro_range": 3,
+		"color": "#b0a088",
+		"desc": "En snabb fältkanin. Flyr hellre än slåss, men ger gott kött åt den som hinner ifatt.",
+		"loot": [
+			{
+				"item": "raw_meat",
+				"min": 1,
+				"max": 1,
+				"chance": 0.6
+			},
+			{
+				"item": "iron_coin",
+				"min": 1,
+				"max": 2,
+				"chance": 0.5
+			}
+		]
+	},
+	"Åkerkråka": {
+		"hp": 14,
+		"atk": 4,
+		"exp": 8,
+		"speed": 2.8,
+		"cooldown": 1.0,
+		"aggro_range": 6,
+		"color": "#2a2a30",
+		"desc": "En högljudd kråka som plundrar fälten. Dess fjädrar är eftertraktade av pilmakare.",
+		"loot": [
+			{
+				"item": "feathers",
+				"min": 1,
+				"max": 2,
+				"chance": 0.7
+			},
+			{
+				"item": "iron_coin",
+				"min": 1,
+				"max": 4,
+				"chance": 0.6
+			}
+		]
+	},
+	"Vildsvin": {
+		"hp": 38,
+		"atk": 9,
+		"exp": 20,
+		"speed": 2.4,
+		"cooldown": 1.3,
+		"aggro_range": 5,
+		"color": "#6a5440",
+		"desc": "Ett ilsket vildsvin som bökar i landsbygdens åkrar. Ger rikligt med kött och en seg hud.",
+		"loot": [
+			{
+				"item": "raw_meat",
+				"min": 1,
+				"max": 2,
+				"chance": 0.7
+			},
+			{
+				"item": "boar_hide",
+				"min": 1,
+				"max": 1,
+				"chance": 0.5
+			},
+			{
+				"item": "iron_coin",
+				"min": 3,
+				"max": 10,
+				"chance": 0.8
+			}
+		]
 	}
 }

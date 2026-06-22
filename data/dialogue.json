@@ -213,8 +213,152 @@
 				]
 			},
 			{
+				"text": "I'm new here — can you teach me to mine?",
+				"next": "elder_appr1",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_appr_mining"
+					}
+				]
+			},
+			{
+				"text": "I've mined the copper ore.",
+				"next": "elder_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_appr_mining",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_appr_mining"
+					}
+				]
+			},
+			{
+				"text": "Teach me woodcutting next.",
+				"next": "elder_appr2",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_appr_woodcutting"
+					}
+				]
+			},
+			{
+				"text": "I've gathered the logs.",
+				"next": "elder_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_appr_woodcutting",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_appr_woodcutting"
+					}
+				]
+			},
+			{
+				"text": "And how do I fish and cook?",
+				"next": "elder_appr3",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_appr_cooking"
+					}
+				]
+			},
+			{
+				"text": "I've cooked the trout.",
+				"next": "elder_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_appr_cooking",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_appr_cooking"
+					}
+				]
+			},
+			{
 				"text": "Back.",
 				"next": "elder_root"
+			}
+		]
+	},
+	"elder_appr1": {
+		"speaker": "npc_elder",
+		"emotion": "neutral",
+		"text": "Every adventurer starts somewhere. Take a pickaxe to the copper veins in the cave and bring me five ore — that'll get you started as a miner.",
+		"choices": [
+			{
+				"text": "I'll start digging.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_appr_mining"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "elder_tasks"
+			}
+		]
+	},
+	"elder_appr2": {
+		"speaker": "npc_elder",
+		"emotion": "neutral",
+		"text": "Good. Now grab a hatchet and fell some trees in the forest. Five logs will teach you the way of the woodcutter.",
+		"choices": [
+			{
+				"text": "To the forest, then.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_appr_woodcutting"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "elder_tasks"
+			}
+		]
+	},
+	"elder_appr3": {
+		"speaker": "npc_elder",
+		"emotion": "neutral",
+		"text": "A full belly keeps you alive out there. Catch trout with a rod, cook them on a stove, and bring me three cooked fish.",
+		"choices": [
+			{
+				"text": "I'll learn to cook.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_appr_cooking"
+					}
+				]
+			},
+			{
+				"text": "Not yet.",
+				"next": "elder_tasks"
 			}
 		]
 	},
@@ -620,8 +764,126 @@
 				]
 			},
 			{
+				"text": "Vad är det som rör sig i Spindelkryptan?",
+				"next": "scholar_spider1",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_spider_crypt_1"
+					}
+				]
+			},
+			{
+				"text": "Giftvävarna är rensade.",
+				"next": "scholar_spider1_done",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_spider_crypt_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_spider_crypt_1"
+					}
+				]
+			},
+			{
+				"text": "Finns det något värre därinne?",
+				"next": "scholar_spider2",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_spider_crypt_2"
+					}
+				]
+			},
+			{
+				"text": "Drottningen Morwena är besegrad.",
+				"next": "scholar_spider2_done",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_spider_crypt_2",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_spider_crypt_2"
+					}
+				]
+			},
+			{
 				"text": "Goodbye.",
 				"next": null
+			}
+		]
+	},
+	"scholar_spider1": {
+		"speaker": "npc_scholar",
+		"emotion": "worried",
+		"text": "Bakom grottans väggar har något vävt en krypta av silke. Giftvävarna förökar sig — rensa dem innan de sprider sig vidare.",
+		"choices": [
+			{
+				"text": "Jag tar mig an väven.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_spider_crypt_1"
+					}
+				]
+			},
+			{
+				"text": "Senare.",
+				"next": null
+			}
+		]
+	},
+	"scholar_spider1_done": {
+		"speaker": "npc_scholar",
+		"emotion": "neutral",
+		"text": "Färre vävare, ja — men jag fruktar att de bara tjänade en större mästarinna. Ta dessa nätstövlar som tack.",
+		"choices": [
+			{
+				"text": "Tack.",
+				"next": "scholar_root"
+			}
+		]
+	},
+	"scholar_spider2": {
+		"speaker": "npc_scholar",
+		"emotion": "worried",
+		"text": "Djupast inne väntar Spindeldrottningen Morwena. Besegra henne och bär hennes silke till mig — det är ovärderligt.",
+		"choices": [
+			{
+				"text": "Hon ska falla.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_spider_crypt_2"
+					}
+				]
+			},
+			{
+				"text": "Jag måste förbereda mig.",
+				"next": null
+			}
+		]
+	},
+	"scholar_spider2_done": {
+		"speaker": "npc_scholar",
+		"emotion": "neutral",
+		"text": "Otroligt! Drottningsilket väver sig nästan av sig självt. Bär denna silkesrustning med ära, hjälte.",
+		"choices": [
+			{
+				"text": "Tack, Maelis.",
+				"next": "scholar_root"
 			}
 		]
 	},
@@ -868,6 +1130,42 @@
 					{
 						"type": "advance_quest",
 						"quest": "quest_sjovagen"
+					}
+				]
+			},
+			{
+				"text": "Jag har bemästrat djupet — vad ligger längre västerut?",
+				"next": "captain_fish_offer",
+				"conditions": [
+					{
+						"type": "quest_completed",
+						"quest": "quest_sjovagen"
+					},
+					{
+						"type": "skill_level",
+						"skill": "fishing",
+						"level": 30
+					},
+					{
+						"type": "quest_available",
+						"quest": "quest_fiskemastaren"
+					}
+				]
+			},
+			{
+				"text": "Jag har mästarens fångst med mig.",
+				"next": "captain_fish_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_fiskemastaren",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_fiskemastaren"
 					}
 				]
 			},
@@ -1762,8 +2060,56 @@
 				]
 			},
 			{
+				"text": "Något jag kan hjälpa till med på fälten?",
+				"next": "ranger_pests",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_fields_pests"
+					}
+				]
+			},
+			{
+				"text": "Skadedjuren är bortjagade.",
+				"next": "ranger_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_fields_pests",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_fields_pests"
+					}
+				]
+			},
+			{
 				"text": "Goodbye.",
 				"next": null
+			}
+		]
+	},
+	"ranger_pests": {
+		"speaker": "npc_ranger",
+		"emotion": "neutral",
+		"text": "Möss och kråkor har gett sig på böndernas säd. Jaga bort åtta möss och sex kråkor, så får du något för besväret.",
+		"choices": [
+			{
+				"text": "Jag tar hand om det.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_fields_pests"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "ranger_root"
 			}
 		]
 	},
@@ -2535,6 +2881,87 @@
 			{
 				"text": "What else?",
 				"next": "guildmaster_trials"
+			}
+		]
+	},
+	"captain_fish_offer": {
+		"speaker": "npc_captain",
+		"emotion": "neutral",
+		"text": "Längre väst ligger Stormrevet — ökänt för sina vrak och de största fiskar någon skådat. Bevisa att du är en mästare: ta tre svärdfiskar och tre humrar, så vet jag att du klarar revet.",
+		"choices": [
+			{
+				"text": "Jag antar utmaningen.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_fiskemastaren"
+					}
+				]
+			},
+			{
+				"text": "En annan gång.",
+				"next": null
+			}
+		]
+	},
+	"captain_fish_report": {
+		"speaker": "npc_captain",
+		"emotion": "friendly",
+		"text": "Vid alla tidvatten — det här är fångst värdig en mästare. Visa mig Fishing 40 så sätter jag segel mot Stormrevet. Båten ligger redo vid kajen.",
+		"choices": [
+			{
+				"text": "Tack, kapten.",
+				"next": null
+			}
+		]
+	},
+	"fishmaster_root": {
+		"speaker": "npc_fishmaster",
+		"emotion": "neutral",
+		"text": "Så du nådde Stormrevet i alla fall. Få gör det. Här simmar fiskar du aldrig sett i Thais vatten.",
+		"choices": [
+			{
+				"text": "Vad simmar här ute?",
+				"next": "fishmaster_fish"
+			},
+			{
+				"text": "Några råd?",
+				"next": "fishmaster_tip"
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"fishmaster_fish": {
+		"speaker": "npc_fishmaster",
+		"emotion": "neutral",
+		"text": "Tonfisk i de djupare stimmen — kräver stadig hand vid Fishing 40. Och haj, om du vågar; bara mästare på 50 drar upp en sådan. Stek dem vid elden här så ger de mer styrka än något i staden.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "fishmaster_root"
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"fishmaster_tip": {
+		"speaker": "npc_fishmaster",
+		"emotion": "friendly",
+		"text": "Håll dig nära vattenbrynet och akta piraterna som strandat på revet. Och ta med dig stekspaden — färsk fångst som tillagas på plats smakar bäst.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "fishmaster_root"
+			},
+			{
+				"text": "Hej då.",
+				"next": null
 			}
 		]
 	}

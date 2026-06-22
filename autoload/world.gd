@@ -180,9 +180,10 @@ func _on_player_died() -> void:
 	grave_tile = GameState.player_tile
 	grave_zone = current_zone
 	var drops: Array = []
+	var drop_frac := GameState.death_drop_fraction()   # ryggsäck minskar förlusten
 	for item_id in GameState.inventory.keys():
 		var qty: int = int(GameState.inventory[item_id])
-		var drop_qty: int = max(1, int(qty * 0.3))
+		var drop_qty: int = max(1, int(qty * drop_frac))
 		drops.append({"item": item_id, "qty": drop_qty})
 		GameState.remove_item(item_id, drop_qty)
 	if drops.is_empty():

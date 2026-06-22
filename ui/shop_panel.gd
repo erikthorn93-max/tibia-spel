@@ -1,7 +1,9 @@
 ﻿extends DraggablePanelContainer
 ## Butikspanel: köp basvaror, sälj inventory för halva värdet.
 
-const STOCK := ["pickaxe", "hatchet", "fishing_rod", "sickle", "bronze_axe", "wooden_club", "empty_vial"]
+const STOCK := ["pickaxe", "hatchet", "fishing_rod", "sickle", "bronze_axe", "wooden_club", "empty_vial",
+	"bronze_amulet", "ring_of_protection", "torch", "leather_backpack",
+	"health_potion", "mana_potion", "antidote_potion", "great_health_potion", "venom_brew"]
 
 var _list: VBoxContainer
 

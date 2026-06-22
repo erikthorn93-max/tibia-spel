@@ -36,6 +36,8 @@ func _handle_world_click() -> void:
 			elif child.has_method("attempt"):
 				World.player.set_gather_target(child)
 				return
+	# Klick på marken: gå dit (Tibia-stil klick-för-att-gå)
+	World.player.walk_to(clicked_tile)
 
 func _debug_spawn_rats() -> void:
 	var origin: Vector2i = GameState.player_tile

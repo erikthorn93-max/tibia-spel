@@ -48,7 +48,7 @@ func attempt() -> String:
 	if depleted:
 		return "depleted"
 	var tool_id := String(def.get("tool", ""))
-	if tool_id != "" and int(GameState.inventory.get(tool_id, 0)) < 1:
+	if tool_id != "" and not GameState.has_tool(tool_id):
 		return "no_tool"
 	if GameState.effective_skill_level(String(def["skill"])) < int(def["level"]):
 		return "low_level"

@@ -42,6 +42,26 @@
 			"count": 3,
 			"monster": "Skogsbjörn",
 			"respawn": 40
+		},
+		{
+			"count": 8,
+			"monster": "Fältmus",
+			"respawn": 15
+		},
+		{
+			"count": 6,
+			"monster": "Vildkanin",
+			"respawn": 18
+		},
+		{
+			"count": 6,
+			"monster": "Åkerkråka",
+			"respawn": 18
+		},
+		{
+			"count": 4,
+			"monster": "Vildsvin",
+			"respawn": 25
 		}
 	],
 	"tiles": [

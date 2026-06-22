@@ -66,6 +66,27 @@ func set_gather_target(n: Node2D) -> void:
 			World.hud.show_message("Kan inte nå dit.")
 			gather_target = null
 
+## Klick-för-att-gå: pathfinda till en ruta och auto-walka dit.
+## Går ända fram till rutan (portaler/dörrar utlöses när spelaren kliver på).
+func walk_to(t: Vector2i) -> void:
+	set_target(null)
+	gather_target = null
+	_auto_path = []
+	if t == tile:
+		return
+	if not zone.is_walkable(t):
+		# Låst gate/genväg intill? ge hint istället för tyst avbrott.
+		if zone.lock_at(t) != "":
+			_try_bump_unlock(t)
+		else:
+			World.hud.show_message("Kan inte nå dit.")
+		return
+	var path: Array = zone.find_path(tile, t)
+	if path.is_empty():
+		World.hud.show_message("Kan inte nå dit.")
+		return
+	_auto_path = path
+
 func _chebyshev(t: Vector2i) -> int:
 	return maxi(absi(t.x - tile.x), absi(t.y - tile.y))
 
@@ -169,11 +190,11 @@ func _update_attack(delta: float) -> void:
 		if weapon_range > 1:
 			# Bågskjutning: kräver ammunition i inventory
 			var ammo_id := String(weapon.get("ammo", ""))
-			if ammo_id != "" and int(GameState.inventory.get(ammo_id, 0)) < 1:
+			if ammo_id != "" and not GameState.has_ammo(ammo_id):
 				World.hud.show_message("Inga pilar kvar!")
 				return
 			if ammo_id != "":
-				GameState.remove_item(ammo_id, 1)
+				GameState.consume_ammo(ammo_id)
 			dmg = CombatFormulas.roll_ranged(
 				GameState.effective_skill_level(wskill), int(weapon.get("atk", 5))) \
 				* TaskSystem.damage_multiplier(target.monster_name)

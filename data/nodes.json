@@ -257,7 +257,10 @@
 		"tool": "pickaxe",
 		"yields": "gem",
 		"xp": 120,
-		"charges": [2, 3],
+		"charges": [
+			2,
+			3
+		],
 		"respawn": 120,
 		"color": "#c084fc",
 		"label": "Ädelstensådra"
@@ -276,5 +279,33 @@
 		"respawn": 50,
 		"color": "#c85a1a",
 		"label": "Eldplats"
+	},
+	"tuna_spot": {
+		"skill": "fishing",
+		"level": 40,
+		"tool": "fishing_rod",
+		"yields": "raw_tuna",
+		"xp": 90,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 55,
+		"color": "#2a6a9a",
+		"label": "Tonfiskstim"
+	},
+	"shark_spot": {
+		"skill": "fishing",
+		"level": 50,
+		"tool": "fishing_rod",
+		"yields": "raw_shark",
+		"xp": 140,
+		"charges": [
+			2,
+			4
+		],
+		"respawn": 75,
+		"color": "#5a6a7a",
+		"label": "Hajvatten"
 	}
 }

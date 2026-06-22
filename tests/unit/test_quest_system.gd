@@ -25,6 +25,24 @@ func test_requires_gate():
 	qs.completed["quest_welcome"] = true
 	assert_true(qs.start("quest_lost_ore"))
 
+func test_giver_marker_start_active_and_clears():
+	# quest_snakes ges av npc_hunter, inga krav → startbar från början
+	assert_eq(qs.giver_marker("npc_hunter"), "start")
+	# Efter start → pågående quest att återvända till
+	qs.start("quest_snakes")
+	assert_eq(qs.giver_marker("npc_hunter"), "active")
+	# Efter slutförande → ingen markör
+	for i in 8:
+		qs.record_kill("Orm")
+	qs.advance_talk("quest_snakes", "npc_hunter")
+	assert_eq(qs.giver_marker("npc_hunter"), "")
+
+func test_giver_marker_hidden_until_requirements_met():
+	# npc_scholars quests kräver quest_welcome → ingen markör förrän det är klart
+	assert_eq(qs.giver_marker("npc_scholar"), "")
+	qs.completed["quest_welcome"] = true
+	assert_eq(qs.giver_marker("npc_scholar"), "start")   # quest_crypt nu startbar
+
 func test_kill_progress_and_advance():
 	qs.start("quest_snakes")
 	for i in 8:

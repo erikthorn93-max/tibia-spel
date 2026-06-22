@@ -234,6 +234,17 @@
 				"iron_ore": 6,
 				"gold_ore": 2
 			}
+		},
+		{
+			"id": "venom_blade",
+			"skill": "smithing",
+			"level": 25,
+			"xp": 85,
+			"ingredients": {
+				"spider_fang": 4,
+				"iron_ore": 3,
+				"venom_gland": 1
+			}
 		}
 	],
 	"stove": [
@@ -319,6 +330,24 @@
 				"raw_meat": 2,
 				"marsh_herb": 1
 			}
+		},
+		{
+			"id": "cooked_tuna",
+			"skill": "cooking",
+			"level": 40,
+			"xp": 110,
+			"ingredients": {
+				"raw_tuna": 1
+			}
+		},
+		{
+			"id": "cooked_shark",
+			"skill": "cooking",
+			"level": 50,
+			"xp": 150,
+			"ingredients": {
+				"raw_shark": 1
+			}
 		}
 	],
 	"alchemy_table": [
@@ -390,6 +419,16 @@
 				"nightshade_herb": 2,
 				"mint_herb": 2
 			}
+		},
+		{
+			"id": "venom_brew",
+			"skill": "alchemy",
+			"level": 22,
+			"xp": 55,
+			"ingredients": {
+				"venom_gland": 1,
+				"nightshade_herb": 1
+			}
 		}
 	],
 	"rune_altar": [
@@ -460,6 +499,15 @@
 			"xp": 10,
 			"ingredients": {
 				"wolf_pelt": 1
+			}
+		},
+		{
+			"id": "leather_strips",
+			"skill": "crafting",
+			"level": 1,
+			"xp": 12,
+			"ingredients": {
+				"boar_hide": 1
 			}
 		},
 		{
@@ -564,6 +612,46 @@
 				"arrow_shaft": 1,
 				"feathers": 1,
 				"willow_log": 1
+			}
+		},
+		{
+			"id": "web_boots",
+			"skill": "crafting",
+			"level": 15,
+			"xp": 50,
+			"ingredients": {
+				"spider_silk": 3,
+				"spider_fang": 2
+			}
+		},
+		{
+			"id": "venom_hood",
+			"skill": "crafting",
+			"level": 20,
+			"xp": 65,
+			"ingredients": {
+				"venom_gland": 2,
+				"leather_strips": 2
+			}
+		},
+		{
+			"id": "spider_amulet",
+			"skill": "crafting",
+			"level": 22,
+			"xp": 80,
+			"ingredients": {
+				"spider_fang": 3,
+				"spider_queen_silk": 1
+			}
+		},
+		{
+			"id": "silk_robe",
+			"skill": "crafting",
+			"level": 30,
+			"xp": 120,
+			"ingredients": {
+				"shadow_silk": 4,
+				"spider_queen_silk": 1
 			}
 		}
 	],

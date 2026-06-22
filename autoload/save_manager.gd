@@ -72,20 +72,19 @@ func load_game() -> bool:
 	GameState.ensure_all_skills()   # v1→v2: fyll på skills som saknas i gamla saves
 	# v5→v6: equipped_weapon → equipment["weapon"]; saknas equipment-dict → bygg från equipped_weapon
 	if s.has("equipment") and s["equipment"] is Dictionary:
-		GameState.equipment = {
-			"weapon":  String(s["equipment"].get("weapon",  "")),
-			"body":    String(s["equipment"].get("body",    "")),
-			"helmet":  String(s["equipment"].get("helmet",  "")),
-			"legs":    String(s["equipment"].get("legs",    "")),
-			"boots":   String(s["equipment"].get("boots",   "")),
-			"offhand": String(s["equipment"].get("offhand", "")),
-		}
+		# Bygg från EQUIPMENT_SLOTS så nya slots (halsband/ring/pilar/verktyg)
+		# fylls på automatiskt och saknade fält i äldre saves blir tomma.
+		var eq: Dictionary = {}
+		for slot in GameState.EQUIPMENT_SLOTS:
+			eq[slot] = String(s["equipment"].get(slot, ""))
+		GameState.equipment = eq
 	else:
 		# Migrera v5-save: gamla equipped_weapon → weapon-slot
-		GameState.equipment = {
-			"weapon":  String(s.get("equipped_weapon", "rusty_sword")),
-			"body":    "", "helmet": "", "legs": "", "boots": "", "offhand": ""
-		}
+		var eq: Dictionary = {}
+		for slot in GameState.EQUIPMENT_SLOTS:
+			eq[slot] = ""
+		eq["weapon"] = String(s.get("equipped_weapon", "rusty_sword"))
+		GameState.equipment = eq
 	GameState.current_zone = s.get("zone", "town")
 	var t: Array = s.get("tile", [-1, -1])
 	GameState.player_tile = Vector2i(int(t[0]), int(t[1]))

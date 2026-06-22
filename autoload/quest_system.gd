@@ -27,6 +27,21 @@ func can_start(id: String) -> bool:
 			return false
 	return true
 
+## Quest-markörstatus för en NPC-givare (OSRS-stil):
+##  "start"  = har en startbar quest här (gul !)
+##  "active" = har en pågående quest att återvända till (grå ?)
+##  ""       = ingen markör (inget att göra / allt slutfört)
+func giver_marker(npc_id: String) -> String:
+	var has_active := false
+	for id in quests:
+		if String(quests[id].get("giver", "")) != npc_id:
+			continue
+		if can_start(id):
+			return "start"
+		if active.has(id):
+			has_active = true
+	return "active" if has_active else ""
+
 func start(id: String) -> bool:
 	if not can_start(id):
 		return false
