@@ -121,3 +121,22 @@ func test_fringe_more_edges_means_more_pixels():
 	var one := _opaque_count(PlaceholderTiles.make_fringe_tile(PlaceholderTiles.FOAM_N))
 	var all := _opaque_count(PlaceholderTiles.make_fringe_tile(15))
 	assert_gt(all, one, "fyra kanter ska ge mer frans än en")
+
+# ── Trädvariation ──
+
+func test_tree_variants_have_different_shape():
+	# Gräsbotten är identisk mellan varianter → alla skillnader är själva trädet.
+	# (Tonjitter ger nästan inga skillnader; olika form ger många.)
+	var t0 := PlaceholderTiles._make_tree_tile(0)
+	var t1 := PlaceholderTiles._make_tree_tile(1)
+	var t2 := PlaceholderTiles._make_tree_tile(2)
+	assert_gt(_pixel_diff(t0, t1), 50, "variant 0 och 1 ska ha olika trädform")
+	assert_gt(_pixel_diff(t1, t2), 50, "variant 1 och 2 ska ha olika trädform")
+
+func _pixel_diff(a: Image, b: Image) -> int:
+	var n := 0
+	for y in PlaceholderTiles.TILE:
+		for x in PlaceholderTiles.TILE:
+			if a.get_pixel(x, y) != b.get_pixel(x, y):
+				n += 1
+	return n

@@ -246,7 +246,13 @@ static func build() -> TileSet:
 		var col: int = TERRAIN[ch]
 		var base := _base_tile(ch, col)
 		for v in VARIANTS:
-			var tile_img := base if v == 0 else _vary(base, ch, v)
+			var tile_img: Image
+			if ch == "t":
+				tile_img = _make_tree_tile(v)   # äkta formvariation, inte bara ton
+			elif v == 0:
+				tile_img = base
+			else:
+				tile_img = _vary(base, ch, v)
 			img.blit_rect(tile_img, Rect2i(0, 0, TILE, TILE), Vector2i(col * TILE, v * TILE))
 
 	var src := TileSetAtlasSource.new()
@@ -321,44 +327,53 @@ static func _vary(src_img: Image, ch: String, seed_v: int) -> Image:
 			clampf(p.b * f, 0.0, 1.0), p.a))
 	return img
 
-## Ritar ett tydligt träd-tile: gräsbotten, brun stam och en bullig krona
-## med mörk konturkant. Den höga, mörka silhuetten skiljer sig klart från
-## det ljusa, platta gräset så spelaren ser var det inte går att gå.
-static func _make_tree_tile() -> Image:
+## Ritar ett träd-tile: gräsbotten, brun stam och en bullig krona med mörk
+## konturkant. Den höga, mörka silhuetten skiljer sig klart från det ljusa,
+## platta gräset. `variant` (0..2) ger genuint olika form/storlek/färg så
+## skogar inte blir en upprepad stämpel.
+static func _make_tree_tile(variant := 0) -> Image:
+	var presets := [
+		# radius, cx, cy, höjdfaktor, krona, ljus, mörk, bump-frekvens, stam-höjd
+		{"r": 11.0, "cx": 16.0, "cy": 12.0, "sq": 1.15, "c": Color("1f5a23"), "hi": Color("327f37"), "lo": Color("123d18"), "bf": 5.0, "th": 10},
+		{"r": 13.0, "cx": 16.0, "cy": 11.0, "sq": 1.05, "c": Color("1a5530"), "hi": Color("2f8a4a"), "lo": Color("0e3a1e"), "bf": 4.0, "th": 11},
+		{"r": 9.0,  "cx": 15.0, "cy": 14.0, "sq": 1.25, "c": Color("2c6b2a"), "hi": Color("4a9a3a"), "lo": Color("17401a"), "bf": 7.0, "th": 8},
+	]
+	var p: Dictionary = presets[variant % presets.size()]
+
 	var img := Image.create(TILE, TILE, false, Image.FORMAT_RGBA8)
 
-	# Gräsbotten så trädet sitter i miljön
+	# Gräsbotten — identisk mellan varianter så trädet sitter i miljön
 	var grass := Color("4a8f3c")
 	for y in TILE:
 		for x in TILE:
 			var n := 0.93 + 0.07 * fmod(sin(float(x * 7 + y * 13)) * 43758.5, 1.0)
 			img.set_pixel(x, y, Color(grass.r * n, grass.g * n, grass.b * n))
 
-	# Stam (centrerad, nedre delen)
+	# Stam (centrerad under kronan, längd från preset)
 	var trunk := Color("5b3a1a")
 	var trunk_dark := Color("3f2812")
-	for y in range(20, 30):
-		for x in range(14, 18):
-			img.set_pixel(x, y, trunk_dark if x >= 16 else trunk)
+	var tx := int(p["cx"])
+	var ty0 := int(p["cy"] + p["r"] * 0.5)
+	for y in range(ty0, mini(ty0 + int(p["th"]), TILE)):
+		for x in range(tx - 2, tx + 2):
+			_put(img, x, y, trunk_dark if x >= tx else trunk)
 
 	# Krona: bullig cirkel med mörk kant och ljus topp-vänster
-	var cx := 16.0
-	var cy := 12.0
-	var canopy := Color("1f5a23")
-	var canopy_hi := Color("327f37")
-	var canopy_lo := Color("123d18")
+	var cx: float = p["cx"]
+	var cy: float = p["cy"]
+	var base_r: float = p["r"]
 	for y in TILE:
 		for x in TILE:
 			var dx := float(x) - cx
-			var dy := (float(y) - cy) * 1.15
+			var dy := (float(y) - cy) * float(p["sq"])
 			var d := sqrt(dx * dx + dy * dy)
-			var edge := 11.0 + 1.5 * sin(atan2(dy, dx) * 5.0)  # bullig kant
+			var edge := base_r + 1.5 * sin(atan2(dy, dx) * float(p["bf"]))  # bullig kant
 			if d <= edge:
-				var shade := canopy
+				var shade: Color = p["c"]
 				if d > edge - 2.0:
-					shade = canopy_lo          # mörk kontur
+					shade = p["lo"]            # mörk kontur
 				elif dx < -2.0 and dy < -2.0:
-					shade = canopy_hi          # ljus topp-vänster
+					shade = p["hi"]            # ljus topp-vänster
 				img.set_pixel(x, y, shade)
 
 	return img
