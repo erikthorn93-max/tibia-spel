@@ -37,3 +37,22 @@ func test_vignette_size():
 	var tex := Atmosphere.make_vignette(48, 24)
 	assert_eq(tex.get_width(), 48)
 	assert_eq(tex.get_height(), 24)
+
+# ── Lokalt ljussken (fackla/lykta) ──
+
+func test_light_glow_warm_center_transparent_edge():
+	var tex := Atmosphere.make_light_glow(64)
+	var img := tex.get_image()
+	var c := img.get_pixel(32, 32)
+	assert_gt(c.a, 0.5, "mitten ska lysa")
+	assert_gt(c.r, c.b, "ljuset ska vara varmt (rött > blått)")
+	assert_lt(img.get_pixel(0, 0).a, 0.05, "kanten ska vara genomskinlig")
+
+func test_glow_strength_zero_without_light():
+	assert_eq(Atmosphere.glow_strength(0.0, 0.0), 0.0)
+
+func test_glow_strength_zero_at_midday():
+	assert_lt(Atmosphere.glow_strength(0.8, 0.5), 0.05)
+
+func test_glow_strength_positive_at_night_with_light():
+	assert_gt(Atmosphere.glow_strength(0.8, 0.0), 0.3)

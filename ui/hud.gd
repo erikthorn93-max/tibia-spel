@@ -29,6 +29,7 @@ var hotkey_bar: Node
 var _msg_timer := 0.0
 var _night_overlay: ColorRect  # dag/natt-mörkläggning
 var _vignette: TextureRect     # mjuk kantmörkläggning (filmisk inramning)
+var _light_glow: TextureRect   # varmt fackelsken runt spelaren (skärmens mitt)
 var _clock_lbl: Label          # spelklocka HH:MM
 var _poison_lbl: Label    # "Giftig!"-chip
 var _boss_panel: PanelContainer  # boss HP-bar, synlig under bossfight
@@ -332,6 +333,19 @@ func _build_night_overlay() -> void:
 	_vignette.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_vignette)
 	move_child(_vignette, 2)
+	# Fackelsken: additivt, centrerat på spelaren (kameran centrerar honom).
+	_light_glow = TextureRect.new()
+	_light_glow.texture = Atmosphere.make_light_glow(384)
+	_light_glow.set_anchors_preset(Control.PRESET_CENTER)
+	_light_glow.pivot_offset = Vector2(192, 192)
+	_light_glow.position = -_light_glow.pivot_offset
+	_light_glow.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var glow_mat := CanvasItemMaterial.new()
+	glow_mat.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	_light_glow.material = glow_mat
+	_light_glow.modulate.a = 0.0
+	add_child(_light_glow)
+	move_child(_light_glow, 3)
 	_clock_lbl = Label.new()
 	_clock_lbl.add_theme_font_size_override("font_size", 11)
 	_clock_lbl.add_theme_color_override("font_color", Color(0.88, 0.84, 0.62))
@@ -360,6 +374,9 @@ func _update_night_overlay() -> void:
 	# Vinjetten följer dygnet (mörkare hörn på natten) och ljuskällan.
 	if _vignette:
 		_vignette.modulate.a = Atmosphere.vignette_strength(frac) * light_factor
+	# Lokalt fackelsken: lyser bara upp när det är mörkt och spelaren bär ljus.
+	if _light_glow:
+		_light_glow.modulate.a = Atmosphere.glow_strength(GameState.light_level(), frac)
 	# Klocka + ikon
 	var icon := "☀" if not TimeOfDay.is_night else "🌙"
 	_clock_lbl.text = "%s %02d:00" % [icon, h]

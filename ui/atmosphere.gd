@@ -41,3 +41,27 @@ static func make_vignette(w: int, h: int) -> ImageTexture:
 static func vignette_strength(day_fraction: float) -> float:
 	var darkness := (cos(day_fraction * TAU) + 1.0) * 0.5
 	return 0.4 + darkness * 0.4
+
+const GLOW := Color(1.0, 0.78, 0.42)   # varmt fackelsken
+
+## Bygger en varm radiell ljussken-textur: ljus i mitten, mjukt uttonande.
+## Ritas additivt ovanpå mörkret → lyser upp lokalt runt spelaren.
+static func make_light_glow(size: int) -> ImageTexture:
+	var img := Image.create(size, size, false, Image.FORMAT_RGBA8)
+	var c := size * 0.5
+	for y in size:
+		for x in size:
+			var dx := (x + 0.5) - c
+			var dy := (y + 0.5) - c
+			var t := clampf(sqrt(dx * dx + dy * dy) / c, 0.0, 1.0)
+			# Mjuk falloff: ljusast i mitten, 0 vid radien. Kvadrerad för naturlig kant.
+			var a := (1.0 - smoothstep(0.0, 1.0, t))
+			a = a * a
+			img.set_pixel(x, y, Color(GLOW.r, GLOW.g, GLOW.b, a))
+	return ImageTexture.create_from_image(img)
+
+## Ljusskenets styrka (modulate-alpha) givet utrustad ljuskälla och tid:
+## syns bara när det är mörkt OCH spelaren bär ljus. Dagtid → 0.
+static func glow_strength(light_level: float, day_fraction: float) -> float:
+	var darkness := (cos(day_fraction * TAU) + 1.0) * 0.5
+	return clampf(light_level, 0.0, 1.0) * darkness
