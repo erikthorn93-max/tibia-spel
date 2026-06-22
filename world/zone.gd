@@ -30,6 +30,7 @@ var _portal_marker_nodes: Dictionary = {} # Vector2i -> Array[Node]
 var entrance_points: Dictionary = {}   # Vector2i -> zon-id (husportaler, dörrar)
 var stair_points: Dictionary = {}      # Vector2i -> {"to": zon-id, "up": bool}
 var _walkable: Dictionary = {}      # Vector2i -> bool
+var _water: Dictionary = {}         # Vector2i -> true (för strand-overlay)
 var _astar := AStarGrid2D.new()
 var tilemap: TileMapLayer
 
@@ -129,6 +130,10 @@ func build_from_data(data: Dictionary, id: String) -> void:
 				terrain = "."
 			tilemap.set_cell(t, 0, Vector2i(PlaceholderTiles.TERRAIN[terrain], PlaceholderTiles.variant_for(t)))
 			_walkable[t] = terrain != "W" and terrain != "w" and terrain != "r" and terrain != "~" and terrain != "t" and not blocked
+			if terrain == "~":
+				_water[t] = true
+
+	_build_shore_overlay()
 
 	_astar.region = Rect2i(Vector2i.ZERO, grid_size)
 	_astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
@@ -157,6 +162,32 @@ func build_from_data(data: Dictionary, id: String) -> void:
 			_add_shortcut_marker(t)
 	for t in dungeon_entrances:
 		_add_entrance_marker(t)
+
+## Lägger ett skum-overlay-lager ovanpå varje vatten-tile som gränsar till
+## land. Rent visuellt — påverkar varken walkability eller astar. Lagret läggs
+## direkt efter bas-tilemap så det ritas ovanpå marken men under figurerna.
+func _build_shore_overlay() -> void:
+	if _water.is_empty():
+		return
+	var overlay := TileMapLayer.new()
+	overlay.tile_set = PlaceholderTiles.build_overlay()
+	add_child(overlay)
+	move_child(overlay, tilemap.get_index() + 1)
+	for t: Vector2i in _water:
+		var mask := 0
+		if _is_land(t + Vector2i(0, -1)): mask |= PlaceholderTiles.FOAM_N
+		if _is_land(t + Vector2i(1, 0)):  mask |= PlaceholderTiles.FOAM_E
+		if _is_land(t + Vector2i(0, 1)):  mask |= PlaceholderTiles.FOAM_S
+		if _is_land(t + Vector2i(-1, 0)): mask |= PlaceholderTiles.FOAM_W
+		if mask > 0:
+			overlay.set_cell(t, 0, Vector2i(mask, 0))
+
+## En tile räknas som "land" mot skummet om den är inom kartan och inte vatten.
+## Kartkanten (utanför) ger inget skum så vattnet inte ramas in vid världsranden.
+func _is_land(t: Vector2i) -> bool:
+	if t.x < 0 or t.y < 0 or t.x >= grid_size.x or t.y >= grid_size.y:
+		return false
+	return not _water.has(t)
 
 ## Väljer slumpmässiga, fria walkable tiles för spawn_table-poster.
 ## Undviker player_start och befintliga spawn_points.

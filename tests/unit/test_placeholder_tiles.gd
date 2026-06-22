@@ -32,3 +32,34 @@ func test_variant_for_produces_variety():
 		for y in 20:
 			seen[PlaceholderTiles.variant_for(Vector2i(x, y))] = true
 	assert_gt(seen.size(), 1, "ska ge mer än en variant över en yta")
+
+# ── Strand-overlay (skum vid vatten) ──
+
+func test_overlay_builds_tiles_for_all_masks():
+	var ts := PlaceholderTiles.build_overlay()
+	assert_not_null(ts)
+	var src := ts.get_source(0) as TileSetAtlasSource
+	for mask in range(1, 16):
+		assert_true(src.has_tile(Vector2i(mask, 0)), "saknar overlay för mask %d" % mask)
+
+func test_foam_tile_has_visible_pixels():
+	var img := PlaceholderTiles.make_foam_tile(1)   # en kant
+	var visible := 0
+	for y in PlaceholderTiles.TILE:
+		for x in PlaceholderTiles.TILE:
+			if img.get_pixel(x, y).a > 0.0:
+				visible += 1
+	assert_gt(visible, 0, "skum-tile ska ha synliga pixlar")
+
+func test_more_edges_means_more_foam():
+	var one := _opaque_count(PlaceholderTiles.make_foam_tile(1))     # nordkant
+	var all := _opaque_count(PlaceholderTiles.make_foam_tile(15))    # alla fyra kanter
+	assert_gt(all, one, "fyra kanter ska ge mer skum än en")
+
+func _opaque_count(img: Image) -> int:
+	var n := 0
+	for y in PlaceholderTiles.TILE:
+		for x in PlaceholderTiles.TILE:
+			if img.get_pixel(x, y).a > 0.0:
+				n += 1
+	return n

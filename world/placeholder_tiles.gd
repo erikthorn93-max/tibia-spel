@@ -43,6 +43,56 @@ static func variant_for(t: Vector2i) -> int:
 	var h := (t.x * 73856093) ^ (t.y * 19349663)
 	return absi(h) % VARIANTS
 
+## Bygger en overlay-TileSet för strandlinjer: 16 tiles indexerade på en
+## bitmask av vilka sidor som vetter mot land (1=N, 2=Ö, 4=S, 8=V). Läggs i
+## ett eget lager ovanpå vatten-tiles — påverkar inte gridet/walkability.
+const FOAM_N := 1
+const FOAM_E := 2
+const FOAM_S := 4
+const FOAM_W := 8
+const FOAM_WIDTH := 6
+
+static func build_overlay() -> TileSet:
+	var img := Image.create(TILE * 16, TILE, false, Image.FORMAT_RGBA8)
+	for mask in range(1, 16):
+		img.blit_rect(make_foam_tile(mask), Rect2i(0, 0, TILE, TILE), Vector2i(mask * TILE, 0))
+	var src := TileSetAtlasSource.new()
+	src.texture = ImageTexture.create_from_image(img)
+	src.texture_region_size = Vector2i(TILE, TILE)
+	for mask in range(1, 16):
+		src.create_tile(Vector2i(mask, 0))
+	var ts := TileSet.new()
+	ts.tile_size = Vector2i(TILE, TILE)
+	ts.add_source(src, 0)
+	return ts
+
+## Ritar en transparent skum-tile: ljus skumremsa längs varje landvänd kant,
+## mest opak ytterst och uttonande inåt. Hörn tar max-alpha av sina två kanter.
+static func make_foam_tile(mask: int) -> Image:
+	var img := Image.create(TILE, TILE, false, Image.FORMAT_RGBA8)
+	img.fill(Color(0, 0, 0, 0))
+	var foam := Color(0.86, 0.94, 1.0)
+	for y in TILE:
+		for x in TILE:
+			var a := 0.0
+			if mask & FOAM_N:
+				a = maxf(a, _foam_alpha(y))
+			if mask & FOAM_S:
+				a = maxf(a, _foam_alpha(TILE - 1 - y))
+			if mask & FOAM_W:
+				a = maxf(a, _foam_alpha(x))
+			if mask & FOAM_E:
+				a = maxf(a, _foam_alpha(TILE - 1 - x))
+			if a > 0.0:
+				img.set_pixel(x, y, Color(foam.r, foam.g, foam.b, a))
+	return img
+
+## Alpha för ett avstånd (i px) från en kant: opak ytterst, 0 bortom remsan.
+static func _foam_alpha(dist_from_edge: int) -> float:
+	if dist_from_edge >= FOAM_WIDTH:
+		return 0.0
+	return 0.7 * (1.0 - float(dist_from_edge) / float(FOAM_WIDTH))
+
 static func build() -> TileSet:
 	# Atlas: TERRAIN.size() kolumner × VARIANTS rader.
 	var img := Image.create(TILE * TERRAIN.size(), TILE * VARIANTS, false, Image.FORMAT_RGBA8)
