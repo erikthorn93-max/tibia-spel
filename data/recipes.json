@@ -4,7 +4,7 @@
 			"id": "wooden_shield",
 			"skill": "smithing",
 			"level": 1,
-			"xp": 10,
+			"xp": 14,
 			"ingredients": {
 				"log": 3
 			}
@@ -13,7 +13,7 @@
 			"id": "copper_boots",
 			"skill": "smithing",
 			"level": 1,
-			"xp": 20,
+			"xp": 14,
 			"ingredients": {
 				"copper_ore": 2
 			}
@@ -22,7 +22,7 @@
 			"id": "copper_helmet",
 			"skill": "smithing",
 			"level": 1,
-			"xp": 20,
+			"xp": 14,
 			"ingredients": {
 				"copper_ore": 2
 			}
@@ -31,7 +31,7 @@
 			"id": "copper_legs",
 			"skill": "smithing",
 			"level": 1,
-			"xp": 25,
+			"xp": 14,
 			"ingredients": {
 				"copper_ore": 3
 			}
@@ -40,7 +40,7 @@
 			"id": "copper_plate",
 			"skill": "smithing",
 			"level": 1,
-			"xp": 30,
+			"xp": 14,
 			"ingredients": {
 				"copper_ore": 4
 			}
@@ -49,7 +49,7 @@
 			"id": "iron_boots",
 			"skill": "smithing",
 			"level": 15,
-			"xp": 35,
+			"xp": 16,
 			"ingredients": {
 				"iron_ore": 2
 			}
@@ -58,7 +58,7 @@
 			"id": "iron_shield",
 			"skill": "smithing",
 			"level": 15,
-			"xp": 40,
+			"xp": 16,
 			"ingredients": {
 				"iron_ore": 3
 			}
@@ -67,7 +67,7 @@
 			"id": "iron_sword",
 			"skill": "smithing",
 			"level": 15,
-			"xp": 40,
+			"xp": 16,
 			"ingredients": {
 				"iron_ore": 2
 			}
@@ -76,7 +76,7 @@
 			"id": "iron_axe",
 			"skill": "smithing",
 			"level": 15,
-			"xp": 40,
+			"xp": 16,
 			"ingredients": {
 				"iron_ore": 2
 			}
@@ -85,7 +85,7 @@
 			"id": "iron_club",
 			"skill": "smithing",
 			"level": 15,
-			"xp": 40,
+			"xp": 16,
 			"ingredients": {
 				"iron_ore": 2
 			}
@@ -94,7 +94,7 @@
 			"id": "iron_helmet",
 			"skill": "smithing",
 			"level": 15,
-			"xp": 40,
+			"xp": 16,
 			"ingredients": {
 				"iron_ore": 3
 			}
@@ -103,7 +103,7 @@
 			"id": "iron_legs",
 			"skill": "smithing",
 			"level": 15,
-			"xp": 45,
+			"xp": 16,
 			"ingredients": {
 				"iron_ore": 4
 			}
@@ -112,7 +112,7 @@
 			"id": "iron_platebody",
 			"skill": "smithing",
 			"level": 15,
-			"xp": 50,
+			"xp": 16,
 			"ingredients": {
 				"iron_ore": 5
 			}
@@ -121,7 +121,7 @@
 			"id": "steel_boots",
 			"skill": "smithing",
 			"level": 30,
-			"xp": 65,
+			"xp": 38,
 			"ingredients": {
 				"iron_ore": 3,
 				"gold_ore": 1
@@ -131,7 +131,7 @@
 			"id": "steel_shield",
 			"skill": "smithing",
 			"level": 30,
-			"xp": 75,
+			"xp": 38,
 			"ingredients": {
 				"iron_ore": 4,
 				"gold_ore": 1
@@ -141,7 +141,7 @@
 			"id": "steel_sword",
 			"skill": "smithing",
 			"level": 30,
-			"xp": 70,
+			"xp": 38,
 			"ingredients": {
 				"iron_ore": 3,
 				"gold_ore": 1
@@ -151,7 +151,7 @@
 			"id": "steel_axe",
 			"skill": "smithing",
 			"level": 30,
-			"xp": 70,
+			"xp": 38,
 			"ingredients": {
 				"iron_ore": 3,
 				"gold_ore": 1
@@ -161,7 +161,7 @@
 			"id": "steel_club",
 			"skill": "smithing",
 			"level": 30,
-			"xp": 70,
+			"xp": 38,
 			"ingredients": {
 				"iron_ore": 3,
 				"gold_ore": 1
@@ -171,7 +171,7 @@
 			"id": "steel_helmet",
 			"skill": "smithing",
 			"level": 30,
-			"xp": 75,
+			"xp": 38,
 			"ingredients": {
 				"iron_ore": 4,
 				"gold_ore": 1
@@ -181,7 +181,7 @@
 			"id": "steel_legs",
 			"skill": "smithing",
 			"level": 30,
-			"xp": 80,
+			"xp": 38,
 			"ingredients": {
 				"iron_ore": 5,
 				"gold_ore": 2
@@ -191,7 +191,7 @@
 			"id": "steel_platebody",
 			"skill": "smithing",
 			"level": 30,
-			"xp": 90,
+			"xp": 38,
 			"ingredients": {
 				"iron_ore": 6,
 				"gold_ore": 2
@@ -201,7 +201,7 @@
 			"id": "brass_knuckles",
 			"skill": "smithing",
 			"level": 1,
-			"xp": 20,
+			"xp": 14,
 			"ingredients": {
 				"copper_ore": 3
 			}
@@ -210,7 +210,7 @@
 			"id": "iron_knuckles",
 			"skill": "smithing",
 			"level": 15,
-			"xp": 40,
+			"xp": 16,
 			"ingredients": {
 				"iron_ore": 3
 			}
@@ -219,7 +219,7 @@
 			"id": "steel_knuckles",
 			"skill": "smithing",
 			"level": 30,
-			"xp": 70,
+			"xp": 38,
 			"ingredients": {
 				"iron_ore": 4,
 				"gold_ore": 1
@@ -229,7 +229,7 @@
 			"id": "guardian_shield",
 			"skill": "smithing",
 			"level": 35,
-			"xp": 100,
+			"xp": 55,
 			"ingredients": {
 				"iron_ore": 6,
 				"gold_ore": 2
@@ -239,11 +239,211 @@
 			"id": "venom_blade",
 			"skill": "smithing",
 			"level": 25,
-			"xp": 85,
+			"xp": 29,
 			"ingredients": {
 				"spider_fang": 4,
 				"iron_ore": 3,
 				"venom_gland": 1
+			}
+		},
+		{
+			"id": "mithril_sword",
+			"skill": "smithing",
+			"level": 40,
+			"xp": 80,
+			"ingredients": {
+				"mithril_ore": 3,
+				"coal": 2
+			}
+		},
+		{
+			"id": "mithril_shield",
+			"skill": "smithing",
+			"level": 42,
+			"xp": 90,
+			"ingredients": {
+				"mithril_ore": 3,
+				"coal": 2
+			}
+		},
+		{
+			"id": "mithril_helmet",
+			"skill": "smithing",
+			"level": 41,
+			"xp": 85,
+			"ingredients": {
+				"mithril_ore": 3,
+				"coal": 2
+			}
+		},
+		{
+			"id": "mithril_legs",
+			"skill": "smithing",
+			"level": 43,
+			"xp": 95,
+			"ingredients": {
+				"mithril_ore": 4,
+				"coal": 3
+			}
+		},
+		{
+			"id": "mithril_platebody",
+			"skill": "smithing",
+			"level": 44,
+			"xp": 105,
+			"ingredients": {
+				"mithril_ore": 5,
+				"coal": 3
+			}
+		},
+		{
+			"id": "adamant_sword",
+			"skill": "smithing",
+			"level": 55,
+			"xp": 240,
+			"ingredients": {
+				"adamant_ore": 3,
+				"coal": 3
+			}
+		},
+		{
+			"id": "adamant_shield",
+			"skill": "smithing",
+			"level": 57,
+			"xp": 290,
+			"ingredients": {
+				"adamant_ore": 3,
+				"coal": 3
+			}
+		},
+		{
+			"id": "adamant_helmet",
+			"skill": "smithing",
+			"level": 56,
+			"xp": 270,
+			"ingredients": {
+				"adamant_ore": 3,
+				"coal": 3
+			}
+		},
+		{
+			"id": "adamant_legs",
+			"skill": "smithing",
+			"level": 58,
+			"xp": 310,
+			"ingredients": {
+				"adamant_ore": 4,
+				"coal": 4
+			}
+		},
+		{
+			"id": "adamant_platebody",
+			"skill": "smithing",
+			"level": 60,
+			"xp": 360,
+			"ingredients": {
+				"adamant_ore": 5,
+				"coal": 4
+			}
+		},
+		{
+			"id": "runite_sword",
+			"skill": "smithing",
+			"level": 70,
+			"xp": 810,
+			"ingredients": {
+				"runite_ore": 3,
+				"coal": 3
+			}
+		},
+		{
+			"id": "runite_shield",
+			"skill": "smithing",
+			"level": 72,
+			"xp": 960,
+			"ingredients": {
+				"runite_ore": 3,
+				"coal": 3
+			}
+		},
+		{
+			"id": "runite_helmet",
+			"skill": "smithing",
+			"level": 71,
+			"xp": 890,
+			"ingredients": {
+				"runite_ore": 3,
+				"coal": 3
+			}
+		},
+		{
+			"id": "runite_legs",
+			"skill": "smithing",
+			"level": 74,
+			"xp": 1150,
+			"ingredients": {
+				"runite_ore": 4,
+				"coal": 4
+			}
+		},
+		{
+			"id": "runite_platebody",
+			"skill": "smithing",
+			"level": 76,
+			"xp": 1350,
+			"ingredients": {
+				"runite_ore": 5,
+				"coal": 4
+			}
+		},
+		{
+			"id": "dragon_sword",
+			"skill": "smithing",
+			"level": 85,
+			"xp": 2850,
+			"ingredients": {
+				"dragon_ore": 4,
+				"coal": 3
+			}
+		},
+		{
+			"id": "dragon_shield",
+			"skill": "smithing",
+			"level": 87,
+			"xp": 3350,
+			"ingredients": {
+				"dragon_ore": 4,
+				"coal": 3
+			}
+		},
+		{
+			"id": "dragon_helmet",
+			"skill": "smithing",
+			"level": 86,
+			"xp": 3100,
+			"ingredients": {
+				"dragon_ore": 4,
+				"coal": 3
+			}
+		},
+		{
+			"id": "dragon_legs",
+			"skill": "smithing",
+			"level": 90,
+			"xp": 4300,
+			"ingredients": {
+				"dragon_ore": 5,
+				"coal": 4
+			}
+		},
+		{
+			"id": "dragon_platebody",
+			"skill": "smithing",
+			"level": 92,
+			"xp": 5100,
+			"ingredients": {
+				"dragon_ore": 6,
+				"coal": 4
 			}
 		}
 	],
@@ -252,7 +452,7 @@
 			"id": "cooked_trout",
 			"skill": "cooking",
 			"level": 1,
-			"xp": 15,
+			"xp": 14,
 			"ingredients": {
 				"raw_trout": 1
 			}
@@ -261,7 +461,7 @@
 			"id": "cooked_meat",
 			"skill": "cooking",
 			"level": 1,
-			"xp": 15,
+			"xp": 14,
 			"ingredients": {
 				"raw_meat": 1
 			}
@@ -270,7 +470,7 @@
 			"id": "bread",
 			"skill": "cooking",
 			"level": 5,
-			"xp": 20,
+			"xp": 13,
 			"ingredients": {
 				"wheat_grain": 2
 			}
@@ -279,7 +479,7 @@
 			"id": "fish_stew",
 			"skill": "cooking",
 			"level": 15,
-			"xp": 35,
+			"xp": 16,
 			"ingredients": {
 				"raw_trout": 2,
 				"marsh_herb": 1
@@ -289,7 +489,7 @@
 			"id": "grilled_mackerel",
 			"skill": "cooking",
 			"level": 20,
-			"xp": 40,
+			"xp": 21,
 			"ingredients": {
 				"raw_mackerel": 1
 			}
@@ -298,7 +498,7 @@
 			"id": "lobster_dinner",
 			"skill": "cooking",
 			"level": 30,
-			"xp": 70,
+			"xp": 38,
 			"ingredients": {
 				"raw_lobster": 1
 			}
@@ -307,7 +507,7 @@
 			"id": "swordfish_steak",
 			"skill": "cooking",
 			"level": 35,
-			"xp": 90,
+			"xp": 55,
 			"ingredients": {
 				"raw_swordfish": 1
 			}
@@ -316,7 +516,7 @@
 			"id": "cooked_eel",
 			"skill": "cooking",
 			"level": 10,
-			"xp": 25,
+			"xp": 13,
 			"ingredients": {
 				"raw_eel": 1
 			}
@@ -325,7 +525,7 @@
 			"id": "hearty_stew",
 			"skill": "cooking",
 			"level": 18,
-			"xp": 45,
+			"xp": 19,
 			"ingredients": {
 				"raw_meat": 2,
 				"marsh_herb": 1
@@ -335,7 +535,7 @@
 			"id": "cooked_tuna",
 			"skill": "cooking",
 			"level": 40,
-			"xp": 110,
+			"xp": 80,
 			"ingredients": {
 				"raw_tuna": 1
 			}
@@ -344,9 +544,91 @@
 			"id": "cooked_shark",
 			"skill": "cooking",
 			"level": 50,
-			"xp": 150,
+			"xp": 165,
 			"ingredients": {
 				"raw_shark": 1
+			}
+		},
+		{
+			"id": "baked_potato",
+			"skill": "cooking",
+			"level": 15,
+			"xp": 16,
+			"ingredients": {
+				"potato": 1
+			}
+		},
+		{
+			"id": "cabbage_stew",
+			"skill": "cooking",
+			"level": 35,
+			"xp": 55,
+			"ingredients": {
+				"cabbage": 2,
+				"marsh_herb": 1
+			}
+		},
+		{
+			"id": "corn_bread",
+			"skill": "cooking",
+			"level": 45,
+			"xp": 115,
+			"ingredients": {
+				"corn": 2
+			}
+		},
+		{
+			"id": "pumpkin_pie",
+			"skill": "cooking",
+			"level": 60,
+			"xp": 360,
+			"ingredients": {
+				"pumpkin": 1
+			}
+		},
+		{
+			"id": "cooked_manta",
+			"skill": "cooking",
+			"level": 60,
+			"xp": 360,
+			"ingredients": {
+				"raw_manta": 1
+			}
+		},
+		{
+			"id": "cooked_anglerfish",
+			"skill": "cooking",
+			"level": 70,
+			"xp": 810,
+			"ingredients": {
+				"raw_anglerfish": 1
+			}
+		},
+		{
+			"id": "cooked_dark_crab",
+			"skill": "cooking",
+			"level": 80,
+			"xp": 1850,
+			"ingredients": {
+				"raw_dark_crab": 1
+			}
+		},
+		{
+			"id": "golden_apple_pie",
+			"skill": "cooking",
+			"level": 85,
+			"xp": 2850,
+			"ingredients": {
+				"golden_apple": 1
+			}
+		},
+		{
+			"id": "cooked_kingfish",
+			"skill": "cooking",
+			"level": 90,
+			"xp": 4300,
+			"ingredients": {
+				"raw_kingfish": 1
 			}
 		}
 	],
@@ -355,7 +637,7 @@
 			"id": "health_potion",
 			"skill": "alchemy",
 			"level": 1,
-			"xp": 20,
+			"xp": 14,
 			"ingredients": {
 				"mint_herb": 2
 			}
@@ -364,7 +646,7 @@
 			"id": "mining_brew",
 			"skill": "alchemy",
 			"level": 10,
-			"xp": 30,
+			"xp": 13,
 			"ingredients": {
 				"mint_herb": 2,
 				"gold_ore": 1
@@ -374,7 +656,7 @@
 			"id": "mana_potion",
 			"skill": "alchemy",
 			"level": 15,
-			"xp": 40,
+			"xp": 16,
 			"ingredients": {
 				"mint_herb": 1,
 				"nightshade_herb": 1
@@ -384,7 +666,7 @@
 			"id": "antidote_potion",
 			"skill": "alchemy",
 			"level": 20,
-			"xp": 50,
+			"xp": 21,
 			"ingredients": {
 				"nightshade_herb": 1,
 				"marsh_herb": 1
@@ -394,7 +676,7 @@
 			"id": "strength_brew",
 			"skill": "alchemy",
 			"level": 25,
-			"xp": 60,
+			"xp": 29,
 			"ingredients": {
 				"nightshade_herb": 2,
 				"gold_ore": 1
@@ -404,7 +686,7 @@
 			"id": "super_health_potion",
 			"skill": "alchemy",
 			"level": 30,
-			"xp": 70,
+			"xp": 38,
 			"ingredients": {
 				"mint_herb": 3,
 				"gold_ore": 1
@@ -414,7 +696,7 @@
 			"id": "super_mana_potion",
 			"skill": "alchemy",
 			"level": 35,
-			"xp": 85,
+			"xp": 55,
 			"ingredients": {
 				"nightshade_herb": 2,
 				"mint_herb": 2
@@ -424,10 +706,89 @@
 			"id": "venom_brew",
 			"skill": "alchemy",
 			"level": 22,
-			"xp": 55,
+			"xp": 24,
 			"ingredients": {
 				"venom_gland": 1,
 				"nightshade_herb": 1
+			}
+		},
+		{
+			"id": "divine_health_potion",
+			"skill": "alchemy",
+			"level": 40,
+			"xp": 80,
+			"ingredients": {
+				"sunflower_herb": 2,
+				"mint_herb": 1
+			}
+		},
+		{
+			"id": "ranging_potion",
+			"skill": "alchemy",
+			"level": 45,
+			"xp": 115,
+			"ingredients": {
+				"sunflower_herb": 1,
+				"feathers": 2
+			}
+		},
+		{
+			"id": "magic_potion",
+			"skill": "alchemy",
+			"level": 50,
+			"xp": 165,
+			"ingredients": {
+				"bloodleaf_herb": 1,
+				"gem": 1
+			}
+		},
+		{
+			"id": "super_strength_potion",
+			"skill": "alchemy",
+			"level": 55,
+			"xp": 240,
+			"ingredients": {
+				"bloodleaf_herb": 2,
+				"nightshade_herb": 1
+			}
+		},
+		{
+			"id": "prayer_potion",
+			"skill": "alchemy",
+			"level": 60,
+			"xp": 360,
+			"ingredients": {
+				"frostpetal_herb": 1,
+				"holy_ash": 1
+			}
+		},
+		{
+			"id": "frost_resist_potion",
+			"skill": "alchemy",
+			"level": 70,
+			"xp": 810,
+			"ingredients": {
+				"frostpetal_herb": 2
+			}
+		},
+		{
+			"id": "dragon_potion",
+			"skill": "alchemy",
+			"level": 85,
+			"xp": 2850,
+			"ingredients": {
+				"dragonherb": 2,
+				"gem": 1
+			}
+		},
+		{
+			"id": "overload_potion",
+			"skill": "alchemy",
+			"level": 90,
+			"xp": 4300,
+			"ingredients": {
+				"dragonherb": 3,
+				"bloodleaf_herb": 2
 			}
 		}
 	],
@@ -436,58 +797,329 @@
 			"id": "attack_rune",
 			"skill": "runecrafting",
 			"level": 1,
-			"xp": 20,
+			"xp": 14,
 			"ingredients": {
 				"log": 2
 			}
 		},
 		{
-			"id": "healing_rune",
+			"id": "pebble_rune",
 			"skill": "runecrafting",
-			"level": 15,
-			"xp": 40,
+			"level": 3,
+			"xp": 13,
 			"ingredients": {
-				"oak_log": 2
+				"log": 2,
+				"copper_ore": 1
 			}
 		},
 		{
-			"id": "fire_rune",
+			"id": "spark_rune",
 			"skill": "runecrafting",
-			"level": 25,
-			"xp": 60,
+			"level": 5,
+			"xp": 13,
 			"ingredients": {
-				"willow_log": 2,
+				"log": 3,
 				"mint_herb": 1
 			}
 		},
 		{
-			"id": "ice_rune",
+			"id": "minor_heal_rune",
 			"skill": "runecrafting",
-			"level": 35,
-			"xp": 80,
+			"level": 8,
+			"xp": 13,
 			"ingredients": {
-				"willow_log": 3,
-				"is_kristall": 1
+				"log": 2,
+				"mint_herb": 1
 			}
 		},
 		{
-			"id": "energy_rune",
+			"id": "flame_dart_rune",
 			"skill": "runecrafting",
-			"level": 18,
-			"xp": 50,
+			"level": 10,
+			"xp": 13,
 			"ingredients": {
 				"oak_log": 2,
 				"mint_herb": 1
 			}
 		},
 		{
+			"id": "frost_rune",
+			"skill": "runecrafting",
+			"level": 12,
+			"xp": 14,
+			"ingredients": {
+				"oak_log": 2,
+				"marsh_herb": 1
+			}
+		},
+		{
+			"id": "healing_rune",
+			"skill": "runecrafting",
+			"level": 15,
+			"xp": 16,
+			"ingredients": {
+				"oak_log": 2
+			}
+		},
+		{
+			"id": "energy_rune",
+			"skill": "runecrafting",
+			"level": 18,
+			"xp": 19,
+			"ingredients": {
+				"oak_log": 2,
+				"mint_herb": 1
+			}
+		},
+		{
+			"id": "poison_rune",
+			"skill": "runecrafting",
+			"level": 20,
+			"xp": 21,
+			"ingredients": {
+				"oak_log": 2,
+				"nightshade_herb": 2
+			}
+		},
+		{
+			"id": "venom_rune",
+			"skill": "runecrafting",
+			"level": 22,
+			"xp": 24,
+			"ingredients": {
+				"willow_log": 2,
+				"venom_gland": 1
+			}
+		},
+		{
+			"id": "fire_rune",
+			"skill": "runecrafting",
+			"level": 25,
+			"xp": 29,
+			"ingredients": {
+				"willow_log": 2,
+				"mint_herb": 1
+			}
+		},
+		{
+			"id": "fire_bomb_rune",
+			"skill": "runecrafting",
+			"level": 27,
+			"xp": 31,
+			"ingredients": {
+				"willow_log": 2,
+				"lava_shard": 1
+			}
+		},
+		{
+			"id": "stone_blast_rune",
+			"skill": "runecrafting",
+			"level": 30,
+			"xp": 38,
+			"ingredients": {
+				"willow_log": 2,
+				"iron_ore": 2
+			}
+		},
+		{
+			"id": "ice_wave_rune",
+			"skill": "runecrafting",
+			"level": 32,
+			"xp": 44,
+			"ingredients": {
+				"willow_log": 3,
+				"is_kristall": 1
+			}
+		},
+		{
+			"id": "ice_rune",
+			"skill": "runecrafting",
+			"level": 35,
+			"xp": 55,
+			"ingredients": {
+				"willow_log": 3,
+				"is_kristall": 1
+			}
+		},
+		{
 			"id": "death_rune",
 			"skill": "runecrafting",
 			"level": 38,
-			"xp": 95,
+			"xp": 65,
 			"ingredients": {
 				"willow_log": 3,
 				"nightshade_herb": 2
+			}
+		},
+		{
+			"id": "greater_heal_rune",
+			"skill": "runecrafting",
+			"level": 40,
+			"xp": 80,
+			"ingredients": {
+				"willow_log": 3,
+				"gem": 1
+			}
+		},
+		{
+			"id": "shock_rune",
+			"skill": "runecrafting",
+			"level": 43,
+			"xp": 95,
+			"ingredients": {
+				"willow_log": 3,
+				"gold_ore": 1
+			}
+		},
+		{
+			"id": "inferno_rune",
+			"skill": "runecrafting",
+			"level": 46,
+			"xp": 120,
+			"ingredients": {
+				"willow_log": 3,
+				"lava_shard": 2
+			}
+		},
+		{
+			"id": "blizzard_rune",
+			"skill": "runecrafting",
+			"level": 50,
+			"xp": 165,
+			"ingredients": {
+				"willow_log": 4,
+				"is_kristall": 2
+			}
+		},
+		{
+			"id": "lightning_rune",
+			"skill": "runecrafting",
+			"level": 54,
+			"xp": 230,
+			"ingredients": {
+				"willow_log": 4,
+				"gold_ore": 2
+			}
+		},
+		{
+			"id": "curse_rune",
+			"skill": "runecrafting",
+			"level": 58,
+			"xp": 310,
+			"ingredients": {
+				"willow_log": 4,
+				"vampire_dust": 1
+			}
+		},
+		{
+			"id": "mass_heal_rune",
+			"skill": "runecrafting",
+			"level": 62,
+			"xp": 430,
+			"ingredients": {
+				"willow_log": 4,
+				"gem": 2
+			}
+		},
+		{
+			"id": "earthquake_rune",
+			"skill": "runecrafting",
+			"level": 66,
+			"xp": 590,
+			"ingredients": {
+				"willow_log": 5,
+				"iron_ore": 3
+			}
+		},
+		{
+			"id": "soulfire_rune",
+			"skill": "runecrafting",
+			"level": 70,
+			"xp": 810,
+			"ingredients": {
+				"willow_log": 5,
+				"lava_shard": 2
+			}
+		},
+		{
+			"id": "frostbite_rune",
+			"skill": "runecrafting",
+			"level": 74,
+			"xp": 1150,
+			"ingredients": {
+				"willow_log": 5,
+				"is_kristall": 3
+			}
+		},
+		{
+			"id": "thunderstorm_rune",
+			"skill": "runecrafting",
+			"level": 78,
+			"xp": 1550,
+			"ingredients": {
+				"willow_log": 6,
+				"gold_ore": 3
+			}
+		},
+		{
+			"id": "plague_rune",
+			"skill": "runecrafting",
+			"level": 82,
+			"xp": 2200,
+			"ingredients": {
+				"willow_log": 6,
+				"vampire_dust": 2
+			}
+		},
+		{
+			"id": "divine_heal_rune",
+			"skill": "runecrafting",
+			"level": 86,
+			"xp": 3100,
+			"ingredients": {
+				"willow_log": 6,
+				"gem": 3
+			}
+		},
+		{
+			"id": "meteor_rune",
+			"skill": "runecrafting",
+			"level": 90,
+			"xp": 4300,
+			"ingredients": {
+				"willow_log": 7,
+				"lava_shard": 3
+			}
+		},
+		{
+			"id": "absolute_zero_rune",
+			"skill": "runecrafting",
+			"level": 94,
+			"xp": 6100,
+			"ingredients": {
+				"willow_log": 7,
+				"is_kristall": 4
+			}
+		},
+		{
+			"id": "annihilation_rune",
+			"skill": "runecrafting",
+			"level": 97,
+			"xp": 7800,
+			"ingredients": {
+				"willow_log": 8,
+				"vampire_dust": 3
+			}
+		},
+		{
+			"id": "armageddon_rune",
+			"skill": "runecrafting",
+			"level": 99,
+			"xp": 9300,
+			"ingredients": {
+				"willow_log": 8,
+				"gold_ore": 4,
+				"gem": 2
 			}
 		}
 	],
@@ -496,7 +1128,7 @@
 			"id": "leather_strips",
 			"skill": "crafting",
 			"level": 1,
-			"xp": 10,
+			"xp": 14,
 			"ingredients": {
 				"wolf_pelt": 1
 			}
@@ -505,7 +1137,7 @@
 			"id": "leather_strips",
 			"skill": "crafting",
 			"level": 1,
-			"xp": 12,
+			"xp": 14,
 			"ingredients": {
 				"boar_hide": 1
 			}
@@ -514,7 +1146,7 @@
 			"id": "leather_cap",
 			"skill": "crafting",
 			"level": 1,
-			"xp": 20,
+			"xp": 14,
 			"ingredients": {
 				"leather_strips": 1
 			}
@@ -523,7 +1155,7 @@
 			"id": "leather_boots",
 			"skill": "crafting",
 			"level": 1,
-			"xp": 20,
+			"xp": 14,
 			"ingredients": {
 				"leather_strips": 1
 			}
@@ -532,7 +1164,7 @@
 			"id": "leather_legs",
 			"skill": "crafting",
 			"level": 3,
-			"xp": 30,
+			"xp": 13,
 			"ingredients": {
 				"leather_strips": 2
 			}
@@ -541,7 +1173,7 @@
 			"id": "leather_vest",
 			"skill": "crafting",
 			"level": 5,
-			"xp": 45,
+			"xp": 13,
 			"ingredients": {
 				"leather_strips": 3
 			}
@@ -550,7 +1182,7 @@
 			"id": "arrow_shaft",
 			"skill": "fletching",
 			"level": 1,
-			"xp": 5,
+			"xp": 14,
 			"ingredients": {
 				"log": 1
 			}
@@ -559,7 +1191,7 @@
 			"id": "wooden_arrow",
 			"skill": "fletching",
 			"level": 1,
-			"xp": 8,
+			"xp": 14,
 			"ingredients": {
 				"arrow_shaft": 1,
 				"feathers": 1
@@ -569,7 +1201,7 @@
 			"id": "wooden_bow",
 			"skill": "fletching",
 			"level": 5,
-			"xp": 40,
+			"xp": 13,
 			"ingredients": {
 				"log": 5
 			}
@@ -578,7 +1210,7 @@
 			"id": "oak_arrow",
 			"skill": "fletching",
 			"level": 15,
-			"xp": 20,
+			"xp": 16,
 			"ingredients": {
 				"arrow_shaft": 1,
 				"feathers": 1,
@@ -589,7 +1221,7 @@
 			"id": "oak_bow",
 			"skill": "fletching",
 			"level": 20,
-			"xp": 80,
+			"xp": 21,
 			"ingredients": {
 				"oak_log": 3
 			}
@@ -598,7 +1230,7 @@
 			"id": "willow_bow",
 			"skill": "fletching",
 			"level": 30,
-			"xp": 90,
+			"xp": 38,
 			"ingredients": {
 				"willow_log": 3
 			}
@@ -607,7 +1239,7 @@
 			"id": "willow_arrow",
 			"skill": "fletching",
 			"level": 25,
-			"xp": 24,
+			"xp": 29,
 			"ingredients": {
 				"arrow_shaft": 1,
 				"feathers": 1,
@@ -618,7 +1250,7 @@
 			"id": "web_boots",
 			"skill": "crafting",
 			"level": 15,
-			"xp": 50,
+			"xp": 16,
 			"ingredients": {
 				"spider_silk": 3,
 				"spider_fang": 2
@@ -628,7 +1260,7 @@
 			"id": "venom_hood",
 			"skill": "crafting",
 			"level": 20,
-			"xp": 65,
+			"xp": 21,
 			"ingredients": {
 				"venom_gland": 2,
 				"leather_strips": 2
@@ -638,7 +1270,7 @@
 			"id": "spider_amulet",
 			"skill": "crafting",
 			"level": 22,
-			"xp": 80,
+			"xp": 24,
 			"ingredients": {
 				"spider_fang": 3,
 				"spider_queen_silk": 1
@@ -648,20 +1280,203 @@
 			"id": "silk_robe",
 			"skill": "crafting",
 			"level": 30,
-			"xp": 120,
+			"xp": 38,
 			"ingredients": {
 				"shadow_silk": 4,
 				"spider_queen_silk": 1
 			}
+		},
+		{
+			"id": "maple_arrow",
+			"skill": "fletching",
+			"level": 40,
+			"xp": 80,
+			"ingredients": {
+				"arrow_shaft": 1,
+				"feathers": 1,
+				"maple_log": 1
+			}
+		},
+		{
+			"id": "yew_arrow",
+			"skill": "fletching",
+			"level": 55,
+			"xp": 240,
+			"ingredients": {
+				"arrow_shaft": 1,
+				"feathers": 1,
+				"yew_log": 1
+			}
+		},
+		{
+			"id": "magic_arrow",
+			"skill": "fletching",
+			"level": 70,
+			"xp": 810,
+			"ingredients": {
+				"arrow_shaft": 1,
+				"feathers": 1,
+				"magic_log": 1
+			}
+		},
+		{
+			"id": "elder_arrow",
+			"skill": "fletching",
+			"level": 85,
+			"xp": 2850,
+			"ingredients": {
+				"arrow_shaft": 1,
+				"feathers": 1,
+				"elder_log": 1
+			}
+		},
+		{
+			"id": "maple_bow",
+			"skill": "fletching",
+			"level": 45,
+			"xp": 115,
+			"ingredients": {
+				"maple_log": 3
+			}
+		},
+		{
+			"id": "yew_bow",
+			"skill": "fletching",
+			"level": 60,
+			"xp": 360,
+			"ingredients": {
+				"yew_log": 3
+			}
+		},
+		{
+			"id": "magic_bow",
+			"skill": "fletching",
+			"level": 75,
+			"xp": 1200,
+			"ingredients": {
+				"magic_log": 3
+			}
+		},
+		{
+			"id": "elder_bow",
+			"skill": "fletching",
+			"level": 90,
+			"xp": 4300,
+			"ingredients": {
+				"elder_log": 3
+			}
+		},
+		{
+			"id": "fox_cloak",
+			"skill": "crafting",
+			"level": 30,
+			"xp": 38,
+			"ingredients": {
+				"fox_fur": 2
+			}
+		},
+		{
+			"id": "gem_ring",
+			"skill": "crafting",
+			"level": 45,
+			"xp": 115,
+			"ingredients": {
+				"gem": 1
+			}
+		},
+		{
+			"id": "bear_body",
+			"skill": "crafting",
+			"level": 50,
+			"xp": 165,
+			"ingredients": {
+				"bear_pelt": 3
+			}
+		},
+		{
+			"id": "gem_amulet",
+			"skill": "crafting",
+			"level": 55,
+			"xp": 240,
+			"ingredients": {
+				"gem": 2
+			}
+		},
+		{
+			"id": "chimera_robe",
+			"skill": "crafting",
+			"level": 85,
+			"xp": 2850,
+			"ingredients": {
+				"chimera_hide": 3,
+				"shadow_silk": 2
+			}
 		}
 	],
-	"prayer_altar": [],
+	"prayer_altar": [
+		{
+			"id": "holy_ash",
+			"skill": "prayer",
+			"level": 1,
+			"xp": 12,
+			"ingredients": {
+				"bones": 5
+			}
+		},
+		{
+			"id": "holy_ash",
+			"skill": "prayer",
+			"level": 10,
+			"xp": 12,
+			"ingredients": {
+				"bone_chips": 8
+			}
+		},
+		{
+			"id": "blessed_charm",
+			"skill": "prayer",
+			"level": 25,
+			"xp": 26,
+			"ingredients": {
+				"troll_bone": 2,
+				"holy_ash": 1
+			}
+		},
+		{
+			"id": "holy_symbol",
+			"skill": "prayer",
+			"level": 45,
+			"xp": 105,
+			"ingredients": {
+				"troll_bone": 4,
+				"gem": 1
+			}
+		},
+		{
+			"id": "holy_ash",
+			"skill": "prayer",
+			"level": 60,
+			"xp": 330,
+			"ingredients": {
+				"big_bones": 3
+			}
+		},
+		{
+			"id": "holy_ash",
+			"skill": "prayer",
+			"level": 80,
+			"xp": 1700,
+			"ingredients": {
+				"dragon_bones": 2
+			}
+		}
+	],
 	"workbench": [
 		{
 			"id": "plank",
 			"skill": "construction",
 			"level": 1,
-			"xp": 8,
+			"xp": 17,
 			"ingredients": {
 				"log": 1
 			}
@@ -670,7 +1485,7 @@
 			"id": "oak_plank",
 			"skill": "construction",
 			"level": 15,
-			"xp": 18,
+			"xp": 19,
 			"ingredients": {
 				"oak_log": 1
 			}
@@ -679,7 +1494,7 @@
 			"id": "wooden_chair",
 			"skill": "construction",
 			"level": 1,
-			"xp": 15,
+			"xp": 17,
 			"ingredients": {
 				"plank": 2
 			}
@@ -688,7 +1503,7 @@
 			"id": "wooden_table",
 			"skill": "construction",
 			"level": 5,
-			"xp": 25,
+			"xp": 16,
 			"ingredients": {
 				"plank": 3
 			}
@@ -697,7 +1512,7 @@
 			"id": "oak_bench",
 			"skill": "construction",
 			"level": 18,
-			"xp": 40,
+			"xp": 22,
 			"ingredients": {
 				"oak_plank": 2
 			}
@@ -706,7 +1521,7 @@
 			"id": "bookshelf",
 			"skill": "construction",
 			"level": 22,
-			"xp": 60,
+			"xp": 29,
 			"ingredients": {
 				"oak_plank": 3
 			}
@@ -715,9 +1530,81 @@
 			"id": "oak_door",
 			"skill": "construction",
 			"level": 28,
-			"xp": 80,
+			"xp": 41,
 			"ingredients": {
 				"oak_plank": 4
+			}
+		},
+		{
+			"id": "maple_plank",
+			"skill": "construction",
+			"level": 45,
+			"xp": 135,
+			"ingredients": {
+				"maple_log": 1
+			}
+		},
+		{
+			"id": "yew_plank",
+			"skill": "construction",
+			"level": 60,
+			"xp": 430,
+			"ingredients": {
+				"yew_log": 1
+			}
+		},
+		{
+			"id": "magic_plank",
+			"skill": "construction",
+			"level": 75,
+			"xp": 1450,
+			"ingredients": {
+				"magic_log": 1
+			}
+		},
+		{
+			"id": "elder_plank",
+			"skill": "construction",
+			"level": 90,
+			"xp": 5100,
+			"ingredients": {
+				"elder_log": 1
+			}
+		},
+		{
+			"id": "maple_table",
+			"skill": "construction",
+			"level": 48,
+			"xp": 170,
+			"ingredients": {
+				"maple_plank": 3
+			}
+		},
+		{
+			"id": "yew_wardrobe",
+			"skill": "construction",
+			"level": 62,
+			"xp": 510,
+			"ingredients": {
+				"yew_plank": 4
+			}
+		},
+		{
+			"id": "magic_lectern",
+			"skill": "construction",
+			"level": 78,
+			"xp": 1900,
+			"ingredients": {
+				"magic_plank": 4
+			}
+		},
+		{
+			"id": "elder_throne",
+			"skill": "construction",
+			"level": 92,
+			"xp": 6100,
+			"ingredients": {
+				"elder_plank": 5
 			}
 		}
 	]

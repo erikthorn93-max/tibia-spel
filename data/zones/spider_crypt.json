@@ -1,0 +1,34 @@
+{
+	"name": "Spindelkryptan",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWW",
+		"W,,,,,,,,,,,,,,,,,,,,W",
+		"W,P,R,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,n,,,W",
+		"W,,,,,,,a,,W,,,,,,,,,W",
+		"W,,,,,,,,,,W,,a,,,,,,W",
+		"W,,,,a,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,b,,,,,,,,,W",
+		"W,,,W,,,,,,,,,,,,b,,,W",
+		"W,,,,,,b,,,,,,c,,,,,,W",
+		"W,,,c,,,,,,,,,,,n,,,,W",
+		"W,,,,,,,,,,,,,,,,,Q,,W",
+		"W,A,C,L,,,,,,,,,,,,,,W",
+		"WWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"R": { "type": "portal", "to": "cave" },
+		"A": { "type": "station", "station": "anvil" },
+		"C": { "type": "station", "station": "crafting_bench" },
+		"L": { "type": "station", "station": "alchemy_table" },
+		"n": { "type": "node", "node": "nightshade_patch" },
+		"a": { "type": "spawn", "monster": "Grottspindel", "respawn": 18.0 },
+		"b": { "type": "spawn", "monster": "Giftvävare", "respawn": 25.0 },
+		"c": { "type": "spawn", "monster": "Skuggspindel", "respawn": 35.0 },
+		"Q": { "type": "spawn", "monster": "Spindeldrottningen Morwena", "respawn": 3600.0 }
+	},
+	"spawn_table": [
+		{ "monster": "Grottspindel", "count": 3, "respawn": 20.0 },
+		{ "monster": "Giftvävare", "count": 2, "respawn": 30.0 }
+	]
+}

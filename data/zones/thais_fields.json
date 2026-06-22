@@ -29,6 +29,41 @@
 			"type": "portal",
 			"to": "thais_heights",
 			"terrain": "c"
+		},
+		"A": {
+			"type": "node",
+			"node": "potato_patch",
+			"terrain": "."
+		},
+		"B": {
+			"type": "node",
+			"node": "cabbage_patch",
+			"terrain": "."
+		},
+		"C": {
+			"type": "node",
+			"node": "corn_patch",
+			"terrain": "."
+		},
+		"E": {
+			"type": "node",
+			"node": "pumpkin_patch",
+			"terrain": "."
+		},
+		"G": {
+			"type": "node",
+			"node": "apple_orchard",
+			"terrain": "."
+		},
+		"K": {
+			"type": "node",
+			"node": "silk_stall",
+			"terrain": "g"
+		},
+		"L": {
+			"type": "node",
+			"node": "gem_stall",
+			"terrain": "g"
 		}
 	},
 	"name": "Norra landsbygden",
@@ -81,19 +116,19 @@
 		"W.ggggg.g.gg.gg.gg..gggggg.ggg.gg.gggg.ggg.g.ggggg..g.gg.g.gcgg.gggggggg..g.gg.gggggggggg..g.ggggggggggg.ggg.ggg.ggggggW",
 		"W.gg.g.gggggggggg..ggggggggggggggggggg..g.g.g..gggggg.gg.g.gcgg.g...gg..ggg.ggggggggg.gggg.gggg.gggggg.gg.gg..ggg.gggggW",
 		"Wg.ggg....gg.ggg.gg.g.g...gg.g.ggggggggggg.ggggg.gggg.g...ggcggggggg.ggg.g.ggggggg.g.ggg..g.ggggggggggggggg..gg.gggggggW",
-		"Wgg.gg..gggggg..gggg.gg.gg...gg...ggg.ggggggggggggg.gggg.gg.cg..g.g..g.ggggg.ggggggg.gg...ggg.ggg.g.ggggggg.gggggggggggW",
-		"Wg..g.ggg.g.ggg.ggg.g..gggggg...gg.gggg.ggggg..ggg.g.g.gg.ggcg.ggggggg.ggg.gg...ggggggg.g.gggg.gggggg....g..gg..ggg..ggW",
+		"Wgg.gg..ggggggE.gggg.gg.gg...gg...ggg.ggggggggggggg.gggg.gg.cg..g.g..g.ggggg.ggggggg.gg...ggg.ggg.g.ggggggg.gggggggggggW",
+		"Wg..g.ggg.gAKLg.ggg.g..gggggg...gg.gggg.ggggg..ggg.g.g.gg.ggcg.ggggggg.ggg.gg...ggggggg.g.gggg.gggggg....g..gg..ggg..ggW",
 		"WgggggggggggFgggg.g.g.gggg.gggggggg.gggggggg..ggggg.gg.gg.ggc..gg..g.g.ggggggg.g..ggggggggggg...ggggggggg.gggg.ggggggg.W",
-		"Wgggggg..g..g.g.g.g.ggg.g.ggggggg...g.gggggggg.ggg.gg.ggg..gcg.g.gggggg.gggg.g.gg.g..g.gg.g.ggg..ggggggg..ggggg.gggggggW",
+		"Wgggggg..gGBgCg.g.g.ggg.g.ggggggg...g.gggggggg.ggg.gg.ggg..gcg.g.gggggg.gggg.g.gg.g..g.gg.g.ggg..ggggggg..ggggg.gggggggW",
 		"Wg..ggg.gggg..ggggg.g.gggg.gggggggg..g..g.gg.ggggggg.ggg.gggcgg.g....g.gg.ggggggg.gg.g...gg.ggggggg..ggg.ggg.gg.ggg.gggW",
 		"Wgggggggggggggg..gggg.ggggggg.ggg.g.gg..gg.gg..g.gg.gg.gggg.cgggggg.gggggggggg...g..gg.g.gggggg.gg.g...g....g.gggggggggW",
 		"Wg.gggg.ggggggggggg.g.ggg.g.gg..gg.ggg.gg.g..gggggggg.gg.gg.cgg....g.gggg.ggggggggggg..ggg.g....g...gg..ggggg.gg.gg..ggW",
 		"W.gg...ggggg.g.ggg.gg.g.gg..g.ggg.g.g.ggggggggg.ggg..g.gggg.c..gg.g..ggg..ggggg.ggg.ggggg.gggg...gggg.gg.g.ggggggggggggW",
 		"Wgggggggg..gggggggggggggg...gggg.g.gggggg.ggg.g..g.gggggggg.cgg.gggggggggggg.gggg.....gggg.gggggg.g.ggggg.gg.gggggg..g.W",
 		"Wgggg.gggggg....ggggg.gg..g.ggg.g.ggggggg...g..ggggg.ggg..ggcg.g.gggggg.ggg.gggggg...gggggg.gg.ggggggg..ggg.g.g.ggggg.gW",
-		"Wg.gggggg.gg.gggg.ggg.gggggggg.g.ggg.g.ggggg..gg.g.ggg.gggggc.gg..gg.ggg.gggg.g.g.g.ggggggg.g.ggggg.g.gggg.gggg..gg..ggW",
-		"Wg.gg...ggg.gg.ggggg.ggggg.gggg.g...ggg.ggg.ggggggggggggggggcgggg.gg.ggggg.gg.g.ggg.g.gg.gggg.gg.g.g.ggg.gg.ggggg.g.g.gW",
-		"W...g.ggggg..Fgggg.gggggg.gg.ggg..gggggg..gggggg.ggg.gggggggc...gggggggg.ggg.g..ggggggggg...gggggg.g.g.g..g.g...g.gggg.W",
+		"Wg.gggggg.ggCgggg.ggg.gggggggg.g.ggg.g.ggggg..gg.g.ggg.gggggc.gg..gg.ggg.gggg.g.g.g.ggggggg.g.ggggg.g.gggg.gggg..gg..ggW",
+		"Wg.gg...ggg.ggAggggg.ggggg.gggg.g...ggg.ggg.ggggggggggggggggcgggg.gg.ggggg.gg.g.ggg.g.gg.gggg.gg.g.g.ggg.gg.ggggg.g.g.gW",
+		"W...g.ggggg.BFgggg.gggggg.gg.ggg..gggggg..gggggg.ggg.gggggggc...gggggggg.ggg.g..ggggggggg...gggggg.g.g.g..g.g...g.gggg.W",
 		"W.g..gggg.ggggg..ggg.gg..g.gggg.gg.ggggggggg.gggg.gg.gg..gggcgg.gggggggggggg.gggg...gg.gggggggg.gg.ggg..g.ggggg..gggg.gW",
 		"Wgg..ggg.g.g.gggg.gg...gg.gggggg..gggggg..ggggggggggg.ggggggcg...ggg.g.gg.g.g.ggggggggg.ggg..gggggggg.g..ggggg...g.gg..W",
 		"Wggggg..ggg..g..gg.ggggggggg.g.ggg.gggggggg.ggggg.ggggggg..gcggggggg..gggggggg.g.gggggg.g.ggggggggggg.g.ggggggggg.g.g.gW",

@@ -55,6 +55,96 @@
 			"type": "portal",
 			"to": "thais_mountains",
 			"terrain": "c"
+		},
+		"C": {
+			"type": "node",
+			"node": "maple_tree",
+			"terrain": "g"
+		},
+		"D": {
+			"type": "node",
+			"node": "fox_trap",
+			"terrain": "g"
+		},
+		"E": {
+			"type": "node",
+			"node": "bear_trap",
+			"terrain": "g"
+		},
+		"H": {
+			"type": "node",
+			"node": "wolf_snare",
+			"terrain": "g"
+		},
+		"I": {
+			"type": "node",
+			"node": "chimera_trap",
+			"terrain": "g"
+		},
+		"J": {
+			"type": "node",
+			"node": "oak_campfire",
+			"terrain": "g"
+		},
+		"K": {
+			"type": "node",
+			"node": "willow_campfire",
+			"terrain": "g"
+		},
+		"L": {
+			"type": "node",
+			"node": "maple_campfire",
+			"terrain": "g"
+		},
+		"N": {
+			"type": "node",
+			"node": "yew_campfire",
+			"terrain": "g"
+		},
+		"Q": {
+			"type": "node",
+			"node": "magic_campfire",
+			"terrain": "g"
+		},
+		"R": {
+			"type": "node",
+			"node": "elder_campfire",
+			"terrain": "g"
+		},
+		"S": {
+			"type": "node",
+			"node": "log_balance",
+			"terrain": "g"
+		},
+		"T": {
+			"type": "node",
+			"node": "rope_swing",
+			"terrain": "g"
+		},
+		"U": {
+			"type": "node",
+			"node": "climbing_wall",
+			"terrain": "g"
+		},
+		"V": {
+			"type": "node",
+			"node": "monkey_bars",
+			"terrain": "g"
+		},
+		"Y": {
+			"type": "node",
+			"node": "fruit_stall",
+			"terrain": "g"
+		},
+		"Z": {
+			"type": "node",
+			"node": "baker_stall",
+			"terrain": "g"
+		},
+		"a": {
+			"type": "node",
+			"node": "silver_stall",
+			"terrain": "g"
 		}
 	},
 	"spawn_table": [
@@ -83,7 +173,7 @@
 		"WggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggW",
-		"WggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggW",
+		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggCggggggggggggggggggggggggggggggggggggggggggggW",
 		"WggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggogggggggggggggggggggggggggggggggggggggggggggW",
 		"WggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WggggggggggggggggggggggggggggggggggggggggggggggggggggggWgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggW",
@@ -94,17 +184,17 @@
 		"WggggggggggggggggggWWWWWWWggggggggggggggggggggggggggWWWWWWWggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggWWWWWWWWWgggggggggggggggggggggggggWWWWWWWggggggggggggggggggggggggggggggggggggWgggggggggggggggggggggggW",
 		"WgggggggggggggggggWWWWWWWWWggggggggggggggggggggggggggWWWWWggggggggggggggggggggggggggggggggggWWWWWWWggggggggggggggggggggW",
-		"WgggggggggggggggggWWWWWWWWWggggggggggggggggggggggggggggWgggggggggggggggggggggggggggggggggggWWWWWWWWWgggggggggggggggggggW",
+		"WgggggggggggggggggWWWWWWWWWggggggggggggggggggggggggggggWgggggggggggggggggggggCgggggggggggggWWWWWWWWWgggggggggggggggggggW",
 		"WggggggggggggggggWWWWWWWWWWWggggggggggggggggggggggggggggggggggggggggggcgggggggoggggggggggggWWWWWWWWWgggggggggggggggggggW",
 		"WgggggggggggggggggWWWWWWWWWgggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggWWWWWWWWWgggggggggggggggggggW",
 		"WgggggggggggggggggWWWWWWWWWgggggggggggggggggggggggggggggggggggggggggggcgggggggggggggggggggWWWWWWWWWWWggggggggggggggggggW",
 		"WgggggggggggggggggWWWWWWWWWgggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggWWWWWWWWWgggggggggggggggggggW",
 		"WggggggggggggggggggWWWWWWWggggggggggggggggggggggggggggggggggggggggggggcggggggggogggggggggggWWWWWWWWWgggggggggggggggggggW",
-		"WgggggggggggggggggggggWgggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggWWWWWWWWWgggggggggggggggggggW",
+		"WgggggggggggggggggggggWggggggggggggggggggggggggggggggggggggggggggggDEIcggggggggggggggggggggWWWWWWWWWgggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggXgcgggggggggggggggggggggWWWWWWWggggggggggggggggggggW",
-		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggWgggggggggggggggggggggggW",
-		"WggggggggggtggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcgggggggggoggggggggggggggggggggggggggggggggggggggW",
-		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
+		"WgggggggggSTUgggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggWgggggggggggggggggggggggW",
+		"WgggggggggVtYgggggggggggggggggggggggggggggggggggggggggggggggggggggggggcgggggggggoggggggggggggggggggggggggggggggggggggggW",
+		"WgggggggggZaggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggtgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggtgggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
@@ -123,9 +213,9 @@
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
-		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggAgggggggggggggggggggggggggggggW",
-		"WgggggggggggggggggggggggggggggggggFgggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
-		"WMggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcccccccccccccccccccccccccccccccccccccccccccccccccccccccPccc>",
+		"WggggggggggggggggggggggggggggggggJKLggggggggggggggggggggggggggggggggggcggggggggggggggggggAgggggggggggggggggggggggggggggW",
+		"WggggggggggggggggggggggggggggggggNFQggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
+		"WMgggggggggggggggggggggggggggggggRggggggggggggggggggggggggggcccccccccccccccccccccccccccccccccccccccccccccccccccccccPccc>",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
@@ -146,7 +236,7 @@
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcgggggGggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
-		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
+		"WggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggHggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggWgggggggggggggggggggggggggggggggggggggBgcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WggggggggggggggggggggggggggWWWWWWWggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggWWWWWWWWWgggggggggggggggggggggggggggggggggggcgggggggggggggggggggWggggggggggggggggggggggggggggW",

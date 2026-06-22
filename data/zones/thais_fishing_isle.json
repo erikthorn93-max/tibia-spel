@@ -1,0 +1,94 @@
+{
+	"name": "Stormrevet",
+	"spawn_table": [
+		{
+			"count": 3,
+			"monster": "Pirat",
+			"respawn": 35
+		},
+		{
+			"count": 2,
+			"monster": "Sjöorm",
+			"respawn": 45
+		},
+		{
+			"count": 2,
+			"monster": "Strandkrabba",
+			"respawn": 30
+		}
+	],
+	"tiles": [
+		"~~~~~~~~~~~~~~~~~~~~~~",
+		"~~~~~~~~~~~~~~~~~~~~~~",
+		"~~~~~~~LbbbbbbS~~~~~~~",
+		"~~~~~bb........bb~~~~~",
+		"~~~~b............b~~~~",
+		"~~~b..............b~~~",
+		"~~b......cVcc......b~~",
+		"~~b...F.cccccc.....b~~",
+		"~~b.....cccccc.....b~~",
+		"~~b......cccc......b~~",
+		"~~~b......d.......C~~~",
+		"~~~~A.....P......B~~~~",
+		"~~~~~TA........BK~~~~~",
+		"~~~~~~~bbbbbbbD~~~~~~~",
+		"~~~~~~~~~~~~~~~~~~~~~~",
+		"~~~~~~~~~~~~~~~~~~~~~~"
+	],
+	"legend": {
+		"d": {
+			"type": "portal",
+			"to": "thais_docks",
+			"terrain": "f"
+		},
+		"F": {
+			"type": "npc_spawn",
+			"npc": "npc_fishmaster"
+		},
+		"V": {
+			"type": "station",
+			"station": "stove",
+			"terrain": "c"
+		},
+		"L": {
+			"type": "node",
+			"node": "lobster_pot",
+			"terrain": "b"
+		},
+		"S": {
+			"type": "node",
+			"node": "swordfish_spot",
+			"terrain": "b"
+		},
+		"T": {
+			"type": "node",
+			"node": "tuna_spot",
+			"terrain": "b"
+		},
+		"K": {
+			"type": "node",
+			"node": "shark_spot",
+			"terrain": "b"
+		},
+		"A": {
+			"type": "node",
+			"node": "manta_spot",
+			"terrain": "b"
+		},
+		"B": {
+			"type": "node",
+			"node": "angler_spot",
+			"terrain": "b"
+		},
+		"C": {
+			"type": "node",
+			"node": "dark_crab_spot",
+			"terrain": "b"
+		},
+		"D": {
+			"type": "node",
+			"node": "kingfish_spot",
+			"terrain": "b"
+		}
+	}
+}

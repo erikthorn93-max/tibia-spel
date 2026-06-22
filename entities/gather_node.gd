@@ -63,7 +63,12 @@ func _on_success() -> void:
 		var tool_id := String(def.get("tool", ""))
 		if tool_id != "":
 			GameState.remove_item(tool_id, 1)
-	GameState.add_item(String(def["yields"]), 1)
+	# no_yield: rena XP-noder (t.ex. agility-hinder ger bara erfarenhet).
+	if not bool(def.get("no_yield", false)):
+		var amt := 1
+		if def.has("yield_min"):
+			amt = randi_range(int(def["yield_min"]), int(def["yield_max"]))
+		GameState.add_item(String(def["yields"]), amt)
 	GameState.gain_skill_xp(String(def["skill"]), int(def["xp"]))
 	charges -= 1
 	if charges <= 0:

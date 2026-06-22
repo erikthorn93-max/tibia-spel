@@ -458,7 +458,11 @@
 		"effect": "damage",
 		"target": "target",
 		"element": "fire",
-		"status": {"type": "burn", "duration": 8.0, "power": 4.0},
+		"status": {
+			"type": "burn",
+			"duration": 8,
+			"power": 4
+		},
 		"sprite": "res://assets/sprites/items/fire_rune.png"
 	},
 	"healing_rune": {
@@ -1049,7 +1053,11 @@
 		"mana_cost": 18,
 		"magic_lvl": 27,
 		"element": "fire",
-		"status": {"type": "burn", "duration": 8.0, "power": 4.0},
+		"status": {
+			"type": "burn",
+			"duration": 8,
+			"power": 4
+		},
 		"sprite": "res://assets/sprites/items/fire_bomb_rune.png"
 	},
 	"ice_wave_rune": {
@@ -1147,8 +1155,391 @@
 		"effect": "damage",
 		"target": "target",
 		"element": "death",
-		"status": {"type": "poison", "duration": 6.0, "power": 3.0},
+		"status": {
+			"type": "poison",
+			"duration": 6,
+			"power": 3
+		},
 		"sprite": "res://assets/sprites/items/death_rune.png"
+	},
+	"pebble_rune": {
+		"name": "Stenruna",
+		"type": "rune",
+		"value": 22,
+		"color": "#9a8866",
+		"rune_power": 10,
+		"mana_cost": 6,
+		"magic_lvl": 2,
+		"effect": "damage",
+		"target": "target",
+		"element": "earth",
+		"sprite": "res://assets/sprites/items/pebble_rune.png"
+	},
+	"spark_rune": {
+		"name": "Gnistruna",
+		"type": "rune",
+		"value": 26,
+		"color": "#ffe07a",
+		"rune_power": 12,
+		"mana_cost": 7,
+		"magic_lvl": 4,
+		"effect": "damage",
+		"target": "target",
+		"element": "energy",
+		"sprite": "res://assets/sprites/items/spark_rune.png"
+	},
+	"minor_heal_rune": {
+		"name": "Mindre läkruna",
+		"type": "rune",
+		"value": 24,
+		"color": "#8fe0a0",
+		"rune_power": 14,
+		"mana_cost": 6,
+		"magic_lvl": 3,
+		"effect": "heal",
+		"target": "self",
+		"sprite": "res://assets/sprites/items/minor_heal_rune.png"
+	},
+	"flame_dart_rune": {
+		"name": "Flamskottsruna",
+		"type": "rune",
+		"value": 30,
+		"color": "#ff8a3a",
+		"rune_power": 16,
+		"mana_cost": 9,
+		"magic_lvl": 6,
+		"effect": "damage",
+		"target": "target",
+		"element": "fire",
+		"status": {
+			"type": "burn",
+			"duration": 6,
+			"power": 3
+		},
+		"sprite": "res://assets/sprites/items/flame_dart_rune.png"
+	},
+	"frost_rune": {
+		"name": "Frostruna",
+		"type": "rune",
+		"value": 30,
+		"color": "#aee0ff",
+		"rune_power": 16,
+		"mana_cost": 9,
+		"magic_lvl": 6,
+		"effect": "damage",
+		"target": "target",
+		"element": "ice",
+		"sprite": "res://assets/sprites/items/frost_rune.png"
+	},
+	"poison_rune": {
+		"name": "Giftruna",
+		"type": "rune",
+		"value": 38,
+		"color": "#7ac84a",
+		"rune_power": 18,
+		"mana_cost": 10,
+		"magic_lvl": 12,
+		"effect": "damage",
+		"target": "target",
+		"element": "death",
+		"status": {
+			"type": "poison",
+			"duration": 6,
+			"power": 3
+		},
+		"sprite": "res://assets/sprites/items/poison_rune.png"
+	},
+	"venom_rune": {
+		"name": "Venomruna",
+		"type": "rune",
+		"value": 55,
+		"color": "#5aa030",
+		"rune_power": 22,
+		"mana_cost": 12,
+		"magic_lvl": 16,
+		"effect": "damage",
+		"target": "target",
+		"element": "death",
+		"status": {
+			"type": "poison",
+			"duration": 8,
+			"power": 5
+		},
+		"sprite": "res://assets/sprites/items/venom_rune.png"
+	},
+	"stone_blast_rune": {
+		"name": "Stenskottsruna",
+		"type": "rune",
+		"value": 60,
+		"color": "#b09060",
+		"rune_power": 24,
+		"mana_cost": 14,
+		"magic_lvl": 22,
+		"effect": "damage",
+		"target": "area",
+		"radius": 1,
+		"element": "earth",
+		"sprite": "res://assets/sprites/items/stone_blast_rune.png"
+	},
+	"greater_heal_rune": {
+		"name": "Större läkruna",
+		"type": "rune",
+		"value": 70,
+		"color": "#40d060",
+		"rune_power": 40,
+		"mana_cost": 16,
+		"magic_lvl": 30,
+		"effect": "heal",
+		"target": "self",
+		"sprite": "res://assets/sprites/items/greater_heal_rune.png"
+	},
+	"shock_rune": {
+		"name": "Chockruna",
+		"type": "rune",
+		"value": 75,
+		"color": "#ffe24a",
+		"rune_power": 36,
+		"mana_cost": 16,
+		"magic_lvl": 35,
+		"effect": "damage",
+		"target": "target",
+		"element": "energy",
+		"sprite": "res://assets/sprites/items/shock_rune.png"
+	},
+	"inferno_rune": {
+		"name": "Infernoruna",
+		"type": "rune",
+		"value": 90,
+		"color": "#ff4400",
+		"rune_power": 38,
+		"mana_cost": 20,
+		"magic_lvl": 40,
+		"effect": "damage",
+		"target": "area",
+		"radius": 1,
+		"element": "fire",
+		"status": {
+			"type": "burn",
+			"duration": 8,
+			"power": 5
+		},
+		"sprite": "res://assets/sprites/items/inferno_rune.png"
+	},
+	"blizzard_rune": {
+		"name": "Snöstormruna",
+		"type": "rune",
+		"value": 90,
+		"color": "#88ccff",
+		"rune_power": 40,
+		"mana_cost": 20,
+		"magic_lvl": 44,
+		"effect": "damage",
+		"target": "area",
+		"radius": 1,
+		"element": "ice",
+		"sprite": "res://assets/sprites/items/blizzard_rune.png"
+	},
+	"lightning_rune": {
+		"name": "Blixtruna",
+		"type": "rune",
+		"value": 95,
+		"color": "#fff04a",
+		"rune_power": 42,
+		"mana_cost": 22,
+		"magic_lvl": 48,
+		"effect": "damage",
+		"target": "area",
+		"radius": 1,
+		"element": "energy",
+		"sprite": "res://assets/sprites/items/lightning_rune.png"
+	},
+	"curse_rune": {
+		"name": "Förbannelseruna",
+		"type": "rune",
+		"value": 100,
+		"color": "#7a2a9a",
+		"rune_power": 46,
+		"mana_cost": 22,
+		"magic_lvl": 52,
+		"effect": "damage",
+		"target": "target",
+		"element": "death",
+		"status": {
+			"type": "poison",
+			"duration": 10,
+			"power": 6
+		},
+		"sprite": "res://assets/sprites/items/curse_rune.png"
+	},
+	"mass_heal_rune": {
+		"name": "Masshelningsruna",
+		"type": "rune",
+		"value": 110,
+		"color": "#50e070",
+		"rune_power": 50,
+		"mana_cost": 26,
+		"magic_lvl": 55,
+		"effect": "heal",
+		"target": "area_self",
+		"radius": 1,
+		"sprite": "res://assets/sprites/items/mass_heal_rune.png"
+	},
+	"earthquake_rune": {
+		"name": "Jordbävningsruna",
+		"type": "rune",
+		"value": 120,
+		"color": "#a07840",
+		"rune_power": 50,
+		"mana_cost": 26,
+		"magic_lvl": 60,
+		"effect": "damage",
+		"target": "area",
+		"radius": 2,
+		"element": "earth",
+		"sprite": "res://assets/sprites/items/earthquake_rune.png"
+	},
+	"soulfire_rune": {
+		"name": "Själseldruna",
+		"type": "rune",
+		"value": 130,
+		"color": "#ff6a00",
+		"rune_power": 56,
+		"mana_cost": 26,
+		"magic_lvl": 64,
+		"effect": "damage",
+		"target": "target",
+		"element": "fire",
+		"status": {
+			"type": "burn",
+			"duration": 10,
+			"power": 6
+		},
+		"sprite": "res://assets/sprites/items/soulfire_rune.png"
+	},
+	"frostbite_rune": {
+		"name": "Frostbettruna",
+		"type": "rune",
+		"value": 130,
+		"color": "#9ad8ff",
+		"rune_power": 54,
+		"mana_cost": 28,
+		"magic_lvl": 68,
+		"effect": "damage",
+		"target": "area",
+		"radius": 2,
+		"element": "ice",
+		"sprite": "res://assets/sprites/items/frostbite_rune.png"
+	},
+	"thunderstorm_rune": {
+		"name": "Åskstormruna",
+		"type": "rune",
+		"value": 140,
+		"color": "#ffe800",
+		"rune_power": 58,
+		"mana_cost": 30,
+		"magic_lvl": 72,
+		"effect": "damage",
+		"target": "area",
+		"radius": 2,
+		"element": "energy",
+		"sprite": "res://assets/sprites/items/thunderstorm_rune.png"
+	},
+	"plague_rune": {
+		"name": "Pestruna",
+		"type": "rune",
+		"value": 150,
+		"color": "#6abf3a",
+		"rune_power": 60,
+		"mana_cost": 30,
+		"magic_lvl": 76,
+		"effect": "damage",
+		"target": "area",
+		"radius": 2,
+		"element": "death",
+		"status": {
+			"type": "poison",
+			"duration": 12,
+			"power": 7
+		},
+		"sprite": "res://assets/sprites/items/plague_rune.png"
+	},
+	"divine_heal_rune": {
+		"name": "Gudomlig läkruna",
+		"type": "rune",
+		"value": 160,
+		"color": "#80ffa0",
+		"rune_power": 80,
+		"mana_cost": 32,
+		"magic_lvl": 80,
+		"effect": "heal",
+		"target": "self",
+		"sprite": "res://assets/sprites/items/divine_heal_rune.png"
+	},
+	"meteor_rune": {
+		"name": "Meteorruna",
+		"type": "rune",
+		"value": 180,
+		"color": "#ff3000",
+		"rune_power": 72,
+		"mana_cost": 36,
+		"magic_lvl": 84,
+		"effect": "damage",
+		"target": "area",
+		"radius": 2,
+		"element": "fire",
+		"status": {
+			"type": "burn",
+			"duration": 12,
+			"power": 8
+		},
+		"sprite": "res://assets/sprites/items/meteor_rune.png"
+	},
+	"absolute_zero_rune": {
+		"name": "Absolut nollpunkt-runa",
+		"type": "rune",
+		"value": 190,
+		"color": "#bfeaff",
+		"rune_power": 76,
+		"mana_cost": 38,
+		"magic_lvl": 88,
+		"effect": "damage",
+		"target": "area",
+		"radius": 2,
+		"element": "ice",
+		"sprite": "res://assets/sprites/items/absolute_zero_rune.png"
+	},
+	"annihilation_rune": {
+		"name": "Förintelseruna",
+		"type": "rune",
+		"value": 210,
+		"color": "#5a1a7a",
+		"rune_power": 82,
+		"mana_cost": 40,
+		"magic_lvl": 92,
+		"effect": "damage",
+		"target": "area",
+		"radius": 2,
+		"element": "death",
+		"status": {
+			"type": "poison",
+			"duration": 14,
+			"power": 9
+		},
+		"sprite": "res://assets/sprites/items/annihilation_rune.png"
+	},
+	"armageddon_rune": {
+		"name": "Domedagsruna",
+		"type": "rune",
+		"value": 250,
+		"color": "#ffffff",
+		"rune_power": 92,
+		"mana_cost": 44,
+		"magic_lvl": 96,
+		"effect": "damage",
+		"target": "area",
+		"radius": 3,
+		"element": "energy",
+		"sprite": "res://assets/sprites/items/armageddon_rune.png"
 	},
 	"blank_rune": {
 		"name": "Tom runa",
@@ -1442,5 +1833,754 @@
 		"type": "material",
 		"value": 14,
 		"color": "#7a5a3c"
+	},
+	"coal": {
+		"name": "Kol",
+		"type": "material",
+		"value": 12,
+		"color": "#2b2b2b",
+		"sprite": "res://assets/sprites/items/coal.png"
+	},
+	"maple_log": {
+		"name": "Lönnstock",
+		"type": "material",
+		"value": 35,
+		"color": "#b5651d",
+		"sprite": "res://assets/sprites/items/maple_log.png"
+	},
+	"yew_log": {
+		"name": "Idegranssock",
+		"type": "material",
+		"value": 60,
+		"color": "#4a5a2a",
+		"sprite": "res://assets/sprites/items/yew_log.png"
+	},
+	"magic_log": {
+		"name": "Magisk stock",
+		"type": "material",
+		"value": 120,
+		"color": "#4aa0d0",
+		"sprite": "res://assets/sprites/items/magic_log.png"
+	},
+	"elder_log": {
+		"name": "Äldstestock",
+		"type": "material",
+		"value": 220,
+		"color": "#6a4a7a",
+		"sprite": "res://assets/sprites/items/elder_log.png"
+	},
+	"mithril_ore": {
+		"name": "Mithrilmalm",
+		"type": "material",
+		"value": 55,
+		"color": "#4a6a8a",
+		"sprite": "res://assets/sprites/items/mithril_ore.png"
+	},
+	"adamant_ore": {
+		"name": "Adamantmalm",
+		"type": "material",
+		"value": 90,
+		"color": "#3a7a5a",
+		"sprite": "res://assets/sprites/items/adamant_ore.png"
+	},
+	"runite_ore": {
+		"name": "Runmalm",
+		"type": "material",
+		"value": 160,
+		"color": "#2a8a8a",
+		"sprite": "res://assets/sprites/items/runite_ore.png"
+	},
+	"dragon_ore": {
+		"name": "Drakmalm",
+		"type": "material",
+		"value": 300,
+		"color": "#8a2a2a",
+		"sprite": "res://assets/sprites/items/dragon_ore.png"
+	},
+	"maple_plank": {
+		"name": "Lönnplanka",
+		"type": "material",
+		"value": 40,
+		"color": "#c5751d",
+		"sprite": "res://assets/sprites/items/maple_plank.png"
+	},
+	"yew_plank": {
+		"name": "Idegransplanka",
+		"type": "material",
+		"value": 70,
+		"color": "#5a6a3a",
+		"sprite": "res://assets/sprites/items/yew_plank.png"
+	},
+	"magic_plank": {
+		"name": "Magisk planka",
+		"type": "material",
+		"value": 140,
+		"color": "#5ab0e0",
+		"sprite": "res://assets/sprites/items/magic_plank.png"
+	},
+	"elder_plank": {
+		"name": "Äldsteplanka",
+		"type": "material",
+		"value": 250,
+		"color": "#7a5a8a",
+		"sprite": "res://assets/sprites/items/elder_plank.png"
+	},
+	"fox_fur": {
+		"name": "Rävpäls",
+		"type": "material",
+		"value": 40,
+		"color": "#c87a3a",
+		"sprite": "res://assets/sprites/items/fox_fur.png"
+	},
+	"bear_pelt": {
+		"name": "Björnpäls",
+		"type": "material",
+		"value": 90,
+		"color": "#6a4a2a",
+		"sprite": "res://assets/sprites/items/bear_pelt.png"
+	},
+	"chimera_hide": {
+		"name": "Chimärhud",
+		"type": "material",
+		"value": 200,
+		"color": "#7a3a5a",
+		"sprite": "res://assets/sprites/items/chimera_hide.png"
+	},
+	"big_bones": {
+		"name": "Stora ben",
+		"type": "material",
+		"value": 8,
+		"color": "#d8d0bc",
+		"sprite": "res://assets/sprites/items/big_bones.png"
+	},
+	"dragon_bones": {
+		"name": "Drakben",
+		"type": "material",
+		"value": 60,
+		"color": "#d0c0a0",
+		"sprite": "res://assets/sprites/items/dragon_bones.png"
+	},
+	"holy_ash": {
+		"name": "Helig aska",
+		"type": "material",
+		"value": 6,
+		"color": "#f0e8c0",
+		"sprite": "res://assets/sprites/items/holy_ash.png"
+	},
+	"sunflower_herb": {
+		"name": "Solrosört",
+		"type": "material",
+		"value": 30,
+		"color": "#e0c040",
+		"sprite": "res://assets/sprites/items/sunflower_herb.png"
+	},
+	"bloodleaf_herb": {
+		"name": "Blodbladsört",
+		"type": "material",
+		"value": 55,
+		"color": "#a02030",
+		"sprite": "res://assets/sprites/items/bloodleaf_herb.png"
+	},
+	"frostpetal_herb": {
+		"name": "Frostkronört",
+		"type": "material",
+		"value": 80,
+		"color": "#9ad8ff",
+		"sprite": "res://assets/sprites/items/frostpetal_herb.png"
+	},
+	"dragonherb": {
+		"name": "Drakört",
+		"type": "material",
+		"value": 140,
+		"color": "#c84a2a",
+		"sprite": "res://assets/sprites/items/dragonherb.png"
+	},
+	"raw_manta": {
+		"name": "Rå mantarocka",
+		"type": "material",
+		"value": 70,
+		"color": "#3a5a7a",
+		"sprite": "res://assets/sprites/items/raw_manta.png"
+	},
+	"raw_anglerfish": {
+		"name": "Rå marulk",
+		"type": "material",
+		"value": 95,
+		"color": "#4a3a5a",
+		"sprite": "res://assets/sprites/items/raw_anglerfish.png"
+	},
+	"raw_dark_crab": {
+		"name": "Rå mörkkrabba",
+		"type": "material",
+		"value": 120,
+		"color": "#3a2a3a",
+		"sprite": "res://assets/sprites/items/raw_dark_crab.png"
+	},
+	"raw_kingfish": {
+		"name": "Rå kungsfisk",
+		"type": "material",
+		"value": 160,
+		"color": "#caa840",
+		"sprite": "res://assets/sprites/items/raw_kingfish.png"
+	},
+	"potato": {
+		"name": "Potatis",
+		"type": "food",
+		"value": 8,
+		"color": "#c8a060",
+		"heal": 15,
+		"sprite": "res://assets/sprites/items/potato.png"
+	},
+	"cabbage": {
+		"name": "Kål",
+		"type": "food",
+		"value": 12,
+		"color": "#5a9a4a",
+		"heal": 22,
+		"sprite": "res://assets/sprites/items/cabbage.png"
+	},
+	"corn": {
+		"name": "Majs",
+		"type": "food",
+		"value": 18,
+		"color": "#e0c040",
+		"heal": 30,
+		"sprite": "res://assets/sprites/items/corn.png"
+	},
+	"pumpkin": {
+		"name": "Pumpa",
+		"type": "food",
+		"value": 30,
+		"color": "#e08020",
+		"heal": 45,
+		"sprite": "res://assets/sprites/items/pumpkin.png"
+	},
+	"golden_apple": {
+		"name": "Gyllene äpple",
+		"type": "food",
+		"value": 80,
+		"color": "#f0d040",
+		"heal": 90,
+		"buff": {
+			"stat": "skill:farming",
+			"amount": 5,
+			"duration": 180
+		},
+		"sprite": "res://assets/sprites/items/golden_apple.png"
+	},
+	"baked_potato": {
+		"name": "Bakad potatis",
+		"type": "food",
+		"value": 16,
+		"color": "#caa56a",
+		"heal": 40,
+		"sprite": "res://assets/sprites/items/baked_potato.png"
+	},
+	"cabbage_stew": {
+		"name": "Kålsoppa",
+		"type": "food",
+		"value": 30,
+		"color": "#6aa84a",
+		"heal": 75,
+		"sprite": "res://assets/sprites/items/cabbage_stew.png"
+	},
+	"corn_bread": {
+		"name": "Majsbröd",
+		"type": "food",
+		"value": 40,
+		"color": "#e8c860",
+		"heal": 95,
+		"sprite": "res://assets/sprites/items/corn_bread.png"
+	},
+	"pumpkin_pie": {
+		"name": "Pumpapaj",
+		"type": "food",
+		"value": 70,
+		"color": "#e8902a",
+		"heal": 125,
+		"sprite": "res://assets/sprites/items/pumpkin_pie.png"
+	},
+	"golden_apple_pie": {
+		"name": "Gyllene äppelpaj",
+		"type": "food",
+		"value": 180,
+		"color": "#f0d850",
+		"heal": 170,
+		"buff": {
+			"stat": "skill:cooking",
+			"amount": 6,
+			"duration": 240
+		},
+		"sprite": "res://assets/sprites/items/golden_apple_pie.png"
+	},
+	"cooked_manta": {
+		"name": "Stekt mantarocka",
+		"type": "food",
+		"value": 170,
+		"color": "#5a7a9a",
+		"heal": 200,
+		"buff": {
+			"stat": "skill:fishing",
+			"amount": 6,
+			"duration": 200
+		},
+		"sprite": "res://assets/sprites/items/cooked_manta.png"
+	},
+	"cooked_anglerfish": {
+		"name": "Stekt marulk",
+		"type": "food",
+		"value": 210,
+		"color": "#6a5a7a",
+		"heal": 230,
+		"buff": {
+			"stat": "max_hp",
+			"amount": 30,
+			"duration": 240
+		},
+		"sprite": "res://assets/sprites/items/cooked_anglerfish.png"
+	},
+	"cooked_dark_crab": {
+		"name": "Stekt mörkkrabba",
+		"type": "food",
+		"value": 250,
+		"color": "#5a4a5a",
+		"heal": 260,
+		"buff": {
+			"stat": "max_hp",
+			"amount": 40,
+			"duration": 240
+		},
+		"sprite": "res://assets/sprites/items/cooked_dark_crab.png"
+	},
+	"cooked_kingfish": {
+		"name": "Stekt kungsfisk",
+		"type": "food",
+		"value": 300,
+		"color": "#e8c860",
+		"heal": 300,
+		"buff": {
+			"stat": "skill:fishing",
+			"amount": 8,
+			"duration": 240
+		},
+		"sprite": "res://assets/sprites/items/cooked_kingfish.png"
+	},
+	"divine_health_potion": {
+		"name": "Gudomlig hälsodryck",
+		"type": "potion",
+		"value": 240,
+		"color": "#ff3050",
+		"heal": 200,
+		"sprite": "res://assets/sprites/items/divine_health_potion.png"
+	},
+	"ranging_potion": {
+		"name": "Distansdryck",
+		"type": "potion",
+		"value": 120,
+		"color": "#3aa84a",
+		"buff_stat": "skill:distance",
+		"buff_amount": 6,
+		"buff_duration": 120,
+		"sprite": "res://assets/sprites/items/ranging_potion.png"
+	},
+	"magic_potion": {
+		"name": "Magidryck",
+		"type": "potion",
+		"value": 150,
+		"color": "#4a6ad0",
+		"buff_stat": "skill:magic",
+		"buff_amount": 6,
+		"buff_duration": 120,
+		"sprite": "res://assets/sprites/items/magic_potion.png"
+	},
+	"super_strength_potion": {
+		"name": "Superstyrkedryck",
+		"type": "potion",
+		"value": 180,
+		"color": "#d04020",
+		"buff_stat": "atk",
+		"buff_amount": 10,
+		"buff_duration": 120,
+		"sprite": "res://assets/sprites/items/super_strength_potion.png"
+	},
+	"prayer_potion": {
+		"name": "Bönedryck",
+		"type": "potion",
+		"value": 200,
+		"color": "#f0e070",
+		"buff_stat": "skill:prayer",
+		"buff_amount": 6,
+		"buff_duration": 150,
+		"sprite": "res://assets/sprites/items/prayer_potion.png"
+	},
+	"frost_resist_potion": {
+		"name": "Frostskyddsdryck",
+		"type": "potion",
+		"value": 230,
+		"color": "#9ad8ff",
+		"heal": 60,
+		"buff_stat": "def",
+		"buff_amount": 8,
+		"buff_duration": 120,
+		"sprite": "res://assets/sprites/items/frost_resist_potion.png"
+	},
+	"dragon_potion": {
+		"name": "Drakdryck",
+		"type": "potion",
+		"value": 320,
+		"color": "#c84a2a",
+		"heal": 150,
+		"buff_stat": "atk",
+		"buff_amount": 12,
+		"buff_duration": 150,
+		"sprite": "res://assets/sprites/items/dragon_potion.png"
+	},
+	"overload_potion": {
+		"name": "Överbelastningsdryck",
+		"type": "potion",
+		"value": 450,
+		"color": "#e040e0",
+		"heal": 120,
+		"buff_stat": "atk",
+		"buff_amount": 16,
+		"buff_duration": 180,
+		"sprite": "res://assets/sprites/items/overload_potion.png"
+	},
+	"maple_arrow": {
+		"name": "Lönnpil",
+		"type": "ammo",
+		"value": 4,
+		"color": "#b5651d",
+		"slot": "ammo",
+		"sprite": "res://assets/sprites/items/maple_arrow.png"
+	},
+	"yew_arrow": {
+		"name": "Idegranspil",
+		"type": "ammo",
+		"value": 6,
+		"color": "#4a5a2a",
+		"slot": "ammo",
+		"sprite": "res://assets/sprites/items/yew_arrow.png"
+	},
+	"magic_arrow": {
+		"name": "Magisk pil",
+		"type": "ammo",
+		"value": 10,
+		"color": "#4aa0d0",
+		"slot": "ammo",
+		"sprite": "res://assets/sprites/items/magic_arrow.png"
+	},
+	"elder_arrow": {
+		"name": "Äldstepil",
+		"type": "ammo",
+		"value": 16,
+		"color": "#6a4a7a",
+		"slot": "ammo",
+		"sprite": "res://assets/sprites/items/elder_arrow.png"
+	},
+	"maple_bow": {
+		"name": "Lönnbåge",
+		"type": "weapon",
+		"value": 600,
+		"color": "#b5651d",
+		"atk": 20,
+		"skill": "distance",
+		"slot": "weapon",
+		"range": 5,
+		"ammo": "maple_arrow",
+		"sprite": "res://assets/sprites/items/maple_bow.png"
+	},
+	"yew_bow": {
+		"name": "Idegransbåge",
+		"type": "weapon",
+		"value": 900,
+		"color": "#4a5a2a",
+		"atk": 26,
+		"skill": "distance",
+		"slot": "weapon",
+		"range": 5,
+		"ammo": "yew_arrow",
+		"sprite": "res://assets/sprites/items/yew_bow.png"
+	},
+	"magic_bow": {
+		"name": "Magisk båge",
+		"type": "weapon",
+		"value": 1400,
+		"color": "#4aa0d0",
+		"atk": 34,
+		"skill": "distance",
+		"slot": "weapon",
+		"range": 5,
+		"ammo": "magic_arrow",
+		"sprite": "res://assets/sprites/items/magic_bow.png"
+	},
+	"elder_bow": {
+		"name": "Äldstebåge",
+		"type": "weapon",
+		"value": 2200,
+		"color": "#6a4a7a",
+		"atk": 42,
+		"skill": "distance",
+		"slot": "weapon",
+		"range": 5,
+		"ammo": "elder_arrow",
+		"sprite": "res://assets/sprites/items/elder_bow.png"
+	},
+	"mithril_sword": {
+		"name": "Mithrilsvärd",
+		"type": "weapon",
+		"value": 528,
+		"color": "#4a6a8a",
+		"atk": 24,
+		"skill": "sword",
+		"slot": "weapon",
+		"sprite": "res://assets/sprites/items/mithril_sword.png"
+	},
+	"mithril_helmet": {
+		"name": "Mithrilhjälm",
+		"type": "armor",
+		"value": 240,
+		"color": "#4a6a8a",
+		"slot": "helmet",
+		"armor": 6,
+		"sprite": "res://assets/sprites/items/mithril_helmet.png"
+	},
+	"mithril_platebody": {
+		"name": "Mithrilharnesk",
+		"type": "armor",
+		"value": 450,
+		"color": "#4a6a8a",
+		"slot": "body",
+		"armor": 10,
+		"sprite": "res://assets/sprites/items/mithril_platebody.png"
+	},
+	"mithril_legs": {
+		"name": "Mithrilbenskydd",
+		"type": "armor",
+		"value": 336,
+		"color": "#4a6a8a",
+		"slot": "legs",
+		"armor": 8,
+		"sprite": "res://assets/sprites/items/mithril_legs.png"
+	},
+	"mithril_shield": {
+		"name": "Mithrilsköld",
+		"type": "armor",
+		"value": 270,
+		"color": "#4a6a8a",
+		"slot": "offhand",
+		"shielding_bonus": 6,
+		"sprite": "res://assets/sprites/items/mithril_shield.png"
+	},
+	"adamant_sword": {
+		"name": "Adamantsvärd",
+		"type": "weapon",
+		"value": 660,
+		"color": "#3a7a5a",
+		"atk": 30,
+		"skill": "sword",
+		"slot": "weapon",
+		"sprite": "res://assets/sprites/items/adamant_sword.png"
+	},
+	"adamant_helmet": {
+		"name": "Adamanthjälm",
+		"type": "armor",
+		"value": 320,
+		"color": "#3a7a5a",
+		"slot": "helmet",
+		"armor": 8,
+		"sprite": "res://assets/sprites/items/adamant_helmet.png"
+	},
+	"adamant_platebody": {
+		"name": "Adamantharnesk",
+		"type": "armor",
+		"value": 585,
+		"color": "#3a7a5a",
+		"slot": "body",
+		"armor": 13,
+		"sprite": "res://assets/sprites/items/adamant_platebody.png"
+	},
+	"adamant_legs": {
+		"name": "Adamantbenskydd",
+		"type": "armor",
+		"value": 420,
+		"color": "#3a7a5a",
+		"slot": "legs",
+		"armor": 10,
+		"sprite": "res://assets/sprites/items/adamant_legs.png"
+	},
+	"adamant_shield": {
+		"name": "Adamantsköld",
+		"type": "armor",
+		"value": 360,
+		"color": "#3a7a5a",
+		"slot": "offhand",
+		"shielding_bonus": 8,
+		"sprite": "res://assets/sprites/items/adamant_shield.png"
+	},
+	"runite_sword": {
+		"name": "Runsvärd",
+		"type": "weapon",
+		"value": 836,
+		"color": "#2a8a8a",
+		"atk": 38,
+		"skill": "sword",
+		"slot": "weapon",
+		"sprite": "res://assets/sprites/items/runite_sword.png"
+	},
+	"runite_helmet": {
+		"name": "Runhjälm",
+		"type": "armor",
+		"value": 400,
+		"color": "#2a8a8a",
+		"slot": "helmet",
+		"armor": 10,
+		"sprite": "res://assets/sprites/items/runite_helmet.png"
+	},
+	"runite_platebody": {
+		"name": "Runharnesk",
+		"type": "armor",
+		"value": 720,
+		"color": "#2a8a8a",
+		"slot": "body",
+		"armor": 16,
+		"sprite": "res://assets/sprites/items/runite_platebody.png"
+	},
+	"runite_legs": {
+		"name": "Runbenskydd",
+		"type": "armor",
+		"value": 546,
+		"color": "#2a8a8a",
+		"slot": "legs",
+		"armor": 13,
+		"sprite": "res://assets/sprites/items/runite_legs.png"
+	},
+	"runite_shield": {
+		"name": "Runsköld",
+		"type": "armor",
+		"value": 450,
+		"color": "#2a8a8a",
+		"slot": "offhand",
+		"shielding_bonus": 10,
+		"sprite": "res://assets/sprites/items/runite_shield.png"
+	},
+	"dragon_sword": {
+		"name": "Draksvärd",
+		"type": "weapon",
+		"value": 1012,
+		"color": "#8a2a2a",
+		"atk": 46,
+		"skill": "sword",
+		"slot": "weapon",
+		"sprite": "res://assets/sprites/items/dragon_sword.png"
+	},
+	"dragon_legs": {
+		"name": "Drakbenskydd",
+		"type": "armor",
+		"value": 672,
+		"color": "#8a2a2a",
+		"slot": "legs",
+		"armor": 16,
+		"sprite": "res://assets/sprites/items/dragon_legs.png"
+	},
+	"dragon_shield": {
+		"name": "Draksköld",
+		"type": "armor",
+		"value": 585,
+		"color": "#8a2a2a",
+		"slot": "offhand",
+		"shielding_bonus": 13,
+		"sprite": "res://assets/sprites/items/dragon_shield.png"
+	},
+	"fox_cloak": {
+		"name": "Rävmantel",
+		"type": "armor",
+		"value": 120,
+		"color": "#c87a3a",
+		"slot": "body",
+		"def_bonus": 6,
+		"sprite": "res://assets/sprites/items/fox_cloak.png"
+	},
+	"bear_body": {
+		"name": "Björnrustning",
+		"type": "armor",
+		"value": 260,
+		"color": "#6a4a2a",
+		"slot": "body",
+		"armor": 9,
+		"sprite": "res://assets/sprites/items/bear_body.png"
+	},
+	"chimera_robe": {
+		"name": "Chimärrobe",
+		"type": "armor",
+		"value": 600,
+		"color": "#7a3a5a",
+		"slot": "body",
+		"armor": 14,
+		"sprite": "res://assets/sprites/items/chimera_robe.png"
+	},
+	"gem_ring": {
+		"name": "Ädelstensring",
+		"type": "armor",
+		"value": 400,
+		"color": "#c084fc",
+		"slot": "ring",
+		"armor": 3,
+		"sprite": "res://assets/sprites/items/gem_ring.png"
+	},
+	"gem_amulet": {
+		"name": "Ädelstensamulett",
+		"type": "armor",
+		"value": 700,
+		"color": "#c084fc",
+		"slot": "amulet",
+		"armor": 6,
+		"sprite": "res://assets/sprites/items/gem_amulet.png"
+	},
+	"maple_table": {
+		"name": "Lönnbord",
+		"type": "furniture",
+		"value": 120,
+		"color": "#c5751d",
+		"sprite": "res://assets/sprites/items/maple_table.png"
+	},
+	"yew_wardrobe": {
+		"name": "Idegransgarderob",
+		"type": "furniture",
+		"value": 260,
+		"color": "#5a6a3a",
+		"sprite": "res://assets/sprites/items/yew_wardrobe.png"
+	},
+	"magic_lectern": {
+		"name": "Magisk pulpet",
+		"type": "furniture",
+		"value": 520,
+		"color": "#5ab0e0",
+		"sprite": "res://assets/sprites/items/magic_lectern.png"
+	},
+	"elder_throne": {
+		"name": "Äldstetron",
+		"type": "furniture",
+		"value": 1100,
+		"color": "#7a5a8a",
+		"sprite": "res://assets/sprites/items/elder_throne.png"
+	},
+	"blessed_charm": {
+		"name": "Välsignad amulett",
+		"type": "armor",
+		"value": 300,
+		"color": "#f0e8c0",
+		"slot": "amulet",
+		"armor": 4,
+		"sprite": "res://assets/sprites/items/blessed_charm.png"
+	},
+	"holy_symbol": {
+		"name": "Helig symbol",
+		"type": "armor",
+		"value": 650,
+		"color": "#f4ecc8",
+		"slot": "amulet",
+		"armor": 7,
+		"sprite": "res://assets/sprites/items/holy_symbol.png"
 	}
 }

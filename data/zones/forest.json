@@ -10,7 +10,7 @@
 		"W.r...r..........t...f~.....tc.....c...W",
 		"W..r....r............~~....c.....c.....W",
 		"W....t.....t.........~~...........t....W",
-		"W....................~~................W",
+		"W....................~~..A.............W",
 		"W....................~~...m............W",
 		"W..b...b.............~~.v..v...j...j..2W",
 		"W.bt.b....b..........~~..v...v...j..t..W",
@@ -81,55 +81,60 @@
 		"r": {
 			"type": "spawn",
 			"monster": "Råtta",
-			"respawn": 20.0,
+			"respawn": 20,
 			"terrain": "."
 		},
 		"b": {
 			"type": "spawn",
 			"monster": "Orm",
-			"respawn": 22.0,
+			"respawn": 22,
 			"terrain": "."
 		},
 		"c": {
 			"type": "spawn",
 			"monster": "Spindel",
-			"respawn": 20.0,
+			"respawn": 20,
 			"terrain": "."
 		},
 		"v": {
 			"type": "spawn",
 			"monster": "Skogsvargen",
-			"respawn": 25.0,
+			"respawn": 25,
 			"terrain": "."
 		},
 		"j": {
 			"type": "spawn",
 			"monster": "Skogsbjörn",
-			"respawn": 30.0,
+			"respawn": 30,
 			"terrain": "."
 		},
 		"F": {
 			"type": "spawn",
 			"monster": "Fantom",
-			"respawn": 45.0,
+			"respawn": 45,
 			"terrain": ","
+		},
+		"A": {
+			"type": "node",
+			"node": "sunflower_patch",
+			"terrain": "."
 		}
 	},
 	"spawn_table": [
 		{
 			"monster": "Grottspindel",
 			"count": 2,
-			"respawn": 30.0
+			"respawn": 30
 		},
 		{
 			"monster": "Vildkanin",
 			"count": 4,
-			"respawn": 18.0
+			"respawn": 18
 		},
 		{
 			"monster": "Åkerkråka",
 			"count": 3,
-			"respawn": 20.0
+			"respawn": 20
 		}
 	]
 }

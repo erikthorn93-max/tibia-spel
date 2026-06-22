@@ -4,7 +4,7 @@
 		"level": 1,
 		"tool": "pickaxe",
 		"yields": "copper_ore",
-		"xp": 15,
+		"xp": 14,
 		"charges": [
 			3,
 			5
@@ -18,7 +18,7 @@
 		"level": 15,
 		"tool": "pickaxe",
 		"yields": "iron_ore",
-		"xp": 30,
+		"xp": 13,
 		"charges": [
 			3,
 			5
@@ -32,7 +32,7 @@
 		"level": 30,
 		"tool": "pickaxe",
 		"yields": "gold_ore",
-		"xp": 60,
+		"xp": 30,
 		"charges": [
 			3,
 			4
@@ -46,7 +46,7 @@
 		"level": 1,
 		"tool": "hatchet",
 		"yields": "log",
-		"xp": 15,
+		"xp": 14,
 		"charges": [
 			4,
 			6
@@ -60,7 +60,7 @@
 		"level": 15,
 		"tool": "hatchet",
 		"yields": "oak_log",
-		"xp": 30,
+		"xp": 13,
 		"charges": [
 			4,
 			6
@@ -74,7 +74,7 @@
 		"level": 30,
 		"tool": "hatchet",
 		"yields": "willow_log",
-		"xp": 60,
+		"xp": 30,
 		"charges": [
 			3,
 			5
@@ -88,7 +88,7 @@
 		"level": 1,
 		"tool": "fishing_rod",
 		"yields": "raw_trout",
-		"xp": 15,
+		"xp": 14,
 		"charges": [
 			5,
 			8
@@ -102,7 +102,7 @@
 		"level": 15,
 		"tool": "fishing_rod",
 		"yields": "raw_pike",
-		"xp": 30,
+		"xp": 13,
 		"charges": [
 			4,
 			6
@@ -116,7 +116,7 @@
 		"level": 1,
 		"tool": "sickle",
 		"yields": "mint_herb",
-		"xp": 15,
+		"xp": 14,
 		"charges": [
 			3,
 			4
@@ -130,7 +130,7 @@
 		"level": 15,
 		"tool": "sickle",
 		"yields": "nightshade_herb",
-		"xp": 30,
+		"xp": 13,
 		"charges": [
 			2,
 			4
@@ -144,7 +144,7 @@
 		"level": 25,
 		"tool": "fishing_rod",
 		"yields": "raw_eel",
-		"xp": 45,
+		"xp": 23,
 		"charges": [
 			4,
 			6
@@ -158,7 +158,7 @@
 		"level": 25,
 		"tool": "sickle",
 		"yields": "marsh_herb",
-		"xp": 45,
+		"xp": 23,
 		"charges": [
 			2,
 			4
@@ -172,7 +172,7 @@
 		"level": 20,
 		"tool": "fishing_rod",
 		"yields": "raw_mackerel",
-		"xp": 40,
+		"xp": 17,
 		"charges": [
 			4,
 			6
@@ -186,7 +186,7 @@
 		"level": 35,
 		"tool": "fishing_rod",
 		"yields": "raw_swordfish",
-		"xp": 75,
+		"xp": 43,
 		"charges": [
 			3,
 			5
@@ -200,7 +200,7 @@
 		"level": 30,
 		"tool": "fishing_rod",
 		"yields": "raw_lobster",
-		"xp": 60,
+		"xp": 30,
 		"charges": [
 			3,
 			5
@@ -214,7 +214,7 @@
 		"level": 1,
 		"tool": "sickle",
 		"yields": "wheat_grain",
-		"xp": 20,
+		"xp": 17,
 		"charges": [
 			3,
 			5
@@ -228,7 +228,7 @@
 		"level": 1,
 		"tool": "",
 		"yields": "raw_meat",
-		"xp": 20,
+		"xp": 14,
 		"charges": [
 			2,
 			4
@@ -242,7 +242,7 @@
 		"level": 10,
 		"tool": "",
 		"yields": "feathers",
-		"xp": 30,
+		"xp": 11,
 		"charges": [
 			2,
 			3
@@ -256,7 +256,7 @@
 		"level": 50,
 		"tool": "pickaxe",
 		"yields": "gem",
-		"xp": 120,
+		"xp": 130,
 		"charges": [
 			2,
 			3
@@ -271,7 +271,7 @@
 		"tool": "log",
 		"consumes_tool": true,
 		"yields": "charcoal",
-		"xp": 20,
+		"xp": 12,
 		"charges": [
 			2,
 			3
@@ -285,7 +285,7 @@
 		"level": 40,
 		"tool": "fishing_rod",
 		"yields": "raw_tuna",
-		"xp": 90,
+		"xp": 60,
 		"charges": [
 			3,
 			5
@@ -299,7 +299,7 @@
 		"level": 50,
 		"tool": "fishing_rod",
 		"yields": "raw_shark",
-		"xp": 140,
+		"xp": 130,
 		"charges": [
 			2,
 			4
@@ -307,5 +307,751 @@
 		"respawn": 75,
 		"color": "#5a6a7a",
 		"label": "Hajvatten"
+	},
+	"maple_tree": {
+		"skill": "woodcutting",
+		"level": 45,
+		"tool": "hatchet",
+		"yields": "maple_log",
+		"xp": 90,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 55,
+		"color": "#b5651d",
+		"label": "Lönn"
+	},
+	"yew_tree": {
+		"skill": "woodcutting",
+		"level": 60,
+		"tool": "hatchet",
+		"yields": "yew_log",
+		"xp": 280,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 70,
+		"color": "#4a5a2a",
+		"label": "Idegran"
+	},
+	"magic_tree": {
+		"skill": "woodcutting",
+		"level": 75,
+		"tool": "hatchet",
+		"yields": "magic_log",
+		"xp": 950,
+		"charges": [
+			2,
+			4
+		],
+		"respawn": 90,
+		"color": "#4aa0d0",
+		"label": "Magiskt träd"
+	},
+	"elder_tree": {
+		"skill": "woodcutting",
+		"level": 90,
+		"tool": "hatchet",
+		"yields": "elder_log",
+		"xp": 3300,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 120,
+		"color": "#6a4a7a",
+		"label": "Äldsteträd"
+	},
+	"coal_vein": {
+		"skill": "mining",
+		"level": 25,
+		"tool": "pickaxe",
+		"yields": "coal",
+		"xp": 23,
+		"charges": [
+			4,
+			6
+		],
+		"respawn": 40,
+		"color": "#2b2b2b",
+		"label": "Kolådra"
+	},
+	"mithril_vein": {
+		"skill": "mining",
+		"level": 40,
+		"tool": "pickaxe",
+		"yields": "mithril_ore",
+		"xp": 60,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 60,
+		"color": "#4a6a8a",
+		"label": "Mithrilådra"
+	},
+	"adamant_vein": {
+		"skill": "mining",
+		"level": 55,
+		"tool": "pickaxe",
+		"yields": "adamant_ore",
+		"xp": 190,
+		"charges": [
+			2,
+			4
+		],
+		"respawn": 75,
+		"color": "#3a7a5a",
+		"label": "Adamantådra"
+	},
+	"runite_vein": {
+		"skill": "mining",
+		"level": 70,
+		"tool": "pickaxe",
+		"yields": "runite_ore",
+		"xp": 630,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 100,
+		"color": "#2a8a8a",
+		"label": "Runådra"
+	},
+	"dragon_vein": {
+		"skill": "mining",
+		"level": 85,
+		"tool": "pickaxe",
+		"yields": "dragon_ore",
+		"xp": 2200,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 140,
+		"color": "#8a2a2a",
+		"label": "Drakådra"
+	},
+	"manta_spot": {
+		"skill": "fishing",
+		"level": 60,
+		"tool": "fishing_rod",
+		"yields": "raw_manta",
+		"xp": 280,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 60,
+		"color": "#3a5a7a",
+		"label": "Mantastim"
+	},
+	"angler_spot": {
+		"skill": "fishing",
+		"level": 70,
+		"tool": "fishing_rod",
+		"yields": "raw_anglerfish",
+		"xp": 630,
+		"charges": [
+			3,
+			4
+		],
+		"respawn": 70,
+		"color": "#4a3a5a",
+		"label": "Marulksstim"
+	},
+	"dark_crab_spot": {
+		"skill": "fishing",
+		"level": 80,
+		"tool": "fishing_rod",
+		"yields": "raw_dark_crab",
+		"xp": 1450,
+		"charges": [
+			2,
+			4
+		],
+		"respawn": 85,
+		"color": "#3a2a3a",
+		"label": "Mörkkrabbetina"
+	},
+	"kingfish_spot": {
+		"skill": "fishing",
+		"level": 90,
+		"tool": "fishing_rod",
+		"yields": "raw_kingfish",
+		"xp": 3300,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 110,
+		"color": "#caa840",
+		"label": "Kungsfiskvatten"
+	},
+	"sunflower_patch": {
+		"skill": "herbalism",
+		"level": 40,
+		"tool": "sickle",
+		"yields": "sunflower_herb",
+		"xp": 60,
+		"charges": [
+			2,
+			4
+		],
+		"respawn": 55,
+		"color": "#e0c040",
+		"label": "Solrosäng"
+	},
+	"bloodleaf_patch": {
+		"skill": "herbalism",
+		"level": 55,
+		"tool": "sickle",
+		"yields": "bloodleaf_herb",
+		"xp": 190,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 70,
+		"color": "#a02030",
+		"label": "Blodbladssnår"
+	},
+	"frostpetal_patch": {
+		"skill": "herbalism",
+		"level": 70,
+		"tool": "sickle",
+		"yields": "frostpetal_herb",
+		"xp": 630,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 90,
+		"color": "#9ad8ff",
+		"label": "Frostkronäng"
+	},
+	"dragonherb_patch": {
+		"skill": "herbalism",
+		"level": 85,
+		"tool": "sickle",
+		"yields": "dragonherb",
+		"xp": 2200,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 120,
+		"color": "#c84a2a",
+		"label": "Drakörtssnår"
+	},
+	"potato_patch": {
+		"skill": "farming",
+		"level": 15,
+		"tool": "sickle",
+		"yields": "potato",
+		"xp": 16,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 35,
+		"color": "#c8a060",
+		"label": "Potatisland"
+	},
+	"cabbage_patch": {
+		"skill": "farming",
+		"level": 30,
+		"tool": "sickle",
+		"yields": "cabbage",
+		"xp": 36,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 40,
+		"color": "#5a9a4a",
+		"label": "Kålland"
+	},
+	"corn_patch": {
+		"skill": "farming",
+		"level": 45,
+		"tool": "sickle",
+		"yields": "corn",
+		"xp": 105,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 50,
+		"color": "#e0c040",
+		"label": "Majsfält"
+	},
+	"pumpkin_patch": {
+		"skill": "farming",
+		"level": 60,
+		"tool": "sickle",
+		"yields": "pumpkin",
+		"xp": 340,
+		"charges": [
+			2,
+			4
+		],
+		"respawn": 65,
+		"color": "#e08020",
+		"label": "Pumpaland"
+	},
+	"apple_orchard": {
+		"skill": "farming",
+		"level": 80,
+		"tool": "sickle",
+		"yields": "golden_apple",
+		"xp": 1750,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 90,
+		"color": "#f0d040",
+		"label": "Äppelodling"
+	},
+	"fox_trap": {
+		"skill": "hunting",
+		"level": 25,
+		"tool": "",
+		"yields": "fox_fur",
+		"xp": 23,
+		"charges": [
+			2,
+			4
+		],
+		"respawn": 45,
+		"color": "#c87a3a",
+		"label": "Rävfälla"
+	},
+	"bear_trap": {
+		"skill": "hunting",
+		"level": 45,
+		"tool": "",
+		"yields": "bear_pelt",
+		"xp": 90,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 60,
+		"color": "#6a4a2a",
+		"label": "Björnfälla"
+	},
+	"wolf_snare": {
+		"skill": "hunting",
+		"level": 65,
+		"tool": "",
+		"yields": "wolf_pelt",
+		"xp": 420,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 75,
+		"color": "#8a7a5a",
+		"label": "Vargsnara"
+	},
+	"chimera_trap": {
+		"skill": "hunting",
+		"level": 85,
+		"tool": "",
+		"yields": "chimera_hide",
+		"xp": 2200,
+		"charges": [
+			1,
+			2
+		],
+		"respawn": 110,
+		"color": "#7a3a5a",
+		"label": "Chimärfälla"
+	},
+	"oak_campfire": {
+		"skill": "firemaking",
+		"level": 15,
+		"tool": "oak_log",
+		"yields": "charcoal",
+		"xp": 12,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 50,
+		"color": "#c85a1a",
+		"label": "Ekeld",
+		"consumes_tool": true
+	},
+	"willow_campfire": {
+		"skill": "firemaking",
+		"level": 30,
+		"tool": "willow_log",
+		"yields": "charcoal",
+		"xp": 27,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 50,
+		"color": "#c85a1a",
+		"label": "Pileld",
+		"consumes_tool": true
+	},
+	"maple_campfire": {
+		"skill": "firemaking",
+		"level": 45,
+		"tool": "maple_log",
+		"yields": "charcoal",
+		"xp": 80,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 50,
+		"color": "#c85a1a",
+		"label": "Lönneld",
+		"consumes_tool": true
+	},
+	"yew_campfire": {
+		"skill": "firemaking",
+		"level": 60,
+		"tool": "yew_log",
+		"yields": "charcoal",
+		"xp": 250,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 50,
+		"color": "#c85a1a",
+		"label": "Idegranseld",
+		"consumes_tool": true
+	},
+	"magic_campfire": {
+		"skill": "firemaking",
+		"level": 75,
+		"tool": "magic_log",
+		"yields": "charcoal",
+		"xp": 850,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 50,
+		"color": "#c85a1a",
+		"label": "Magisk eld",
+		"consumes_tool": true
+	},
+	"elder_campfire": {
+		"skill": "firemaking",
+		"level": 90,
+		"tool": "elder_log",
+		"yields": "charcoal",
+		"xp": 3000,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 50,
+		"color": "#c85a1a",
+		"label": "Äldsteeld",
+		"consumes_tool": true
+	},
+	"log_balance": {
+		"skill": "agility",
+		"level": 1,
+		"tool": "",
+		"yields": "holy_ash",
+		"no_yield": true,
+		"xp": 14,
+		"charges": [
+			4,
+			6
+		],
+		"respawn": 12,
+		"color": "#c8a060",
+		"label": "Balansstock",
+		"sprite": "res://assets/sprites/nodes/log_balance.png"
+	},
+	"rope_swing": {
+		"skill": "agility",
+		"level": 10,
+		"tool": "",
+		"yields": "holy_ash",
+		"no_yield": true,
+		"xp": 11,
+		"charges": [
+			4,
+			6
+		],
+		"respawn": 12,
+		"color": "#c8a060",
+		"label": "Repgunga",
+		"sprite": "res://assets/sprites/nodes/rope_swing.png"
+	},
+	"climbing_wall": {
+		"skill": "agility",
+		"level": 20,
+		"tool": "",
+		"yields": "holy_ash",
+		"no_yield": true,
+		"xp": 17,
+		"charges": [
+			4,
+			6
+		],
+		"respawn": 12,
+		"color": "#c8a060",
+		"label": "Klättervägg",
+		"sprite": "res://assets/sprites/nodes/climbing_wall.png"
+	},
+	"monkey_bars": {
+		"skill": "agility",
+		"level": 30,
+		"tool": "",
+		"yields": "holy_ash",
+		"no_yield": true,
+		"xp": 30,
+		"charges": [
+			4,
+			6
+		],
+		"respawn": 12,
+		"color": "#c8a060",
+		"label": "Apstege",
+		"sprite": "res://assets/sprites/nodes/monkey_bars.png"
+	},
+	"tightrope": {
+		"skill": "agility",
+		"level": 40,
+		"tool": "",
+		"yields": "holy_ash",
+		"no_yield": true,
+		"xp": 60,
+		"charges": [
+			4,
+			6
+		],
+		"respawn": 12,
+		"color": "#c8a060",
+		"label": "Lina",
+		"sprite": "res://assets/sprites/nodes/tightrope.png"
+	},
+	"zipline": {
+		"skill": "agility",
+		"level": 50,
+		"tool": "",
+		"yields": "holy_ash",
+		"no_yield": true,
+		"xp": 130,
+		"charges": [
+			4,
+			6
+		],
+		"respawn": 12,
+		"color": "#c8a060",
+		"label": "Linbana",
+		"sprite": "res://assets/sprites/nodes/zipline.png"
+	},
+	"cliff_climb": {
+		"skill": "agility",
+		"level": 60,
+		"tool": "",
+		"yields": "holy_ash",
+		"no_yield": true,
+		"xp": 280,
+		"charges": [
+			4,
+			6
+		],
+		"respawn": 12,
+		"color": "#c8a060",
+		"label": "Klippvägg",
+		"sprite": "res://assets/sprites/nodes/cliff_climb.png"
+	},
+	"pole_vault": {
+		"skill": "agility",
+		"level": 70,
+		"tool": "",
+		"yields": "holy_ash",
+		"no_yield": true,
+		"xp": 630,
+		"charges": [
+			4,
+			6
+		],
+		"respawn": 12,
+		"color": "#c8a060",
+		"label": "Stavhopp",
+		"sprite": "res://assets/sprites/nodes/pole_vault.png"
+	},
+	"wind_tunnel": {
+		"skill": "agility",
+		"level": 80,
+		"tool": "",
+		"yields": "holy_ash",
+		"no_yield": true,
+		"xp": 1450,
+		"charges": [
+			4,
+			6
+		],
+		"respawn": 12,
+		"color": "#c8a060",
+		"label": "Vindtunnel",
+		"sprite": "res://assets/sprites/nodes/wind_tunnel.png"
+	},
+	"sky_bridge": {
+		"skill": "agility",
+		"level": 90,
+		"tool": "",
+		"yields": "holy_ash",
+		"no_yield": true,
+		"xp": 3300,
+		"charges": [
+			4,
+			6
+		],
+		"respawn": 12,
+		"color": "#c8a060",
+		"label": "Himmelsbro",
+		"sprite": "res://assets/sprites/nodes/sky_bridge.png"
+	},
+	"fruit_stall": {
+		"skill": "thieving",
+		"level": 1,
+		"tool": "",
+		"yields": "iron_coin",
+		"xp": 14,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 20,
+		"color": "#b85a2a",
+		"label": "Fruktstånd",
+		"sprite": "res://assets/sprites/nodes/fruit_stall.png",
+		"yield_min": 5,
+		"yield_max": 15
+	},
+	"baker_stall": {
+		"skill": "thieving",
+		"level": 8,
+		"tool": "",
+		"yields": "iron_coin",
+		"xp": 11,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 20,
+		"color": "#b85a2a",
+		"label": "Bagarstånd",
+		"sprite": "res://assets/sprites/nodes/baker_stall.png",
+		"yield_min": 10,
+		"yield_max": 24
+	},
+	"silk_stall": {
+		"skill": "thieving",
+		"level": 18,
+		"tool": "",
+		"yields": "spider_silk",
+		"xp": 15,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 20,
+		"color": "#b85a2a",
+		"label": "Silkesstånd",
+		"sprite": "res://assets/sprites/nodes/silk_stall.png"
+	},
+	"silver_stall": {
+		"skill": "thieving",
+		"level": 28,
+		"tool": "",
+		"yields": "iron_coin",
+		"xp": 27,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 20,
+		"color": "#b85a2a",
+		"label": "Silverstånd",
+		"sprite": "res://assets/sprites/nodes/silver_stall.png",
+		"yield_min": 30,
+		"yield_max": 70
+	},
+	"gem_stall": {
+		"skill": "thieving",
+		"level": 42,
+		"tool": "",
+		"yields": "gem",
+		"xp": 70,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 20,
+		"color": "#b85a2a",
+		"label": "Ädelstensstånd",
+		"sprite": "res://assets/sprites/nodes/gem_stall.png"
+	},
+	"spice_stall": {
+		"skill": "thieving",
+		"level": 55,
+		"tool": "",
+		"yields": "iron_coin",
+		"xp": 190,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 20,
+		"color": "#b85a2a",
+		"label": "Kryddstånd",
+		"sprite": "res://assets/sprites/nodes/spice_stall.png",
+		"yield_min": 90,
+		"yield_max": 180
+	},
+	"magic_stall": {
+		"skill": "thieving",
+		"level": 70,
+		"tool": "",
+		"yields": "iron_coin",
+		"xp": 630,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 20,
+		"color": "#b85a2a",
+		"label": "Magistånd",
+		"sprite": "res://assets/sprites/nodes/magic_stall.png",
+		"yield_min": 160,
+		"yield_max": 320
+	},
+	"treasure_stall": {
+		"skill": "thieving",
+		"level": 85,
+		"tool": "",
+		"yields": "iron_coin",
+		"xp": 2200,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 20,
+		"color": "#b85a2a",
+		"label": "Skattstånd",
+		"sprite": "res://assets/sprites/nodes/treasure_stall.png",
+		"yield_min": 300,
+		"yield_max": 600
 	}
 }

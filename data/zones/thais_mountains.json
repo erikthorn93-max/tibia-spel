@@ -31,6 +31,36 @@
 			"to": "thais_gemcavern",
 			"unlock": "kristallgrottan",
 			"terrain": "c"
+		},
+		"A": {
+			"type": "node",
+			"node": "coal_vein",
+			"terrain": "g"
+		},
+		"B": {
+			"type": "node",
+			"node": "mithril_vein",
+			"terrain": "g"
+		},
+		"D": {
+			"type": "node",
+			"node": "adamant_vein",
+			"terrain": "g"
+		},
+		"E": {
+			"type": "node",
+			"node": "pole_vault",
+			"terrain": "g"
+		},
+		"F": {
+			"type": "node",
+			"node": "wind_tunnel",
+			"terrain": "g"
+		},
+		"G": {
+			"type": "node",
+			"node": "sky_bridge",
+			"terrain": "g"
 		}
 	},
 	"spawn_table": [
@@ -70,13 +100,13 @@
 		"WggggggggggggggWWWWWWWWWWWggggggggggggggggggggWWWWWWWWWgggggggggggggggggggggggggggggggggWWWWWWWWWggggggggggggggggggggggW",
 		"WggggggggggggggWWWWWWWWWWWggggggggggggggggggggWWWWWWWWWggggggggggggggggggggggggggggggggWWWWWWWWWWWgggggggggggggggggggggW",
 		"WgggggggggggggWWWWWWWWWWWWWggggggggggggggggggggWWWWWWWggggggggggggggggcggggggggggggggggWWWWWWWWWWWgggggggggggggggggggggW",
-		"WggggggggggggggWWWWWWWWWWWggggggggggggggggggggggggWgggggggggggggggggggcggggggggggggggggWWWWWWWWWWWgggggggggggggggggggggW",
-		"WggggggggggggggWWWWWWWWWWWggggggggigggggggggggggggggggggggggggggggggggcgggggggggggggggWWWWWWWWWWWWWggggggggggggggggggggW",
+		"WggggggggggggggWWWWWWWWWWWgggggggAEFggggggggggggggWgggggggggggggggggggcggggggggggggggggWWWWWWWWWWWgggggggggggggggggggggW",
+		"WggggggggggggggWWWWWWWWWWWgggggggGigggggggggggggggggggggggggggggggggggcgggggggggggggggWWWWWWWWWWWWWggggggggggggggggggggW",
 		"WggggggggggggggWWWWWWWWWWWggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggWWWWWWWWWWWgggggggggggggggggggggW",
 		"WgggggggggggggggWWWWWWWWWgggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggWWWWWWWWWWWgggggggggggggggggggggW",
 		"WggggggggggggggggWWWWWWWggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggWWWWWWWWWWWgggggggggggggggggggggW",
 		"WgggggggggggggggggggWgggggggggggggggggggggggggggggggggggggggggggggggggcgggggggggggggggggWWWWWWWWWggggggggggggggggggggggW",
-		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggWWWWWWWgggggggggggggggggggggggW",
+		"WggggggggggggggggggggggggggggggggAggggggggggggggggggggggggggggggggggggcggggggggggggggggggWWWWWWWgggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggigggggggggggggggggggggggggggggggggggcgggggggggggggggggggggWggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggegggggggggggggggggggggggggggggW",
@@ -112,16 +142,16 @@
 		"WggggggggggggggggggggWWWWWWWWWggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggWWWWWWWWWgggggggggggggggggggW",
 		"WgggggggggggggggggggggWWWWWWWgggggggggggggggggggggggggggggggggggggggggcgggggggggggggggggggggWWWWWWWggggggggggggggggggggW",
 		"WggggggggggggggggggggggggWggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggWgggggggggggggggggggggggW",
-		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
+		"WggggggggggggggggggggggggggggggggBggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggOgggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
-		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
-		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggJgggggggggggggggggggggggggggggW",
+		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcgggggggggggggggggDggggggggggggggggggggggggggggggW",
+		"WggggggggggggggggggggggggggggggggBggggggggggggggggggggggggggggggggggggcggggggggggggggggggJgggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggOgggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
-		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
+		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcgggggggggggggggggDggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggcggggggggggggggggggJgggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggggggOgggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
 		"WgggggggggggggggggggggggggggggWgggggggggggggggggggggggggggggggggggggggcggggggggggggggggggggggggggggggggggggggggggggggggW",
