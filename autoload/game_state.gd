@@ -10,6 +10,7 @@ signal level_up(new_level: int)
 signal player_died
 signal player_hit(dmg: float, dmg_type: String)
 signal skill_changed(skill: String)
+signal skill_leveled(skill: String, new_level: int)
 signal buffs_changed
 signal appearance_changed
 signal equipment_changed
@@ -165,6 +166,7 @@ func gain_skill_xp(skill: String, amount: int) -> void:
 	while s["xp"] >= skill_xp_next(s["level"], skill):
 		s["xp"] -= skill_xp_next(s["level"], skill)
 		s["level"] += 1
+		skill_leveled.emit(skill, int(s["level"]))
 	skill_changed.emit(skill)
 
 func take_damage(dmg: float, dmg_type: String = "physical") -> void:

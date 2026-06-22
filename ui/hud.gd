@@ -36,7 +36,6 @@ var _boss_hp_bg: ColorRect
 var _levelup_lbl: Label        # "★ LEVEL UP!" popup
 var _skillup_lbl: Label        # "+Skill nivå X" popup
 var _prev_hp := 150.0          # för att detektera riktning av HP-förändring
-var _prev_skill_levels: Dictionary = {}  # skill -> nivå (för level-up-detektion)
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS    # måste fungera när trädet pausas vid död
@@ -94,7 +93,8 @@ func _ready() -> void:
 	GameState.mana_changed.connect(func(_v, _m): _refresh())
 	GameState.exp_changed.connect(func(_x, _n, _l): _refresh())
 	GameState.gold_changed.connect(func(_g): _refresh())
-	GameState.skill_changed.connect(func(s): _refresh(); _on_skill_changed_anim(s))
+	GameState.skill_changed.connect(func(_s): _refresh())
+	GameState.skill_leveled.connect(_on_skill_leveled)
 	GameState.level_up.connect(_on_level_up_anim)
 	GameState.inventory_changed.connect(_refresh_inv)
 	GameState.inventory_changed.connect(func(): if hotkey_bar: hotkey_bar._refresh_all())
@@ -413,23 +413,23 @@ func _build_levelup_labels() -> void:
 	_skillup_lbl.add_theme_color_override("font_color", Color(0.6, 1.0, 0.6))
 	_skillup_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_skillup_lbl.set_anchors_preset(Control.PRESET_CENTER)
+	_skillup_lbl.position.y += 40   # under "★ LEVEL UP!" så de inte överlappar
 	_skillup_lbl.visible = false
 	add_child(_skillup_lbl)
-	_prev_skill_levels = GameState.skills.duplicate()
 
 func _on_hp_changed_anim(h: float, _m: float) -> void:
 	_prev_hp = h
 
-func _on_skill_changed_anim(s: String) -> void:
-	var cur := GameState.effective_skill_level(s)
-	var prev := int(_prev_skill_levels.get(s, {}).get("level", 0)) if typeof(_prev_skill_levels.get(s)) == TYPE_DICTIONARY else int(_prev_skill_levels.get(s, 0))
-	if cur > prev and _skillup_lbl != null:
-		_skillup_lbl.text = "+%s nivå %d" % [s.capitalize(), cur]
-		_skillup_lbl.visible = true
-		var tw := create_tween()
-		tw.tween_interval(1.5)
-		tw.tween_callback(func(): _skillup_lbl.visible = false)
-	_prev_skill_levels = GameState.skills.duplicate()
+func _on_skill_leveled(skill: String, new_level: int) -> void:
+	if _skillup_lbl == null:
+		return
+	var sname: String = String(GameState.skill_defs[skill]["name"]) \
+		if skill in GameState.skill_defs else skill.capitalize()
+	_skillup_lbl.text = "%s nivå %d!" % [sname, new_level]
+	_skillup_lbl.visible = true
+	var tw := create_tween()
+	tw.tween_interval(1.5)
+	tw.tween_callback(func(): _skillup_lbl.visible = false)
 
 func _on_level_up_anim() -> void:
 	if _levelup_lbl == null:

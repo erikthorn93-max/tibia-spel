@@ -27,6 +27,24 @@ func test_gain_skill_xp_emits_skill_changed():
 	gs.gain_skill_xp("mining", 10)
 	assert_signal_emitted_with_parameters(gs, "skill_changed", ["mining"])
 
+func test_gain_skill_xp_emits_skill_leveled_on_levelup():
+	watch_signals(gs)
+	gs.gain_skill_xp("mining", gs.skill_xp_next(1, "mining"))
+	assert_eq(gs.skills["mining"]["level"], 2)
+	assert_signal_emitted_with_parameters(gs, "skill_leveled", ["mining", 2])
+
+func test_gain_skill_xp_no_levelup_no_skill_leveled():
+	watch_signals(gs)
+	gs.gain_skill_xp("mining", 1)   # för lite för att gå upp en nivå
+	assert_signal_not_emitted(gs, "skill_leveled")
+
+func test_gain_skill_xp_emits_skill_leveled_once_per_level():
+	watch_signals(gs)
+	var need: int = gs.skill_xp_next(1, "mining") + gs.skill_xp_next(2, "mining")
+	gs.gain_skill_xp("mining", need)
+	assert_eq(gs.skills["mining"]["level"], 3)
+	assert_eq(get_signal_emit_count(gs, "skill_leveled"), 2)
+
 func test_ensure_all_skills_preserves_existing():
 	gs.skills = {"sword": {"level": 25, "xp": 7}}
 	gs.ensure_all_skills()
