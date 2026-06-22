@@ -127,7 +127,7 @@ func build_from_data(data: Dictionary, id: String) -> void:
 									terrain = String(e.get("locked_terrain", "W"))
 			if not PlaceholderTiles.TERRAIN.has(terrain):
 				terrain = "."
-			tilemap.set_cell(t, 0, Vector2i(PlaceholderTiles.TERRAIN[terrain], 0))
+			tilemap.set_cell(t, 0, Vector2i(PlaceholderTiles.TERRAIN[terrain], PlaceholderTiles.variant_for(t)))
 			_walkable[t] = terrain != "W" and terrain != "w" and terrain != "r" and terrain != "~" and terrain != "t" and not blocked
 
 	_astar.region = Rect2i(Vector2i.ZERO, grid_size)
@@ -321,7 +321,7 @@ func _on_unlock_added(id: String) -> void:
 			_add_portal_marker(t)
 
 func _open_tile(t: Vector2i) -> void:
-	tilemap.set_cell(t, 0, Vector2i(PlaceholderTiles.TERRAIN[_gate_terrain[t]], 0))
+	tilemap.set_cell(t, 0, Vector2i(PlaceholderTiles.TERRAIN[_gate_terrain[t]], PlaceholderTiles.variant_for(t)))
 	_walkable[t] = true
 	_astar.set_point_solid(t, false)
 

@@ -1,9 +1,12 @@
 class_name PlaceholderTiles
 ## Bygger ett TileSet från riktiga tile-sprites (assets/sprites/tiles/).
 ## Terrängtecken → atlas-kolumn matchas via TERRAIN-konstanten.
-## zone.gd berörs inte — byter bara visuellt.
+## Varje terräng får VARIANTS varianter (atlas-rader) med subtil variation så
+## stora ytor inte blir enformiga. zone.gd väljer variant per ruta via
+## variant_for(). zone.gd:s logik berörs annars inte — byter bara visuellt.
 
 const TILE := 32
+const VARIANTS := 3
 # atlas-kolumn per terrängtecken
 const TERRAIN := {".": 0, ",": 1, "W": 2, "~": 3, "s": 4, "b": 5, "w": 6, "f": 7, "r": 8, "n": 9, "t": 10, "c": 11, "g": 12}
 
@@ -34,52 +37,94 @@ const COLORS := {
 	"t": Color("2f5a28"), "c": Color("8a8478"), "g": Color("9aa84e"),
 }
 
+## Deterministisk variant (0..VARIANTS-1) för en ruta. Samma ruta → samma
+## variant varje gång, men grannar skiljer sig så ytan får liv.
+static func variant_for(t: Vector2i) -> int:
+	var h := (t.x * 73856093) ^ (t.y * 19349663)
+	return absi(h) % VARIANTS
+
 static func build() -> TileSet:
-	# Bygg en bred atlas-bild: TERRAIN.size() kolumner × TILE px
-	var img := Image.create(TILE * TERRAIN.size(), TILE, false, Image.FORMAT_RGBA8)
+	# Atlas: TERRAIN.size() kolumner × VARIANTS rader.
+	var img := Image.create(TILE * TERRAIN.size(), TILE * VARIANTS, false, Image.FORMAT_RGBA8)
 
 	for ch in TERRAIN:
 		var col: int = TERRAIN[ch]
-		var fname: String = TILE_FILES.get(ch, "")
-		var tile_img: Image = null
-
-		if fname != "":
-			var path := "res://assets/sprites/tiles/%s.png" % fname
-			if ResourceLoader.exists(path):
-				var tex: Texture2D = load(path) as Texture2D
-				if tex != null:
-					tile_img = tex.get_image()
-					tile_img.resize(TILE, TILE, Image.INTERPOLATE_NEAREST)
-
-		# Träd har ingen sprite → rita ett tydligt hinder (stam + krona med mörk kant)
-		# så det inte förväxlas med gångbart gräs.
-		if tile_img == null and ch == "t":
-			tile_img = _make_tree_tile()
-
-		if tile_img == null:
-			# Fallback: enfärgad med brusstruktur
-			var base: Color = COLORS.get(ch, Color("888888"))
-			tile_img = Image.create(TILE, TILE, false, Image.FORMAT_RGBA8)
-			for y in TILE:
-				for x in TILE:
-					var n := 0.93 + 0.07 * fmod(sin(float(x * 7 + y * 13 + col * 31)) * 43758.5, 1.0)
-					tile_img.set_pixel(x, y, Color(base.r * n, base.g * n, base.b * n))
-
-		# Kopiera in i atlas
-		for y in TILE:
-			for x in TILE:
-				img.set_pixel(col * TILE + x, y, tile_img.get_pixel(x, y))
+		var base := _base_tile(ch, col)
+		for v in VARIANTS:
+			var tile_img := base if v == 0 else _vary(base, ch, v)
+			img.blit_rect(tile_img, Rect2i(0, 0, TILE, TILE), Vector2i(col * TILE, v * TILE))
 
 	var src := TileSetAtlasSource.new()
 	src.texture = ImageTexture.create_from_image(img)
 	src.texture_region_size = Vector2i(TILE, TILE)
 	for col in TERRAIN.size():
-		src.create_tile(Vector2i(col, 0))
+		for v in VARIANTS:
+			src.create_tile(Vector2i(col, v))
 
 	var ts := TileSet.new()
 	ts.tile_size = Vector2i(TILE, TILE)
 	ts.add_source(src, 0)
 	return ts
+
+## Bas-tilen för ett terrängtecken: riktig sprite om den finns, annars
+## procedurell textur (träd/kullersten/åker) eller enfärgad fallback.
+static func _base_tile(ch: String, col: int) -> Image:
+	var fname: String = TILE_FILES.get(ch, "")
+	if fname != "":
+		var path := "res://assets/sprites/tiles/%s.png" % fname
+		if ResourceLoader.exists(path):
+			var tex: Texture2D = load(path) as Texture2D
+			if tex != null:
+				var tile_img := tex.get_image()
+				tile_img.resize(TILE, TILE, Image.INTERPOLATE_NEAREST)
+				if tile_img.get_format() != Image.FORMAT_RGBA8:
+					tile_img.convert(Image.FORMAT_RGBA8)
+				return tile_img
+
+	match ch:
+		"t": return _make_tree_tile()
+		"c": return _make_cobblestone_tile()
+		"g": return _make_field_tile()
+
+	# Fallback: enfärgad med brusstruktur
+	var base: Color = COLORS.get(ch, Color("888888"))
+	var img := Image.create(TILE, TILE, false, Image.FORMAT_RGBA8)
+	for y in TILE:
+		for x in TILE:
+			var n := 0.93 + 0.07 * fmod(sin(float(x * 7 + y * 13 + col * 31)) * 43758.5, 1.0)
+			img.set_pixel(x, y, Color(base.r * n, base.g * n, base.b * n))
+	return img
+
+## Skapar en varierad kopia av en tile: subtil ljus-jitter + några ströpixlar,
+## deterministiskt utifrån terräng + variant-index. Håller det diskret så
+## kartan känns naturlig, inte brusig.
+static func _vary(src_img: Image, ch: String, seed_v: int) -> Image:
+	var img := src_img.duplicate() as Image
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash(ch) * 31 + seed_v
+	# Global ton: ±5% ljusstyrka över hela tilen
+	var tone := 1.0 + rng.randf_range(-0.05, 0.05)
+	# Strukturella tiles ska hålla skarp form → mindre jitter
+	var structural := ch in ["W", "r", "w", "n", "f"]
+	var speck_amount := 4 if structural else 10
+	for y in TILE:
+		for x in TILE:
+			var p := img.get_pixel(x, y)
+			img.set_pixel(x, y, Color(
+				clampf(p.r * tone, 0.0, 1.0),
+				clampf(p.g * tone, 0.0, 1.0),
+				clampf(p.b * tone, 0.0, 1.0), p.a))
+	# Strö in några ljusare/mörkare flagor
+	for i in speck_amount:
+		var sx := rng.randi_range(0, TILE - 1)
+		var sy := rng.randi_range(0, TILE - 1)
+		var p := img.get_pixel(sx, sy)
+		var f := rng.randf_range(0.82, 1.18)
+		img.set_pixel(sx, sy, Color(
+			clampf(p.r * f, 0.0, 1.0),
+			clampf(p.g * f, 0.0, 1.0),
+			clampf(p.b * f, 0.0, 1.0), p.a))
+	return img
 
 ## Ritar ett tydligt träd-tile: gräsbotten, brun stam och en bullig krona
 ## med mörk konturkant. Den höga, mörka silhuetten skiljer sig klart från
@@ -121,4 +166,50 @@ static func _make_tree_tile() -> Image:
 					shade = canopy_hi          # ljus topp-vänster
 				img.set_pixel(x, y, shade)
 
+	return img
+
+## Kullersten: gråa rundade stenar i mörka fogar — för stadsgator/torg.
+static func _make_cobblestone_tile() -> Image:
+	var img := Image.create(TILE, TILE, false, Image.FORMAT_RGBA8)
+	var grout := Color("4a463f")
+	img.fill(grout)
+	# 2×2 rutnät av stenar, varannan rad förskjuten (murförband)
+	var stones := [Color("9a958a"), Color("8a857a"), Color("a39d90"), Color("827d72")]
+	var k := 0
+	for gy in 2:
+		var offset := 0 if gy == 0 else 8
+		for gx in 3:
+			var cx := gx * 16 + offset - 4
+			var cy := gy * 16 + 8
+			var base: Color = stones[k % stones.size()]
+			k += 1
+			for y in TILE:
+				for x in TILE:
+					var dx := float(x - cx)
+					var dy := float(y - cy)
+					var d := sqrt(dx * dx + dy * dy)
+					if d <= 7.0:
+						# Ljus topp, mörk botten för rundad känsla
+						var sh := 1.0 + clampf(-dy / 14.0, -0.25, 0.25)
+						img.set_pixel(x % TILE, y % TILE, Color(
+							clampf(base.r * sh, 0, 1),
+							clampf(base.g * sh, 0, 1),
+							clampf(base.b * sh, 0, 1)))
+	return img
+
+## Åker: gyllengröna grödrader med fåror och kornprickar.
+static func _make_field_tile() -> Image:
+	var img := Image.create(TILE, TILE, false, Image.FORMAT_RGBA8)
+	var soil := Color("6b5a2e")
+	var crop := Color("9aa84e")
+	var crop_hi := Color("b9c463")
+	for y in TILE:
+		for x in TILE:
+			# Vertikala rader: gröda på raden, mörkare jord i fåran
+			var on_row := (x % 6) < 4
+			var c := crop if on_row else soil
+			# Lätt vågighet längs raden
+			if on_row and ((x + y) % 5 == 0):
+				c = crop_hi
+			img.set_pixel(x, y, c)
 	return img
