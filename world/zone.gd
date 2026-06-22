@@ -16,6 +16,7 @@ var station_points: Array = []     # [{tile, station}]
 var shop_points: Array = []        # [tile]
 var bank_points: Array = []        # [tile]
 var taskmaster_points: Array = []  # [tile]
+var spell_teacher_points: Array = []  # [tile]
 var chest_points: Array = []       # [tile] (dungeons)
 var dungeon_entrances: Dictionary = {}  # Vector2i -> tema-id
 var _monster_tiles: Dictionary = {}    # Vector2i -> Monster (kollisionskarta)
@@ -101,6 +102,9 @@ func build_from_data(data: Dictionary, id: String) -> void:
 								blocked = true
 							"taskmaster":
 								taskmaster_points.append(t)
+								blocked = true
+							"spell_teacher":
+								spell_teacher_points.append(t)
 								blocked = true
 							"chest":
 								chest_points.append(t)

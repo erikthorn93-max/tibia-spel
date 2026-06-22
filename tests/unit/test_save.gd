@@ -32,9 +32,9 @@ func test_v1_snapshot_migrates_to_all_skills():
 	assert_eq(gs.skills["mining"]["level"], 1)
 	gs.free()
 
-func test_save_version_is_5():
+func test_save_version_is_9():
 	var sm2 = load("res://autoload/save_manager.gd").new()
-	assert_eq(sm2.SAVE_VERSION, 5)
+	assert_eq(sm2.SAVE_VERSION, 9)
 	sm2.free()
 
 func test_v4_save_migrates_to_v5_standard_outfit():

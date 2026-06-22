@@ -56,7 +56,8 @@ var skill_defs: Dictionary = {}
 var current_zone := "town"
 var player_tile := Vector2i.ZERO
 var active_buffs: Array = []   # [{stat, amount, time_left}]
-var active_rune := ""          # id för aktiv runa (F1 kastar)
+var active_rune := ""          # DEPRECERAD: gamla run-spåret, migreras bort
+var learned_spells: Array = [] # id:n för inlärda instant-spells (SpellSystem)
 var status_effects: Dictionary = {}  # id -> {tick_dmg, time_left, tick_acc}
 var bank: Dictionary = {}            # item_id -> qty (bankförvar, sparas i save)
 

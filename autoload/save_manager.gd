@@ -1,7 +1,7 @@
 extends Node
 ## Autoload: SaveManager. JSON-sparfil + autosave var 60 s.
 
-const SAVE_VERSION := 8
+const SAVE_VERSION := 9
 var save_path := "user://save.json"
 var _timer := 0.0
 
@@ -54,7 +54,7 @@ func save_game() -> void:
 		"unlocked": UnlockSystem.unlocked,
 		"quests_active": QuestSystem.active,
 		"quests_completed": QuestSystem.completed,
-		"active_rune": GameState.active_rune,
+		"learned_spells": GameState.learned_spells,
 		"bank": GameState.bank,
 	})
 
@@ -110,7 +110,9 @@ func load_game() -> bool:
 		QuestSystem.completed = {}
 		for _qid in _qc_raw:
 			QuestSystem.completed[str(_qid)] = true
-	GameState.active_rune = String(s.get("active_rune", ""))
+	# v9: instant-spells. active_rune (v≤8) ignoreras medvetet — run-spåret är borttaget.
+	var ls_raw = s.get("learned_spells", [])
+	GameState.learned_spells = ls_raw if ls_raw is Array else []
 	# v8: bankförvar
 	var bank_raw = s.get("bank", {})
 	GameState.bank = bank_raw if bank_raw is Dictionary else {}

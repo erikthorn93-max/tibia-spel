@@ -443,6 +443,8 @@
 		"mana_cost": 5,
 		"magic_lvl": 1,
 		"effect": "damage",
+		"target": "target",
+		"element": "physical",
 		"sprite": "res://assets/sprites/items/attack_rune.png"
 	},
 	"fire_rune": {
@@ -454,6 +456,9 @@
 		"mana_cost": 12,
 		"magic_lvl": 8,
 		"effect": "damage",
+		"target": "target",
+		"element": "fire",
+		"status": {"type": "burn", "duration": 8.0, "power": 4.0},
 		"sprite": "res://assets/sprites/items/fire_rune.png"
 	},
 	"healing_rune": {
@@ -465,6 +470,7 @@
 		"mana_cost": 8,
 		"magic_lvl": 5,
 		"effect": "heal",
+		"target": "self",
 		"sprite": "res://assets/sprites/items/healing_rune.png"
 	},
 	"boss_crown": {
@@ -809,7 +815,10 @@
 		"rune_power": 22,
 		"mana_cost": 8,
 		"magic_lvl": 25,
-		"effect": "damage"
+		"effect": "damage",
+		"target": "target",
+		"element": "ice",
+		"sprite": "res://assets/sprites/items/ice_rune.png"
 	},
 	"goblin_ear": {
 		"name": "Gobliöra",
@@ -1034,6 +1043,13 @@
 		"value": 80,
 		"color": "#ff4400",
 		"effect": "fire_bomb",
+		"target": "area",
+		"radius": 1,
+		"rune_power": 30,
+		"mana_cost": 18,
+		"magic_lvl": 27,
+		"element": "fire",
+		"status": {"type": "burn", "duration": 8.0, "power": 4.0},
 		"sprite": "res://assets/sprites/items/fire_bomb_rune.png"
 	},
 	"ice_wave_rune": {
@@ -1042,6 +1058,12 @@
 		"value": 80,
 		"color": "#88ccff",
 		"effect": "ice_wave",
+		"target": "area",
+		"radius": 1,
+		"rune_power": 26,
+		"mana_cost": 16,
+		"magic_lvl": 20,
+		"element": "ice",
 		"sprite": "res://assets/sprites/items/ice_wave_rune.png"
 	},
 	"brass_knuckles": {
@@ -1110,6 +1132,8 @@
 		"mana_cost": 10,
 		"magic_lvl": 15,
 		"effect": "damage",
+		"target": "target",
+		"element": "energy",
 		"sprite": "res://assets/sprites/items/energy_rune.png"
 	},
 	"death_rune": {
@@ -1121,7 +1145,17 @@
 		"mana_cost": 18,
 		"magic_lvl": 40,
 		"effect": "damage",
+		"target": "target",
+		"element": "death",
+		"status": {"type": "poison", "duration": 6.0, "power": 3.0},
 		"sprite": "res://assets/sprites/items/death_rune.png"
+	},
+	"blank_rune": {
+		"name": "Tom runa",
+		"type": "material",
+		"value": 10,
+		"color": "#b8b0a0",
+		"sprite": "res://assets/sprites/items/blank_rune.png"
 	},
 	"cooked_eel": {
 		"name": "Stekt ål",

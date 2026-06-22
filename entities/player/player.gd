@@ -5,7 +5,6 @@ extends Node2D
 const TILE := 32
 const ATTACK_COOLDOWN := 1.0
 const GATHER_INTERVAL := 2.0
-const MAGIC_RANGE := 4   # Chebyshev-avstånd för runkastning
 
 var zone: Node2D                      # sätts av World vid zonladdning
 var tile := Vector2i.ZERO
@@ -231,53 +230,45 @@ func _update_gather(delta: float) -> void:
 			gather_target = null
 
 func _update_spells() -> void:
-	if Input.is_action_just_pressed("use_rune"):
-		_cast_rune()
 	if Input.is_action_just_pressed("use_potion"):
 		if not GameState.use_item("health_potion"):
 			World.hud.show_message("Ingen hälsodryck.")
 
-## Kastar aktiv runa mot target (damage) eller sig själv (heal).
-func _cast_rune() -> void:
-	var rid := GameState.active_rune
-	if rid.is_empty():
-		World.hud.show_message("Ingen runa vald.")
+## Casting-entrypoint: anropas av hotbaren för spell_id ELLER run-item-id.
+## Instant-spells (self/area_self) löses direkt; target/area startar sikt-läget.
+func cast_spell(id: String) -> void:
+	var def := SpellSystem.cast_def(id)
+	if def.is_empty():
+		World.hud.show_message("Inget att kasta.")
 		return
-	if int(GameState.inventory.get(rid, 0)) < 1:
-		World.hud.show_message("Du har inga runor av den typen.")
+	var check := SpellSystem.can_cast(id)
+	if not check["ok"]:
+		World.hud.show_message(String(check["reason"]))
 		return
-	var d: Dictionary = ItemDB.items.get(rid, {})
-	var rune_power := int(d.get("rune_power", 0))
-	var mana_cost  := float(d.get("mana_cost", 0.0))
-	var req_lvl    := int(d.get("magic_lvl", 1))
-	var effect     := String(d.get("effect", "damage"))
-	var magic_lvl  := GameState.effective_skill_level("magic")
-	if magic_lvl < req_lvl:
-		World.hud.show_message("Kräver magic %d." % req_lvl)
-		return
-	# Damage-runor kräver giltigt target — kontrollera INNAN mana/runa förbrukas
-	if effect != "heal":
-		if target == null or not is_instance_valid(target) or target.dead:
-			World.hud.show_message("Inget mål att attackera.")
-			return
-		if _chebyshev(target.tile) > MAGIC_RANGE:
-			World.hud.show_message("För långt bort.")
-			return
-	if not GameState.use_mana(mana_cost):
-		World.hud.show_message("Inte tillräckligt med mana.")
-		return
-	GameState.remove_item(rid, 1)
-	var dmg := CombatFormulas.roll_magic(magic_lvl, rune_power)
-	if effect == "heal":
-		GameState.heal(dmg)
-		GameState.gain_skill_xp("magic", 2)
-		World.hud.show_message("Du helar %.0f HP!" % dmg)
+	if SpellSystem.needs_aim(def):
+		_begin_aim(id, def)
 	else:
-		target.take_damage(dmg)
-		GameState.gain_skill_xp("magic", 3)
-		# Eldrunor tänder eld på monstret
-		if rid == "fire_rune" and target.has_method("apply_status"):
-			target.apply_status("burn", 8.0, 4.0)
+		var res := SpellSystem.resolve_cast(id, self, tile)
+		if String(res.get("message", "")) != "":
+			World.hud.show_message(String(res["message"]))
+
+## Startar sikt-cursorn; vid bekräftad ruta löser SpellSystem utfallet.
+func _begin_aim(id: String, def: Dictionary) -> void:
+	if World.aim == null or not is_instance_valid(World.aim):
+		World.hud.show_message("Sikte ej tillgängligt.")
+		return
+	World.aim.begin(def, _on_aim_confirmed.bind(id))
+
+## Callback från AimController när spelaren bekräftat en ruta.
+func _on_aim_confirmed(picked: Vector2i, id: String) -> void:
+	# Re-validera: tillstånd kan ha ändrats medan spelaren siktade.
+	var recheck := SpellSystem.can_cast(id)
+	if not recheck["ok"]:
+		World.hud.show_message(String(recheck["reason"]))
+		return
+	var res := SpellSystem.resolve_cast(id, self, picked)
+	if String(res.get("message", "")) != "":
+		World.hud.show_message(String(res["message"]))
 
 func _check_portal() -> void:
 	if zone.dungeon_entrances.has(tile):

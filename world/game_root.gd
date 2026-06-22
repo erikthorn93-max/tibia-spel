@@ -10,6 +10,10 @@ func _ready() -> void:
 	World.game_root = self
 	var hud := preload("res://ui/hud.tscn").instantiate()
 	add_child(hud)
+	var aim := Node2D.new()
+	aim.set_script(preload("res://entities/aim_controller.gd"))
+	add_child(aim)
+	World.aim = aim
 	World.start_game(GameState.current_zone,
 		GameState.player_tile if SaveManager.has_save() and GameState.player_tile != Vector2i.ZERO else Vector2i(-1, -1))
 	if "--perftest" in OS.get_cmdline_user_args():

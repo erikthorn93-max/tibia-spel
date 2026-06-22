@@ -12,6 +12,7 @@ var current_zone: Node2D
 var player: Node2D
 var game_root: Node2D    # sätts av game.tscn vid _ready
 var hud: CanvasLayer     # sätts av hud.gd vid _ready
+var aim: Node2D          # AimController, sätts av game_root vid _ready
 var last_surface_zone := ""
 var last_surface_tile := Vector2i(-1, -1)
 ## Gravsten — sätts när spelaren dör, visas på minimap tills hen plockar upp loot
@@ -149,6 +150,10 @@ func _spawn_world_objects() -> void:
 		var tm: Node2D = preload("res://entities/taskmaster_npc.tscn").instantiate()
 		current_zone.add_child(tm)
 		tm.setup(t)
+	for t in current_zone.spell_teacher_points:
+		var st: Node2D = preload("res://entities/spell_teacher_npc.tscn").instantiate()
+		current_zone.add_child(st)
+		st.setup(t)
 	if ResourceLoader.exists(CHEST_SCRIPT_PATH):
 		var ChestScript = load(CHEST_SCRIPT_PATH)
 		for t in current_zone.chest_points:

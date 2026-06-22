@@ -69,6 +69,7 @@ func _init_slots() -> void:
 			"key_name": DEFAULT_NAMES[i],
 			"keycode":  int(DEFAULT_KEYS[i]),
 			"item_id":  "",
+			"spell_id": "",
 			"pos_x":    dp.x,
 			"pos_y":    dp.y,
 		})
@@ -146,11 +147,18 @@ func _build_slot(idx: int) -> void:
 	var _ci := idx
 	cell.set_drag_forwarding(
 		func(_pos): return null,
-		func(_pos, data) -> bool: return data is Dictionary and data.has("item_id"),
+		func(_pos, data) -> bool: return data is Dictionary and (data.has("item_id") or data.has("spell_id")),
 		func(_pos, data):
-			var iid := String(data.get("item_id", ""))
-			if iid.is_empty(): return
-			_slots[_ci]["item_id"] = iid
+			if data.has("spell_id"):
+				var sid := String(data.get("spell_id", ""))
+				if sid.is_empty(): return
+				_slots[_ci]["spell_id"] = sid
+				_slots[_ci]["item_id"]  = ""    # spell ersätter item i sloten
+			else:
+				var iid := String(data.get("item_id", ""))
+				if iid.is_empty(): return
+				_slots[_ci]["item_id"]  = iid
+				_slots[_ci]["spell_id"] = ""    # item ersätter spell i sloten
 			_save_config()
 			_refresh_slot(_ci)
 	)
@@ -194,8 +202,19 @@ func _set_border(node: Control, col: Color) -> void:
 
 # ─────────────────────────────────────────────
 func _use_slot(idx: int) -> void:
+	# Spell-slot → kasta via magisystemet.
+	var spell_id: String = String(_slots[idx].get("spell_id", ""))
+	if spell_id != "":
+		if World.player and is_instance_valid(World.player):
+			World.player.cast_spell(spell_id)
+		return
 	var item_id: String = String(_slots[idx].get("item_id", ""))
 	if item_id.is_empty():
+		return
+	# Runor kastas via magisystemet (kan kräva sikte), inte via use_item.
+	if not SpellSystem.cast_def(item_id).is_empty():
+		if World.player and is_instance_valid(World.player):
+			World.player.cast_spell(item_id)
 		return
 	if not GameState.use_item(item_id):
 		World.hud.show_message("Kan inte använda: %s" % item_id)
@@ -216,9 +235,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	for i in SLOT_COUNT:
 		if int(_slots[i].get("keycode", 0)) == int(event.keycode):
-			# Konsumera bara om sloten har ett item — annars låt HUD-tangenter gå igenom
-			var item_id: String = String(_slots[i].get("item_id", ""))
-			if not item_id.is_empty():
+			# Konsumera bara om sloten har item ELLER spell — annars låt HUD-tangenter gå igenom
+			var has_content := String(_slots[i].get("item_id", "")) != "" \
+				or String(_slots[i].get("spell_id", "")) != ""
+			if has_content:
 				_use_slot(i)
 				get_viewport().set_input_as_handled()
 			return
@@ -331,6 +351,8 @@ func _on_ok() -> void:
 	if sel.size() > 0 and sel[0] > 0:
 		item_id = String(_cfg_item_lst.get_item_metadata(sel[0]))
 	_slots[_cfg_idx]["item_id"]  = item_id
+	if item_id != "":
+		_slots[_cfg_idx]["spell_id"] = ""    # valt item ersätter ev. spell
 	_slots[_cfg_idx]["key_name"] = _pending_kname
 	_slots[_cfg_idx]["keycode"]  = _pending_kcode
 	_popup.visible = false
@@ -339,7 +361,8 @@ func _on_ok() -> void:
 
 func _on_clear() -> void:
 	if _cfg_idx >= 0:
-		_slots[_cfg_idx]["item_id"] = ""
+		_slots[_cfg_idx]["item_id"]  = ""
+		_slots[_cfg_idx]["spell_id"] = ""
 	_popup.visible = false
 	_refresh_slot(_cfg_idx)
 	_save_config()
@@ -352,11 +375,24 @@ func _refresh_all() -> void:
 func _refresh_slot(idx: int) -> void:
 	if idx >= _slot_icons.size(): return
 	var slot: Dictionary = _slots[idx]
+	var icon: TextureRect = _slot_icons[idx]
+	var nlbl: Label = _slot_name_lbls[idx]
+	var spell_id: String = String(slot.get("spell_id", ""))
 	var item_id: String = String(slot.get("item_id", ""))
-	var d: Dictionary = ItemDB.items.get(item_id, {}) if item_id != "" else {}
-	if d.is_empty():
-		_slot_icons[idx].texture  = null
-	else:
+	icon.texture = null
+	nlbl.visible = false
+	if spell_id != "":
+		var ssp := "res://assets/sprites/spells/%s.png" % spell_id
+		if ResourceLoader.exists(ssp):
+			icon.texture = load(ssp)
+		else:
+			# Ingen sprite → visa förkortat besvärjelsenamn som etikett.
+			var sd: Dictionary = SpellSystem.spells.get(spell_id, {})
+			nlbl.text = String(sd.get("name", spell_id)).substr(0, 5)
+			nlbl.add_theme_font_size_override("font_size", 8)
+			nlbl.add_theme_color_override("font_color", Color(0.75, 0.65, 1.0))
+			nlbl.visible = true
+	elif item_id != "":
 		var sp := "res://assets/sprites/items/%s.png" % item_id
-		_slot_icons[idx].texture = load(sp) if ResourceLoader.exists(sp) else null
+		icon.texture = load(sp) if ResourceLoader.exists(sp) else null
 	_slot_key_lbls[idx].text = String(slot.get("key_name", ""))

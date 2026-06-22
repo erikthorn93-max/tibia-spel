@@ -18,6 +18,7 @@ var bank_panel: PanelContainer
 var prayer_panel: PanelContainer
 var task_panel: PanelContainer
 var bestiary_panel: PanelContainer
+var spellbook_panel: PanelContainer
 var dialogue_box: PanelContainer
 var quest_log: PanelContainer
 var wardrobe: PanelContainer
@@ -56,6 +57,8 @@ func _ready() -> void:
 	add_child(task_panel)
 	bestiary_panel = preload("res://ui/bestiary_panel.gd").new()
 	add_child(bestiary_panel)
+	spellbook_panel = preload("res://ui/spellbook_panel.gd").new()
+	add_child(spellbook_panel)
 	dialogue_box = preload("res://ui/dialogue_box.gd").new()
 	add_child(dialogue_box)
 	quest_log = preload("res://ui/quest_log.gd").new()
@@ -146,6 +149,12 @@ func open_tasks() -> void:
 	recipe_panel.visible = false
 	shop_panel.visible = false
 	task_panel.open()
+
+func open_spellbook(learn_mode := false) -> void:
+	recipe_panel.visible = false
+	shop_panel.visible = false
+	task_panel.visible = false
+	spellbook_panel.open(learn_mode)
 
 func open_dialogue(npc_id: String) -> void:
 	recipe_panel.visible = false
@@ -267,6 +276,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		wardrobe.toggle()
 	elif event.is_action_pressed("toggle_equipment"):
 		equipment_panel.toggle()
+	elif event.is_action_pressed("toggle_spellbook"):
+		spellbook_panel.toggle()
 	elif event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		recipe_panel.visible = false
 		shop_panel.visible = false
@@ -276,6 +287,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		quest_log.visible = false
 		wardrobe.visible = false
 		equipment_panel.visible = false
+		spellbook_panel.visible = false
 
 ## Bygger gift/stun-status chip (övre högra hörnet)
 func _build_status_chips() -> void:
