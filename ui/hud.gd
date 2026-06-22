@@ -421,6 +421,7 @@ func _on_hp_changed_anim(h: float, _m: float) -> void:
 	_prev_hp = h
 
 func _on_skill_leveled(skill: String, new_level: int) -> void:
+	Sfx.skill_up()
 	if _skillup_lbl == null:
 		return
 	var sname: String = String(GameState.skill_defs[skill]["name"]) \
@@ -432,6 +433,7 @@ func _on_skill_leveled(skill: String, new_level: int) -> void:
 	tw.tween_callback(func(): _skillup_lbl.visible = false)
 
 func _on_level_up_anim() -> void:
+	Sfx.level_up()
 	if _levelup_lbl == null:
 		return
 	_levelup_lbl.visible = true

@@ -1,0 +1,39 @@
+extends GutTest
+## Testar den procedurella ljudsyntesen (ren matematik, ingen uppspelning).
+
+const Sfx = preload("res://autoload/sfx.gd")
+
+func test_synth_length_matches_notes():
+	# Två toner à 0.1 s i stereo → 2 * (0.1 * mix_rate) frames.
+	var buf: PackedVector2Array = Sfx.synth([440.0, 880.0], 0.1)
+	var per := int(0.1 * Sfx.MIX_RATE)
+	assert_eq(buf.size(), per * 2)
+
+func test_synth_values_in_range_and_nonzero():
+	var buf: PackedVector2Array = Sfx.synth([440.0], 0.05)
+	var maxv := 0.0
+	var out_of_range := false
+	for fr in buf:
+		if fr.x < -1.0 or fr.x > 1.0:
+			out_of_range = true
+		maxv = maxf(maxv, absf(fr.x))
+	assert_false(out_of_range, "alla sampel ska ligga inom [-1, 1]")
+	assert_gt(maxv, 0.0, "vågformen ska inte vara helt tyst")
+
+func test_synth_envelope_decays():
+	# Envelopen klingar av: första toppen ska vara starkare än slutet.
+	var buf: PackedVector2Array = Sfx.synth([440.0], 0.1)
+	var head := 0.0
+	var tail := 0.0
+	var n := buf.size()
+	for i in range(n):
+		var a := absf(buf[i].x)
+		if i < n / 10:
+			head = maxf(head, a)
+		elif i > n - n / 10:
+			tail = maxf(tail, a)
+	assert_gt(head, tail, "starten ska vara ljudligare än slutet (avklingning)")
+
+func test_empty_freqs_gives_empty_buffer():
+	var buf: PackedVector2Array = Sfx.synth([], 0.1)
+	assert_eq(buf.size(), 0)

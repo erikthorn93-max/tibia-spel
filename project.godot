@@ -28,6 +28,7 @@ World="*res://autoload/world.gd"
 SaveManager="*res://autoload/save_manager.gd"
 TimeOfDay="*res://autoload/time_of_day.gd"
 ItemTooltip="*res://autoload/item_tooltip.gd"
+Sfx="*res://autoload/sfx.gd"
 
 [display]
 
