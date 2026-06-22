@@ -12,6 +12,7 @@ static var _global_bark_gate_ms := 0   # delas av alla NPC:er — en i taget
 var npc_id := ""
 var tile := Vector2i.ZERO
 var _bark_timer := 0.0
+var _breath_t := 0.0      # idle-andning, slumpad fas så NPC:er inte andas i takt
 var _quest_marker: Label
 const MARKER_BASE_Y := -56.0
 
@@ -35,6 +36,7 @@ func _ready() -> void:
 	else:
 		_sprite.texture = load("res://assets/sprites/npcs/dialogue_npc.png")
 	click_area.input_event.connect(_on_click)
+	_breath_t = randf() * 10.0
 	_build_quest_marker()
 	# Uppdatera markören när questläget ändras (start/progress/slutförd)
 	for sig in [QuestSystem.quest_started, QuestSystem.step_advanced, QuestSystem.quest_completed]:
@@ -72,6 +74,9 @@ func _refresh_quest_marker() -> void:
 			_quest_marker.visible = false
 
 func _process(delta: float) -> void:
+	# Idle-andning så NPC:n inte står helt livlös
+	_breath_t += delta
+	_sprite.scale.y = CharacterVisual.breath_scale(_breath_t)
 	# Mjuk upp/ned-rörelse på quest-markören
 	if _quest_marker and _quest_marker.visible:
 		_quest_marker.offset_top = MARKER_BASE_Y + sin(Time.get_ticks_msec() / 300.0) * 3.0

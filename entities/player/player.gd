@@ -91,6 +91,7 @@ func _chebyshev(t: Vector2i) -> int:
 
 func _process(delta: float) -> void:
 	_update_movement(delta)
+	visual.set_walk(_move_t < 1.0, _move_t)   # gång-studs under steg, annars andning
 	_update_attack(delta)
 	_update_gather(delta)
 	_update_spells()
