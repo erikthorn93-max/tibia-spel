@@ -31,6 +31,7 @@ var entrance_points: Dictionary = {}   # Vector2i -> zon-id (husportaler, dörra
 var stair_points: Dictionary = {}      # Vector2i -> {"to": zon-id, "up": bool}
 var _walkable: Dictionary = {}      # Vector2i -> bool
 var _water: Dictionary = {}         # Vector2i -> true (för strand-overlay)
+var _decor: Array = []              # [[Vector2i, dekal-index]] (naturdetaljer)
 var _astar := AStarGrid2D.new()
 var tilemap: TileMapLayer
 
@@ -132,8 +133,13 @@ func build_from_data(data: Dictionary, id: String) -> void:
 			_walkable[t] = terrain != "W" and terrain != "w" and terrain != "r" and terrain != "~" and terrain != "t" and not blocked
 			if terrain == "~":
 				_water[t] = true
+			elif not blocked:
+				var dec := PlaceholderTiles.decor_for(t, terrain)
+				if dec != PlaceholderTiles.DECOR_NONE:
+					_decor.append([t, dec])
 
 	_build_shore_overlay()
+	_build_decor_overlay()
 
 	_astar.region = Rect2i(Vector2i.ZERO, grid_size)
 	_astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
@@ -181,6 +187,17 @@ func _build_shore_overlay() -> void:
 		if _is_land(t + Vector2i(-1, 0)): mask |= PlaceholderTiles.FOAM_W
 		if mask > 0:
 			overlay.set_cell(t, 0, Vector2i(mask, 0))
+
+## Lägger glesa naturdetaljer (blommor/tuvor/sten) ovanpå marken. Eget lager,
+## ritas efter skummet → ovanpå mark & strand men under figurer. Rent visuellt.
+func _build_decor_overlay() -> void:
+	if _decor.is_empty():
+		return
+	var layer := TileMapLayer.new()
+	layer.tile_set = PlaceholderTiles.build_decor()
+	add_child(layer)
+	for d in _decor:
+		layer.set_cell(d[0], 0, Vector2i(int(d[1]), 0))
 
 ## En tile räknas som "land" mot skummet om den är inom kartan och inte vatten.
 ## Kartkanten (utanför) ger inget skum så vattnet inte ramas in vid världsranden.

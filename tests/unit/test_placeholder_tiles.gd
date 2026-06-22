@@ -63,3 +63,38 @@ func _opaque_count(img: Image) -> int:
 			if img.get_pixel(x, y).a > 0.0:
 				n += 1
 	return n
+
+# ── Naturdetaljer (dekor-overlay) ──
+
+func test_decor_atlas_has_all_decals():
+	var ts := PlaceholderTiles.build_decor()
+	assert_not_null(ts)
+	var src := ts.get_source(0) as TileSetAtlasSource
+	for i in PlaceholderTiles.DECOR_TILES:
+		assert_true(src.has_tile(Vector2i(i, 0)), "saknar dekal %d" % i)
+
+func test_decor_for_is_deterministic():
+	assert_eq(
+		PlaceholderTiles.decor_for(Vector2i(9, 4), "."),
+		PlaceholderTiles.decor_for(Vector2i(9, 4), "."))
+
+func test_decor_for_none_on_undecorated_terrain():
+	# Mur/vatten ska aldrig få dekal.
+	for t in 30:
+		assert_eq(PlaceholderTiles.decor_for(Vector2i(t, t), "W"), PlaceholderTiles.DECOR_NONE)
+		assert_eq(PlaceholderTiles.decor_for(Vector2i(t, t * 2), "~"), PlaceholderTiles.DECOR_NONE)
+
+func test_decor_for_is_sparse_but_present():
+	var decorated := 0
+	for x in 30:
+		for y in 30:
+			if PlaceholderTiles.decor_for(Vector2i(x, y), ".") != PlaceholderTiles.DECOR_NONE:
+				decorated += 1
+	assert_gt(decorated, 0, "någon ruta ska dekoreras")
+	assert_lt(decorated, 450, "dekor ska vara gles (< hälften av 900)")
+
+func test_decor_for_returns_valid_decal_index():
+	for x in 40:
+		var d := PlaceholderTiles.decor_for(Vector2i(x, x + 3), ".")
+		if d != PlaceholderTiles.DECOR_NONE:
+			assert_between(d, 0, PlaceholderTiles.DECOR_TILES - 1)

@@ -93,6 +93,97 @@ static func _foam_alpha(dist_from_edge: int) -> float:
 		return 0.0
 	return 0.7 * (1.0 - float(dist_from_edge) / float(FOAM_WIDTH))
 
+## ── Naturdetaljer: glesa dekaler (blommor, tuvor, sten) ovanpå mark ──
+## Rent visuellt overlay-lager. Dekal-index per ruta är deterministiskt så
+## kartan ser likadan ut varje gång men inte rutmönstrad.
+const DECOR_NONE := -1
+const DECOR_TILES := 6        # 0 gul blomma, 1 röd, 2 grästuva, 3 vit blomma, 4 småsten, 5 stenflisa
+const DECOR_DENSITY := 12     # ~% av dekorbara rutor som får en dekal
+# Vilka dekaler som passar på vilken terräng
+const DECOR_BY_TERRAIN := {
+	".": [0, 1, 2, 3],   # gräs: blommor + tuva
+	",": [4, 5],         # jord: små stenar
+	"g": [0, 3],         # åker: enstaka blommor i kanten
+}
+
+## Returnerar dekal-index (0..DECOR_TILES-1) för en ruta, eller DECOR_NONE.
+static func decor_for(t: Vector2i, terrain: String) -> int:
+	if not DECOR_BY_TERRAIN.has(terrain):
+		return DECOR_NONE
+	var opts: Array = DECOR_BY_TERRAIN[terrain]
+	var h := absi((t.x * 374761393) ^ (t.y * 668265263))
+	if h % 100 >= DECOR_DENSITY:
+		return DECOR_NONE
+	return int(opts[(h / 100) % opts.size()])
+
+static func build_decor() -> TileSet:
+	var img := Image.create(TILE * DECOR_TILES, TILE, false, Image.FORMAT_RGBA8)
+	for i in DECOR_TILES:
+		img.blit_rect(_make_decor_tile(i), Rect2i(0, 0, TILE, TILE), Vector2i(i * TILE, 0))
+	var src := TileSetAtlasSource.new()
+	src.texture = ImageTexture.create_from_image(img)
+	src.texture_region_size = Vector2i(TILE, TILE)
+	for i in DECOR_TILES:
+		src.create_tile(Vector2i(i, 0))
+	var ts := TileSet.new()
+	ts.tile_size = Vector2i(TILE, TILE)
+	ts.add_source(src, 0)
+	return ts
+
+## Ritar en transparent dekal. Motivet placeras något off-center och fröas på
+## index så de olika dekalerna inte ser identiska ut.
+static func _make_decor_tile(idx: int) -> Image:
+	var img := Image.create(TILE, TILE, false, Image.FORMAT_RGBA8)
+	img.fill(Color(0, 0, 0, 0))
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 1000 + idx
+	var ox := 10 + rng.randi_range(0, 12)
+	var oy := 12 + rng.randi_range(0, 10)
+	match idx:
+		0: _draw_flower(img, ox, oy, Color("f2d23a"), Color("c79a12"))   # gul
+		1: _draw_flower(img, ox, oy, Color("e0533a"), Color("a32f1c"))   # röd
+		2: _draw_tuft(img, ox, oy)                                       # grästuva
+		3: _draw_flower(img, ox, oy, Color("eef0f4"), Color("9aa6c0"))   # vit
+		4: _draw_pebbles(img, ox, oy, 3)                                 # småsten
+		5: _draw_pebbles(img, ox, oy, 2)                                 # stenflisa
+	return img
+
+static func _draw_flower(img: Image, cx: int, cy: int, petal: Color, center: Color) -> void:
+	# Stjälk
+	var stem := Color("2f6b2a")
+	for y in range(cy, mini(cy + 6, TILE)):
+		_put(img, cx, y, stem)
+	# Fyllig 3×3-blomma: kronblad i kors + diagonaler, mitt i annan färg
+	var hy := cy - 3
+	for d in [Vector2i(-1, 0), Vector2i(1, 0), Vector2i(0, -1), Vector2i(0, 1),
+			Vector2i(-1, -1), Vector2i(1, -1)]:
+		_put(img, cx + d.x, hy + d.y, petal)
+	_put(img, cx, hy, center)
+
+static func _draw_tuft(img: Image, cx: int, cy: int) -> void:
+	# Tydlig tuva: mörka strån i botten, ljusa toppar — sticker ut mot graset.
+	var blade := Color("2a5a22")
+	var blade_hi := Color("6cc24f")
+	for off in [-2, -1, 0, 1, 2]:
+		var h := 4 - absi(off)               # mittstrået högst
+		for k in range(h):
+			var c := blade_hi if k == h - 1 else blade
+			_put(img, cx + off, cy - k, c)
+
+static func _draw_pebbles(img: Image, cx: int, cy: int, count: int) -> void:
+	var stone := Color("9a948a")
+	var stone_lo := Color("6f6a61")
+	var spots := [Vector2i(0, 0), Vector2i(3, 1), Vector2i(-2, 2)]
+	for i in count:
+		var p: Vector2i = spots[i]
+		_put(img, cx + p.x, cy + p.y, stone)
+		_put(img, cx + p.x + 1, cy + p.y, stone)
+		_put(img, cx + p.x, cy + p.y + 1, stone_lo)
+
+static func _put(img: Image, x: int, y: int, c: Color) -> void:
+	if x >= 0 and y >= 0 and x < TILE and y < TILE:
+		img.set_pixel(x, y, c)
+
 static func build() -> TileSet:
 	# Atlas: TERRAIN.size() kolumner × VARIANTS rader.
 	var img := Image.create(TILE * TERRAIN.size(), TILE * VARIANTS, false, Image.FORMAT_RGBA8)
