@@ -93,6 +93,60 @@ static func _foam_alpha(dist_from_edge: int) -> float:
 		return 0.0
 	return 0.7 * (1.0 - float(dist_from_edge) / float(FOAM_WIDTH))
 
+## ── Gräsfrans: mjukar upp kanten där väg/jord möter gräs ──
+## Som strandskummet men grön och oregelbunden — gräset "kryper" in över
+## vägkanten. Bitmask 1=N, 2=Ö, 4=S, 8=V mot gräs. Eget lager, grid orört.
+const FRINGE_MAX := 6
+
+static func build_fringe() -> TileSet:
+	var img := Image.create(TILE * 16, TILE, false, Image.FORMAT_RGBA8)
+	for mask in range(1, 16):
+		img.blit_rect(make_fringe_tile(mask), Rect2i(0, 0, TILE, TILE), Vector2i(mask * TILE, 0))
+	var src := TileSetAtlasSource.new()
+	src.texture = ImageTexture.create_from_image(img)
+	src.texture_region_size = Vector2i(TILE, TILE)
+	for mask in range(1, 16):
+		src.create_tile(Vector2i(mask, 0))
+	var ts := TileSet.new()
+	ts.tile_size = Vector2i(TILE, TILE)
+	ts.add_source(src, 0)
+	return ts
+
+## Ritar en transparent grästofs-frans längs varje gräsvänd kant. Djupet
+## varierar per position (deterministiskt på mask) så kanten blir ojämn som
+## riktiga grässtrån, inte en rak remsa.
+static func make_fringe_tile(mask: int) -> Image:
+	var img := Image.create(TILE, TILE, false, Image.FORMAT_RGBA8)
+	img.fill(Color(0, 0, 0, 0))
+	var grass := Color("4a8f3c")
+	var grass_hi := Color("63a84a")
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 7000 + mask
+	# Per kant: slumpa ett djup per kolumn/rad och fyll inåt.
+	if mask & FOAM_N:
+		for x in TILE:
+			var d := rng.randi_range(2, FRINGE_MAX)
+			for y in d:
+				_put(img, x, y, grass_hi if y == d - 1 else grass)
+	if mask & FOAM_S:
+		for x in TILE:
+			var d := rng.randi_range(2, FRINGE_MAX)
+			for k in d:
+				var y := TILE - 1 - k
+				_put(img, x, y, grass_hi if k == d - 1 else grass)
+	if mask & FOAM_W:
+		for y in TILE:
+			var d := rng.randi_range(2, FRINGE_MAX)
+			for x in d:
+				_put(img, x, y, grass_hi if x == d - 1 else grass)
+	if mask & FOAM_E:
+		for y in TILE:
+			var d := rng.randi_range(2, FRINGE_MAX)
+			for k in d:
+				var x := TILE - 1 - k
+				_put(img, x, y, grass_hi if k == d - 1 else grass)
+	return img
+
 ## ── Naturdetaljer: glesa dekaler (blommor, tuvor, sten) ovanpå mark ──
 ## Rent visuellt overlay-lager. Dekal-index per ruta är deterministiskt så
 ## kartan ser likadan ut varje gång men inte rutmönstrad.

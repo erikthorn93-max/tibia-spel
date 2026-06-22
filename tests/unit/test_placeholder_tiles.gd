@@ -98,3 +98,26 @@ func test_decor_for_returns_valid_decal_index():
 		var d := PlaceholderTiles.decor_for(Vector2i(x, x + 3), ".")
 		if d != PlaceholderTiles.DECOR_NONE:
 			assert_between(d, 0, PlaceholderTiles.DECOR_TILES - 1)
+
+# ── Gräsfrans (väg/jord → gräs-övergång) ──
+
+func test_fringe_atlas_has_tiles_for_all_masks():
+	var ts := PlaceholderTiles.build_fringe()
+	assert_not_null(ts)
+	var src := ts.get_source(0) as TileSetAtlasSource
+	for mask in range(1, 16):
+		assert_true(src.has_tile(Vector2i(mask, 0)), "saknar frans för mask %d" % mask)
+
+func test_fringe_tile_has_visible_pixels():
+	var img := PlaceholderTiles.make_fringe_tile(PlaceholderTiles.FOAM_N)
+	var visible := 0
+	for y in PlaceholderTiles.TILE:
+		for x in PlaceholderTiles.TILE:
+			if img.get_pixel(x, y).a > 0.0:
+				visible += 1
+	assert_gt(visible, 0, "fransen ska ha synliga pixlar")
+
+func test_fringe_more_edges_means_more_pixels():
+	var one := _opaque_count(PlaceholderTiles.make_fringe_tile(PlaceholderTiles.FOAM_N))
+	var all := _opaque_count(PlaceholderTiles.make_fringe_tile(15))
+	assert_gt(all, one, "fyra kanter ska ge mer frans än en")

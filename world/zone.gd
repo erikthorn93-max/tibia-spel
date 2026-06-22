@@ -32,6 +32,8 @@ var stair_points: Dictionary = {}      # Vector2i -> {"to": zon-id, "up": bool}
 var _walkable: Dictionary = {}      # Vector2i -> bool
 var _water: Dictionary = {}         # Vector2i -> true (för strand-overlay)
 var _decor: Array = []              # [[Vector2i, dekal-index]] (naturdetaljer)
+var _grass: Dictionary = {}         # Vector2i -> true (för gräsfrans)
+var _path: Array = []              # Vector2i (jord/kullersten, för gräsfrans)
 var _astar := AStarGrid2D.new()
 var tilemap: TileMapLayer
 
@@ -133,12 +135,18 @@ func build_from_data(data: Dictionary, id: String) -> void:
 			_walkable[t] = terrain != "W" and terrain != "w" and terrain != "r" and terrain != "~" and terrain != "t" and not blocked
 			if terrain == "~":
 				_water[t] = true
-			elif not blocked:
-				var dec := PlaceholderTiles.decor_for(t, terrain)
-				if dec != PlaceholderTiles.DECOR_NONE:
-					_decor.append([t, dec])
+			else:
+				if terrain == ".":
+					_grass[t] = true
+				elif terrain == "," or terrain == "c":
+					_path.append(t)
+				if not blocked:
+					var dec := PlaceholderTiles.decor_for(t, terrain)
+					if dec != PlaceholderTiles.DECOR_NONE:
+						_decor.append([t, dec])
 
 	_build_shore_overlay()
+	_build_fringe_overlay()
 	_build_decor_overlay()
 
 	_astar.region = Rect2i(Vector2i.ZERO, grid_size)
@@ -187,6 +195,23 @@ func _build_shore_overlay() -> void:
 		if _is_land(t + Vector2i(-1, 0)): mask |= PlaceholderTiles.FOAM_W
 		if mask > 0:
 			overlay.set_cell(t, 0, Vector2i(mask, 0))
+
+## Lägger en gräsfrans på väg-/jordrutor som gränsar till gräs, så den hårda
+## kanten mjukas upp. Eget overlay-lager mellan skum och dekor. Grid orört.
+func _build_fringe_overlay() -> void:
+	if _path.is_empty() or _grass.is_empty():
+		return
+	var layer := TileMapLayer.new()
+	layer.tile_set = PlaceholderTiles.build_fringe()
+	add_child(layer)
+	for t: Vector2i in _path:
+		var mask := 0
+		if _grass.has(t + Vector2i(0, -1)): mask |= PlaceholderTiles.FOAM_N
+		if _grass.has(t + Vector2i(1, 0)):  mask |= PlaceholderTiles.FOAM_E
+		if _grass.has(t + Vector2i(0, 1)):  mask |= PlaceholderTiles.FOAM_S
+		if _grass.has(t + Vector2i(-1, 0)): mask |= PlaceholderTiles.FOAM_W
+		if mask > 0:
+			layer.set_cell(t, 0, Vector2i(mask, 0))
 
 ## Lägger glesa naturdetaljer (blommor/tuvor/sten) ovanpå marken. Eget lager,
 ## ritas efter skummet → ovanpå mark & strand men under figurer. Rent visuellt.
