@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+const Atmosphere = preload("res://ui/atmosphere.gd")
+
 @onready var hp_bar: ColorRect = $HpBar
 @onready var mana_bar: ColorRect = $ManaBar
 @onready var stats: Label = $StatsLabel
@@ -26,6 +28,7 @@ var equipment_panel: PanelContainer
 var hotkey_bar: Node
 var _msg_timer := 0.0
 var _night_overlay: ColorRect  # dag/natt-mörkläggning
+var _vignette: TextureRect     # mjuk kantmörkläggning (filmisk inramning)
 var _clock_lbl: Label          # spelklocka HH:MM
 var _poison_lbl: Label    # "Giftig!"-chip
 var _boss_panel: PanelContainer  # boss HP-bar, synlig under bossfight
@@ -320,6 +323,15 @@ func _build_night_overlay() -> void:
 	_night_overlay.color = Color(0.02, 0.04, 0.18, 0.0)
 	add_child(_night_overlay)
 	move_child(_night_overlay, 1)   # precis ovanför world_drop_zone
+	# Vinjett: mjuk kantmörkläggning ovanpå dygns-tonen, under HUD-widgets.
+	_vignette = TextureRect.new()
+	_vignette.texture = Atmosphere.make_vignette(256, 144)
+	_vignette.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_vignette.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_vignette.stretch_mode = TextureRect.STRETCH_SCALE
+	_vignette.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_vignette)
+	move_child(_vignette, 2)
 	_clock_lbl = Label.new()
 	_clock_lbl.add_theme_font_size_override("font_size", 11)
 	_clock_lbl.add_theme_color_override("font_color", Color(0.88, 0.84, 0.62))
@@ -339,15 +351,15 @@ func _update_night_overlay() -> void:
 	if _night_overlay == null or _clock_lbl == null:
 		return
 	var h := TimeOfDay.hour
-	var frac := TimeOfDay.day_fraction   # 0.0–1.0
-	# Beräkna alpha: max mörkhet 0.52 klockan 00:00, 0.0 klockan 12:00
-	# Sinuskurva: mörkt 22:00–06:00, ljust 08:00–20:00
-	var angle := frac * TAU   # 0 = midnatt, PI = middag
-	var raw_alpha := (-cos(angle) + 1.0) * 0.5   # 0..1, topp vid midnatt
-	var alpha := raw_alpha * 0.52
+	var frac := TimeOfDay.day_fraction   # 0.0 = midnatt, 0.5 = middag
+	# Dygnsfärgning: varm gryning/skymning, sval natt, klar middag.
+	var sky := Atmosphere.overlay_color(frac)
 	# Utrustad ljuskälla (fackla/lykta) lättar upp mörkret runt spelaren.
-	alpha *= clampf(1.0 - GameState.light_level(), 0.15, 1.0)
-	_night_overlay.color = Color(0.02, 0.04, 0.18, alpha)
+	var light_factor := clampf(1.0 - GameState.light_level(), 0.15, 1.0)
+	_night_overlay.color = Color(sky.r, sky.g, sky.b, sky.a * light_factor)
+	# Vinjetten följer dygnet (mörkare hörn på natten) och ljuskällan.
+	if _vignette:
+		_vignette.modulate.a = Atmosphere.vignette_strength(frac) * light_factor
 	# Klocka + ikon
 	var icon := "☀" if not TimeOfDay.is_night else "🌙"
 	_clock_lbl.text = "%s %02d:00" % [icon, h]
