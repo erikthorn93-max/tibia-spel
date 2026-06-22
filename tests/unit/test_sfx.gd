@@ -37,3 +37,12 @@ func test_synth_envelope_decays():
 func test_empty_freqs_gives_empty_buffer():
 	var buf: PackedVector2Array = Sfx.synth([], 0.1)
 	assert_eq(buf.size(), 0)
+
+func test_sound_methods_callable_without_error():
+	# Instansiera autoloaden och spela varje ljud — får inte krascha (headless).
+	var sfx = add_child_autofree(Sfx.new())
+	sfx.level_up()
+	sfx.skill_up()
+	sfx.quest_done()
+	sfx.unlock()
+	pass_test("alla ljudmetoder gick att anropa")

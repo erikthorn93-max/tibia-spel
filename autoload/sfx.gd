@@ -60,3 +60,11 @@ func level_up() -> void:
 ## Kort tvåtons-blip (E-H) för skill-uppgång.
 func skill_up() -> void:
 	_enqueue(synth([659.25, 987.77], 0.08, 0.22))
+
+## Längre triumferande fanfar (G-C-E-G-C) för avklarad quest.
+func quest_done() -> void:
+	_enqueue(synth([392.0, 523.25, 659.25, 783.99, 1046.50], 0.14))
+
+## Stigande kvint (C-G) — "något har öppnats".
+func unlock() -> void:
+	_enqueue(synth([523.25, 783.99], 0.13, 0.25))

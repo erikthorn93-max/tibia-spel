@@ -76,6 +76,7 @@ func _ready() -> void:
 	QuestSystem.step_advanced.connect(func(_id): _refresh_quests())
 	QuestSystem.quest_completed.connect(func(id):
 		_refresh_quests()
+		Sfx.quest_done()
 		show_message("Quest klar: %s!" % QuestSystem.quests[id]["name"]))
 	add_child(preload("res://ui/minimap.gd").new())
 	add_child(preload("res://ui/debug_console.gd").new())
@@ -88,7 +89,9 @@ func _ready() -> void:
 	TaskSystem.task_taken.connect(func(_id): _refresh_tasks())
 	TaskSystem.task_progress.connect(func(_id): _refresh_tasks())
 	TaskSystem.task_completed.connect(func(_id): _refresh_tasks())
-	UnlockSystem.unlock_added.connect(func(id): show_message("%s har öppnats!" % UnlockSystem.display_name(id)))
+	UnlockSystem.unlock_added.connect(func(id):
+		Sfx.unlock()
+		show_message("%s har öppnats!" % UnlockSystem.display_name(id)))
 	GameState.hp_changed.connect(func(h, m): _refresh(); _on_hp_changed_anim(h, m))
 	GameState.mana_changed.connect(func(_v, _m): _refresh())
 	GameState.exp_changed.connect(func(_x, _n, _l): _refresh())
