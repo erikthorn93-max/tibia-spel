@@ -72,6 +72,27 @@ func needs_aim(def: Dictionary) -> bool:
 func cooldown_left(id: String) -> float:
 	return float(_cooldowns.get(id, 0.0))
 
+## Castbar just nu bortsett från cooldown — krav, mana, runor & reagens.
+## Används av hotbaren för att gråtona ikoner man inte har råd med (cooldown
+## visas separat via overlayn, så den räknas medvetet inte in här).
+func affordable(id: String) -> bool:
+	var def := cast_def(id)
+	if def.is_empty():
+		return false
+	if String(def["source"]) == "spell" and not knows_spell(id):
+		return false
+	if String(def["source"]) == "rune" and int(GameState.inventory.get(id, 0)) < 1:
+		return false
+	if GameState.effective_skill_level("magic") < int(def.get("magic_lvl", 1)):
+		return false
+	if GameState.mana < float(def.get("mana_cost", 0.0)):
+		return false
+	if String(def.get("type", "")) == "conjure":
+		var reagent := String(def.get("reagent", ""))
+		if reagent != "" and int(GameState.inventory.get(reagent, 0)) < 1:
+			return false
+	return true
+
 # ── Gating ───────────────────────────────────────────────────────────────────
 ## Returnerar {ok: bool, reason: String}. reason är tom vid ok.
 func can_cast(id: String) -> Dictionary:

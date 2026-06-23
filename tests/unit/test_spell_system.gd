@@ -101,6 +101,32 @@ func test_can_cast_rune_needs_inventory() -> void:
 	GameState.inventory["fire_rune"] = 1
 	assert_true(SpellSystem.can_cast("fire_rune")["ok"])
 
+# ── affordability (hotbar-graying) ───────────────────────────────────────────
+func test_affordable_true_when_castable() -> void:
+	GameState.learned_spells = ["light_healing"]
+	assert_true(SpellSystem.affordable("light_healing"), "inlärd spell med mana ska vara affordable")
+
+func test_affordable_false_without_mana() -> void:
+	GameState.learned_spells = ["light_healing"]
+	GameState.mana = 0.0
+	assert_false(SpellSystem.affordable("light_healing"), "utan mana ska den gråtonas")
+
+func test_affordable_false_for_unknown_spell() -> void:
+	assert_false(SpellSystem.affordable("flame_strike"), "ej inlärd spell är inte affordable")
+
+func test_affordable_ignores_cooldown() -> void:
+	# Nyckelfall: cooldown visas via overlay, inte via graying — affordable
+	# ska förbli sann direkt efter en cast så länge resurserna räcker.
+	GameState.learned_spells = ["light_healing"]
+	SpellSystem.resolve_cast("light_healing", null, Vector2i.ZERO)
+	assert_gt(SpellSystem.cooldown_left("light_healing"), 0.0, "spellen ska vara på cooldown")
+	assert_true(SpellSystem.affordable("light_healing"), "cooldown ska inte gråtona ikonen")
+
+func test_affordable_rune_needs_inventory() -> void:
+	assert_false(SpellSystem.affordable("fire_rune"), "utan runor är den inte affordable")
+	GameState.inventory["fire_rune"] = 1
+	assert_true(SpellSystem.affordable("fire_rune"))
+
 # ── Inlärning ────────────────────────────────────────────────────────────────
 func test_learn_spell_deducts_gold_and_learns() -> void:
 	GameState.gold = 1000

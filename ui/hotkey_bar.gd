@@ -31,6 +31,7 @@ var _slot_icons:    Array = []
 var _slot_name_lbls: Array = []
 var _slot_key_lbls:  Array = []
 var _slot_cooldowns: Array = []   # CooldownOverlay per slot
+var _slot_cast_ids:  Array = []   # castbart id per slot ("" om ej spell/runa)
 
 # Drag-tillstånd
 var _drag_slot    := -1
@@ -147,6 +148,7 @@ func _build_slot(idx: int) -> void:
 	cd.set_anchors_preset(Control.PRESET_FULL_RECT)
 	cell.add_child(cd)
 	_slot_cooldowns.append(cd)
+	_slot_cast_ids.append("")
 
 	_slot_nodes.append(cell)
 	cell.gui_input.connect(func(ev): _on_slot_input(ev, idx, cell))
@@ -375,16 +377,19 @@ func _on_clear() -> void:
 	_save_config()
 
 # ─────────────────────────────────────────────
-## Pollar cooldown för varje slots bundna besvärjelse/runa och driver overlayn.
+const _DIM := Color(0.5, 0.5, 0.58, 0.6)   # gråton för "har inte råd"
+
+## Pollar cooldown & affordability per spell/rune-slot; driver overlay + graying.
 func _process(_delta: float) -> void:
 	for i in _slot_cooldowns.size():
-		var slot: Dictionary = _slots[i]
-		var id := String(slot.get("spell_id", ""))
+		var id := String(_slot_cast_ids[i])
 		if id == "":
-			id = String(slot.get("item_id", ""))   # runor delar cooldown-id med casten
-		var left := SpellSystem.cooldown_left(id) if id != "" else 0.0
+			_slot_cooldowns[i].set_cooldown(0.0, 1.0)
+			continue
+		var left := SpellSystem.cooldown_left(id)
 		# _cd_total bygger en rune-def — undvik det utom när sloten faktiskt laddar.
 		_slot_cooldowns[i].set_cooldown(left, _cd_total(id) if left > 0.0 else 1.0)
+		_slot_icons[i].modulate = Color.WHITE if SpellSystem.affordable(id) else _DIM
 
 ## Full cooldown-längd för ett spell-/rune-id (för wedge-andelen).
 func _cd_total(id: String) -> float:
@@ -404,9 +409,11 @@ func _refresh_slot(idx: int) -> void:
 	var spell_id: String = String(slot.get("spell_id", ""))
 	var item_id: String = String(slot.get("item_id", ""))
 	icon.texture = null
+	icon.modulate = Color.WHITE
 	nlbl.visible = false
 	var cell: Control = _slot_nodes[idx]
 	cell.tooltip_text = ""
+	_slot_cast_ids[idx] = ""
 	if spell_id != "":
 		var ssp := "res://assets/sprites/spells/%s.png" % spell_id
 		if ResourceLoader.exists(ssp):
@@ -415,10 +422,14 @@ func _refresh_slot(idx: int) -> void:
 			# Ingen sprite → procedurell element-ikon (samma som spellbok).
 			icon.texture = SpellIcons.texture(spell_id, SpellSystem.spells.get(spell_id, {}))
 		cell.tooltip_text = _spell_tooltip(spell_id)
+		_slot_cast_ids[idx] = spell_id
 	elif item_id != "":
 		var sp := "res://assets/sprites/items/%s.png" % item_id
 		icon.texture = load(sp) if ResourceLoader.exists(sp) else null
 		cell.tooltip_text = String(ItemDB.items.get(item_id, {}).get("name", item_id))
+		# Bara runor gråtonas av mana/krav — vanliga items (drycker) lämnas vita.
+		if not SpellSystem.cast_def(item_id).is_empty():
+			_slot_cast_ids[idx] = item_id
 	_slot_key_lbls[idx].text = String(slot.get("key_name", ""))
 
 ## Tooltip för en bunden besvärjelse: namn, ord, mana, magic-krav, cooldown.
