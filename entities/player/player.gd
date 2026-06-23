@@ -18,6 +18,7 @@ var _attack_timer := 0.0
 var gather_target: Node2D = null
 var _gather_timer := 0.0
 var _auto_path: Array = []
+var _status_aura: CPUParticles2D = null
 
 @onready var visual: CharacterVisual = $CharacterVisual
 
@@ -25,6 +26,37 @@ func _ready() -> void:
 	visual.apply_appearance(GameState.appearance)
 	GameState.appearance_changed.connect(func(): visual.apply_appearance(GameState.appearance))
 	GameState.player_hit.connect(_on_player_hit)
+	_build_status_aura()
+	GameState.status_changed.connect(_update_status_aura)
+
+## Bygger en partikel-aura som visar pågående status (gift/brand) runt spelaren.
+func _build_status_aura() -> void:
+	_status_aura = CPUParticles2D.new()
+	_status_aura.emitting = false
+	_status_aura.amount = 10
+	_status_aura.lifetime = 0.8
+	_status_aura.direction = Vector2(0, -1)
+	_status_aura.spread = 25.0
+	_status_aura.initial_velocity_min = 12.0
+	_status_aura.initial_velocity_max = 26.0
+	_status_aura.gravity = Vector2(0, -12)
+	_status_aura.scale_amount_min = 1.5
+	_status_aura.scale_amount_max = 2.5
+	_status_aura.position = Vector2(0, -6)
+	add_child(_status_aura)
+
+## Slår på/av auran utifrån aktiv status (gift = grön, brand = orange).
+func _update_status_aura(_id := "") -> void:
+	if _status_aura == null:
+		return
+	if GameState.has_status("poison"):
+		_status_aura.color = Color(0.40, 0.95, 0.35)
+		_status_aura.emitting = true
+	elif GameState.has_status("burn"):
+		_status_aura.color = Color(1.0, 0.50, 0.12)
+		_status_aura.emitting = true
+	else:
+		_status_aura.emitting = false
 
 func _on_player_hit(dmg: float, dmg_type: String) -> void:
 	if dmg <= 0:

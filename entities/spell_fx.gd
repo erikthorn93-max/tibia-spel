@@ -46,8 +46,8 @@ static func burst(parent: Node, world_pos: Vector2, color: Color, amount := 12, 
 	parent.add_child(p)
 	p.get_tree().create_timer(0.9).timeout.connect(p.queue_free)
 
-## Helande gnistor som stiger uppåt vid målet.
-static func heal_sparkle(parent: Node, world_pos: Vector2) -> void:
+## Gnistor som stiger uppåt vid en position (fontän). Återanvänds av heal & nivå-upp.
+static func fountain(parent: Node, world_pos: Vector2, color: Color, amount := 14) -> void:
 	if parent == null:
 		return
 	var p := CPUParticles2D.new()
@@ -55,7 +55,7 @@ static func heal_sparkle(parent: Node, world_pos: Vector2) -> void:
 	p.emitting = true
 	p.one_shot = true
 	p.explosiveness = 0.7
-	p.amount = 14
+	p.amount = amount
 	p.lifetime = 0.7
 	p.direction = Vector2(0, -1)
 	p.spread = 35.0
@@ -64,9 +64,13 @@ static func heal_sparkle(parent: Node, world_pos: Vector2) -> void:
 	p.gravity = Vector2(0, -20)
 	p.scale_amount_min = 1.5
 	p.scale_amount_max = 3.0
-	p.color = Color(0.45, 1.0, 0.5)
+	p.color = color
 	parent.add_child(p)
 	p.get_tree().create_timer(1.1).timeout.connect(p.queue_free)
+
+## Helande gnistor som stiger uppåt vid målet.
+static func heal_sparkle(parent: Node, world_pos: Vector2) -> void:
+	fountain(parent, world_pos, Color(0.45, 1.0, 0.5))
 
 ## Expanderande, tonande ring (cast/buff-markör).
 static func ring(parent: Node, world_pos: Vector2, color: Color, max_r := 26.0) -> void:

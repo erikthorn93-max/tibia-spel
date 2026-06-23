@@ -456,6 +456,9 @@ func _on_hp_changed_anim(h: float, _m: float) -> void:
 
 func _on_skill_leveled(skill: String, new_level: int) -> void:
 	Sfx.skill_up()
+	var p := World.player
+	if p != null and is_instance_valid(p):
+		SpellFx.ring(p.get_parent(), p.global_position, Color(0.7, 0.9, 1.0), 26.0)
 	if _skillup_lbl == null:
 		return
 	var sname: String = String(GameState.skill_defs[skill]["name"]) \
@@ -493,6 +496,12 @@ func _on_item_used(item_id: String) -> void:
 
 func _on_level_up_anim() -> void:
 	Sfx.level_up()
+	# Guldpelare + ring vid spelaren
+	var p := World.player
+	if p != null and is_instance_valid(p):
+		var gold := Color(1.0, 0.88, 0.3)
+		SpellFx.ring(p.get_parent(), p.global_position, gold, 44.0)
+		SpellFx.fountain(p.get_parent(), p.global_position, gold, 22)
 	if _levelup_lbl == null:
 		return
 	_levelup_lbl.visible = true
