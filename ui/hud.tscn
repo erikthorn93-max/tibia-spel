@@ -6,34 +6,6 @@
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1")
 
-[node name="HpBack" type="ColorRect" parent="."]
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 216.0
-offset_bottom = 30.0
-color = Color(0.2, 0.05, 0.05, 0.85)
-
-[node name="HpBar" type="ColorRect" parent="."]
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 216.0
-offset_bottom = 30.0
-color = Color(0.8, 0.15, 0.15, 1)
-
-[node name="ManaBack" type="ColorRect" parent="."]
-offset_left = 16.0
-offset_top = 34.0
-offset_right = 216.0
-offset_bottom = 48.0
-color = Color(0.05, 0.05, 0.2, 0.85)
-
-[node name="ManaBar" type="ColorRect" parent="."]
-offset_left = 16.0
-offset_top = 34.0
-offset_right = 216.0
-offset_bottom = 48.0
-color = Color(0.2, 0.3, 0.9, 1)
-
 [node name="StatsLabel" type="Label" parent="."]
 offset_left = 16.0
 offset_top = 52.0

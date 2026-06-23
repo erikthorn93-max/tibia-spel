@@ -2,8 +2,11 @@ extends CanvasLayer
 
 const Atmosphere = preload("res://ui/atmosphere.gd")
 
-@onready var hp_bar: ColorRect = $HpBar
-@onready var mana_bar: ColorRect = $ManaBar
+var hp_bar: Panel       # fyllnad (anchor_right driver nivån) — byggs i _build_bars()
+var mana_bar: Panel
+var _hp_val: Label
+var _mana_val: Label
+var _hp_pulse_t := 0.0
 @onready var stats: Label = $StatsLabel
 @onready var buffs_lbl: Label = $BuffsLabel
 @onready var tasks_lbl: Label = $TasksLabel
@@ -85,6 +88,7 @@ func _ready() -> void:
 	add_child(preload("res://ui/minimap.gd").new())
 	add_child(preload("res://ui/debug_console.gd").new())
 	add_child(preload("res://ui/death_screen.gd").new())
+	_build_bars()
 	_build_boss_bar()
 	_build_night_overlay()
 	_build_levelup_labels()
@@ -127,6 +131,15 @@ func _process(delta: float) -> void:
 		_refresh_buffs()   # nedräkning
 	_refresh_boss_bar()
 	_update_night_overlay()
+	# Kritiskt låg HP: fyllningen pulserar varnande
+	if hp_bar:
+		var crit := GameState.max_health > 0.0 and (GameState.health / GameState.max_health) < 0.3
+		if crit:
+			_hp_pulse_t += delta * 6.0
+			var g := 0.75 + 0.25 * sin(_hp_pulse_t)
+			hp_bar.self_modulate = Color(1.0, g, g)
+		elif hp_bar.self_modulate != Color.WHITE:
+			hp_bar.self_modulate = Color.WHITE
 
 func show_message(text: String) -> void:
 	msg_lbl.text = text
@@ -180,8 +193,14 @@ func _refresh_tasks() -> void:
 	tasks_lbl.text = " · ".join(parts)
 
 func _refresh() -> void:
-	hp_bar.size.x = 200.0 * (GameState.health / GameState.max_health)
-	mana_bar.size.x = 200.0 * (GameState.mana / GameState.max_mana)
+	var hp_ratio := clampf(GameState.health / GameState.max_health, 0.0, 1.0)
+	var mp_ratio := clampf(GameState.mana / GameState.max_mana, 0.0, 1.0)
+	if hp_bar:
+		hp_bar.anchor_right = hp_ratio
+		_hp_val.text = "%d / %d" % [roundi(GameState.health), roundi(GameState.max_health)]
+	if mana_bar:
+		mana_bar.anchor_right = mp_ratio
+		_mana_val.text = "%d / %d" % [roundi(GameState.mana), roundi(GameState.max_mana)]
 	var wskill := GameState.weapon_skill()
 	stats.text = "Lv %d  XP %d/%d  Guld %d  %s %d" % [
 		GameState.level, GameState.experience, GameState.xp_to_next, GameState.gold,
@@ -403,6 +422,86 @@ func _update_night_overlay() -> void:
 	# Klocka + ikon
 	var icon := "☀" if not TimeOfDay.is_night else "🌙"
 	_clock_lbl.text = "%s %02d:00" % [icon, h]
+
+## Bygger uppfräschade HP/mana-barer: rundad ram med skugga, glansig fyllning
+## (sheen-list upptill) och centrerat värde "X / Y". Fyllnadsgraden styrs av
+## fyllnadens anchor_right i _refresh().
+const _BAR_W := 208.0
+const _BAR_H := 18.0
+
+func _build_bars() -> void:
+	hp_bar = _make_bar(14.0,
+		Color(0.86, 0.20, 0.20), Color(0.45, 0.10, 0.10, 0.95))   # rött + mörk kant
+	_hp_val = _make_bar_label(14.0)
+	mana_bar = _make_bar(34.0,
+		Color(0.26, 0.46, 0.96), Color(0.14, 0.20, 0.50, 0.95))   # blått + mörk kant
+	_mana_val = _make_bar_label(34.0)
+
+## Skapar ram + fyllning + sheen. Returnerar fyllnads-panelen (driver nivån).
+func _make_bar(top: float, fill_color: Color, border_color: Color) -> Panel:
+	# --- rundad mörk ram med mjuk skugga ---
+	var frame := Panel.new()
+	frame.offset_left = 16.0
+	frame.offset_top = top
+	frame.offset_right = 16.0 + _BAR_W
+	frame.offset_bottom = top + _BAR_H
+	frame.clip_contents = true
+	var fsb := StyleBoxFlat.new()
+	fsb.bg_color = Color(0.07, 0.06, 0.07, 0.92)
+	fsb.set_corner_radius_all(6)
+	fsb.set_border_width_all(1)
+	fsb.border_color = border_color
+	fsb.shadow_color = Color(0, 0, 0, 0.45)
+	fsb.shadow_size = 3
+	frame.add_theme_stylebox_override("panel", fsb)
+	add_child(frame)
+	# --- glansig fyllning (rundad pill, anchor_right = nivå) ---
+	var fill := Panel.new()
+	fill.anchor_left = 0.0
+	fill.anchor_top = 0.0
+	fill.anchor_bottom = 1.0
+	fill.anchor_right = 1.0
+	fill.offset_left = 2.0
+	fill.offset_top = 2.0
+	fill.offset_bottom = -2.0
+	fill.offset_right = -2.0
+	fill.clip_contents = true
+	var fillsb := StyleBoxFlat.new()
+	fillsb.bg_color = fill_color
+	fillsb.set_corner_radius_all(5)
+	fill.add_theme_stylebox_override("panel", fillsb)
+	frame.add_child(fill)
+	# --- sheen: ljus list över övre halvan för glanseffekt ---
+	var sheen := ColorRect.new()
+	sheen.color = Color(1, 1, 1, 0.16)
+	sheen.anchor_left = 0.0
+	sheen.anchor_right = 1.0
+	sheen.anchor_top = 0.0
+	sheen.anchor_bottom = 0.0
+	sheen.offset_left = 2.0
+	sheen.offset_right = -2.0
+	sheen.offset_top = 1.0
+	sheen.offset_bottom = 6.0
+	sheen.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	fill.add_child(sheen)
+	return fill
+
+## Centrerad värde-etikett över en bar, med svart kontur för läsbarhet.
+func _make_bar_label(top: float) -> Label:
+	var lbl := Label.new()
+	lbl.offset_left = 16.0
+	lbl.offset_top = top
+	lbl.offset_right = 16.0 + _BAR_W
+	lbl.offset_bottom = top + _BAR_H
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	lbl.add_theme_font_size_override("font_size", 11)
+	lbl.add_theme_color_override("font_color", Color(1, 1, 1))
+	lbl.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.85))
+	lbl.add_theme_constant_override("outline_size", 3)
+	lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(lbl)
+	return lbl
 
 func _build_boss_bar() -> void:
 	_boss_panel = PanelContainer.new()
