@@ -32,6 +32,7 @@ var _slot_name_lbls: Array = []
 var _slot_key_lbls:  Array = []
 var _slot_cooldowns: Array = []   # CooldownOverlay per slot
 var _slot_cast_ids:  Array = []   # castbart id per slot ("" om ej spell/runa)
+var _slot_blink:     Array = []   # kvarvarande blink-tid (s) per slot
 
 # Drag-tillstånd
 var _drag_slot    := -1
@@ -56,6 +57,13 @@ func _ready() -> void:
 		_build_slot(i)
 	_build_popup()
 	_refresh_all()
+	SpellSystem.spell_cast.connect(_on_spell_cast)
+
+## Lyckad cast → blixt på alla slottar bundna till samma besvärjelse/runa.
+func _on_spell_cast(id: String, _result: Dictionary) -> void:
+	for i in _slot_cast_ids.size():
+		if String(_slot_cast_ids[i]) == id:
+			_slot_blink[i] = _BLINK_TIME
 
 func _default_pos(i: int) -> Vector2:
 	var vp := get_viewport().get_visible_rect().size
@@ -149,6 +157,7 @@ func _build_slot(idx: int) -> void:
 	cell.add_child(cd)
 	_slot_cooldowns.append(cd)
 	_slot_cast_ids.append("")
+	_slot_blink.append(0.0)
 
 	_slot_nodes.append(cell)
 	cell.gui_input.connect(func(ev): _on_slot_input(ev, idx, cell))
@@ -377,10 +386,13 @@ func _on_clear() -> void:
 	_save_config()
 
 # ─────────────────────────────────────────────
-const _DIM := Color(0.5, 0.5, 0.58, 0.6)   # gråton för "har inte råd"
+const _DIM        := Color(0.5, 0.5, 0.58, 0.6)   # gråton för "har inte råd"
+const _BLINK_TIME := 0.28                          # blixt-längd (s)
+const _BLINK_COL  := Color(1.7, 1.7, 1.7, 1.0)     # additiv ljusning vid cast
 
-## Pollar cooldown & affordability per spell/rune-slot; driver overlay + graying.
-func _process(_delta: float) -> void:
+## Pollar cooldown & affordability per spell/rune-slot; driver overlay, graying
+## och cast-blixt.
+func _process(delta: float) -> void:
 	for i in _slot_cooldowns.size():
 		var id := String(_slot_cast_ids[i])
 		if id == "":
@@ -389,7 +401,12 @@ func _process(_delta: float) -> void:
 		var left := SpellSystem.cooldown_left(id)
 		# _cd_total bygger en rune-def — undvik det utom när sloten faktiskt laddar.
 		_slot_cooldowns[i].set_cooldown(left, _cd_total(id) if left > 0.0 else 1.0)
-		_slot_icons[i].modulate = Color.WHITE if SpellSystem.affordable(id) else _DIM
+		var base: Color = Color.WHITE if SpellSystem.affordable(id) else _DIM
+		if _slot_blink[i] > 0.0:
+			_slot_blink[i] = maxf(_slot_blink[i] - delta, 0.0)
+			_slot_icons[i].modulate = base.lerp(_BLINK_COL, _slot_blink[i] / _BLINK_TIME)
+		else:
+			_slot_icons[i].modulate = base
 
 ## Full cooldown-längd för ett spell-/rune-id (för wedge-andelen).
 func _cd_total(id: String) -> float:

@@ -127,6 +127,15 @@ func test_affordable_rune_needs_inventory() -> void:
 	GameState.inventory["fire_rune"] = 1
 	assert_true(SpellSystem.affordable("fire_rune"))
 
+# ── Signaler (hotbar-blixt m.m. bygger på dessa) ─────────────────────────────
+func test_resolve_cast_emits_spell_cast() -> void:
+	GameState.learned_spells = ["light_healing"]
+	watch_signals(SpellSystem)
+	SpellSystem.resolve_cast("light_healing", null, Vector2i.ZERO)
+	assert_signal_emitted(SpellSystem, "spell_cast", "cast ska emittera spell_cast för hotbar-feedback")
+	var params = get_signal_parameters(SpellSystem, "spell_cast")
+	assert_eq(String(params[0]), "light_healing", "signalen ska bära casten:s id")
+
 # ── Inlärning ────────────────────────────────────────────────────────────────
 func test_learn_spell_deducts_gold_and_learns() -> void:
 	GameState.gold = 1000
