@@ -381,6 +381,8 @@ func _refresh_slot(idx: int) -> void:
 	var item_id: String = String(slot.get("item_id", ""))
 	icon.texture = null
 	nlbl.visible = false
+	var cell: Control = _slot_nodes[idx]
+	cell.tooltip_text = ""
 	if spell_id != "":
 		var ssp := "res://assets/sprites/spells/%s.png" % spell_id
 		if ResourceLoader.exists(ssp):
@@ -388,7 +390,25 @@ func _refresh_slot(idx: int) -> void:
 		else:
 			# Ingen sprite → procedurell element-ikon (samma som spellbok).
 			icon.texture = SpellIcons.texture(spell_id, SpellSystem.spells.get(spell_id, {}))
+		cell.tooltip_text = _spell_tooltip(spell_id)
 	elif item_id != "":
 		var sp := "res://assets/sprites/items/%s.png" % item_id
 		icon.texture = load(sp) if ResourceLoader.exists(sp) else null
+		cell.tooltip_text = String(ItemDB.items.get(item_id, {}).get("name", item_id))
 	_slot_key_lbls[idx].text = String(slot.get("key_name", ""))
+
+## Tooltip för en bunden besvärjelse: namn, ord, mana, magic-krav, cooldown.
+func _spell_tooltip(spell_id: String) -> String:
+	var d: Dictionary = SpellSystem.spells.get(spell_id, {})
+	if d.is_empty():
+		return spell_id
+	var lines := PackedStringArray()
+	lines.append(String(d.get("name", spell_id)))
+	var words := String(d.get("words", ""))
+	if words != "":
+		lines.append("“%s”" % words)
+	lines.append("Mana: %d · Magic %d" % [int(d.get("mana_cost", 0)), int(d.get("magic_lvl", 1))])
+	var cd := float(d.get("cooldown", 0.0))
+	if cd > 0.0:
+		lines.append("Cooldown: %ss" % String.num(cd, 1))
+	return "\n".join(lines)
