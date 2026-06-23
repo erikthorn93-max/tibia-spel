@@ -167,10 +167,7 @@ func _make_slot(slot: String) -> PanelContainer:
 	return cell
 
 func _load_sprite(item_id: String) -> Texture2D:
-	var path := "res://assets/sprites/items/%s.png" % item_id
-	if ResourceLoader.exists(path):
-		return load(path) as Texture2D
-	return null
+	return ItemIcons.texture(item_id)
 
 func _make_preview(item_id: String) -> Control:
 	var t := TextureRect.new()

@@ -203,10 +203,7 @@ func _slot_sv(slot: String) -> String:
 # ─── Helpers ──────────────────────────────────────────────────────────────────
 
 func _load_sprite(item_id: String) -> Texture2D:
-	var path := "res://assets/sprites/items/%s.png" % item_id
-	if ResourceLoader.exists(path):
-		return load(path) as Texture2D
-	return null
+	return ItemIcons.texture(item_id)
 
 func _safe_pos(screen_pos: Vector2) -> Vector2:
 	var vp := get_viewport()

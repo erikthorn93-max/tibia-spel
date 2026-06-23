@@ -424,8 +424,7 @@ func _refresh_slot(idx: int) -> void:
 		cell.tooltip_text = _spell_tooltip(spell_id)
 		_slot_cast_ids[idx] = spell_id
 	elif item_id != "":
-		var sp := "res://assets/sprites/items/%s.png" % item_id
-		icon.texture = load(sp) if ResourceLoader.exists(sp) else null
+		icon.texture = ItemIcons.texture(item_id)
 		cell.tooltip_text = String(ItemDB.items.get(item_id, {}).get("name", item_id))
 		# Bara runor gråtonas av mana/krav — vanliga items (drycker) lämnas vita.
 		if not SpellSystem.cast_def(item_id).is_empty():
