@@ -52,10 +52,49 @@ func attempt() -> String:
 		return "no_tool"
 	if GameState.effective_skill_level(String(def["skill"])) < int(def["level"]):
 		return "low_level"
-	if randf() <= success_chance(GameState.effective_skill_level(String(def["skill"])), int(def["level"])):
+	var success := randf() <= success_chance(
+		GameState.effective_skill_level(String(def["skill"])), int(def["level"]))
+	react(success)
+	if success:
 		_on_success()
 		return "ok"
 	return "miss"
+
+## Visuell reaktion på en sving: noden squashar till, och vid lyckat
+## försök sprutar en liten gnistskur i nodens färg.
+func react(success: bool) -> void:
+	if _sprite != null and _sprite.texture != null:
+		var tw := create_tween()
+		tw.tween_property(_sprite, "scale", Vector2(1.18, 0.82), 0.06).set_ease(Tween.EASE_OUT)
+		tw.tween_property(_sprite, "scale", Vector2(1.0, 1.0), 0.13).set_ease(Tween.EASE_IN_OUT)
+	if success:
+		_spark()
+
+func _spark() -> void:
+	var p := CPUParticles2D.new()
+	p.emitting = true
+	p.one_shot = true
+	p.explosiveness = 0.9
+	p.amount = 8
+	p.lifetime = 0.5
+	p.direction = Vector2(0, -1)
+	p.spread = 55.0
+	p.initial_velocity_min = 28.0
+	p.initial_velocity_max = 70.0
+	p.gravity = Vector2(0, 90)
+	p.scale_amount_min = 1.5
+	p.scale_amount_max = 2.5
+	p.color = Color(String(def.get("color", "#ffffff"))).lightened(0.3)
+	add_child(p)
+	get_tree().create_timer(0.9).timeout.connect(p.queue_free)
+
+## Flytande "+N namn"/xp-text ovanför noden.
+func _spawn_float(text: String, color: Color) -> void:
+	var ft: Node2D = preload("res://entities/floating_text.gd").new()
+	var parent := get_parent() if get_parent() != null else self
+	parent.add_child(ft)
+	ft.global_position = global_position + Vector2(randf_range(-4, 4), -14)
+	ft.setup(text, color, 12)
 
 func _on_success() -> void:
 	# Konsumera verktyget om noden kräver det (t.ex. campfire_spot bränner loggar)
@@ -69,6 +108,10 @@ func _on_success() -> void:
 		if def.has("yield_min"):
 			amt = randi_range(int(def["yield_min"]), int(def["yield_max"]))
 		GameState.add_item(String(def["yields"]), amt)
+		var yname := String(ItemDB.items.get(String(def["yields"]), {}).get("name", def["yields"]))
+		_spawn_float("+%d %s" % [amt, yname], Color(0.96, 0.94, 0.55))   # mjukt guld
+	else:
+		_spawn_float("+%d xp" % int(def["xp"]), Color(0.6, 0.85, 1.0))   # ljusblå
 	GameState.gain_skill_xp(String(def["skill"]), int(def["xp"]))
 	charges -= 1
 	if charges <= 0:
@@ -77,10 +120,18 @@ func _on_success() -> void:
 func _deplete() -> void:
 	depleted = true
 	modulate = Color(0.45, 0.45, 0.45)
+	# Krymp ihop noden lite så uttömning syns tydligt
+	if _sprite != null:
+		var tw := create_tween()
+		tw.tween_property(_sprite, "scale", Vector2(0.7, 0.7), 0.22).set_ease(Tween.EASE_OUT)
 	if is_inside_tree():
 		get_tree().create_timer(float(def["respawn"])).timeout.connect(_respawn)
 
 func _respawn() -> void:
 	depleted = false
 	modulate = Color.WHITE
+	# Studsa tillbaka i full storlek när noden återhämtat sig
+	if _sprite != null:
+		var tw := create_tween()
+		tw.tween_property(_sprite, "scale", Vector2(1.0, 1.0), 0.25).set_ease(Tween.EASE_OUT)
 	charges = randi_range(int(def["charges"][0]), int(def["charges"][1]))

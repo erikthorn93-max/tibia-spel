@@ -11,6 +11,7 @@ signal player_died
 signal player_hit(dmg: float, dmg_type: String)
 signal skill_changed(skill: String)
 signal skill_leveled(skill: String, new_level: int)
+signal crafted(item_id: String, skill: String)
 signal buffs_changed
 signal appearance_changed
 signal equipment_changed
@@ -477,4 +478,5 @@ func craft(recipe: Dictionary) -> bool:
 		remove_item(ing, int(recipe["ingredients"][ing]))
 	add_item(String(recipe["id"]), 1)
 	gain_skill_xp(skill, int(recipe["xp"]))
+	crafted.emit(String(recipe["id"]), skill)
 	return true

@@ -237,6 +237,15 @@ func _update_gather(delta: float) -> void:
 			gather_target = null
 		"depleted":
 			gather_target = null
+		_:
+			# Faktiskt sving-försök (ok/miss): vänd dig mot noden, svinga, ljud
+			var gd := Vector2i(signi(gather_target.tile.x - tile.x),
+				signi(gather_target.tile.y - tile.y))
+			if gd != Vector2i.ZERO:
+				facing = gd
+				visual.face(facing)
+			visual.play_attack(facing)
+			Sfx.gather()
 
 func _update_spells() -> void:
 	if Input.is_action_just_pressed("use_potion"):

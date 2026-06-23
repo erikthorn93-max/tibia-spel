@@ -68,3 +68,11 @@ func quest_done() -> void:
 ## Stigande kvint (C-G) — "något har öppnats".
 func unlock() -> void:
 	_enqueue(synth([523.25, 783.99], 0.13, 0.25))
+
+## Dovt kort "hack/tick" för gathering-svingar (gruv/hugg/fiske m.m.).
+func gather() -> void:
+	_enqueue(synth([196.0], 0.05, 0.12))
+
+## Kort positiv ding (D-A) för avklarat hantverk.
+func craft() -> void:
+	_enqueue(synth([587.33, 880.0], 0.09, 0.18))
