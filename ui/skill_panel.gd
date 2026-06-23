@@ -66,7 +66,7 @@ const MET_FG := Color(0.55, 0.90, 0.45)   # grön: du klarar nivåkravet
 
 func _ready() -> void:
 	visible = false
-	custom_minimum_size = Vector2(306, 0)
+	custom_minimum_size = Vector2(192, 0)
 
 	var sb_outer := StyleBoxFlat.new()
 	sb_outer.bg_color = BG_COLOR
@@ -215,62 +215,49 @@ func _body_label(text: String) -> Label:
 
 func _make_cell(id: String, label: String, icon_color: Color) -> PanelContainer:
 	var cell := PanelContainer.new()
-	cell.custom_minimum_size = Vector2(96, 66)
+	cell.custom_minimum_size = Vector2(58, 50)
 	cell.mouse_filter = Control.MOUSE_FILTER_STOP
 	cell.gui_input.connect(func(ev: InputEvent):
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 			_show_guide(id))
-	# Tooltip byggs om vid hover så xp/h och tid till nästa nivå är färska
+	# Tooltip byggs om vid hover så namn + xp/h och tid till nästa nivå är färska
 	cell.mouse_entered.connect(func(): cell.tooltip_text = _tooltip_for(id, label))
 
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = CELL_BG
 	sb.border_color = BORDER
 	sb.set_border_width_all(1)
-	sb.content_margin_left   = 3.0
-	sb.content_margin_right  = 3.0
-	sb.content_margin_top    = 3.0
-	sb.content_margin_bottom = 3.0
+	sb.set_corner_radius_all(3)
+	sb.content_margin_left   = 2.0
+	sb.content_margin_right  = 2.0
+	sb.content_margin_top    = 2.0
+	sb.content_margin_bottom = 2.0
 	cell.add_theme_stylebox_override("panel", sb)
 
-	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 1)
-	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
-	cell.add_child(vbox)
+	# Ikon fyller cellen; nivån läggs som liten siffra i nedre högra hörnet (OSRS-stil)
+	var stack := VBoxContainer.new()
+	stack.add_theme_constant_override("separation", 1)
+	stack.alignment = BoxContainer.ALIGNMENT_CENTER
+	cell.add_child(stack)
 
-	# Ikon — färgad ruta med text
-	var icon_wrap := CenterContainer.new()
-	vbox.add_child(icon_wrap)
+	var icon_row := HBoxContainer.new()
+	icon_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	stack.add_child(icon_row)
 
-	var icon_bg := ColorRect.new()
-	icon_bg.color = icon_color
-	icon_bg.custom_minimum_size = Vector2(32, 24)
-	icon_wrap.add_child(icon_bg)
+	# Procedurell pixel-ikon i skillens egen färg
+	var icon := TextureRect.new()
+	icon.texture = SkillIcons.texture(id, icon_color)
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.custom_minimum_size = Vector2(30, 30)
+	icon_row.add_child(icon)
 
-	var icon_lbl := Label.new()
-	icon_lbl.text = label.substr(0, 3)
-	icon_lbl.add_theme_font_size_override("font_size", 8)
-	icon_lbl.add_theme_color_override("font_color", Color.WHITE)
-	icon_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	icon_lbl.vertical_alignment   = VERTICAL_ALIGNMENT_CENTER
-	icon_lbl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	icon_bg.add_child(icon_lbl)
-
-	# Skillnamn — hämtas från GameState (svenska/engelska)
-	var sname: String = String(GameState.skill_defs[id]["name"]) if id in GameState.skill_defs else label
-	var name_lbl := Label.new()
-	name_lbl.text = sname
-	name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	name_lbl.add_theme_font_size_override("font_size", 9)
-	name_lbl.add_theme_color_override("font_color", TEXT_FG)
-	vbox.add_child(name_lbl)
-
-	# Nivå — stor gul siffra
+	# Nivå — gul siffra under ikonen
 	var lvl_lbl := Label.new()
 	lvl_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	lvl_lbl.add_theme_font_size_override("font_size", 13)
+	lvl_lbl.add_theme_font_size_override("font_size", 12)
 	lvl_lbl.add_theme_color_override("font_color", LVL_FG)
-	vbox.add_child(lvl_lbl)
+	stack.add_child(lvl_lbl)
 
 	# XP-bar — fylls enligt skill_xp_progress, färgad i skillens egen färg
 	var bar := ProgressBar.new()
@@ -279,7 +266,7 @@ func _make_cell(id: String, label: String, icon_color: Color) -> PanelContainer:
 	bar.step = 0.0001
 	bar.value = 0.0
 	bar.show_percentage = false
-	bar.custom_minimum_size = Vector2(0, 5)
+	bar.custom_minimum_size = Vector2(0, 4)
 
 	var bar_bg := StyleBoxFlat.new()
 	bar_bg.bg_color = Color(0.05, 0.03, 0.01)
@@ -292,11 +279,11 @@ func _make_cell(id: String, label: String, icon_color: Color) -> PanelContainer:
 	bar_fill.bg_color = icon_color
 	bar_fill.set_corner_radius_all(2)
 	bar.add_theme_stylebox_override("fill", bar_fill)
-	vbox.add_child(bar)
+	stack.add_child(bar)
 
 	_cells[id] = lvl_lbl
 	_bars[id] = bar
-	_ignore_mouse(vbox)   # barn ska inte sluka klicket — cellen hanterar det
+	_ignore_mouse(stack)   # barn ska inte sluka klicket — cellen hanterar det
 	return cell
 
 ## Sätter mouse_filter = IGNORE på en kontroll och alla dess barn.
