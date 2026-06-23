@@ -114,25 +114,23 @@ func _make_slot(slot: String) -> PanelContainer:
 	sb.set_corner_radius_all(3)
 	cell.add_theme_stylebox_override("panel", sb)
 
-	# Tom-etikett (slotnamn) som syns när inget är utrustat
-	var empty_lbl := Label.new()
-	empty_lbl.text = SLOT_NAMES.get(slot, slot)
-	empty_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	empty_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	empty_lbl.add_theme_font_size_override("font_size", 8)
-	empty_lbl.add_theme_color_override("font_color", SLOT_EMPTY)
-	empty_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	empty_lbl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_empties[slot] = empty_lbl
+	# Tom-silhuett (visar vad som hör hemma i sloten) syns när inget är utrustat
+	var empty_icon := TextureRect.new()
+	empty_icon.texture = EquipIcons.silhouette(slot)
+	empty_icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	empty_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	empty_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	empty_icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_empties[slot] = empty_icon
 
 	var icon := TextureRect.new()
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_icons[slot] = icon
 
-	var wrap := Control.new()        # håller ikon + tom-etikett ovanpå varandra
+	var wrap := Control.new()        # håller ikon + tom-silhuett ovanpå varandra
 	wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	wrap.add_child(empty_lbl)
+	wrap.add_child(empty_icon)
 	wrap.add_child(icon)
 	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	cell.add_child(wrap)
