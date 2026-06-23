@@ -267,6 +267,14 @@ func _fill_spawn_table(table: Array) -> void:
 			used.append(t)
 			placed += 1
 
+## Loopande puls (scale) som signalerar att en ruta går att interagera med.
+func _pulse_marker(node: Node2D, lo := 1.0, hi := 1.25, dur := 0.7) -> void:
+	if not node.is_inside_tree():
+		return
+	var tw := node.create_tween().set_loops()
+	tw.tween_property(node, "scale", Vector2(hi, hi), dur).set_trans(Tween.TRANS_SINE)
+	tw.tween_property(node, "scale", Vector2(lo, lo), dur).set_trans(Tween.TRANS_SINE)
+
 func _add_portal_marker(t: Vector2i) -> void:
 	for n in _portal_marker_nodes.get(t, []):
 		n.queue_free()
@@ -284,6 +292,8 @@ func _add_portal_marker(t: Vector2i) -> void:
 	inner.color = Color(0.6, 0.6, 0.65) if locked else Color(0.85, 0.72, 1.0)
 	inner.position = c
 	add_child(inner)
+	if not locked:
+		_pulse_marker(inner)   # levande glow → "gå hit"
 	var lbl := Label.new()
 	lbl.text = "Låst: %s" % UnlockSystem.display_name(portal_locks[t]) if locked \
 		else "→ " + _zone_display_name(String(portals[t]))
@@ -309,6 +319,7 @@ func _add_entrance_marker(t: Vector2i) -> void:
 	step.color = Color(0.25, 0.23, 0.28)
 	step.position = c
 	add_child(step)
+	_pulse_marker(step, 1.0, 1.18, 0.9)
 	var lbl := Label.new()
 	lbl.text = "Ner: " + DungeonGen.theme_name(dungeon_entrances[t])
 	lbl.position = c + Vector2(-64, -32)

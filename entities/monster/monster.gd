@@ -27,6 +27,7 @@ var enraged := false       # publik — enrage-fas aktiv
 var _breath_t := 0.0       # idle-andning, slumpad fas
 var _sprite_base_y := 0.0  # spritens vilo-y (för gång-studs)
 var _attacking := false    # pausar livs-anim medan attack-stöten spelas
+var _status_aura: CPUParticles2D = null   # gift/brand-partiklar
 
 @onready var _hp_bar: ColorRect  = $HpBar
 @onready var _name_lbl: Label    = $NameLabel
@@ -105,8 +106,37 @@ func _ready() -> void:
 	bg.color = Color(0.3, 0.07, 0.07)
 	add_child(bg)
 	move_child(bg, _hp_bar.get_index())   # bakgrunden hamnar BAKOM hp_bar
+	_build_status_aura()
 	# Klickhantering via Area2D
 	_click_area.input_event.connect(_on_click_area_input)
+
+## Partikel-aura som visar pågående status (gift = grön, brand = orange).
+func _build_status_aura() -> void:
+	_status_aura = CPUParticles2D.new()
+	_status_aura.emitting = false
+	_status_aura.amount = 8
+	_status_aura.lifetime = 0.7
+	_status_aura.direction = Vector2(0, -1)
+	_status_aura.spread = 25.0
+	_status_aura.initial_velocity_min = 10.0
+	_status_aura.initial_velocity_max = 22.0
+	_status_aura.gravity = Vector2(0, -10)
+	_status_aura.scale_amount_min = 1.5
+	_status_aura.scale_amount_max = 2.5
+	add_child(_status_aura)
+
+## Slår på/av auran utifrån aktiv status.
+func _update_status_aura() -> void:
+	if _status_aura == null:
+		return
+	if has_status("poison"):
+		_status_aura.color = Color(0.40, 0.95, 0.35)
+		_status_aura.emitting = true
+	elif has_status("burn"):
+		_status_aura.color = Color(1.0, 0.50, 0.12)
+		_status_aura.emitting = true
+	else:
+		_status_aura.emitting = false
 
 func _on_click_area_input(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed \
@@ -244,6 +274,7 @@ func play_attack(dir: Vector2i) -> void:
 ## Applicerar en statuseffekt på monstret (skriver över om samma id redan finns).
 func apply_status(id: String, duration: float, tick_dmg: float) -> void:
 	status_effects[id] = {"tick_dmg": tick_dmg, "time_left": duration, "tick_acc": 0.0}
+	_update_status_aura()
 
 func has_status(id: String) -> bool:
 	return status_effects.has(id)
@@ -265,6 +296,7 @@ func _tick_statuses(delta: float) -> void:
 	# Uppdatera HP-baren om burn-status ändrades (puls → normal)
 	if burn_active_before != has_status("burn"):
 		_refresh_label()
+	_update_status_aura()   # släck/uppdatera auran när status tickar ut
 
 ## Kontrollerar om monstret ska gå in i enrage-fas (kallas från take_damage).
 func _check_enrage() -> void:
