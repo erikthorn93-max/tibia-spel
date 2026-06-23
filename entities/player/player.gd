@@ -186,6 +186,11 @@ func _update_attack(delta: float) -> void:
 		if dist > weapon_range:
 			return   # utom räckvidd
 		_attack_timer = ATTACK_COOLDOWN
+		# Vänd dig mot målet inför slaget (gäller både närstrid och bågskytte)
+		var to_dir := Vector2i(signi(target.tile.x - tile.x), signi(target.tile.y - tile.y))
+		if to_dir != Vector2i.ZERO:
+			facing = to_dir
+			visual.face(facing)
 		var dmg: float
 		if weapon_range > 1:
 			# Bågskjutning: kräver ammunition i inventory
@@ -210,6 +215,7 @@ func _update_attack(delta: float) -> void:
 				* TaskSystem.damage_multiplier(target.monster_name)   # bestiary-tierbonus
 			target.take_damage(dmg)
 			GameState.gain_skill_xp(wskill, 1)
+			visual.play_attack(facing)   # närstrids-stöt mot målet
 
 func _update_gather(delta: float) -> void:
 	if gather_target == null or not is_instance_valid(gather_target):
