@@ -94,6 +94,15 @@ const SPRITE_MAP: Dictionary = {
 	"Lich":                    "Lich",
 	"Elddraken":               "Elddraken",
 	"Ärkedemonen":             "Ärkedemonen",
+	# Spindelgrotta & nybörjarfauna
+	"Grottspindel":               "Grottspindel",
+	"Giftvävare":                 "Giftvävare",
+	"Skuggspindel":               "Skuggspindel",
+	"Spindeldrottningen Morwena": "Spindeldrottningen_Morwena",
+	"Fältmus":                    "Fältmus",
+	"Vildkanin":                  "Vildkanin",
+	"Åkerkråka":                  "Åkerkråka",
+	"Vildsvin":                   "Vildsvin",
 }
 
 func _ready() -> void:
@@ -146,14 +155,27 @@ func _on_click_area_input(_viewport: Node, event: InputEvent, _shape_idx: int) -
 
 func _load_sprite() -> void:
 	var key: String = str(SPRITE_MAP.get(monster_name, ""))
-	if key.is_empty():
-		return
-	var path: String = "res://assets/sprites/monsters/%s.png" % key
-	var tex: Texture2D = load(path) as Texture2D
+	var tex: Texture2D = null
+	if not key.is_empty():
+		var path := "res://assets/sprites/monsters/%s.png" % key
+		if ResourceLoader.exists(path):
+			tex = load(path) as Texture2D
 	if tex != null:
 		_sprite.texture = tex
 	else:
-		push_warning("Monster sprite saknas: %s" % path)
+		_add_fallback_shape()   # säkerställ att monstret aldrig blir osynligt
+
+## Färgad diamant (monstrets color-fält) när en sprite saknas — fallback så
+## att även framtida monster utan grafik fortfarande syns.
+func _add_fallback_shape() -> void:
+	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
+	var col := Color(String(d.get("color", "#aa3333")))
+	var poly := Polygon2D.new()
+	poly.polygon = PackedVector2Array([
+		Vector2(0, -12), Vector2(11, 0), Vector2(0, 12), Vector2(-11, 0)])
+	poly.color = col
+	add_child(poly)
+	push_warning("Monster sprite saknas (%s) — använder fallback-form" % monster_name)
 
 func setup(mname: String, t: Vector2i, z: Node2D, respawn := -1.0) -> void:
 	monster_name = mname
