@@ -198,6 +198,16 @@ func restore_mana(amount: float) -> void:
 	mana = minf(mana + amount, max_mana)
 	mana_changed.emit(mana, max_mana)
 
+## Tappar mana (monster-förmåga "drain"). Tar överskottet från HP om manan
+## tar slut, så effekten biter även när spelaren är tom på mana.
+func drain_mana(amount: float) -> void:
+	var from_mana := minf(mana, maxf(amount, 0.0))
+	mana -= from_mana
+	mana_changed.emit(mana, max_mana)
+	var remainder := amount - from_mana
+	if remainder > 0.0:
+		take_damage(remainder, "drain")
+
 ## Tibia-stil dödsåterkomst: 50% XP-förlust, full HP/mana, tillbaka till town.
 func respawn() -> void:
 	var penalty := int(float(xp_to_next) * 0.5)

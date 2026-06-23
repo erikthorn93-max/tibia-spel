@@ -347,6 +347,12 @@ func _try_apply_ability() -> void:
 			GameState.apply_status("poison",
 				float(ab.get("duration", 10.0)),
 				float(ab.get("tick_dmg", 3.0)))
+		"burn":
+			GameState.apply_status("burn",
+				float(ab.get("duration", 6.0)),
+				float(ab.get("tick_dmg", 6.0)))
+		"drain":
+			GameState.drain_mana(float(ab.get("tick_dmg", 10.0)))
 		"stun":
 			GameState.apply_status("stun",
 				float(ab.get("duration", 2.0)), 0.0)
