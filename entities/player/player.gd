@@ -33,7 +33,9 @@ func _on_player_hit(dmg: float, dmg_type: String) -> void:
 	match dmg_type:
 		"poison": color = Color(0.35, 0.95, 0.35)   # grön
 		"burn":   color = Color(1.00, 0.50, 0.10)   # orange
-		_:        color = Color(1.00, 0.22, 0.22)   # röd (fysisk)
+		_:
+			color = Color(1.00, 0.22, 0.22)   # röd (fysisk)
+			visual.play_hurt()   # träff-blink bara på fysiska slag (ej DoT-tick)
 	var dn: Node2D = preload("res://entities/damage_number.gd").new()
 	add_child(dn)
 	dn.setup(dmg, false, color)
