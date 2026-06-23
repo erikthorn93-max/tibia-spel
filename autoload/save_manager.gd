@@ -69,6 +69,14 @@ func load_game() -> bool:
 	GameState.mana = float(s["mana"]); GameState.max_mana = float(s["max_mana"])
 	GameState.gold = int(s["gold"]); GameState.inventory = s["inventory"]
 	GameState.skills = s["skills"]; GameState.appearance = s["appearance"]
+	# v4→v5: outfit_equipped/appearance_base saknas i gamla saves.
+	# Härled basen från appearance så "standard" alltid kan återställas.
+	var ab_raw = s.get("appearance_base", {})
+	if ab_raw is Dictionary and not ab_raw.is_empty():
+		GameState.appearance_base = ab_raw
+	else:
+		GameState.appearance_base = GameState.appearance.duplicate()
+	GameState.outfit_equipped = String(s.get("outfit_equipped", "standard"))
 	GameState.ensure_all_skills()   # v1→v2: fyll på skills som saknas i gamla saves
 	# v5→v6: equipped_weapon → equipment["weapon"]; saknas equipment-dict → bygg från equipped_weapon
 	if s.has("equipment") and s["equipment"] is Dictionary:

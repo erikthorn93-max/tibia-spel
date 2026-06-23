@@ -27,7 +27,8 @@ func test_v1_snapshot_migrates_to_all_skills():
 	var gs = load("res://autoload/game_state.gd").new()
 	gs.skills = {"sword": {"level": 22, "xp": 10}, "shielding": {"level": 14, "xp": 0}}
 	gs.ensure_all_skills()
-	assert_eq(gs.skills.size(), 18)
+	# Alla definierade skills ska finnas efter migrering (dynamiskt mot skills.json)
+	assert_eq(gs.skills.size(), gs.skill_defs.size())
 	assert_eq(gs.skills["sword"]["level"], 22)
 	assert_eq(gs.skills["mining"]["level"], 1)
 	gs.free()
@@ -73,7 +74,7 @@ func test_save_in_dungeon_writes_surface_zone():
 	World.last_surface_zone = "cave"
 	World.last_surface_tile = Vector2i(5, 10)
 	sm.save_game()
-	var s := sm.read_snapshot()
+	var s: Dictionary = sm.read_snapshot()
 	assert_eq(String(s["zone"]), "cave")
 	assert_eq(int(s["tile"][0]), 5)
 	assert_eq(int(s["tile"][1]), 10)

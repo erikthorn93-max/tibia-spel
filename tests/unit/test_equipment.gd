@@ -27,29 +27,29 @@ func test_other_slots_start_empty() -> void:
 
 func test_equip_body_armor_removes_from_inventory() -> void:
 	gs.inventory["copper_plate"] = 1
-	var ok := gs.equip("body", "copper_plate")
+	var ok: bool = gs.equip("body", "copper_plate")
 	assert_true(ok)
 	assert_eq(String(gs.equipment["body"]), "copper_plate")
 	assert_false(gs.inventory.has("copper_plate"), "copper_plate borde ha tagits ur inventory")
 
 func test_equip_wrong_slot_fails() -> void:
 	gs.inventory["copper_plate"] = 1
-	var ok := gs.equip("weapon", "copper_plate")  # copper_plate är body-slot
+	var ok: bool = gs.equip("weapon", "copper_plate")  # copper_plate är body-slot
 	assert_false(ok)
 	assert_eq(int(gs.inventory.get("copper_plate", 0)), 1, "Item borde vara kvar i inventory")
 
 func test_equip_item_not_in_inventory_fails() -> void:
-	var ok := gs.equip("body", "copper_plate")
+	var ok: bool = gs.equip("body", "copper_plate")
 	assert_false(ok)
 
 func test_equip_unknown_item_fails() -> void:
 	gs.inventory["fake_item"] = 1
-	var ok := gs.equip("body", "fake_item")
+	var ok: bool = gs.equip("body", "fake_item")
 	assert_false(ok)
 
 func test_equip_shield_in_offhand() -> void:
 	gs.inventory["wooden_shield"] = 1
-	var ok := gs.equip("offhand", "wooden_shield")
+	var ok: bool = gs.equip("offhand", "wooden_shield")
 	assert_true(ok)
 	assert_eq(String(gs.equipment["offhand"]), "wooden_shield")
 
@@ -130,7 +130,7 @@ func test_equipped_weapon_property_returns_equipment_weapon() -> void:
 
 func test_equip_weapon_compat() -> void:
 	gs.inventory["iron_sword"] = 1
-	var ok := gs.equip_weapon("iron_sword")
+	var ok: bool = gs.equip_weapon("iron_sword")
 	assert_true(ok)
 	assert_eq(String(gs.equipment["weapon"]), "iron_sword")
 	assert_eq(gs.equipped_weapon, "iron_sword")

@@ -32,12 +32,12 @@ func test_antidote_forbrukar_ett_i_inventory() -> void:
 
 func test_antidote_returnerar_true_nar_gift_aktivt() -> void:
 	gs.apply_status("poison", 10.0, 3.0)
-	var ok := gs.use_item("antidote_potion")
+	var ok: bool = gs.use_item("antidote_potion")
 	assert_true(ok, "use_item ska returnera true")
 
 func test_antidote_returnerar_true_utan_gift_ocksa() -> void:
 	# clears_poison → used = true även om inget gift pågår
-	var ok := gs.use_item("antidote_potion")
+	var ok: bool = gs.use_item("antidote_potion")
 	assert_true(ok, "use_item ska returnera true (item förbrukas)")
 
 func test_antidote_paverkar_inte_andra_statusar() -> void:
@@ -48,7 +48,7 @@ func test_antidote_paverkar_inte_andra_statusar() -> void:
 	assert_false(gs.has_status("poison"), "poison ska vara borta")
 
 func test_antidote_recept_finns_i_alchemy_table() -> void:
-	var recs: Array = Recipes.all_for_station("alchemy_table")
+	var recs: Array = ItemDB.recipes.get("alchemy_table", [])
 	var found := false
 	for r in recs:
 		if String(r.get("id", "")) == "antidote_potion":

@@ -13,19 +13,19 @@ func after_each() -> void:
 
 func test_use_mana_reducerar_mana() -> void:
 	gs.mana = 50.0
-	var ok := gs.use_mana(20.0)
+	var ok: bool = gs.use_mana(20.0)
 	assert_true(ok)
 	assert_almost_eq(gs.mana, 30.0, 0.01)
 
 func test_use_mana_insufficient_returnerar_false() -> void:
 	gs.mana = 5.0
-	var ok := gs.use_mana(20.0)
+	var ok: bool = gs.use_mana(20.0)
 	assert_false(ok)
 	assert_almost_eq(gs.mana, 5.0, 0.01, "mana ska vara oförändrad")
 
 func test_use_mana_exakt_nog_lyckas() -> void:
 	gs.mana = 20.0
-	var ok := gs.use_mana(20.0)
+	var ok: bool = gs.use_mana(20.0)
 	assert_true(ok)
 	assert_almost_eq(gs.mana, 0.0, 0.01)
 
@@ -46,7 +46,7 @@ func test_restore_mana_clampar_pa_max() -> void:
 func test_use_item_health_potion_helar() -> void:
 	gs.inventory["health_potion"] = 1
 	gs.health = 50.0; gs.max_health = 200.0
-	var ok := gs.use_item("health_potion")
+	var ok: bool = gs.use_item("health_potion")
 	assert_true(ok)
 	assert_gt(gs.health, 50.0, "health_potion ska hela")
 	assert_false(gs.inventory.has("health_potion"), "potion ska förbrukas")
@@ -54,13 +54,13 @@ func test_use_item_health_potion_helar() -> void:
 func test_use_item_mana_potion_aterstaller_mana() -> void:
 	gs.inventory["mana_potion"] = 1
 	gs.mana = 10.0; gs.max_mana = 100.0
-	var ok := gs.use_item("mana_potion")
+	var ok: bool = gs.use_item("mana_potion")
 	assert_true(ok)
 	assert_gt(gs.mana, 10.0, "mana_potion ska ge mana")
 	assert_false(gs.inventory.has("mana_potion"), "potion ska förbrukas")
 
 func test_use_item_saknas_i_inventory_misslyckas() -> void:
-	var ok := gs.use_item("health_potion")
+	var ok: bool = gs.use_item("health_potion")
 	assert_false(ok)
 
 # --- respawn ---
