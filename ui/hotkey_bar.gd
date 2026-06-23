@@ -386,12 +386,8 @@ func _refresh_slot(idx: int) -> void:
 		if ResourceLoader.exists(ssp):
 			icon.texture = load(ssp)
 		else:
-			# Ingen sprite → visa förkortat besvärjelsenamn som etikett.
-			var sd: Dictionary = SpellSystem.spells.get(spell_id, {})
-			nlbl.text = String(sd.get("name", spell_id)).substr(0, 5)
-			nlbl.add_theme_font_size_override("font_size", 8)
-			nlbl.add_theme_color_override("font_color", Color(0.75, 0.65, 1.0))
-			nlbl.visible = true
+			# Ingen sprite → procedurell element-ikon (samma som spellbok).
+			icon.texture = SpellIcons.texture(spell_id, SpellSystem.spells.get(spell_id, {}))
 	elif item_id != "":
 		var sp := "res://assets/sprites/items/%s.png" % item_id
 		icon.texture = load(sp) if ResourceLoader.exists(sp) else null

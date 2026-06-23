@@ -118,9 +118,16 @@ func _known_row(id: String) -> Control:
 	sb.content_margin_top = 3; sb.content_margin_bottom = 3
 	row.add_theme_stylebox_override("panel", sb)
 
+	var hb := HBoxContainer.new()
+	hb.add_theme_constant_override("separation", 6)
+	hb.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(hb)
+	hb.add_child(_spell_icon(id, def))
+
 	var lbl := Label.new()
 	lbl.text = "%s   %s" % [String(def.get("name", id)), _spell_summary(def)]
-	row.add_child(lbl)
+	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	hb.add_child(lbl)
 
 	var _id := id
 	row.set_drag_forwarding(
@@ -136,10 +143,12 @@ func _learn_row(id: String) -> Control:
 	var def: Dictionary = SpellSystem.spells.get(id, {})
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 6)
+	row.add_child(_spell_icon(id, def))
 
 	var known := SpellSystem.knows_spell(id)
 	var lbl := Label.new()
 	lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	lbl.text = "%s   %s · %d guld" % [String(def.get("name", id)), _spell_summary(def), int(def.get("price", 0))]
 	if known:
 		lbl.add_theme_color_override("font_color", Color(0.5, 0.85, 0.5))
@@ -161,6 +170,16 @@ func _learn_row(id: String) -> Control:
 			_rebuild())
 		row.add_child(btn)
 	return row
+
+## Procedurell 16×16-ikon för en besvärjelse (element/typ-härledd).
+func _spell_icon(id: String, def: Dictionary) -> TextureRect:
+	var icon := TextureRect.new()
+	icon.texture = SpellIcons.texture(id, def)
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.custom_minimum_size = Vector2(24, 24)
+	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return icon
 
 func _drag_preview(label_text: String) -> Control:
 	var p := PanelContainer.new()
