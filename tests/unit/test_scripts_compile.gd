@@ -9,6 +9,7 @@ var _paths := [
 	"res://entities/crafting_station.gd",
 	"res://entities/floating_text.gd",
 	"res://entities/spell_fx.gd",
+	"res://entities/ground_item.gd",
 	"res://entities/damage_number.gd",
 	"res://ui/recipe_panel.gd",
 	"res://ui/hud.gd",

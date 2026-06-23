@@ -103,6 +103,7 @@ func _ready() -> void:
 	GameState.skill_changed.connect(func(_s): _refresh())
 	GameState.skill_leveled.connect(_on_skill_leveled)
 	GameState.crafted.connect(_on_crafted)
+	GameState.item_used.connect(_on_item_used)
 	GameState.level_up.connect(_on_level_up_anim)
 	GameState.inventory_changed.connect(_refresh_inv)
 	GameState.inventory_changed.connect(func(): if hotkey_bar: hotkey_bar._refresh_all())
@@ -478,6 +479,17 @@ func _on_crafted(item_id: String, _skill: String) -> void:
 	ft.setup("+1 %s" % iname, Color(0.7, 0.95, 0.7), 12)
 	if p.visual != null and p.visual.has_method("play_attack"):
 		p.visual.play_attack(p.facing)   # liten hantverks-rörelse
+
+## Förbrukad dryck/föremål: heal-gnistor (grönt) eller mana-skur (blått) vid spelaren.
+func _on_item_used(item_id: String) -> void:
+	var p := World.player
+	if p == null or not is_instance_valid(p):
+		return
+	var d: Dictionary = ItemDB.items.get(item_id, {})
+	if d.has("heal"):
+		SpellFx.heal_sparkle(p.get_parent(), p.global_position)
+	elif d.has("mana"):
+		SpellFx.burst(p.get_parent(), p.global_position, Color(0.45, 0.65, 1.0), 10, 60.0)
 
 func _on_level_up_anim() -> void:
 	Sfx.level_up()

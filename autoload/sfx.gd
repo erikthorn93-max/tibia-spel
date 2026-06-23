@@ -76,3 +76,7 @@ func gather() -> void:
 ## Kort positiv ding (D-A) för avklarat hantverk.
 func craft() -> void:
 	_enqueue(synth([587.33, 880.0], 0.09, 0.18))
+
+## Mjukt "plopp" (A-D) vid upplockning av loot.
+func pickup() -> void:
+	_enqueue(synth([880.0, 1174.66], 0.05, 0.15))

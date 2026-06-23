@@ -12,6 +12,7 @@ signal player_hit(dmg: float, dmg_type: String)
 signal skill_changed(skill: String)
 signal skill_leveled(skill: String, new_level: int)
 signal crafted(item_id: String, skill: String)
+signal item_used(item_id: String)
 signal buffs_changed
 signal appearance_changed
 signal equipment_changed
@@ -330,6 +331,7 @@ func use_item(item_id: String) -> bool:
 	if used:
 		remove_item(item_id, 1)
 		QuestSystem.record_use(item_id)
+		item_used.emit(item_id)
 	return used
 
 func weapon_skill() -> String:

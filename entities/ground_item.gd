@@ -24,6 +24,12 @@ func setup(drops: Array, t: Vector2i) -> void:
 	_icon.color = Color("e8c84a")
 	add_child(_icon)
 
+	# Pop in när påsen landar
+	scale = Vector2.ZERO
+	var tw := create_tween()
+	tw.tween_property(self, "scale", Vector2.ONE, 0.18) \
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
 	var area := Area2D.new()
 	var cs   := CollisionShape2D.new()
 	cs.shape = RectangleShape2D.new()
@@ -59,6 +65,18 @@ func _on_click(_vp: Viewport, event: InputEvent, _shape: int) -> void:
 	_collect()
 
 func _collect() -> void:
+	var parent := get_parent()
+	var oy := 0.0
 	for d in contents:
 		GameState.add_item(String(d["item"]), int(d["qty"]))
+		if parent != null:
+			var iname := String(ItemDB.items.get(String(d["item"]), {}).get("name", d["item"]))
+			var ft: Node2D = preload("res://entities/floating_text.gd").new()
+			parent.add_child(ft)
+			ft.global_position = global_position + Vector2(0, -10 + oy)
+			ft.setup("+%d %s" % [int(d["qty"]), iname], Color(0.96, 0.86, 0.42), 12)
+			oy -= 13.0   # stapla flera föremål uppåt
+	if parent != null:
+		SpellFx.burst(parent, global_position, Color(0.96, 0.86, 0.42), 8, 60.0)
+	Sfx.pickup()
 	queue_free()
