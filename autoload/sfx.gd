@@ -80,3 +80,19 @@ func craft() -> void:
 ## Mjukt "plopp" (A-D) vid upplockning av loot.
 func pickup() -> void:
 	_enqueue(synth([880.0, 1174.66], 0.05, 0.15))
+
+## Magi-cast — klangfärgen varierar efter besvärjelsetyp.
+func cast(ctype: String) -> void:
+	match ctype:
+		"heal":
+			_enqueue(synth([523.25, 659.25, 880.0], 0.10, 0.20))      # mjuk stigande dur
+		"support":
+			_enqueue(synth([659.25, 880.0, 1108.73], 0.09, 0.18))     # skimrande uppåt
+		"conjure":
+			_enqueue(synth([440.0, 587.33, 784.0], 0.11, 0.18))       # mystisk treklang
+		_:
+			_enqueue(synth([1318.51, 880.0], 0.06, 0.22))             # vasst attack-"pew"
+
+## Nekande "wah" nedåt när en cast blockeras (mana/cooldown/krav saknas).
+func denied() -> void:
+	_enqueue(synth([349.23, 261.63, 196.0], 0.07, 0.20))

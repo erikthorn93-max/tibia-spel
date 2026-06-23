@@ -294,6 +294,7 @@ func cast_spell(id: String) -> void:
 	var check := SpellSystem.can_cast(id)
 	if not check["ok"]:
 		World.hud.show_message(String(check["reason"]))
+		Sfx.denied()
 		return
 	if SpellSystem.needs_aim(def):
 		_begin_aim(id, def)
@@ -316,6 +317,7 @@ func _on_aim_confirmed(picked: Vector2i, id: String) -> void:
 	var recheck := SpellSystem.can_cast(id)
 	if not recheck["ok"]:
 		World.hud.show_message(String(recheck["reason"]))
+		Sfx.denied()
 		return
 	var res := SpellSystem.resolve_cast(id, self, picked)
 	_play_spell_fx(res)
@@ -325,7 +327,10 @@ func _on_aim_confirmed(picked: Vector2i, id: String) -> void:
 ## Spawnar besvärjelse-effekter utifrån metadatan i resolve_cast-resultatet.
 func _play_spell_fx(res: Dictionary) -> void:
 	var fx: Dictionary = res.get("fx", {})
-	if fx.is_empty() or zone == null:
+	if fx.is_empty():
+		return
+	Sfx.cast(String(fx.get("ctype", "")))
+	if zone == null:
 		return
 	var color := SpellFx.element_color(String(fx.get("element", "none")))
 	var parent := get_parent()

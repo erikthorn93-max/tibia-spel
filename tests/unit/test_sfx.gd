@@ -45,4 +45,12 @@ func test_sound_methods_callable_without_error():
 	sfx.skill_up()
 	sfx.quest_done()
 	sfx.unlock()
+	sfx.denied()
+	for ctype in ["heal", "support", "conjure", "attack", ""]:
+		sfx.cast(ctype)
 	pass_test("alla ljudmetoder gick att anropa")
+
+func test_cast_and_denied_produce_audio():
+	# Cast- och denial-vågformerna ska vara icke-tomma.
+	assert_gt(Sfx.synth([523.25, 659.25, 880.0], 0.10, 0.20).size(), 0, "heal-cast ska ge ljud")
+	assert_gt(Sfx.synth([349.23, 261.63, 196.0], 0.07, 0.20).size(), 0, "denied ska ge ljud")
