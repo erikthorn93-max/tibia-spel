@@ -1131,6 +1131,15 @@
 		"slot": "offhand",
 		"sprite": "res://assets/sprites/items/guardian_shield.png"
 	},
+	"ancient_bark_shield": {
+		"name": "Uråldrig barksköld",
+		"type": "armor",
+		"value": 900,
+		"color": "#5a3d22",
+		"shielding_bonus": 16,
+		"slot": "offhand",
+		"sprite": "res://assets/sprites/items/ancient_bark_shield.png"
+	},
 	"energy_rune": {
 		"name": "Energiruna",
 		"type": "rune",
@@ -2582,5 +2591,117 @@
 		"slot": "amulet",
 		"armor": 7,
 		"sprite": "res://assets/sprites/items/holy_symbol.png"
+	},
+	"gold_coin": {
+		"name": "Guldmynt",
+		"type": "currency",
+		"value": 50,
+		"color": "#f0c850",
+		"sprite": "res://assets/sprites/items/gold_coin.png"
+	},
+	"ruby": {
+		"name": "Rubin",
+		"type": "material",
+		"value": 300,
+		"color": "#e0314a",
+		"sprite": "res://assets/sprites/items/ruby.png"
+	},
+	"emerald": {
+		"name": "Smaragd",
+		"type": "material",
+		"value": 260,
+		"color": "#22a558",
+		"sprite": "res://assets/sprites/items/emerald.png"
+	},
+	"sapphire": {
+		"name": "Safir",
+		"type": "material",
+		"value": 280,
+		"color": "#2a6ad0",
+		"sprite": "res://assets/sprites/items/sapphire.png"
+	},
+	"topaz": {
+		"name": "Topas",
+		"type": "material",
+		"value": 180,
+		"color": "#e0a020",
+		"sprite": "res://assets/sprites/items/topaz.png"
+	},
+	"amethyst": {
+		"name": "Ametist",
+		"type": "material",
+		"value": 210,
+		"color": "#9a4ec8",
+		"sprite": "res://assets/sprites/items/amethyst.png"
+	},
+	"opal": {
+		"name": "Opal",
+		"type": "material",
+		"value": 150,
+		"color": "#8fd0d8",
+		"sprite": "res://assets/sprites/items/opal.png"
+	},
+	"diamond": {
+		"name": "Diamant",
+		"type": "material",
+		"value": 600,
+		"color": "#bfe8f0",
+		"sprite": "res://assets/sprites/items/diamond.png"
+	},
+	"black_pearl": {
+		"name": "Svart pärla",
+		"type": "material",
+		"value": 340,
+		"color": "#3a3550",
+		"sprite": "res://assets/sprites/items/black_pearl.png"
+	},
+	"pearl": {
+		"name": "Pärla",
+		"type": "material",
+		"value": 75,
+		"color": "#e8e4d8",
+		"sprite": "res://assets/sprites/items/pearl.png"
+	},
+	"gold_ring": {
+		"name": "Guldring",
+		"type": "material",
+		"value": 120,
+		"color": "#f0c850",
+		"sprite": "res://assets/sprites/items/gold_ring.png"
+	},
+	"gold_necklace": {
+		"name": "Guldhalsband",
+		"type": "material",
+		"value": 200,
+		"color": "#f0c850",
+		"sprite": "res://assets/sprites/items/gold_necklace.png"
+	},
+	"silver_amulet": {
+		"name": "Silveramulett",
+		"type": "material",
+		"value": 70,
+		"color": "#cdd2da",
+		"sprite": "res://assets/sprites/items/silver_amulet.png"
+	},
+	"gold_nugget": {
+		"name": "Guldklimp",
+		"type": "material",
+		"value": 95,
+		"color": "#e8b840",
+		"sprite": "res://assets/sprites/items/gold_nugget.png"
+	},
+	"jewelled_goblet": {
+		"name": "Juvelbägare",
+		"type": "material",
+		"value": 240,
+		"color": "#e0c060",
+		"sprite": "res://assets/sprites/items/jewelled_goblet.png"
+	},
+	"ancient_coin": {
+		"name": "Forntida mynt",
+		"type": "material",
+		"value": 55,
+		"color": "#b8a060",
+		"sprite": "res://assets/sprites/items/ancient_coin.png"
 	}
 }

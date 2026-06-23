@@ -60,6 +60,25 @@ function scale(c, f) { return [Math.min(255, c[0] * f) | 0, Math.min(255, c[1] *
 const DARK = c => scale(c, 0.6), LITE = c => scale(c, 1.35);
 
 // ── Ikon-mallar ──────────────────────────────────────────────────────────────
+function drawGem(im, c) { // fasetterad ädelsten
+  tri(im, 16, 5, 8, 13, 24, 13, LITE(c));          // topp-tabell
+  tri(im, 8, 13, 24, 13, 16, 27, c);               // krona ner mot spets
+  tri(im, 8, 13, 16, 13, 11, 19, scale(c, 0.75));  // vänster fasett (skugga)
+  tri(im, 16, 13, 24, 13, 21, 19, scale(c, 1.3));  // höger fasett (ljus)
+  line(im, 8, 13, 24, 13, LITE(c));                // gördellinje
+  px(im, 14, 9, [255, 255, 255, 235]); px(im, 15, 10, [255, 255, 255, 170]); // glans
+}
+function drawCoin(im, c) { // mynthög
+  for (const [x, y, r] of [[11, 22, 5], [21, 22, 5], [16, 18, 6]]) {
+    disc(im, x, y, r, c); disc(im, x, y, r, [c[0], c[1], c[2], 255]);
+    ring(im, x, y, r, DARK(c)); disc(im, x - 1, y - 1, 2, LITE(c));
+  }
+}
+function drawGoblet(im, c) { // juvelbägare/skatt
+  for (let y = 6; y <= 14; y++) { const r = Math.round(6 - (y - 6) * 0.3); for (let x = -r; x <= r; x++) px(im, 16 + x, y, c); }
+  rect(im, 15, 14, 2, 7, scale(c, 0.8)); rect(im, 11, 21, 10, 2, c);  // stam + fot
+  rect(im, 10, 7, 12, 2, LITE(c)); disc(im, 16, 9, 2, [220, 60, 80, 255]); // juvel
+}
 function drawOre(im, c) { // klumpig sten med ådror
   const stone = [90, 92, 100, 255];
   disc(im, 16, 18, 10, stone); disc(im, 12, 14, 6, scale(stone, 1.15)); disc(im, 21, 21, 5, scale(stone, 0.8));
@@ -118,8 +137,12 @@ function pick(id, type) {
     if (has("potato") || has("cabbage") || has("corn") || has("pumpkin") || has("apple")) return drawVeg;
     return drawDrumstick;
   }
+  // ädelstenar & skatter
+  if (/(^|_)(ruby|emerald|sapphire|diamond|topaz|amethyst|opal|pearl|gem)(_|$)/.test(id)) return drawGem;
+  if (has("coin") || has("nugget")) return drawCoin;
+  if (has("goblet") || has("chalice") || has("crown") && has("jewel")) return drawGoblet;
   // material & övrigt
-  if (has("_ore") || id === "coal" || has("gem")) return drawOre;
+  if (has("_ore") || id === "coal") return drawOre;
   if (has("plank")) return drawPlank;
   if (has("_log")) return drawLog;
   if (has("herb") || id === "dragonherb") return drawHerb;

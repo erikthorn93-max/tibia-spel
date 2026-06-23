@@ -211,8 +211,10 @@ func respawn() -> void:
 	player_respawned.emit()
 
 func add_item(item_id: String, qty: int) -> void:
-	if item_id == "iron_coin":
-		gold += qty
+	# Valutaslag (järnmynt, guldmynt …) går direkt till guld efter sitt värde.
+	var d: Dictionary = ItemDB.items.get(item_id, {})
+	if String(d.get("type", "")) == "currency":
+		gold += qty * int(d.get("value", 1))
 		gold_changed.emit(gold)
 		return
 	inventory[item_id] = int(inventory.get(item_id, 0)) + qty

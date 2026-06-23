@@ -13,6 +13,12 @@
 				"min": 1,
 				"max": 4,
 				"chance": 0.9
+			},
+			{
+				"item": "gold_nugget",
+				"min": 1,
+				"max": 1,
+				"chance": 0.015
 			}
 		]
 	},
@@ -36,6 +42,12 @@
 				"min": 1,
 				"max": 2,
 				"chance": 0.4
+			},
+			{
+				"item": "pearl",
+				"min": 1,
+				"max": 1,
+				"chance": 0.012
 			}
 		],
 		"ability": {
@@ -65,6 +77,12 @@
 				"min": 1,
 				"max": 3,
 				"chance": 0.35
+			},
+			{
+				"item": "ancient_coin",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
 			}
 		]
 	},
@@ -100,6 +118,18 @@
 				"min": 1,
 				"max": 2,
 				"chance": 0.7
+			},
+			{
+				"item": "gold_coin",
+				"min": 1,
+				"max": 3,
+				"chance": 0.06
+			},
+			{
+				"item": "gold_nugget",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
 			}
 		]
 	},
@@ -135,6 +165,24 @@
 				"min": 1,
 				"max": 2,
 				"chance": 0.7
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "pearl",
+				"min": 1,
+				"max": 2,
+				"chance": 0.05
+			},
+			{
+				"item": "ruby",
+				"min": 1,
+				"max": 1,
+				"chance": 0.022
 			}
 		]
 	},
@@ -164,6 +212,24 @@
 				"min": 1,
 				"max": 1,
 				"chance": 0.08
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "gold_ring",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "topaz",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
 			}
 		]
 	},
@@ -199,6 +265,24 @@
 				"min": 1,
 				"max": 2,
 				"chance": 0.7
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "emerald",
+				"min": 1,
+				"max": 1,
+				"chance": 0.022
+			},
+			{
+				"item": "gold_ring",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
 			}
 		]
 	},
@@ -234,6 +318,24 @@
 				"min": 1,
 				"max": 2,
 				"chance": 0.7
+			},
+			{
+				"item": "gold_coin",
+				"min": 6,
+				"max": 18,
+				"chance": 0.25
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.025
+			},
+			{
+				"item": "ruby",
+				"min": 1,
+				"max": 2,
+				"chance": 0.03
 			}
 		]
 	},
@@ -257,6 +359,24 @@
 				"min": 8,
 				"max": 25,
 				"chance": 0.7
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "ruby",
+				"min": 1,
+				"max": 1,
+				"chance": 0.022
+			},
+			{
+				"item": "emerald",
+				"min": 1,
+				"max": 1,
+				"chance": 0.022
 			}
 		],
 		"ability": {
@@ -292,6 +412,24 @@
 				"min": 1,
 				"max": 1,
 				"chance": 0.08
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "pearl",
+				"min": 1,
+				"max": 2,
+				"chance": 0.05
+			},
+			{
+				"item": "silver_amulet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.04
 			}
 		]
 	},
@@ -322,6 +460,24 @@
 				"min": 1,
 				"max": 2,
 				"chance": 0.5
+			},
+			{
+				"item": "gold_coin",
+				"min": 20,
+				"max": 60,
+				"chance": 1
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.2
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.4
 			}
 		],
 		"enrage": true
@@ -346,6 +502,18 @@
 				"min": 1,
 				"max": 1,
 				"chance": 0.12
+			},
+			{
+				"item": "gold_coin",
+				"min": 1,
+				"max": 3,
+				"chance": 0.06
+			},
+			{
+				"item": "topaz",
+				"min": 1,
+				"max": 1,
+				"chance": 0.018
 			}
 		]
 	},
@@ -369,6 +537,24 @@
 				"min": 1,
 				"max": 1,
 				"chance": 0.06
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "topaz",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "silver_amulet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.04
 			}
 		]
 	},
@@ -398,6 +584,24 @@
 				"min": 1,
 				"max": 1,
 				"chance": 0.07
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "amethyst",
+				"min": 1,
+				"max": 1,
+				"chance": 0.025
+			},
+			{
+				"item": "topaz",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
 			}
 		]
 	},
@@ -421,6 +625,24 @@
 				"min": 1,
 				"max": 1,
 				"chance": 0.08
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "pearl",
+				"min": 1,
+				"max": 2,
+				"chance": 0.05
+			},
+			{
+				"item": "gold_ring",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
 			}
 		]
 	},
@@ -444,6 +666,24 @@
 				"min": 8,
 				"max": 24,
 				"chance": 0.7
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "gold_ring",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "silver_amulet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.04
 			}
 		]
 	},
@@ -480,6 +720,36 @@
 				"min": 1,
 				"max": 2,
 				"chance": 0.5
+			},
+			{
+				"item": "gold_coin",
+				"min": 20,
+				"max": 60,
+				"chance": 1
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.2
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.4
+			},
+			{
+				"item": "emerald",
+				"min": 1,
+				"max": 2,
+				"chance": 0.03
+			},
+			{
+				"item": "black_pearl",
+				"min": 1,
+				"max": 1,
+				"chance": 0.025
 			}
 		],
 		"enrage": true
@@ -517,6 +787,30 @@
 				"min": 2,
 				"max": 3,
 				"chance": 0.75
+			},
+			{
+				"item": "gold_coin",
+				"min": 20,
+				"max": 60,
+				"chance": 1
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.2
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.4
+			},
+			{
+				"item": "gold_necklace",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
 			}
 		]
 	},
@@ -546,6 +840,24 @@
 				"min": 5,
 				"max": 15,
 				"chance": 0.65
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "gold_ring",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "emerald",
+				"min": 1,
+				"max": 1,
+				"chance": 0.022
 			}
 		]
 	},
@@ -586,6 +898,24 @@
 				"min": 1,
 				"max": 2,
 				"chance": 0.7
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "topaz",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 1,
+				"chance": 0.02
 			}
 		]
 	},
@@ -635,6 +965,30 @@
 				"min": 1,
 				"max": 2,
 				"chance": 0.55
+			},
+			{
+				"item": "gold_coin",
+				"min": 20,
+				"max": 60,
+				"chance": 1
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.2
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.4
+			},
+			{
+				"item": "ruby",
+				"min": 1,
+				"max": 2,
+				"chance": 0.03
 			}
 		]
 	},
@@ -664,6 +1018,24 @@
 				"min": 20,
 				"max": 50,
 				"chance": 0.75
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "ruby",
+				"min": 1,
+				"max": 1,
+				"chance": 0.022
+			},
+			{
+				"item": "topaz",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
 			}
 		]
 	},
@@ -687,6 +1059,24 @@
 				"min": 10,
 				"max": 30,
 				"chance": 0.6
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "amethyst",
+				"min": 1,
+				"max": 1,
+				"chance": 0.025
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 1,
+				"chance": 0.02
 			}
 		]
 	},
@@ -736,6 +1126,30 @@
 				"min": 1,
 				"max": 2,
 				"chance": 0.55
+			},
+			{
+				"item": "gold_coin",
+				"min": 20,
+				"max": 60,
+				"chance": 1
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.2
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.4
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 2,
+				"chance": 0.028
 			}
 		]
 	},
@@ -765,6 +1179,24 @@
 				"min": 30,
 				"max": 80,
 				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 6,
+				"max": 18,
+				"chance": 0.25
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.025
+			},
+			{
+				"item": "amethyst",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
 			}
 		]
 	},
@@ -788,6 +1220,24 @@
 				"min": 20,
 				"max": 60,
 				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 6,
+				"max": 18,
+				"chance": 0.25
+			},
+			{
+				"item": "gold_necklace",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.025
 			}
 		]
 	},
@@ -837,6 +1287,30 @@
 				"min": 1,
 				"max": 3,
 				"chance": 0.85
+			},
+			{
+				"item": "gold_coin",
+				"min": 20,
+				"max": 60,
+				"chance": 1
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.2
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.4
+			},
+			{
+				"item": "amethyst",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
 			}
 		]
 	},
@@ -860,6 +1334,18 @@
 				"min": 5,
 				"max": 20,
 				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 1,
+				"max": 3,
+				"chance": 0.06
+			},
+			{
+				"item": "opal",
+				"min": 1,
+				"max": 1,
+				"chance": 0.02
 			}
 		]
 	},
@@ -895,6 +1381,24 @@
 				"min": 1,
 				"max": 2,
 				"chance": 0.55
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "silver_amulet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.04
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 1,
+				"chance": 0.02
 			}
 		]
 	},
@@ -918,6 +1422,18 @@
 				"min": 2,
 				"max": 10,
 				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 1,
+				"max": 3,
+				"chance": 0.06
+			},
+			{
+				"item": "topaz",
+				"min": 1,
+				"max": 1,
+				"chance": 0.018
 			}
 		]
 	},
@@ -947,6 +1463,24 @@
 				"min": 20,
 				"max": 60,
 				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "topaz",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "pearl",
+				"min": 1,
+				"max": 2,
+				"chance": 0.05
 			}
 		]
 	},
@@ -964,6 +1498,18 @@
 				"min": 5,
 				"max": 18,
 				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 1,
+				"max": 3,
+				"chance": 0.06
+			},
+			{
+				"item": "topaz",
+				"min": 1,
+				"max": 1,
+				"chance": 0.018
 			}
 		]
 	},
@@ -993,6 +1539,24 @@
 				"min": 30,
 				"max": 80,
 				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "emerald",
+				"min": 1,
+				"max": 1,
+				"chance": 0.022
+			},
+			{
+				"item": "ruby",
+				"min": 1,
+				"max": 1,
+				"chance": 0.022
 			}
 		]
 	},
@@ -1022,6 +1586,24 @@
 				"min": 8,
 				"max": 25,
 				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "silver_amulet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.04
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 1,
+				"chance": 0.02
 			}
 		]
 	},
@@ -1057,6 +1639,24 @@
 				"min": 50,
 				"max": 120,
 				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 6,
+				"max": 18,
+				"chance": 0.25
+			},
+			{
+				"item": "amethyst",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 2,
+				"chance": 0.028
 			}
 		]
 	},
@@ -1080,6 +1680,24 @@
 				"min": 6,
 				"max": 20,
 				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "silver_amulet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.04
+			},
+			{
+				"item": "ruby",
+				"min": 1,
+				"max": 1,
+				"chance": 0.022
 			}
 		]
 	},
@@ -1109,6 +1727,24 @@
 				"min": 22,
 				"max": 60,
 				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "gold_ring",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 1,
+				"chance": 0.02
 			}
 		]
 	},
@@ -1132,6 +1768,18 @@
 				"min": 3,
 				"max": 14,
 				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 1,
+				"max": 3,
+				"chance": 0.06
+			},
+			{
+				"item": "opal",
+				"min": 1,
+				"max": 1,
+				"chance": 0.02
 			}
 		]
 	},
@@ -1160,6 +1808,18 @@
 				"item": "wooden_club",
 				"min": 1,
 				"max": 1,
+				"chance": 0.04
+			},
+			{
+				"item": "gold_coin",
+				"min": 1,
+				"max": 3,
+				"chance": 0.06
+			},
+			{
+				"item": "ancient_coin",
+				"min": 1,
+				"max": 2,
 				"chance": 0.04
 			}
 		]
@@ -1190,6 +1850,24 @@
 				"min": 1,
 				"max": 1,
 				"chance": 0.05
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "gold_ring",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 1,
+				"chance": 0.02
 			}
 		]
 	},
@@ -1219,6 +1897,18 @@
 				"min": 1,
 				"max": 1,
 				"chance": 0.06
+			},
+			{
+				"item": "gold_coin",
+				"min": 1,
+				"max": 3,
+				"chance": 0.06
+			},
+			{
+				"item": "opal",
+				"min": 1,
+				"max": 1,
+				"chance": 0.02
 			}
 		]
 	},
@@ -1254,6 +1944,24 @@
 				"min": 1,
 				"max": 1,
 				"chance": 0.08
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "emerald",
+				"min": 1,
+				"max": 1,
+				"chance": 0.022
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 1,
+				"chance": 0.02
 			}
 		]
 	},
@@ -1297,6 +2005,36 @@
 				"min": 1,
 				"max": 2,
 				"chance": 0.6
+			},
+			{
+				"item": "gold_coin",
+				"min": 20,
+				"max": 60,
+				"chance": 1
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.2
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.4
+			},
+			{
+				"item": "black_pearl",
+				"min": 1,
+				"max": 1,
+				"chance": 0.025
+			},
+			{
+				"item": "gold_necklace",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
 			}
 		]
 	},
@@ -1326,6 +2064,24 @@
 				"min": 1,
 				"max": 1,
 				"chance": 0.04
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "ruby",
+				"min": 1,
+				"max": 1,
+				"chance": 0.022
+			},
+			{
+				"item": "gold_ring",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
 			}
 		]
 	},
@@ -1367,6 +2123,24 @@
 				"min": 1,
 				"max": 1,
 				"chance": 0.04
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "silver_amulet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.04
+			},
+			{
+				"item": "ruby",
+				"min": 1,
+				"max": 1,
+				"chance": 0.022
 			}
 		]
 	},
@@ -1404,6 +2178,36 @@
 				"min": 2,
 				"max": 3,
 				"chance": 0.8
+			},
+			{
+				"item": "gold_coin",
+				"min": 20,
+				"max": 60,
+				"chance": 1
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.2
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.4
+			},
+			{
+				"item": "amethyst",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "ruby",
+				"min": 1,
+				"max": 2,
+				"chance": 0.03
 			}
 		]
 	},
@@ -1439,6 +2243,24 @@
 				"min": 1,
 				"max": 1,
 				"chance": 0.1
+			},
+			{
+				"item": "gold_coin",
+				"min": 6,
+				"max": 18,
+				"chance": 0.25
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.025
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 2,
+				"chance": 0.028
 			}
 		]
 	},
@@ -1480,6 +2302,24 @@
 				"min": 1,
 				"max": 1,
 				"chance": 0.12
+			},
+			{
+				"item": "gold_coin",
+				"min": 6,
+				"max": 18,
+				"chance": 0.25
+			},
+			{
+				"item": "amethyst",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.014
 			}
 		]
 	},
@@ -1529,6 +2369,36 @@
 				"min": 1,
 				"max": 2,
 				"chance": 0.55
+			},
+			{
+				"item": "gold_coin",
+				"min": 20,
+				"max": 60,
+				"chance": 1
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.2
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.4
+			},
+			{
+				"item": "amethyst",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "ruby",
+				"min": 1,
+				"max": 2,
+				"chance": 0.03
 			}
 		]
 	},
@@ -1557,6 +2427,24 @@
 				"item": "iron_axe",
 				"min": 1,
 				"max": 1,
+				"chance": 0.05
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "silver_amulet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.04
+			},
+			{
+				"item": "pearl",
+				"min": 1,
+				"max": 2,
 				"chance": 0.05
 			}
 		]
@@ -1593,6 +2481,24 @@
 				"min": 1,
 				"max": 1,
 				"chance": 0.1
+			},
+			{
+				"item": "gold_coin",
+				"min": 6,
+				"max": 18,
+				"chance": 0.25
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 2,
+				"chance": 0.028
+			},
+			{
+				"item": "ruby",
+				"min": 1,
+				"max": 2,
+				"chance": 0.03
 			}
 		]
 	},
@@ -1628,6 +2534,24 @@
 				"min": 1,
 				"max": 2,
 				"chance": 0.15
+			},
+			{
+				"item": "gold_coin",
+				"min": 6,
+				"max": 18,
+				"chance": 0.25
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.025
+			},
+			{
+				"item": "amethyst",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
 			}
 		]
 	},
@@ -1677,6 +2601,36 @@
 				"min": 1,
 				"max": 2,
 				"chance": 0.55
+			},
+			{
+				"item": "gold_coin",
+				"min": 20,
+				"max": 60,
+				"chance": 1
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.2
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.4
+			},
+			{
+				"item": "emerald",
+				"min": 1,
+				"max": 2,
+				"chance": 0.03
+			},
+			{
+				"item": "black_pearl",
+				"min": 1,
+				"max": 1,
+				"chance": 0.025
 			}
 		]
 	},
@@ -1718,6 +2672,24 @@
 				"min": 1,
 				"max": 1,
 				"chance": 0.12
+			},
+			{
+				"item": "gold_coin",
+				"min": 6,
+				"max": 18,
+				"chance": 0.25
+			},
+			{
+				"item": "amethyst",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.025
 			}
 		]
 	},
@@ -1761,6 +2733,30 @@
 				"min": 2,
 				"max": 3,
 				"chance": 0.8
+			},
+			{
+				"item": "gold_coin",
+				"min": 20,
+				"max": 60,
+				"chance": 1
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.2
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.4
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 2,
+				"chance": 0.028
 			}
 		]
 	},
@@ -1810,6 +2806,36 @@
 				"min": 1,
 				"max": 3,
 				"chance": 0.85
+			},
+			{
+				"item": "gold_coin",
+				"min": 20,
+				"max": 60,
+				"chance": 1
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.2
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.4
+			},
+			{
+				"item": "gold_necklace",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "amethyst",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
 			}
 		]
 	},
@@ -1859,6 +2885,30 @@
 				"min": 1,
 				"max": 3,
 				"chance": 0.85
+			},
+			{
+				"item": "gold_coin",
+				"min": 20,
+				"max": 60,
+				"chance": 1
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.2
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.4
+			},
+			{
+				"item": "gold_necklace",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
 			}
 		]
 	},
@@ -1889,6 +2939,24 @@
 				"min": 6,
 				"max": 18,
 				"chance": 0.9
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "pearl",
+				"min": 1,
+				"max": 2,
+				"chance": 0.05
+			},
+			{
+				"item": "amethyst",
+				"min": 1,
+				"max": 1,
+				"chance": 0.025
 			}
 		]
 	},
@@ -1925,6 +2993,24 @@
 				"min": 14,
 				"max": 38,
 				"chance": 0.85
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 8,
+				"chance": 0.12
+			},
+			{
+				"item": "amethyst",
+				"min": 1,
+				"max": 1,
+				"chance": 0.025
+			},
+			{
+				"item": "emerald",
+				"min": 1,
+				"max": 1,
+				"chance": 0.022
 			}
 		]
 	},
@@ -1961,6 +3047,24 @@
 				"min": 1,
 				"max": 1,
 				"chance": 0.06
+			},
+			{
+				"item": "gold_coin",
+				"min": 6,
+				"max": 18,
+				"chance": 0.25
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.014
+			},
+			{
+				"item": "amethyst",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
 			}
 		]
 	},
@@ -2011,6 +3115,36 @@
 				"min": 2,
 				"max": 3,
 				"chance": 0.8
+			},
+			{
+				"item": "gold_coin",
+				"min": 20,
+				"max": 60,
+				"chance": 1
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.2
+			},
+			{
+				"item": "jewelled_goblet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.4
+			},
+			{
+				"item": "gold_necklace",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 2,
+				"chance": 0.028
 			}
 		]
 	},
@@ -2035,6 +3169,12 @@
 				"min": 1,
 				"max": 1,
 				"chance": 0.15
+			},
+			{
+				"item": "gold_nugget",
+				"min": 1,
+				"max": 1,
+				"chance": 0.015
 			}
 		]
 	},
@@ -2059,6 +3199,12 @@
 				"min": 1,
 				"max": 2,
 				"chance": 0.5
+			},
+			{
+				"item": "ancient_coin",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
 			}
 		]
 	},
@@ -2083,6 +3229,12 @@
 				"min": 1,
 				"max": 4,
 				"chance": 0.6
+			},
+			{
+				"item": "gold_nugget",
+				"min": 1,
+				"max": 1,
+				"chance": 0.015
 			}
 		]
 	},
@@ -2113,6 +3265,18 @@
 				"min": 3,
 				"max": 10,
 				"chance": 0.8
+			},
+			{
+				"item": "gold_coin",
+				"min": 1,
+				"max": 3,
+				"chance": 0.06
+			},
+			{
+				"item": "ancient_coin",
+				"min": 1,
+				"max": 2,
+				"chance": 0.04
 			}
 		]
 	}
