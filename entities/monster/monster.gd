@@ -385,6 +385,8 @@ func take_damage(dmg: float, crit := false) -> void:
 	_flash_hit()
 	if hp <= 0:
 		_die()
+	else:
+		Sfx.hit()
 
 ## Kort röd blink när monstret tar skada.
 func _flash_hit() -> void:
@@ -433,6 +435,7 @@ func _die() -> void:
 		SpellFx.death_burst(fx_parent, global_position, base_col, kind)
 		if not drops.is_empty():
 			SpellFx.fountain(fx_parent, global_position, Color(1.0, 0.92, 0.45), 8)
+	Sfx.monster_die()
 	if respawn_time > 0.0:
 		var t  := tile
 		var mn := monster_name

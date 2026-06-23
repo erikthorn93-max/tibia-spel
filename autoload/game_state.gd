@@ -178,7 +178,9 @@ func take_damage(dmg: float, dmg_type: String = "physical") -> void:
 	gain_skill_xp("constitution", 1)   # skada tränar constitution
 	if World.player and World.player.visual:
 		World.player.visual.play_hurt()   # röd blink på spelaren
+	Sfx.player_hurt()
 	if health <= 0.0:
+		Sfx.player_died()
 		player_died.emit()
 
 func heal(amount: float) -> void:

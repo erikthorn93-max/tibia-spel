@@ -96,3 +96,26 @@ func cast(ctype: String) -> void:
 ## Nekande "wah" nedåt när en cast blockeras (mana/cooldown/krav saknas).
 func denied() -> void:
 	_enqueue(synth([349.23, 261.63, 196.0], 0.07, 0.20))
+
+var _last_hit_ms := 0
+
+## Kort vasst "thwack" när ett monster tar skada. Throttlad så AoE som träffar
+## många monster på samma frame ger ett ljud, inte en kakofoni.
+func hit() -> void:
+	var now := Time.get_ticks_msec()
+	if now - _last_hit_ms < 45:
+		return
+	_last_hit_ms = now
+	_enqueue(synth([261.63, 130.81], 0.035, 0.16))
+
+## Nedåtgående "besegrad"-figur när ett monster dör.
+func monster_die() -> void:
+	_enqueue(synth([329.63, 261.63, 174.61], 0.08, 0.20))
+
+## Dovt lågt "ugh" när spelaren tar skada (lägre & strävare än monster-hit).
+func player_hurt() -> void:
+	_enqueue(synth([155.56, 116.54], 0.05, 0.22))
+
+## Sorgsen lång nedåtfigur vid spelarens död.
+func player_died() -> void:
+	_enqueue(synth([220.0, 174.61, 130.81, 98.0], 0.18, 0.25))
