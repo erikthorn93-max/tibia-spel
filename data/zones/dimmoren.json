@@ -1,0 +1,50 @@
+{
+	"name": "Dimmoren",
+	"tiles": [
+			"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+			"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+			"W,,,,tt,,,,,,,,,,,,,,,,,,,,,,,,,,,,,D,,W",
+			"W,,,,t,,Y,,,,,,..,,,,,,,,,,,,,,,tt,,,,,W",
+			"W,,..,,,,,,,,G,,,,,,,,,,,,,,,,,,t,,,,,,W",
+			"W,,.,,,,,,,,,,,,,,ss,,,,,B,,,,Y,,,,,,,,W",
+			"W,,,,,A,,,...,,,,,s,~,,,,,,,,,,,,,,,,,,W",
+			"W,,,,,,,,,,,,,,,,C,,,,,,,,,,,,,,,..,,,,W",
+			"W,,,,,,,,,,,,,t,,,,,,,,,L,,,,,,,,,,F,,,W",
+			"W,,,,,sss,,B,,t,,,,,,,,,,,ss,,,H,,,,,,,W",
+			"W,,,,,,s~,,,,,,,,,,,..,,,,,s~,,,,,,,,,,W",
+			"W,,,,H,,,,,,,,,,,,,,,,.,,,,,,,,,,,,,,,,W",
+			"W,,,,,,,,,tt,,,,,tt,,,,,,,,G,,,,,A,,,,,W",
+			"W,,,,,,,,E,,,,,,,,,,,,,,,,,,..,,,,,,,,,W",
+			"W,,,,,,,,,,,,,,L,,,I,,tt,,,,,,.,,,,,,,,W",
+			"W,,,,,,,..,,,,,,,,,,,,,,,,,,,C,,,,,,,,,W",
+			"W,,,,,,,,,,,ss,,,,,,,E,,,..,,,,,,,V,,,,W",
+			"W,0,,,,,,,,,,s,,,,,,,,,,,,,,,,tt,,,,,,,W",
+			"W,P,,,,,,,,,,~,,,,,,,,,,,,,,,,,,,,,,,,,W",
+			"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"0": { "type": "portal", "to": "forest", "terrain": "," },
+		"D": { "type": "dungeon_entrance", "theme": "katakomber", "terrain": "," },
+		"Y": { "type": "node", "node": "yew_tree", "terrain": "," },
+		"L": { "type": "node", "node": "willow_tree", "terrain": "," },
+		"V": { "type": "node", "node": "gem_vein", "terrain": "," },
+		"A": { "type": "spawn", "monster": "Varg", "respawn": 28.0, "terrain": "." },
+		"B": { "type": "spawn", "monster": "Vildsvin", "respawn": 26.0, "terrain": "." },
+		"C": { "type": "spawn", "monster": "Skogsvargen", "respawn": 40.0, "terrain": "." },
+		"E": { "type": "spawn", "monster": "Skelett", "respawn": 30.0, "terrain": "," },
+		"F": { "type": "spawn", "monster": "Skelettkrigare", "respawn": 45.0, "terrain": "," },
+		"G": { "type": "spawn", "monster": "Ghoul", "respawn": 35.0, "terrain": "," },
+		"H": { "type": "spawn", "monster": "Bandit", "respawn": 32.0, "terrain": "," },
+		"I": { "type": "spawn", "monster": "Fantom", "respawn": 50.0, "terrain": "," }
+	},
+	"spawn_table": [
+		{ "monster": "Varg", "count": 3, "respawn": 40.0 },
+		{ "monster": "Vildsvin", "count": 2, "respawn": 38.0 },
+		{ "monster": "Skogsvargen", "count": 2, "respawn": 55.0 },
+		{ "monster": "Skelett", "count": 3, "respawn": 45.0 },
+		{ "monster": "Skelettkrigare", "count": 2, "respawn": 60.0 },
+		{ "monster": "Ghoul", "count": 2, "respawn": 50.0 },
+		{ "monster": "Bandit", "count": 2, "respawn": 45.0 },
+		{ "monster": "Fantom", "count": 1, "respawn": 70.0 }
+	]
+}

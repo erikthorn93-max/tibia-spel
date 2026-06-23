@@ -429,6 +429,39 @@ func test_apprentice_skilling_questline():
 	# Belönar skill-XP för att jumpstarta den introducerade skillen
 	assert_true(QuestSystem.quests["quest_appr_mining"]["rewards"].has("skill_xp"))
 
+## ── Dimmoren: ny mellannivå-hed kopplad till skogen ──
+
+func test_dimmoren_loads_with_content():
+	var z = _make_zone("dimmoren")
+	assert_eq(z.zone_name, "Dimmoren")
+	assert_true(z.is_walkable(z.player_start), "startrutan ska vara gångbar")
+	# Portal tillbaka till skogen
+	assert_true(z.portals.values().has("forest"), "saknar portal tillbaka till forest")
+	# Katakomb-ingång i gravkummel
+	assert_true(z.dungeon_entrances.values().has("katakomber"))
+	# Gather-noder: idegran, sälg, ädelstensåder
+	var nodes = z.node_points.map(func(n): return n["node"])
+	for nid in ["yew_tree", "willow_tree", "gem_vein"]:
+		assert_has(nodes, nid)
+	# Mellannivå-mix av best & odöda
+	for name in ["Varg", "Vildsvin", "Skogsvargen", "Skelett", "Ghoul", "Bandit", "Fantom"]:
+		assert_gt(z.spawn_points.filter(func(s): return s["monster"] == name).size(), 0,
+			"dimmoren saknar " + name)
+
+func test_dimmoren_monsters_and_theme_are_valid():
+	# Alla spawnade monster ska finnas i MonsterDB och temat vara byggbart.
+	var z = _make_zone("dimmoren")
+	for sp in z.spawn_points:
+		assert_true(MonsterDB.monsters.has(sp["monster"]), "okänt monster " + String(sp["monster"]))
+	for t in z.dungeon_entrances:
+		var theme := String(z.dungeon_entrances[t])
+		var data: Dictionary = DungeonGen.generate(theme, 7)
+		assert_gt(data.get("tiles", []).size(), 0, "temat %s genererade ingen karta" % theme)
+
+func test_forest_links_to_dimmoren():
+	var z = _make_zone("forest")
+	assert_true(z.portals.values().has("dimmoren"), "skogen saknar portal till dimmoren")
+
 func test_boar_hide_tans_to_leather():
 	assert_true(ItemDB.items.has("boar_hide"))
 	var bench: Array = ItemDB.recipes["crafting_bench"]
