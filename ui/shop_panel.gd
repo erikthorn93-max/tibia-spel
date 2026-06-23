@@ -12,8 +12,13 @@ func _ready() -> void:
 	custom_minimum_size = Vector2(360, 0)
 	offset_left = 300.0
 	offset_top = 120.0
+	var scroll := ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(360, 440)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	add_child(scroll)
 	_list = VBoxContainer.new()
-	add_child(_list)
+	_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(_list)
 	GameState.inventory_changed.connect(func(): if visible: _rebuild())
 	GameState.gold_changed.connect(func(_g): if visible: _rebuild())
 

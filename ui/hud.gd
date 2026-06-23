@@ -426,24 +426,89 @@ func _update_night_overlay() -> void:
 ## Bygger uppfräschade HP/mana-barer: rundad ram med skugga, glansig fyllning
 ## (sheen-list upptill) och centrerat värde "X / Y". Fyllnadsgraden styrs av
 ## fyllnadens anchor_right i _refresh().
-const _BAR_W := 208.0
+const _BAR_LEFT := 40.0   # plats för ikon till vänster
+const _BAR_W := 200.0
 const _BAR_H := 18.0
 
 func _build_bars() -> void:
+	_make_stat_icon(14.0, "hp")
 	hp_bar = _make_bar(14.0,
 		Color(0.86, 0.20, 0.20), Color(0.45, 0.10, 0.10, 0.95))   # rött + mörk kant
 	_hp_val = _make_bar_label(14.0)
+	_make_stat_icon(34.0, "mana")
 	mana_bar = _make_bar(34.0,
 		Color(0.26, 0.46, 0.96), Color(0.14, 0.20, 0.50, 0.95))   # blått + mörk kant
 	_mana_val = _make_bar_label(34.0)
+
+## Liten pixel-ikon (hjärta / mana-droppe) till vänster om en bar.
+func _make_stat_icon(top: float, kind: String) -> void:
+	var tr := TextureRect.new()
+	tr.texture = _heart_texture() if kind == "hp" else _drop_texture()
+	tr.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	tr.offset_left = 13.0
+	tr.offset_top = top - 1.0
+	tr.offset_right = 35.0
+	tr.offset_bottom = top + 19.0
+	tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(tr)
+
+## Bygger en 16×16-ikon ur en mask-funktion, med mörk kontur + ljus glansprick.
+func _icon_tex(mask: Callable, fill: Color, outline: Color, hi: Color, hi_px: Array) -> ImageTexture:
+	var img := Image.create(16, 16, false, Image.FORMAT_RGBA8)
+	img.fill(Color(0, 0, 0, 0))
+	for y in 16:
+		for x in 16:
+			if mask.call(x, y):
+				img.set_pixel(x, y, fill)
+	# Konturpass: tomma pixlar intill en fylld blir mörk kant
+	var dirs: Array[Vector2i] = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
+	var edge: Array = []
+	for y in 16:
+		for x in 16:
+			if img.get_pixel(x, y).a > 0.0:
+				continue
+			for d in dirs:
+				var nx: int = int(x) + d.x
+				var ny: int = int(y) + d.y
+				if nx >= 0 and nx < 16 and ny >= 0 and ny < 16 and img.get_pixel(nx, ny).a > 0.0:
+					edge.append(Vector2i(x, y))
+					break
+	for p in edge:
+		img.set_pixel(p.x, p.y, outline)
+	for p in hi_px:
+		if img.get_pixel(p.x, p.y).a > 0.0:
+			img.set_pixel(p.x, p.y, hi)
+	return ImageTexture.create_from_image(img)
+
+func _heart_texture() -> ImageTexture:
+	var mask := func(x: int, y: int) -> bool:
+		var fx := float(x)
+		var fy := float(y)
+		var lobe := Vector2(fx, fy).distance_to(Vector2(4.5, 5.5)) <= 3.4 \
+			or Vector2(fx, fy).distance_to(Vector2(10.5, 5.5)) <= 3.4
+		var body := fy >= 5.0 and absf(fx - 7.5) <= (13.5 - fy) * 0.78
+		return lobe or body
+	return _icon_tex(mask, Color(0.90, 0.22, 0.22), Color(0.20, 0.03, 0.03),
+		Color(1.0, 0.62, 0.62), [Vector2i(3, 3), Vector2i(4, 3), Vector2i(3, 4)])
+
+func _drop_texture() -> ImageTexture:
+	var mask := func(x: int, y: int) -> bool:
+		var fx := float(x)
+		var fy := float(y)
+		var bulb := Vector2(fx, fy).distance_to(Vector2(7.5, 10.0)) <= 4.3
+		var tip := fy <= 10.0 and absf(fx - 7.5) <= maxf(0.0, fy - 1.0) * 0.46
+		return bulb or tip
+	return _icon_tex(mask, Color(0.30, 0.55, 1.0), Color(0.05, 0.12, 0.40),
+		Color(0.72, 0.86, 1.0), [Vector2i(6, 7), Vector2i(6, 8), Vector2i(5, 8)])
 
 ## Skapar ram + fyllning + sheen. Returnerar fyllnads-panelen (driver nivån).
 func _make_bar(top: float, fill_color: Color, border_color: Color) -> Panel:
 	# --- rundad mörk ram med mjuk skugga ---
 	var frame := Panel.new()
-	frame.offset_left = 16.0
+	frame.offset_left = _BAR_LEFT
 	frame.offset_top = top
-	frame.offset_right = 16.0 + _BAR_W
+	frame.offset_right = _BAR_LEFT + _BAR_W
 	frame.offset_bottom = top + _BAR_H
 	frame.clip_contents = true
 	var fsb := StyleBoxFlat.new()
@@ -489,9 +554,9 @@ func _make_bar(top: float, fill_color: Color, border_color: Color) -> Panel:
 ## Centrerad värde-etikett över en bar, med svart kontur för läsbarhet.
 func _make_bar_label(top: float) -> Label:
 	var lbl := Label.new()
-	lbl.offset_left = 16.0
+	lbl.offset_left = _BAR_LEFT
 	lbl.offset_top = top
-	lbl.offset_right = 16.0 + _BAR_W
+	lbl.offset_right = _BAR_LEFT + _BAR_W
 	lbl.offset_bottom = top + _BAR_H
 	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
