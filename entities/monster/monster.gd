@@ -26,6 +26,7 @@ var status_effects: Dictionary = {}  # id -> {tick_dmg, time_left, tick_acc}
 var enraged := false       # publik — enrage-fas aktiv
 var _breath_t := 0.0       # idle-andning, slumpad fas
 var _sprite_base_y := 0.0  # spritens vilo-y (för gång-studs)
+var _attacking := false    # pausar livs-anim medan attack-stöten spelas
 
 @onready var _hp_bar: ColorRect  = $HpBar
 @onready var _name_lbl: Label    = $NameLabel
@@ -193,6 +194,7 @@ func _process(delta: float) -> void:
 	if dist <= 1:                                    # intill: slå
 		if _atk_timer <= 0.0:
 			_atk_timer = cooldown
+			play_attack(player_tile - tile)
 			var raw := CombatFormulas.roll_monster(atk)
 			var dmg := CombatFormulas.mitigate(raw,
 				GameState.effective_skill_level("shielding") + GameState.total_shielding_bonus(),
@@ -213,7 +215,7 @@ func _process(delta: float) -> void:
 ## Karaktärsliv: gång-studs under ett steg, annars subtil idle-andning.
 ## Delar hjälpfunktioner med spelare/NPC via CharacterVisual.
 func _update_life_anim(delta: float) -> void:
-	if _sprite == null:
+	if _sprite == null or _attacking:
 		return
 	_breath_t += delta
 	if _move_t < 1.0:                       # mitt i ett steg → studsa
@@ -222,6 +224,22 @@ func _update_life_anim(delta: float) -> void:
 	else:                                   # stillastående → andas
 		_sprite.position.y = _sprite_base_y
 		_sprite.scale.y = CharacterVisual.breath_scale(_breath_t)
+
+## Attack-stöt: monstret lutar sig snabbt mot spelaren och studsar tillbaka.
+## Pausar idle-/gång-anim så tweenen får styra spriten ostört.
+func play_attack(dir: Vector2i) -> void:
+	if _sprite == null:
+		return
+	var d := Vector2(dir.x, dir.y)
+	if d == Vector2.ZERO:
+		return
+	var lunge := d.normalized() * 7.0
+	_attacking = true
+	var rest := Vector2(0.0, _sprite_base_y)
+	var tw := create_tween()
+	tw.tween_property(_sprite, "position", rest + lunge, 0.07).set_ease(Tween.EASE_OUT)
+	tw.tween_property(_sprite, "position", rest, 0.13).set_ease(Tween.EASE_IN_OUT)
+	tw.tween_callback(func(): _attacking = false)
 
 ## Applicerar en statuseffekt på monstret (skriver över om samma id redan finns).
 func apply_status(id: String, duration: float, tick_dmg: float) -> void:

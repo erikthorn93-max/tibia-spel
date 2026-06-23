@@ -10,9 +10,10 @@ class MockMonster:
 	var _breath_t := 0.0
 	var _sprite_base_y := 0.0
 	var _move_t := 1.0
+	var _attacking := false
 
 	func _update_life_anim(delta: float) -> void:
-		if _sprite == null:
+		if _sprite == null or _attacking:
 			return
 		_breath_t += delta
 		if _move_t < 1.0:
@@ -58,3 +59,13 @@ func test_andning_skalar_spriten_i_vila() -> void:
 		if _m._sprite.scale.y > 1.0: saw_above = true
 		if _m._sprite.scale.y < 1.0: saw_below = true
 	assert_true(saw_above and saw_below, "andningen ska pulsera kring 1.0 i vila")
+
+# --- attack pausar livs-anim ---
+
+func test_livs_anim_pausas_under_attack() -> void:
+	_m._attacking = true
+	_m._sprite.position.y = 99.0           # värde tween:en äger under attacken
+	_m._sprite.scale.y = 99.0
+	_m._update_life_anim(0.05)
+	assert_almost_eq(_m._sprite.position.y, 99.0, 0.001, "livs-anim ska ej röra spriten under attack")
+	assert_almost_eq(_m._sprite.scale.y, 99.0, 0.001, "livs-anim ska ej skala spriten under attack")
