@@ -30,6 +30,7 @@ var _slot_nodes:    Array = []
 var _slot_icons:    Array = []
 var _slot_name_lbls: Array = []
 var _slot_key_lbls:  Array = []
+var _slot_cooldowns: Array = []   # CooldownOverlay per slot
 
 # Drag-tillstånd
 var _drag_slot    := -1
@@ -140,6 +141,12 @@ func _build_slot(idx: int) -> void:
 	klbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(klbl)
 	_slot_key_lbls.append(klbl)
+
+	# Cooldown-overlay ovanpå ikonen (full ruta, ignorerar mus).
+	var cd := CooldownOverlay.new()
+	cd.set_anchors_preset(Control.PRESET_FULL_RECT)
+	cell.add_child(cd)
+	_slot_cooldowns.append(cd)
 
 	_slot_nodes.append(cell)
 	cell.gui_input.connect(func(ev): _on_slot_input(ev, idx, cell))
@@ -368,6 +375,23 @@ func _on_clear() -> void:
 	_save_config()
 
 # ─────────────────────────────────────────────
+## Pollar cooldown för varje slots bundna besvärjelse/runa och driver overlayn.
+func _process(_delta: float) -> void:
+	for i in _slot_cooldowns.size():
+		var slot: Dictionary = _slots[i]
+		var id := String(slot.get("spell_id", ""))
+		if id == "":
+			id = String(slot.get("item_id", ""))   # runor delar cooldown-id med casten
+		var left := SpellSystem.cooldown_left(id) if id != "" else 0.0
+		# _cd_total bygger en rune-def — undvik det utom när sloten faktiskt laddar.
+		_slot_cooldowns[i].set_cooldown(left, _cd_total(id) if left > 0.0 else 1.0)
+
+## Full cooldown-längd för ett spell-/rune-id (för wedge-andelen).
+func _cd_total(id: String) -> float:
+	if SpellSystem.spells.has(id):
+		return float(SpellSystem.spells[id].get("cooldown", 1.0))
+	return float(SpellSystem.cast_def(id).get("cooldown", 1.0))
+
 func _refresh_all() -> void:
 	for i in SLOT_COUNT:
 		_refresh_slot(i)
