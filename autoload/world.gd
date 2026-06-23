@@ -58,35 +58,44 @@ func enter_dungeon(theme: String, dseed: int = -1) -> void:
 		dseed = randi()
 	var data := DungeonGen.generate(theme, dseed)
 	SaveManager.save_game()   # spara med ytzon INNAN vi byter
-	if current_zone:
-		if player and is_instance_valid(player) and player.get_parent() == current_zone:
-			current_zone.remove_child(player)
-		if current_zone.get_parent():
-			current_zone.get_parent().remove_child(current_zone)
-		current_zone.queue_free()
-	current_zone = Node2D.new()
-	current_zone.set_script(ZoneScript)
-	game_root.add_child(current_zone)
-	current_zone.build_from_data(data, "dungeon:" + theme)
-	GameState.current_zone = "dungeon:" + theme
-	QuestSystem.record_explore("dungeon:" + theme)
-	if player == null or not is_instance_valid(player):
-		player = PlayerScene.instantiate()
-	if player.get_parent():
-		player.get_parent().remove_child(player)
-	current_zone.add_child(player)
-	player.zone = current_zone
-	player.snap_to(current_zone.player_start)
-	_spawn_monsters()
-	_spawn_world_objects()
+	var rebuild := func():
+		if current_zone:
+			if player and is_instance_valid(player) and player.get_parent() == current_zone:
+				current_zone.remove_child(player)
+			if current_zone.get_parent():
+				current_zone.get_parent().remove_child(current_zone)
+			current_zone.queue_free()
+		current_zone = Node2D.new()
+		current_zone.set_script(ZoneScript)
+		game_root.add_child(current_zone)
+		current_zone.build_from_data(data, "dungeon:" + theme)
+		GameState.current_zone = "dungeon:" + theme
+		QuestSystem.record_explore("dungeon:" + theme)
+		if player == null or not is_instance_valid(player):
+			player = PlayerScene.instantiate()
+		if player.get_parent():
+			player.get_parent().remove_child(player)
+		current_zone.add_child(player)
+		player.zone = current_zone
+		player.snap_to(current_zone.player_start)
+		_spawn_monsters()
+		_spawn_world_objects()
+	if hud != null and is_instance_valid(hud) and hud.has_method("transition"):
+		hud.transition(rebuild)
+	else:
+		rebuild.call_deferred()
 
 func change_zone(zone_id: String) -> void:
 	SaveManager.save_game()
 	# Dungeoneixt: återvänd till ingångstiln i ytzonen
+	var dest_tile := Vector2i(-1, -1)
 	if GameState.current_zone.begins_with("dungeon:") and zone_id == last_surface_zone and last_surface_tile.x >= 0:
-		start_game.call_deferred(zone_id, last_surface_tile)
+		dest_tile = last_surface_tile
+	var rebuild := func(): start_game(zone_id, dest_tile)
+	if hud != null and is_instance_valid(hud) and hud.has_method("transition"):
+		hud.transition(rebuild)
 	else:
-		start_game.call_deferred(zone_id)
+		rebuild.call_deferred()
 
 func _spawn_monsters() -> void:
 	for sp in current_zone.spawn_points:

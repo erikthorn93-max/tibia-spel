@@ -111,6 +111,7 @@ func _ready() -> void:
 	_build_status_chips()
 	GameState.buffs_changed.connect(_refresh_buffs)
 	GameState.player_died.connect(_on_death)
+	_build_fade_overlay()   # sist → överst, täcker hela HUD vid zon-fade
 	_refresh()
 	_refresh_inv()
 	_refresh_buffs()
@@ -319,6 +320,26 @@ func _on_death() -> void:
 	pass   # DeathScreen hanterar sin egen synlighet via player_died-signalen
 
 ## Bygger boss HP-bar längst ner i mitten — dold tills target är en boss
+var _fade_rect: ColorRect   # svart heltäckande overlay för zon-övergångar
+
+func _build_fade_overlay() -> void:
+	_fade_rect = ColorRect.new()
+	_fade_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_fade_rect.color = Color(0, 0, 0, 0.0)
+	add_child(_fade_rect)   # läggs sist → ritas överst
+
+## Zon-övergång: tona till svart, kör om-byggnaden, tona tillbaka in.
+func transition(rebuild: Callable) -> void:
+	if _fade_rect == null:
+		rebuild.call_deferred()
+		return
+	_fade_rect.color.a = 0.0
+	var tw := create_tween()
+	tw.tween_property(_fade_rect, "color:a", 1.0, 0.18)
+	tw.tween_callback(rebuild)
+	tw.tween_property(_fade_rect, "color:a", 0.0, 0.28)
+
 func _build_night_overlay() -> void:
 	_night_overlay = ColorRect.new()
 	_night_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
