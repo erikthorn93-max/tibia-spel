@@ -267,6 +267,7 @@ func cast_spell(id: String) -> void:
 		_begin_aim(id, def)
 	else:
 		var res := SpellSystem.resolve_cast(id, self, tile)
+		_play_spell_fx(res)
 		if String(res.get("message", "")) != "":
 			World.hud.show_message(String(res["message"]))
 
@@ -285,8 +286,38 @@ func _on_aim_confirmed(picked: Vector2i, id: String) -> void:
 		World.hud.show_message(String(recheck["reason"]))
 		return
 	var res := SpellSystem.resolve_cast(id, self, picked)
+	_play_spell_fx(res)
 	if String(res.get("message", "")) != "":
 		World.hud.show_message(String(res["message"]))
+
+## Spawnar besvärjelse-effekter utifrån metadatan i resolve_cast-resultatet.
+func _play_spell_fx(res: Dictionary) -> void:
+	var fx: Dictionary = res.get("fx", {})
+	if fx.is_empty() or zone == null:
+		return
+	var color := SpellFx.element_color(String(fx.get("element", "none")))
+	var parent := get_parent()
+	if parent == null:
+		return
+	var ctype := String(fx.get("ctype", ""))
+	var center_tile: Vector2i = fx.get("center", tile)
+	var center_pos: Vector2 = zone.tile_to_world(center_tile)
+	match ctype:
+		"heal":
+			SpellFx.heal_sparkle(parent, global_position)
+		"support":
+			SpellFx.ring(parent, global_position, color, 24.0)
+			SpellFx.burst(parent, global_position, color, 10, 70.0)
+		"conjure":
+			SpellFx.burst(parent, global_position, color, 10, 70.0)
+		"attack":
+			var target_type := String(fx.get("target_type", "target"))
+			if target_type == "area_self" or center_tile == tile:
+				SpellFx.burst(parent, center_pos, color, 18, 110.0)
+			else:
+				# Projektil från spelaren → nedslag vid målet
+				SpellFx.projectile(parent, global_position, center_pos, color,
+					func(): SpellFx.burst(parent, center_pos, color, 16, 110.0))
 
 func _check_portal() -> void:
 	if zone.dungeon_entrances.has(tile):

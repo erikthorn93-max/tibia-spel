@@ -160,6 +160,19 @@ func resolve_cast(id: String, caster: Node, center_tile: Vector2i) -> Dictionary
 				result["message"] = "Besvärjelsen missade."
 
 	GameState.gain_skill_xp("magic", _xp_for(def))
+	# Effekt-metadata: casters spawnar visuella effekter utifrån detta.
+	var target_type := String(def.get("target", "target"))
+	var fx_center := center_tile
+	if ctype != "attack" or target_type == "area_self" or target_type == "self":
+		if caster != null and is_instance_valid(caster):
+			fx_center = caster.tile
+	result["fx"] = {
+		"ctype": ctype,
+		"element": String(def.get("element", "none")),
+		"target_type": target_type,
+		"center": fx_center,
+		"radius": int(def.get("radius", 0)),
+	}
 	spell_cast.emit(id, result)
 	return result
 
