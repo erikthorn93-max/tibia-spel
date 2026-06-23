@@ -59,9 +59,9 @@ func test_hit_is_throttled():
 	var sfx = add_child_autofree(Sfx.new())
 	sfx._last_hit_ms = 0
 	sfx.hit()
-	var after_first := sfx._last_hit_ms
+	var after_first: int = sfx._last_hit_ms
 	sfx.hit()                      # direkt igen → ska throttlas (samma tidsstämpel)
-	assert_eq(sfx._last_hit_ms, after_first, "tät andra-träff ska ignoreras av throttlen")
+	assert_eq(int(sfx._last_hit_ms), after_first, "tät andra-träff ska ignoreras av throttlen")
 
 func test_cast_and_denied_produce_audio():
 	# Cast- och denial-vågformerna ska vara icke-tomma.
