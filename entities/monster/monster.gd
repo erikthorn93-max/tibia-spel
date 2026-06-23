@@ -419,6 +419,14 @@ func _die() -> void:
 		gi.setup(drops, tile)
 	TaskSystem.record_kill(monster_name)
 	QuestSystem.record_kill(monster_name)
+	# --- DÖDSSKUR: stoftmoln i monstrets färg + glitter om loot föll ---
+	var fx_parent := get_parent()
+	if fx_parent != null:
+		var dust := Color(String(d.get("color", "#aa3333")))
+		dust = dust.lerp(Color(0.25, 0.2, 0.18), 0.35)  # dämpa mot stoftton
+		SpellFx.burst(fx_parent, global_position, dust, 16, 110.0)
+		if not drops.is_empty():
+			SpellFx.fountain(fx_parent, global_position, Color(1.0, 0.92, 0.45), 8)
 	if respawn_time > 0.0:
 		var t  := tile
 		var mn := monster_name

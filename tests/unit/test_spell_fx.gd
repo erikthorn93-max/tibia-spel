@@ -21,6 +21,29 @@ func test_fire_ar_varm_ice_ar_kall() -> void:
 	assert_gt(fire.r, fire.b, "eld ska luta mot rött")
 	assert_gt(ice.b, ice.r, "is ska luta mot blått")
 
+func test_burst_spawnar_partiklar() -> void:
+	var root := Node2D.new()
+	add_child_autofree(root)
+	SFX.burst(root, Vector2(10, 10), Color.RED, 16, 110.0)
+	var found := false
+	for c in root.get_children():
+		if c is CPUParticles2D:
+			found = true
+			assert_true(c.emitting, "skuren ska emittera direkt")
+			assert_eq(c.amount, 16, "antal partiklar ska skickas vidare")
+	assert_true(found, "burst ska spawna en CPUParticles2D")
+
+func test_fountain_spawnar_uppatriktade_partiklar() -> void:
+	var root := Node2D.new()
+	add_child_autofree(root)
+	SFX.fountain(root, Vector2(0, 0), Color.YELLOW, 8)
+	var p: CPUParticles2D = null
+	for c in root.get_children():
+		if c is CPUParticles2D:
+			p = c
+	assert_not_null(p, "fountain ska spawna en CPUParticles2D")
+	assert_lt(p.direction.y, 0.0, "fontänen ska peka uppåt")
+
 func test_projektil_ror_sig_mot_malet() -> void:
 	var root := Node2D.new()
 	add_child_autofree(root)
