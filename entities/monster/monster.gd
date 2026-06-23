@@ -24,6 +24,8 @@ var _to   := Vector2.ZERO
 var dead := false          # publik — läses av player.gd
 var status_effects: Dictionary = {}  # id -> {tick_dmg, time_left, tick_acc}
 var enraged := false       # publik — enrage-fas aktiv
+var _breath_t := 0.0       # idle-andning, slumpad fas
+var _sprite_base_y := 0.0  # spritens vilo-y (för gång-studs)
 
 @onready var _hp_bar: ColorRect  = $HpBar
 @onready var _name_lbl: Label    = $NameLabel
@@ -142,6 +144,9 @@ func setup(mname: String, t: Vector2i, z: Node2D, respawn := -1.0) -> void:
 	_from = position; _to = position; _move_t = 1.0
 	zone.occupy(tile, self)
 	_load_sprite()
+	_breath_t = randf() * 10.0        # slumpad fas så monster inte andas i takt
+	if _sprite != null:
+		_sprite_base_y = _sprite.position.y
 	_refresh_label()
 
 func _refresh_label() -> void:
@@ -171,6 +176,7 @@ func _refresh_label() -> void:
 func _process(delta: float) -> void:
 	if dead:
 		return
+	_update_life_anim(delta)
 	_atk_timer = maxf(_atk_timer - delta, 0.0)
 	_tick_statuses(delta)
 
@@ -203,6 +209,19 @@ func _process(delta: float) -> void:
 			var next: Vector2i = _path[1]
 			if next != player_tile and zone.is_walkable(next) and not zone.is_occupied(next):
 				_step_to(next)
+
+## Karaktärsliv: gång-studs under ett steg, annars subtil idle-andning.
+## Delar hjälpfunktioner med spelare/NPC via CharacterVisual.
+func _update_life_anim(delta: float) -> void:
+	if _sprite == null:
+		return
+	_breath_t += delta
+	if _move_t < 1.0:                       # mitt i ett steg → studsa
+		_sprite.position.y = _sprite_base_y + CharacterVisual.walk_bob(_move_t)
+		_sprite.scale.y = 1.0
+	else:                                   # stillastående → andas
+		_sprite.position.y = _sprite_base_y
+		_sprite.scale.y = CharacterVisual.breath_scale(_breath_t)
 
 ## Applicerar en statuseffekt på monstret (skriver över om samma id redan finns).
 func apply_status(id: String, duration: float, tick_dmg: float) -> void:
@@ -266,6 +285,9 @@ func _try_apply_ability() -> void:
 func _step_to(next: Vector2i) -> void:
 	zone.vacate(tile)
 	zone.occupy(next, self)
+	# Vänd spriten mot rörelseriktningen (vänster/höger)
+	if _sprite != null and next.x != tile.x:
+		_sprite.scale.x = -1.0 if next.x < tile.x else 1.0
 	tile = next
 	_from = position
 	_to = zone.tile_to_world(next)
