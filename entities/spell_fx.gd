@@ -46,6 +46,73 @@ static func burst(parent: Node, world_pos: Vector2, color: Color, amount := 12, 
 	parent.add_child(p)
 	p.get_tree().create_timer(0.9).timeout.connect(p.queue_free)
 
+## Härleder en döds-stil ur monsternamnet (samma idé som sprite-väljaren).
+static func death_kind(monster_name: String) -> String:
+	var n := monster_name.to_lower()
+	var has := func(words: Array) -> bool:
+		for w in words:
+			if n.find(w) != -1:
+				return true
+		return false
+	if has.call(["skelett", "ghoul", "ghul", "mumie", "fantom", "gast", "drunknad", "zombie", "vålnad"]):
+		return "bone"
+	if has.call(["slem", "sump", "kräla", "padda", "mask", "blob", "gegga"]):
+		return "ooze"
+	if has.call(["lava", "glöd", "sot", "smält", "ask", "eld", "demon", "flam"]):
+		return "ember"
+	if has.call(["is", "frost", "snö", "köld"]):
+		return "ice"
+	return "dust"
+
+## Dödsskur med stil per monstertyp. base_color = monstrets färg (fallback för dust).
+static func death_burst(parent: Node, world_pos: Vector2, base_color: Color, kind := "dust") -> void:
+	if parent == null:
+		return
+	match kind:
+		"bone":
+			# Benskärvor som studsar ut och faller
+			_emit(parent, world_pos, Color(0.90, 0.87, 0.78), 18, 60.0, 130.0,
+				Vector2(0, 140), 1.5, 3.0, 0.6)
+		"ooze":
+			# Tjock grön plask som klafsar nedåt
+			_emit(parent, world_pos, Color(0.45, 0.78, 0.30), 14, 40.0, 95.0,
+				Vector2(0, 180), 2.5, 4.5, 0.55)
+		"ember":
+			# Glöd som stiger + mörk rök
+			_emit(parent, world_pos, Color(1.0, 0.55, 0.15), 16, 50.0, 110.0,
+				Vector2(0, -60), 1.5, 3.0, 0.7)
+			_emit(parent, world_pos, Color(0.25, 0.2, 0.18), 10, 20.0, 55.0,
+				Vector2(0, -40), 3.0, 5.0, 0.8)
+		"ice":
+			# Iskristaller som splittras utåt
+			_emit(parent, world_pos, Color(0.65, 0.88, 1.0), 18, 70.0, 140.0,
+				Vector2(0, 70), 1.5, 3.0, 0.55)
+		_:
+			var dust := base_color.lerp(Color(0.25, 0.2, 0.18), 0.35)
+			_emit(parent, world_pos, dust, 16, 44.0, 110.0,
+				Vector2(0, 30), 1.5, 3.0, 0.5)
+
+## Intern fabrik: en självstädande engångs-CPUParticles2D med givna parametrar.
+static func _emit(parent: Node, world_pos: Vector2, color: Color, amount: int,
+		vmin: float, vmax: float, gravity: Vector2,
+		smin: float, smax: float, lifetime: float) -> void:
+	var p := CPUParticles2D.new()
+	p.position = world_pos
+	p.emitting = true
+	p.one_shot = true
+	p.explosiveness = 1.0
+	p.amount = amount
+	p.lifetime = lifetime
+	p.spread = 180.0
+	p.initial_velocity_min = vmin
+	p.initial_velocity_max = vmax
+	p.gravity = gravity
+	p.scale_amount_min = smin
+	p.scale_amount_max = smax
+	p.color = color
+	parent.add_child(p)
+	p.get_tree().create_timer(lifetime + 0.4).timeout.connect(p.queue_free)
+
 ## Gnistor som stiger uppåt vid en position (fontän). Återanvänds av heal & nivå-upp.
 static func fountain(parent: Node, world_pos: Vector2, color: Color, amount := 14) -> void:
 	if parent == null:

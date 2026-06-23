@@ -44,6 +44,25 @@ func test_fountain_spawnar_uppatriktade_partiklar() -> void:
 	assert_not_null(p, "fountain ska spawna en CPUParticles2D")
 	assert_lt(p.direction.y, 0.0, "fontänen ska peka uppåt")
 
+func test_death_kind_klassificerar_kanda_typer() -> void:
+	assert_eq(SFX.death_kind("Skelettkrigare"), "bone", "skelett ska ge ben")
+	assert_eq(SFX.death_kind("Ökenmumie"), "bone", "mumie ska ge ben")
+	assert_eq(SFX.death_kind("Sumpkräla"), "ooze", "sump ska ge slem")
+	assert_eq(SFX.death_kind("Lavavarelse"), "ember", "lava ska ge glöd")
+	assert_eq(SFX.death_kind("Istroll"), "ice", "is ska ge is")
+	assert_eq(SFX.death_kind("Råtta"), "dust", "okänd typ ska falla tillbaka på stoft")
+
+func test_death_burst_spawnar_partiklar_for_varje_stil() -> void:
+	for kind in ["bone", "ooze", "ember", "ice", "dust"]:
+		var root := Node2D.new()
+		add_child_autofree(root)
+		SFX.death_burst(root, Vector2(5, 5), Color.RED, kind)
+		var n := 0
+		for c in root.get_children():
+			if c is CPUParticles2D:
+				n += 1
+		assert_gt(n, 0, "stilen '%s' ska spawna minst en partikelnod" % kind)
+
 func test_projektil_ror_sig_mot_malet() -> void:
 	var root := Node2D.new()
 	add_child_autofree(root)
