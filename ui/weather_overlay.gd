@@ -20,9 +20,11 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	# Synka mot aktuell zon (täcker alla zonbyten utan extra signaler).
+	# "dynamic"-zoner följer det globala omgivningsvädret.
 	var zone := World.current_zone
-	var want := Weather.normalize(zone.weather) if zone != null and is_instance_valid(zone) \
-		and "weather" in zone else Weather.CLEAR
+	var want := Weather.CLEAR
+	if zone != null and is_instance_valid(zone) and "weather" in zone:
+		want = Weather.resolve(zone.weather, WeatherSystem.current)
 	var sz := size
 	if want != _built_weather or sz != _built_size:
 		weather = want

@@ -1,5 +1,6 @@
 {
 	"name": "Bergspasset",
+	"weather": "snow",
 	"legend": {
 		">": {
 			"type": "portal",

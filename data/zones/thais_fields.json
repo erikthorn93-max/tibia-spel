@@ -67,6 +67,7 @@
 		}
 	},
 	"name": "Norra landsbygden",
+	"weather": "dynamic",
 	"spawn_table": [
 		{
 			"count": 5,

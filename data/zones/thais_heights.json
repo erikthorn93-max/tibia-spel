@@ -1,5 +1,6 @@
 {
 	"name": "Skogshöjderna",
+	"weather": "dynamic",
 	"legend": {
 		">": {
 			"type": "portal",

@@ -23,6 +23,42 @@ func test_from_zone_data_defaults_clear():
 func test_from_zone_data_sanitizes_garbage():
 	assert_eq(Weather.from_zone_data({"weather": "??"}), Weather.CLEAR)
 
+func test_from_zone_data_allows_dynamic():
+	assert_eq(Weather.from_zone_data({"weather": "dynamic"}), Weather.DYNAMIC)
+
+func test_render_normalize_rejects_dynamic():
+	# Overlayn ritar aldrig "dynamic" direkt — den måste lösas upp först.
+	assert_eq(Weather.normalize(Weather.DYNAMIC), Weather.CLEAR)
+
+# ── Upplösning (dynamic → omgivningsväder) ──
+
+func test_resolve_dynamic_follows_ambient():
+	assert_eq(Weather.resolve(Weather.DYNAMIC, Weather.RAIN), Weather.RAIN)
+	assert_eq(Weather.resolve(Weather.DYNAMIC, Weather.CLEAR), Weather.CLEAR)
+
+func test_resolve_fixed_ignores_ambient():
+	assert_eq(Weather.resolve(Weather.FOG, Weather.RAIN), Weather.FOG)
+	assert_eq(Weather.resolve(Weather.SNOW, Weather.CLEAR), Weather.SNOW)
+
+# ── Omgivningsvädrets övergångar ──
+
+func test_ambient_rain_clears_on_low_roll():
+	assert_eq(Weather.next_ambient(Weather.RAIN, 0.0), Weather.CLEAR)
+
+func test_ambient_rain_persists_on_high_roll():
+	assert_eq(Weather.next_ambient(Weather.RAIN, 0.99), Weather.RAIN)
+
+func test_ambient_clear_can_start_raining():
+	assert_eq(Weather.next_ambient(Weather.CLEAR, 0.0), Weather.RAIN)
+
+func test_ambient_clear_usually_stays_clear():
+	assert_eq(Weather.next_ambient(Weather.CLEAR, 0.99), Weather.CLEAR)
+
+func test_ambient_pool_is_temperate():
+	# Dynamiskt väder ska aldrig ge dimma eller snö.
+	assert_false(Weather.SNOW in Weather.AMBIENT_POOL)
+	assert_false(Weather.FOG in Weather.AMBIENT_POOL)
+
 # ── Nederbörd ──
 
 func test_precip_only_rain_and_snow():

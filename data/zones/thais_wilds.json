@@ -107,6 +107,7 @@
 		}
 	},
 	"name": "Trollmarken",
+	"weather": "dynamic",
 	"spawn_table": [
 		{
 			"count": 5,

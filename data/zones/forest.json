@@ -1,5 +1,6 @@
 {
 	"name": "Gamla skogen",
+	"weather": "dynamic",
 	"tiles": [
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 		"W....................~~................W",

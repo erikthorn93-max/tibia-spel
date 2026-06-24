@@ -8,15 +8,39 @@ const CLEAR := "clear"
 const RAIN  := "rain"
 const FOG   := "fog"
 const SNOW  := "snow"
+const DYNAMIC := "dynamic"   # zon-värde: följ WeatherSystem.current (skiftar över tid)
+## Vädertyper overlayn faktiskt ritar.
 const TYPES := [CLEAR, RAIN, FOG, SNOW]
+## Värden en zon får ange i sin JSON (inkl. "dynamic" som löses upp i körtid).
+const ZONE_TYPES := [CLEAR, RAIN, FOG, SNOW, DYNAMIC]
+## Tempererad pool som det dynamiska vädret pendlar mellan.
+const AMBIENT_POOL := [CLEAR, RAIN]
 
-## Säkrar att en sträng är en giltig vädertyp — annars "clear".
+## Säkrar att en sträng är en ritbar vädertyp — annars "clear".
 static func normalize(w: String) -> String:
 	return w if w in TYPES else CLEAR
 
-## Läser zonens vädertyp ur dess JSON-data (default "clear").
+## Säkrar att en sträng är ett giltigt zon-värde (tillåter "dynamic").
+static func normalize_zone(w: String) -> String:
+	return w if w in ZONE_TYPES else CLEAR
+
+## Läser zonens vädertyp ur dess JSON-data (default "clear"; "dynamic" tillåts).
 static func from_zone_data(data: Dictionary) -> String:
-	return normalize(String(data.get("weather", CLEAR)))
+	return normalize_zone(String(data.get("weather", CLEAR)))
+
+## Löser upp en zons deklarerade väder till en ritbar typ: "dynamic" → det
+## globala omgivningsvädret, allt annat → sig självt.
+static func resolve(zone_weather: String, ambient: String) -> String:
+	if zone_weather == DYNAMIC:
+		return normalize(ambient)
+	return normalize(zone_weather)
+
+## Ren övergångsregel för det dynamiska omgivningsvädret. `roll` är 0..1.
+## Regn klarnar oftare än det börjar → mestadels uppehåll, enstaka skurar.
+static func next_ambient(current: String, roll: float) -> String:
+	if current == RAIN:
+		return CLEAR if roll < 0.6 else RAIN
+	return RAIN if roll < 0.35 else CLEAR
 
 ## True för väder som faller (regn/snö) och alltså har rörliga partiklar.
 static func has_precip(w: String) -> bool:

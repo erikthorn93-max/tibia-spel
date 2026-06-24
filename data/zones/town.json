@@ -122,6 +122,7 @@
 		}
 	},
 	"name": "Thais",
+	"weather": "dynamic",
 	"spawn_table": [
 		{
 			"count": 4,

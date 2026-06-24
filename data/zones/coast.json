@@ -1,5 +1,6 @@
 {
 	"name": "Saltviks hamn",
+	"weather": "dynamic",
 	"tiles": [
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 		"W~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~W",
