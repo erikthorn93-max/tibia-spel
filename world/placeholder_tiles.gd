@@ -151,13 +151,17 @@ static func make_fringe_tile(mask: int) -> Image:
 ## Rent visuellt overlay-lager. Dekal-index per ruta är deterministiskt så
 ## kartan ser likadan ut varje gång men inte rutmönstrad.
 const DECOR_NONE := -1
-const DECOR_TILES := 6        # 0 gul blomma, 1 röd, 2 grästuva, 3 vit blomma, 4 småsten, 5 stenflisa
-const DECOR_DENSITY := 12     # ~% av dekorbara rutor som får en dekal
+# 0 gul blomma · 1 röd · 2 grästuva · 3 vit blomma · 4 småsten · 5 stenflisa
+# 6 svamp · 7 vass · 8 näckros · 9 snäckor
+const DECOR_TILES := 10
+const DECOR_DENSITY := 15     # ~% av dekorbara rutor som får en dekal
 # Vilka dekaler som passar på vilken terräng
 const DECOR_BY_TERRAIN := {
-	".": [0, 1, 2, 3],   # gräs: blommor + tuva
-	",": [4, 5],         # jord: små stenar
-	"g": [0, 3],         # åker: enstaka blommor i kanten
+	".": [0, 1, 2, 3, 6],   # gräs: blommor, tuva, svamp
+	",": [4, 5],            # jord: små stenar
+	"g": [0, 3],            # åker: enstaka blommor i kanten
+	"s": [7, 8, 6],         # träsk: vass, näckros, svamp
+	"b": [9, 4],            # strand: snäckor, småsten
 }
 
 ## Returnerar dekal-index (0..DECOR_TILES-1) för en ruta, eller DECOR_NONE.
@@ -193,6 +197,8 @@ static func _make_decor_tile(idx: int) -> Image:
 	rng.seed = 1000 + idx
 	var ox := 10 + rng.randi_range(0, 12)
 	var oy := 12 + rng.randi_range(0, 10)
+	# Mjuk kontaktskugga vid motivets fot — jordar dekalen mot marken.
+	_decor_shadow(img, ox, oy + 2, 4.0, 1.7)
 	match idx:
 		0: _draw_flower(img, ox, oy, Color("f2d23a"), Color("c79a12"))   # gul
 		1: _draw_flower(img, ox, oy, Color("e0533a"), Color("a32f1c"))   # röd
@@ -200,7 +206,21 @@ static func _make_decor_tile(idx: int) -> Image:
 		3: _draw_flower(img, ox, oy, Color("eef0f4"), Color("9aa6c0"))   # vit
 		4: _draw_pebbles(img, ox, oy, 3)                                 # småsten
 		5: _draw_pebbles(img, ox, oy, 2)                                 # stenflisa
+		6: _draw_mushroom(img, ox, oy)                                   # svamp
+		7: _draw_reeds(img, ox, oy)                                      # vass
+		8: _draw_lily(img, ox, oy)                                       # näckros
+		9: _draw_shells(img, ox, oy)                                     # snäckor
 	return img
+
+## Halvgenomskinlig mörk ellips — kontaktskugga under en dekal.
+static func _decor_shadow(img: Image, cx: int, cy: int, rx: float, ry: float) -> void:
+	for y in range(int(cy - ry), int(cy + ry) + 1):
+		for x in range(int(cx - rx), int(cx + rx) + 1):
+			var dx := (float(x) - cx) / rx
+			var dy := (float(y) - cy) / ry
+			var d := dx * dx + dy * dy
+			if d <= 1.0:
+				_put(img, x, y, Color(0.0, 0.0, 0.0, 0.22 * (1.0 - d)))
 
 static func _draw_flower(img: Image, cx: int, cy: int, petal: Color, center: Color) -> void:
 	# Stjälk
@@ -233,6 +253,54 @@ static func _draw_pebbles(img: Image, cx: int, cy: int, count: int) -> void:
 		_put(img, cx + p.x, cy + p.y, stone)
 		_put(img, cx + p.x + 1, cy + p.y, stone)
 		_put(img, cx + p.x, cy + p.y + 1, stone_lo)
+
+## Liten röd flugsvamp med vita prickar — passar gräs och träsk.
+static func _draw_mushroom(img: Image, cx: int, cy: int) -> void:
+	var stem := Color("e8e2d2")
+	var stem_lo := Color("c8c0ad")
+	_put(img, cx, cy, stem); _put(img, cx, cy - 1, stem); _put(img, cx + 1, cy, stem_lo)
+	var cap := Color("c43a2e")
+	var cap_hi := Color("e0573a")
+	for dx in [-2, -1, 0, 1, 2]:
+		_put(img, cx + dx, cy - 2, cap)
+	_put(img, cx - 1, cy - 3, cap); _put(img, cx, cy - 3, cap_hi); _put(img, cx + 1, cy - 3, cap)
+	_put(img, cx, cy - 4, cap_hi)
+	_put(img, cx - 1, cy - 2, Color("f3ead5")); _put(img, cx + 1, cy - 3, Color("f3ead5"))
+
+## Vass/kaveldun: höga strån med brun kolv — träskkanter.
+static func _draw_reeds(img: Image, cx: int, cy: int) -> void:
+	var blade := Color("3f7d3a")
+	var blade_hi := Color("5fa84a")
+	for off in [-2, 0, 2]:
+		var h := 8 - absi(off)
+		for k in range(h):
+			_put(img, cx + off, cy - k, blade_hi if k == h - 1 else blade)
+	var cat := Color("6b4a2a")        # kolv på mittstrået
+	for k in range(3, 6):
+		_put(img, cx, cy - k, cat)
+	_put(img, cx, cy - 6, Color("8a6238"))
+
+## Näckrosblad med litet blomfäste — flyter på träsk.
+static func _draw_lily(img: Image, cx: int, cy: int) -> void:
+	var pad := Color("3a7d4a")
+	var pad_hi := Color("4e9a5c")
+	for y in range(-2, 3):
+		for x in range(-3, 4):
+			if float(x * x) / 9.0 + float(y * y) / 4.0 <= 1.0:
+				_put(img, cx + x, cy + y, pad)
+	_put(img, cx - 1, cy - 1, pad_hi); _put(img, cx, cy - 1, pad_hi)
+	_put(img, cx + 2, cy, Color(0, 0, 0, 0))      # kilskåra i bladet
+	_put(img, cx + 3, cy, Color(0, 0, 0, 0))
+	_put(img, cx, cy - 2, Color("f0e6f4"))        # liten blomma
+
+## Ett par snäckor i sanden — strandkanter.
+static func _draw_shells(img: Image, cx: int, cy: int) -> void:
+	var sh := Color("e7d3b0")
+	var sh_lo := Color("c9ad84")
+	_put(img, cx, cy - 2, sh)
+	_put(img, cx - 1, cy - 1, sh); _put(img, cx, cy - 1, sh_lo); _put(img, cx + 1, cy - 1, sh)
+	_put(img, cx - 1, cy, sh_lo); _put(img, cx, cy, sh); _put(img, cx + 1, cy, sh_lo)
+	_put(img, cx + 3, cy + 1, sh); _put(img, cx + 3, cy, sh_lo)   # liten andra snäcka
 
 static func _put(img: Image, x: int, y: int, c: Color) -> void:
 	if x >= 0 and y >= 0 and x < TILE and y < TILE:
@@ -348,6 +416,21 @@ static func _make_tree_tile(variant := 0) -> Image:
 		for x in TILE:
 			var n := 0.93 + 0.07 * fmod(sin(float(x * 7 + y * 13)) * 43758.5, 1.0)
 			img.set_pixel(x, y, Color(grass.r * n, grass.g * n, grass.b * n))
+
+	# Markskugga — bred ellips under kronan så trädet sitter i marken, inte svävar
+	var sh_cx: float = p["cx"]
+	var sh_cy: float = p["cy"] + p["r"] * 0.62
+	var sh_rx: float = p["r"] * 0.92
+	var sh_ry: float = p["r"] * 0.40
+	for y in TILE:
+		for x in TILE:
+			var sdx := (float(x) - sh_cx) / sh_rx
+			var sdy := (float(y) - sh_cy) / sh_ry
+			var sd := sdx * sdx + sdy * sdy
+			if sd <= 1.0:
+				var k := 1.0 - 0.42 * (1.0 - sd)   # mörkast i mitten, tonar ut
+				var gp := img.get_pixel(x, y)
+				img.set_pixel(x, y, Color(gp.r * k, gp.g * k, gp.b * k, gp.a))
 
 	# Stam (centrerad under kronan, längd från preset)
 	var trunk := Color("5b3a1a")
