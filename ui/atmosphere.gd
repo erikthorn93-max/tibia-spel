@@ -65,3 +65,10 @@ static func make_light_glow(size: int) -> ImageTexture:
 static func glow_strength(light_level: float, day_fraction: float) -> float:
 	var darkness := (cos(day_fraction * TAU) + 1.0) * 0.5
 	return clampf(light_level, 0.0, 1.0) * darkness
+
+## Organiskt lågflimmer för fackelskenet: en multiplikator nära 1.0 som
+## skälver lätt. Två osammanhängande sinusvågor → oregelbunden, levande låga
+## utan synlig periodicitet. Aldrig så lågt att skenet "slocknar".
+static func flicker(t: float) -> float:
+	var f := sin(t * 11.0) * 0.5 + sin(t * 6.3 + 1.7) * 0.5
+	return clampf(0.9 + f * 0.1, 0.78, 1.0)

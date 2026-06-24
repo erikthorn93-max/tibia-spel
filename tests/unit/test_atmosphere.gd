@@ -56,3 +56,21 @@ func test_glow_strength_zero_at_midday():
 
 func test_glow_strength_positive_at_night_with_light():
 	assert_gt(Atmosphere.glow_strength(0.8, 0.0), 0.3)
+
+# ── Fackelsken-flimmer ──
+
+func test_flicker_stays_near_full_brightness():
+	# Skenet får skälva men aldrig slockna eller överstyra.
+	for i in 200:
+		var v := Atmosphere.flicker(float(i) * 0.05)
+		assert_between(v, 0.78, 1.0)
+
+func test_flicker_actually_varies():
+	# Flimret ska faktiskt röra sig över tid, inte vara konstant.
+	var lo := 2.0
+	var hi := -2.0
+	for i in 200:
+		var v := Atmosphere.flicker(float(i) * 0.037)
+		lo = minf(lo, v)
+		hi = maxf(hi, v)
+	assert_gt(hi - lo, 0.05, "flimret ska variera märkbart")

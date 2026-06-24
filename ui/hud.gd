@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 const Atmosphere = preload("res://ui/atmosphere.gd")
+const Biome = preload("res://ui/biome.gd")
 
 var hp_bar: Panel       # fyllnad (anchor_right driver nivån) — byggs i _build_bars()
 var mana_bar: Panel
@@ -34,6 +35,9 @@ var _night_overlay: ColorRect  # dag/natt-mörkläggning
 var _vignette: TextureRect     # mjuk kantmörkläggning (filmisk inramning)
 var _light_glow: TextureRect   # varmt fackelsken runt spelaren (skärmens mitt)
 var _weather_overlay: Control  # regn/snö/dimma per zon
+var _ambient_overlay: Control  # eldflugor/damm/glödflagor per biom
+var _biome_overlay: ColorRect  # biom-färggradering (stämningston per platstyp)
+var _glow_t := 0.0             # tidsackumulator för fackelskenets flimmer
 var _clock_lbl: Label          # spelklocka HH:MM
 var _poison_lbl: Label    # "Giftig!"-chip
 var _boss_panel: PanelContainer  # boss HP-bar, synlig under bossfight
@@ -132,6 +136,7 @@ func _process(delta: float) -> void:
 	if not GameState.active_buffs.is_empty():
 		_refresh_buffs()   # nedräkning
 	_refresh_boss_bar()
+	_glow_t += delta
 	_update_night_overlay()
 	# Kritiskt låg HP: fyllningen pulserar varnande
 	if hp_bar:
@@ -359,12 +364,20 @@ func transition(rebuild: Callable) -> void:
 	tw.tween_property(_fade_rect, "color:a", 0.0, 0.28)
 
 func _build_night_overlay() -> void:
+	# Biom-färggradering: subtil stämningston för platstypen, under allt annat
+	# atmosfär-lager så den tonar marken innan natt/vinjett läggs på.
+	_biome_overlay = ColorRect.new()
+	_biome_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_biome_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_biome_overlay.color = Color(0, 0, 0, 0.0)
+	add_child(_biome_overlay)
+	move_child(_biome_overlay, 1)   # precis ovanför world_drop_zone
 	_night_overlay = ColorRect.new()
 	_night_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_night_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_night_overlay.color = Color(0.02, 0.04, 0.18, 0.0)
 	add_child(_night_overlay)
-	move_child(_night_overlay, 1)   # precis ovanför world_drop_zone
+	move_child(_night_overlay, 2)
 	# Vinjett: mjuk kantmörkläggning ovanpå dygns-tonen, under HUD-widgets.
 	_vignette = TextureRect.new()
 	_vignette.texture = Atmosphere.make_vignette(256, 144)
@@ -373,7 +386,7 @@ func _build_night_overlay() -> void:
 	_vignette.stretch_mode = TextureRect.STRETCH_SCALE
 	_vignette.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_vignette)
-	move_child(_vignette, 2)
+	move_child(_vignette, 3)
 	# Fackelsken: additivt, centrerat på spelaren (kameran centrerar honom).
 	_light_glow = TextureRect.new()
 	_light_glow.texture = Atmosphere.make_light_glow(384)
@@ -386,7 +399,7 @@ func _build_night_overlay() -> void:
 	_light_glow.material = glow_mat
 	_light_glow.modulate.a = 0.0
 	add_child(_light_glow)
-	move_child(_light_glow, 3)
+	move_child(_light_glow, 4)
 	_clock_lbl = Label.new()
 	_clock_lbl.add_theme_font_size_override("font_size", 11)
 	_clock_lbl.add_theme_color_override("font_color", Color(0.88, 0.84, 0.62))
@@ -402,8 +415,11 @@ func _build_night_overlay() -> void:
 func _build_weather_overlay() -> void:
 	_weather_overlay = preload("res://ui/weather_overlay.gd").new()
 	add_child(_weather_overlay)
-	# Ovanför dag/natt-atmosfären (glow ligger på index 3) men under panelerna.
-	move_child(_weather_overlay, 4)
+	# Ovanför dag/natt-atmosfären (glow ligger på index 4) men under panelerna.
+	move_child(_weather_overlay, 5)
+	_ambient_overlay = preload("res://ui/ambient_overlay.gd").new()
+	add_child(_ambient_overlay)
+	move_child(_ambient_overlay, 6)
 
 func _on_hour_changed(_h: int) -> void:
 	_update_night_overlay()
@@ -422,8 +438,15 @@ func _update_night_overlay() -> void:
 	if _vignette:
 		_vignette.modulate.a = Atmosphere.vignette_strength(frac) * light_factor
 	# Lokalt fackelsken: lyser bara upp när det är mörkt och spelaren bär ljus.
+	# Ett organiskt flimmer ovanpå gör lågan levande istället för en platt cirkel.
 	if _light_glow:
-		_light_glow.modulate.a = Atmosphere.glow_strength(GameState.light_level(), frac)
+		var glow := Atmosphere.glow_strength(GameState.light_level(), frac)
+		_light_glow.modulate.a = glow * Atmosphere.flicker(_glow_t)
+	# Biom-färggradering: stämningston för den aktuella platstypen.
+	if _biome_overlay:
+		var zid: String = World.current_zone.zone_id if World.current_zone != null \
+			and is_instance_valid(World.current_zone) and "zone_id" in World.current_zone else ""
+		_biome_overlay.color = Biome.grade(Biome.classify(zid))
 	# Klocka + ikon
 	var icon := "☀" if not TimeOfDay.is_night else "🌙"
 	_clock_lbl.text = "%s %02d:00" % [icon, h]
