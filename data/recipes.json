@@ -790,6 +790,56 @@
 				"dragonherb": 3,
 				"bloodleaf_herb": 2
 			}
+		},
+		{
+			"id": "sapphire_elixir",
+			"skill": "alchemy",
+			"level": 35,
+			"xp": 55,
+			"ingredients": {
+				"sapphire": 1,
+				"mint_herb": 2
+			}
+		},
+		{
+			"id": "emerald_elixir",
+			"skill": "alchemy",
+			"level": 40,
+			"xp": 80,
+			"ingredients": {
+				"emerald": 1,
+				"sunflower_herb": 1
+			}
+		},
+		{
+			"id": "ruby_elixir",
+			"skill": "alchemy",
+			"level": 50,
+			"xp": 165,
+			"ingredients": {
+				"ruby": 1,
+				"bloodleaf_herb": 1
+			}
+		},
+		{
+			"id": "diamond_elixir",
+			"skill": "alchemy",
+			"level": 65,
+			"xp": 510,
+			"ingredients": {
+				"diamond": 1,
+				"frostpetal_herb": 2
+			}
+		},
+		{
+			"id": "dragonstone_elixir",
+			"skill": "alchemy",
+			"level": 85,
+			"xp": 2850,
+			"ingredients": {
+				"dragonstone": 1,
+				"dragonherb": 2
+			}
 		}
 	],
 	"rune_altar": [
@@ -1410,6 +1460,106 @@
 			"ingredients": {
 				"chimera_hide": 3,
 				"shadow_silk": 2
+			}
+		},
+		{
+			"id": "emerald_ring",
+			"skill": "crafting",
+			"level": 25,
+			"xp": 29,
+			"ingredients": {
+				"emerald": 1,
+				"gold_ore": 1
+			}
+		},
+		{
+			"id": "emerald_amulet",
+			"skill": "crafting",
+			"level": 28,
+			"xp": 41,
+			"ingredients": {
+				"emerald": 1,
+				"gold_ore": 2
+			}
+		},
+		{
+			"id": "sapphire_ring",
+			"skill": "crafting",
+			"level": 30,
+			"xp": 38,
+			"ingredients": {
+				"sapphire": 1,
+				"gold_ore": 1
+			}
+		},
+		{
+			"id": "sapphire_amulet",
+			"skill": "crafting",
+			"level": 33,
+			"xp": 53,
+			"ingredients": {
+				"sapphire": 1,
+				"gold_ore": 2
+			}
+		},
+		{
+			"id": "ruby_ring",
+			"skill": "crafting",
+			"level": 40,
+			"xp": 80,
+			"ingredients": {
+				"ruby": 1,
+				"gold_ore": 1
+			}
+		},
+		{
+			"id": "ruby_amulet",
+			"skill": "crafting",
+			"level": 43,
+			"xp": 112,
+			"ingredients": {
+				"ruby": 1,
+				"gold_ore": 2
+			}
+		},
+		{
+			"id": "diamond_ring",
+			"skill": "crafting",
+			"level": 55,
+			"xp": 240,
+			"ingredients": {
+				"diamond": 1,
+				"gold_ore": 1
+			}
+		},
+		{
+			"id": "diamond_amulet",
+			"skill": "crafting",
+			"level": 58,
+			"xp": 336,
+			"ingredients": {
+				"diamond": 1,
+				"gold_ore": 2
+			}
+		},
+		{
+			"id": "dragonstone_ring",
+			"skill": "crafting",
+			"level": 70,
+			"xp": 810,
+			"ingredients": {
+				"dragonstone": 1,
+				"gold_ore": 1
+			}
+		},
+		{
+			"id": "dragonstone_amulet",
+			"skill": "crafting",
+			"level": 73,
+			"xp": 1134,
+			"ingredients": {
+				"dragonstone": 1,
+				"gold_ore": 2
 			}
 		}
 	],

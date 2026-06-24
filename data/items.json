@@ -2703,5 +2703,145 @@
 		"value": 55,
 		"color": "#b8a060",
 		"sprite": "res://assets/sprites/items/ancient_coin.png"
+	},
+	"dragonstone": {
+		"name": "Draksten",
+		"type": "material",
+		"value": 900,
+		"color": "#b83adf"
+	},
+	"emerald_ring": {
+		"name": "Smaragdring",
+		"type": "armor",
+		"slot": "ring",
+		"armor": 2,
+		"value": 520,
+		"color": "#22a558"
+	},
+	"emerald_amulet": {
+		"name": "Smaragdamulett",
+		"type": "armor",
+		"slot": "amulet",
+		"armor": 4,
+		"value": 780,
+		"color": "#22a558"
+	},
+	"sapphire_ring": {
+		"name": "Safirring",
+		"type": "armor",
+		"slot": "ring",
+		"armor": 3,
+		"value": 560,
+		"color": "#2a6ad0"
+	},
+	"sapphire_amulet": {
+		"name": "Safiramulett",
+		"type": "armor",
+		"slot": "amulet",
+		"armor": 5,
+		"value": 840,
+		"color": "#2a6ad0"
+	},
+	"ruby_ring": {
+		"name": "Rubinring",
+		"type": "armor",
+		"slot": "ring",
+		"armor": 4,
+		"value": 600,
+		"color": "#e0314a"
+	},
+	"ruby_amulet": {
+		"name": "Rubinamulett",
+		"type": "armor",
+		"slot": "amulet",
+		"armor": 6,
+		"value": 900,
+		"color": "#e0314a"
+	},
+	"diamond_ring": {
+		"name": "Diamantring",
+		"type": "armor",
+		"slot": "ring",
+		"armor": 5,
+		"value": 1200,
+		"color": "#bfe8f0"
+	},
+	"diamond_amulet": {
+		"name": "Diamantamulett",
+		"type": "armor",
+		"slot": "amulet",
+		"armor": 8,
+		"value": 1800,
+		"color": "#bfe8f0"
+	},
+	"dragonstone_ring": {
+		"name": "Drakstenring",
+		"type": "armor",
+		"slot": "ring",
+		"armor": 7,
+		"value": 1800,
+		"color": "#b83adf"
+	},
+	"dragonstone_amulet": {
+		"name": "Drakstenamulett",
+		"type": "armor",
+		"slot": "amulet",
+		"armor": 10,
+		"value": 2700,
+		"color": "#b83adf"
+	},
+	"sapphire_elixir": {
+		"name": "Safirelixir",
+		"type": "potion",
+		"value": 240,
+		"color": "#2a6ad0",
+		"mana": 50,
+		"buff": {
+			"stat": "skill:magic",
+			"amount": 8,
+			"duration": 180
+		}
+	},
+	"emerald_elixir": {
+		"name": "Smaragdelixir",
+		"type": "potion",
+		"value": 280,
+		"color": "#22a558",
+		"buff": {
+			"stat": "skill:distance",
+			"amount": 8,
+			"duration": 180
+		}
+	},
+	"ruby_elixir": {
+		"name": "Rubinelixir",
+		"type": "potion",
+		"value": 320,
+		"color": "#e0314a",
+		"buff": {
+			"stat": "skill:sword",
+			"amount": 8,
+			"duration": 180
+		}
+	},
+	"diamond_elixir": {
+		"name": "Diamantelixir",
+		"type": "potion",
+		"value": 420,
+		"color": "#bfe8f0",
+		"heal": 150,
+		"mana": 80
+	},
+	"dragonstone_elixir": {
+		"name": "Drakstenelixir",
+		"type": "potion",
+		"value": 650,
+		"color": "#b83adf",
+		"heal": 200,
+		"buff": {
+			"stat": "skill:magic",
+			"amount": 12,
+			"duration": 240
+		}
 	}
 }

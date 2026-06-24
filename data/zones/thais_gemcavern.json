@@ -25,6 +25,31 @@
 			"type": "node",
 			"node": "dragon_vein",
 			"terrain": "."
+		},
+		"e": {
+			"type": "node",
+			"node": "emerald_vein",
+			"terrain": "."
+		},
+		"s": {
+			"type": "node",
+			"node": "sapphire_vein",
+			"terrain": "."
+		},
+		"r": {
+			"type": "node",
+			"node": "ruby_vein",
+			"terrain": "."
+		},
+		"d": {
+			"type": "node",
+			"node": "diamond_vein",
+			"terrain": "."
+		},
+		"k": {
+			"type": "node",
+			"node": "dragonstone_vein",
+			"terrain": "."
 		}
 	},
 	"spawn_table": [
@@ -45,9 +70,9 @@
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 		"WWWWWWWWW....W....W....W....W....W....W....W....W....W....W....W....W....W....W....W....W....W....W....W....W....WWWWWWW",
 		"WWWWWWWW.W....W....W....W....W....W....W....W....W....W....W....W....W....W....W....W....W....W....W....W....W...WWWWWWW",
-		"WWWWWWWW..W....W....W....W....W....W....W....W....W....W....W....W....W....W....W....W....W....W....W....W....W..WWWWWWW",
-		"WWWWWWWW.......................................................................................................W.WWWWWWW",
-		"WWWWWWWW........................................................................................................WWWWWWWW",
+		"WWWWWWWW..W...eW....W....W....W....W....W....Ws...W....W....W....W....W....W.r..W....W....W....W....W....W....W..WWWWWWW",
+		"WWWWWWWW........d........................k........................e........................s...................W.WWWWWWW",
+		"WWWWWWWW................r........................d........................k.....................................WWWWWWWW",
 		"WWWWWWWWW........................................................................................................WWWWWWW",
 		"WWWWWWWW.W..............................................................................AB.......................WWWWWWW",
 		"WWWWWWWW..W..............................................................................J....................W..WWWWWWW",

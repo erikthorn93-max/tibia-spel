@@ -1053,5 +1053,75 @@
 		"sprite": "res://assets/sprites/nodes/treasure_stall.png",
 		"yield_min": 300,
 		"yield_max": 600
+	},
+	"emerald_vein": {
+		"skill": "mining",
+		"level": 30,
+		"tool": "pickaxe",
+		"yields": "emerald",
+		"xp": 38,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 50,
+		"color": "#22a558",
+		"label": "Smaragdådra"
+	},
+	"sapphire_vein": {
+		"skill": "mining",
+		"level": 35,
+		"tool": "pickaxe",
+		"yields": "sapphire",
+		"xp": 55,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 60,
+		"color": "#2a6ad0",
+		"label": "Safirådra"
+	},
+	"ruby_vein": {
+		"skill": "mining",
+		"level": 45,
+		"tool": "pickaxe",
+		"yields": "ruby",
+		"xp": 80,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 75,
+		"color": "#e0314a",
+		"label": "Rubinådra"
+	},
+	"diamond_vein": {
+		"skill": "mining",
+		"level": 60,
+		"tool": "pickaxe",
+		"yields": "diamond",
+		"xp": 200,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 110,
+		"color": "#bfe8f0",
+		"label": "Diamantådra"
+	},
+	"dragonstone_vein": {
+		"skill": "mining",
+		"level": 80,
+		"tool": "pickaxe",
+		"yields": "dragonstone",
+		"xp": 700,
+		"charges": [
+			2,
+			3
+		],
+		"respawn": 180,
+		"color": "#b83adf",
+		"label": "Drakstensådra"
 	}
 }
