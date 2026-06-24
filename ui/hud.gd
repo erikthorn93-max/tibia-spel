@@ -33,6 +33,7 @@ var _msg_timer := 0.0
 var _night_overlay: ColorRect  # dag/natt-mörkläggning
 var _vignette: TextureRect     # mjuk kantmörkläggning (filmisk inramning)
 var _light_glow: TextureRect   # varmt fackelsken runt spelaren (skärmens mitt)
+var _weather_overlay: Control  # regn/snö/dimma per zon
 var _clock_lbl: Label          # spelklocka HH:MM
 var _poison_lbl: Label    # "Giftig!"-chip
 var _boss_panel: PanelContainer  # boss HP-bar, synlig under bossfight
@@ -91,6 +92,7 @@ func _ready() -> void:
 	_build_bars()
 	_build_boss_bar()
 	_build_night_overlay()
+	_build_weather_overlay()
 	_build_levelup_labels()
 	TimeOfDay.hour_changed.connect(_on_hour_changed)
 	GameState.equipment_changed.connect(_update_night_overlay)   # ljuskälla på/av
@@ -396,6 +398,12 @@ func _build_night_overlay() -> void:
 	_clock_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	add_child(_clock_lbl)
 	_update_night_overlay()
+
+func _build_weather_overlay() -> void:
+	_weather_overlay = preload("res://ui/weather_overlay.gd").new()
+	add_child(_weather_overlay)
+	# Ovanför dag/natt-atmosfären (glow ligger på index 3) men under panelerna.
+	move_child(_weather_overlay, 4)
 
 func _on_hour_changed(_h: int) -> void:
 	_update_night_overlay()

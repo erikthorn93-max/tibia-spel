@@ -4,9 +4,11 @@ extends Node2D
 
 const TILE := 32
 const DungeonGen = preload("res://world/dungeon_generator.gd")
+const Weather = preload("res://ui/weather.gd")
 
 var zone_id := ""
 var zone_name := ""
+var weather := "clear"   # "clear" | "rain" | "fog" | "snow" — driver väder-overlay
 var grid_size := Vector2i.ZERO
 var player_start := Vector2i.ZERO
 var portals: Dictionary = {}        # Vector2i -> mål-zon-id
@@ -45,6 +47,7 @@ func build_from_data(data: Dictionary, id: String) -> void:
 	zone_id = id
 	zone_name = data["name"]
 	dungeon_theme = String(data.get("theme", ""))
+	weather = Weather.from_zone_data(data)
 	var rows: Array = data["tiles"]
 	var legend: Dictionary = data.get("legend", {})
 	grid_size = Vector2i(rows[0].length(), rows.size())
