@@ -1,7 +1,7 @@
 extends Node
 ## Autoload: SaveManager. JSON-sparfil + autosave var 60 s.
 
-const SAVE_VERSION := 9
+const SAVE_VERSION := 10
 var save_path := "user://save.json"
 var _timer := 0.0
 
@@ -56,6 +56,7 @@ func save_game() -> void:
 		"quests_completed": QuestSystem.completed,
 		"learned_spells": GameState.learned_spells,
 		"bank": GameState.bank,
+		"satiation": GameState.satiation,
 	})
 
 func load_game() -> bool:
@@ -124,4 +125,6 @@ func load_game() -> bool:
 	# v8: bankförvar
 	var bank_raw = s.get("bank", {})
 	GameState.bank = bank_raw if bank_raw is Dictionary else {}
+	# v10: mättnad (satiation) — gamla saves utan fältet börjar omättade
+	GameState.satiation = float(s.get("satiation", 0.0))
 	return true
