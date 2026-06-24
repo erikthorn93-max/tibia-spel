@@ -30,6 +30,7 @@ TimeOfDay="*res://autoload/time_of_day.gd"
 ItemTooltip="*res://autoload/item_tooltip.gd"
 Sfx="*res://autoload/sfx.gd"
 WeatherSystem="*res://autoload/weather_system.gd"
+Ambience="*res://autoload/ambience.gd"
 
 [display]
 
