@@ -2843,5 +2843,35 @@
 			"amount": 12,
 			"duration": 240
 		}
+	},
+	"uncut_emerald": {
+		"name": "Oslipad smaragd",
+		"type": "material",
+		"value": 150,
+		"color": "#22a558"
+	},
+	"uncut_sapphire": {
+		"name": "Oslipad safir",
+		"type": "material",
+		"value": 165,
+		"color": "#2a6ad0"
+	},
+	"uncut_ruby": {
+		"name": "Oslipad rubin",
+		"type": "material",
+		"value": 180,
+		"color": "#e0314a"
+	},
+	"uncut_diamond": {
+		"name": "Oslipad diamant",
+		"type": "material",
+		"value": 360,
+		"color": "#bfe8f0"
+	},
+	"uncut_dragonstone": {
+		"name": "Oslipad draksten",
+		"type": "material",
+		"value": 540,
+		"color": "#b83adf"
 	}
 }

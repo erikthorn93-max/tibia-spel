@@ -77,13 +77,30 @@ func test_elixir_recipes_exist_on_alchemy_table():
 
 # ── Noder (gem-ådror) ──
 
-func test_gem_veins_exist_and_yield_gems():
+func test_gem_veins_exist_and_yield_uncut_gems():
 	for g in GEMS:
 		var id: String = g + "_vein"
 		assert_true(db.nodes.has(id), id)
-		assert_eq(db.nodes[id]["yields"], g, id)
+		assert_eq(db.nodes[id]["yields"], "uncut_" + g, id + " ska ge oslipad sten")
 		assert_eq(db.nodes[id]["skill"], "mining", id)
 		assert_eq(db.nodes[id]["tool"], "pickaxe", id)
+
+func test_uncut_gems_exist_and_cheaper_than_cut():
+	for g in GEMS:
+		var raw: String = "uncut_" + g
+		assert_true(db.items.has(raw), raw)
+		assert_eq(db.items[raw]["type"], "material", raw)
+		assert_lt(int(db.items[raw]["value"]), int(db.items[g]["value"]),
+			raw + " ska vara billigare än slipad")
+
+func test_cutting_recipes_turn_uncut_into_cut():
+	for g in GEMS:
+		var found := false
+		for r in db.recipes["crafting_bench"]:
+			if r["id"] == g and r["ingredients"].has("uncut_" + g):
+				found = true
+				assert_eq(String(r["skill"]), "crafting", g)
+		assert_true(found, "slipnings-recept saknas för " + g)
 
 func test_dragonstone_vein_needs_highest_level():
 	for g in ["emerald", "sapphire", "ruby", "diamond"]:

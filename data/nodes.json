@@ -1058,7 +1058,7 @@
 		"skill": "mining",
 		"level": 30,
 		"tool": "pickaxe",
-		"yields": "emerald",
+		"yields": "uncut_emerald",
 		"xp": 38,
 		"charges": [
 			2,
@@ -1072,7 +1072,7 @@
 		"skill": "mining",
 		"level": 35,
 		"tool": "pickaxe",
-		"yields": "sapphire",
+		"yields": "uncut_sapphire",
 		"xp": 55,
 		"charges": [
 			2,
@@ -1086,7 +1086,7 @@
 		"skill": "mining",
 		"level": 45,
 		"tool": "pickaxe",
-		"yields": "ruby",
+		"yields": "uncut_ruby",
 		"xp": 80,
 		"charges": [
 			2,
@@ -1100,7 +1100,7 @@
 		"skill": "mining",
 		"level": 60,
 		"tool": "pickaxe",
-		"yields": "diamond",
+		"yields": "uncut_diamond",
 		"xp": 200,
 		"charges": [
 			2,
@@ -1114,7 +1114,7 @@
 		"skill": "mining",
 		"level": 80,
 		"tool": "pickaxe",
-		"yields": "dragonstone",
+		"yields": "uncut_dragonstone",
 		"xp": 700,
 		"charges": [
 			2,

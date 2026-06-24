@@ -1463,6 +1463,51 @@
 			}
 		},
 		{
+			"id": "emerald",
+			"skill": "crafting",
+			"level": 22,
+			"xp": 24,
+			"ingredients": {
+				"uncut_emerald": 1
+			}
+		},
+		{
+			"id": "sapphire",
+			"skill": "crafting",
+			"level": 26,
+			"xp": 31,
+			"ingredients": {
+				"uncut_sapphire": 1
+			}
+		},
+		{
+			"id": "ruby",
+			"skill": "crafting",
+			"level": 38,
+			"xp": 65,
+			"ingredients": {
+				"uncut_ruby": 1
+			}
+		},
+		{
+			"id": "diamond",
+			"skill": "crafting",
+			"level": 52,
+			"xp": 165,
+			"ingredients": {
+				"uncut_diamond": 1
+			}
+		},
+		{
+			"id": "dragonstone",
+			"skill": "crafting",
+			"level": 68,
+			"xp": 590,
+			"ingredients": {
+				"uncut_dragonstone": 1
+			}
+		},
+		{
 			"id": "emerald_ring",
 			"skill": "crafting",
 			"level": 25,
