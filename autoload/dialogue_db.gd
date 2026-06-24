@@ -45,6 +45,8 @@ func eval_condition(c: Dictionary) -> bool:
 			ok = GameState.effective_skill_level(String(c["skill"])) >= int(c["level"])
 		"unlock":
 			ok = UnlockSystem.is_unlocked(String(c["id"]))
+		"gold":
+			ok = GameState.gold >= int(c["amount"])
 	return not ok if bool(c.get("not", false)) else ok
 
 func run_actions(actions: Array, npc_id: String) -> void:
@@ -66,3 +68,10 @@ func run_actions(actions: Array, npc_id: String) -> void:
 					if World.hud: World.hud.show_message("Du lyckas bestjäla %s!" % who)
 				else:
 					if World.hud: World.hud.show_message("%s ertappar dig!" % who)
+			"rest":
+				var cost := int(a.get("cost", 0))
+				if GameState.rest_at_inn(cost, float(a.get("satiation", 0.0))):
+					Sfx.rest()
+					if World.hud: World.hud.show_message("Du vilar ut. HP och mana är fyllda.")
+				else:
+					if World.hud: World.hud.show_message("Du har inte råd med ett rum (%d guld)." % cost)

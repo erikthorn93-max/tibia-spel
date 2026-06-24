@@ -1620,8 +1620,34 @@
 				"next": "frodo_inn"
 			},
 			{
+				"text": "I'd like to rent a room. (15 guld)",
+				"next": "frodo_rest"
+			},
+			{
 				"text": "Just passing through.",
 				"next": null
+			}
+		]
+	},
+	"frodo_rest": {
+		"speaker": "npc_frodo",
+		"emotion": "friendly",
+		"text": "A wise choice — nothing mends a weary adventurer like a night under a warm roof. Fifteen gold and the bed's yours till morning.",
+		"choices": [
+			{
+				"text": "Here's the gold. [Vila ut]",
+				"next": null,
+				"actions": [
+					{
+						"type": "rest",
+						"cost": 15,
+						"satiation": 300
+					}
+				]
+			},
+			{
+				"text": "On second thought, no.",
+				"next": "frodo_root"
 			}
 		]
 	},

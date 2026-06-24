@@ -313,6 +313,21 @@ func feed(seconds: float) -> void:
 	satiation = minf(satiation + seconds, MAX_SATIATION)
 	satiation_changed.emit(satiation, MAX_SATIATION)
 
+## Vila på värdshus: betalar guld, återställer HP/mana fullt och toppar mättnad.
+## Returnerar false (utan att ändra något) om spelaren inte har råd.
+func rest_at_inn(cost: int, satiation_secs := 0.0) -> bool:
+	if gold < cost:
+		return false
+	gold -= cost
+	gold_changed.emit(gold)
+	health = max_health
+	mana = max_mana
+	hp_changed.emit(health, max_health)
+	mana_changed.emit(mana, max_mana)
+	if satiation_secs > 0.0:
+		feed(satiation_secs)
+	return true
+
 func _tick_statuses(delta: float) -> void:
 	if status_effects.is_empty():
 		return

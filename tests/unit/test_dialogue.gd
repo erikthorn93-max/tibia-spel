@@ -82,6 +82,42 @@ func test_quest_reward_grants_skill_xp_and_unlock():
 	var prog := int(GameState.skills["constitution"]["level"]) * 1000000 + int(GameState.skills["constitution"]["xp"])
 	assert_gt(prog, 1000000, "skill_xp-belöning tränade inte constitution")
 
+# ── Värdshusvila (rest at inn) ──
+
+func test_frodo_root_offers_room():
+	assert_has(_texts("frodo_root"), "I'd like to rent a room. (15 guld)")
+
+func test_rest_restores_and_charges_when_affordable():
+	GameState.gold = 50
+	GameState.max_health = 150.0
+	GameState.health = 40.0
+	GameState.max_mana = 100.0
+	GameState.mana = 10.0
+	GameState.satiation = 0.0
+	DialogueDB.run_actions([
+		{"type": "rest", "cost": 15, "satiation": 300}
+	], "npc_frodo")
+	assert_eq(GameState.gold, 35, "15 guld ska dras")
+	assert_eq(GameState.health, GameState.max_health, "HP ska fyllas")
+	assert_eq(GameState.mana, GameState.max_mana, "mana ska fyllas")
+	assert_almost_eq(GameState.satiation, 300.0, 0.01, "mättnad ska toppas")
+
+func test_rest_does_nothing_when_broke():
+	GameState.gold = 5
+	GameState.max_health = 150.0
+	GameState.health = 40.0
+	GameState.mana = 10.0
+	var ok := GameState.rest_at_inn(15, 300.0)
+	assert_false(ok, "ska misslyckas utan råd")
+	assert_eq(GameState.gold, 5, "guld ska vara orört")
+	assert_eq(GameState.health, 40.0, "HP ska vara orört")
+
+func test_gold_condition_gates_choice():
+	GameState.gold = 5
+	assert_false(DialogueDB.eval_condition({"type": "gold", "amount": 15}))
+	GameState.gold = 20
+	assert_true(DialogueDB.eval_condition({"type": "gold", "amount": 15}))
+
 func test_gemcavern_unlock_requires_quest_and_skill():
 	# Kristallgrottan kräver BÅDE Mästarprovet (quest_trial_3) OCH Mining 40.
 	UnlockSystem.unlocked.erase("kristallgrottan")

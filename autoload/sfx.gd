@@ -81,6 +81,10 @@ func craft() -> void:
 func pickup() -> void:
 	_enqueue(synth([880.0, 1174.66], 0.05, 0.15))
 
+## Varm, vilsam nedåtgående klang (G-E-C) — utvilad på värdshuset.
+func rest() -> void:
+	_enqueue(synth([783.99, 659.25, 523.25], 0.16, 0.2))
+
 ## Magi-cast — klangfärgen varierar efter besvärjelsetyp.
 func cast(ctype: String) -> void:
 	match ctype:
