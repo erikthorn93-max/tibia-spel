@@ -250,7 +250,7 @@ func _process(delta: float) -> void:
 			var raw := CombatFormulas.roll_monster(atk)
 			var dmg := CombatFormulas.mitigate(raw,
 				GameState.effective_skill_level("shielding") + GameState.total_shielding_bonus(),
-				GameState.total_armor())
+				GameState.total_armor() + GameState.total_def_bonus())
 			if dmg > 0:
 				GameState.take_damage(dmg)
 				GameState.gain_skill_xp("shielding", 1)

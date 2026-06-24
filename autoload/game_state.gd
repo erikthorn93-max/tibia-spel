@@ -454,6 +454,27 @@ func total_shielding_bonus() -> int:
 		return 0
 	return int(ItemDB.items.get(id, {}).get("shielding_bonus", 0))
 
+## Summerar ett numeriskt bonusfält över all utrustad gear.
+func _sum_equip_field(field: String) -> float:
+	var total := 0.0
+	for slot in equipment:
+		var id := String(equipment.get(slot, ""))
+		if id != "":
+			total += float(ItemDB.items.get(id, {}).get(field, 0))
+	return total
+
+## Total attack-bonus (atk_bonus) från all utrustning — adderas till vapnets ATK.
+func total_atk_bonus() -> int:
+	return int(_sum_equip_field("atk_bonus"))
+
+## Total defense-bonus (def_bonus) från all utrustning — adderas till rustning vid mitigering.
+func total_def_bonus() -> int:
+	return int(_sum_equip_field("def_bonus"))
+
+## Total attackhastighetsbonus (speed_bonus) — kortar ner attackens cooldown (andel).
+func total_speed_bonus() -> float:
+	return _sum_equip_field("speed_bonus")
+
 ## Bakåtkompatibel wrapper — anropar equip("weapon", item_id).
 func equip_weapon(item_id: String) -> bool:
 	if String(equipment.get("weapon", "")) == item_id:

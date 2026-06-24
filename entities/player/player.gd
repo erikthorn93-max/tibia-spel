@@ -219,7 +219,7 @@ func _update_attack(delta: float) -> void:
 		var dist := _chebyshev(target.tile)
 		if dist > weapon_range:
 			return   # utom räckvidd
-		_attack_timer = ATTACK_COOLDOWN
+		_attack_timer = ATTACK_COOLDOWN / (1.0 + GameState.total_speed_bonus())
 		# Vänd dig mot målet inför slaget (gäller både närstrid och bågskytte)
 		var to_dir := Vector2i(signi(target.tile.x - tile.x), signi(target.tile.y - tile.y))
 		if to_dir != Vector2i.ZERO:
@@ -235,7 +235,8 @@ func _update_attack(delta: float) -> void:
 			if ammo_id != "":
 				GameState.consume_ammo(ammo_id)
 			dmg = CombatFormulas.roll_ranged(
-				GameState.effective_skill_level(wskill), int(weapon.get("atk", 5))) \
+				GameState.effective_skill_level(wskill),
+				int(weapon.get("atk", 5)) + GameState.total_atk_bonus()) \
 				* TaskSystem.damage_multiplier(target.monster_name)
 			target.take_damage(dmg)
 			GameState.gain_skill_xp(wskill, 1)
@@ -245,7 +246,8 @@ func _update_attack(delta: float) -> void:
 			if dist > 1:
 				return
 			dmg = CombatFormulas.roll_melee(GameState.level,
-				GameState.effective_skill_level(wskill), int(weapon.get("atk", 5))) \
+				GameState.effective_skill_level(wskill),
+				int(weapon.get("atk", 5)) + GameState.total_atk_bonus()) \
 				* TaskSystem.damage_multiplier(target.monster_name)   # bestiary-tierbonus
 			target.take_damage(dmg)
 			GameState.gain_skill_xp(wskill, 1)
