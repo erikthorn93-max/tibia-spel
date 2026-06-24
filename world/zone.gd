@@ -359,6 +359,23 @@ func _add_door_marker(t: Vector2i) -> void:
 	knob.color = Color(0.85, 0.72, 0.20)
 	knob.position = c
 	add_child(knob)
+	# Pulserande ledstjärna ovanför dörren — drar ögat hit (som portaler/trappor)
+	var beacon := Polygon2D.new()
+	beacon.polygon = PackedVector2Array([
+		Vector2(0, -5), Vector2(5, 0), Vector2(0, 5), Vector2(-5, 0)])
+	beacon.color = Color(1.0, 0.85, 0.35)
+	beacon.position = c + Vector2(0, -20)
+	add_child(beacon)
+	_pulse_marker(beacon, 0.8, 1.3, 0.8)
+	# Namnskylt på husdörren så den går att hitta (saknades tidigare)
+	var lbl := Label.new()
+	lbl.text = _zone_display_name(String(portals[t]))
+	lbl.position = c + Vector2(-64, -44)
+	lbl.custom_minimum_size = Vector2(128, 0)
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.add_theme_font_size_override("font_size", 10)
+	lbl.modulate = Color(1.0, 0.88, 0.55)
+	add_child(lbl)
 
 func _add_stair_marker(t: Vector2i, going_up: bool) -> void:
 	## Ritar en trappil (upp eller ned).

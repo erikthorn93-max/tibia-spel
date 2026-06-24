@@ -56,6 +56,31 @@ func test_pathfinding_finds_path():
 	assert_gt(path.size(), 0)
 	assert_eq(path[path.size() - 1], goal)
 
+func test_frodo_inn_is_registered_entrance():
+	var z = _make_zone("town")
+	assert_true(z.entrance_points.values().has("frodo_inn"),
+		"Frodo's Inn ska vara registrerad som husingång")
+
+func test_frodo_inn_entrance_is_walkable():
+	var z = _make_zone("town")
+	var tile := Vector2i.ZERO
+	for t in z.entrance_points:
+		if String(z.entrance_points[t]) == "frodo_inn":
+			tile = t
+			break
+	assert_ne(tile, Vector2i.ZERO, "hittade ingen frodo_inn-ingång")
+	assert_true(z.is_walkable(tile), "ingångsrutan måste gå att kliva på")
+
+func test_house_door_has_name_label():
+	# Discoverability: husdörrar ska ha en synlig namnskylt (tidigare saknades den).
+	var z = _make_zone("town")
+	var found := false
+	for child in z.get_children():
+		if child is Label and String(child.text) == "Frodo's Inn":
+			found = true
+			break
+	assert_true(found, "Frodo's Inn-dörren saknar namnskylt i världen")
+
 func test_forest_loads_with_nodes():
 	var z = _make_zone("forest")
 	assert_gt(z.node_points.size(), 5)
