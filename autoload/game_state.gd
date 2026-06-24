@@ -18,6 +18,7 @@ signal appearance_changed
 signal equipment_changed
 signal player_respawned
 signal status_changed
+signal satiation_changed(seconds: float, max_seconds: float)
 
 const SKILL_XP_BASE := 50.0
 const SKILL_XP_GROWTH := 1.1
@@ -25,6 +26,10 @@ const EQUIPMENT_SLOTS := ["weapon", "body", "helmet", "legs", "boots", "offhand"
 	"amulet", "ring", "ring2", "ammo", "tool", "light", "backpack"]
 ## Andel av varje stack som tappas vid död utan ryggsäck.
 const BASE_DEATH_DROP := 0.30
+## Mättnad (satiation): mat ger sekunder av passiv regenerering, Tibia-stil.
+const REGEN_INTERVAL := 3.0          # hur ofta HP/mana regenereras medan mätt
+const SECONDS_PER_NUTRITION := 4.0   # mättnadssekunder per näringsvärde i maten
+const MAX_SATIATION := 600.0         # tak på lagrad mättnad
 ## Slots vars föremål ligger kvar i ryggsäcken — sloten är bara en aktiv-markör
 ## (du behåller dina verktyg/pilar och använder dem därifrån).
 const REFERENCE_SLOTS := ["ammo", "tool"]
@@ -63,6 +68,8 @@ var active_rune := ""          # DEPRECERAD: gamla run-spåret, migreras bort
 var learned_spells: Array = [] # id:n för inlärda instant-spells (SpellSystem)
 var status_effects: Dictionary = {}  # id -> {tick_dmg, time_left, tick_acc}
 var bank: Dictionary = {}            # item_id -> qty (bankförvar, sparas i save)
+var satiation := 0.0                 # sekunder av kvarvarande mättnad/regen
+var _regen_acc := 0.0                # ackumulator för regen-intervallet
 
 ## _init (inte _ready): skills måste finnas direkt vid .new() i tester,
 ## och innan andra autoloads läser GameState.skills.
@@ -276,6 +283,35 @@ func has_status(id: String) -> bool:
 func _process(delta: float) -> void:
 	_tick_buffs(delta)
 	_tick_statuses(delta)
+	_tick_regen(delta)
+
+## HP/mana-regen per intervall medan spelaren är mätt. Mättnaden tickar ned
+## i realtid; regenereringen sker i diskreta steg om REGEN_INTERVAL.
+func _tick_regen(delta: float) -> void:
+	if satiation <= 0.0:
+		return
+	satiation = maxf(satiation - delta, 0.0)
+	_regen_acc += delta
+	while _regen_acc >= REGEN_INTERVAL:
+		_regen_acc -= REGEN_INTERVAL
+		if health < max_health:
+			heal(float(hp_regen_amount()))
+		if mana < max_mana:
+			restore_mana(float(mp_regen_amount()))
+	satiation_changed.emit(satiation, MAX_SATIATION)
+
+## HP som regenereras per intervall — skalar med constitution + regen-gear.
+func hp_regen_amount() -> int:
+	return 1 + effective_skill_level("constitution") / 15 + total_regen()
+
+## Mana som regenereras per intervall — skalar med magic-skill.
+func mp_regen_amount() -> int:
+	return 1 + effective_skill_level("magic") / 8
+
+## Lägg till mättnadssekunder (från mat). Clampas på MAX_SATIATION.
+func feed(seconds: float) -> void:
+	satiation = minf(satiation + seconds, MAX_SATIATION)
+	satiation_changed.emit(satiation, MAX_SATIATION)
 
 func _tick_statuses(delta: float) -> void:
 	if status_effects.is_empty():
@@ -326,8 +362,14 @@ func use_item(item_id: String) -> bool:
 		return false
 	var d: Dictionary = ItemDB.items.get(item_id, {})
 	var used := false
+	var is_food := String(d.get("type", "")) == "food"
 	if d.has("heal"):
-		heal(float(d["heal"]))
+		if is_food:
+			# Mat helar inte direkt — den ger mättnad som driver passiv regen.
+			var nutrition := maxi(int(d["heal"]), 10)
+			feed(nutrition * SECONDS_PER_NUTRITION)
+		else:
+			heal(float(d["heal"]))
 		used = true
 	if d.has("mana"):
 		mana = minf(mana + float(d["mana"]), max_mana)
@@ -474,6 +516,10 @@ func total_def_bonus() -> int:
 ## Total attackhastighetsbonus (speed_bonus) — kortar ner attackens cooldown (andel).
 func total_speed_bonus() -> float:
 	return _sum_equip_field("speed_bonus")
+
+## Total regen-bonus (regen) från utrustning — adderas till passiv HP-regen.
+func total_regen() -> int:
+	return int(_sum_equip_field("regen"))
 
 ## Bakåtkompatibel wrapper — anropar equip("weapon", item_id).
 func equip_weapon(item_id: String) -> bool:

@@ -40,6 +40,7 @@ var _biome_overlay: ColorRect  # biom-färggradering (stämningston per platstyp
 var _glow_t := 0.0             # tidsackumulator för fackelskenets flimmer
 var _clock_lbl: Label          # spelklocka HH:MM
 var _poison_lbl: Label    # "Giftig!"-chip
+var _fed_lbl: Label       # "Mätt"-chip (passiv regen aktiv)
 var _boss_panel: PanelContainer  # boss HP-bar, synlig under bossfight
 var _boss_name_lbl: Label
 var _boss_hp_bar: ColorRect
@@ -334,6 +335,22 @@ func _build_status_chips() -> void:
 	_poison_lbl.offset_bottom =  100.0
 	_poison_lbl.visible = false
 	add_child(_poison_lbl)
+
+	_fed_lbl = Label.new()
+	_fed_lbl.text = "🍗 Mätt"
+	_fed_lbl.add_theme_color_override("font_color", Color(0.95, 0.78, 0.35))
+	_fed_lbl.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	_fed_lbl.offset_left   = -160.0
+	_fed_lbl.offset_top    =  100.0
+	_fed_lbl.offset_right  =   -8.0
+	_fed_lbl.offset_bottom =  120.0
+	_fed_lbl.visible = GameState.satiation > 0.0
+	add_child(_fed_lbl)
+	GameState.satiation_changed.connect(_on_satiation_changed)
+
+func _on_satiation_changed(seconds: float, _max_seconds: float) -> void:
+	if _fed_lbl:
+		_fed_lbl.visible = seconds > 0.0
 
 func _refresh_status() -> void:
 	if _poison_lbl:
