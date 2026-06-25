@@ -160,5 +160,11 @@
 			"level": 40
 		},
 		"hint": "Klara Fiskemästarens prov och nå Fishing 40 — då vågar Brandt segla ut till Stormrevet."
+	},
+	"outfit_sunking": {
+		"name": "Solkonungens regalier",
+		"category": "outfit",
+		"requires": {},
+		"desc": "Belönas för att ha besegrat Solkonungen Akh-Mortis i Solgraven."
 	}
 }

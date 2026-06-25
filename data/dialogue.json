@@ -3016,5 +3016,194 @@
 				"next": null
 			}
 		]
+	},
+	"sunseeker_root": {
+		"speaker": "npc_sunseeker",
+		"emotion": "neutral",
+		"text": "En levande själ, här ute? Sanden tar de flesta innan de når så långt. Jag är Khaira — jag gräver fram det Glödöknen vill dölja.",
+		"choices": [
+			{
+				"text": "Vem är du?",
+				"next": "sunseeker_who"
+			},
+			{
+				"text": "Vad döljer öknen?",
+				"next": "sunseeker_g1",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_glod_1"
+					}
+				]
+			},
+			{
+				"text": "Skorpionerna är dödade.",
+				"next": "sunseeker_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_glod_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_glod_1"
+					}
+				]
+			},
+			{
+				"text": "Vad mer rör sig i ruinerna?",
+				"next": "sunseeker_g2",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_glod_2"
+					}
+				]
+			},
+			{
+				"text": "Här är gravdammet du bad om.",
+				"next": "sunseeker_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_glod_2",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_glod_2"
+					}
+				]
+			},
+			{
+				"text": "Vem sover i Solgraven?",
+				"next": "sunseeker_g3",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_glod_3"
+					}
+				]
+			},
+			{
+				"text": "Solkonungen är besegrad.",
+				"next": "sunseeker_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_glod_3",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_glod_3"
+					}
+				]
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"sunseeker_who": {
+		"speaker": "npc_sunseeker",
+		"emotion": "neutral",
+		"text": "Solsökare av Thais. Jag följde de förgyllda skarabéerna hit och fann en grav äldre än kungariket självt. Något därinne vägrar att förbli dött.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "sunseeker_root"
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"sunseeker_g1": {
+		"speaker": "npc_sunseeker",
+		"emotion": "worried",
+		"text": "Glödskorpioner svärmar kring mitt utgrävningsläger och låter mig inte arbeta. Döda tio av dem, så kan jag öppna vägen vidare.",
+		"choices": [
+			{
+				"text": "Det ska bli gjort.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_glod_1"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "sunseeker_root"
+			}
+		]
+	},
+	"sunseeker_g2": {
+		"speaker": "npc_sunseeker",
+		"emotion": "worried",
+		"text": "De döda reser sig ur sanden om natten — sandvålnader, bundna till Akh-Mortis sömn. Skingra åtta av dem och samla deras gravdamm; det bär hans namn, och jag måste läsa det.",
+		"choices": [
+			{
+				"text": "Jag samlar dammet.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_glod_2"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "sunseeker_root"
+			}
+		]
+	},
+	"sunseeker_g3": {
+		"speaker": "npc_sunseeker",
+		"emotion": "worried",
+		"text": "Gravdammet bekräftar min fruktan: Solkonungen Akh-Mortis vaknar. Om han stiger fullt ut sväljs öknen — och sedan kungariket. Gå in i Solgraven och lägg honom till ro för gott.",
+		"choices": [
+			{
+				"text": "Jag avslutar det här.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_glod_3"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "sunseeker_root"
+			}
+		]
+	},
+	"sunseeker_reward": {
+		"speaker": "npc_sunseeker",
+		"emotion": "friendly",
+		"text": "Solen vilar äntligen lugn över sanden. Du har gjort mer än någon expedition förmått — ta din belöning, du har förtjänat den.",
+		"choices": [
+			{
+				"text": "Tack.",
+				"next": null
+			},
+			{
+				"text": "Något mer?",
+				"next": "sunseeker_root"
+			}
+		]
 	}
 }

@@ -79,5 +79,14 @@
 			"pants": "#2a2a3a",
 			"hair": "#e8c84a"
 		}
+	},
+	"outfit_sunking": {
+		"name": "Solkonungens regalier",
+		"unlock": "outfit_sunking",
+		"colors": {
+			"shirt": "#d4a017",
+			"pants": "#8a5a14",
+			"hair": "#f0d878"
+		}
 	}
 }

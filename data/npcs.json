@@ -457,5 +457,23 @@
 			"model": "en_US-amy-medium",
 			"length_scale": 1
 		}
+	},
+	"npc_sunseeker": {
+		"name": "Khaira Solsökare",
+		"zone": "glodoknen",
+		"position": [
+			9,
+			15
+		],
+		"barks": [
+			"Solen begraver lika villigt som den blottar.",
+			"Akh-Mortis sover inte — han väntar.",
+			"Varje skärva sand bär ett namn, om man lyssnar."
+		],
+		"dialogue_root": "sunseeker_root",
+		"voice": {
+			"model": "en_US-lessac-medium",
+			"length_scale": 1
+		}
 	}
 }
