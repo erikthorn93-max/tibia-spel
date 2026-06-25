@@ -401,14 +401,24 @@ func take_damage(dmg: float, crit := false) -> void:
 func take_charm_damage(dmg: float, element: String) -> void:
 	if dead:
 		return
-	hp = maxi(hp - int(dmg), 0)
+	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
+	var modifier := CharmSystem.element_modifier(d, element)
+	var final_dmg := CharmSystem.resisted_damage(int(dmg), modifier)
+	var parent := get_parent() if get_parent() != null else self
+	if final_dmg <= 0:
+		# Immunt mot detta element — visa "immun" istället för en nolla.
+		var imm: Node2D = preload("res://entities/floating_text.gd").new()
+		parent.add_child(imm)
+		imm.global_position = global_position + Vector2(randf_range(-6, 6), -16)
+		imm.setup("immun", Color(0.6, 0.6, 0.6), 11)
+		return
+	hp = maxi(hp - final_dmg, 0)
 	_check_enrage()
 	_refresh_label()
 	var dn: Node2D = preload("res://entities/damage_number.gd").new()
-	var parent := get_parent() if get_parent() != null else self
 	parent.add_child(dn)
 	dn.global_position = global_position + Vector2(randf_range(-6, 6), -16)
-	dn.setup(dmg, false, CharmSystem.element_color(element))
+	dn.setup(final_dmg, false, CharmSystem.element_color(element))
 	_flash_hit()
 	Sfx.charm(element)
 	if hp <= 0:

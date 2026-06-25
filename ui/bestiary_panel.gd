@@ -50,6 +50,35 @@ func _rebuild() -> void:
 				dlbl.custom_minimum_size = Vector2(330, 0)
 				dlbl.modulate = Color(0.75, 0.72, 0.6)
 				_list.add_child(dlbl)
+			# Element-svagheter/resistenser (charm-element) om monstret har några
+			var etext := _element_text(MonsterDB.monsters[mname].get("element_mod", {}))
+			if etext != "":
+				var elbl := Label.new()
+				elbl.text = "   " + etext
+				elbl.add_theme_font_size_override("font_size", 10)
+				elbl.modulate = Color(0.6, 0.8, 0.95)
+				_list.add_child(elbl)
+
+const _ELEM_NAMES := {"fire": "Eld", "energy": "Energi", "death": "Död", "physical": "Fysisk"}
+
+## Formaterar element_mod till t.ex. "Svag: Eld · Tål: Död" för bestiariet.
+func _element_text(mods) -> String:
+	if not (mods is Dictionary) or mods.is_empty():
+		return ""
+	var weak: Array = []
+	var resist: Array = []
+	var immune: Array = []
+	for el in mods:
+		var m := float(mods[el])
+		var nm := String(_ELEM_NAMES.get(el, el))
+		if m <= 0.0: immune.append(nm)
+		elif m < 1.0: resist.append(nm)
+		elif m > 1.0: weak.append(nm)
+	var parts: Array = []
+	if not weak.is_empty(): parts.append("Svag: " + ", ".join(weak))
+	if not immune.is_empty(): parts.append("Immun: " + ", ".join(immune))
+	if not resist.is_empty(): parts.append("Tål: " + ", ".join(resist))
+	return "  ".join(parts)
 
 ## Charm-sektion: poängsaldo och en rad per charm med köp/bär-knapp.
 func _build_charms() -> void:

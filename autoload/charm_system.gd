@@ -67,6 +67,21 @@ func unequip_defense() -> void:
 	equipped_defense = ""
 	charms_changed.emit()
 
+## Monsterns multiplikator mot ett charm-element (1.0 = normal, <1 = resistent,
+## 0 = immun, >1 = svag). Läses ur monsterdefinitionens "element_mod".
+static func element_modifier(monster_def: Dictionary, element: String) -> float:
+	var mods = monster_def.get("element_mod", {})
+	if mods is Dictionary and mods.has(element):
+		return float(mods[element])
+	return 1.0
+
+## Charm-skada efter att monsterns element-resistens tillämpats.
+## Immunt (mod 0) ger 0; annars minst 1 så en träff alltid känns.
+static func resisted_damage(base: int, modifier: float) -> int:
+	if modifier <= 0.0:
+		return 0
+	return maxi(int(round(float(base) * modifier)), 1)
+
 ## Bonusskada en offensiv charm gör mot ett mål med givet max-HP (avrundat, minst 1).
 func offense_damage(id: String, target_max_hp: float) -> int:
 	if not charms.has(id):

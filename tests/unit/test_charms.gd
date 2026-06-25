@@ -153,6 +153,42 @@ func test_offense_roll_element_matches_charm_def():
 	# elementfärgen som siffran ritas med ska matcha fire-grenen
 	assert_eq(cs.element_color(String(r["element"])), cs.element_color("fire"))
 
+func test_element_modifier_defaults_to_normal():
+	assert_eq(cs.element_modifier({}, "fire"), 1.0)
+	assert_eq(cs.element_modifier({"element_mod": {}}, "fire"), 1.0)
+	assert_eq(cs.element_modifier({"element_mod": {"energy": 1.5}}, "fire"), 1.0)
+
+func test_element_modifier_reads_def():
+	var def = {"element_mod": {"fire": 0.0, "energy": 1.5, "death": 0.4}}
+	assert_eq(cs.element_modifier(def, "fire"), 0.0)
+	assert_eq(cs.element_modifier(def, "energy"), 1.5)
+	assert_eq(cs.element_modifier(def, "death"), 0.4)
+
+func test_resisted_damage_normal():
+	assert_eq(cs.resisted_damage(50, 1.0), 50)
+
+func test_resisted_damage_weak_amplifies():
+	assert_eq(cs.resisted_damage(50, 1.5), 75)
+
+func test_resisted_damage_immune_is_zero():
+	assert_eq(cs.resisted_damage(50, 0.0), 0)
+
+func test_resisted_damage_resistant_min_one():
+	# Kraftig resistens får aldrig nolla ut en träff helt (bara immunitet gör det).
+	assert_eq(cs.resisted_damage(1, 0.3), 1)
+
+func test_data_monsters_have_valid_element_mods():
+	# Alla element_mod i datan ska peka på kända charm-element.
+	var valid := {"fire": true, "energy": true, "death": true, "physical": true}
+	var found := 0
+	for mname in MonsterDB.monsters:
+		var mods = MonsterDB.monsters[mname].get("element_mod", {})
+		if mods is Dictionary and not mods.is_empty():
+			found += 1
+			for el in mods:
+				assert_true(valid.has(el), "%s har okänt element: %s" % [mname, el])
+	assert_gt(found, 0, "minst ett monster ska ha element_mod")
+
 func test_record_kill_no_points_between_thresholds():
 	CharmSystem.reset()
 	var ts = load("res://autoload/task_system.gd").new()
