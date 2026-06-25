@@ -131,6 +131,28 @@ func test_record_kill_awards_charm_points_at_tier():
 	ts.free()
 	CharmSystem.reset()
 
+func test_element_colors_are_distinct():
+	var phys = cs.element_color("physical")
+	var fire = cs.element_color("fire")
+	var energy = cs.element_color("energy")
+	var death = cs.element_color("death")
+	assert_ne(fire, energy)
+	assert_ne(fire, death)
+	assert_ne(energy, death)
+	assert_ne(phys, fire)
+
+func test_unknown_element_falls_back_to_default():
+	# Okänt element ska ge samma färg som "physical" (default-grenen).
+	assert_eq(cs.element_color("plasma"), cs.element_color("physical"))
+
+func test_offense_roll_element_matches_charm_def():
+	cs.award_points(200); cs.unlock("enflame"); cs.equip("enflame")
+	cs.charms["enflame"]["chance"] = 1.0
+	var r = cs.roll_offense(1000.0)
+	assert_eq(String(r["element"]), "fire")
+	# elementfärgen som siffran ritas med ska matcha fire-grenen
+	assert_eq(cs.element_color(String(r["element"])), cs.element_color("fire"))
+
 func test_record_kill_no_points_between_thresholds():
 	CharmSystem.reset()
 	var ts = load("res://autoload/task_system.gd").new()

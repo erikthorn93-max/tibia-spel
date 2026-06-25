@@ -269,7 +269,7 @@ func _apply_offense_charm(target) -> void:
 		return
 	var r := CharmSystem.roll_offense(float(target.max_hp))
 	if r.get("triggered", false):
-		target.take_damage(float(r["amount"]), false)
+		target.take_charm_damage(float(r["amount"]), String(r["element"]))
 
 func _update_gather(delta: float) -> void:
 	if gather_target == null or not is_instance_valid(gather_target):

@@ -192,6 +192,7 @@ func take_damage(dmg: float, dmg_type: String = "physical") -> void:
 	var d := CharmSystem.roll_defense(dmg)
 	if d.get("triggered", false):
 		dmg = maxf(dmg - float(d["prevented"]), 0.0)
+		_show_charm_block(String(d["id"]), dmg <= 0.0)
 	health = maxf(health - dmg, 0.0)
 	hp_changed.emit(health, max_health)
 	player_hit.emit(dmg, dmg_type)
@@ -202,6 +203,20 @@ func take_damage(dmg: float, dmg_type: String = "physical") -> void:
 	if health <= 0.0:
 		Sfx.player_died()
 		player_died.emit()
+
+## Visuell/ljud-feedback när en defensiv charm parerar eller helt undviker ett slag.
+func _show_charm_block(charm_id: String, fully_avoided: bool) -> void:
+	Sfx.charm_block()
+	var p = World.player
+	if p == null or not is_instance_valid(p):
+		return
+	var cname := String(CharmSystem.charms.get(charm_id, {}).get("name", "Charm"))
+	var text := cname + "!" if fully_avoided else cname
+	var color := Color(0.5, 0.95, 1.0) if fully_avoided else Color(0.7, 0.85, 1.0)
+	var ft: Node2D = preload("res://entities/floating_text.gd").new()
+	p.get_parent().add_child(ft)
+	ft.global_position = p.global_position + Vector2(0, -20)
+	ft.setup(text, color, 12)
 
 func heal(amount: float) -> void:
 	health = minf(health + amount, max_health)

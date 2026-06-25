@@ -396,6 +396,24 @@ func take_damage(dmg: float, crit := false) -> void:
 	elif not crit:
 		Sfx.hit()
 
+## Elementär bonusskada från en offensiv charm. Egen färgad siffra + charm-ljud,
+## så den läses som ett separat tillägg ovanpå den vanliga träffen.
+func take_charm_damage(dmg: float, element: String) -> void:
+	if dead:
+		return
+	hp = maxi(hp - int(dmg), 0)
+	_check_enrage()
+	_refresh_label()
+	var dn: Node2D = preload("res://entities/damage_number.gd").new()
+	var parent := get_parent() if get_parent() != null else self
+	parent.add_child(dn)
+	dn.global_position = global_position + Vector2(randf_range(-6, 6), -16)
+	dn.setup(dmg, false, CharmSystem.element_color(element))
+	_flash_hit()
+	Sfx.charm(element)
+	if hp <= 0:
+		_die()
+
 ## Kort röd blink när monstret tar skada.
 func _flash_hit() -> void:
 	var tw := create_tween()

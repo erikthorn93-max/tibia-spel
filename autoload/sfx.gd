@@ -116,6 +116,18 @@ func hit() -> void:
 func crit() -> void:
 	_enqueue(synth([523.25, 783.99], 0.04, 0.22))
 
+## Charm-träff — klangfärgen varierar efter element så den känns "magisk".
+func charm(element: String) -> void:
+	match element:
+		"fire":   _enqueue(synth([880.0, 587.33], 0.05, 0.20))      # fräsande nedåt
+		"energy": _enqueue(synth([1318.51, 1760.0], 0.04, 0.20))    # vasst zap uppåt
+		"death":  _enqueue(synth([207.65, 155.56], 0.07, 0.22))     # dov mörk klang
+		_:        _enqueue(synth([659.25, 987.77], 0.045, 0.18))    # neutral ljus glimt
+
+## Mjukt metalliskt "ting" när en defensiv charm parerar/undviker ett slag.
+func charm_block() -> void:
+	_enqueue(synth([1244.51, 1661.22], 0.05, 0.18))
+
 ## Nedåtgående "besegrad"-figur när ett monster dör.
 func monster_die() -> void:
 	_enqueue(synth([329.63, 261.63, 174.61], 0.08, 0.20))

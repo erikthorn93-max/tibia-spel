@@ -17,6 +17,14 @@ func _init() -> void:
 	var parsed = JSON.parse_string(f.get_as_text()) if f else null
 	charms = parsed if parsed is Dictionary else {}
 
+## Färg på den flytande skadesiffran per element (charm-träff).
+static func element_color(element: String) -> Color:
+	match element:
+		"fire": return Color(1.0, 0.45, 0.1)
+		"energy": return Color(0.4, 0.8, 1.0)
+		"death": return Color(0.62, 0.32, 0.82)
+		_: return Color(0.85, 0.85, 0.85)
+
 ## Tilldelar charm-poäng (kallas av TaskSystem vid tier-fyllnad).
 func award_points(n: int) -> void:
 	if n <= 0:
