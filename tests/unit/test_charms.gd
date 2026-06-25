@@ -236,6 +236,66 @@ func test_all_charms_have_known_type():
 		assert_has(["offense", "defense"], String(cs.charms[id].get("type", "")),
 			"%s har okänd charm-typ" % id)
 
+func test_effect_type_defaults_to_mitigate():
+	assert_eq(cs.effect("parry"), "mitigate")
+	assert_eq(cs.effect("numb"), "mitigate")
+	assert_eq(cs.effect("adrenaline"), "adrenaline")
+
+func test_adrenaline_charm_configured():
+	assert_true(cs.charms.has("adrenaline"))
+	assert_eq(String(cs.charms["adrenaline"]["type"]), "defense")
+
+func test_roll_defense_ignores_adrenaline_charm():
+	cs.award_points(1000); cs.unlock("adrenaline"); cs.equip("adrenaline")
+	cs.charms["adrenaline"]["chance"] = 1.0
+	# Adrenaline mildrar inte skada — roll_defense ska aldrig trigga för den.
+	assert_false(cs.roll_defense(100.0)["triggered"])
+
+func test_roll_adrenaline_triggers_below_threshold():
+	cs.award_points(1000); cs.unlock("adrenaline"); cs.equip("adrenaline")
+	cs.charms["adrenaline"]["chance"] = 1.0
+	var r = cs.roll_adrenaline(0.20)          # under 0.30-tröskeln
+	assert_true(r["triggered"])
+	assert_almost_eq(float(r["speed"]), 0.5, 0.001)
+	assert_almost_eq(float(r["duration"]), 6.0, 0.001)
+
+func test_roll_adrenaline_silent_above_threshold():
+	cs.award_points(1000); cs.unlock("adrenaline"); cs.equip("adrenaline")
+	cs.charms["adrenaline"]["chance"] = 1.0
+	assert_false(cs.roll_adrenaline(0.50)["triggered"])
+
+func test_roll_adrenaline_none_equipped():
+	assert_false(cs.roll_adrenaline(0.1)["triggered"])
+
+func test_adrenaline_speed_scales_with_rank():
+	cs.award_points(10000); cs.unlock("adrenaline"); cs.equip("adrenaline")
+	cs.charms["adrenaline"]["chance"] = 1.0
+	cs.upgrade("adrenaline")                   # rank 2 → ×1.6
+	assert_almost_eq(float(cs.roll_adrenaline(0.2)["speed"]), 0.5 * 1.6, 0.001)
+
+func test_speed_buff_feeds_total_speed_bonus():
+	GameState.active_buffs.clear()
+	var base: float = GameState.total_speed_bonus()
+	GameState.apply_buff("speed", 0.5, 5.0)
+	assert_almost_eq(GameState.total_speed_bonus(), base + 0.5, 0.001)
+	GameState.active_buffs.clear()
+
+func test_take_damage_grants_adrenaline_buff_when_low():
+	CharmSystem.reset(); GameState.active_buffs.clear()
+	CharmSystem.award_points(1000)
+	CharmSystem.unlock("adrenaline"); CharmSystem.equip("adrenaline")
+	var orig = CharmSystem.charms["adrenaline"]["chance"]
+	CharmSystem.charms["adrenaline"]["chance"] = 1.0
+	GameState.max_health = 100.0; GameState.health = 25.0   # 25 % < 30 %
+	GameState.take_damage(5.0)
+	var has_speed := false
+	for b in GameState.active_buffs:
+		if String(b["stat"]) == "speed":
+			has_speed = true
+	assert_true(has_speed, "adrenalin-buffen applicerades inte vid lågt HP")
+	CharmSystem.charms["adrenaline"]["chance"] = orig
+	CharmSystem.reset(); GameState.active_buffs.clear()
+
 func test_element_modifier_defaults_to_normal():
 	assert_eq(cs.element_modifier({}, "fire"), 1.0)
 	assert_eq(cs.element_modifier({"element_mod": {}}, "fire"), 1.0)

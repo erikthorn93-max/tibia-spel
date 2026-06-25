@@ -45,6 +45,18 @@
 		"lifesteal": 0.6,
 		"desc": "10 % chans till 5 % av målets max-HP (död) — du läker 60 % av skadan."
 	},
+	"adrenaline": {
+		"name": "Adrenalinrus",
+		"type": "defense",
+		"effect": "adrenaline",
+		"element": "physical",
+		"cost": 120,
+		"chance": 0.25,
+		"threshold": 0.30,
+		"speed": 0.5,
+		"duration": 6.0,
+		"desc": "Tar du ett slag medan HP är under 30 %: 25 % chans till +50 % attackhastighet i 6 s."
+	},
 	"dodge": {
 		"name": "Undanglid",
 		"type": "defense",

@@ -200,6 +200,12 @@ func take_damage(dmg: float, dmg_type: String = "physical") -> void:
 	if World.player and World.player.visual:
 		World.player.visual.play_hurt()   # röd blink på spelaren
 	Sfx.player_hurt()
+	# Adrenalin-charm: överlever du slaget med lågt HP kan farten skjuta i höjden.
+	if health > 0.0 and max_health > 0.0:
+		var a := CharmSystem.roll_adrenaline(health / max_health)
+		if a.get("triggered", false):
+			apply_buff("speed", float(a["speed"]), float(a["duration"]))
+			_show_charm_block(String(a["id"]), false)
 	if health <= 0.0:
 		Sfx.player_died()
 		player_died.emit()
@@ -607,8 +613,13 @@ func total_def_bonus() -> int:
 	return int(_sum_equip_field("def_bonus"))
 
 ## Total attackhastighetsbonus (speed_bonus) — kortar ner attackens cooldown (andel).
+## Summerar utrustning + tillfälliga "speed"-buffar (t.ex. adrenalin-charm).
 func total_speed_bonus() -> float:
-	return _sum_equip_field("speed_bonus")
+	var v := _sum_equip_field("speed_bonus")
+	for b in active_buffs:
+		if String(b["stat"]) == "speed":
+			v += float(b["amount"])
+	return v
 
 ## Total kritträff-bonus (crit_chance) från utrustning — adderas till crit-chansen.
 func total_crit_bonus() -> float:

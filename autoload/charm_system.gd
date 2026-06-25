@@ -78,6 +78,12 @@ func upgrade(id: String) -> bool:
 	charms_changed.emit()
 	return true
 
+## Charmens effekttyp: "mitigate" (skadereduktion, default) eller "adrenaline".
+func effect(id: String) -> String:
+	if not charms.has(id):
+		return ""
+	return String(charms[id].get("effect", "mitigate"))
+
 ## Andel av utdelad charm-skada som läker spelaren (0 = ingen leech).
 func lifesteal(id: String) -> float:
 	if not charms.has(id):
@@ -155,13 +161,32 @@ func roll_offense(target_max_hp: float) -> Dictionary:
 ## Returnerar {triggered, prevented, id}.
 func roll_defense(incoming: float) -> Dictionary:
 	var id := equipped_defense
-	if id == "" or not charms.has(id):
-		return {"triggered": false, "prevented": 0.0, "id": ""}
+	# Endast mitigate-charms reducerar skada här; t.ex. adrenaline hanteras separat.
+	if id == "" or not charms.has(id) or effect(id) != "mitigate":
+		return {"triggered": false, "prevented": 0.0, "id": id}
 	if randf() >= float(charms[id].get("chance", 0.0)):
 		return {"triggered": false, "prevented": 0.0, "id": id}
 	return {
 		"triggered": true,
 		"prevented": defense_reduction(id, incoming),
+		"id": id,
+	}
+
+## Slår en adrenalin-charm när spelaren tagit ett slag. Triggar bara om den bärna
+## defensiva charmen är en adrenaline-typ och spelarens HP-andel är under tröskeln.
+## speed-boosten skalar med rank; duration är fast. Returnerar {triggered, speed, duration, id}.
+func roll_adrenaline(hp_fraction: float) -> Dictionary:
+	var id := equipped_defense
+	if id == "" or not charms.has(id) or effect(id) != "adrenaline":
+		return {"triggered": false, "speed": 0.0, "duration": 0.0, "id": id}
+	if hp_fraction > float(charms[id].get("threshold", 0.0)):
+		return {"triggered": false, "speed": 0.0, "duration": 0.0, "id": id}
+	if randf() >= float(charms[id].get("chance", 0.0)):
+		return {"triggered": false, "speed": 0.0, "duration": 0.0, "id": id}
+	return {
+		"triggered": true,
+		"speed": float(charms[id].get("speed", 0.0)) * RANK_VALUE_MULT[rank(id)],
+		"duration": float(charms[id].get("duration", 0.0)),
 		"id": id,
 	}
 

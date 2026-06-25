@@ -217,7 +217,11 @@ func _refresh() -> void:
 func _refresh_buffs() -> void:
 	var parts: Array = []
 	for b in GameState.active_buffs:
-		parts.append("%s +%d (%ds)" % [String(b["stat"]).trim_prefix("skill:"), int(b["amount"]), int(ceil(b["time_left"]))])
+		var stat := String(b["stat"])
+		if stat == "speed":
+			parts.append("Fart +%d%% (%ds)" % [int(round(float(b["amount"]) * 100.0)), int(ceil(b["time_left"]))])
+		else:
+			parts.append("%s +%d (%ds)" % [stat.trim_prefix("skill:"), int(b["amount"]), int(ceil(b["time_left"]))])
 	buffs_lbl.text = "  ".join(parts)
 
 func _refresh_quests() -> void:
