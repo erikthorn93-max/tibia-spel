@@ -973,5 +973,28 @@
 				"outfit_sunking"
 			]
 		}
+	},
+	"quest_charm_intro": {
+		"name": "Bestians gåva",
+		"giver": "npc_charmer",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Skelett",
+				"count": 3,
+				"hint": "Krossa 3 skelett — de reser sig i Thais-grottan och kryptorna. Odöda brinner lätt."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_charmer",
+				"hint": "Återvänd till Veyra med vad bestian lämnat."
+			}
+		],
+		"rewards": {
+			"xp": 200,
+			"gold": 50,
+			"charm_points": 100
+		}
 	}
 }

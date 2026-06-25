@@ -475,5 +475,22 @@
 			"model": "en_US-lessac-medium",
 			"length_scale": 1
 		}
+	},
+	"npc_charmer": {
+		"name": "Charm-mästaren Veyra",
+		"zone": "town",
+		"position": [
+			71,
+			87
+		],
+		"voice": {
+			"model": "en_US-amy-medium",
+			"length_scale": 1
+		},
+		"barks": [
+			"Bestian viskar till den som lyssnar.",
+			"Varje fälld best lämnar något efter sig."
+		],
+		"dialogue_root": "charmer_root"
 	}
 }

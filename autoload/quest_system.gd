@@ -132,6 +132,9 @@ func _complete(id: String) -> void:
 	# Unlock-belöning: låser upp content (områden/outfits) vid slutförande.
 	for uid in r.get("unlocks", []):
 		UnlockSystem.unlock(String(uid))
+	# Charm-poäng-belöning: matar bestiarie-charmsystemet.
+	if r.has("charm_points"):
+		CharmSystem.award_points(int(r["charm_points"]))
 	active.erase(id)
 	completed[id] = true
 	quest_completed.emit(id)

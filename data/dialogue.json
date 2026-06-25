@@ -3205,5 +3205,90 @@
 				"next": "sunseeker_root"
 			}
 		]
+	},
+	"charmer_root": {
+		"speaker": "npc_charmer",
+		"emotion": "neutral",
+		"text": "Du jagar bestar, det ser jag på dig. Men hör du vad de lämnar efter sig? Jag lär dem som lyssnar att binda bestians kraft till charms.",
+		"choices": [
+			{
+				"text": "Vad är charms?",
+				"next": "charmer_about"
+			},
+			{
+				"text": "Lär mig.",
+				"next": "charmer_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_charm_intro"
+					}
+				]
+			},
+			{
+				"text": "Skeletten är krossade.",
+				"next": "charmer_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_charm_intro",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_charm_intro"
+					}
+				]
+			},
+			{
+				"text": "En annan gång.",
+				"next": null
+			}
+		]
+	},
+	"charmer_about": {
+		"speaker": "npc_charmer",
+		"emotion": "friendly",
+		"text": "För varje art du fäller fylls din bestiarie. När du nått 100, 400 eller 1000 av samma best får du charm-poäng. Dem spenderar du på charms: offensiva som river upp eld, energi eller död ur dina slag — defensiva som låter dig parera och glida undan. Men minns: eldvarelser ler åt eld. Välj charm efter byte.",
+		"choices": [
+			{
+				"text": "Förstått.",
+				"next": "charmer_root"
+			}
+		]
+	},
+	"charmer_offer": {
+		"speaker": "npc_charmer",
+		"emotion": "neutral",
+		"text": "Då börjar vi enkelt. Krossa tre skelett — odöda värjer sig sällan mot eld. Kom tillbaka, så ger jag dig poäng nog att binda din första charm.",
+		"choices": [
+			{
+				"text": "Det ska bli gjort.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_charm_intro"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "charmer_root"
+			}
+		]
+	},
+	"charmer_reward": {
+		"speaker": "npc_charmer",
+		"emotion": "happy",
+		"text": "Känner du hur bestian sjunger? Här — hundra charm-poäng. Öppna din bestiarie, bind en charm och ge dig ut igen. Jaga det som viker sig för din kraft, inte det som ler åt den.",
+		"choices": [
+			{
+				"text": "Tack, Veyra.",
+				"next": null
+			}
+		]
 	}
 }

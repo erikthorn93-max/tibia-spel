@@ -58,6 +58,9 @@ func run_actions(actions: Array, npc_id: String) -> void:
 				QuestSystem.advance_talk(String(a["quest"]), npc_id)
 			"give_item":
 				GameState.add_item(String(a["item"]), int(a.get("count", 1)))
+			"grant_charm_points":
+				CharmSystem.award_points(int(a.get("amount", 0)))
+				if World.hud: World.hud.show_message("Du får %d charm-poäng." % int(a.get("amount", 0)))
 			"take_item":
 				GameState.remove_item(String(a["item"]), int(a.get("count", 1)))
 			"steal":

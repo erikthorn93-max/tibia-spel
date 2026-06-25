@@ -82,6 +82,28 @@ func test_quest_reward_grants_skill_xp_and_unlock():
 	var prog := int(GameState.skills["constitution"]["level"]) * 1000000 + int(GameState.skills["constitution"]["xp"])
 	assert_gt(prog, 1000000, "skill_xp-belöning tränade inte constitution")
 
+# ── Charm-mästaren (charms-introquest) ──
+
+func test_charmer_root_offers_intro_quest():
+	CharmSystem.reset()
+	assert_has(_texts("charmer_root"), "Lär mig.")
+
+func test_charm_intro_quest_grants_charm_points():
+	CharmSystem.reset()
+	QuestSystem.start("quest_charm_intro")
+	for i in 3:
+		QuestSystem.record_kill("Skelett")          # → talk_to-steget
+	QuestSystem.advance_talk("quest_charm_intro", "npc_charmer")
+	assert_true(QuestSystem.completed.has("quest_charm_intro"), "introquesten slutfördes inte")
+	assert_eq(CharmSystem.points, 100, "charm_points-belöningen delades inte ut")
+	CharmSystem.reset()
+
+func test_grant_charm_points_dialogue_action():
+	CharmSystem.reset()
+	DialogueDB.run_actions([{"type": "grant_charm_points", "amount": 25}], "npc_charmer")
+	assert_eq(CharmSystem.points, 25)
+	CharmSystem.reset()
+
 # ── Värdshusvila (rest at inn) ──
 
 func test_frodo_root_offers_room():
