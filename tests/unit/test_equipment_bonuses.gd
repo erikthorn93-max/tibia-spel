@@ -61,6 +61,17 @@ func test_crit_bonus_feeds_crit_chance() -> void:
 	var chance := CombatFormulas.crit_chance(0, gs.total_crit_bonus())
 	assert_almost_eq(chance, CombatFormulas.CRIT_BASE_CHANCE, 0.0001)
 
+func test_crit_gear_grants_bonus() -> void:
+	gs.equipment["amulet"] = "dragonstone_amulet"   # +0.08
+	gs.equipment["ring"] = "dragonstone_ring"        # +0.05
+	assert_almost_eq(gs.total_crit_bonus(), 0.13, 0.0001, "draksten-set ger +13 % crit")
+
+func test_crit_gear_summed_with_ruby() -> void:
+	gs.equipment["amulet"] = "ruby_amulet"   # +0.05
+	gs.equipment["ring"] = "ruby_ring"        # +0.03
+	gs.equipment["ring2"] = "ruby_ring"       # +0.03
+	assert_almost_eq(gs.total_crit_bonus(), 0.11, 0.0001)
+
 # --- Integration: endgame-vapen blir verkligt vassare ---
 
 func test_dragon_blade_outdamages_rusty_default() -> void:

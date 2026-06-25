@@ -2747,6 +2747,7 @@
 		"type": "armor",
 		"slot": "ring",
 		"armor": 4,
+		"crit_chance": 0.03,
 		"value": 600,
 		"color": "#e0314a"
 	},
@@ -2755,6 +2756,7 @@
 		"type": "armor",
 		"slot": "amulet",
 		"armor": 6,
+		"crit_chance": 0.05,
 		"value": 900,
 		"color": "#e0314a"
 	},
@@ -2779,6 +2781,7 @@
 		"type": "armor",
 		"slot": "ring",
 		"armor": 7,
+		"crit_chance": 0.05,
 		"value": 1800,
 		"color": "#b83adf"
 	},
@@ -2787,6 +2790,7 @@
 		"type": "armor",
 		"slot": "amulet",
 		"armor": 10,
+		"crit_chance": 0.08,
 		"value": 2700,
 		"color": "#b83adf"
 	},

@@ -210,7 +210,10 @@ func _resolve_attack(def: Dictionary, caster: Node, center_tile: Vector2i, magic
 	var hits := 0
 	for m in _monsters_in_radius(center, radius):
 		var dmg := CombatFormulas.roll_magic(magic_lvl, power)
-		m.take_damage(dmg)
+		var crit := CombatFormulas.roll_crit(magic_lvl, GameState.total_crit_bonus())
+		if crit:
+			dmg *= CombatFormulas.CRIT_MULTIPLIER
+		m.take_damage(dmg, crit)
 		if not status.is_empty() and m.has_method("apply_status"):
 			m.apply_status(String(status.get("type", "burn")),
 				float(status.get("duration", 4.0)), float(status.get("power", 3.0)))

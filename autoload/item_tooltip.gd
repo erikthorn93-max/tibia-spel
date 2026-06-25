@@ -149,6 +149,8 @@ func _build_stats_bbcode(d: Dictionary, eq_d: Dictionary, eq_id: String) -> Stri
 				lines.append("[color=#cccccc]%s: 0 [color=#dd4444](▼-%d)[/color][/color]" % [stat_names[sk], eq_val])
 
 	# Icke-jämförbara stats
+	if d.has("crit_chance"):
+		lines.append("[color=#ff8844]Crit-chans: +%d%%[/color]" % roundi(float(d["crit_chance"]) * 100.0))
 	if d.has("heal"):
 		lines.append("[color=#88ff88]Helande: +%d HP[/color]" % int(d["heal"]))
 	if d.has("mana"):
