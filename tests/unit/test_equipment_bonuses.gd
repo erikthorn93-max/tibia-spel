@@ -51,6 +51,16 @@ func test_speed_bonus_pharaohs_scepter() -> void:
 	gs.equipment["weapon"] = "pharaohs_scepter"
 	assert_almost_eq(gs.total_speed_bonus(), 0.3, 0.001)
 
+# --- total_crit_bonus() ---
+
+func test_crit_bonus_zero_with_starting_gear() -> void:
+	assert_almost_eq(gs.total_crit_bonus(), 0.0, 0.001, "startgear ger ingen crit-bonus")
+
+func test_crit_bonus_feeds_crit_chance() -> void:
+	# Utan crit-fält på gear ska crit_chance vara grundchansen för skill 0.
+	var chance := CombatFormulas.crit_chance(0, gs.total_crit_bonus())
+	assert_almost_eq(chance, CombatFormulas.CRIT_BASE_CHANCE, 0.0001)
+
 # --- Integration: endgame-vapen blir verkligt vassare ---
 
 func test_dragon_blade_outdamages_rusty_default() -> void:

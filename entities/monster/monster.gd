@@ -383,9 +383,11 @@ func take_damage(dmg: float, crit := false) -> void:
 	_spawn_damage_number(dmg, crit)
 	# --- ANIMATION: röd blink vid träff ---
 	_flash_hit()
+	if crit:
+		Sfx.crit()
 	if hp <= 0:
 		_die()
-	else:
+	elif not crit:
 		Sfx.hit()
 
 ## Kort röd blink när monstret tar skada.

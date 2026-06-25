@@ -238,7 +238,11 @@ func _update_attack(delta: float) -> void:
 				GameState.effective_skill_level(wskill),
 				int(weapon.get("atk", 5)) + GameState.total_atk_bonus()) \
 				* TaskSystem.damage_multiplier(target.monster_name)
-			target.take_damage(dmg)
+			var crit := CombatFormulas.roll_crit(
+				GameState.effective_skill_level(wskill), GameState.total_crit_bonus())
+			if crit:
+				dmg *= CombatFormulas.CRIT_MULTIPLIER
+			target.take_damage(dmg, crit)
 			GameState.gain_skill_xp(wskill, 1)
 			visual.play_attack(facing)
 		else:
@@ -249,7 +253,11 @@ func _update_attack(delta: float) -> void:
 				GameState.effective_skill_level(wskill),
 				int(weapon.get("atk", 5)) + GameState.total_atk_bonus()) \
 				* TaskSystem.damage_multiplier(target.monster_name)   # bestiary-tierbonus
-			target.take_damage(dmg)
+			var crit := CombatFormulas.roll_crit(
+				GameState.effective_skill_level(wskill), GameState.total_crit_bonus())
+			if crit:
+				dmg *= CombatFormulas.CRIT_MULTIPLIER
+			target.take_damage(dmg, crit)
 			GameState.gain_skill_xp(wskill, 1)
 			visual.play_attack(facing)   # närstrids-stöt mot målet
 

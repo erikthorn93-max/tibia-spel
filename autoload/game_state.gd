@@ -591,6 +591,10 @@ func total_def_bonus() -> int:
 func total_speed_bonus() -> float:
 	return _sum_equip_field("speed_bonus")
 
+## Total kritträff-bonus (crit_chance) från utrustning — adderas till crit-chansen.
+func total_crit_bonus() -> float:
+	return _sum_equip_field("crit_chance")
+
 ## Total regen-bonus (regen) från utrustning — adderas till passiv HP-regen.
 func total_regen() -> int:
 	return int(_sum_equip_field("regen"))

@@ -112,6 +112,10 @@ func hit() -> void:
 	_last_hit_ms = now
 	_enqueue(synth([261.63, 130.81], 0.035, 0.16))
 
+## Skarp ljus uppåt-figur vid kritisk träff.
+func crit() -> void:
+	_enqueue(synth([523.25, 783.99], 0.04, 0.22))
+
 ## Nedåtgående "besegrad"-figur när ett monster dör.
 func monster_die() -> void:
 	_enqueue(synth([329.63, 261.63, 174.61], 0.08, 0.20))
