@@ -1,7 +1,7 @@
 extends Node
 ## Autoload: SaveManager. JSON-sparfil + autosave var 60 s.
 
-const SAVE_VERSION := 11
+const SAVE_VERSION := 12
 var save_path := "user://save.json"
 var _timer := 0.0
 
@@ -59,6 +59,7 @@ func save_game() -> void:
 		"satiation": GameState.satiation,
 		"home_zone": GameState.home_zone,
 		"home_tile": [GameState.home_tile.x, GameState.home_tile.y],
+		"blessings": GameState.blessings,
 	})
 
 func load_game() -> bool:
@@ -133,4 +134,6 @@ func load_game() -> bool:
 	GameState.home_zone = String(s.get("home_zone", "town"))
 	var ht: Array = s.get("home_tile", [-1, -1])
 	GameState.home_tile = Vector2i(int(ht[0]), int(ht[1]))
+	# v12: välsignelser — gamla saves utan fältet börjar ovälsignade
+	GameState.blessings = int(s.get("blessings", 0))
 	return true

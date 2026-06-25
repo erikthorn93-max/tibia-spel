@@ -19,6 +19,7 @@ signal equipment_changed
 signal player_respawned
 signal status_changed
 signal satiation_changed(seconds: float, max_seconds: float)
+signal blessings_changed(count: int)
 
 const SKILL_XP_BASE := 50.0
 const SKILL_XP_GROWTH := 1.1
@@ -26,6 +27,8 @@ const EQUIPMENT_SLOTS := ["weapon", "body", "helmet", "legs", "boots", "offhand"
 	"amulet", "ring", "ring2", "ammo", "tool", "light", "backpack"]
 ## Andel av varje stack som tappas vid död utan ryggsäck.
 const BASE_DEATH_DROP := 0.30
+## Max antal välsignelser man kan bära (Tibia-stil). Förbrukas vid död.
+const MAX_BLESSINGS := 5
 ## Mättnad (satiation): mat ger sekunder av passiv regenerering, Tibia-stil.
 const REGEN_INTERVAL := 3.0          # hur ofta HP/mana regenereras medan mätt
 const SECONDS_PER_NUTRITION := 4.0   # mättnadssekunder per näringsvärde i maten
@@ -65,6 +68,7 @@ var current_zone := "town"
 var player_tile := Vector2i.ZERO
 var home_zone := "town"               # hempunkt: dit man återuppstår vid död
 var home_tile := Vector2i(-1, -1)     # (-1,-1) = zonens player_start
+var blessings := 0                    # aktiva välsignelser; mildrar dödsstraff
 var active_buffs: Array = []   # [{stat, amount, time_left}]
 var active_rune := ""          # DEPRECERAD: gamla run-spåret, migreras bort
 var learned_spells: Array = [] # id:n för inlärda instant-spells (SpellSystem)
@@ -224,14 +228,38 @@ func set_home(zone: String, tile := Vector2i(-1, -1)) -> void:
 	home_zone = zone
 	home_tile = tile
 
-## Tibia-stil dödsåterkomst: 50% XP-förlust, full HP/mana, tillbaka till hempunkten.
+## Köper så många välsignelser som har råd, upp till MAX_BLESSINGS.
+## Returnerar antalet köpta välsignelser (0 om fullt välsignad eller utan råd).
+func buy_blessings(cost_each: int) -> int:
+	var missing := MAX_BLESSINGS - blessings
+	if missing <= 0:
+		return 0
+	var affordable := (gold / cost_each) if cost_each > 0 else missing
+	var n := mini(missing, affordable)
+	if n <= 0:
+		return 0
+	gold -= n * cost_each
+	blessings += n
+	gold_changed.emit(gold)
+	blessings_changed.emit(blessings)
+	return n
+
+## XP-strafffaktor vid död: varje välsignelse mildrar förlusten med 8 %.
+func bless_xp_penalty_mult() -> float:
+	return clampf(1.0 - 0.08 * blessings, 0.0, 1.0)
+
+## Tibia-stil dödsåterkomst: 50% XP-förlust (mildras av välsignelser),
+## full HP/mana, tillbaka till hempunkten. Välsignelser förbrukas vid död.
 func respawn() -> void:
-	var penalty := int(float(xp_to_next) * 0.5)
+	var penalty := int(float(xp_to_next) * 0.5 * bless_xp_penalty_mult())
 	experience = maxi(experience - penalty, 0)
 	health = max_health
 	mana = max_mana
 	current_zone = home_zone
 	player_tile = home_tile
+	if blessings > 0:
+		blessings = 0
+		blessings_changed.emit(blessings)
 	hp_changed.emit(health, max_health)
 	mana_changed.emit(mana, max_mana)
 	player_respawned.emit()
@@ -482,9 +510,14 @@ func light_level() -> float:
 ## Andel av varje stack som tappas vid död. En utrustad ryggsäck skyddar
 ## innehållet (drop_protection) och sänker andelen, dock aldrig under 5 %.
 func death_drop_fraction() -> float:
+	# Full uppsättning välsignelser skyddar allt löst gods.
+	if blessings >= MAX_BLESSINGS:
+		return 0.0
 	var id := String(equipment.get("backpack", ""))
 	var protection := float(ItemDB.items.get(id, {}).get("drop_protection", 0.0)) if id != "" else 0.0
-	return clampf(BASE_DEATH_DROP - protection, 0.05, BASE_DEATH_DROP)
+	var base := clampf(BASE_DEATH_DROP - protection, 0.05, BASE_DEATH_DROP)
+	# Varje välsignelse skyddar ytterligare 18 % av det som annars tappas.
+	return base * clampf(1.0 - 0.18 * blessings, 0.0, 1.0)
 
 ## True om verktyget är tillgängligt — antingen i ryggsäcken eller i verktygssloten.
 func has_tool(tool_id: String) -> bool:

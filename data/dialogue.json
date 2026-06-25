@@ -1594,11 +1594,36 @@
 	"priest_bless": {
 		"speaker": "npc_priest",
 		"emotion": "friendly",
-		"text": "Kneel at the altar and let your burdens rest a moment. The gods give no swords — but a clear heart has won fights that steel could not.",
+		"text": "Kneel at the altar, traveller. A blessing shields your soul: should death find you, the gods will spare your hard-won wisdom and your belongings. Each blessing costs fifty gold, and Uman grants up to five.",
 		"choices": [
 			{
-				"text": "Thank you, Father.",
+				"text": "Bless me, Father. (50 guld per välsignelse)",
+				"next": "priest_root",
+				"actions": [
+					{
+						"type": "bless",
+						"cost_each": 50
+					}
+				]
+			},
+			{
+				"text": "How do blessings work?",
+				"next": "priest_bless_info"
+			},
+			{
+				"text": "Not now, Father.",
 				"next": "priest_root"
+			}
+		]
+	},
+	"priest_bless_info": {
+		"speaker": "npc_priest",
+		"emotion": "neutral",
+		"text": "When you fall, you forfeit half your unspent wisdom and scatter your goods upon the ground. Each blessing softens that loss; carry all five, and you keep every coin and lose far less wisdom. But take heed — death consumes your blessings, and you must seek them anew.",
+		"choices": [
+			{
+				"text": "Back.",
+				"next": "priest_bless"
 			},
 			{
 				"text": "Goodbye.",

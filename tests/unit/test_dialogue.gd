@@ -125,6 +125,35 @@ func test_rest_with_set_home_binds_home_point():
 	assert_eq(GameState.home_zone, "frodo_inn", "vila ska binda hempunkten till värdshuset")
 	assert_eq(GameState.home_tile, Vector2i(4, 8), "hem-tile ska vara där man vilade")
 
+func test_bless_action_kops_av_prasten():
+	GameState.gold = 100
+	GameState.blessings = 0
+	DialogueDB.run_actions([
+		{"type": "bless", "cost_each": 50}
+	], "npc_priest")
+	assert_eq(GameState.blessings, 2, "100 guld ger 2 välsignelser à 50")
+	assert_eq(GameState.gold, 0, "guldet ska dras")
+
+func test_bless_action_utan_rad_lamnar_state_orord():
+	GameState.gold = 30
+	GameState.blessings = 0
+	DialogueDB.run_actions([
+		{"type": "bless", "cost_each": 50}
+	], "npc_priest")
+	assert_eq(GameState.blessings, 0, "ingen välsignelse utan råd")
+	assert_eq(GameState.gold, 30, "guldet ska vara orört")
+
+func test_priest_bless_node_has_buy_action():
+	# Köp-valet i prästdialogen ska bära en bless-action.
+	var node: Dictionary = DialogueDB.nodes.get("priest_bless", {})
+	assert_false(node.is_empty(), "priest_bless-noden ska finnas")
+	var found := false
+	for c in node.get("choices", []):
+		for a in c.get("actions", []):
+			if String(a.get("type", "")) == "bless":
+				found = true
+	assert_true(found, "priest_bless ska ha ett val med en bless-action")
+
 func test_gold_condition_gates_choice():
 	GameState.gold = 5
 	assert_false(DialogueDB.eval_condition({"type": "gold", "amount": 15}))

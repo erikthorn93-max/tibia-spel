@@ -33,10 +33,26 @@ func test_v1_snapshot_migrates_to_all_skills():
 	assert_eq(gs.skills["mining"]["level"], 1)
 	gs.free()
 
-func test_save_version_is_11():
+func test_save_version_is_12():
 	var sm2 = load("res://autoload/save_manager.gd").new()
-	assert_eq(sm2.SAVE_VERSION, 11)
+	assert_eq(sm2.SAVE_VERSION, 12)
 	sm2.free()
+
+func test_blessings_survive_roundtrip():
+	GameState.blessings = 3
+	sm.save_game()
+	GameState.blessings = 0
+	assert_true(sm.load_game())
+	assert_eq(GameState.blessings, 3)
+
+func test_old_save_without_blessings_defaults_to_zero():
+	GameState.blessings = 4
+	sm.save_game()
+	var s: Dictionary = sm.read_snapshot()
+	s.erase("blessings")   # gammal save saknar fältet
+	sm.write_snapshot(s)
+	assert_true(sm.load_game())
+	assert_eq(GameState.blessings, 0)
 
 func test_home_point_survives_roundtrip():
 	GameState.home_zone = "frodo_inn"

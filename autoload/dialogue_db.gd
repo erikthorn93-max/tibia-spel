@@ -79,3 +79,15 @@ func run_actions(actions: Array, npc_id: String) -> void:
 						World.hud.show_message("Du vilar ut. HP och mana är fyllda.")
 				else:
 					if World.hud: World.hud.show_message("Du har inte råd med ett rum (%d guld)." % cost)
+			"bless":
+				var cost_each := int(a.get("cost_each", 50))
+				if GameState.blessings >= GameState.MAX_BLESSINGS:
+					if World.hud: World.hud.show_message("Du bär redan alla välsignelser.")
+				else:
+					var n := GameState.buy_blessings(cost_each)
+					if n > 0:
+						Sfx.rest()
+						if World.hud:
+							World.hud.show_message("Du välsignas (%d/%d)." % [GameState.blessings, GameState.MAX_BLESSINGS])
+					else:
+						if World.hud: World.hud.show_message("Du har inte råd med en välsignelse (%d guld)." % cost_each)

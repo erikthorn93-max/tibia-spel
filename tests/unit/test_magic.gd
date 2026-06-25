@@ -96,6 +96,57 @@ func test_respawn_gar_till_satt_hempunkt() -> void:
 	assert_eq(gs.current_zone, "frodo_inn", "respawn ska gå till hempunkten")
 	assert_eq(gs.player_tile, Vector2i(3, 9), "respawn ska placera på hem-tilen")
 
+# --- välsignelser (blessings) ---
+
+func test_buy_blessings_kostar_guld_och_okar_antal() -> void:
+	gs.gold = 200
+	var n: int = gs.buy_blessings(50)
+	assert_eq(n, 4, "200 guld räcker till 4 välsignelser à 50")
+	assert_eq(gs.blessings, 4)
+	assert_eq(gs.gold, 0, "200 - 4*50 = 0")
+
+func test_buy_blessings_klampas_till_max() -> void:
+	gs.gold = 10000
+	var n: int = gs.buy_blessings(50)
+	assert_eq(n, gs.MAX_BLESSINGS, "kan aldrig köpa fler än MAX_BLESSINGS")
+	assert_eq(gs.blessings, gs.MAX_BLESSINGS)
+	assert_eq(gs.gold, 10000 - gs.MAX_BLESSINGS * 50)
+
+func test_buy_blessings_utan_rad_ger_noll() -> void:
+	gs.gold = 30
+	var n: int = gs.buy_blessings(50)
+	assert_eq(n, 0, "30 guld räcker inte till en välsignelse à 50")
+	assert_eq(gs.blessings, 0)
+	assert_eq(gs.gold, 30, "guldet ska vara orört")
+
+func test_blessings_mildrar_xp_straff() -> void:
+	gs.gold = 1000
+	gs.buy_blessings(50)   # fullt välsignad → mult = 1 - 0.08*5 = 0.6
+	gs.experience = 1000
+	gs.xp_to_next = 200
+	gs.respawn()
+	# penalty = int(200 * 0.5 * 0.6) = 60 → experience = 1000 - 60 = 940
+	assert_eq(gs.experience, 940, "full välsignelse ska minska xp-förlusten")
+
+func test_respawn_forbrukar_valsignelser() -> void:
+	gs.gold = 1000
+	gs.buy_blessings(50)
+	assert_eq(gs.blessings, gs.MAX_BLESSINGS)
+	gs.respawn()
+	assert_eq(gs.blessings, 0, "döden ska förbruka alla välsignelser")
+
+func test_full_valsignelse_skyddar_allt_gods() -> void:
+	gs.gold = 1000
+	gs.buy_blessings(50)
+	assert_almost_eq(gs.death_drop_fraction(), 0.0, 0.001, "full välsignelse → inget tappas")
+
+func test_delvis_valsignelse_minskar_drop() -> void:
+	gs.gold = 100
+	gs.buy_blessings(50)   # 2 välsignelser
+	assert_eq(gs.blessings, 2)
+	# base 0.30 * (1 - 0.18*2) = 0.30 * 0.64 = 0.192
+	assert_almost_eq(gs.death_drop_fraction(), 0.192, 0.001)
+
 # --- items.json — runfält ---
 
 func test_attack_rune_har_rune_power() -> void:
