@@ -153,6 +153,62 @@ func test_offense_roll_element_matches_charm_def():
 	# elementfärgen som siffran ritas med ska matcha fire-grenen
 	assert_eq(cs.element_color(String(r["element"])), cs.element_color("fire"))
 
+func test_unlock_sets_rank_one():
+	cs.award_points(100)
+	cs.unlock("wound")
+	assert_eq(cs.rank("wound"), 1)
+
+func test_unranked_charm_defaults_to_rank_one():
+	# Ej köpt charm rapporterar rank 1 (för bakåtkompatibel skadeberäkning).
+	assert_eq(cs.rank("wound"), 1)
+	assert_almost_eq(cs.effective_value("wound"), float(cs.charms["wound"]["value"]), 0.0001)
+
+func test_upgrade_raises_rank_and_spends_points():
+	cs.award_points(1000)
+	cs.unlock("wound")                       # kostar 60 → 940 kvar
+	var before: int = cs.points
+	assert_true(cs.upgrade("wound"))         # rank 1→2, kostar cost*1 = 60
+	assert_eq(cs.rank("wound"), 2)
+	assert_eq(cs.points, before - 60)
+
+func test_upgrade_cost_scales_with_rank():
+	cs.award_points(1000); cs.unlock("wound")
+	assert_eq(cs.upgrade_cost("wound"), 60)  # rank 1→2
+	cs.upgrade("wound")
+	assert_eq(cs.upgrade_cost("wound"), 120) # rank 2→3 = cost*2
+
+func test_cannot_upgrade_past_max_rank():
+	cs.award_points(10000); cs.unlock("wound")
+	cs.upgrade("wound"); cs.upgrade("wound")
+	assert_eq(cs.rank("wound"), cs.MAX_RANK)
+	assert_false(cs.can_upgrade("wound"))
+	assert_false(cs.upgrade("wound"))
+
+func test_cannot_upgrade_unowned_charm():
+	cs.award_points(1000)
+	assert_false(cs.can_upgrade("wound"))
+	assert_false(cs.upgrade("wound"))
+
+func test_rank_scales_effective_value_and_damage():
+	cs.award_points(10000); cs.unlock("wound")
+	var base: int = cs.offense_damage("wound", 1000.0)   # rank 1 = 50
+	cs.upgrade("wound")                               # rank 2 = ×1.6
+	assert_eq(cs.offense_damage("wound", 1000.0), int(round(base * 1.6)))
+	cs.upgrade("wound")                               # rank 3 = ×2.4
+	assert_eq(cs.offense_damage("wound", 1000.0), int(round(base * 2.4)))
+
+func test_rank_scales_defense_reduction():
+	cs.award_points(10000); cs.unlock("numb")        # value 0.20
+	var base: float = cs.defense_reduction("numb", 100.0)  # rank 1 = 20
+	cs.upgrade("numb")
+	assert_almost_eq(cs.defense_reduction("numb", 100.0), base * 1.6, 0.001)
+
+func test_reset_clears_ranks():
+	cs.award_points(1000); cs.unlock("wound"); cs.upgrade("wound")
+	cs.reset()
+	assert_eq(cs.ranks.size(), 0)
+	assert_eq(cs.rank("wound"), 1)
+
 func test_element_modifier_defaults_to_normal():
 	assert_eq(cs.element_modifier({}, "fire"), 1.0)
 	assert_eq(cs.element_modifier({"element_mod": {}}, "fire"), 1.0)

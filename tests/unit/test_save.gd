@@ -33,10 +33,34 @@ func test_v1_snapshot_migrates_to_all_skills():
 	assert_eq(gs.skills["mining"]["level"], 1)
 	gs.free()
 
-func test_save_version_is_14():
+func test_save_version_is_15():
 	var sm2 = load("res://autoload/save_manager.gd").new()
-	assert_eq(sm2.SAVE_VERSION, 14)
+	assert_eq(sm2.SAVE_VERSION, 15)
 	sm2.free()
+
+func test_charm_ranks_survive_roundtrip():
+	CharmSystem.reset()
+	CharmSystem.award_points(10000)
+	CharmSystem.unlock("wound")
+	CharmSystem.upgrade("wound")            # rank 2
+	sm.save_game()
+	CharmSystem.reset()
+	assert_true(sm.load_game())
+	assert_eq(CharmSystem.rank("wound"), 2)
+	CharmSystem.reset()
+
+func test_old_save_without_ranks_defaults_unlocked_to_rank_one():
+	CharmSystem.reset()
+	CharmSystem.award_points(500)
+	CharmSystem.unlock("wound")
+	sm.save_game()
+	var s: Dictionary = sm.read_snapshot()
+	s.erase("charm_ranks")
+	sm.write_snapshot(s)
+	CharmSystem.reset()
+	assert_true(sm.load_game())
+	assert_eq(CharmSystem.rank("wound"), 1)
+	CharmSystem.reset()
 
 func test_charms_survive_roundtrip():
 	CharmSystem.reset()

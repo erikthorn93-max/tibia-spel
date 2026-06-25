@@ -93,10 +93,17 @@ func _build_charms() -> void:
 		var info := Label.new()
 		info.add_theme_font_size_override("font_size", 11)
 		info.custom_minimum_size = Vector2(240, 0)
-		info.text = "%s (%d p)\n%s" % [def.get("name", id), int(def.get("cost", 0)), def.get("desc", "")]
+		var head := String(def.get("name", id))
+		if CharmSystem.is_unlocked(String(id)):
+			head += "  " + "◆".repeat(CharmSystem.rank(String(id)))   # rank-diamanter
+		else:
+			head += " (%d p)" % int(def.get("cost", 0))
+		info.text = "%s\n%s" % [head, def.get("desc", "")]
 		info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		row.add_child(info)
 		row.add_child(_charm_button(String(id), def))
+		if CharmSystem.is_unlocked(String(id)) and CharmSystem.rank(String(id)) < CharmSystem.MAX_RANK:
+			row.add_child(_upgrade_button(String(id)))
 		_list.add_child(row)
 	var sep := HSeparator.new()
 	_list.add_child(sep)
@@ -118,4 +125,12 @@ func _charm_button(id: String, def: Dictionary) -> Button:
 	else:
 		btn.text = "Bär"
 		btn.pressed.connect(func(): CharmSystem.equip(id))
+	return btn
+
+func _upgrade_button(id: String) -> Button:
+	var btn := Button.new()
+	btn.custom_minimum_size = Vector2(90, 0)
+	btn.text = "Rank↑ (%d p)" % CharmSystem.upgrade_cost(id)
+	btn.disabled = not CharmSystem.can_upgrade(id)
+	btn.pressed.connect(func(): CharmSystem.upgrade(id))
 	return btn

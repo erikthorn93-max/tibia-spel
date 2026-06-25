@@ -6,9 +6,15 @@ extends Node
 signal points_changed(points: int)
 signal charms_changed
 
+## Charms kan uppgraderas i rank 1–3; högre rank ökar effektens styrka (value).
+const MAX_RANK := 3
+## Multiplikator på charmens value per rank (index = rank, 0 oanvänd).
+const RANK_VALUE_MULT := [0.0, 1.0, 1.6, 2.4]
+
 var charms: Dictionary = {}        # id -> def (data/charms.json)
 var points := 0                    # ospenderade charm-poäng
 var unlocked: Dictionary = {}      # id -> true (köpta charms)
+var ranks: Dictionary = {}         # id -> rank (1..MAX_RANK), sätts vid köp
 var equipped_offense := ""         # aktiv offensiv charm-id ("" = ingen)
 var equipped_defense := ""         # aktiv defensiv charm-id ("" = ingen)
 
@@ -44,9 +50,39 @@ func unlock(id: String) -> bool:
 		return false
 	points -= int(charms[id].get("cost", 0))
 	unlocked[id] = true
+	ranks[id] = 1
 	points_changed.emit(points)
 	charms_changed.emit()
 	return true
+
+## Nuvarande rank för en charm (1 om köpt utan lagrad rank, clampad mot MAX_RANK).
+func rank(id: String) -> int:
+	return clampi(int(ranks.get(id, 1)), 1, MAX_RANK)
+
+## Poängkostnad för att höja en charm till nästa rank (skalar med nuvarande rank).
+func upgrade_cost(id: String) -> int:
+	if not charms.has(id):
+		return 0
+	return int(charms[id].get("cost", 0)) * rank(id)
+
+func can_upgrade(id: String) -> bool:
+	return is_unlocked(id) and rank(id) < MAX_RANK and points >= upgrade_cost(id)
+
+## Höjer en köpt charm en rank. Returnerar false om max-rank eller för få poäng.
+func upgrade(id: String) -> bool:
+	if not can_upgrade(id):
+		return false
+	points -= upgrade_cost(id)
+	ranks[id] = rank(id) + 1
+	points_changed.emit(points)
+	charms_changed.emit()
+	return true
+
+## Charmens value efter rank-skalning (rank 1 = oförändrat).
+func effective_value(id: String) -> float:
+	if not charms.has(id):
+		return 0.0
+	return float(charms[id].get("value", 0.0)) * RANK_VALUE_MULT[rank(id)]
 
 ## Bär en köpt charm i rätt slot (offense/defense efter dess typ).
 func equip(id: String) -> bool:
@@ -86,13 +122,13 @@ static func resisted_damage(base: int, modifier: float) -> int:
 func offense_damage(id: String, target_max_hp: float) -> int:
 	if not charms.has(id):
 		return 0
-	return maxi(int(round(target_max_hp * float(charms[id].get("value", 0.0)))), 1)
+	return maxi(int(round(target_max_hp * effective_value(id))), 1)
 
-## Skada som en defensiv charm mildrar bort från ett inkommande slag.
+## Skada som en defensiv charm mildrar bort från ett inkommande slag (rank-skalad).
 func defense_reduction(id: String, incoming: float) -> float:
 	if not charms.has(id):
 		return 0.0
-	return maxf(incoming, 0.0) * float(charms[id].get("value", 0.0))
+	return maxf(incoming, 0.0) * effective_value(id)
 
 ## Slår den bärna offensiva charmen mot ett mål.
 ## Returnerar {triggered, amount, element, id}.
@@ -126,6 +162,7 @@ func roll_defense(incoming: float) -> Dictionary:
 func reset() -> void:
 	points = 0
 	unlocked.clear()
+	ranks.clear()
 	equipped_offense = ""
 	equipped_defense = ""
 	points_changed.emit(points)
