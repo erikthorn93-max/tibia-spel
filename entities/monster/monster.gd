@@ -109,6 +109,12 @@ const SPRITE_MAP: Dictionary = {
 	"Vildkanin":                  "Vildkanin",
 	"Åkerkråka":                  "Åkerkråka",
 	"Vildsvin":                   "Vildsvin",
+	# Svampgrottan — lysande mykonid-fauna
+	"Sporling":                   "Sporling",
+	"Lysfluga":                   "Lysfluga",
+	"Svampvätte":                 "Svampvätte",
+	"Mykonidäldste":              "Mykonidäldste",
+	"Sporkungen Myzandros":       "Sporkungen_Myzandros",
 }
 
 func _ready() -> void:

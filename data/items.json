@@ -2953,5 +2953,85 @@
 		"speed_bonus": 0.15,
 		"slot": "boots",
 		"level_req": 26
+	},
+	"spore_dust": {
+		"name": "Spordamm",
+		"type": "material",
+		"value": 6,
+		"color": "#9a7fb0"
+	},
+	"glowing_cap": {
+		"name": "Lyshatt",
+		"type": "food",
+		"value": 16,
+		"color": "#5fe0c8",
+		"heal": 35
+	},
+	"mycelium_fiber": {
+		"name": "Mycelfiber",
+		"type": "material",
+		"value": 12,
+		"color": "#c8b89a"
+	},
+	"spore_sac": {
+		"name": "Sporsäck",
+		"type": "material",
+		"value": 40,
+		"color": "#7a5a9a"
+	},
+	"luminous_essence": {
+		"name": "Lysande essens",
+		"type": "material",
+		"value": 80,
+		"color": "#9affe0"
+	},
+	"glowing_soup": {
+		"name": "Lysande svampsoppa",
+		"type": "food",
+		"value": 60,
+		"color": "#6fe0c0",
+		"heal": 70,
+		"buff": {
+			"stat": "regen",
+			"amount": 3,
+			"duration": 40
+		}
+	},
+	"spore_staff": {
+		"name": "Sporstav",
+		"type": "weapon",
+		"slot": "weapon",
+		"skill": "club",
+		"atk": 18,
+		"crit_chance": 0.05,
+		"value": 1600,
+		"color": "#7a9a5a",
+		"desc": "En levande stav som sprutar glödande sporer vid varje slag."
+	},
+	"mushroom_helm": {
+		"name": "Svamphätta",
+		"type": "armor",
+		"slot": "helmet",
+		"armor": 5,
+		"regen": 1,
+		"value": 700,
+		"color": "#c46a6a"
+	},
+	"mycelium_tunic": {
+		"name": "Myceltunika",
+		"type": "armor",
+		"slot": "body",
+		"armor": 7,
+		"regen": 2,
+		"value": 1100,
+		"color": "#9a8a6a"
+	},
+	"glowshroom_shield": {
+		"name": "Lyssköld",
+		"type": "armor",
+		"slot": "offhand",
+		"shielding_bonus": 5,
+		"value": 800,
+		"color": "#5fc0a0"
 	}
 }

@@ -168,6 +168,85 @@ function drawGuardian(im, c, big = false) {  // gravväktare / solkonung
     disc(im, cx, cy - 18, 2, [255, 230, 120, 255]);
   }
 }
+function drawMushroom(im, c) {  // sporling — vandrande svampknopp
+  const cx = 16, cy = 20;
+  // små ben under foten
+  for (const dx of [-3, 3]) line(im, cx + dx, cy + 4, cx + dx, cy + 8, DARK(c), 2);
+  // fot/stjälk
+  rect(im, cx - 3, cy - 1, 6, 6, [225, 220, 200, 255]);
+  oval(im, cx - 1, cy, 2, 3, [240, 236, 215, 255]);
+  // hatt
+  oval(im, cx, cy - 4, 9, 6, c);
+  oval(im, cx - 3, cy - 6, 4, 3, LITE(c));            // glansfläck
+  // prickar på hatten
+  for (const [dx, dy] of [[-5, -3], [4, -4], [0, -6], [6, -1], [-7, 0]]) disc(im, cx + dx, cy + dy, 1, scale(c, 0.6));
+  // ögon under hatten
+  px(im, cx - 3, cy + 1, [25, 22, 26, 255]); px(im, cx + 3, cy + 1, [25, 22, 26, 255]);
+  // svävande sporer
+  for (const [dx, dy] of [[-9, -8], [9, -7], [11, -2]]) px(im, cx + dx, cy + dy, [200, 240, 150, 200]);
+}
+function drawFirefly(im, c) {  // lysfluga — lysande grottfluga
+  const cx = 16, cy = 15;
+  // vingar
+  for (const s of [-1, 1]) oval(im, cx + s * 5, cy - 3, 5, 3, [220, 240, 220, 110]);
+  // kropp (segment)
+  oval(im, cx, cy, 4, 6, scale(c, 0.7));
+  // lysande bakkropp
+  disc(im, cx, cy + 6, 4, c);
+  disc(im, cx, cy + 6, 2, [240, 255, 190, 255]);     // glödkärna
+  for (const [dx, dy] of [[-6, 8], [6, 8], [0, 12]]) px(im, cx + dx, cy + dy, [200, 255, 140, 150]); // sken
+  // huvud
+  disc(im, cx, cy - 6, 3, scale(c, 0.8));
+  px(im, cx - 1, cy - 6, EYE); px(im, cx + 1, cy - 6, EYE);
+  // antenner
+  line(im, cx - 1, cy - 8, cx - 3, cy - 11, DARK(c), 1); line(im, cx + 1, cy - 8, cx + 3, cy - 11, DARK(c), 1);
+  // ben
+  for (const s of [-1, 1]) for (let k = 0; k < 2; k++) line(im, cx + s, cy + k * 3, cx + s * 6, cy + 2 + k * 3, DARK(c), 1);
+}
+function drawMykonid(im, c, big = false) {  // svampvätte / mykonidäldste — humanoid svamp
+  const cx = 16, cy = 16, cap = big ? 10 : 8;
+  // ben
+  rect(im, cx - 4, cy + 5, 3, 8, DARK(c)); rect(im, cx + 1, cy + 5, 3, 8, DARK(c));
+  // bål (stjälk)
+  rect(im, cx - 4, cy - 3, 8, 9, [220, 214, 192, 255]);
+  oval(im, cx - 1, cy, 2, 4, [236, 230, 208, 255]);   // ljus mittlinje
+  // armar
+  rect(im, cx - 7, cy - 2, 3, 7, scale(c, 0.85)); rect(im, cx + 4, cy - 2, 3, 7, scale(c, 0.85));
+  // hatt-huvud
+  oval(im, cx, cy - 6, cap, 5, c);
+  oval(im, cx - 3, cy - 8, 4, 2, LITE(c));            // glans
+  for (const dx of [-5, 0, 5]) disc(im, cx + dx, cy - 7, 1, scale(c, 0.6)); // prickar
+  // ögon i skuggan under hatten
+  px(im, cx - 3, cy - 3, [220, 240, 120, 255]); px(im, cx + 3, cy - 3, [220, 240, 120, 255]);
+  if (big) {
+    // stav med sporklot
+    line(im, cx + 8, cy - 9, cx + 8, cy + 10, [120, 100, 70, 255], 2);
+    disc(im, cx + 8, cy - 11, 3, [180, 240, 130, 255]);
+    ring(im, cx + 8, cy - 11, 4, [120, 200, 90, 200]);
+  }
+}
+function drawMykonidBoss(im, c) {  // sporkungen myzandros — kolossal mykonid
+  const cx = 16, cy = 17;
+  // ben
+  rect(im, cx - 6, cy + 6, 4, 8, DARK(c)); rect(im, cx + 2, cy + 6, 4, 8, DARK(c));
+  // massiv bål
+  rect(im, cx - 6, cy - 4, 12, 11, [210, 200, 188, 255]);
+  oval(im, cx, cy + 1, 3, 5, [232, 224, 210, 255]);
+  // armar
+  rect(im, cx - 10, cy - 3, 3, 10, scale(c, 0.8)); rect(im, cx + 7, cy - 3, 3, 10, scale(c, 0.8));
+  // bred sporhatt
+  oval(im, cx, cy - 7, 12, 6, c);
+  oval(im, cx - 4, cy - 9, 5, 3, LITE(c));
+  // glödande sporprickar
+  for (const [dx, dy] of [[-8, -7], [-3, -9], [3, -9], [8, -7], [0, -6]]) disc(im, cx + dx, cy + dy, 1, [200, 255, 150, 255]);
+  // sporkrona ovanpå hatten
+  for (let i = -7; i <= 7; i += 3) line(im, cx + i, cy - 12, cx + i, cy - 16, [150, 210, 110, 255], 1);
+  for (let i = -7; i <= 7; i += 3) disc(im, cx + i, cy - 16, 1, [220, 255, 160, 255]);
+  // lysande ögon
+  disc(im, cx - 4, cy - 4, 1, [180, 255, 120, 255]); disc(im, cx + 4, cy - 4, 1, [180, 255, 120, 255]);
+  // sporer i luften
+  for (const [dx, dy] of [[-12, -2], [12, -3], [11, 4], [-11, 5]]) px(im, cx + dx, cy + dy, [190, 250, 140, 180]);
+}
 const MONSTERS = [
   ["Glödskorpion", "Glödskorpion", "#e0641e", "scorpion"],
   ["Sandskarabé", "Sandskarabé", "#3a8a5a", "scarab"],
@@ -182,10 +261,18 @@ const MONSTERS = [
   ["Vildkanin", "Vildkanin", "#b0a088", "rabbit"],
   ["Åkerkråka", "Åkerkråka", "#2a2a30", "bird"],
   ["Vildsvin", "Vildsvin", "#6a5440", "boar"],
+  // Svampgrottan — lysande mykonid-fauna
+  ["Sporling", "Sporling", "#8fd07a", "mushroom"],
+  ["Lysfluga", "Lysfluga", "#bff066", "firefly"],
+  ["Svampvätte", "Svampvätte", "#6a9a5a", "mykonid"],
+  ["Mykonidäldste", "Mykonidäldste", "#4a7a5a", "mykonidelder"],
+  ["Sporkungen Myzandros", "Sporkungen_Myzandros", "#7a4a8a", "mykonidboss"],
 ];
 
 let made = 0;
+const onlyNew = process.argv.includes("--only-new");
 for (const [name, file, color, kind] of MONSTERS) {
+  if (onlyNew && fs.existsSync(path.join(OUT, file + ".png"))) continue;
   const im = img(); const c = hex(color);
   if (kind === "spider") drawSpider(im, c, false);
   else if (kind === "spiderboss") drawSpider(im, c, true);
@@ -198,6 +285,11 @@ for (const [name, file, color, kind] of MONSTERS) {
   else if (kind === "rabbit") drawRabbit(im, c);
   else if (kind === "bird") drawBird(im, c);
   else if (kind === "boar") drawBoar(im, c);
+  else if (kind === "mushroom") drawMushroom(im, c);
+  else if (kind === "firefly") drawFirefly(im, c);
+  else if (kind === "mykonid") drawMykonid(im, c, false);
+  else if (kind === "mykonidelder") drawMykonid(im, c, true);
+  else if (kind === "mykonidboss") drawMykonidBoss(im, c);
   outline(im);
   fs.writeFileSync(path.join(OUT, file + ".png"), encodePNG(im));
   console.log("  ✓", file + ".png  (" + name + ")");

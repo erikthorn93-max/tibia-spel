@@ -651,6 +651,16 @@
 			"ingredients": {
 				"raw_kingfish": 1
 			}
+		},
+		{
+			"id": "glowing_soup",
+			"skill": "cooking",
+			"level": 20,
+			"xp": 60,
+			"ingredients": {
+				"glowing_cap": 3,
+				"spore_dust": 1
+			}
 		}
 	],
 	"alchemy_table": [
@@ -1656,6 +1666,36 @@
 			"ingredients": {
 				"scarab_shell": 5,
 				"tomb_dust": 4
+			}
+		},
+		{
+			"id": "mushroom_helm",
+			"skill": "crafting",
+			"level": 15,
+			"xp": 70,
+			"ingredients": {
+				"mycelium_fiber": 4,
+				"glowing_cap": 2
+			}
+		},
+		{
+			"id": "mycelium_tunic",
+			"skill": "crafting",
+			"level": 25,
+			"xp": 120,
+			"ingredients": {
+				"mycelium_fiber": 6,
+				"spore_sac": 1
+			}
+		},
+		{
+			"id": "glowshroom_shield",
+			"skill": "crafting",
+			"level": 18,
+			"xp": 90,
+			"ingredients": {
+				"mycelium_fiber": 3,
+				"luminous_essence": 1
 			}
 		}
 	],

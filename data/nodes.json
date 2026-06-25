@@ -1123,5 +1123,19 @@
 		"respawn": 180,
 		"color": "#b83adf",
 		"label": "Drakstensådra"
+	},
+	"glowcap_patch": {
+		"skill": "herbalism",
+		"level": 1,
+		"tool": "sickle",
+		"yields": "glowing_cap",
+		"xp": 18,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 30,
+		"color": "#5fe0c8",
+		"label": "Lyshattar"
 	}
 }

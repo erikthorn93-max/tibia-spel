@@ -1,0 +1,92 @@
+{
+	"name": "Svampgrottan",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WccccccccccccccccccccccccccccW",
+		"WccccccccccccccBcccccccccccccW",
+		"WcccccoccccccnnnnnccccccyccccW",
+		"WcccccccccWWccccccccoccccccccW",
+		"WcccccccccccGcccccWWcccccccccW",
+		"WccccccccccccclccccccclccccccW",
+		"WcccccccccccccccccccccccccmccW",
+		"WcccssccccocccccccyccccccccccW",
+		"WcccsccccccccccsscccWWcccccccW",
+		"WcccccccccccccccscccccccGccccW",
+		"WccccccclcccyccccccccccccscccW",
+		"WcccccccWcccccccccccmccccssccW",
+		"WcccccccWcccccccGccccccccccccW",
+		"WcccccccccccccccccccccccccoccW",
+		"WccPc0cTcCcccccccccccccccccccW",
+		"WccccccccccccccccccccccccccccW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"0": {
+			"type": "portal",
+			"to": "cave",
+			"terrain": "c"
+		},
+		"T": {
+			"type": "station",
+			"station": "stove",
+			"terrain": "c"
+		},
+		"C": {
+			"type": "station",
+			"station": "crafting_bench",
+			"terrain": "c"
+		},
+		"G": {
+			"type": "node",
+			"node": "glowcap_patch",
+			"terrain": "c"
+		},
+		"o": {
+			"type": "spawn",
+			"monster": "Sporling",
+			"respawn": 18,
+			"terrain": "c"
+		},
+		"l": {
+			"type": "spawn",
+			"monster": "Lysfluga",
+			"respawn": 20,
+			"terrain": "c"
+		},
+		"y": {
+			"type": "spawn",
+			"monster": "Svampvätte",
+			"respawn": 30,
+			"terrain": "c"
+		},
+		"m": {
+			"type": "spawn",
+			"monster": "Mykonidäldste",
+			"respawn": 45,
+			"terrain": "c"
+		},
+		"B": {
+			"type": "spawn",
+			"monster": "Sporkungen Myzandros",
+			"respawn": 3600,
+			"terrain": "c"
+		}
+	},
+	"spawn_table": [
+		{
+			"monster": "Sporling",
+			"count": 3,
+			"respawn": 22
+		},
+		{
+			"monster": "Lysfluga",
+			"count": 3,
+			"respawn": 24
+		},
+		{
+			"monster": "Svampvätte",
+			"count": 2,
+			"respawn": 34
+		}
+	]
+}

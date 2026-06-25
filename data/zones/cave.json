@@ -19,7 +19,7 @@
 		"W,,,,,WWWWWW,,,,W,,,,,,,,,,,,,,,,,,,,,,W",
 		"W,,,,,,,,,,,,,,,W,,,,,,,,,,,,,,e,,,,4,,W",
 		"W,,,,,,,,,,,,,,,WWWWWWWW,,,,,,,,,,,,,,,W",
-		"W,,,,c,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,c,,,,,,,,,,,,,,,,,,,,,,,,F,,,,,,,,W",
 		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,WWWW,,,,,,W",
 		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,W,g,g,e,,,W",
 		"W,,,,,,,,b,,,,,,,,,,,,,,,,,,,W,,,,,,,,,W",
@@ -36,14 +36,26 @@
 			"type": "portal",
 			"to": "town"
 		},
-		"M": {
-			"type": "portal",
-			"to": "spider_crypt"
+		"1": {
+			"type": "gate",
+			"unlock": "spindelhalan"
+		},
+		"2": {
+			"type": "gate",
+			"unlock": "kryptan"
+		},
+		"3": {
+			"type": "gate",
+			"unlock": "bossrummet"
 		},
 		"4": {
 			"type": "portal",
 			"to": "swamp",
 			"unlock": "genvag_grottan"
+		},
+		"M": {
+			"type": "portal",
+			"to": "spider_crypt"
 		},
 		"D": {
 			"type": "dungeon_entrance",
@@ -52,22 +64,22 @@
 		"b": {
 			"type": "spawn",
 			"monster": "Orm",
-			"respawn": 15.0
+			"respawn": 15
 		},
 		"c": {
 			"type": "spawn",
 			"monster": "Spindel",
-			"respawn": 15.0
+			"respawn": 15
 		},
 		"d": {
 			"type": "spawn",
 			"monster": "Skelett",
-			"respawn": 25.0
+			"respawn": 25
 		},
 		"e": {
 			"type": "spawn",
 			"monster": "Ghoul",
-			"respawn": 45.0
+			"respawn": 45
 		},
 		"k": {
 			"type": "node",
@@ -81,54 +93,46 @@
 			"type": "node",
 			"node": "gold_vein"
 		},
-		"1": {
-			"type": "gate",
-			"unlock": "spindelhalan"
-		},
-		"2": {
-			"type": "gate",
-			"unlock": "kryptan"
-		},
-		"3": {
-			"type": "gate",
-			"unlock": "bossrummet"
-		},
 		"J": {
 			"type": "spawn",
 			"monster": "Jättespindel",
-			"respawn": 30.0
+			"respawn": 30
 		},
 		"S": {
 			"type": "spawn",
 			"monster": "Skelettkrigare",
-			"respawn": 40.0
+			"respawn": 40
 		},
 		"X": {
 			"type": "spawn",
 			"monster": "Ghulkungen",
-			"respawn": 3600.0
+			"respawn": 3600
+		},
+		"F": {
+			"type": "portal",
+			"to": "svampgrotta"
 		}
 	},
 	"spawn_table": [
 		{
 			"monster": "Skelett",
 			"count": 5,
-			"respawn": 40.0
+			"respawn": 40
 		},
 		{
 			"monster": "Ghoul",
 			"count": 3,
-			"respawn": 50.0
+			"respawn": 50
 		},
 		{
 			"monster": "Skelettkrigare",
 			"count": 2,
-			"respawn": 60.0
+			"respawn": 60
 		},
 		{
 			"monster": "Grottspindel",
 			"count": 3,
-			"respawn": 25.0
+			"respawn": 25
 		}
 	]
 }

@@ -564,3 +564,58 @@ func test_glodoknen_crit_gear_feeds_bonus():
 	gs.equipment["amulet"] = "sun_amulet"        # +0.06
 	assert_almost_eq(gs.total_crit_bonus(), 0.14, 0.0001)
 	gs.free()
+
+## ── Svampgrottan: lysande mykonid-grotta bortom Grottan (gather → laga → utrustning) ──
+
+func test_cave_links_to_svampgrotta():
+	var z = _make_zone("cave")
+	assert_true(z.portals.values().has("svampgrotta"), "grottan saknar portal till Svampgrottan")
+	var pt = null
+	for t in z.portals:
+		if String(z.portals[t]) == "svampgrotta":
+			pt = t
+			break
+	assert_not_null(pt)
+	assert_gt(z.find_path(z.player_start, pt).size(), 0, "Svampgrottan-portalen är inte nåbar")
+
+func test_svampgrotta_loads_with_content():
+	var z = _make_zone("svampgrotta")
+	assert_eq(z.zone_name, "Svampgrottan")
+	assert_true(z.is_walkable(z.player_start), "startrutan ska vara gångbar")
+	assert_true(z.portals.values().has("cave"), "saknar portal tillbaka till Grottan")
+	for name in ["Sporling", "Lysfluga", "Svampvätte", "Mykonidäldste"]:
+		assert_gt(z.spawn_points.filter(func(s): return s["monster"] == name).size(), 0,
+			"svampgrotta saknar " + name)
+	# bossen ska finnas och vara nåbar
+	var bt = null
+	for s in z.spawn_points:
+		if s["monster"] == "Sporkungen Myzandros":
+			bt = s["tile"]
+			break
+	assert_not_null(bt, "Sporkungen Myzandros spawnar inte i zonen")
+	assert_gt(z.find_path_adjacent(z.player_start, bt).size(), 0, "bossen är inte nåbar")
+	# herbalism-nod för lyshattar
+	var nodes = z.node_points.map(func(n): return n["node"])
+	assert_has(nodes, "glowcap_patch")
+
+func test_svampgrotta_monsters_registered_with_desc():
+	for name in ["Sporling", "Lysfluga", "Svampvätte", "Mykonidäldste", "Sporkungen Myzandros"]:
+		assert_true(MonsterDB.monsters.has(name), "saknar monster " + name)
+		assert_ne(String(MonsterDB.monsters[name].get("desc", "")), "", name + " saknar bestiary-text")
+	assert_true(MonsterDB.monsters["Sporkungen Myzandros"].get("boss", false), "sporkungen ska vara boss")
+
+func test_svampgrotta_items_registered():
+	for id in ["spore_dust", "glowing_cap", "mycelium_fiber", "spore_sac", "luminous_essence",
+			"glowing_soup", "spore_staff", "mycelium_tunic", "glowshroom_shield"]:
+		assert_true(ItemDB.items.has(id), "saknar item " + id)
+
+func test_svampgrotta_recipes_exist_with_real_ingredients():
+	var stove_ids: Array = ItemDB.recipes["stove"].map(func(r): return r["id"])
+	assert_has(stove_ids, "glowing_soup")
+	var bench_ids: Array = ItemDB.recipes["crafting_bench"].map(func(r): return r["id"])
+	for id in ["mycelium_tunic", "glowshroom_shield"]:
+		assert_has(bench_ids, id)
+	for station in ["stove", "crafting_bench"]:
+		for r in ItemDB.recipes[station]:
+			for ing in r["ingredients"]:
+				assert_true(ItemDB.items.has(ing), "recept %s saknar item %s" % [r["id"], ing])
