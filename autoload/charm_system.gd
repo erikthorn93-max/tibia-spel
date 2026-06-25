@@ -78,6 +78,12 @@ func upgrade(id: String) -> bool:
 	charms_changed.emit()
 	return true
 
+## Andel av utdelad charm-skada som läker spelaren (0 = ingen leech).
+func lifesteal(id: String) -> float:
+	if not charms.has(id):
+		return 0.0
+	return float(charms[id].get("lifesteal", 0.0))
+
 ## Charmens value efter rank-skalning (rank 1 = oförändrat).
 func effective_value(id: String) -> float:
 	if not charms.has(id):

@@ -209,6 +209,33 @@ func test_reset_clears_ranks():
 	assert_eq(cs.ranks.size(), 0)
 	assert_eq(cs.rank("wound"), 1)
 
+func test_leech_charm_configured():
+	assert_true(cs.charms.has("leech"))
+	assert_eq(String(cs.charms["leech"]["type"]), "offense")
+	assert_eq(String(cs.charms["leech"]["element"]), "death")
+
+func test_lifesteal_zero_for_non_leech_charms():
+	assert_eq(cs.lifesteal("wound"), 0.0)
+	assert_eq(cs.lifesteal("parry"), 0.0)
+	assert_eq(cs.lifesteal("does_not_exist"), 0.0)
+
+func test_lifesteal_reads_charm_field():
+	assert_almost_eq(cs.lifesteal("leech"), 0.6, 0.0001)
+
+func test_leech_heal_amount_follows_dealt_damage():
+	# Läkning = utdelad skada × lifesteal; skadan följer rank.
+	cs.award_points(10000); cs.unlock("leech")
+	var dealt: int = cs.offense_damage("leech", 1000.0)   # rank 1
+	assert_almost_eq(float(dealt) * cs.lifesteal("leech"), float(dealt) * 0.6, 0.001)
+	cs.upgrade("leech")                                    # rank 2 → större skada → mer leech
+	var dealt2: int = cs.offense_damage("leech", 1000.0)
+	assert_gt(dealt2, dealt)
+
+func test_all_charms_have_known_type():
+	for id in cs.charms:
+		assert_has(["offense", "defense"], String(cs.charms[id].get("type", "")),
+			"%s har okänd charm-typ" % id)
+
 func test_element_modifier_defaults_to_normal():
 	assert_eq(cs.element_modifier({}, "fire"), 1.0)
 	assert_eq(cs.element_modifier({"element_mod": {}}, "fire"), 1.0)

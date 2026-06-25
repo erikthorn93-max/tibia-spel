@@ -35,6 +35,16 @@
 		"value": 0.08,
 		"desc": "8 % chans att förbanna målet för 8 % av dess max-HP (död)."
 	},
+	"leech": {
+		"name": "Blodtörst",
+		"type": "offense",
+		"element": "death",
+		"cost": 140,
+		"chance": 0.10,
+		"value": 0.05,
+		"lifesteal": 0.6,
+		"desc": "10 % chans till 5 % av målets max-HP (död) — du läker 60 % av skadan."
+	},
 	"dodge": {
 		"name": "Undanglid",
 		"type": "defense",

@@ -269,7 +269,19 @@ func _apply_offense_charm(target) -> void:
 		return
 	var r := CharmSystem.roll_offense(float(target.max_hp))
 	if r.get("triggered", false):
-		target.take_charm_damage(float(r["amount"]), String(r["element"]))
+		var dealt: int = target.take_charm_damage(float(r["amount"]), String(r["element"]))
+		var ls := CharmSystem.lifesteal(String(r["id"]))
+		if ls > 0.0 and dealt > 0 and GameState.health < GameState.max_health:
+			var healed := float(dealt) * ls
+			GameState.heal(healed)
+			_spawn_heal_float(healed)
+
+## Grön "+N" ovanför spelaren när en leech-charm läker.
+func _spawn_heal_float(amount: float) -> void:
+	var ft: Node2D = preload("res://entities/floating_text.gd").new()
+	get_parent().add_child(ft)
+	ft.global_position = global_position + Vector2(0, -20)
+	ft.setup("+%d" % int(round(amount)), Color(0.5, 0.95, 0.5), 12)
 
 func _update_gather(delta: float) -> void:
 	if gather_target == null or not is_instance_valid(gather_target):

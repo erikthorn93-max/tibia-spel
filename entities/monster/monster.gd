@@ -398,9 +398,11 @@ func take_damage(dmg: float, crit := false) -> void:
 
 ## Elementär bonusskada från en offensiv charm. Egen färgad siffra + charm-ljud,
 ## så den läses som ett separat tillägg ovanpå den vanliga träffen.
-func take_charm_damage(dmg: float, element: String) -> void:
+## Elementär bonusskada från en offensiv charm. Returnerar faktiskt utdelad skada
+## (0 vid immunitet) så anroparen kan basera t.ex. leech på den.
+func take_charm_damage(dmg: float, element: String) -> int:
 	if dead:
-		return
+		return 0
 	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
 	var modifier := CharmSystem.element_modifier(d, element)
 	var final_dmg := CharmSystem.resisted_damage(int(dmg), modifier)
@@ -411,7 +413,7 @@ func take_charm_damage(dmg: float, element: String) -> void:
 		parent.add_child(imm)
 		imm.global_position = global_position + Vector2(randf_range(-6, 6), -16)
 		imm.setup("immun", Color(0.6, 0.6, 0.6), 11)
-		return
+		return 0
 	hp = maxi(hp - final_dmg, 0)
 	_check_enrage()
 	_refresh_label()
@@ -423,6 +425,7 @@ func take_charm_damage(dmg: float, element: String) -> void:
 	Sfx.charm(element)
 	if hp <= 0:
 		_die()
+	return final_dmg
 
 ## Kort röd blink när monstret tar skada.
 func _flash_hit() -> void:
