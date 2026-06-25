@@ -72,6 +72,10 @@ func run_actions(actions: Array, npc_id: String) -> void:
 				var cost := int(a.get("cost", 0))
 				if GameState.rest_at_inn(cost, float(a.get("satiation", 0.0))):
 					Sfx.rest()
-					if World.hud: World.hud.show_message("Du vilar ut. HP och mana är fyllda.")
+					if bool(a.get("set_home", false)):
+						GameState.set_home(GameState.current_zone, GameState.player_tile)
+						if World.hud: World.hud.show_message("Du vilar ut. HP och mana är fyllda — värdshuset är nu din hempunkt.")
+					elif World.hud:
+						World.hud.show_message("Du vilar ut. HP och mana är fyllda.")
 				else:
 					if World.hud: World.hud.show_message("Du har inte råd med ett rum (%d guld)." % cost)

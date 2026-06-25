@@ -87,7 +87,14 @@ func test_respawn_straff_aldrig_under_noll() -> void:
 func test_respawn_satter_zon_till_town() -> void:
 	gs.current_zone = "cave"
 	gs.respawn()
-	assert_eq(gs.current_zone, "town")
+	assert_eq(gs.current_zone, "town")   # standard-hempunkt är town
+
+func test_respawn_gar_till_satt_hempunkt() -> void:
+	gs.set_home("frodo_inn", Vector2i(3, 9))
+	gs.current_zone = "cave"
+	gs.respawn()
+	assert_eq(gs.current_zone, "frodo_inn", "respawn ska gå till hempunkten")
+	assert_eq(gs.player_tile, Vector2i(3, 9), "respawn ska placera på hem-tilen")
 
 # --- items.json — runfält ---
 

@@ -33,10 +33,31 @@ func test_v1_snapshot_migrates_to_all_skills():
 	assert_eq(gs.skills["mining"]["level"], 1)
 	gs.free()
 
-func test_save_version_is_10():
+func test_save_version_is_11():
 	var sm2 = load("res://autoload/save_manager.gd").new()
-	assert_eq(sm2.SAVE_VERSION, 10)
+	assert_eq(sm2.SAVE_VERSION, 11)
 	sm2.free()
+
+func test_home_point_survives_roundtrip():
+	GameState.home_zone = "frodo_inn"
+	GameState.home_tile = Vector2i(4, 8)
+	sm.save_game()
+	GameState.home_zone = "town"
+	GameState.home_tile = Vector2i(-1, -1)
+	assert_true(sm.load_game())
+	assert_eq(GameState.home_zone, "frodo_inn")
+	assert_eq(GameState.home_tile, Vector2i(4, 8))
+
+func test_old_save_without_home_defaults_to_town():
+	GameState.home_zone = "frodo_inn"
+	sm.save_game()
+	var s: Dictionary = sm.read_snapshot()
+	s.erase("home_zone")   # gammal save saknar fältet
+	s.erase("home_tile")
+	sm.write_snapshot(s)
+	assert_true(sm.load_game())
+	assert_eq(GameState.home_zone, "town")
+	assert_eq(GameState.home_tile, Vector2i(-1, -1))
 
 func test_satiation_survives_roundtrip():
 	GameState.satiation = 234.0

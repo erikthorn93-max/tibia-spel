@@ -112,6 +112,19 @@ func test_rest_does_nothing_when_broke():
 	assert_eq(GameState.gold, 5, "guld ska vara orört")
 	assert_eq(GameState.health, 40.0, "HP ska vara orört")
 
+func test_rest_with_set_home_binds_home_point():
+	GameState.gold = 50
+	GameState.max_health = 150.0; GameState.health = 40.0
+	GameState.max_mana = 100.0; GameState.mana = 10.0
+	GameState.current_zone = "frodo_inn"
+	GameState.player_tile = Vector2i(4, 8)
+	GameState.home_zone = "town"
+	DialogueDB.run_actions([
+		{"type": "rest", "cost": 15, "satiation": 300, "set_home": true}
+	], "npc_frodo")
+	assert_eq(GameState.home_zone, "frodo_inn", "vila ska binda hempunkten till värdshuset")
+	assert_eq(GameState.home_tile, Vector2i(4, 8), "hem-tile ska vara där man vilade")
+
 func test_gold_condition_gates_choice():
 	GameState.gold = 5
 	assert_false(DialogueDB.eval_condition({"type": "gold", "amount": 15}))

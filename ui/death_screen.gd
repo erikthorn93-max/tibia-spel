@@ -1,5 +1,5 @@
 extends CanvasLayer
-## Dödsöverlägg: visas när spelaren dör, låter spelaren återuppstå i town.
+## Dödsöverlägg: visas när spelaren dör, låter spelaren återuppstå vid hempunkten.
 
 var _panel: PanelContainer
 var _btn: Button
@@ -47,7 +47,7 @@ func _build_ui() -> void:
 	vbox.add_child(sub)
 
 	_btn = Button.new()
-	_btn.text = "Återuppstå i town"
+	_btn.text = "Återuppstå vid hempunkten"
 	_btn.add_theme_font_size_override("font_size", 15)
 	_btn.pressed.connect(_on_respawn)
 	vbox.add_child(_btn)

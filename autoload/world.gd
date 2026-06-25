@@ -21,6 +21,13 @@ var grave_zone  : Node2D = null   # vilken zon graven finns i
 
 func _ready() -> void:
 	GameState.player_died.connect(_on_player_died)
+	GameState.player_respawned.connect(_on_player_respawned)
+
+## Bygger om hemzonen och flyttar spelaren dit efter återuppståndelse.
+func _on_player_respawned() -> void:
+	if game_root == null:
+		return
+	start_game(GameState.current_zone, GameState.player_tile)
 
 func start_game(zone_id: String, at_tile := Vector2i(-1, -1)) -> void:
 	if current_zone:

@@ -63,6 +63,8 @@ var skills: Dictionary = {}
 var skill_defs: Dictionary = {}
 var current_zone := "town"
 var player_tile := Vector2i.ZERO
+var home_zone := "town"               # hempunkt: dit man återuppstår vid död
+var home_tile := Vector2i(-1, -1)     # (-1,-1) = zonens player_start
 var active_buffs: Array = []   # [{stat, amount, time_left}]
 var active_rune := ""          # DEPRECERAD: gamla run-spåret, migreras bort
 var learned_spells: Array = [] # id:n för inlärda instant-spells (SpellSystem)
@@ -217,14 +219,19 @@ func drain_mana(amount: float) -> void:
 	if remainder > 0.0:
 		take_damage(remainder, "drain")
 
-## Tibia-stil dödsåterkomst: 50% XP-förlust, full HP/mana, tillbaka till town.
+## Sätter hempunkten (dit man återuppstår vid död). Tile (-1,-1) = zonens start.
+func set_home(zone: String, tile := Vector2i(-1, -1)) -> void:
+	home_zone = zone
+	home_tile = tile
+
+## Tibia-stil dödsåterkomst: 50% XP-förlust, full HP/mana, tillbaka till hempunkten.
 func respawn() -> void:
 	var penalty := int(float(xp_to_next) * 0.5)
 	experience = maxi(experience - penalty, 0)
 	health = max_health
 	mana = max_mana
-	current_zone = "town"
-	player_tile = Vector2i(-1, -1)
+	current_zone = home_zone
+	player_tile = home_tile
 	hp_changed.emit(health, max_health)
 	mana_changed.emit(mana, max_mana)
 	player_respawned.emit()

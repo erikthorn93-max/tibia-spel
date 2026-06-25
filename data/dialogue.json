@@ -1641,7 +1641,8 @@
 					{
 						"type": "rest",
 						"cost": 15,
-						"satiation": 300
+						"satiation": 300,
+						"set_home": true
 					}
 				]
 			},
