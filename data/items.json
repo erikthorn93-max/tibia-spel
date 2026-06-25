@@ -639,8 +639,9 @@
 	},
 	"scarab_shell": {
 		"name": "Skarabéskal",
-		"value": 60,
-		"desc": "Iriseras i ökenljuset. Sällan förekommande."
+		"type": "material",
+		"value": 18,
+		"color": "#3a8a5a"
 	},
 	"pharaohs_scepter": {
 		"name": "Faraos spira",
@@ -2877,5 +2878,80 @@
 		"type": "material",
 		"value": 540,
 		"color": "#b83adf"
+	},
+	"ember_gland": {
+		"name": "Glödkörtel",
+		"type": "material",
+		"value": 40,
+		"color": "#e0641e"
+	},
+	"tomb_dust": {
+		"name": "Gravdamm",
+		"type": "material",
+		"value": 14,
+		"color": "#8a7a64"
+	},
+	"sun_shard": {
+		"name": "Solskärva",
+		"type": "material",
+		"value": 120,
+		"color": "#ffd24a"
+	},
+	"gilded_scarab": {
+		"name": "Förgylld skarabé",
+		"type": "material",
+		"value": 260,
+		"color": "#e0b020"
+	},
+	"sunforged_blade": {
+		"name": "Solsmidd klinga",
+		"type": "weapon",
+		"value": 4200,
+		"color": "#ffb020",
+		"atk": 46,
+		"skill": "sword",
+		"slot": "weapon",
+		"level_req": 38,
+		"crit_chance": 0.08
+	},
+	"scarab_shield": {
+		"name": "Skarabésköld",
+		"type": "armor",
+		"value": 1100,
+		"color": "#3a8a5a",
+		"armor": 6,
+		"shielding_bonus": 14,
+		"slot": "offhand",
+		"level_req": 30
+	},
+	"sun_amulet": {
+		"name": "Solamulett",
+		"type": "armor",
+		"value": 1600,
+		"color": "#ffd24a",
+		"armor": 6,
+		"crit_chance": 0.06,
+		"slot": "amulet",
+		"level_req": 32
+	},
+	"ember_robe": {
+		"name": "Glödmantel",
+		"type": "armor",
+		"value": 1300,
+		"color": "#c0481e",
+		"armor": 17,
+		"def_bonus": 6,
+		"slot": "body",
+		"level_req": 30
+	},
+	"sandstrider_boots": {
+		"name": "Sandvandrarstövlar",
+		"type": "armor",
+		"value": 700,
+		"color": "#d0a860",
+		"armor": 5,
+		"speed_bonus": 0.15,
+		"slot": "boots",
+		"level_req": 26
 	}
 }

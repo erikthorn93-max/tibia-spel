@@ -20,7 +20,7 @@
 		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
 		"WbbbbbbbbbbbbbbWWWWbbbbbbbbbbWWbbbbbbbbbbbbbbW",
 		"WbbbbbbbbbbbbbWbbbbKbbKbbbKbbbWbbbbbbbbbbbbbbW",
-		"WbbbbbbbbbbbbbWbbbbbKbPbKbbbKbWbbbbbbbbbbbbbbW",
+		"WbbbbbbbbbbbbbWbbbbbKbPXKbbbKbWbbbbbbbbbbbbbbW",
 		"WbbbbbbbbbbbbbbWWWWbbb0bbbbbbWWbbbbbbbbbbbbbbW",
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
 	],
@@ -28,6 +28,11 @@
 		"0": {
 			"type": "portal",
 			"to": "town",
+			"terrain": "b"
+		},
+		"X": {
+			"type": "portal",
+			"to": "glodoknen",
 			"terrain": "b"
 		},
 		"g": {

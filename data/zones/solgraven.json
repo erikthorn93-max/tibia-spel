@@ -1,0 +1,33 @@
+{
+	"name": "Solgraven",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WfffffffffffffffffffffffffW",
+		"WffAffffffffffffffffffCfffW",
+		"WfffffffffffffffffffffffffW",
+		"WffffffffGfffffffffffVffffW",
+		"WfffffffffffffffffffffffffW",
+		"WffffWfffffffWfffffffWffffW",
+		"WfffffffffffffffffffffffffW",
+		"WffffffffffffBffffffffffffW",
+		"WfffffffffffffffffffffffffW",
+		"WffffWfffffffWfffffffWffffW",
+		"WfffffffffffffffffffffffffW",
+		"WffffVfffffffffffffffGffffW",
+		"WfffffffffffffffffffffffffW",
+		"Wfffffffffffff0PffffffffffW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"0": { "type": "portal", "to": "glodoknen", "terrain": "f" },
+		"A": { "type": "station", "station": "anvil", "terrain": "f" },
+		"C": { "type": "station", "station": "crafting_bench", "terrain": "f" },
+		"G": { "type": "spawn", "monster": "Gravväktare", "respawn": 50.0, "terrain": "f" },
+		"V": { "type": "spawn", "monster": "Sandvålnad", "respawn": 40.0, "terrain": "f" },
+		"B": { "type": "spawn", "monster": "Solkonungen Akh-Mortis", "respawn": 3600.0, "terrain": "f" }
+	},
+	"spawn_table": [
+		{ "monster": "Gravväktare", "count": 3, "respawn": 60.0 },
+		{ "monster": "Sandvålnad", "count": 3, "respawn": 50.0 }
+	]
+}

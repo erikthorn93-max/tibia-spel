@@ -1,0 +1,36 @@
+{
+	"name": "Glödöknen",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
+		"WbbbbWWbbbbbbSbbbbbbbbbbWWbbbbbW",
+		"WbbbbWbbbbbbbbbbbbKbbbbbbbbbbbbW",
+		"WbbbbbbbbbbbbbbbbbbbbbbbbbbVbbbW",
+		"WbbSbbbbbbGbbbbbbbbbbbbbbbbbbbbW",
+		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
+		"WbbbbbbbbbbbKbbbbbbbbbbSbbbbbbbW",
+		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
+		"WbbVbbbbbbbbbbbbbbbbbbbbbbGbbbbW",
+		"WbbbbbbbbbbbbbbWWbbbbbbbbbbbbbbW",
+		"WbbbbbbbbbbbbbbWZbbbbbbbbbKbbbbW",
+		"WbbbbbbSbbbbbbbWWbbbbbbbbbbbbbbW",
+		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
+		"WbbbbbbbbbbbbbbbbbbbbbbbbVbbbbbW",
+		"Wbbbbb0PbbbbbbbbbbbbbbbbbbbbbbbW",
+		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"0": { "type": "portal", "to": "desert", "terrain": "b" },
+		"Z": { "type": "portal", "to": "solgraven", "terrain": "b" },
+		"G": { "type": "node", "node": "gem_vein", "terrain": "b" },
+		"S": { "type": "spawn", "monster": "Glödskorpion", "respawn": 28.0, "terrain": "b" },
+		"K": { "type": "spawn", "monster": "Sandskarabé", "respawn": 20.0, "terrain": "b" },
+		"V": { "type": "spawn", "monster": "Sandvålnad", "respawn": 35.0, "terrain": "b" }
+	},
+	"spawn_table": [
+		{ "monster": "Glödskorpion", "count": 3, "respawn": 36.0 },
+		{ "monster": "Sandskarabé", "count": 4, "respawn": 26.0 },
+		{ "monster": "Sandvålnad", "count": 2, "respawn": 50.0 }
+	]
+}

@@ -94,6 +94,12 @@ const SPRITE_MAP: Dictionary = {
 	"Lich":                    "Lich",
 	"Elddraken":               "Elddraken",
 	"Ärkedemonen":             "Ärkedemonen",
+	# Glödöknen — region bortom öknen
+	"Glödskorpion":               "Glödskorpion",
+	"Sandskarabé":                "Sandskarabé",
+	"Sandvålnad":                 "Sandvålnad",
+	"Gravväktare":                "Gravväktare",
+	"Solkonungen Akh-Mortis":     "Solkonungen_Akh-Mortis",
 	# Spindelgrotta & nybörjarfauna
 	"Grottspindel":               "Grottspindel",
 	"Giftvävare":                 "Giftvävare",

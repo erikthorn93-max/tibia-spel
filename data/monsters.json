@@ -3303,5 +3303,288 @@
 				"chance": 0.04
 			}
 		]
+	},
+	"Glödskorpion": {
+		"hp": 55,
+		"atk": 18,
+		"exp": 42,
+		"speed": 3,
+		"cooldown": 1,
+		"aggro_range": 8,
+		"color": "#e0641e",
+		"desc": "En glödhet skorpion vars stjärtgadd bränner allt den når. Den frodas i den soldränkta sanden bortom ruinerna.",
+		"ability": {
+			"type": "burn",
+			"chance": 0.3,
+			"duration": 6,
+			"tick_dmg": 7
+		},
+		"loot": [
+			{
+				"item": "ember_gland",
+				"min": 1,
+				"max": 1,
+				"chance": 0.5
+			},
+			{
+				"item": "scarab_shell",
+				"min": 1,
+				"max": 1,
+				"chance": 0.25
+			},
+			{
+				"item": "iron_coin",
+				"min": 4,
+				"max": 16,
+				"chance": 1
+			},
+			{
+				"item": "amethyst",
+				"min": 1,
+				"max": 1,
+				"chance": 0.04
+			},
+			{
+				"item": "ruby",
+				"min": 1,
+				"max": 1,
+				"chance": 0.02
+			},
+			{
+				"item": "gold_coin",
+				"min": 1,
+				"max": 3,
+				"chance": 0.08
+			}
+		]
+	},
+	"Sandskarabé": {
+		"hp": 34,
+		"atk": 11,
+		"exp": 22,
+		"speed": 4,
+		"cooldown": 1,
+		"aggro_range": 7,
+		"color": "#3a8a5a",
+		"desc": "En snabb, iriserande skalbagge som myllrar kring de gamla gravarna. Skalet är eftertraktat av hantverkare.",
+		"loot": [
+			{
+				"item": "scarab_shell",
+				"min": 1,
+				"max": 2,
+				"chance": 0.6
+			},
+			{
+				"item": "iron_coin",
+				"min": 2,
+				"max": 10,
+				"chance": 1
+			},
+			{
+				"item": "opal",
+				"min": 1,
+				"max": 1,
+				"chance": 0.05
+			},
+			{
+				"item": "gilded_scarab",
+				"min": 1,
+				"max": 1,
+				"chance": 0.04
+			},
+			{
+				"item": "gold_coin",
+				"min": 1,
+				"max": 2,
+				"chance": 0.05
+			}
+		]
+	},
+	"Sandvålnad": {
+		"hp": 72,
+		"atk": 23,
+		"exp": 64,
+		"speed": 3,
+		"cooldown": 1,
+		"aggro_range": 9,
+		"color": "#cdbb92",
+		"desc": "Anden av en vandrare som gick vilse i öknen. Den driver genom sandstormarna och söker sällskap i döden.",
+		"loot": [
+			{
+				"item": "tomb_dust",
+				"min": 1,
+				"max": 1,
+				"chance": 0.5
+			},
+			{
+				"item": "bones",
+				"min": 1,
+				"max": 1,
+				"chance": 0.8
+			},
+			{
+				"item": "iron_coin",
+				"min": 5,
+				"max": 18,
+				"chance": 1
+			},
+			{
+				"item": "ancient_bandage",
+				"min": 1,
+				"max": 1,
+				"chance": 0.1
+			},
+			{
+				"item": "ancient_coin",
+				"min": 1,
+				"max": 1,
+				"chance": 0.06
+			},
+			{
+				"item": "sun_shard",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "gold_coin",
+				"min": 1,
+				"max": 4,
+				"chance": 0.1
+			}
+		]
+	},
+	"Gravväktare": {
+		"hp": 120,
+		"atk": 32,
+		"exp": 100,
+		"speed": 2,
+		"cooldown": 1,
+		"aggro_range": 8,
+		"color": "#b8a55e",
+		"desc": "En balsamerad krigare bunden att vakta Solgraven i evighet. Dess förgyllda rustning står emot tidens tand.",
+		"loot": [
+			{
+				"item": "tomb_dust",
+				"min": 1,
+				"max": 2,
+				"chance": 0.5
+			},
+			{
+				"item": "bones",
+				"min": 1,
+				"max": 1,
+				"chance": 0.9
+			},
+			{
+				"item": "ancient_coin",
+				"min": 1,
+				"max": 1,
+				"chance": 0.12
+			},
+			{
+				"item": "iron_coin",
+				"min": 8,
+				"max": 24,
+				"chance": 1
+			},
+			{
+				"item": "scarab_shell",
+				"min": 1,
+				"max": 1,
+				"chance": 0.3
+			},
+			{
+				"item": "sun_shard",
+				"min": 1,
+				"max": 1,
+				"chance": 0.06
+			},
+			{
+				"item": "gold_coin",
+				"min": 2,
+				"max": 6,
+				"chance": 0.15
+			}
+		]
+	},
+	"Solkonungen Akh-Mortis": {
+		"hp": 1500,
+		"atk": 60,
+		"exp": 1900,
+		"speed": 2,
+		"cooldown": 1,
+		"aggro_range": 10,
+		"color": "#ffb020",
+		"boss": true,
+		"desc": "Den odöde solkungen, balsamerad med smält guld och solens vrede. Han reser sig när någon vågar störa hans grav.",
+		"ability": {
+			"type": "burn",
+			"chance": 0.4,
+			"duration": 8,
+			"tick_dmg": 14
+		},
+		"loot": [
+			{
+				"item": "sunforged_blade",
+				"min": 1,
+				"max": 1,
+				"chance": 0.12
+			},
+			{
+				"item": "sun_amulet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.15
+			},
+			{
+				"item": "sun_shard",
+				"min": 3,
+				"max": 6,
+				"chance": 1
+			},
+			{
+				"item": "gilded_scarab",
+				"min": 1,
+				"max": 2,
+				"chance": 0.6
+			},
+			{
+				"item": "gold_coin",
+				"min": 40,
+				"max": 90,
+				"chance": 1
+			},
+			{
+				"item": "ancient_coin",
+				"min": 2,
+				"max": 5,
+				"chance": 0.5
+			},
+			{
+				"item": "ruby",
+				"min": 1,
+				"max": 1,
+				"chance": 0.25
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.18
+			},
+			{
+				"item": "tomb_dust",
+				"min": 2,
+				"max": 5,
+				"chance": 1
+			},
+			{
+				"item": "bones",
+				"min": 2,
+				"max": 4,
+				"chance": 1
+			}
+		]
 	}
 }

@@ -445,6 +445,27 @@
 				"dragon_ore": 6,
 				"coal": 4
 			}
+		},
+		{
+			"id": "sunforged_blade",
+			"skill": "smithing",
+			"level": 45,
+			"xp": 80,
+			"ingredients": {
+				"sun_shard": 3,
+				"ember_gland": 4,
+				"scarab_shell": 6
+			}
+		},
+		{
+			"id": "scarab_shield",
+			"skill": "smithing",
+			"level": 32,
+			"xp": 40,
+			"ingredients": {
+				"scarab_shell": 8,
+				"ember_gland": 2
+			}
 		}
 	],
 	"stove": [
@@ -1605,6 +1626,36 @@
 			"ingredients": {
 				"dragonstone": 1,
 				"gold_ore": 2
+			}
+		},
+		{
+			"id": "sun_amulet",
+			"skill": "crafting",
+			"level": 34,
+			"xp": 46,
+			"ingredients": {
+				"sun_shard": 2,
+				"gilded_scarab": 1
+			}
+		},
+		{
+			"id": "ember_robe",
+			"skill": "crafting",
+			"level": 32,
+			"xp": 42,
+			"ingredients": {
+				"ember_gland": 5,
+				"scarab_shell": 6
+			}
+		},
+		{
+			"id": "sandstrider_boots",
+			"skill": "crafting",
+			"level": 28,
+			"xp": 30,
+			"ingredients": {
+				"scarab_shell": 5,
+				"tomb_dust": 4
 			}
 		}
 	],

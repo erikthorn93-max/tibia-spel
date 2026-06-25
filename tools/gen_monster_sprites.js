@@ -106,7 +106,74 @@ function drawBoar(im, c) {  // vildsvin
   for (let x = cx - 6; x <= cx + 4; x += 3) line(im, x, cy - 6, x, cy - 9, DARK(c), 1);
 }
 
+function drawScorpion(im, c) {  // glödskorpion
+  const cx = 15, cy = 18;
+  // svans som böjer sig upp över ryggen
+  let px0 = cx + 4, py0 = cy + 1;
+  const seg = [[6, -2], [9, -6], [10, -11], [8, -15]];
+  for (const [dx, dy] of seg) { const nx = cx + dx, ny = cy + dy; line(im, px0, py0, nx, ny, c, 3); disc(im, nx, ny, 2, LITE(c)); px0 = nx; py0 = ny; }
+  disc(im, cx + 8, cy - 16, 2, [255, 220, 90, 255]);          // gadd glöder
+  oval(im, cx, cy + 1, 7, 5, c);                              // kropp
+  oval(im, cx - 1, cy - 1, 5, 3, LITE(c));                    // highlight
+  // ben
+  for (const s of [-1, 1]) for (let k = 0; k < 3; k++) line(im, cx - 2 + k * 3, cy + 4, cx - 6 + k * 4, cy + 7 + s * 0, DARK(c), 1);
+  disc(im, cx - 7, cy - 1, 3, c);                             // huvud
+  // klor
+  for (const s of [-1, 1]) { line(im, cx - 8, cy - 1 + s * 3, cx - 13, cy - 1 + s * 5, c, 2); disc(im, cx - 13, cy - 1 + s * 5, 2, LITE(c)); }
+  px(im, cx - 8, cy - 2, EYE); px(im, cx - 6, cy - 2, EYE);
+}
+function drawScarab(im, c) {  // sandskarabé
+  const cx = 16, cy = 17;
+  // ben
+  for (const s of [-1, 1]) for (let k = 0; k < 3; k++) line(im, cx + s * 4, cy - 2 + k * 4, cx + s * 10, cy - 4 + k * 5, DARK(c), 2);
+  oval(im, cx, cy + 1, 9, 8, c);                              // skal
+  line(im, cx, cy - 6, cx, cy + 8, DARK(c), 1);              // delningslinje
+  oval(im, cx - 3, cy - 2, 4, 3, LITE(c));                    // glansfläck
+  oval(im, cx + 4, cy + 2, 3, 4, LITE(c));
+  disc(im, cx, cy - 8, 4, scale(c, 0.85));                   // huvud
+  for (let i = -3; i <= 3; i += 2) line(im, cx + i, cy - 11, cx + i, cy - 14, scale(c, 0.7), 1); // antenner/horn
+  px(im, cx - 2, cy - 8, EYE); px(im, cx + 2, cy - 8, EYE);
+}
+function drawWraith(im, c) {  // sandvålnad — svävande hamn
+  const cx = 16;
+  // trasig dimkjol
+  for (let x = -8; x <= 8; x++) { const h = 26 + Math.round(3 * Math.sin(x * 0.9)); for (let y = 12; y < h; y++) if ((x + y) % 2 === 0) px(im, cx + x, y, scale(c, 0.8 + 0.2 * Math.random())); }
+  oval(im, cx, 11, 8, 9, c);                                  // kåpa/kropp
+  oval(im, cx - 2, 8, 4, 4, LITE(c));                         // highlight
+  disc(im, cx, 8, 5, scale(c, 0.9));                          // huvud
+  // huva-skugga
+  for (let x = -5; x <= 5; x++) px(im, cx + x, 4, DARK(c));
+  px(im, cx - 2, 8, [120, 230, 255, 255]); px(im, cx + 2, 8, [120, 230, 255, 255]); // spöklika ögon
+  px(im, cx - 2, 9, [120, 230, 255, 160]); px(im, cx + 2, 9, [120, 230, 255, 160]);
+}
+function drawGuardian(im, c, big = false) {  // gravväktare / solkonung
+  const cx = 16, cy = 16, gold = [230, 190, 70, 255];
+  // ben
+  rect(im, cx - 5, cy + 6, 4, 8, DARK(c)); rect(im, cx + 1, cy + 6, 4, 8, DARK(c));
+  // bål med förgylld bröstplåt
+  rect(im, cx - 6, cy - 4, 12, 11, c);
+  rect(im, cx - 6, cy - 4, 12, 3, gold);
+  oval(im, cx, cy + 1, 4, 4, gold);
+  // armar + spjut
+  rect(im, cx - 9, cy - 3, 3, 9, scale(c, 0.85)); rect(im, cx + 6, cy - 3, 3, 9, scale(c, 0.85));
+  line(im, cx + 9, cy - 8, cx + 9, cy + 12, [150, 110, 60, 255], 2); tri(im, cx + 7, cy - 8, cx + 11, cy - 8, cx + 9, cy - 13, gold);
+  // skallhuvud
+  disc(im, cx, cy - 8, 5, [225, 215, 190, 255]);
+  px(im, cx - 2, cy - 8, [180, 40, 30, 255]); px(im, cx + 2, cy - 8, [180, 40, 30, 255]); // glödande ögon
+  rect(im, cx - 2, cy - 5, 4, 2, [60, 50, 50, 255]);          // käke
+  if (big) {
+    // krona av solstrålar
+    for (let i = -5; i <= 5; i += 2) line(im, cx + i, cy - 13, cx + i, cy - 17, gold, 1);
+    rect(im, cx - 6, cy - 13, 13, 2, gold);
+    disc(im, cx, cy - 18, 2, [255, 230, 120, 255]);
+  }
+}
 const MONSTERS = [
+  ["Glödskorpion", "Glödskorpion", "#e0641e", "scorpion"],
+  ["Sandskarabé", "Sandskarabé", "#3a8a5a", "scarab"],
+  ["Sandvålnad", "Sandvålnad", "#cdbb92", "wraith"],
+  ["Gravväktare", "Gravväktare", "#b8a55e", "guardian"],
+  ["Solkonungen Akh-Mortis", "Solkonungen_Akh-Mortis", "#ffb020", "guardianboss"],
   ["Grottspindel", "Grottspindel", "#3a2f26", "spider"],
   ["Giftvävare", "Giftvävare", "#5a2a6a", "spider"],
   ["Skuggspindel", "Skuggspindel", "#1a1426", "spider"],
@@ -122,6 +189,11 @@ for (const [name, file, color, kind] of MONSTERS) {
   const im = img(); const c = hex(color);
   if (kind === "spider") drawSpider(im, c, false);
   else if (kind === "spiderboss") drawSpider(im, c, true);
+  else if (kind === "scorpion") drawScorpion(im, c);
+  else if (kind === "scarab") drawScarab(im, c);
+  else if (kind === "wraith") drawWraith(im, c);
+  else if (kind === "guardian") drawGuardian(im, c, false);
+  else if (kind === "guardianboss") drawGuardian(im, c, true);
   else if (kind === "rodent") drawRodent(im, c);
   else if (kind === "rabbit") drawRabbit(im, c);
   else if (kind === "bird") drawBird(im, c);

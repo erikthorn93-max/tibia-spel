@@ -493,3 +493,74 @@ func test_boar_hide_tans_to_leather():
 	var tan := bench.filter(func(r): return r["id"] == "leather_strips" \
 		and r["ingredients"].has("boar_hide"))
 	assert_gt(tan.size(), 0, "saknar garvningsrecept boar_hide → leather_strips")
+
+## ── Glödöknen: ny ökenregion bortom Ökenruinerna (monster → material → utrustning) ──
+
+func test_desert_links_to_glodoknen():
+	var z = _make_zone("desert")
+	assert_true(z.portals.values().has("glodoknen"), "öknen saknar portal till Glödöknen")
+	var pt = null
+	for t in z.portals:
+		if String(z.portals[t]) == "glodoknen":
+			pt = t
+			break
+	assert_not_null(pt)
+	assert_gt(z.find_path(z.player_start, pt).size(), 0, "Glödöknen-portalen är inte nåbar")
+
+func test_glodoknen_loads_with_content():
+	var z = _make_zone("glodoknen")
+	assert_eq(z.zone_name, "Glödöknen")
+	assert_true(z.is_walkable(z.player_start), "startrutan ska vara gångbar")
+	assert_true(z.portals.values().has("desert"), "saknar portal tillbaka till öknen")
+	assert_true(z.portals.values().has("solgraven"), "saknar portal vidare till Solgraven")
+	for name in ["Glödskorpion", "Sandskarabé", "Sandvålnad"]:
+		assert_gt(z.spawn_points.filter(func(s): return s["monster"] == name).size(), 0,
+			"glodoknen saknar " + name)
+
+func test_solgraven_loads_with_content():
+	var z = _make_zone("solgraven")
+	assert_eq(z.zone_name, "Solgraven")
+	assert_true(z.is_walkable(z.player_start), "startrutan ska vara gångbar")
+	assert_true(z.portals.values().has("glodoknen"), "saknar portal tillbaka till Glödöknen")
+	var stations = z.station_points.map(func(s): return s["station"])
+	assert_has(stations, "anvil")
+	assert_has(stations, "crafting_bench")
+	assert_eq(z.spawn_points.filter(func(s): return s["monster"] == "Solkonungen Akh-Mortis").size(), 1)
+	var bt = null
+	for s in z.spawn_points:
+		if s["monster"] == "Solkonungen Akh-Mortis":
+			bt = s["tile"]
+			break
+	assert_not_null(bt)
+	assert_gt(z.find_path_adjacent(z.player_start, bt).size(), 0, "bossen är inte nåbar")
+
+func test_glodoknen_monsters_registered_with_desc():
+	for name in ["Glödskorpion", "Sandskarabé", "Sandvålnad", "Gravväktare", "Solkonungen Akh-Mortis"]:
+		assert_true(MonsterDB.monsters.has(name), "saknar monster " + name)
+		assert_ne(String(MonsterDB.monsters[name].get("desc", "")), "", name + " saknar bestiary-text")
+	assert_true(MonsterDB.monsters["Solkonungen Akh-Mortis"].get("boss", false), "solkonungen ska vara boss")
+
+func test_glodoknen_items_registered():
+	for id in ["scarab_shell", "ember_gland", "tomb_dust", "sun_shard", "gilded_scarab",
+			"sunforged_blade", "scarab_shield", "sun_amulet", "ember_robe", "sandstrider_boots"]:
+		assert_true(ItemDB.items.has(id), "saknar item " + id)
+
+func test_glodoknen_recipes_exist_with_real_ingredients():
+	var anvil_ids: Array = ItemDB.recipes["anvil"].map(func(r): return r["id"])
+	for id in ["sunforged_blade", "scarab_shield"]:
+		assert_has(anvil_ids, id)
+	var bench_ids: Array = ItemDB.recipes["crafting_bench"].map(func(r): return r["id"])
+	for id in ["sun_amulet", "ember_robe", "sandstrider_boots"]:
+		assert_has(bench_ids, id)
+	for station in ["anvil", "crafting_bench"]:
+		for r in ItemDB.recipes[station]:
+			for ing in r["ingredients"]:
+				assert_true(ItemDB.items.has(ing), "recept %s saknar item %s" % [r["id"], ing])
+
+func test_glodoknen_crit_gear_feeds_bonus():
+	# Knyter ihop med crit-systemet: solklinga + solamulett ska ge crit-bonus.
+	var gs = load("res://autoload/game_state.gd").new()
+	gs.equipment["weapon"] = "sunforged_blade"   # +0.08
+	gs.equipment["amulet"] = "sun_amulet"        # +0.06
+	assert_almost_eq(gs.total_crit_bonus(), 0.14, 0.0001)
+	gs.free()
