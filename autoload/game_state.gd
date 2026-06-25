@@ -69,6 +69,9 @@ var player_tile := Vector2i.ZERO
 var home_zone := "town"               # hempunkt: dit man återuppstår vid död
 var home_tile := Vector2i(-1, -1)     # (-1,-1) = zonens player_start
 var blessings := 0                    # aktiva välsignelser; mildrar dödsstraff
+var grave_zone := ""                  # zon där döds-looten ligger ("" = ingen grav)
+var grave_tile := Vector2i(-1, -1)    # tile där lootpåsen ligger
+var grave_drops: Array = []           # [{item, qty}] som väntar på upphämtning
 var active_buffs: Array = []   # [{stat, amount, time_left}]
 var active_rune := ""          # DEPRECERAD: gamla run-spåret, migreras bort
 var learned_spells: Array = [] # id:n för inlärda instant-spells (SpellSystem)
@@ -227,6 +230,22 @@ func drain_mana(amount: float) -> void:
 func set_home(zone: String, tile := Vector2i(-1, -1)) -> void:
 	home_zone = zone
 	home_tile = tile
+
+## True om det finns en grav med oupphämtad loot.
+func has_grave() -> bool:
+	return grave_zone != "" and not grave_drops.is_empty()
+
+## Lägger en grav (döds-loot) som väntar på upphämtning i en viss zon.
+func set_grave(zone: String, tile: Vector2i, drops: Array) -> void:
+	grave_zone = zone
+	grave_tile = tile
+	grave_drops = drops
+
+## Rensar graven — anropas när looten plockats upp.
+func clear_grave() -> void:
+	grave_zone = ""
+	grave_tile = Vector2i(-1, -1)
+	grave_drops = []
 
 ## Köper så många välsignelser som har råd, upp till MAX_BLESSINGS.
 ## Returnerar antalet köpta välsignelser (0 om fullt välsignad eller utan råd).

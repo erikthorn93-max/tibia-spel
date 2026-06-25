@@ -15,9 +15,8 @@ var hud: CanvasLayer     # sätts av hud.gd vid _ready
 var aim: Node2D          # AimController, sätts av game_root vid _ready
 var last_surface_zone := ""
 var last_surface_tile := Vector2i(-1, -1)
-## Gravsten — sätts när spelaren dör, visas på minimap tills hen plockar upp loot
-var grave_tile  := Vector2i(-1, -1)
-var grave_zone  : Node2D = null   # vilken zon graven finns i
+# Grav-tillståndet (zon/tile/loot) bor i GameState så det persisteras och
+# överlever zon-ombyggnad. Minimap läser GameState.grave_zone/grave_tile.
 
 func _ready() -> void:
 	GameState.player_died.connect(_on_player_died)
@@ -57,6 +56,7 @@ func start_game(zone_id: String, at_tile := Vector2i(-1, -1)) -> void:
 
 	_spawn_monsters()
 	_spawn_world_objects()
+	_spawn_grave_if_here()
 
 func enter_dungeon(theme: String, dseed: int = -1) -> void:
 	last_surface_zone = GameState.current_zone
@@ -194,22 +194,36 @@ func drop_item(item_id: String, qty: int = 1) -> void:
 	GameState.remove_item(item_id, qty)
 
 ## Tappar döds-loot + placerar gravsten när spelaren dör.
-## Kastar 30 % av varje stack som ett GroundItem på spelarens tile.
+## Andelen styrs av death_drop_fraction() (ryggsäck + välsignelser minskar den).
+## Graven persisteras i GameState så looten överlever respawn/zon-ombyggnad.
 func _on_player_died() -> void:
 	if current_zone == null:
 		return
-	grave_tile = GameState.player_tile
-	grave_zone = current_zone
+	var drop_frac := GameState.death_drop_fraction()
+	if drop_frac <= 0.0:
+		GameState.clear_grave()   # full välsignelse: inget tappas
+		return
 	var drops: Array = []
-	var drop_frac := GameState.death_drop_fraction()   # ryggsäck minskar förlusten
 	for item_id in GameState.inventory.keys():
 		var qty: int = int(GameState.inventory[item_id])
 		var drop_qty: int = max(1, int(qty * drop_frac))
 		drops.append({"item": item_id, "qty": drop_qty})
 		GameState.remove_item(item_id, drop_qty)
 	if drops.is_empty():
+		GameState.clear_grave()
+		return
+	GameState.set_grave(GameState.current_zone, GameState.player_tile, drops)
+	_spawn_grave_if_here()
+
+## Återskapar gravens lootpåse om spelaren är i grav-zonen. Persistent påse:
+## försvinner inte med tiden och rensar graven när den plockas upp.
+func _spawn_grave_if_here() -> void:
+	if current_zone == null or not GameState.has_grave():
+		return
+	if GameState.grave_zone != current_zone.zone_id:
 		return
 	var gi = preload("res://entities/ground_item.gd").new()
 	current_zone.add_child(gi)
-	gi.setup(drops, grave_tile)
-	gi.lifetime_override = 300.0   # 5 minuter för gravsten-loot
+	gi.setup(GameState.grave_drops, GameState.grave_tile)
+	gi.persistent = true
+	gi.is_grave = true

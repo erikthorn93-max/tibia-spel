@@ -147,6 +147,23 @@ func test_delvis_valsignelse_minskar_drop() -> void:
 	# base 0.30 * (1 - 0.18*2) = 0.30 * 0.64 = 0.192
 	assert_almost_eq(gs.death_drop_fraction(), 0.192, 0.001)
 
+# --- grav (oupphämtad döds-loot) ---
+
+func test_grave_helpers_set_and_clear() -> void:
+	assert_false(gs.has_grave(), "ingen grav från start")
+	gs.set_grave("forest", Vector2i(5, 9), [{"item": "bear_pelt", "qty": 2}])
+	assert_true(gs.has_grave())
+	assert_eq(gs.grave_zone, "forest")
+	assert_eq(gs.grave_tile, Vector2i(5, 9))
+	gs.clear_grave()
+	assert_false(gs.has_grave())
+	assert_eq(gs.grave_zone, "")
+	assert_eq(gs.grave_tile, Vector2i(-1, -1))
+
+func test_grave_med_tom_loot_raknas_inte() -> void:
+	gs.set_grave("forest", Vector2i(5, 9), [])
+	assert_false(gs.has_grave(), "tom loot-lista = ingen grav")
+
 # --- items.json — runfält ---
 
 func test_attack_rune_har_rune_power() -> void:

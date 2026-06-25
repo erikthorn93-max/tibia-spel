@@ -165,8 +165,8 @@ func _draw_mini() -> void:
 		_mini_dot(gi.tile, pt, ox, oy, COL_LOOT, 2)
 
 	# Gravsten (vit prick) om spelaren dog i denna zon
-	if World.grave_zone == zone and World.grave_tile.x >= 0:
-		_mini_dot(World.grave_tile, pt, ox, oy, COL_GRAVE, 3)
+	if GameState.grave_zone == zone.zone_id and GameState.grave_tile.x >= 0:
+		_mini_dot(GameState.grave_tile, pt, ox, oy, COL_GRAVE, 3)
 
 	# Quest-markörer (gul/grå prickar)
 	for q in _quest_givers(zone):
@@ -316,8 +316,8 @@ func _draw_full_overlay() -> void:
 		_full_dot_clipped(gi.tile, clip, COL_LOOT, ft)
 
 	# Gravsten
-	if World.grave_zone == zone and World.grave_tile.x >= 0:
-		_full_dot_clipped(World.grave_tile, clip, COL_GRAVE, ft)
+	if GameState.grave_zone == zone.zone_id and GameState.grave_tile.x >= 0:
+		_full_dot_clipped(GameState.grave_tile, clip, COL_GRAVE, ft)
 
 	# Quest-markörer (gul ! = startbar, grå ? = pågående) — ovanpå allt annat
 	for q in _quest_givers(zone):

@@ -33,10 +33,32 @@ func test_v1_snapshot_migrates_to_all_skills():
 	assert_eq(gs.skills["mining"]["level"], 1)
 	gs.free()
 
-func test_save_version_is_12():
+func test_save_version_is_13():
 	var sm2 = load("res://autoload/save_manager.gd").new()
-	assert_eq(sm2.SAVE_VERSION, 12)
+	assert_eq(sm2.SAVE_VERSION, 13)
 	sm2.free()
+
+func test_grave_survives_roundtrip():
+	GameState.set_grave("cave", Vector2i(7, 3), [{"item": "bone_chips", "qty": 5}])
+	sm.save_game()
+	GameState.clear_grave()
+	assert_true(sm.load_game())
+	assert_eq(GameState.grave_zone, "cave")
+	assert_eq(GameState.grave_tile, Vector2i(7, 3))
+	assert_eq(int(GameState.grave_drops[0]["qty"]), 5)
+	assert_true(GameState.has_grave())
+
+func test_old_save_without_grave_has_none():
+	GameState.set_grave("cave", Vector2i(1, 1), [{"item": "gold_coin", "qty": 1}])
+	sm.save_game()
+	var s: Dictionary = sm.read_snapshot()
+	s.erase("grave_zone")
+	s.erase("grave_tile")
+	s.erase("grave_drops")
+	sm.write_snapshot(s)
+	assert_true(sm.load_game())
+	assert_false(GameState.has_grave())
+	assert_eq(GameState.grave_zone, "")
 
 func test_blessings_survive_roundtrip():
 	GameState.blessings = 3

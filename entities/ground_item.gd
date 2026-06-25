@@ -9,6 +9,8 @@ const BLINK_START := 10.0   # sekunder kvar när blinkandet börjar
 var contents         : Array = []   # [{item: String, qty: int}]
 var tile             : Vector2i = Vector2i.ZERO
 var lifetime_override := -1.0       # om > 0 ersätter LIFETIME
+var persistent       := false       # true = försvinner aldrig (grav-loot)
+var is_grave         := false       # true = rensar GameState-graven vid pickup
 
 var _elapsed  := 0.0
 var _icon     : Polygon2D = null
@@ -39,6 +41,8 @@ func setup(drops: Array, t: Vector2i) -> void:
 	area.input_event.connect(_on_click)
 
 func _process(delta: float) -> void:
+	if persistent:
+		return   # grav-loot tickar inte ned och blinkar inte
 	_elapsed += delta
 	var lifetime := lifetime_override if lifetime_override > 0.0 else LIFETIME
 	var time_left := lifetime - _elapsed
@@ -78,5 +82,7 @@ func _collect() -> void:
 			oy -= 13.0   # stapla flera föremål uppåt
 	if parent != null:
 		SpellFx.burst(parent, global_position, Color(0.96, 0.86, 0.42), 8, 60.0)
+	if is_grave:
+		GameState.clear_grave()   # graven är tömd
 	Sfx.pickup()
 	queue_free()
