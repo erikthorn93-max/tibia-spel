@@ -41,6 +41,7 @@ var _glow_t := 0.0             # tidsackumulator för fackelskenets flimmer
 var _clock_lbl: Label          # spelklocka HH:MM
 var _poison_lbl: Label    # "Giftig!"-chip
 var _fed_lbl: Label       # "Mätt"-chip (passiv regen aktiv)
+var _bless_lbl: Label     # "Välsignad"-chip (antal aktiva välsignelser)
 var _boss_panel: PanelContainer  # boss HP-bar, synlig under bossfight
 var _boss_name_lbl: Label
 var _boss_hp_bar: ColorRect
@@ -348,9 +349,25 @@ func _build_status_chips() -> void:
 	add_child(_fed_lbl)
 	GameState.satiation_changed.connect(_on_satiation_changed)
 
+	_bless_lbl = Label.new()
+	_bless_lbl.add_theme_color_override("font_color", Color(0.95, 0.9, 0.55))
+	_bless_lbl.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	_bless_lbl.offset_left   = -160.0
+	_bless_lbl.offset_top    =  120.0
+	_bless_lbl.offset_right  =   -8.0
+	_bless_lbl.offset_bottom =  140.0
+	add_child(_bless_lbl)
+	_on_blessings_changed(GameState.blessings)
+	GameState.blessings_changed.connect(_on_blessings_changed)
+
 func _on_satiation_changed(seconds: float, _max_seconds: float) -> void:
 	if _fed_lbl:
 		_fed_lbl.visible = seconds > 0.0
+
+func _on_blessings_changed(count: int) -> void:
+	if _bless_lbl:
+		_bless_lbl.text = "✦ Välsignad %d/%d" % [count, GameState.MAX_BLESSINGS]
+		_bless_lbl.visible = count > 0
 
 func _refresh_status() -> void:
 	if _poison_lbl:
