@@ -8,6 +8,8 @@ signal task_completed(id: String)
 signal bestiary_changed
 
 const TIER_THRESHOLDS := [100, 400, 1000]
+## Charm-poäng som delas ut när ett monster når motsvarande tier-tröskel.
+const CHARM_POINTS_PER_TIER := [5, 10, 15]
 const TIER_DAMAGE_BONUS := 0.02
 const BOSS_COOLDOWN := 3600.0
 const BOSS_SLAYER_XP := 2000
@@ -51,7 +53,12 @@ func abandon_task(id: String) -> void:
 		task_progress.emit(id)
 
 func record_kill(monster_name: String) -> void:
-	bestiary[monster_name] = int(bestiary.get(monster_name, 0)) + 1
+	var new_kills := int(bestiary.get(monster_name, 0)) + 1
+	bestiary[monster_name] = new_kills
+	# Charm-poäng delas ut exakt när en tier-tröskel passeras.
+	var ti := TIER_THRESHOLDS.find(new_kills)
+	if ti != -1:
+		CharmSystem.award_points(CHARM_POINTS_PER_TIER[ti])
 	bestiary_changed.emit()
 	if bool(MonsterDB.monsters.get(monster_name, {}).get("boss", false)):
 		boss_kill_times[monster_name] = Time.get_unix_time_from_system()

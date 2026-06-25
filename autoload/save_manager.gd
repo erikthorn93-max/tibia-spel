@@ -1,7 +1,7 @@
 extends Node
 ## Autoload: SaveManager. JSON-sparfil + autosave var 60 s.
 
-const SAVE_VERSION := 13
+const SAVE_VERSION := 14
 var save_path := "user://save.json"
 var _timer := 0.0
 
@@ -63,6 +63,10 @@ func save_game() -> void:
 		"grave_zone": GameState.grave_zone,
 		"grave_tile": [GameState.grave_tile.x, GameState.grave_tile.y],
 		"grave_drops": GameState.grave_drops,
+		"charm_points": CharmSystem.points,
+		"charms_unlocked": CharmSystem.unlocked,
+		"charm_offense": CharmSystem.equipped_offense,
+		"charm_defense": CharmSystem.equipped_defense,
 	})
 
 func load_game() -> bool:
@@ -145,4 +149,10 @@ func load_game() -> bool:
 	GameState.grave_tile = Vector2i(int(gt[0]), int(gt[1]))
 	var gd_raw = s.get("grave_drops", [])
 	GameState.grave_drops = gd_raw if gd_raw is Array else []
+	# v14: charm-poäng och köpta/bärna charms — gamla saves börjar utan charms
+	CharmSystem.points = int(s.get("charm_points", 0))
+	var cu_raw = s.get("charms_unlocked", {})
+	CharmSystem.unlocked = cu_raw if cu_raw is Dictionary else {}
+	CharmSystem.equipped_offense = String(s.get("charm_offense", ""))
+	CharmSystem.equipped_defense = String(s.get("charm_defense", ""))
 	return true

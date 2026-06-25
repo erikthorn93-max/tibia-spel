@@ -1,0 +1,65 @@
+{
+	"wound": {
+		"name": "Sår",
+		"type": "offense",
+		"element": "physical",
+		"cost": 60,
+		"chance": 0.10,
+		"value": 0.05,
+		"desc": "10 % chans att riva upp ett sår för 5 % av målets max-HP (fysisk)."
+	},
+	"enflame": {
+		"name": "Brand",
+		"type": "offense",
+		"element": "fire",
+		"cost": 100,
+		"chance": 0.10,
+		"value": 0.06,
+		"desc": "10 % chans att antända målet för 6 % av dess max-HP (eld)."
+	},
+	"zap": {
+		"name": "Urladdning",
+		"type": "offense",
+		"element": "energy",
+		"cost": 80,
+		"chance": 0.12,
+		"value": 0.04,
+		"desc": "12 % chans att urladda för 4 % av målets max-HP (energi)."
+	},
+	"curse": {
+		"name": "Förbannelse",
+		"type": "offense",
+		"element": "death",
+		"cost": 150,
+		"chance": 0.08,
+		"value": 0.08,
+		"desc": "8 % chans att förbanna målet för 8 % av dess max-HP (död)."
+	},
+	"dodge": {
+		"name": "Undanglid",
+		"type": "defense",
+		"element": "physical",
+		"cost": 150,
+		"chance": 0.05,
+		"value": 1.0,
+		"desc": "5 % chans att helt undvika ett inkommande slag."
+	},
+	"parry": {
+		"name": "Parad",
+		"type": "defense",
+		"element": "physical",
+		"cost": 80,
+		"chance": 0.12,
+		"value": 0.35,
+		"desc": "12 % chans att parera och mildra 35 % av inkommande skada."
+	},
+	"numb": {
+		"name": "Domning",
+		"type": "defense",
+		"element": "physical",
+		"cost": 60,
+		"chance": 0.12,
+		"value": 0.20,
+		"desc": "12 % chans att domna av slaget och mildra 20 % av skadan."
+	}
+}

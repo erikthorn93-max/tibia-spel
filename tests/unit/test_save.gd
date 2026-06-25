@@ -33,10 +33,42 @@ func test_v1_snapshot_migrates_to_all_skills():
 	assert_eq(gs.skills["mining"]["level"], 1)
 	gs.free()
 
-func test_save_version_is_13():
+func test_save_version_is_14():
 	var sm2 = load("res://autoload/save_manager.gd").new()
-	assert_eq(sm2.SAVE_VERSION, 13)
+	assert_eq(sm2.SAVE_VERSION, 14)
 	sm2.free()
+
+func test_charms_survive_roundtrip():
+	CharmSystem.reset()
+	CharmSystem.award_points(200)
+	CharmSystem.unlock("wound")
+	CharmSystem.equip("wound")
+	CharmSystem.unlock("parry")
+	CharmSystem.equip("parry")
+	var pts := CharmSystem.points
+	sm.save_game()
+	CharmSystem.reset()
+	assert_true(sm.load_game())
+	assert_eq(CharmSystem.points, pts)
+	assert_true(CharmSystem.is_unlocked("wound"))
+	assert_eq(CharmSystem.equipped_offense, "wound")
+	assert_eq(CharmSystem.equipped_defense, "parry")
+	CharmSystem.reset()
+
+func test_old_save_without_charms_defaults_empty():
+	CharmSystem.reset()
+	CharmSystem.award_points(50)
+	sm.save_game()
+	var s: Dictionary = sm.read_snapshot()
+	s.erase("charm_points")
+	s.erase("charms_unlocked")
+	s.erase("charm_offense")
+	s.erase("charm_defense")
+	sm.write_snapshot(s)
+	assert_true(sm.load_game())
+	assert_eq(CharmSystem.points, 0)
+	assert_eq(CharmSystem.unlocked.size(), 0)
+	assert_eq(CharmSystem.equipped_offense, "")
 
 func test_grave_survives_roundtrip():
 	GameState.set_grave("cave", Vector2i(7, 3), [{"item": "bone_chips", "qty": 5}])

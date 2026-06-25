@@ -243,6 +243,7 @@ func _update_attack(delta: float) -> void:
 			if crit:
 				dmg *= CombatFormulas.CRIT_MULTIPLIER
 			target.take_damage(dmg, crit)
+			_apply_offense_charm(target)
 			GameState.gain_skill_xp(wskill, 1)
 			visual.play_attack(facing)
 		else:
@@ -258,8 +259,17 @@ func _update_attack(delta: float) -> void:
 			if crit:
 				dmg *= CombatFormulas.CRIT_MULTIPLIER
 			target.take_damage(dmg, crit)
+			_apply_offense_charm(target)
 			GameState.gain_skill_xp(wskill, 1)
 			visual.play_attack(facing)   # närstrids-stöt mot målet
+
+## Slår den bärna offensiva charmen mot målet och lägger på elementär bonusskada.
+func _apply_offense_charm(target) -> void:
+	if not is_instance_valid(target) or target.dead:
+		return
+	var r := CharmSystem.roll_offense(float(target.max_hp))
+	if r.get("triggered", false):
+		target.take_damage(float(r["amount"]), false)
 
 func _update_gather(delta: float) -> void:
 	if gather_target == null or not is_instance_valid(gather_target):

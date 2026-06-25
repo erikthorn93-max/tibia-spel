@@ -188,6 +188,10 @@ func gain_skill_xp(skill: String, amount: int) -> void:
 	skill_changed.emit(skill)
 
 func take_damage(dmg: float, dmg_type: String = "physical") -> void:
+	# Defensiv charm kan mildra eller helt undvika slaget innan det landar.
+	var d := CharmSystem.roll_defense(dmg)
+	if d.get("triggered", false):
+		dmg = maxf(dmg - float(d["prevented"]), 0.0)
 	health = maxf(health - dmg, 0.0)
 	hp_changed.emit(health, max_health)
 	player_hit.emit(dmg, dmg_type)
