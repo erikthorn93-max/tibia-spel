@@ -1221,5 +1221,33 @@
 		"respawn": 32,
 		"color": "#5fe0c0",
 		"label": "Lystångsbädd"
+	},
+	"void_geode": {
+		"skill": "mining",
+		"level": 36,
+		"tool": "pickaxe",
+		"yields": "void_shard",
+		"xp": 48,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 42,
+		"color": "#6a2a5a",
+		"label": "Tomgeod"
+	},
+	"nightbloom_cluster": {
+		"skill": "herbalism",
+		"level": 32,
+		"tool": "sickle",
+		"yields": "nightbloom",
+		"xp": 36,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 36,
+		"color": "#7a4a9a",
+		"label": "Nattblomssnår"
 	}
 }

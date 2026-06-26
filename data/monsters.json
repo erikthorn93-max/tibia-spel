@@ -4750,5 +4750,278 @@
 			"energy": 1.4,
 			"fire": 0.4
 		}
+	},
+	"Tomkrälare": {
+		"hp": 150,
+		"atk": 38,
+		"exp": 130,
+		"speed": 3.4,
+		"cooldown": 1,
+		"aggro_range": 9,
+		"color": "#3a2f4a",
+		"desc": "En krälande tomhetens yngel, vävd av mörker som aldrig sett ljus. Den svärmar fram ur sprickorna i världens botten.",
+		"ability": {
+			"type": "poison",
+			"chance": 0.22,
+			"duration": 8,
+			"tick_dmg": 5
+		},
+		"loot": [
+			{
+				"item": "void_residue",
+				"min": 1,
+				"max": 1,
+				"chance": 0.45
+			},
+			{
+				"item": "nightbloom",
+				"min": 1,
+				"max": 2,
+				"chance": 0.3
+			},
+			{
+				"item": "iron_coin",
+				"min": 14,
+				"max": 36,
+				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 2,
+				"max": 5,
+				"chance": 0.12
+			}
+		],
+		"element_mod": {
+			"fire": 1.6,
+			"death": 0.6
+		}
+	},
+	"Mörkersimmare": {
+		"hp": 260,
+		"atk": 50,
+		"exp": 250,
+		"speed": 3.1,
+		"cooldown": 1.1,
+		"aggro_range": 10,
+		"color": "#2a2440",
+		"desc": "En skugga som simmar genom det tjocka mörkret, snabb som en tanke och kall som glömskan. Du ser den först när den redan är över dig.",
+		"ability": {
+			"type": "drain",
+			"chance": 0.35,
+			"duration": 0,
+			"tick_dmg": 20
+		},
+		"loot": [
+			{
+				"item": "shadow_essence",
+				"min": 1,
+				"max": 2,
+				"chance": 0.5
+			},
+			{
+				"item": "void_residue",
+				"min": 1,
+				"max": 1,
+				"chance": 0.25
+			},
+			{
+				"item": "iron_coin",
+				"min": 22,
+				"max": 56,
+				"chance": 1
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 1,
+				"chance": 0.05
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 7,
+				"chance": 0.14
+			}
+		],
+		"element_mod": {
+			"fire": 1.6,
+			"death": 0.6
+		}
+	},
+	"Avgrundsöga": {
+		"hp": 460,
+		"atk": 60,
+		"exp": 430,
+		"speed": 1.5,
+		"cooldown": 1.6,
+		"aggro_range": 8,
+		"color": "#6a2a5a",
+		"desc": "Ett gigantiskt öga som svävar i mörkret, en vaktande blick som aldrig blinkar. Dess stirrande tar viljan ur den som möter det.",
+		"ability": {
+			"type": "stun",
+			"chance": 0.34,
+			"duration": 2,
+			"tick_dmg": 0
+		},
+		"loot": [
+			{
+				"item": "void_shard",
+				"min": 1,
+				"max": 2,
+				"chance": 0.45
+			},
+			{
+				"item": "shadow_essence",
+				"min": 1,
+				"max": 1,
+				"chance": 0.3
+			},
+			{
+				"item": "iron_coin",
+				"min": 30,
+				"max": 72,
+				"chance": 1
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 1,
+				"chance": 0.1
+			},
+			{
+				"item": "gold_coin",
+				"min": 5,
+				"max": 11,
+				"chance": 0.18
+			}
+		],
+		"element_mod": {
+			"fire": 1.5,
+			"death": 0.5
+		}
+	},
+	"Urtidskväljaren": {
+		"hp": 850,
+		"atk": 74,
+		"exp": 820,
+		"speed": 1.8,
+		"cooldown": 1.4,
+		"aggro_range": 10,
+		"color": "#4a1a3a",
+		"desc": "En urtidens käftgap stort som en grotta, kantat av tänder ur en svunnen värld. Det slukar ljus, ljud och liv i ett enda andetag.",
+		"ability": {
+			"type": "drain",
+			"chance": 0.42,
+			"duration": 0,
+			"tick_dmg": 26
+		},
+		"loot": [
+			{
+				"item": "god_relic",
+				"min": 1,
+				"max": 1,
+				"chance": 0.3
+			},
+			{
+				"item": "void_shard",
+				"min": 1,
+				"max": 2,
+				"chance": 0.4
+			},
+			{
+				"item": "shadow_essence",
+				"min": 1,
+				"max": 2,
+				"chance": 0.35
+			},
+			{
+				"item": "gold_coin",
+				"min": 12,
+				"max": 32,
+				"chance": 1
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.05
+			}
+		],
+		"element_mod": {
+			"fire": 1.5,
+			"death": 0.5
+		}
+	},
+	"Urguden Nyxoth": {
+		"hp": 4500,
+		"atk": 110,
+		"exp": 5200,
+		"speed": 2,
+		"cooldown": 1.2,
+		"aggro_range": 12,
+		"color": "#5a1a6a",
+		"boss": true,
+		"desc": "Den första havsguden, äldre än ljuset självt, hopringlad på världens botten sedan tidens början. Att väcka Nyxoth är att be om världens slut — eller en gudasköld.",
+		"ability": {
+			"type": "stun",
+			"chance": 0.46,
+			"duration": 2.8,
+			"tick_dmg": 0
+		},
+		"loot": [
+			{
+				"item": "void_reaver",
+				"min": 1,
+				"max": 1,
+				"chance": 0.12
+			},
+			{
+				"item": "nyx_amulet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.15
+			},
+			{
+				"item": "god_relic",
+				"min": 3,
+				"max": 6,
+				"chance": 1
+			},
+			{
+				"item": "void_shard",
+				"min": 4,
+				"max": 8,
+				"chance": 1
+			},
+			{
+				"item": "shadow_essence",
+				"min": 3,
+				"max": 6,
+				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 70,
+				"max": 150,
+				"chance": 1
+			},
+			{
+				"item": "ancient_coin",
+				"min": 4,
+				"max": 9,
+				"chance": 0.6
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 2,
+				"chance": 0.3
+			}
+		],
+		"element_mod": {
+			"fire": 1.4,
+			"death": 0.4
+		}
 	}
 }

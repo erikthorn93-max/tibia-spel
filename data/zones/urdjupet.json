@@ -1,0 +1,103 @@
+{
+	"name": "Urdjupet",
+	"weather": "fog",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"Wssssssssss~~ssssssssssssssssW",
+		"WsosssVssssssssssssssyssBssssW",
+		"Wsssssssssssssss~ssWWssssssssW",
+		"WssosssssssssysssssssssssslssW",
+		"Wssssssss~~ssssssssssssssmsssW",
+		"WssGssssssssssssss~~sssssssssW",
+		"WsssssssssWWssssss~sssssssslsW",
+		"WsssssssssssssssysssssssVssssW",
+		"WssssssssssssssossssssssssGssW",
+		"Wsssss~~ssssssossssssssssssssW",
+		"Wsssssssssssss~~ssssssWWsssssW",
+		"WsssssssssslsssssssssssssssmsW",
+		"WsAsTsCssssssssssssssssssssssW",
+		"WssssssssssssssssssssssssssssW",
+		"WsPs0ssssssssssssssssssssssssW",
+		"WssssssssssssssssssssssssssssW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"0": {
+			"type": "portal",
+			"to": "lysdjupet",
+			"terrain": "s"
+		},
+		"A": {
+			"type": "station",
+			"station": "anvil",
+			"terrain": "s"
+		},
+		"T": {
+			"type": "station",
+			"station": "stove",
+			"terrain": "s"
+		},
+		"C": {
+			"type": "station",
+			"station": "crafting_bench",
+			"terrain": "s"
+		},
+		"V": {
+			"type": "node",
+			"node": "void_geode",
+			"terrain": "s"
+		},
+		"G": {
+			"type": "node",
+			"node": "nightbloom_cluster",
+			"terrain": "s"
+		},
+		"o": {
+			"type": "spawn",
+			"monster": "Tomkrälare",
+			"respawn": 18,
+			"terrain": "s"
+		},
+		"l": {
+			"type": "spawn",
+			"monster": "Mörkersimmare",
+			"respawn": 24,
+			"terrain": "s"
+		},
+		"y": {
+			"type": "spawn",
+			"monster": "Avgrundsöga",
+			"respawn": 40,
+			"terrain": "s"
+		},
+		"m": {
+			"type": "spawn",
+			"monster": "Urtidskväljaren",
+			"respawn": 60,
+			"terrain": "s"
+		},
+		"B": {
+			"type": "spawn",
+			"monster": "Urguden Nyxoth",
+			"respawn": 3600,
+			"terrain": "s"
+		}
+	},
+	"spawn_table": [
+		{
+			"monster": "Tomkrälare",
+			"count": 4,
+			"respawn": 22
+		},
+		{
+			"monster": "Mörkersimmare",
+			"count": 3,
+			"respawn": 28
+		},
+		{
+			"monster": "Avgrundsöga",
+			"count": 1,
+			"respawn": 45
+		}
+	]
+}

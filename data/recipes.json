@@ -529,6 +529,27 @@
 				"abyssal_crystal": 4,
 				"eel_hide": 2
 			}
+		},
+		{
+			"id": "void_reaver",
+			"skill": "smithing",
+			"level": 52,
+			"xp": 120,
+			"ingredients": {
+				"god_relic": 2,
+				"shadow_essence": 3,
+				"void_shard": 5
+			}
+		},
+		{
+			"id": "abyssal_aegis",
+			"skill": "smithing",
+			"level": 42,
+			"xp": 68,
+			"ingredients": {
+				"void_shard": 4,
+				"shadow_essence": 2
+			}
 		}
 	],
 	"stove": [
@@ -753,6 +774,16 @@
 			"ingredients": {
 				"lumen_kelp": 2,
 				"lantern_organ": 1
+			}
+		},
+		{
+			"id": "void_broth",
+			"skill": "cooking",
+			"level": 34,
+			"xp": 92,
+			"ingredients": {
+				"nightbloom": 2,
+				"void_residue": 1
 			}
 		}
 	],
@@ -1849,6 +1880,26 @@
 			"ingredients": {
 				"leviathan_scale": 1,
 				"lantern_organ": 3
+			}
+		},
+		{
+			"id": "void_plate",
+			"skill": "crafting",
+			"level": 44,
+			"xp": 185,
+			"ingredients": {
+				"shadow_essence": 6,
+				"void_shard": 4
+			}
+		},
+		{
+			"id": "nyx_amulet",
+			"skill": "crafting",
+			"level": 40,
+			"xp": 160,
+			"ingredients": {
+				"god_relic": 1,
+				"void_residue": 4
 			}
 		}
 	],

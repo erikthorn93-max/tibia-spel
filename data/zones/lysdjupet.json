@@ -16,13 +16,18 @@
 		"W,,,,,,,,,,,,,,,,,,WW,,,,,,,,W",
 		"W,A,T,C,,,,,,,,~~,,,,,,,,m,,,W",
 		"W,,,,,,,,,,,,,,,,,,,,,,,B,,,,W",
-		"W,P,0,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,P,0,9,,,,,,,,,,,,,,,,,,,,,,W",
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
 	],
 	"legend": {
 		"0": {
 			"type": "portal",
 			"to": "korallavgrunden",
+			"terrain": ","
+		},
+		"9": {
+			"type": "portal",
+			"to": "urdjupet",
 			"terrain": ","
 		},
 		"A": {

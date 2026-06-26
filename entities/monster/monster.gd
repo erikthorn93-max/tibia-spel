@@ -133,6 +133,12 @@ const SPRITE_MAP: Dictionary = {
 	"Pansarkrabba":               "Pansarkrabba",
 	"Avgrundsorm":                "Avgrundsorm",
 	"Leviatanen Abyssos":         "Leviatanen_Abyssos",
+	# Urdjupet — eldritch void-avgrund på världens botten
+	"Tomkrälare":                 "Tomkrälare",
+	"Mörkersimmare":              "Mörkersimmare",
+	"Avgrundsöga":                "Avgrundsöga",
+	"Urtidskväljaren":            "Urtidskväljaren",
+	"Urguden Nyxoth":             "Urguden_Nyxoth",
 }
 
 func _ready() -> void:

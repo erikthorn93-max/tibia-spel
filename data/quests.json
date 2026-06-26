@@ -1456,5 +1456,120 @@
 				"outfit_leviathan"
 			]
 		}
+	},
+	"quest_void_1": {
+		"name": "Tomrummets yngel",
+		"giver": "npc_voidseer",
+		"requires": [],
+		"steps": [
+			{
+				"type": "explore",
+				"zone": "urdjupet",
+				"hint": "Stig ner i Urdjupet via sprickan i Lysdjupets botten."
+			},
+			{
+				"type": "kill",
+				"monster": "Tomkrälare",
+				"count": 14,
+				"hint": "Utplåna 14 Tomkrälare ur tomrummets sprickor."
+			},
+			{
+				"type": "kill",
+				"monster": "Mörkersimmare",
+				"count": 10,
+				"hint": "Jaga 10 Mörkersimmare innan de når dig i mörkret."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_voidseer",
+				"hint": "Rapportera till Drunknade Siaren Vael."
+			}
+		],
+		"rewards": {
+			"xp": 5000,
+			"gold": 2400,
+			"items": {
+				"great_health_potion": 5
+			},
+			"skill_xp": {
+				"slayer": 900
+			}
+		}
+	},
+	"quest_void_2": {
+		"name": "Den vakande blicken",
+		"giver": "npc_voidseer",
+		"requires": [
+			"quest_void_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Avgrundsöga",
+				"count": 8,
+				"hint": "Släck 8 Avgrundsögon som vakar kring gudens läger."
+			},
+			{
+				"type": "collect",
+				"item": "void_shard",
+				"count": 8,
+				"hint": "Bryt loss 8 Tomskärvor ur ögonens kärna."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_voidseer",
+				"hint": "Lämna tomskärvorna till Vael."
+			}
+		],
+		"rewards": {
+			"xp": 7500,
+			"gold": 3600,
+			"items": {
+				"great_health_potion": 7
+			},
+			"skill_xp": {
+				"slayer": 1400
+			}
+		}
+	},
+	"quest_void_3": {
+		"name": "Urgudens sömn",
+		"giver": "npc_voidseer",
+		"requires": [
+			"quest_void_2"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Urtidskväljaren",
+				"count": 3,
+				"hint": "Bana väg till guden — fäll 3 Urtidskväljare."
+			},
+			{
+				"type": "kill",
+				"monster": "Urguden Nyxoth",
+				"count": 1,
+				"hint": "Besegra Urguden Nyxoth på världens botten."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_voidseer",
+				"hint": "Återvänd till Vael med beskedet att guden sover för evigt."
+			}
+		],
+		"rewards": {
+			"xp": 16000,
+			"gold": 8000,
+			"items": {
+				"great_health_potion": 8,
+				"diamond": 3
+			},
+			"skill_xp": {
+				"constitution": 4500
+			},
+			"unlocks": [
+				"outfit_voidgod"
+			]
+		}
 	}
 }

@@ -190,5 +190,11 @@
 		"category": "outfit",
 		"requires": {},
 		"desc": "Belönas för att ha besegrat Leviatanen Abyssos i Lysdjupet."
+	},
+	"outfit_voidgod": {
+		"name": "Urgudens regalier",
+		"category": "outfit",
+		"requires": {},
+		"desc": "Belönas för att ha besegrat Urguden Nyxoth på världens botten i Urdjupet."
 	}
 }

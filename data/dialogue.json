@@ -4046,5 +4046,194 @@
 				"next": "deepkeeper_root"
 			}
 		]
+	},
+	"voidseer_root": {
+		"speaker": "npc_voidseer",
+		"emotion": "neutral",
+		"text": "Du andas ännu. Märkligt. Jag är Vael — eller var. Jag följde leviatanens spår ända hit, till världens botten, och fann den som drömde fram havet. Nu vaknar Nyxoth, och mörkret med honom.",
+		"choices": [
+			{
+				"text": "Vem är du?",
+				"next": "voidseer_who"
+			},
+			{
+				"text": "Vad rör sig i tomrummet?",
+				"next": "voidseer_s1",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_void_1"
+					}
+				]
+			},
+			{
+				"text": "Ynglen är utplånade.",
+				"next": "voidseer_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_void_1",
+						"step": 3
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_void_1"
+					}
+				]
+			},
+			{
+				"text": "Vad vaktar guden?",
+				"next": "voidseer_s2",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_void_2"
+					}
+				]
+			},
+			{
+				"text": "Här är tomskärvorna du bad om.",
+				"next": "voidseer_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_void_2",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_void_2"
+					}
+				]
+			},
+			{
+				"text": "Vem sover på världens botten?",
+				"next": "voidseer_s3",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_void_3"
+					}
+				]
+			},
+			{
+				"text": "Urguden är besegrad.",
+				"next": "voidseer_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_void_3",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_void_3"
+					}
+				]
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"voidseer_who": {
+		"speaker": "npc_voidseer",
+		"emotion": "neutral",
+		"text": "En siare som sökte sanningen för djupt. Havet tog min kropp men lät mig leva för att bevittna slutet. Jag läser gudens drömmar i mörkret — och de blir allt vaknare för var dag du dröjer.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "voidseer_root"
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"voidseer_s1": {
+		"speaker": "npc_voidseer",
+		"emotion": "worried",
+		"text": "Tomkrälare väller upp ur sprickorna och Mörkersimmare följer i deras spår. De är gudens drömmar som tagit kött. Utplåna fjorton krälare och tio simmare, så öppnar sig vägen mot djupet.",
+		"choices": [
+			{
+				"text": "Det ska bli gjort.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_void_1"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "voidseer_root"
+			}
+		]
+	},
+	"voidseer_s2": {
+		"speaker": "npc_voidseer",
+		"emotion": "worried",
+		"text": "Avgrundsögon vakar kring gudens läger — blickar som aldrig blinkar. Släck åtta av dem och bryt loss tomskärvorna ur deras kärna; de bär en bråkdel av Nyxoths kraft, och jag måste tyda dem.",
+		"choices": [
+			{
+				"text": "Jag släcker blickarna.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_void_2"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "voidseer_root"
+			}
+		]
+	},
+	"voidseer_s3": {
+		"speaker": "npc_voidseer",
+		"emotion": "worried",
+		"text": "Skärvorna bekräftar det oundvikliga: Urguden Nyxoth rör sig i sömnen, vaktad av Urtidskväljare. Vaknar han helt slukar mörkret all skapelse. Bana väg och söv guden för evigt — om en dödlig nu kan.",
+		"choices": [
+			{
+				"text": "Jag avslutar det här.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_void_3"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "voidseer_root"
+			}
+		]
+	},
+	"voidseer_reward": {
+		"speaker": "npc_voidseer",
+		"emotion": "happy",
+		"text": "Mörkret drar sig tillbaka — för första gången på en evighet känner jag stillhet. Du har gjort det ingen gud trodde möjligt. Ta det här; det är smitt av gudens egen relik. Du har förtjänat det.",
+		"choices": [
+			{
+				"text": "Tack, Vael.",
+				"next": null
+			},
+			{
+				"text": "Något mer?",
+				"next": "voidseer_root"
+			}
+		]
 	}
 }

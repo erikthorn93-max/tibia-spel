@@ -124,5 +124,14 @@
 			"pants": "#3a2a5a",
 			"hair": "#7fe8d8"
 		}
+	},
+	"outfit_voidgod": {
+		"name": "Urgudens regalier",
+		"unlock": "outfit_voidgod",
+		"colors": {
+			"shirt": "#5a1a6a",
+			"pants": "#2a1040",
+			"hair": "#9a4ab0"
+		}
 	}
 }

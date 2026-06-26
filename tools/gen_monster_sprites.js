@@ -441,6 +441,74 @@ function drawLeviathan(im, c) {  // leviatanen abyssos — boss
   for (const s of [-1, 1]) { line(im, cx + s * 5, cy - 14, cx + s * 7, cy - 18, deepglow, 1); disc(im, cx + s * 7, cy - 18, 1, deepglow); } // antenn-lyktor
   for (const [dx, dy] of [[-12, -2], [12, -3], [11, 7], [-11, 8], [0, 12]]) px(im, cx + dx, cy + dy, [160, 140, 230, 200]); // sporljus
 }
+const VOIDEYE = [200, 90, 230, 255], VOIDGLOW = [150, 70, 200, 200];
+function drawVoidCrawler(im, c) {  // tomkrälare — krälande tomhetens yngel
+  const cx = 16, cy = 17;
+  for (const s of [-1, 1]) for (const o of [0, 4, 8]) line(im, cx + s * 3, cy + 1, cx + s * (7 + o % 5), cy + 4 + (o >> 2) * 3, DARK(c), 1); // krälande lemmar
+  oval(im, cx, cy, 7, 5, c);                                        // kropp
+  oval(im, cx - 2, cy - 2, 4, 2, scale(c, 1.3));                    // ryggskimmer
+  disc(im, cx - 6, cy - 1, 3, scale(c, 0.9));                       // huvud
+  px(im, cx - 7, cy - 2, VOIDEYE); px(im, cx - 5, cy - 2, VOIDEYE); // ögon
+  for (let i = -3; i <= 3; i += 2) line(im, cx + i, cy - 5, cx + i, cy - 7, scale(c, 0.8), 1); // ryggtaggar
+  for (const [dx, dy] of [[8, -3], [-8, 4], [6, 5]]) px(im, cx + dx, cy + dy, VOIDGLOW); // tomstoft
+}
+function drawDarkSwimmer(im, c) {  // mörkersimmare — skugga i mörkret
+  const cx = 16, cy = 16;
+  tri(im, cx + 5, cy - 5, cx + 5, cy + 5, cx + 13, cy, DARK(c));    // slöjstjärt
+  oval(im, cx, cy, 7, 4, c);                                        // kropp
+  for (const s of [-1, 1]) tri(im, cx - 1, cy + s * 3, cx + 4, cy + s * 7, cx + 5, cy + s * 2, scale(c, 0.8)); // fenor/slöjor
+  disc(im, cx - 6, cy - 1, 3, scale(c, 0.95));                      // huvud
+  tri(im, cx - 9, cy, cx - 5, cy - 2, cx - 5, cy + 2, scale(c, 0.9)); // nos
+  px(im, cx - 6, cy - 1, VOIDEYE);                                  // glödande öga
+  disc(im, cx - 6, cy - 1, 2, [200, 90, 230, 70]);                 // ögongloria
+  for (let x = cx - 2; x <= cx + 3; x += 2) line(im, x, cy - 4, x, cy - 6, scale(c, 0.7), 1); // ryggslöja
+  for (const [dx, dy] of [[2, 6], [-2, -6], [8, -4]]) px(im, cx + dx, cy + dy, VOIDGLOW); // skuggstoft
+}
+function drawAbyssEye(im, c) {  // avgrundsöga — svävande vaktande blick
+  const cx = 16, cy = 15, sclera = [230, 210, 240, 255];
+  for (let a = 0; a < 360; a += 30) {                               // tentakelkrans
+    const rx = Math.round(9 * Math.cos(a * Math.PI / 180)), ry = Math.round(9 * Math.sin(a * Math.PI / 180));
+    line(im, cx + Math.round(rx * 0.7), cy + Math.round(ry * 0.7), cx + rx, cy + ry, scale(c, 0.8), 1);
+  }
+  disc(im, cx, cy, 7, c);                                          // ögonglob
+  disc(im, cx, cy, 6, sclera);                                     // vita
+  disc(im, cx, cy, 3, VOIDEYE);                                    // iris
+  disc(im, cx, cy, 1, [20, 10, 30, 255]);                         // pupill
+  px(im, cx - 2, cy - 2, [255, 255, 255, 255]);                   // glans
+  for (let a = 0; a < 360; a += 60) px(im, cx + Math.round(5 * Math.cos(a * Math.PI / 180)), cy + Math.round(5 * Math.sin(a * Math.PI / 180)), DARK(c)); // ådror
+  for (const [dx, dy] of [[10, -7], [-10, 8]]) px(im, cx + dx, cy + dy, VOIDGLOW);
+}
+function drawDevourer(im, c) {  // urtidskväljaren — gigantiskt käftgap
+  const cx = 16, cy = 16, maw = [25, 10, 35, 255], tooth = [235, 230, 240, 255];
+  disc(im, cx, cy, 11, c);                                         // kroppsmassa
+  disc(im, cx - 3, cy - 3, 5, scale(c, 1.2));                      // skimmer
+  disc(im, cx, cy + 1, 7, maw);                                    // gap
+  for (let a = 0; a < 360; a += 30) {                              // tandkrans
+    const tx = cx + Math.round(7 * Math.cos(a * Math.PI / 180)), ty = cy + 1 + Math.round(7 * Math.sin(a * Math.PI / 180));
+    const ix = cx + Math.round(4 * Math.cos(a * Math.PI / 180)), iy = cy + 1 + Math.round(4 * Math.sin(a * Math.PI / 180));
+    tri(im, tx, ty, tx + 1, ty, ix, iy, tooth);
+  }
+  for (const [dx, dy] of [[-6, -7], [6, -7], [0, -9]]) px(im, cx + dx, cy + dy, VOIDEYE); // små ögon runt gapet
+  for (const [dx, dy] of [[12, 0], [-12, 2], [9, 9], [-9, 9]]) line(im, cx, cy, cx + dx, cy + dy, scale(c, 0.6), 1); // utskott
+}
+function drawVoidGod(im, c) {  // urguden nyxoth — boss
+  const cx = 16, cy = 16, god = [180, 90, 220, 255], maw = [20, 8, 30, 255], relic = [220, 180, 250, 255];
+  for (const s of [-1, 1]) {                                       // gudsvingar/tentakler
+    for (const o of [0, 5, 10]) { let px0 = cx + s * 5, py0 = cy - 2 + o; for (const [x, y] of [[cx + s * 10, cy - 6 + o], [cx + s * 14, cy - 2 + o], [cx + s * 12, cy + 4 + o]]) { line(im, px0, py0, x, y, scale(c, 0.7), 1); px0 = x; py0 = y; } }
+  }
+  rect(im, cx - 6, cy - 2, 13, 12, c);                            // bål
+  oval(im, cx, cy + 3, 4, 5, scale(c, 1.2));                      // hjärtljus
+  rect(im, cx - 9, cy - 1, 3, 11, scale(c, 0.85)); rect(im, cx + 7, cy - 1, 3, 11, scale(c, 0.85)); // armar
+  disc(im, cx, cy - 8, 6, scale(c, 0.95));                        // huvud
+  disc(im, cx, cy - 7, 4, maw);                                   // ansiktsgap
+  for (let a = 0; a < 360; a += 45) { const tx = cx + Math.round(4 * Math.cos(a * Math.PI / 180)), ty = cy - 7 + Math.round(4 * Math.sin(a * Math.PI / 180)); px(im, tx, ty, [235, 230, 240, 255]); } // tänder
+  px(im, cx - 2, cy - 9, VOIDEYE); px(im, cx + 2, cy - 9, VOIDEYE); px(im, cx, cy - 5, VOIDEYE); // tre ögon
+  for (let i = -5; i <= 5; i += 2) line(im, cx + i, cy - 13, cx + i, cy - 13 - (3 - Math.abs(i) % 2), god, 1); // gudakrona
+  rect(im, cx - 6, cy - 13, 13, 2, god);
+  disc(im, cx, cy - 18, 2, relic);                               // relikjuvel
+  for (const s of [-1, 1]) tri(im, cx + s * 6, cy - 2, cx + s * 11, cy - 2, cx + s * 9, cy - 9, god); // skuldertaggar
+  for (const [dx, dy] of [[-13, -3], [13, -5], [12, 8], [-12, 9], [0, 13]]) px(im, cx + dx, cy + dy, VOIDGLOW); // gudastoft
+}
 const MONSTERS = [
   ["Glödskorpion", "Glödskorpion", "#e0641e", "scorpion"],
   ["Sandskarabé", "Sandskarabé", "#3a8a5a", "scarab"],
@@ -479,6 +547,12 @@ const MONSTERS = [
   ["Pansarkrabba", "Pansarkrabba", "#8a5a4a", "armorcrab"],
   ["Avgrundsorm", "Avgrundsorm", "#4a3a6a", "abyssserpent"],
   ["Leviatanen Abyssos", "Leviatanen_Abyssos", "#5a3a8a", "leviathan"],
+  // Urdjupet — eldritch void-avgrund på världens botten
+  ["Tomkrälare", "Tomkrälare", "#3a2f4a", "voidcrawler"],
+  ["Mörkersimmare", "Mörkersimmare", "#2a2440", "darkswimmer"],
+  ["Avgrundsöga", "Avgrundsöga", "#6a2a5a", "abysseye"],
+  ["Urtidskväljaren", "Urtidskväljaren", "#4a1a3a", "devourer"],
+  ["Urguden Nyxoth", "Urguden_Nyxoth", "#5a1a6a", "voidgod"],
 ];
 
 let made = 0;
@@ -517,6 +591,11 @@ for (const [name, file, color, kind] of MONSTERS) {
   else if (kind === "armorcrab") drawArmorCrab(im, c);
   else if (kind === "abyssserpent") drawAbyssSerpent(im, c);
   else if (kind === "leviathan") drawLeviathan(im, c);
+  else if (kind === "voidcrawler") drawVoidCrawler(im, c);
+  else if (kind === "darkswimmer") drawDarkSwimmer(im, c);
+  else if (kind === "abysseye") drawAbyssEye(im, c);
+  else if (kind === "devourer") drawDevourer(im, c);
+  else if (kind === "voidgod") drawVoidGod(im, c);
   outline(im);
   fs.writeFileSync(path.join(OUT, file + ".png"), encodePNG(im));
   console.log("  ✓", file + ".png  (" + name + ")");

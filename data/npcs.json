@@ -564,5 +564,23 @@
 			"Min lykta är det enda som håller djupet borta."
 		],
 		"dialogue_root": "deepkeeper_root"
+	},
+	"npc_voidseer": {
+		"name": "Drunknade Siaren Vael",
+		"zone": "urdjupet",
+		"position": [
+			6,
+			15
+		],
+		"voice": {
+			"model": "en_US-lessac-medium",
+			"length_scale": 1
+		},
+		"barks": [
+			"Jag drunknade för länge sedan. Nu hör jag bara guden andas.",
+			"Nyxoth drömmer om en värld utan oss. Jag har sett den.",
+			"Du borde inte ha kommit. Och ändå — kanske bara du kan."
+		],
+		"dialogue_root": "voidseer_root"
 	}
 }

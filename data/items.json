@@ -3288,5 +3288,90 @@
 		"level_req": 36,
 		"value": 2100,
 		"color": "#7fe8d8"
+	},
+	"void_residue": {
+		"name": "Tomstoft",
+		"type": "material",
+		"value": 32,
+		"color": "#3a2f4a"
+	},
+	"shadow_essence": {
+		"name": "Skuggessens",
+		"type": "material",
+		"value": 55,
+		"color": "#2a2440"
+	},
+	"void_shard": {
+		"name": "Tomskärva",
+		"type": "material",
+		"value": 95,
+		"color": "#6a2a5a"
+	},
+	"god_relic": {
+		"name": "Gudarelik",
+		"type": "material",
+		"value": 200,
+		"color": "#9a4ab0"
+	},
+	"nightbloom": {
+		"name": "Nattblomma",
+		"type": "food",
+		"value": 28,
+		"color": "#7a4a9a",
+		"heal": 60
+	},
+	"void_broth": {
+		"name": "Tomsoppa",
+		"type": "food",
+		"value": 110,
+		"color": "#6a3a8a",
+		"heal": 120,
+		"buff": {
+			"stat": "armor",
+			"amount": 6,
+			"duration": 55
+		}
+	},
+	"void_reaver": {
+		"name": "Tomslukaren",
+		"type": "weapon",
+		"slot": "weapon",
+		"skill": "sword",
+		"atk": 60,
+		"crit_chance": 0.12,
+		"level_req": 44,
+		"value": 6500,
+		"color": "#7a2a9a",
+		"desc": "En klinga smidd ur en gudarelik, som äter ljuset kring sin egg och lämnar bara tomrum där den dragit fram."
+	},
+	"abyssal_aegis": {
+		"name": "Urtidsaegis",
+		"type": "armor",
+		"slot": "offhand",
+		"armor": 10,
+		"shielding_bonus": 9,
+		"level_req": 38,
+		"value": 2400,
+		"color": "#6a2a5a"
+	},
+	"void_plate": {
+		"name": "Tomgudspansar",
+		"type": "armor",
+		"slot": "body",
+		"armor": 24,
+		"def_bonus": 9,
+		"level_req": 41,
+		"value": 3600,
+		"color": "#4a1a3a"
+	},
+	"nyx_amulet": {
+		"name": "Nyxoths öga",
+		"type": "armor",
+		"slot": "amulet",
+		"armor": 8,
+		"crit_chance": 0.08,
+		"level_req": 40,
+		"value": 2600,
+		"color": "#9a4ab0"
 	}
 }

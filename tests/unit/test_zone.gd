@@ -878,3 +878,88 @@ func test_lysdjupet_crit_gear_feeds_bonus():
 	gs.equipment["amulet"] = "glow_amulet"      # +0.07
 	assert_almost_eq(gs.total_crit_bonus(), 0.17, 0.0001)
 	gs.free()
+
+## ── Urdjupet: eldritch void-avgrund på världens botten (slutet av havskedjan) ──
+
+func test_lysdjupet_links_to_urdjupet():
+	var z = _make_zone("lysdjupet")
+	assert_true(z.portals.values().has("urdjupet"), "Lysdjupet saknar portal till Urdjupet")
+	var pt = null
+	for t in z.portals:
+		if String(z.portals[t]) == "urdjupet":
+			pt = t
+			break
+	assert_not_null(pt)
+	assert_gt(z.find_path(z.player_start, pt).size(), 0, "Urdjupet-portalen är inte nåbar")
+
+func test_urdjupet_loads_with_content():
+	var z = _make_zone("urdjupet")
+	assert_eq(z.zone_name, "Urdjupet")
+	assert_true(z.is_walkable(z.player_start), "startrutan ska vara gångbar")
+	assert_true(z.portals.values().has("lysdjupet"), "saknar portal tillbaka till Lysdjupet")
+	for name in ["Tomkrälare", "Mörkersimmare", "Avgrundsöga"]:
+		assert_gt(z.spawn_points.filter(func(s): return s["monster"] == name).size(), 0,
+			"urdjupet saknar " + name)
+	var bt = null
+	for s in z.spawn_points:
+		if s["monster"] == "Urguden Nyxoth":
+			bt = s["tile"]
+			break
+	assert_not_null(bt, "Urguden Nyxoth spawnar inte i zonen")
+	assert_gt(z.find_path_adjacent(z.player_start, bt).size(), 0, "bossen är inte nåbar")
+	# Exakt en boss i zonen (regression mot dubbel-spawn).
+	assert_eq(z.spawn_points.filter(func(s): return s["monster"] == "Urguden Nyxoth").size(), 1,
+		"ska finnas exakt en boss-spawn")
+	var nodes = z.node_points.map(func(n): return n["node"])
+	assert_has(nodes, "void_geode")
+	assert_has(nodes, "nightbloom_cluster")
+	var stations = z.station_points.map(func(s): return s["station"])
+	assert_has(stations, "anvil")
+	assert_has(stations, "crafting_bench")
+
+func test_urdjupet_monsters_registered_with_desc():
+	for name in ["Tomkrälare", "Mörkersimmare", "Avgrundsöga", "Urtidskväljaren", "Urguden Nyxoth"]:
+		assert_true(MonsterDB.monsters.has(name), "saknar monster " + name)
+		assert_ne(String(MonsterDB.monsters[name].get("desc", "")), "", name + " saknar bestiary-text")
+	assert_true(MonsterDB.monsters["Urguden Nyxoth"].get("boss", false), "Nyxoth ska vara boss")
+	# Void-varelser bryter havskonventionen: svaga mot eld, tåliga mot död.
+	var mod: Dictionary = MonsterDB.monsters["Mörkersimmare"]["element_mod"]
+	assert_gt(float(mod.get("fire", 1.0)), 1.0, "mörkersimmare ska vara svag mot eld")
+	assert_lt(float(mod.get("death", 1.0)), 1.0, "mörkersimmare ska tåla död")
+
+func test_urdjupet_items_registered():
+	for id in ["void_residue", "shadow_essence", "void_shard", "god_relic", "nightbloom",
+			"void_broth", "void_reaver", "abyssal_aegis", "void_plate", "nyx_amulet"]:
+		assert_true(ItemDB.items.has(id), "saknar item " + id)
+
+func test_urdjupet_recipes_exist_with_real_ingredients():
+	var anvil_ids: Array = ItemDB.recipes["anvil"].map(func(r): return r["id"])
+	for id in ["void_reaver", "abyssal_aegis"]:
+		assert_has(anvil_ids, id)
+	var bench_ids: Array = ItemDB.recipes["crafting_bench"].map(func(r): return r["id"])
+	for id in ["void_plate", "nyx_amulet"]:
+		assert_has(bench_ids, id)
+	var stove_ids: Array = ItemDB.recipes["stove"].map(func(r): return r["id"])
+	assert_has(stove_ids, "void_broth")
+	for station in ["anvil", "crafting_bench", "stove"]:
+		for r in ItemDB.recipes[station]:
+			for ing in r["ingredients"]:
+				assert_true(ItemDB.items.has(ing), "recept %s saknar item %s" % [r["id"], ing])
+
+func test_urdjupet_quest_chain():
+	for id in ["quest_void_1", "quest_void_2", "quest_void_3"]:
+		assert_true(QuestSystem.quests.has(id), "saknar quest " + id)
+		assert_eq(String(QuestSystem.quests[id]["giver"]), "npc_voidseer", id + " har fel giver")
+	assert_eq(QuestSystem.quests["quest_void_2"]["requires"], ["quest_void_1"])
+	assert_eq(QuestSystem.quests["quest_void_3"]["requires"], ["quest_void_2"])
+	var last: Dictionary = QuestSystem.quests["quest_void_3"]
+	assert_eq(String(last["steps"][1]["monster"]), "Urguden Nyxoth")
+	assert_has(last["rewards"]["unlocks"], "outfit_voidgod")
+
+func test_urdjupet_crit_gear_feeds_bonus():
+	# Knyter ihop med crit-systemet: tomslukaren + nyxoths öga ska ge crit-bonus.
+	var gs = load("res://autoload/game_state.gd").new()
+	gs.equipment["weapon"] = "void_reaver"  # +0.12
+	gs.equipment["amulet"] = "nyx_amulet"   # +0.08
+	assert_almost_eq(gs.total_crit_bonus(), 0.20, 0.0001)
+	gs.free()
