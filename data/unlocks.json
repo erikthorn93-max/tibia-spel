@@ -196,5 +196,11 @@
 		"category": "outfit",
 		"requires": {},
 		"desc": "Belönas för att ha besegrat Urguden Nyxoth på världens botten i Urdjupet."
+	},
+	"outfit_deepmaster": {
+		"name": "Djupmästarens regalier",
+		"category": "outfit",
+		"requires": {},
+		"desc": "Belönas för att ha besegrat alla tre djuphavshärskarna — Nautilex, Abyssos och Nyxoth — och krönts till Djupets mästare."
 	}
 }

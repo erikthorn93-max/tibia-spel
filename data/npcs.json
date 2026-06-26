@@ -582,5 +582,23 @@
 			"Du borde inte ha kommit. Och ändå — kanske bara du kan."
 		],
 		"dialogue_root": "voidseer_root"
+	},
+	"npc_seachronicler": {
+		"name": "Hamnkrönikören Doria",
+		"zone": "coast",
+		"position": [
+			14,
+			13
+		],
+		"voice": {
+			"model": "en_US-lessac-medium",
+			"length_scale": 1
+		},
+		"barks": [
+			"Varje våg bär ett rykte hem. Jag skriver ner dem alla.",
+			"Sprickan vid kajen leder ner i djupet. Få återvänder.",
+			"Tre härskare sover därnere. Den som väcker dem alla blir en legend."
+		],
+		"dialogue_root": "chronicler_root"
 	}
 }

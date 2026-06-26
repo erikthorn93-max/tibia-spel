@@ -963,3 +963,56 @@ func test_urdjupet_crit_gear_feeds_bonus():
 	gs.equipment["amulet"] = "nyx_amulet"   # +0.08
 	assert_almost_eq(gs.total_crit_bonus(), 0.20, 0.0001)
 	gs.free()
+
+## ── Capstone: Hamnkrönikören i Saltviks hamn knyter ihop hela havskedjan ──
+
+func test_seachronicler_npc_in_harbor():
+	assert_true(DialogueDB.npcs.has("npc_seachronicler"), "Hamnkrönikören saknas i npcs.json")
+	assert_eq(String(DialogueDB.npcs["npc_seachronicler"]["zone"]), "coast",
+		"krönikören ska stå i Saltviks hamn")
+	assert_eq(String(DialogueDB.npcs["npc_seachronicler"]["dialogue_root"]), "chronicler_root")
+
+func test_chronicler_dialogue_offers_capstone():
+	assert_true(DialogueDB.nodes.has("chronicler_root"), "saknar dialognod chronicler_root")
+	# Erbjudande-valet ska vara gated på att capstone-questet är startbart.
+	var offer = null
+	for c in DialogueDB.nodes["chronicler_root"]["choices"]:
+		if String(c.get("next", "")) == "chronicler_offer":
+			offer = c
+			break
+	assert_not_null(offer, "krönikören saknar erbjudande om Djupets mästare")
+	var conds: Array = offer.get("conditions", [])
+	assert_eq(conds.size(), 1)
+	assert_eq(String(conds[0]["type"]), "quest_available")
+	assert_eq(String(conds[0]["quest"]), "quest_deep_master")
+	# Lore-noden ska peka mot havskedjans regioner.
+	assert_true(DialogueDB.nodes.has("chronicler_lore"))
+
+func test_capstone_quest_requires_all_three_bosses():
+	assert_true(QuestSystem.quests.has("quest_deep_master"), "saknar capstone-quest")
+	var cap: Dictionary = QuestSystem.quests["quest_deep_master"]
+	assert_eq(String(cap["giver"]), "npc_seachronicler")
+	for req in ["quest_abyss_3", "quest_deep_3", "quest_void_3"]:
+		assert_has(cap["requires"], req)
+	# Ren turn-in: ett enda talk_to-steg till krönikören.
+	assert_eq(cap["steps"].size(), 1)
+	assert_eq(String(cap["steps"][0]["type"]), "talk_to")
+	assert_eq(String(cap["steps"][0]["npc"]), "npc_seachronicler")
+	assert_has(cap["rewards"]["unlocks"], "outfit_deepmaster")
+	assert_true(cap["rewards"]["items"].has("deep_sigil"), "ska belöna djupkonungens sigill")
+
+func test_capstone_gating_unlocks_after_three_bosses():
+	# Frisk QuestSystem-instans: capstonen ska vara låst tills de tre bossquesten är klara.
+	var qs = load("res://autoload/quest_system.gd").new()
+	assert_false(qs.can_start("quest_deep_master"), "capstone ska vara låst från start")
+	for id in ["quest_abyss_3", "quest_deep_3", "quest_void_3"]:
+		qs.completed[id] = true
+	assert_true(qs.can_start("quest_deep_master"), "capstone ska låsas upp när alla tre bossar är fällda")
+	qs.free()
+
+func test_deep_sigil_registered_and_feeds_crit():
+	assert_true(ItemDB.items.has("deep_sigil"), "saknar trofé-amuletten deep_sigil")
+	var gs = load("res://autoload/game_state.gd").new()
+	gs.equipment["amulet"] = "deep_sigil"  # +0.10
+	assert_almost_eq(gs.total_crit_bonus(), 0.10, 0.0001)
+	gs.free()

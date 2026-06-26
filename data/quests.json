@@ -1571,5 +1571,35 @@
 				"outfit_voidgod"
 			]
 		}
+	},
+	"quest_deep_master": {
+		"name": "Djupets mästare",
+		"giver": "npc_seachronicler",
+		"requires": [
+			"quest_abyss_3",
+			"quest_deep_3",
+			"quest_void_3"
+		],
+		"steps": [
+			{
+				"type": "talk_to",
+				"npc": "npc_seachronicler",
+				"hint": "Återvänd till Hamnkrönikören Doria och kräv din ära som Djupets mästare."
+			}
+		],
+		"rewards": {
+			"xp": 20000,
+			"gold": 10000,
+			"items": {
+				"deep_sigil": 1
+			},
+			"skill_xp": {
+				"constitution": 5000
+			},
+			"charm_points": 50,
+			"unlocks": [
+				"outfit_deepmaster"
+			]
+		}
 	}
 }

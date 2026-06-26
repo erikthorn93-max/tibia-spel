@@ -4235,5 +4235,142 @@
 				"next": "voidseer_root"
 			}
 		]
+	},
+	"chronicler_root": {
+		"speaker": "npc_seachronicler",
+		"emotion": "neutral",
+		"text": "Välkommen till Saltviks hamn. Jag är Doria — jag tecknar ner allt havet viskar hem. Och just nu viskar det om dig, främling.",
+		"choices": [
+			{
+				"text": "Berätta om djupet.",
+				"next": "chronicler_lore"
+			},
+			{
+				"text": "Jag har tämjt djupets tre härskare.",
+				"next": "chronicler_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_deep_master"
+					}
+				]
+			},
+			{
+				"text": "Jag är redo för min ära.",
+				"next": "chronicler_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_deep_master",
+						"step": 0
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_deep_master"
+					}
+				]
+			},
+			{
+				"text": "En djupmästare hälsar dig.",
+				"next": "chronicler_done",
+				"conditions": [
+					{
+						"type": "quest_completed",
+						"quest": "quest_deep_master"
+					}
+				]
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"chronicler_lore": {
+		"speaker": "npc_seachronicler",
+		"emotion": "neutral",
+		"text": "Vid kajen gapar en spricka rakt ner i havet. Först når du Korallavgrunden — en sjunken stad där Sjökungen Nautilex härskar. Djupare ner ligger Lysdjupet, där Leviatanen Abyssos sover i mörkret. Och allra längst ner, på världens botten, ringlar Urguden Nyxoth i Urdjupet. Tre härskare. Få ser ens den första och lever.",
+		"choices": [
+			{
+				"text": "Hur tar jag mig dit?",
+				"next": "chronicler_how"
+			},
+			{
+				"text": "Tillbaka.",
+				"next": "chronicler_root"
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"chronicler_how": {
+		"speaker": "npc_seachronicler",
+		"emotion": "neutral",
+		"text": "Stig ner genom sprickan vid kajen, så står du i Korallavgrunden. Därifrån leder djupet vidare, region för region — var och en med en väktare vid sin botten som öppnar vägen neråt. Ta med ljus, stål och mod. Och kom tillbaka och berätta — om du kan.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "chronicler_root"
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"chronicler_offer": {
+		"speaker": "npc_seachronicler",
+		"emotion": "happy",
+		"text": "Tre härskare fällda av en och samma hand? Nautilex, Abyssos OCH Nyxoth? Sjömännen kommer sjunga om det här i hundra år. En sådan bragd förtjänar mer än rykten — den förtjänar djupets eget sigill. Vill du att jag krönar dig till Djupets mästare?",
+		"choices": [
+			{
+				"text": "Ge mig äran.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_deep_master"
+					}
+				]
+			},
+			{
+				"text": "Inte än.",
+				"next": "chronicler_root"
+			}
+		]
+	},
+	"chronicler_reward": {
+		"speaker": "npc_seachronicler",
+		"emotion": "happy",
+		"text": "Då gör jag det officiellt, inför hela hamnen: du är Djupets mästare, den som tämjde havets tre härskare. Bär detta sigill och dessa regalier med stolthet — ingen levande själ har förtjänat dem mer.",
+		"choices": [
+			{
+				"text": "Tack, Doria.",
+				"next": null
+			},
+			{
+				"text": "Något mer?",
+				"next": "chronicler_root"
+			}
+		]
+	},
+	"chronicler_done": {
+		"speaker": "npc_seachronicler",
+		"emotion": "happy",
+		"text": "Djupets mästare, i egen hög person. Sjömännen lyfter på mössan när du går förbi, och jag har redan fyllt tre sidor om dina bragder. Havet har inga härskare kvar som kan mäta sig med dig.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "chronicler_root"
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
 	}
 }

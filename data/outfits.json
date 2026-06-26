@@ -133,5 +133,14 @@
 			"pants": "#2a1040",
 			"hair": "#9a4ab0"
 		}
+	},
+	"outfit_deepmaster": {
+		"name": "Djupmästarens regalier",
+		"unlock": "outfit_deepmaster",
+		"colors": {
+			"shirt": "#1f8fb0",
+			"pants": "#0f5a70",
+			"hair": "#ffd86a"
+		}
 	}
 }

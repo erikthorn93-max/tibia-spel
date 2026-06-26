@@ -3373,5 +3373,17 @@
 		"level_req": 40,
 		"value": 2600,
 		"color": "#9a4ab0"
+	},
+	"deep_sigil": {
+		"name": "Djupkonungens sigill",
+		"type": "armor",
+		"slot": "amulet",
+		"armor": 9,
+		"crit_chance": 0.1,
+		"def_bonus": 4,
+		"level_req": 45,
+		"value": 8000,
+		"color": "#ffd86a",
+		"desc": "Havets tre härskares kraft smält samman till ett sigill. Bara den som tämjt djupet i sin helhet kan bära det."
 	}
 }
