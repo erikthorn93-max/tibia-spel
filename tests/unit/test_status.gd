@@ -79,3 +79,40 @@ func test_poison_tick_ger_inte_negativ_health() -> void:
 	gs.apply_status("poison", 10.0, 50.0)
 	gs._tick_statuses(1.0)
 	assert_gte(gs.health, 0.0, "health ska aldrig bli negativ")
+
+# --- DoT-omapplicering (balansfix: gift blir inte permanent av upprepade procs) ---
+
+func test_aktiv_dot_fornyas_inte_av_lika_proc() -> void:
+	gs.health = 100.0; gs.max_health = 100.0
+	gs.apply_status("poison", 10.0, 3.0)
+	gs._tick_statuses(3.0)                  # time_left → 7.0
+	gs.apply_status("poison", 10.0, 3.0)    # lika stark proc igen
+	assert_almost_eq(float(gs.status_effects["poison"]["time_left"]), 7.0, 0.01,
+		"lika stark proc ska INTE förnya till full duration")
+
+func test_aktiv_dot_fornyas_inte_av_svagare_proc() -> void:
+	gs.health = 100.0; gs.max_health = 100.0
+	gs.apply_status("poison", 10.0, 5.0)
+	gs._tick_statuses(2.0)                  # time_left → 8.0
+	gs.apply_status("poison", 10.0, 2.0)    # svagare proc
+	assert_almost_eq(float(gs.status_effects["poison"]["tick_dmg"]), 5.0, 0.01,
+		"svagare proc ska inte sänka tick_dmg")
+	assert_almost_eq(float(gs.status_effects["poison"]["time_left"]), 8.0, 0.01,
+		"svagare proc ska inte förnya duration")
+
+func test_starkare_dot_skriver_over_och_fornyar() -> void:
+	gs.health = 100.0; gs.max_health = 100.0
+	gs.apply_status("poison", 5.0, 2.0)
+	gs._tick_statuses(1.0)                  # time_left → 4.0
+	gs.apply_status("poison", 12.0, 6.0)    # starkare proc
+	assert_almost_eq(float(gs.status_effects["poison"]["tick_dmg"]), 6.0, 0.01)
+	assert_almost_eq(float(gs.status_effects["poison"]["time_left"]), 12.0, 0.01,
+		"starkare gift ska förnya till sin fulla duration")
+
+func test_stun_fornyas_fortfarande() -> void:
+	# Icke-DoT (tick_dmg 0) ska förnyas som förr — annars kan stun inte staplas.
+	gs.apply_status("stun", 2.0, 0.0)
+	gs._tick_statuses(1.0)                  # time_left → 1.0
+	gs.apply_status("stun", 2.0, 0.0)
+	assert_almost_eq(float(gs.status_effects["stun"]["time_left"]), 2.0, 0.01,
+		"stun ska förnyas till full duration vid ny proc")

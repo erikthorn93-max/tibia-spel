@@ -329,8 +329,13 @@ func play_attack(dir: Vector2i) -> void:
 	tw.tween_property(_sprite, "position", rest, 0.13).set_ease(Tween.EASE_IN_OUT)
 	tw.tween_callback(func(): _attacking = false)
 
-## Applicerar en statuseffekt på monstret (skriver över om samma id redan finns).
+## Applicerar en statuseffekt på monstret. Speglar GameState.apply_status:
+## en aktiv DoT förnyas bara av en starkare proc (högre tick_dmg) — lika/svagare
+## ignoreras så att spelarens gift inte heller blir permanent via spam.
 func apply_status(id: String, duration: float, tick_dmg: float) -> void:
+	if tick_dmg > 0.0 and status_effects.has(id) \
+			and tick_dmg <= float(status_effects[id]["tick_dmg"]):
+		return
 	status_effects[id] = {"tick_dmg": tick_dmg, "time_left": duration, "tick_acc": 0.0}
 	_update_status_aura()
 

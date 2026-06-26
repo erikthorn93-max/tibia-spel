@@ -346,8 +346,16 @@ func attempt_steal(spec: Dictionary) -> bool:
 		add_item(String(spec["item"]), int(spec.get("item_count", 1)))
 	return true
 
-## Applicerar en statuseffekt (skriver över om samma id redan finns).
+## Applicerar en statuseffekt.
+## DoT-effekter (tick_dmg > 0, t.ex. poison/burn) får INTE förnyas till full
+## duration av varje ny proc — det gjorde gift permanent när snabba monster
+## träffade om och om igen. En redan aktiv DoT uppdateras bara om den nya är
+## STARKARE (högre tick_dmg); lika/svagare procs ignoreras och låter den
+## pågående effekten ticka ut. Icke-DoT (stun/slow, tick_dmg 0) förnyas som förr.
 func apply_status(id: String, duration: float, tick_dmg: float) -> void:
+	if tick_dmg > 0.0 and status_effects.has(id) \
+			and tick_dmg <= float(status_effects[id]["tick_dmg"]):
+		return
 	status_effects[id] = {"tick_dmg": tick_dmg, "time_left": duration, "tick_acc": 0.0}
 	status_changed.emit()
 

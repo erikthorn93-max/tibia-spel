@@ -52,9 +52,9 @@
 		],
 		"ability": {
 			"type": "poison",
-			"chance": 0.25,
-			"tick_dmg": 3,
-			"duration": 10
+			"chance": 0.12,
+			"tick_dmg": 1,
+			"duration": 4
 		}
 	},
 	"Spindel": {
@@ -397,9 +397,9 @@
 		],
 		"ability": {
 			"type": "poison",
-			"chance": 0.35,
-			"tick_dmg": 5,
-			"duration": 12
+			"chance": 0.18,
+			"tick_dmg": 3,
+			"duration": 6
 		}
 	},
 	"Träskdjävul": {
@@ -848,9 +848,9 @@
 		"color": "#b8a060",
 		"ability": {
 			"type": "poison",
-			"chance": 0.2,
-			"duration": 8,
-			"tick_dmg": 4
+			"chance": 0.14,
+			"duration": 5,
+			"tick_dmg": 2
 		},
 		"loot": [
 			{
@@ -959,9 +959,9 @@
 		"enrage": true,
 		"ability": {
 			"type": "burn",
-			"chance": 0.3,
+			"chance": 0.28,
 			"duration": 6,
-			"tick_dmg": 8
+			"tick_dmg": 7
 		},
 		"loot": [
 			{
@@ -1030,9 +1030,9 @@
 		"color": "#cc4400",
 		"ability": {
 			"type": "burn",
-			"chance": 0.25,
-			"duration": 6,
-			"tick_dmg": 6
+			"chance": 0.16,
+			"duration": 5,
+			"tick_dmg": 3
 		},
 		"loot": [
 			{
@@ -1128,9 +1128,9 @@
 		"enrage": true,
 		"ability": {
 			"type": "burn",
-			"chance": 0.4,
-			"duration": 8,
-			"tick_dmg": 12
+			"chance": 0.3,
+			"duration": 6,
+			"tick_dmg": 10
 		},
 		"loot": [
 			{
@@ -1475,9 +1475,9 @@
 		"color": "#4a6640",
 		"ability": {
 			"type": "poison",
-			"chance": 0.15,
-			"duration": 6,
-			"tick_dmg": 2
+			"chance": 0.1,
+			"duration": 4,
+			"tick_dmg": 1
 		},
 		"loot": [
 			{
@@ -1510,9 +1510,9 @@
 		"color": "#3a5530",
 		"ability": {
 			"type": "poison",
-			"chance": 0.2,
-			"duration": 8,
-			"tick_dmg": 3
+			"chance": 0.14,
+			"duration": 5,
+			"tick_dmg": 2
 		},
 		"loot": [
 			{
@@ -1586,9 +1586,9 @@
 		"color": "#d4a040",
 		"ability": {
 			"type": "poison",
-			"chance": 0.22,
-			"duration": 8,
-			"tick_dmg": 4
+			"chance": 0.15,
+			"duration": 5,
+			"tick_dmg": 2
 		},
 		"loot": [
 			{
@@ -1633,9 +1633,9 @@
 		"color": "#ff4400",
 		"ability": {
 			"type": "burn",
-			"chance": 0.18,
+			"chance": 0.14,
 			"duration": 4,
-			"tick_dmg": 4
+			"tick_dmg": 2
 		},
 		"loot": [
 			{
@@ -1684,9 +1684,9 @@
 		"color": "#221100",
 		"ability": {
 			"type": "burn",
-			"chance": 0.3,
+			"chance": 0.2,
 			"duration": 6,
-			"tick_dmg": 8
+			"tick_dmg": 4
 		},
 		"loot": [
 			{
@@ -2173,9 +2173,9 @@
 		"color": "#3a5a1a",
 		"ability": {
 			"type": "poison",
-			"chance": 0.28,
-			"duration": 10,
-			"tick_dmg": 5
+			"chance": 0.16,
+			"duration": 6,
+			"tick_dmg": 3
 		},
 		"loot": [
 			{
@@ -2866,9 +2866,9 @@
 		"enrage": true,
 		"ability": {
 			"type": "burn",
-			"chance": 0.45,
-			"duration": 8,
-			"tick_dmg": 15
+			"chance": 0.32,
+			"duration": 6,
+			"tick_dmg": 12
 		},
 		"loot": [
 			{
@@ -2955,9 +2955,9 @@
 		"enrage": true,
 		"ability": {
 			"type": "burn",
-			"chance": 0.4,
-			"duration": 10,
-			"tick_dmg": 18
+			"chance": 0.32,
+			"duration": 6,
+			"tick_dmg": 14
 		},
 		"loot": [
 			{
@@ -3085,9 +3085,9 @@
 		"desc": "Väver giftiga nät djupt i kryptan. Dess körtlar sprutar en frätande gift som långsamt tär på offret.",
 		"ability": {
 			"type": "poison",
-			"chance": 0.3,
-			"duration": 10,
-			"tick_dmg": 5
+			"chance": 0.18,
+			"duration": 6,
+			"tick_dmg": 3
 		},
 		"loot": [
 			{
@@ -3195,9 +3195,9 @@
 		"desc": "Kryptans urgamla härskarinna. Hennes gift kan fälla en fullrustad riddare på ett ögonblick — och hennes silke är legendariskt.",
 		"ability": {
 			"type": "poison",
-			"chance": 0.4,
-			"duration": 12,
-			"tick_dmg": 14
+			"chance": 0.3,
+			"duration": 6,
+			"tick_dmg": 10
 		},
 		"loot": [
 			{
@@ -3405,9 +3405,9 @@
 		"desc": "En glödhet skorpion vars stjärtgadd bränner allt den når. Den frodas i den soldränkta sanden bortom ruinerna.",
 		"ability": {
 			"type": "burn",
-			"chance": 0.3,
-			"duration": 6,
-			"tick_dmg": 7
+			"chance": 0.15,
+			"duration": 5,
+			"tick_dmg": 3
 		},
 		"loot": [
 			{
@@ -3622,9 +3622,9 @@
 		"desc": "Den odöde solkungen, balsamerad med smält guld och solens vrede. Han reser sig när någon vågar störa hans grav.",
 		"ability": {
 			"type": "burn",
-			"chance": 0.4,
-			"duration": 8,
-			"tick_dmg": 14
+			"chance": 0.3,
+			"duration": 6,
+			"tick_dmg": 10
 		},
 		"loot": [
 			{
@@ -4198,9 +4198,9 @@
 		"desc": "En revhaj som glider genom de sjunkna salarna i flock. Den känner blod på mils avstånd och river sönder allt som rör sig.",
 		"ability": {
 			"type": "poison",
-			"chance": 0.22,
-			"duration": 8,
-			"tick_dmg": 3
+			"chance": 0.14,
+			"duration": 5,
+			"tick_dmg": 2
 		},
 		"loot": [
 			{
@@ -4483,9 +4483,9 @@
 		"desc": "En lyktfisk vars spöklika ljus lockar bytet närmare i det becksvarta djupet. Den jagar i stim där solen aldrig nått.",
 		"ability": {
 			"type": "poison",
-			"chance": 0.2,
-			"duration": 8,
-			"tick_dmg": 4
+			"chance": 0.14,
+			"duration": 5,
+			"tick_dmg": 2
 		},
 		"loot": [
 			{
@@ -4762,9 +4762,9 @@
 		"desc": "En krälande tomhetens yngel, vävd av mörker som aldrig sett ljus. Den svärmar fram ur sprickorna i världens botten.",
 		"ability": {
 			"type": "poison",
-			"chance": 0.22,
-			"duration": 8,
-			"tick_dmg": 5
+			"chance": 0.15,
+			"duration": 5,
+			"tick_dmg": 3
 		},
 		"loot": [
 			{
