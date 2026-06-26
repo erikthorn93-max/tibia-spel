@@ -3668,5 +3668,194 @@
 				"next": "frostwarden_root"
 			}
 		]
+	},
+	"tidewarden_root": {
+		"speaker": "npc_tidewarden",
+		"emotion": "neutral",
+		"text": "En levande själ, så här djupt? Jag är Nerida — jag dök efter ett sjunket skepp och fann en hel stad under vågorna. Men något gammalt vaknar i revet, och tidvattnet bär dess vrede.",
+		"choices": [
+			{
+				"text": "Vem är du?",
+				"next": "tidewarden_who"
+			},
+			{
+				"text": "Vad vaknar i revet?",
+				"next": "tidewarden_s1",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_abyss_1"
+					}
+				]
+			},
+			{
+				"text": "Rovdjuren är skingrade.",
+				"next": "tidewarden_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_abyss_1",
+						"step": 3
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_abyss_1"
+					}
+				]
+			},
+			{
+				"text": "Vad vaktar revets hjärta?",
+				"next": "tidewarden_s2",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_abyss_2"
+					}
+				]
+			},
+			{
+				"text": "Här är korallskärvorna du bad om.",
+				"next": "tidewarden_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_abyss_2",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_abyss_2"
+					}
+				]
+			},
+			{
+				"text": "Vem härskar i djupets stad?",
+				"next": "tidewarden_s3",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_abyss_3"
+					}
+				]
+			},
+			{
+				"text": "Sjökungen är besegrad.",
+				"next": "tidewarden_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_abyss_3",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_abyss_3"
+					}
+				]
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"tidewarden_who": {
+		"speaker": "npc_tidewarden",
+		"emotion": "neutral",
+		"text": "Bärgningsdykare från Saltviks hamn. Jag kartlägger vraken på havsbottnen — sprickan vid kajen leder rakt ner hit. Men ju längre in i revet jag når, desto mer rör sig i mörkret.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "tidewarden_root"
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"tidewarden_s1": {
+		"speaker": "npc_tidewarden",
+		"emotion": "worried",
+		"text": "Revhajar jagar i flock kring mitt dykläger, och Tånggastar reser sig ur slammet när de känner blod. Fäll tio hajar och sex gastar, så vågar jag tränga djupare in i staden.",
+		"choices": [
+			{
+				"text": "Det ska bli gjort.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_abyss_1"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "tidewarden_root"
+			}
+		]
+	},
+	"tidewarden_s2": {
+		"speaker": "npc_tidewarden",
+		"emotion": "worried",
+		"text": "Längre in står Korallväktare — urgamla konstrukt av levande rev som vaktar stadens hjärta. Krossa sex av dem och samla deras korallskärvor; de bär djupets minne, och jag måste tyda det.",
+		"choices": [
+			{
+				"text": "Jag samlar skärvorna.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_abyss_2"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "tidewarden_root"
+			}
+		]
+	},
+	"tidewarden_s3": {
+		"speaker": "npc_tidewarden",
+		"emotion": "worried",
+		"text": "Skärvorna bekräftar min fasa: Sjökungen Nautilex vaknar på sin tron, vaktad av Djupkrakar. Stiger han ur djupet dränker tidvattnet hela Saltviks hamn. Bana väg och tysta honom för gott.",
+		"choices": [
+			{
+				"text": "Jag avslutar det här.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_abyss_3"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "tidewarden_root"
+			}
+		]
+	},
+	"tidewarden_reward": {
+		"speaker": "npc_tidewarden",
+		"emotion": "happy",
+		"text": "Tidvattnet stillnar — jag känner det i strömmen mot huden. Ingen dykare har nått så djupt och återvänt. Ta det här, du har förtjänat varenda pärla.",
+		"choices": [
+			{
+				"text": "Tack, Nerida.",
+				"next": null
+			},
+			{
+				"text": "Något mer?",
+				"next": "tidewarden_root"
+			}
+		]
 	}
 }

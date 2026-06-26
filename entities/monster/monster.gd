@@ -121,6 +121,12 @@ const SPRITE_MAP: Dictionary = {
 	"Isväktare":                  "Isväktare",
 	"Glaciärjätte":               "Glaciärjätte",
 	"Frostmonarken Hrimnir":      "Frostmonarken_Hrimnir",
+	# Korallavgrunden — sjunken stad under Saltviks hamn
+	"Revhaj":                     "Revhaj",
+	"Tånggast":                   "Tånggast",
+	"Korallväktare":              "Korallväktare",
+	"Djupkraken":                 "Djupkraken",
+	"Sjökungen Nautilex":         "Sjökungen_Nautilex",
 }
 
 func _ready() -> void:

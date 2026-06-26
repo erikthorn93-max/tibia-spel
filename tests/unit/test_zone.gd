@@ -714,3 +714,85 @@ func test_frostavgrunden_crit_gear_feeds_bonus():
 	gs.equipment["amulet"] = "rime_amulet"          # +0.06
 	assert_almost_eq(gs.total_crit_bonus(), 0.14, 0.0001)
 	gs.free()
+
+## ── Korallavgrunden: sjunken stad under Saltviks hamn (sjö-element, gather → smide → utrustning) ──
+
+func test_coast_links_to_korallavgrunden():
+	var z = _make_zone("coast")
+	assert_true(z.portals.values().has("korallavgrunden"), "Saltviks hamn saknar portal till Korallavgrunden")
+	var pt = null
+	for t in z.portals:
+		if String(z.portals[t]) == "korallavgrunden":
+			pt = t
+			break
+	assert_not_null(pt)
+	assert_gt(z.find_path(z.player_start, pt).size(), 0, "Korallavgrunden-portalen är inte nåbar")
+
+func test_korallavgrunden_loads_with_content():
+	var z = _make_zone("korallavgrunden")
+	assert_eq(z.zone_name, "Korallavgrunden")
+	assert_true(z.is_walkable(z.player_start), "startrutan ska vara gångbar")
+	assert_true(z.portals.values().has("coast"), "saknar portal tillbaka till Saltviks hamn")
+	for name in ["Revhaj", "Tånggast", "Korallväktare"]:
+		assert_gt(z.spawn_points.filter(func(s): return s["monster"] == name).size(), 0,
+			"korallavgrunden saknar " + name)
+	var bt = null
+	for s in z.spawn_points:
+		if s["monster"] == "Sjökungen Nautilex":
+			bt = s["tile"]
+			break
+	assert_not_null(bt, "Sjökungen Nautilex spawnar inte i zonen")
+	assert_gt(z.find_path_adjacent(z.player_start, bt).size(), 0, "bossen är inte nåbar")
+	var nodes = z.node_points.map(func(n): return n["node"])
+	assert_has(nodes, "coral_reef")
+	assert_has(nodes, "kelp_tangle")
+	var stations = z.station_points.map(func(s): return s["station"])
+	assert_has(stations, "anvil")
+	assert_has(stations, "crafting_bench")
+
+func test_korallavgrunden_monsters_registered_with_desc():
+	for name in ["Revhaj", "Tånggast", "Korallväktare", "Djupkraken", "Sjökungen Nautilex"]:
+		assert_true(MonsterDB.monsters.has(name), "saknar monster " + name)
+		assert_ne(String(MonsterDB.monsters[name].get("desc", "")), "", name + " saknar bestiary-text")
+	assert_true(MonsterDB.monsters["Sjökungen Nautilex"].get("boss", false), "Nautilex ska vara boss")
+	# Sjövarelser ska vara svaga mot energi och tåliga mot eld (havs-konvention: vatten leder ström, släcker eld).
+	var mod: Dictionary = MonsterDB.monsters["Tånggast"]["element_mod"]
+	assert_gt(float(mod.get("energy", 1.0)), 1.0, "tånggast ska vara svag mot energi")
+	assert_lt(float(mod.get("fire", 1.0)), 1.0, "tånggast ska tåla eld")
+
+func test_korallavgrunden_items_registered():
+	for id in ["coral_shard", "siren_scale", "kraken_ink", "abyss_pearl", "sea_kelp",
+			"kelp_broth", "tideblade", "coral_shield", "nautilus_plate", "pearl_amulet"]:
+		assert_true(ItemDB.items.has(id), "saknar item " + id)
+
+func test_korallavgrunden_recipes_exist_with_real_ingredients():
+	var anvil_ids: Array = ItemDB.recipes["anvil"].map(func(r): return r["id"])
+	for id in ["tideblade", "coral_shield"]:
+		assert_has(anvil_ids, id)
+	var bench_ids: Array = ItemDB.recipes["crafting_bench"].map(func(r): return r["id"])
+	for id in ["nautilus_plate", "pearl_amulet"]:
+		assert_has(bench_ids, id)
+	var stove_ids: Array = ItemDB.recipes["stove"].map(func(r): return r["id"])
+	assert_has(stove_ids, "kelp_broth")
+	for station in ["anvil", "crafting_bench", "stove"]:
+		for r in ItemDB.recipes[station]:
+			for ing in r["ingredients"]:
+				assert_true(ItemDB.items.has(ing), "recept %s saknar item %s" % [r["id"], ing])
+
+func test_korallavgrunden_quest_chain():
+	for id in ["quest_abyss_1", "quest_abyss_2", "quest_abyss_3"]:
+		assert_true(QuestSystem.quests.has(id), "saknar quest " + id)
+		assert_eq(String(QuestSystem.quests[id]["giver"]), "npc_tidewarden", id + " har fel giver")
+	assert_eq(QuestSystem.quests["quest_abyss_2"]["requires"], ["quest_abyss_1"])
+	assert_eq(QuestSystem.quests["quest_abyss_3"]["requires"], ["quest_abyss_2"])
+	var last: Dictionary = QuestSystem.quests["quest_abyss_3"]
+	assert_eq(String(last["steps"][1]["monster"]), "Sjökungen Nautilex")
+	assert_has(last["rewards"]["unlocks"], "outfit_seaking")
+
+func test_korallavgrunden_crit_gear_feeds_bonus():
+	# Knyter ihop med crit-systemet: tidvattenklingan + pärlamulett ska ge crit-bonus.
+	var gs = load("res://autoload/game_state.gd").new()
+	gs.equipment["weapon"] = "tideblade"     # +0.08
+	gs.equipment["amulet"] = "pearl_amulet"  # +0.06
+	assert_almost_eq(gs.total_crit_bonus(), 0.14, 0.0001)
+	gs.free()

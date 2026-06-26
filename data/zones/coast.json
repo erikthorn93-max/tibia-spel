@@ -15,7 +15,7 @@
 		"WbbTbbbbbbbbbbbbbbbbcbbbbbbbbbbobbbbbbbW",
 		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
 		"Wbbbbbbbbbb0bbbbbbbbbbbbbbbbbbbbbbbbbbbW",
-		"WbbbbbbbbbbPbbbbbbbbbbbbbbqbbbbbbbbbbbbW",
+		"WbbbbbbbbbbPb9bbbbbbbbbbbbqbbbbbbbbbbbbW",
 		"WbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbW",
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
 	],
@@ -23,6 +23,11 @@
 		"0": {
 			"type": "portal",
 			"to": "town",
+			"terrain": "b"
+		},
+		"9": {
+			"type": "portal",
+			"to": "korallavgrunden",
 			"terrain": "b"
 		},
 		"G": {

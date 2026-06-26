@@ -1165,5 +1165,33 @@
 		"respawn": 30,
 		"color": "#9ad0f0",
 		"label": "Rimbärssnår"
+	},
+	"coral_reef": {
+		"skill": "mining",
+		"level": 28,
+		"tool": "pickaxe",
+		"yields": "coral_shard",
+		"xp": 34,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 35,
+		"color": "#e07f8a",
+		"label": "Korallrev"
+	},
+	"kelp_tangle": {
+		"skill": "herbalism",
+		"level": 24,
+		"tool": "sickle",
+		"yields": "sea_kelp",
+		"xp": 26,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 30,
+		"color": "#3f8f6a",
+		"label": "Tångruska"
 	}
 }

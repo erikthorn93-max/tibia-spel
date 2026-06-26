@@ -178,5 +178,11 @@
 		"category": "outfit",
 		"requires": {},
 		"desc": "Belönas för att ha besegrat Frostmonarken Hrimnir i Frostavgrunden."
+	},
+	"outfit_seaking": {
+		"name": "Sjökungens regalier",
+		"category": "outfit",
+		"requires": {},
+		"desc": "Belönas för att ha besegrat Sjökungen Nautilex i Korallavgrunden."
 	}
 }

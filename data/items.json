@@ -3118,5 +3118,90 @@
 		"level_req": 32,
 		"value": 1700,
 		"color": "#bfe8ff"
+	},
+	"coral_shard": {
+		"name": "Korallskärva",
+		"type": "material",
+		"value": 16,
+		"color": "#e07f8a"
+	},
+	"siren_scale": {
+		"name": "Sirenfjäll",
+		"type": "material",
+		"value": 48,
+		"color": "#5fbfa8"
+	},
+	"kraken_ink": {
+		"name": "Bläckessens",
+		"type": "material",
+		"value": 24,
+		"color": "#5a4a7a"
+	},
+	"abyss_pearl": {
+		"name": "Avgrundspärla",
+		"type": "material",
+		"value": 120,
+		"color": "#cfe8f0"
+	},
+	"sea_kelp": {
+		"name": "Havstång",
+		"type": "food",
+		"value": 16,
+		"color": "#3f8f6a",
+		"heal": 40
+	},
+	"kelp_broth": {
+		"name": "Tångsoppa",
+		"type": "food",
+		"value": 72,
+		"color": "#4fae7a",
+		"heal": 85,
+		"buff": {
+			"stat": "armor",
+			"amount": 4,
+			"duration": 45
+		}
+	},
+	"tideblade": {
+		"name": "Tidvattenklingan",
+		"type": "weapon",
+		"slot": "weapon",
+		"skill": "sword",
+		"atk": 46,
+		"crit_chance": 0.08,
+		"level_req": 36,
+		"value": 4200,
+		"color": "#2f9fc0",
+		"desc": "En klinga smidd ur abyssal korall som dryper av saltvatten och befaller tidvattnets kraft vid varje hugg."
+	},
+	"coral_shield": {
+		"name": "Korallsköld",
+		"type": "armor",
+		"slot": "offhand",
+		"armor": 8,
+		"shielding_bonus": 7,
+		"level_req": 30,
+		"value": 1600,
+		"color": "#d06f7a"
+	},
+	"nautilus_plate": {
+		"name": "Nautiluspansar",
+		"type": "armor",
+		"slot": "body",
+		"armor": 20,
+		"def_bonus": 7,
+		"level_req": 33,
+		"value": 2500,
+		"color": "#6fb8c8"
+	},
+	"pearl_amulet": {
+		"name": "Pärlamulett",
+		"type": "armor",
+		"slot": "amulet",
+		"armor": 6,
+		"crit_chance": 0.06,
+		"level_req": 32,
+		"value": 1800,
+		"color": "#dff4f8"
 	}
 }

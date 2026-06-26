@@ -303,6 +303,72 @@ function drawFrostMonarch(im, c) {  // frostmonarken hrimnir — boss
   for (const s of [-1, 1]) tri(im, cx + s * 7, cy - 4, cx + s * 11, cy - 4, cx + s * 9, cy - 10, crown); // skuldertaggar
   for (const [dx, dy] of [[-12, -2], [12, -4], [11, 5], [-11, 6]]) px(im, cx + dx, cy + dy, [200, 240, 255, 200]); // flingor
 }
+const SEAEYE = [255, 240, 120, 255];
+function drawReefShark(im, c) {  // revhaj
+  const cx = 16, cy = 17;
+  tri(im, cx + 7, cy - 4, cx + 7, cy + 4, cx + 13, cy, LITE(c));       // stjärtfena
+  oval(im, cx, cy, 9, 4, c);                                          // kropp
+  oval(im, cx - 2, cy - 1, 6, 2, LITE(c));                            // rygg-highlight
+  tri(im, cx - 9, cy, cx - 4, cy - 3, cx - 4, cy + 2, scale(c, 0.95)); // nos
+  tri(im, cx - 1, cy - 4, cx + 3, cy - 4, cx + 1, cy - 9, scale(c, 0.9)); // ryggfena
+  tri(im, cx - 3, cy + 3, cx, cy + 3, cx - 1, cy + 7, scale(c, 0.85)); // bukfena
+  px(im, cx - 6, cy - 1, SEAEYE);                                     // öga
+  for (let i = 0; i < 4; i++) line(im, cx - 7 - i, cy, cx - 7 - i, cy + 2, DARK(c), 1); // gälar
+  rect(im, cx - 9, cy + 1, 5, 1, [240, 240, 245, 255]);              // tandrad
+}
+function drawKelpWraith(im, c) {  // tånggast — tångvålnad
+  const cx = 16, cy = 13;
+  for (const dx of [-5, -2, 1, 4]) { line(im, cx + dx, cy + 4, cx + dx - 1, cy + 13, scale(c, 0.8), 2); px(im, cx + dx - 1, cy + 13, LITE(c)); } // tångtrasor
+  oval(im, cx, cy, 6, 7, c);                                          // bål
+  oval(im, cx - 1, cy - 1, 4, 4, LITE(c));                            // skimmer
+  line(im, cx - 6, cy - 2, cx - 10, cy + 5, scale(c, 0.85), 2);       // arm v
+  line(im, cx + 6, cy - 2, cx + 10, cy + 5, scale(c, 0.85), 2);       // arm h
+  disc(im, cx, cy - 7, 4, scale(c, 0.9));                             // huvud
+  px(im, cx - 2, cy - 7, SEAEYE); px(im, cx + 2, cy - 7, SEAEYE);
+  for (let i = -3; i <= 3; i += 2) line(im, cx + i, cy - 10, cx + i, cy - 12, LITE(c), 1); // tångslingor
+  for (const [dx, dy] of [[-8, -4], [8, -5], [7, 8]]) px(im, cx + dx, cy + dy, [180, 240, 200, 170]); // bubblor
+}
+function drawCoralGuardian(im, c) {  // korallväktare — korallkonstrukt
+  const cx = 16, cy = 16, glow = [255, 200, 170, 255];
+  rect(im, cx - 5, cy + 6, 4, 8, DARK(c)); rect(im, cx + 1, cy + 6, 4, 8, DARK(c)); // ben
+  rect(im, cx - 6, cy - 4, 12, 11, c);                               // bål
+  oval(im, cx - 2, cy - 1, 3, 4, glow);                              // glödkärna
+  rect(im, cx - 9, cy - 3, 3, 9, scale(c, 0.85)); rect(im, cx + 6, cy - 3, 3, 9, scale(c, 0.85)); // armar
+  for (const s of [-1, 1]) { tri(im, cx + s * 5, cy - 5, cx + s * 9, cy - 7, cx + s * 7, cy - 2, LITE(c)); tri(im, cx + s * 8, cy - 1, cx + s * 11, cy - 3, cx + s * 9, cy + 2, LITE(c)); } // korallgrenar
+  disc(im, cx, cy - 8, 4, scale(c, 0.95));                           // huvud
+  px(im, cx - 2, cy - 8, SEAEYE); px(im, cx + 2, cy - 8, SEAEYE);
+  for (let i = -3; i <= 3; i += 2) line(im, cx + i, cy - 11, cx + i, cy - 13 - (Math.abs(i) === 1 ? 1 : 0), LITE(c), 1); // korallkrona
+  for (const [dx, dy] of [[-7, 2], [7, 3], [-6, -3]]) px(im, cx + dx, cy + dy, [255, 180, 160, 200]); // polyper
+}
+function drawDeepKraken(im, c) {  // djupkraken
+  const cx = 16, cy = 12;
+  for (const [dx, sp] of [[-7, -1], [-3, -1], [2, 1], [6, 1], [-5, -1], [4, 1]]) // tentakler
+    line(im, cx + dx, cy + 5, cx + dx + sp * 4, cy + 14, scale(c, 0.8), 2);
+  oval(im, cx, cy, 8, 9, c);                                          // mantel/huvud
+  oval(im, cx - 2, cy - 3, 4, 5, LITE(c));                            // skimmer
+  for (let i = -4; i <= 4; i += 3) px(im, cx + i, cy + 6, DARK(c));   // sugkoppsrad
+  disc(im, cx - 4, cy - 1, 3, [250, 245, 235, 255]); disc(im, cx + 4, cy - 1, 3, [250, 245, 235, 255]); // ögonvitor
+  px(im, cx - 4, cy - 1, [20, 18, 24, 255]); px(im, cx + 4, cy - 1, [20, 18, 24, 255]); // pupiller
+  for (const [dx, dy] of [[-10, 2], [10, 1], [-9, 8], [9, 9], [0, 13]]) px(im, cx + dx, cy + dy, [120, 90, 160, 180]); // bläck
+}
+function drawSeaKing(im, c) {  // sjökungen nautilex — boss
+  const cx = 16, cy = 16, gold = [240, 220, 120, 255], pearl = [225, 245, 250, 255];
+  rect(im, cx - 5, cy + 7, 4, 8, DARK(c)); rect(im, cx + 1, cy + 7, 4, 8, DARK(c)); // ben
+  rect(im, cx - 7, cy - 4, 14, 12, c);                               // bål
+  ring(im, cx + 4, cy + 1, 5, scale(c, 0.8)); ring(im, cx + 4, cy + 1, 3, LITE(c)); // nautilusskal
+  oval(im, cx - 2, cy, 3, 5, pearl);                                 // bröstpärla
+  rect(im, cx - 10, cy - 3, 3, 10, scale(c, 0.9)); rect(im, cx + 7, cy - 3, 3, 10, scale(c, 0.9)); // armar
+  line(im, cx - 11, cy - 12, cx - 11, cy + 10, [200, 200, 210, 255], 2); // treudd-skaft
+  for (const dx of [-2, 0, 2]) line(im, cx - 11 + dx, cy - 12, cx - 11 + dx, cy - 16, [220, 225, 235, 255], 1); // treuddspetsar
+  disc(im, cx, cy - 8, 5, scale(c, 0.97));                           // huvud
+  px(im, cx - 2, cy - 8, SEAEYE); px(im, cx + 2, cy - 8, SEAEYE);
+  rect(im, cx - 4, cy - 5, 9, 1, DARK(c));                           // mun
+  for (let i = -5; i <= 5; i += 2) line(im, cx + i, cy - 12, cx + i, cy - 12 - (3 - Math.abs(i) % 2), gold, 1); // krona
+  rect(im, cx - 6, cy - 12, 13, 2, gold);
+  disc(im, cx, cy - 17, 2, pearl);
+  for (const s of [-1, 1]) tri(im, cx + s * 7, cy - 4, cx + s * 11, cy - 4, cx + s * 9, cy - 10, gold); // skuldertaggar
+  for (const [dx, dy] of [[-12, -2], [12, -4], [11, 6], [-11, 7]]) px(im, cx + dx, cy + dy, [180, 230, 240, 200]); // bubblor
+}
 const MONSTERS = [
   ["Glödskorpion", "Glödskorpion", "#e0641e", "scorpion"],
   ["Sandskarabé", "Sandskarabé", "#3a8a5a", "scarab"],
@@ -329,6 +395,12 @@ const MONSTERS = [
   ["Isväktare", "Isväktare", "#6fa8d8", "icesentinel"],
   ["Glaciärjätte", "Glaciärjätte", "#5a90c0", "glaciergiant"],
   ["Frostmonarken Hrimnir", "Frostmonarken_Hrimnir", "#aee0ff", "frostmonarch"],
+  // Korallavgrunden — sjunken stad under Saltviks hamn
+  ["Revhaj", "Revhaj", "#4a8fb0", "reefshark"],
+  ["Tånggast", "Tånggast", "#3f8f6a", "kelpwraith"],
+  ["Korallväktare", "Korallväktare", "#d06f7a", "coralguardian"],
+  ["Djupkraken", "Djupkraken", "#6a4a8a", "deepkraken"],
+  ["Sjökungen Nautilex", "Sjökungen_Nautilex", "#2f9fc0", "seaking"],
 ];
 
 let made = 0;
@@ -357,6 +429,11 @@ for (const [name, file, color, kind] of MONSTERS) {
   else if (kind === "icesentinel") drawIceSentinel(im, c);
   else if (kind === "glaciergiant") drawGlacierGiant(im, c);
   else if (kind === "frostmonarch") drawFrostMonarch(im, c);
+  else if (kind === "reefshark") drawReefShark(im, c);
+  else if (kind === "kelpwraith") drawKelpWraith(im, c);
+  else if (kind === "coralguardian") drawCoralGuardian(im, c);
+  else if (kind === "deepkraken") drawDeepKraken(im, c);
+  else if (kind === "seaking") drawSeaKing(im, c);
   outline(im);
   fs.writeFileSync(path.join(OUT, file + ".png"), encodePNG(im));
   console.log("  ✓", file + ".png  (" + name + ")");

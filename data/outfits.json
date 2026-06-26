@@ -106,5 +106,14 @@
 			"pants": "#5a90c0",
 			"hair": "#e8f6ff"
 		}
+	},
+	"outfit_seaking": {
+		"name": "Sjökungens regalier",
+		"unlock": "outfit_seaking",
+		"colors": {
+			"shirt": "#2f9fc0",
+			"pants": "#1f6f90",
+			"hair": "#cfe8f0"
+		}
 	}
 }

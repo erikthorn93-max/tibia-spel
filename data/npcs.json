@@ -528,5 +528,23 @@
 			"Jag har grävt fram namn ur isen som ingen borde läsa."
 		],
 		"dialogue_root": "frostwarden_root"
+	},
+	"npc_tidewarden": {
+		"name": "Dykaren Nerida",
+		"zone": "korallavgrunden",
+		"position": [
+			8,
+			14
+		],
+		"voice": {
+			"model": "en_US-lessac-medium",
+			"length_scale": 1
+		},
+		"barks": [
+			"Andas lugnt. Djupet straffar den som flåsar.",
+			"Hör du tidvattnet? Det är Nautilex som drömmer.",
+			"Varje pärla här nere är köpt med en sjömans liv."
+		],
+		"dialogue_root": "tidewarden_root"
 	}
 }

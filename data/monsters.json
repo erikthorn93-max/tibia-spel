@@ -4186,5 +4186,290 @@
 			"fire": 1.4,
 			"energy": 0.5
 		}
+	},
+	"Revhaj": {
+		"hp": 78,
+		"atk": 24,
+		"exp": 64,
+		"speed": 3.3,
+		"cooldown": 1,
+		"aggro_range": 8,
+		"color": "#4a8fb0",
+		"desc": "En revhaj som glider genom de sjunkna salarna i flock. Den känner blod på mils avstånd och river sönder allt som rör sig.",
+		"ability": {
+			"type": "poison",
+			"chance": 0.22,
+			"duration": 8,
+			"tick_dmg": 3
+		},
+		"loot": [
+			{
+				"item": "siren_scale",
+				"min": 1,
+				"max": 1,
+				"chance": 0.4
+			},
+			{
+				"item": "sea_kelp",
+				"min": 1,
+				"max": 2,
+				"chance": 0.3
+			},
+			{
+				"item": "iron_coin",
+				"min": 6,
+				"max": 20,
+				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 1,
+				"max": 3,
+				"chance": 0.08
+			}
+		],
+		"element_mod": {
+			"energy": 1.6,
+			"fire": 0.6
+		}
+	},
+	"Tånggast": {
+		"hp": 150,
+		"atk": 33,
+		"exp": 150,
+		"speed": 2.4,
+		"cooldown": 1.2,
+		"aggro_range": 9,
+		"color": "#3f8f6a",
+		"desc": "En vålnad av drunknade sjömän, hopflätad av tång och slam. Dess armar griper tag och drar offret ner i djupet.",
+		"ability": {
+			"type": "slow",
+			"chance": 0.3,
+			"duration": 2.5,
+			"tick_dmg": 0
+		},
+		"loot": [
+			{
+				"item": "sea_kelp",
+				"min": 1,
+				"max": 3,
+				"chance": 0.55
+			},
+			{
+				"item": "kraken_ink",
+				"min": 1,
+				"max": 1,
+				"chance": 0.3
+			},
+			{
+				"item": "iron_coin",
+				"min": 14,
+				"max": 40,
+				"chance": 1
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "gold_coin",
+				"min": 2,
+				"max": 5,
+				"chance": 0.12
+			}
+		],
+		"element_mod": {
+			"energy": 1.6,
+			"fire": 0.6
+		}
+	},
+	"Korallväktare": {
+		"hp": 270,
+		"atk": 47,
+		"exp": 270,
+		"speed": 1.5,
+		"cooldown": 1.6,
+		"aggro_range": 6,
+		"color": "#d06f7a",
+		"desc": "En urgammal konstruktion av levande korall, rest för att vakta revets innersta. Den rör sig sakta men dess slag krossar sten.",
+		"ability": {
+			"type": "stun",
+			"chance": 0.3,
+			"duration": 1.5,
+			"tick_dmg": 0
+		},
+		"loot": [
+			{
+				"item": "coral_shard",
+				"min": 1,
+				"max": 2,
+				"chance": 0.5
+			},
+			{
+				"item": "siren_scale",
+				"min": 1,
+				"max": 1,
+				"chance": 0.3
+			},
+			{
+				"item": "iron_coin",
+				"min": 20,
+				"max": 55,
+				"chance": 1
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 1,
+				"chance": 0.08
+			},
+			{
+				"item": "gold_coin",
+				"min": 3,
+				"max": 7,
+				"chance": 0.15
+			}
+		],
+		"element_mod": {
+			"energy": 1.5,
+			"fire": 0.6
+		}
+	},
+	"Djupkraken": {
+		"hp": 480,
+		"atk": 56,
+		"exp": 520,
+		"speed": 1.7,
+		"cooldown": 1.4,
+		"aggro_range": 9,
+		"color": "#6a4a8a",
+		"desc": "En koloss av tentakler och bläck som väller fram ur avgrundens svartaste gap. Dess armar suger livet ur den som fastnar.",
+		"ability": {
+			"type": "drain",
+			"chance": 0.4,
+			"duration": 0,
+			"tick_dmg": 18
+		},
+		"loot": [
+			{
+				"item": "kraken_ink",
+				"min": 1,
+				"max": 3,
+				"chance": 0.6
+			},
+			{
+				"item": "abyss_pearl",
+				"min": 1,
+				"max": 1,
+				"chance": 0.35
+			},
+			{
+				"item": "siren_scale",
+				"min": 1,
+				"max": 2,
+				"chance": 0.4
+			},
+			{
+				"item": "gold_coin",
+				"min": 8,
+				"max": 24,
+				"chance": 1
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 1,
+				"chance": 0.12
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			}
+		],
+		"element_mod": {
+			"energy": 1.5,
+			"fire": 0.5
+		}
+	},
+	"Sjökungen Nautilex": {
+		"hp": 2200,
+		"atk": 78,
+		"exp": 2800,
+		"speed": 1.8,
+		"cooldown": 1.2,
+		"aggro_range": 10,
+		"color": "#2f9fc0",
+		"boss": true,
+		"desc": "Djupets krönte härskare, vuxen samman med sitt nautilusskal och en treudd som befaller tidvattnet självt. Han väcks bara av den som trotsar avgrunden.",
+		"ability": {
+			"type": "stun",
+			"chance": 0.45,
+			"duration": 2.5,
+			"tick_dmg": 0
+		},
+		"loot": [
+			{
+				"item": "tideblade",
+				"min": 1,
+				"max": 1,
+				"chance": 0.12
+			},
+			{
+				"item": "pearl_amulet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.15
+			},
+			{
+				"item": "abyss_pearl",
+				"min": 3,
+				"max": 6,
+				"chance": 1
+			},
+			{
+				"item": "siren_scale",
+				"min": 2,
+				"max": 4,
+				"chance": 1
+			},
+			{
+				"item": "kraken_ink",
+				"min": 2,
+				"max": 5,
+				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 40,
+				"max": 90,
+				"chance": 1
+			},
+			{
+				"item": "ancient_coin",
+				"min": 2,
+				"max": 5,
+				"chance": 0.5
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 2,
+				"chance": 0.4
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.18
+			}
+		],
+		"element_mod": {
+			"energy": 1.4,
+			"fire": 0.5
+		}
 	}
 }

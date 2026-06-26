@@ -1,0 +1,101 @@
+{
+	"name": "Korallavgrunden",
+	"weather": "fog",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WssssssssssssssssssssssssssW",
+		"WsssssoVsslssossssssossssssW",
+		"WsssssssssssssssssssssVssssW",
+		"Wsssssssss~~sssssssssssssssW",
+		"Wsssssssys~ssssslssssssssssW",
+		"WsssGsssssssssssss~~ssslsssW",
+		"Wssssssssssssssssss~sssssssW",
+		"WssssosssssssssysssssssssssW",
+		"WssssssssssslsssssssssssGssW",
+		"Wsssssss~~ssssssssmssssssssW",
+		"Wsssssssssssssssssss~~sssssW",
+		"WsAsTsCsssssss~~sssssssssssW",
+		"WsssssssssssssssssssssmsBssW",
+		"WsPs0ssssssssssssssssssssssW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"0": {
+			"type": "portal",
+			"to": "coast",
+			"terrain": "s"
+		},
+		"A": {
+			"type": "station",
+			"station": "anvil",
+			"terrain": "s"
+		},
+		"T": {
+			"type": "station",
+			"station": "stove",
+			"terrain": "s"
+		},
+		"C": {
+			"type": "station",
+			"station": "crafting_bench",
+			"terrain": "s"
+		},
+		"V": {
+			"type": "node",
+			"node": "coral_reef",
+			"terrain": "s"
+		},
+		"G": {
+			"type": "node",
+			"node": "kelp_tangle",
+			"terrain": "s"
+		},
+		"o": {
+			"type": "spawn",
+			"monster": "Revhaj",
+			"respawn": 20,
+			"terrain": "s"
+		},
+		"l": {
+			"type": "spawn",
+			"monster": "Tånggast",
+			"respawn": 28,
+			"terrain": "s"
+		},
+		"y": {
+			"type": "spawn",
+			"monster": "Korallväktare",
+			"respawn": 42,
+			"terrain": "s"
+		},
+		"m": {
+			"type": "spawn",
+			"monster": "Djupkraken",
+			"respawn": 55,
+			"terrain": "s"
+		},
+		"B": {
+			"type": "spawn",
+			"monster": "Sjökungen Nautilex",
+			"respawn": 3600,
+			"terrain": "s"
+		}
+	},
+	"spawn_table": [
+		{
+			"monster": "Revhaj",
+			"count": 3,
+			"respawn": 24
+		},
+		{
+			"monster": "Tånggast",
+			"count": 3,
+			"respawn": 30
+		},
+		{
+			"monster": "Korallväktare",
+			"count": 1,
+			"respawn": 48
+		}
+	]
+}

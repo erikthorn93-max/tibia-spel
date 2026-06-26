@@ -487,6 +487,27 @@
 				"rime_shard": 3,
 				"is_kristall": 4
 			}
+		},
+		{
+			"id": "tideblade",
+			"skill": "smithing",
+			"level": 43,
+			"xp": 78,
+			"ingredients": {
+				"siren_scale": 2,
+				"kraken_ink": 2,
+				"coral_shard": 4
+			}
+		},
+		{
+			"id": "coral_shield",
+			"skill": "smithing",
+			"level": 34,
+			"xp": 46,
+			"ingredients": {
+				"coral_shard": 4,
+				"siren_scale": 1
+			}
 		}
 	],
 	"stove": [
@@ -691,6 +712,16 @@
 			"ingredients": {
 				"frost_berry": 2,
 				"is_kristall": 1
+			}
+		},
+		{
+			"id": "kelp_broth",
+			"skill": "cooking",
+			"level": 26,
+			"xp": 68,
+			"ingredients": {
+				"sea_kelp": 2,
+				"kraken_ink": 1
 			}
 		}
 	],
@@ -1746,6 +1777,26 @@
 			"xp": 120,
 			"ingredients": {
 				"glacial_core": 1,
+				"sapphire": 2
+			}
+		},
+		{
+			"id": "nautilus_plate",
+			"skill": "crafting",
+			"level": 35,
+			"xp": 145,
+			"ingredients": {
+				"coral_shard": 6,
+				"abyss_pearl": 1
+			}
+		},
+		{
+			"id": "pearl_amulet",
+			"skill": "crafting",
+			"level": 31,
+			"xp": 125,
+			"ingredients": {
+				"abyss_pearl": 1,
 				"sapphire": 2
 			}
 		}
