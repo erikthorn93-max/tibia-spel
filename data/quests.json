@@ -1746,5 +1746,118 @@
 				"constitution": 1200
 			}
 		}
+	},
+	"quest_jail_1": {
+		"name": "Mannen i cellen",
+		"giver": "npc_jack_springer",
+		"requires": [],
+		"steps": [
+			{
+				"type": "talk_to",
+				"npc": "npc_gamel",
+				"hint": "Fråga Gamel i nedre hamnen vad han såg natten Jack greps."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_jack_springer",
+				"hint": "Berätta för Jack vad Gamel viskade om de riktiga smugglarna."
+			}
+		],
+		"rewards": {
+			"xp": 1200,
+			"gold": 300
+		}
+	},
+	"quest_jail_2": {
+		"name": "Smugglarnas spår",
+		"giver": "npc_gamel",
+		"requires": [
+			"quest_jail_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Pirat",
+				"count": 6,
+				"hint": "Slå ut sex av smugglarnas pirater som langar gods vid Stormrevet."
+			},
+			{
+				"type": "collect",
+				"item": "topaz",
+				"count": 3,
+				"hint": "Återta 3 smuggeltopaser ur piraternas gömmor."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_black_bert",
+				"hint": "Konfrontera Black Bert på övre kontoret med de stulna topaserna."
+			}
+		],
+		"rewards": {
+			"xp": 2200,
+			"gold": 600
+		}
+	},
+	"quest_jail_3": {
+		"name": "Black Berts pris",
+		"giver": "npc_black_bert",
+		"requires": [
+			"quest_jail_2"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Jättespindel",
+				"count": 8,
+				"hint": "Black Bert kräver sällsynt silke ur Kristallgrottan. Döda 8 jättespindlar."
+			},
+			{
+				"type": "collect",
+				"item": "spider_silk",
+				"count": 5,
+				"hint": "Samla 5 spindelsilke åt Bert som betalning för sanningen."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_black_bert",
+				"hint": "Lämna silket till Bert och pressa fram namnet bakom komplotten."
+			}
+		],
+		"rewards": {
+			"xp": 3200,
+			"gold": 900,
+			"items": {
+				"gold_ring": 1
+			}
+		}
+	},
+	"quest_jail_4": {
+		"name": "Rättvisa i Thais",
+		"giver": "npc_henricus",
+		"requires": [
+			"quest_jail_3"
+		],
+		"steps": [
+			{
+				"type": "talk_to",
+				"npc": "npc_jack_springer",
+				"hint": "Hämta Jacks vittnesmål nere i fängelsehålan inför rannsakningen."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_henricus",
+				"hint": "Lägg fram bevisen och Jacks vittnesmål för fångvaktaren Henricus."
+			}
+		],
+		"rewards": {
+			"xp": 5000,
+			"gold": 2000,
+			"items": {
+				"smugglers_signet": 1
+			},
+			"skill_xp": {
+				"thieving": 800
+			}
+		}
 	}
 }

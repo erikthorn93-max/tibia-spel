@@ -3385,5 +3385,15 @@
 		"value": 8000,
 		"color": "#ffd86a",
 		"desc": "Havets tre härskares kraft smält samman till ett sigill. Bara den som tämjt djupet i sin helhet kan bära det."
+	},
+	"smugglers_signet": {
+		"name": "Smugglarsigill",
+		"type": "armor",
+		"slot": "ring",
+		"armor": 3,
+		"crit_chance": 0.04,
+		"value": 1200,
+		"color": "#8a6f3a",
+		"desc": "Black Berts sigillring — märket som öppnade dörrar i Thais undre värld. Jack Springer gav dig den när cellen äntligen slog upp."
 	}
 }

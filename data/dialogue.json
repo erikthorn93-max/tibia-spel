@@ -1738,6 +1738,54 @@
 				]
 			},
 			{
+				"text": "Jag vet att du köper smugglarnas gods, Bert. Här är beviset.",
+				"next": "bert_confront",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_jail_2",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_jail_2"
+					}
+				]
+			},
+			{
+				"text": "Vad är ditt pris för namnet bakom komplotten?",
+				"next": "bert_quest_offer",
+				"conditions": [
+					{
+						"type": "quest_completed",
+						"quest": "quest_jail_2"
+					},
+					{
+						"type": "quest_available",
+						"quest": "quest_jail_3"
+					}
+				]
+			},
+			{
+				"text": "Här är ditt silke. Nu — namnet.",
+				"next": "bert_name",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_jail_3",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_jail_3"
+					}
+				]
+			},
+			{
 				"text": "I'll leave you to it.",
 				"next": null
 			}
@@ -1802,6 +1850,37 @@
 				]
 			},
 			{
+				"text": "Jack Springer skickade mig. Vad såg du natten han greps?",
+				"next": "gamel_witness",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_jail_1",
+						"step": 0
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_jail_1"
+					}
+				]
+			},
+			{
+				"text": "Hjälp mig avslöja de riktiga smugglarna.",
+				"next": "gamel_quest_offer",
+				"conditions": [
+					{
+						"type": "quest_completed",
+						"quest": "quest_jail_1"
+					},
+					{
+						"type": "quest_available",
+						"quest": "quest_jail_2"
+					}
+				]
+			},
+			{
 				"text": "I'll leave you be.",
 				"next": null
 			}
@@ -1849,6 +1928,37 @@
 			{
 				"text": "How is justice done here?",
 				"next": "henricus_justice"
+			},
+			{
+				"text": "Jack Springer blev oskyldigt fängslad. Jag kan bevisa det.",
+				"next": "henricus_quest_offer",
+				"conditions": [
+					{
+						"type": "quest_completed",
+						"quest": "quest_jail_3"
+					},
+					{
+						"type": "quest_available",
+						"quest": "quest_jail_4"
+					}
+				]
+			},
+			{
+				"text": "Här är bevisen och Jacks vittnesmål. Döm rättvist.",
+				"next": "henricus_verdict",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_jail_4",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_jail_4"
+					}
+				]
 			},
 			{
 				"text": "Goodbye.",
@@ -1911,6 +2021,50 @@
 							10,
 							35
 						]
+					}
+				]
+			},
+			{
+				"text": "Berätta vad som hände. Jag vill hjälpa dig.",
+				"next": "jack_quest_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_jail_1"
+					}
+				]
+			},
+			{
+				"text": "Gamel bekräftade din historia — du blev lurad.",
+				"next": "jack_quest1_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_jail_1",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_jail_1"
+					}
+				]
+			},
+			{
+				"text": "Fångvaktaren tar upp ditt fall. Ge mig ditt vittnesmål.",
+				"next": "jack_statement",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_jail_4",
+						"step": 0
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_jail_4"
 					}
 				]
 			},
@@ -4652,6 +4806,156 @@
 			{
 				"text": "Något mer?",
 				"next": "forestwarden_root"
+			}
+		]
+	},
+	"jack_quest_offer": {
+		"speaker": "npc_jack_springer",
+		"emotion": "worried",
+		"text": "Sanningen? Jag arbetade vid hamnen tills jag vägrade bära smugglarnas lådor. Nästa morgon låg stulna varor i min säck och vakterna stod där. Gamel i nedre hamnen — han såg allt den natten. Fråga honom!",
+		"choices": [
+			{
+				"text": "Jag ska prata med Gamel.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_jail_1"
+					}
+				]
+			},
+			{
+				"text": "Vi får se.",
+				"next": null
+			}
+		]
+	},
+	"jack_quest1_report": {
+		"speaker": "npc_jack_springer",
+		"emotion": "happy",
+		"text": "Han minns! Då är jag inte galen — någon ville bli av med mig. Men Gamels ord räcker inte för fångvaktaren. Du måste nysta upp hela tråden... börja med honom, han vet vägen vidare.",
+		"choices": [
+			{
+				"text": "Jag ger mig inte förrän du är fri.",
+				"next": null
+			}
+		]
+	},
+	"jack_statement": {
+		"speaker": "npc_jack_springer",
+		"emotion": "worried",
+		"text": "Ett vittnesmål? Här — varje namn, varje natt, varje låda jag vägrade bära. Skriv ner det och lägg det framför Henricus. Den här gången måste han lyssna.",
+		"choices": [
+			{
+				"text": "Jag bär det rakt till fångvaktaren.",
+				"next": null
+			}
+		]
+	},
+	"gamel_witness": {
+		"speaker": "npc_gamel",
+		"emotion": "worried",
+		"text": "Jack, ja... Jag såg dem lasta lådor i mörkret den natten — pirater från revet, inte stadens folk. Allt går genom Black Bert på övre kontoret. Jack tog skulden för någon annans smuts.",
+		"choices": [
+			{
+				"text": "Tack. Jag berättar för Jack.",
+				"next": "gamel_root"
+			}
+		]
+	},
+	"gamel_quest_offer": {
+		"speaker": "npc_gamel",
+		"emotion": "neutral",
+		"text": "Vill du fälla dem? Då behöver du bevis, inte skvaller. Piraterna langar gods vid Stormrevet — slå ut dem och ta tillbaka de stulna topaserna. Lägg dem på Black Berts bord och se honom svettas.",
+		"choices": [
+			{
+				"text": "Smugglarna ska få sitt.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_jail_2"
+					}
+				]
+			},
+			{
+				"text": "Inte än.",
+				"next": null
+			}
+		]
+	},
+	"bert_confront": {
+		"speaker": "npc_black_bert",
+		"emotion": "worried",
+		"text": "...De där topaserna. Var fick du — nej. Tyst nu. Ja, jag köper. Jag säljer. Men jag lät ingen oskyldig ruttna i en cell, det var inte mitt påhitt. Vill du ha namnet bakom Jacks fall? Då gör du först en sak åt mig.",
+		"choices": [
+			{
+				"text": "Vad vill du ha?",
+				"next": "black_bert_root"
+			}
+		]
+	},
+	"bert_quest_offer": {
+		"speaker": "npc_black_bert",
+		"emotion": "neutral",
+		"text": "Spindelsilke från Kristallgrottan — det finaste som finns, och dödligt att skörda. Hämta fem stycken åt mig, så ger jag dig namnet. Ett rättvist byte, eller hur?",
+		"choices": [
+			{
+				"text": "Du får ditt silke.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_jail_3"
+					}
+				]
+			},
+			{
+				"text": "Lägg av.",
+				"next": null
+			}
+		]
+	},
+	"bert_name": {
+		"speaker": "npc_black_bert",
+		"emotion": "neutral",
+		"text": "Ett nöje att handla med dig. Namnet, som lovat: det var hamnfogden själv som lät plantera godset på Jack — pojken kände till för mycket om var lådorna gick. Ta det till fångvaktaren Henricus. Mig såg du aldrig.",
+		"choices": [
+			{
+				"text": "Henricus får höra varenda ord.",
+				"next": null
+			}
+		]
+	},
+	"henricus_quest_offer": {
+		"speaker": "npc_henricus",
+		"emotion": "neutral",
+		"text": "Oskyldig, säger du? Det är ord lätta att slänga ur sig. Men jag dömer på bevis, inte tro. Hämta Jacks vittnesmål från cellen och lägg allt du har framför mig — så ska jag granska fallet på nytt.",
+		"choices": [
+			{
+				"text": "Du ska få allt, svart på vitt.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_jail_4"
+					}
+				]
+			},
+			{
+				"text": "Senare.",
+				"next": null
+			}
+		]
+	},
+	"henricus_verdict": {
+		"speaker": "npc_henricus",
+		"emotion": "friendly",
+		"text": "Hamnfogden... så det var dit lådorna gick. Topaserna, silket, Gamels ord, pojkens vittnesmål — det håller. Jag river upp domen. Jack går fri i kväll. Han tryckte den här sigillringen i min hand åt dig på vägen ut — Black Berts märke, sägs det. Rättvisa, äntligen.",
+		"choices": [
+			{
+				"text": "Det var värt varje steg.",
+				"next": null
 			}
 		]
 	}
