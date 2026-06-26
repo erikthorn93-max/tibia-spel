@@ -971,6 +971,24 @@
 				"chance": 1
 			},
 			{
+				"item": "golden_platebody",
+				"min": 1,
+				"max": 1,
+				"chance": 0.1
+			},
+			{
+				"item": "golden_helmet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.14
+			},
+			{
+				"item": "golden_legs",
+				"min": 1,
+				"max": 1,
+				"chance": 0.12
+			},
+			{
 				"item": "scarab_shell",
 				"min": 3,
 				"max": 6,

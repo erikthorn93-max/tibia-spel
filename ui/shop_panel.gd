@@ -2,8 +2,10 @@
 ## Butikspanel: köp basvaror, sälj inventory för halva värdet.
 
 const STOCK := ["pickaxe", "hatchet", "fishing_rod", "sickle", "bronze_axe", "wooden_club", "empty_vial",
-	"bronze_amulet", "ring_of_protection", "torch", "leather_backpack",
-	"health_potion", "mana_potion", "antidote_potion", "great_health_potion", "venom_brew", "blank_rune"]
+	"hunting_bow", "steel_bow",
+	"bronze_amulet", "steel_amulet", "ring_of_protection", "ring_of_vigor",
+	"torch", "lantern", "leather_backpack", "explorer_backpack",
+	"health_potion", "mana_potion", "great_mana_potion", "antidote_potion", "great_health_potion", "venom_brew", "blank_rune"]
 
 var _list: VBoxContainer
 
