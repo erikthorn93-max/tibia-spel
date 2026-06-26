@@ -3290,5 +3290,194 @@
 				"next": null
 			}
 		]
+	},
+	"mycologist_root": {
+		"speaker": "npc_mycologist",
+		"emotion": "neutral",
+		"text": "Stilla — trampa inte på mycelet. Jag är Lirien, sänd att kartlägga det lysande svampriket. Men något har väckts härnere, och sporerna har slutat lyda.",
+		"choices": [
+			{
+				"text": "Vem är du?",
+				"next": "mycologist_who"
+			},
+			{
+				"text": "Vad har väckts?",
+				"next": "mycologist_s1",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_svamp_1"
+					}
+				]
+			},
+			{
+				"text": "Sporlingarna och flugorna är nedtrampade.",
+				"next": "mycologist_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_svamp_1",
+						"step": 3
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_svamp_1"
+					}
+				]
+			},
+			{
+				"text": "Vad viskar mycelet om?",
+				"next": "mycologist_s2",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_svamp_2"
+					}
+				]
+			},
+			{
+				"text": "Här är sporsäckarna du bad om.",
+				"next": "mycologist_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_svamp_2",
+						"step": 3
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_svamp_2"
+					}
+				]
+			},
+			{
+				"text": "Vem härskar i grottans hjärta?",
+				"next": "mycologist_s3",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_svamp_3"
+					}
+				]
+			},
+			{
+				"text": "Sporkungen är besegrad.",
+				"next": "mycologist_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_svamp_3",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_svamp_3"
+					}
+				]
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"mycologist_who": {
+		"speaker": "npc_mycologist",
+		"emotion": "neutral",
+		"text": "Sporvakt vid Thais örtagille. Jag följde lyshattarnas sken hit ner och fann en grotta som lyser av sitt eget liv. Vackert — tills mycelet började forma soldater av sig självt.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "mycologist_root"
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"mycologist_s1": {
+		"speaker": "npc_mycologist",
+		"emotion": "worried",
+		"text": "Sporlingar yr kring mitt läger och Lysflugor lockar hit än värre kryp. Trampa ner tio Sporlingar och släck sex Lysflugor, så får jag arbeta i fred och spåra källan.",
+		"choices": [
+			{
+				"text": "Det ska bli gjort.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_svamp_1"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "mycologist_root"
+			}
+		]
+	},
+	"mycologist_s2": {
+		"speaker": "npc_mycologist",
+		"emotion": "worried",
+		"text": "Mycelet talar genom Svampvättarna, och Mykonidäldste formar sporerna till vapen. Tysta åtta vättar och tre äldste, och samla deras sporsäckar — de bär minnet av det som befaller dem.",
+		"choices": [
+			{
+				"text": "Jag samlar säckarna.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_svamp_2"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "mycologist_root"
+			}
+		]
+	},
+	"mycologist_s3": {
+		"speaker": "npc_mycologist",
+		"emotion": "worried",
+		"text": "Sporsäckarna bekräftar det: en urgammal vilja vaknar — Sporkungen Myzandros, grottans hjärta. Sprider han sig vidare kvävs hela Grottan i mycel. Gå ner och lägg honom till ro.",
+		"choices": [
+			{
+				"text": "Jag avslutar det här.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_svamp_3"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "mycologist_root"
+			}
+		]
+	},
+	"mycologist_reward": {
+		"speaker": "npc_mycologist",
+		"emotion": "happy",
+		"text": "Mycelet andas lugnt igen — jag känner det genom golvet. Du gjorde det ingen expedition vågat. Ta det här, du har förtjänat skörden.",
+		"choices": [
+			{
+				"text": "Tack, Lirien.",
+				"next": null
+			},
+			{
+				"text": "Något mer?",
+				"next": "mycologist_root"
+			}
+		]
 	}
 }

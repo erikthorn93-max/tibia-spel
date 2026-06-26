@@ -619,3 +619,16 @@ func test_svampgrotta_recipes_exist_with_real_ingredients():
 		for r in ItemDB.recipes[station]:
 			for ing in r["ingredients"]:
 				assert_true(ItemDB.items.has(ing), "recept %s saknar item %s" % [r["id"], ing])
+
+func test_svampgrotta_quest_chain():
+	# Tre länkade quests hos Sporvakt Lirien, kulminerar i bosskampen.
+	for id in ["quest_svamp_1", "quest_svamp_2", "quest_svamp_3"]:
+		assert_true(QuestSystem.quests.has(id), "saknar quest " + id)
+		assert_eq(String(QuestSystem.quests[id]["giver"]), "npc_mycologist", id + " har fel giver")
+	assert_eq(QuestSystem.quests["quest_svamp_2"]["requires"], ["quest_svamp_1"])
+	assert_eq(QuestSystem.quests["quest_svamp_3"]["requires"], ["quest_svamp_2"])
+	# Sista questen ska fälla bossen och belöna mykonid-skruden.
+	var last: Dictionary = QuestSystem.quests["quest_svamp_3"]
+	assert_eq(String(last["steps"][0]["monster"]), "Sporkungen Myzandros")
+	assert_has(last["rewards"]["unlocks"], "outfit_mykonid")
+	assert_true(ItemDB.items.has("spore_staff"), "bossbelöningen spore_staff saknas")

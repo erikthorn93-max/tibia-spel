@@ -166,5 +166,11 @@
 		"category": "outfit",
 		"requires": {},
 		"desc": "Belönas för att ha besegrat Solkonungen Akh-Mortis i Solgraven."
+	},
+	"outfit_mykonid": {
+		"name": "Mykonidernas skrud",
+		"category": "outfit",
+		"requires": {},
+		"desc": "Belönas för att ha besegrat Sporkungen Myzandros i Svampgrottan."
 	}
 }

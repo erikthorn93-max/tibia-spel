@@ -88,5 +88,14 @@
 			"pants": "#8a5a14",
 			"hair": "#f0d878"
 		}
+	},
+	"outfit_mykonid": {
+		"name": "Mykonidernas skrud",
+		"unlock": "outfit_mykonid",
+		"colors": {
+			"shirt": "#6a9a5a",
+			"pants": "#4a6a4a",
+			"hair": "#bff066"
+		}
 	}
 }

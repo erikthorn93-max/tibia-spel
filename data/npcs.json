@@ -492,5 +492,23 @@
 			"Varje fälld best lämnar något efter sig."
 		],
 		"dialogue_root": "charmer_root"
+	},
+	"npc_mycologist": {
+		"name": "Sporvakt Lirien",
+		"zone": "svampgrotta",
+		"position": [
+			11,
+			15
+		],
+		"voice": {
+			"model": "en_US-amy-medium",
+			"length_scale": 1
+		},
+		"barks": [
+			"Lyssna — mycelet andas under fötterna på dig.",
+			"Sporerna minns allt, om man bara vågar inandas dem.",
+			"Ljuset här är levande. Det vill något."
+		],
+		"dialogue_root": "mycologist_root"
 	}
 }

@@ -996,5 +996,120 @@
 			"gold": 50,
 			"charm_points": 100
 		}
+	},
+	"quest_svamp_1": {
+		"name": "Det lysande mörkret",
+		"giver": "npc_mycologist",
+		"requires": [],
+		"steps": [
+			{
+				"type": "explore",
+				"zone": "svampgrotta",
+				"hint": "Följ den lysande gången från Grottan ner i Svampgrottan."
+			},
+			{
+				"type": "kill",
+				"monster": "Sporling",
+				"count": 10,
+				"hint": "Trampa ner 10 Sporlingar innan deras sporer tar över gången."
+			},
+			{
+				"type": "kill",
+				"monster": "Lysfluga",
+				"count": 6,
+				"hint": "Släck 6 Lysflugor — deras sken lockar värre saker till oss."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_mycologist",
+				"hint": "Rapportera till Sporvakt Lirien vid lägret."
+			}
+		],
+		"rewards": {
+			"xp": 700,
+			"gold": 350,
+			"items": {
+				"glowing_soup": 2
+			},
+			"skill_xp": {
+				"herbalism": 250
+			}
+		}
+	},
+	"quest_svamp_2": {
+		"name": "Mycelets viskningar",
+		"giver": "npc_mycologist",
+		"requires": [
+			"quest_svamp_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Svampvätte",
+				"count": 8,
+				"hint": "Hugg ner 8 Svampvättar som vaktar mycelnätet."
+			},
+			{
+				"type": "kill",
+				"monster": "Mykonidäldste",
+				"count": 3,
+				"hint": "Tysta 3 Mykonidäldste innan de formar sporerna till vapen."
+			},
+			{
+				"type": "collect",
+				"item": "spore_sac",
+				"count": 5,
+				"hint": "Samla 5 Sporsäckar från de fallna mykoniderna."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_mycologist",
+				"hint": "Lämna sporsäckarna till Lirien för analys."
+			}
+		],
+		"rewards": {
+			"xp": 1400,
+			"gold": 700,
+			"items": {
+				"glowing_soup": 3
+			},
+			"skill_xp": {
+				"slayer": 500
+			}
+		}
+	},
+	"quest_svamp_3": {
+		"name": "Sporkungens fall",
+		"giver": "npc_mycologist",
+		"requires": [
+			"quest_svamp_2"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Sporkungen Myzandros",
+				"count": 1,
+				"hint": "Stig ner i grottans hjärta och besegra Sporkungen Myzandros."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_mycologist",
+				"hint": "Återvänd till Lirien med beskedet att mycelet är fritt."
+			}
+		],
+		"rewards": {
+			"xp": 5000,
+			"gold": 2500,
+			"items": {
+				"spore_staff": 1,
+				"great_health_potion": 5
+			},
+			"skill_xp": {
+				"constitution": 1500
+			},
+			"unlocks": [
+				"outfit_mykonid"
+			]
+		}
 	}
 }
