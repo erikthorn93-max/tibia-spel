@@ -3033,5 +3033,90 @@
 		"shielding_bonus": 5,
 		"value": 800,
 		"color": "#5fc0a0"
+	},
+	"frost_pelt": {
+		"name": "Frostpäls",
+		"type": "material",
+		"value": 14,
+		"color": "#cfe8f5"
+	},
+	"frost_fang": {
+		"name": "Frosttand",
+		"type": "material",
+		"value": 22,
+		"color": "#a8d4ec"
+	},
+	"rime_shard": {
+		"name": "Rimskärva",
+		"type": "material",
+		"value": 45,
+		"color": "#7fb8e0"
+	},
+	"glacial_core": {
+		"name": "Glaciärkärna",
+		"type": "material",
+		"value": 110,
+		"color": "#5aa0e0"
+	},
+	"frost_berry": {
+		"name": "Rimbär",
+		"type": "food",
+		"value": 18,
+		"color": "#9ad0f0",
+		"heal": 38
+	},
+	"frost_stew": {
+		"name": "Frostgryta",
+		"type": "food",
+		"value": 70,
+		"color": "#bfe4f5",
+		"heal": 80,
+		"buff": {
+			"stat": "armor",
+			"amount": 4,
+			"duration": 45
+		}
+	},
+	"frostbringer_blade": {
+		"name": "Frostbringaren",
+		"type": "weapon",
+		"slot": "weapon",
+		"skill": "sword",
+		"atk": 44,
+		"crit_chance": 0.08,
+		"level_req": 36,
+		"value": 4000,
+		"color": "#8fd0ff",
+		"desc": "En klinga smidd ur evig is som söver sina offer med köld vid varje hugg."
+	},
+	"glacier_shield": {
+		"name": "Glaciärsköld",
+		"type": "armor",
+		"slot": "offhand",
+		"armor": 8,
+		"shielding_bonus": 7,
+		"level_req": 30,
+		"value": 1500,
+		"color": "#6fb0e0"
+	},
+	"rime_plate": {
+		"name": "Rimpansar",
+		"type": "armor",
+		"slot": "body",
+		"armor": 19,
+		"def_bonus": 7,
+		"level_req": 32,
+		"value": 2400,
+		"color": "#9ac8e8"
+	},
+	"rime_amulet": {
+		"name": "Köldamulett",
+		"type": "armor",
+		"slot": "amulet",
+		"armor": 6,
+		"crit_chance": 0.06,
+		"level_req": 32,
+		"value": 1700,
+		"color": "#bfe8ff"
 	}
 }

@@ -466,6 +466,27 @@
 				"scarab_shell": 8,
 				"ember_gland": 2
 			}
+		},
+		{
+			"id": "frostbringer_blade",
+			"skill": "smithing",
+			"level": 42,
+			"xp": 75,
+			"ingredients": {
+				"rime_shard": 4,
+				"frost_fang": 2,
+				"is_kristall": 3
+			}
+		},
+		{
+			"id": "glacier_shield",
+			"skill": "smithing",
+			"level": 34,
+			"xp": 44,
+			"ingredients": {
+				"rime_shard": 3,
+				"is_kristall": 4
+			}
 		}
 	],
 	"stove": [
@@ -660,6 +681,16 @@
 			"ingredients": {
 				"glowing_cap": 3,
 				"spore_dust": 1
+			}
+		},
+		{
+			"id": "frost_stew",
+			"skill": "cooking",
+			"level": 25,
+			"xp": 66,
+			"ingredients": {
+				"frost_berry": 2,
+				"is_kristall": 1
 			}
 		}
 	],
@@ -1696,6 +1727,26 @@
 			"ingredients": {
 				"mycelium_fiber": 3,
 				"luminous_essence": 1
+			}
+		},
+		{
+			"id": "rime_plate",
+			"skill": "crafting",
+			"level": 34,
+			"xp": 140,
+			"ingredients": {
+				"frost_pelt": 6,
+				"rime_shard": 3
+			}
+		},
+		{
+			"id": "rime_amulet",
+			"skill": "crafting",
+			"level": 30,
+			"xp": 120,
+			"ingredients": {
+				"glacial_core": 1,
+				"sapphire": 2
 			}
 		}
 	],

@@ -247,6 +247,62 @@ function drawMykonidBoss(im, c) {  // sporkungen myzandros — kolossal mykonid
   // sporer i luften
   for (const [dx, dy] of [[-12, -2], [12, -3], [11, 4], [-11, 5]]) px(im, cx + dx, cy + dy, [190, 250, 140, 180]);
 }
+const FROSTEYE = [150, 225, 255, 255];
+function drawFrostWolf(im, c, big = false) {  // rimtass / frostvarg — isvarg
+  const cx = 15, cy = 18, body = big ? 9 : 7;
+  line(im, cx + body - 1, cy, cx + body + 5, cy - (big ? 5 : 3), LITE(c), big ? 3 : 2); // svans
+  for (const dx of (big ? [-6, -2, 3, 7] : [-5, -1, 2, 5])) line(im, cx + dx, cy + 3, cx + dx, cy + (big ? 9 : 7), DARK(c), 2); // ben
+  oval(im, cx, cy, body, big ? 6 : 5, c);             // kropp
+  oval(im, cx - 2, cy - 2, body - 3, 3, LITE(c));     // rygg-highlight
+  disc(im, cx - body - 1, cy - 2, big ? 5 : 4, scale(c, 0.95)); // huvud
+  tri(im, cx - body - 3, cy - 6, cx - body - 1, cy - 9, cx - body, cy - 5, scale(c, 0.85)); // öra
+  tri(im, cx - body + 1, cy - 6, cx - body + 3, cy - 9, cx - body, cy - 5, scale(c, 0.85));
+  tri(im, cx - body - 6, cy - 2, cx - body - 1, cy - 4, cx - body - 1, cy, scale(c, 0.8)); // nos
+  px(im, cx - body - 1, cy - 3, FROSTEYE);            // öga
+  for (let x = cx - body + 1; x <= cx + body - 2; x += 3) line(im, x, cy - (big ? 6 : 5), x, cy - (big ? 9 : 7), [220, 245, 255, 255], 1); // rimfrost
+}
+function drawIceSentinel(im, c) {  // isväktare — kristallkonstrukt
+  const cx = 16, cy = 16, ice = [200, 235, 255, 255];
+  rect(im, cx - 5, cy + 6, 4, 8, DARK(c)); rect(im, cx + 1, cy + 6, 4, 8, DARK(c)); // ben
+  rect(im, cx - 6, cy - 4, 12, 11, c);                // bål
+  line(im, cx, cy - 4, cx - 5, cy + 6, LITE(c), 1); line(im, cx, cy - 4, cx + 5, cy + 6, LITE(c), 1); // fasetter
+  oval(im, cx - 2, cy - 1, 3, 4, ice);                // glanskärna
+  rect(im, cx - 9, cy - 3, 3, 9, scale(c, 0.85)); rect(im, cx + 6, cy - 3, 3, 9, scale(c, 0.85)); // armar
+  tri(im, cx - 4, cy - 5, cx + 4, cy - 5, cx, cy - 13, c);       // huvud-kristall
+  tri(im, cx - 2, cy - 6, cx + 2, cy - 6, cx, cy - 11, LITE(c));
+  px(im, cx - 2, cy - 7, FROSTEYE); px(im, cx + 2, cy - 7, FROSTEYE);
+  for (const s of [-1, 1]) tri(im, cx + s * 6, cy - 4, cx + s * 9, cy - 4, cx + s * 7, cy - 9, ice); // axeltaggar
+}
+function drawGlacierGiant(im, c) {  // glaciärjätte
+  const cx = 16, cy = 15;
+  rect(im, cx - 6, cy + 7, 5, 8, DARK(c)); rect(im, cx + 2, cy + 7, 5, 8, DARK(c)); // ben
+  rect(im, cx - 7, cy - 5, 14, 13, c);                // bål
+  oval(im, cx - 3, cy - 2, 4, 5, LITE(c));            // highlight
+  rect(im, cx - 11, cy - 4, 4, 11, scale(c, 0.9)); rect(im, cx + 7, cy - 4, 4, 11, scale(c, 0.9)); // armar
+  disc(im, cx - 9, cy + 7, 3, scale(c, 0.85)); disc(im, cx + 9, cy + 7, 3, scale(c, 0.85)); // nävar
+  disc(im, cx, cy - 8, 5, scale(c, 0.95));            // huvud
+  px(im, cx - 2, cy - 8, FROSTEYE); px(im, cx + 2, cy - 8, FROSTEYE);
+  rect(im, cx - 3, cy - 5, 6, 1, DARK(c));            // mun
+  for (let x = cx - 6; x <= cx + 6; x += 3) line(im, x, cy - 5, x, cy - 8, [220, 245, 255, 255], 1); // istappar
+  for (const s of [-1, 1]) tri(im, cx + s * 7, cy - 5, cx + s * 11, cy - 5, cx + s * 9, cy - 11, [210, 240, 255, 255]); // axeltaggar
+}
+function drawFrostMonarch(im, c) {  // frostmonarken hrimnir — boss
+  const cx = 16, cy = 16, ice = [225, 248, 255, 255], crown = [180, 230, 255, 255];
+  rect(im, cx - 5, cy + 7, 4, 8, DARK(c)); rect(im, cx + 1, cy + 7, 4, 8, DARK(c)); // ben
+  rect(im, cx - 7, cy - 4, 14, 12, c);                // mantel/bål
+  for (let y = cy + 8; y < cy + 12; y++) for (let x = -7; x <= 7; x++) if ((x + y) % 2 === 0) px(im, cx + x, y, LITE(c)); // mantelkant
+  oval(im, cx, cy + 1, 3, 5, ice);                    // bröstjuvel
+  rect(im, cx - 10, cy - 3, 3, 10, scale(c, 0.9)); rect(im, cx + 7, cy - 3, 3, 10, scale(c, 0.9)); // armar
+  line(im, cx + 10, cy - 9, cx + 10, cy + 11, [150, 200, 230, 255], 2); // isstav
+  tri(im, cx + 8, cy - 9, cx + 12, cy - 9, cx + 10, cy - 14, ice);
+  disc(im, cx, cy - 8, 5, scale(c, 0.97));            // huvud
+  px(im, cx - 2, cy - 8, FROSTEYE); px(im, cx + 2, cy - 8, FROSTEYE);
+  for (let i = -5; i <= 5; i += 2) line(im, cx + i, cy - 12, cx + i, cy - 12 - (3 - Math.abs(i) % 2), crown, 1); // krona
+  rect(im, cx - 6, cy - 12, 13, 2, crown);
+  disc(im, cx, cy - 17, 2, ice);
+  for (const s of [-1, 1]) tri(im, cx + s * 7, cy - 4, cx + s * 11, cy - 4, cx + s * 9, cy - 10, crown); // skuldertaggar
+  for (const [dx, dy] of [[-12, -2], [12, -4], [11, 5], [-11, 6]]) px(im, cx + dx, cy + dy, [200, 240, 255, 200]); // flingor
+}
 const MONSTERS = [
   ["Glödskorpion", "Glödskorpion", "#e0641e", "scorpion"],
   ["Sandskarabé", "Sandskarabé", "#3a8a5a", "scarab"],
@@ -267,6 +323,12 @@ const MONSTERS = [
   ["Svampvätte", "Svampvätte", "#6a9a5a", "mykonid"],
   ["Mykonidäldste", "Mykonidäldste", "#4a7a5a", "mykonidelder"],
   ["Sporkungen Myzandros", "Sporkungen_Myzandros", "#7a4a8a", "mykonidboss"],
+  // Frostavgrunden — frusen avgrund bortom Is-zonen
+  ["Rimtass", "Rimtass", "#bfe4f5", "frostwolf"],
+  ["Frostvarg", "Frostvarg", "#8fc7e8", "frostwolfbig"],
+  ["Isväktare", "Isväktare", "#6fa8d8", "icesentinel"],
+  ["Glaciärjätte", "Glaciärjätte", "#5a90c0", "glaciergiant"],
+  ["Frostmonarken Hrimnir", "Frostmonarken_Hrimnir", "#aee0ff", "frostmonarch"],
 ];
 
 let made = 0;
@@ -290,6 +352,11 @@ for (const [name, file, color, kind] of MONSTERS) {
   else if (kind === "mykonid") drawMykonid(im, c, false);
   else if (kind === "mykonidelder") drawMykonid(im, c, true);
   else if (kind === "mykonidboss") drawMykonidBoss(im, c);
+  else if (kind === "frostwolf") drawFrostWolf(im, c, false);
+  else if (kind === "frostwolfbig") drawFrostWolf(im, c, true);
+  else if (kind === "icesentinel") drawIceSentinel(im, c);
+  else if (kind === "glaciergiant") drawGlacierGiant(im, c);
+  else if (kind === "frostmonarch") drawFrostMonarch(im, c);
   outline(im);
   fs.writeFileSync(path.join(OUT, file + ".png"), encodePNG(im));
   console.log("  ✓", file + ".png  (" + name + ")");

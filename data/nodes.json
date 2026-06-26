@@ -1137,5 +1137,33 @@
 		"respawn": 30,
 		"color": "#5fe0c8",
 		"label": "Lyshattar"
+	},
+	"rime_crystal_vein": {
+		"skill": "mining",
+		"level": 25,
+		"tool": "pickaxe",
+		"yields": "is_kristall",
+		"xp": 32,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 35,
+		"color": "#7fb8e0",
+		"label": "Iskristallådra"
+	},
+	"rime_thicket": {
+		"skill": "herbalism",
+		"level": 20,
+		"tool": "sickle",
+		"yields": "frost_berry",
+		"xp": 24,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 30,
+		"color": "#9ad0f0",
+		"label": "Rimbärssnår"
 	}
 }

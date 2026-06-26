@@ -172,5 +172,11 @@
 		"category": "outfit",
 		"requires": {},
 		"desc": "Belönas för att ha besegrat Sporkungen Myzandros i Svampgrottan."
+	},
+	"outfit_frostmonarch": {
+		"name": "Frostmonarkens regalier",
+		"category": "outfit",
+		"requires": {},
+		"desc": "Belönas för att ha besegrat Frostmonarken Hrimnir i Frostavgrunden."
 	}
 }

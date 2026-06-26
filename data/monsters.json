@@ -3901,5 +3901,290 @@
 				"chance": 0.4
 			}
 		]
+	},
+	"Rimtass": {
+		"hp": 70,
+		"atk": 22,
+		"exp": 60,
+		"speed": 3.2,
+		"cooldown": 1,
+		"aggro_range": 8,
+		"color": "#bfe4f5",
+		"desc": "En vargunge av rimfrost vars tassar lämnar isiga spår. Den jagar i flock djupt nere i Frostavgrunden.",
+		"ability": {
+			"type": "slow",
+			"chance": 0.2,
+			"duration": 2,
+			"tick_dmg": 0
+		},
+		"loot": [
+			{
+				"item": "frost_pelt",
+				"min": 1,
+				"max": 1,
+				"chance": 0.5
+			},
+			{
+				"item": "is_kristall",
+				"min": 1,
+				"max": 1,
+				"chance": 0.2
+			},
+			{
+				"item": "iron_coin",
+				"min": 6,
+				"max": 20,
+				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 1,
+				"max": 3,
+				"chance": 0.08
+			}
+		],
+		"element_mod": {
+			"fire": 1.6,
+			"energy": 0.6
+		}
+	},
+	"Frostvarg": {
+		"hp": 140,
+		"atk": 34,
+		"exp": 140,
+		"speed": 2.6,
+		"cooldown": 1.2,
+		"aggro_range": 9,
+		"color": "#8fc7e8",
+		"desc": "En fullvuxen frostvarg med päls hård som is. Dess tjut fryser märgen i den som hör det.",
+		"ability": {
+			"type": "slow",
+			"chance": 0.28,
+			"duration": 2.5,
+			"tick_dmg": 0
+		},
+		"loot": [
+			{
+				"item": "frost_pelt",
+				"min": 1,
+				"max": 2,
+				"chance": 0.55
+			},
+			{
+				"item": "frost_fang",
+				"min": 1,
+				"max": 1,
+				"chance": 0.3
+			},
+			{
+				"item": "iron_coin",
+				"min": 14,
+				"max": 40,
+				"chance": 1
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			},
+			{
+				"item": "gold_coin",
+				"min": 2,
+				"max": 5,
+				"chance": 0.12
+			}
+		],
+		"element_mod": {
+			"fire": 1.6,
+			"energy": 0.6
+		}
+	},
+	"Isväktare": {
+		"hp": 250,
+		"atk": 46,
+		"exp": 250,
+		"speed": 1.6,
+		"cooldown": 1.6,
+		"aggro_range": 6,
+		"color": "#6fa8d8",
+		"desc": "En urgammal väktare av sammanfrusen is, rest för att vakta avgrundens hjärta. Den rör sig sakta men slår som en lavin.",
+		"ability": {
+			"type": "slow",
+			"chance": 0.35,
+			"duration": 3,
+			"tick_dmg": 0
+		},
+		"loot": [
+			{
+				"item": "rime_shard",
+				"min": 1,
+				"max": 2,
+				"chance": 0.5
+			},
+			{
+				"item": "is_kristall",
+				"min": 1,
+				"max": 2,
+				"chance": 0.4
+			},
+			{
+				"item": "iron_coin",
+				"min": 30,
+				"max": 75,
+				"chance": 1
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 1,
+				"chance": 0.06
+			},
+			{
+				"item": "gold_coin",
+				"min": 4,
+				"max": 10,
+				"chance": 0.15
+			}
+		],
+		"element_mod": {
+			"fire": 1.5,
+			"energy": 0.5
+		}
+	},
+	"Glaciärjätte": {
+		"hp": 440,
+		"atk": 60,
+		"exp": 440,
+		"speed": 1.4,
+		"cooldown": 1.8,
+		"aggro_range": 8,
+		"color": "#5a90c0",
+		"desc": "En kolossal jätte mejslad ur en sjunken glaciär. Varje steg får avgrunden att knaka av köld.",
+		"ability": {
+			"type": "slow",
+			"chance": 0.4,
+			"duration": 3,
+			"tick_dmg": 0
+		},
+		"loot": [
+			{
+				"item": "glacial_core",
+				"min": 1,
+				"max": 1,
+				"chance": 0.4
+			},
+			{
+				"item": "rime_shard",
+				"min": 1,
+				"max": 3,
+				"chance": 0.6
+			},
+			{
+				"item": "frost_fang",
+				"min": 1,
+				"max": 2,
+				"chance": 0.4
+			},
+			{
+				"item": "gold_coin",
+				"min": 8,
+				"max": 22,
+				"chance": 1
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 1,
+				"chance": 0.12
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.03
+			}
+		],
+		"element_mod": {
+			"fire": 1.5,
+			"energy": 0.5
+		}
+	},
+	"Frostmonarken Hrimnir": {
+		"hp": 2000,
+		"atk": 75,
+		"exp": 2600,
+		"speed": 1.8,
+		"cooldown": 1.2,
+		"aggro_range": 10,
+		"color": "#aee0ff",
+		"boss": true,
+		"desc": "Avgrundens frusna härskare, krönt med istappar och en vrede äldre än vintern själv. Han väcks bara av den som vågar nå hans tron.",
+		"ability": {
+			"type": "slow",
+			"chance": 0.45,
+			"duration": 3.5,
+			"tick_dmg": 0
+		},
+		"loot": [
+			{
+				"item": "frostbringer_blade",
+				"min": 1,
+				"max": 1,
+				"chance": 0.12
+			},
+			{
+				"item": "rime_amulet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.15
+			},
+			{
+				"item": "glacial_core",
+				"min": 3,
+				"max": 6,
+				"chance": 1
+			},
+			{
+				"item": "rime_shard",
+				"min": 2,
+				"max": 4,
+				"chance": 1
+			},
+			{
+				"item": "frost_pelt",
+				"min": 2,
+				"max": 5,
+				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 40,
+				"max": 90,
+				"chance": 1
+			},
+			{
+				"item": "ancient_coin",
+				"min": 2,
+				"max": 5,
+				"chance": 0.5
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 2,
+				"chance": 0.4
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.18
+			}
+		],
+		"element_mod": {
+			"fire": 1.4,
+			"energy": 0.5
+		}
 	}
 }

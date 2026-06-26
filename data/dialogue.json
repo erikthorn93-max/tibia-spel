@@ -3479,5 +3479,194 @@
 				"next": "mycologist_root"
 			}
 		]
+	},
+	"frostwarden_root": {
+		"speaker": "npc_frostwarden",
+		"emotion": "neutral",
+		"text": "Varmt blod, härnere? Då är du antingen modig eller dåre. Jag är Torvald — jag har följt kölden ända ner i avgrunden, och funnit något som rör sig i isen.",
+		"choices": [
+			{
+				"text": "Vem är du?",
+				"next": "frostwarden_who"
+			},
+			{
+				"text": "Vad rör sig i isen?",
+				"next": "frostwarden_s1",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_frost_1"
+					}
+				]
+			},
+			{
+				"text": "Vargarna är fällda.",
+				"next": "frostwarden_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_frost_1",
+						"step": 3
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_frost_1"
+					}
+				]
+			},
+			{
+				"text": "Vad vaktar djupet?",
+				"next": "frostwarden_s2",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_frost_2"
+					}
+				]
+			},
+			{
+				"text": "Här är rimskärvorna du bad om.",
+				"next": "frostwarden_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_frost_2",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_frost_2"
+					}
+				]
+			},
+			{
+				"text": "Vem härskar i avgrundens hjärta?",
+				"next": "frostwarden_s3",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_frost_3"
+					}
+				]
+			},
+			{
+				"text": "Frostmonarken är besegrad.",
+				"next": "frostwarden_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_frost_3",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_frost_3"
+					}
+				]
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"frostwarden_who": {
+		"speaker": "npc_frostwarden",
+		"emotion": "neutral",
+		"text": "Frostvandrare från Isfjorden. Jag kartlägger det som ligger bortom drakens näste — sprickan som leder ner hit. Men ju djupare jag gräver, desto mer vaknar avgrunden.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "frostwarden_root"
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"frostwarden_s1": {
+		"speaker": "npc_frostwarden",
+		"emotion": "worried",
+		"text": "Rimtassar yr kring mitt läger i flock, och Frostvargar svarar på deras tjut. Fäll tio tassar och sex vargar, så vågar jag tränga djupare in i isen.",
+		"choices": [
+			{
+				"text": "Det ska bli gjort.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_frost_1"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "frostwarden_root"
+			}
+		]
+	},
+	"frostwarden_s2": {
+		"speaker": "npc_frostwarden",
+		"emotion": "worried",
+		"text": "Längre ner står Isväktare — urgamla konstrukt som vaktar djupet. Krossa sex av dem och samla deras rimskärvor; de bär köld äldre än fjorden, och jag måste tyda dem.",
+		"choices": [
+			{
+				"text": "Jag samlar skärvorna.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_frost_2"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "frostwarden_root"
+			}
+		]
+	},
+	"frostwarden_s3": {
+		"speaker": "npc_frostwarden",
+		"emotion": "worried",
+		"text": "Skärvorna bekräftar min skräck: Frostmonarken Hrimnir vaknar på sin tron, vaktad av Glaciärjättar. Stiger han fullt ut fryser hela Isfjorden till sten. Bana väg och lägg honom i evig sömn.",
+		"choices": [
+			{
+				"text": "Jag avslutar det här.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_frost_3"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "frostwarden_root"
+			}
+		]
+	},
+	"frostwarden_reward": {
+		"speaker": "npc_frostwarden",
+		"emotion": "happy",
+		"text": "Kölden viker undan — jag känner det i mina gamla ben. Ingen expedition har nått så långt och återvänt. Ta det här, du har förtjänat varenda mynt.",
+		"choices": [
+			{
+				"text": "Tack, Torvald.",
+				"next": null
+			},
+			{
+				"text": "Något mer?",
+				"next": "frostwarden_root"
+			}
+		]
 	}
 }

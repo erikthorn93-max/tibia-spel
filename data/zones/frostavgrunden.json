@@ -1,0 +1,101 @@
+{
+	"name": "Frostavgrunden",
+	"weather": "snow",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"W..........................W",
+		"W.....oV..l..o......o......W",
+		"W.....................V....W",
+		"W.........~~...............W",
+		"W.......y.~.....l..........W",
+		"W...G.............~~...l...W",
+		"W..................~.......W",
+		"W....o.........y...........W",
+		"W...........l...........G..W",
+		"W.......~~........m........W",
+		"W...................~~.....W",
+		"W.A.T.C.......~~...........W",
+		"W.....................m.B..W",
+		"W.P.0......................W",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"0": {
+			"type": "portal",
+			"to": "ice",
+			"terrain": "."
+		},
+		"A": {
+			"type": "station",
+			"station": "anvil",
+			"terrain": "."
+		},
+		"T": {
+			"type": "station",
+			"station": "stove",
+			"terrain": "."
+		},
+		"C": {
+			"type": "station",
+			"station": "crafting_bench",
+			"terrain": "."
+		},
+		"V": {
+			"type": "node",
+			"node": "rime_crystal_vein",
+			"terrain": "."
+		},
+		"G": {
+			"type": "node",
+			"node": "rime_thicket",
+			"terrain": "."
+		},
+		"o": {
+			"type": "spawn",
+			"monster": "Rimtass",
+			"respawn": 20,
+			"terrain": "."
+		},
+		"l": {
+			"type": "spawn",
+			"monster": "Frostvarg",
+			"respawn": 28,
+			"terrain": "."
+		},
+		"y": {
+			"type": "spawn",
+			"monster": "Isväktare",
+			"respawn": 40,
+			"terrain": "."
+		},
+		"m": {
+			"type": "spawn",
+			"monster": "Glaciärjätte",
+			"respawn": 55,
+			"terrain": "."
+		},
+		"B": {
+			"type": "spawn",
+			"monster": "Frostmonarken Hrimnir",
+			"respawn": 3600,
+			"terrain": "."
+		}
+	},
+	"spawn_table": [
+		{
+			"monster": "Rimtass",
+			"count": 3,
+			"respawn": 24
+		},
+		{
+			"monster": "Frostvarg",
+			"count": 3,
+			"respawn": 30
+		},
+		{
+			"monster": "Isväktare",
+			"count": 1,
+			"respawn": 45
+		}
+	]
+}

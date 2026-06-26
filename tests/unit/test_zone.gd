@@ -632,3 +632,85 @@ func test_svampgrotta_quest_chain():
 	assert_eq(String(last["steps"][0]["monster"]), "Sporkungen Myzandros")
 	assert_has(last["rewards"]["unlocks"], "outfit_mykonid")
 	assert_true(ItemDB.items.has("spore_staff"), "bossbelöningen spore_staff saknas")
+
+## ── Frostavgrunden: frusen avgrund bortom Is-zonen (frost-element, gather → smide → utrustning) ──
+
+func test_ice_links_to_frostavgrunden():
+	var z = _make_zone("ice")
+	assert_true(z.portals.values().has("frostavgrunden"), "Isfjorden saknar portal till Frostavgrunden")
+	var pt = null
+	for t in z.portals:
+		if String(z.portals[t]) == "frostavgrunden":
+			pt = t
+			break
+	assert_not_null(pt)
+	assert_gt(z.find_path(z.player_start, pt).size(), 0, "Frostavgrunden-portalen är inte nåbar")
+
+func test_frostavgrunden_loads_with_content():
+	var z = _make_zone("frostavgrunden")
+	assert_eq(z.zone_name, "Frostavgrunden")
+	assert_true(z.is_walkable(z.player_start), "startrutan ska vara gångbar")
+	assert_true(z.portals.values().has("ice"), "saknar portal tillbaka till Isfjorden")
+	for name in ["Rimtass", "Frostvarg", "Isväktare"]:
+		assert_gt(z.spawn_points.filter(func(s): return s["monster"] == name).size(), 0,
+			"frostavgrunden saknar " + name)
+	var bt = null
+	for s in z.spawn_points:
+		if s["monster"] == "Frostmonarken Hrimnir":
+			bt = s["tile"]
+			break
+	assert_not_null(bt, "Frostmonarken Hrimnir spawnar inte i zonen")
+	assert_gt(z.find_path_adjacent(z.player_start, bt).size(), 0, "bossen är inte nåbar")
+	var nodes = z.node_points.map(func(n): return n["node"])
+	assert_has(nodes, "rime_crystal_vein")
+	assert_has(nodes, "rime_thicket")
+	var stations = z.station_points.map(func(s): return s["station"])
+	assert_has(stations, "anvil")
+	assert_has(stations, "crafting_bench")
+
+func test_frostavgrunden_monsters_registered_with_desc():
+	for name in ["Rimtass", "Frostvarg", "Isväktare", "Glaciärjätte", "Frostmonarken Hrimnir"]:
+		assert_true(MonsterDB.monsters.has(name), "saknar monster " + name)
+		assert_ne(String(MonsterDB.monsters[name].get("desc", "")), "", name + " saknar bestiary-text")
+	assert_true(MonsterDB.monsters["Frostmonarken Hrimnir"].get("boss", false), "Hrimnir ska vara boss")
+	# Frostvarelser ska vara svaga mot eld och tåliga mot energi (is-konvention).
+	var mod: Dictionary = MonsterDB.monsters["Frostvarg"]["element_mod"]
+	assert_gt(float(mod.get("fire", 1.0)), 1.0, "frostvarg ska vara svag mot eld")
+	assert_lt(float(mod.get("energy", 1.0)), 1.0, "frostvarg ska tåla energi")
+
+func test_frostavgrunden_items_registered():
+	for id in ["frost_pelt", "frost_fang", "rime_shard", "glacial_core", "frost_berry",
+			"frost_stew", "frostbringer_blade", "glacier_shield", "rime_plate", "rime_amulet"]:
+		assert_true(ItemDB.items.has(id), "saknar item " + id)
+
+func test_frostavgrunden_recipes_exist_with_real_ingredients():
+	var anvil_ids: Array = ItemDB.recipes["anvil"].map(func(r): return r["id"])
+	for id in ["frostbringer_blade", "glacier_shield"]:
+		assert_has(anvil_ids, id)
+	var bench_ids: Array = ItemDB.recipes["crafting_bench"].map(func(r): return r["id"])
+	for id in ["rime_plate", "rime_amulet"]:
+		assert_has(bench_ids, id)
+	var stove_ids: Array = ItemDB.recipes["stove"].map(func(r): return r["id"])
+	assert_has(stove_ids, "frost_stew")
+	for station in ["anvil", "crafting_bench", "stove"]:
+		for r in ItemDB.recipes[station]:
+			for ing in r["ingredients"]:
+				assert_true(ItemDB.items.has(ing), "recept %s saknar item %s" % [r["id"], ing])
+
+func test_frostavgrunden_quest_chain():
+	for id in ["quest_frost_1", "quest_frost_2", "quest_frost_3"]:
+		assert_true(QuestSystem.quests.has(id), "saknar quest " + id)
+		assert_eq(String(QuestSystem.quests[id]["giver"]), "npc_frostwarden", id + " har fel giver")
+	assert_eq(QuestSystem.quests["quest_frost_2"]["requires"], ["quest_frost_1"])
+	assert_eq(QuestSystem.quests["quest_frost_3"]["requires"], ["quest_frost_2"])
+	var last: Dictionary = QuestSystem.quests["quest_frost_3"]
+	assert_eq(String(last["steps"][1]["monster"]), "Frostmonarken Hrimnir")
+	assert_has(last["rewards"]["unlocks"], "outfit_frostmonarch")
+
+func test_frostavgrunden_crit_gear_feeds_bonus():
+	# Knyter ihop med crit-systemet: frostbringaren + köldamulett ska ge crit-bonus.
+	var gs = load("res://autoload/game_state.gd").new()
+	gs.equipment["weapon"] = "frostbringer_blade"   # +0.08
+	gs.equipment["amulet"] = "rime_amulet"          # +0.06
+	assert_almost_eq(gs.total_crit_bonus(), 0.14, 0.0001)
+	gs.free()

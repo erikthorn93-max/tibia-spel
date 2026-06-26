@@ -510,5 +510,23 @@
 			"Ljuset här är levande. Det vill något."
 		],
 		"dialogue_root": "mycologist_root"
+	},
+	"npc_frostwarden": {
+		"name": "Frostvandraren Torvald",
+		"zone": "frostavgrunden",
+		"position": [
+			8,
+			14
+		],
+		"voice": {
+			"model": "en_US-lessac-medium",
+			"length_scale": 1
+		},
+		"barks": [
+			"Avgrunden tar värmen ur märgen om du står stilla.",
+			"Hrimnir sover. Be att han fortsätter med det.",
+			"Jag har grävt fram namn ur isen som ingen borde läsa."
+		],
+		"dialogue_root": "frostwarden_root"
 	}
 }

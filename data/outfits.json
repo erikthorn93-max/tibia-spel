@@ -97,5 +97,14 @@
 			"pants": "#4a6a4a",
 			"hair": "#bff066"
 		}
+	},
+	"outfit_frostmonarch": {
+		"name": "Frostmonarkens regalier",
+		"unlock": "outfit_frostmonarch",
+		"colors": {
+			"shirt": "#aee0ff",
+			"pants": "#5a90c0",
+			"hair": "#e8f6ff"
+		}
 	}
 }

@@ -115,6 +115,12 @@ const SPRITE_MAP: Dictionary = {
 	"Svampvätte":                 "Svampvätte",
 	"Mykonidäldste":              "Mykonidäldste",
 	"Sporkungen Myzandros":       "Sporkungen_Myzandros",
+	# Frostavgrunden — frusen avgrund bortom Is-zonen
+	"Rimtass":                    "Rimtass",
+	"Frostvarg":                  "Frostvarg",
+	"Isväktare":                  "Isväktare",
+	"Glaciärjätte":               "Glaciärjätte",
+	"Frostmonarken Hrimnir":      "Frostmonarken_Hrimnir",
 }
 
 func _ready() -> void:

@@ -1111,5 +1111,120 @@
 				"outfit_mykonid"
 			]
 		}
+	},
+	"quest_frost_1": {
+		"name": "Avgrundens köld",
+		"giver": "npc_frostwarden",
+		"requires": [],
+		"steps": [
+			{
+				"type": "explore",
+				"zone": "frostavgrunden",
+				"hint": "Stig ner i Frostavgrunden via sprickan i Isfjordens mitt."
+			},
+			{
+				"type": "kill",
+				"monster": "Rimtass",
+				"count": 10,
+				"hint": "Skingra flocken — fäll 10 Rimtassar i avgrunden."
+			},
+			{
+				"type": "kill",
+				"monster": "Frostvarg",
+				"count": 6,
+				"hint": "Tysta 6 Frostvargar innan deras tjut kallar fler."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_frostwarden",
+				"hint": "Rapportera till Frostvandraren Torvald vid lägret."
+			}
+		],
+		"rewards": {
+			"xp": 1500,
+			"gold": 700,
+			"items": {
+				"great_health_potion": 3
+			},
+			"skill_xp": {
+				"slayer": 400
+			}
+		}
+	},
+	"quest_frost_2": {
+		"name": "Väktarnas is",
+		"giver": "npc_frostwarden",
+		"requires": [
+			"quest_frost_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Isväktare",
+				"count": 6,
+				"hint": "Krossa 6 Isväktare som vaktar avgrundens djup."
+			},
+			{
+				"type": "collect",
+				"item": "rime_shard",
+				"count": 6,
+				"hint": "Samla 6 Rimskärvor ur de fallna väktarna."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_frostwarden",
+				"hint": "Lämna rimskärvorna till Torvald."
+			}
+		],
+		"rewards": {
+			"xp": 2500,
+			"gold": 1200,
+			"items": {
+				"great_health_potion": 5
+			},
+			"skill_xp": {
+				"slayer": 700
+			}
+		}
+	},
+	"quest_frost_3": {
+		"name": "Frostmonarkens tron",
+		"giver": "npc_frostwarden",
+		"requires": [
+			"quest_frost_2"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Glaciärjätte",
+				"count": 3,
+				"hint": "Bana väg till tronen — fäll 3 Glaciärjättar."
+			},
+			{
+				"type": "kill",
+				"monster": "Frostmonarken Hrimnir",
+				"count": 1,
+				"hint": "Besegra Frostmonarken Hrimnir i avgrundens hjärta."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_frostwarden",
+				"hint": "Återvänd till Torvald med beskedet att kölden är bruten."
+			}
+		],
+		"rewards": {
+			"xp": 7000,
+			"gold": 3500,
+			"items": {
+				"great_health_potion": 5,
+				"diamond": 1
+			},
+			"skill_xp": {
+				"constitution": 2000
+			},
+			"unlocks": [
+				"outfit_frostmonarch"
+			]
+		}
 	}
 }
