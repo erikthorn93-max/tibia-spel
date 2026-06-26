@@ -20,7 +20,7 @@ static func classify(zone_id: String) -> String:
 	var z := zone_id.to_lower()
 	if z.begins_with("dungeon:"):
 		return CAVE
-	if "volcano" in z or "demon" in z or "rift" in z:
+	if "volcano" in z or "demon" in z or "rift" in z or "drakbo" in z:
 		return VOLCANO
 	if "swamp" in z or "dimmoren" in z:
 		return SWAMP
@@ -33,7 +33,7 @@ static func classify(zone_id: String) -> String:
 		return CAVE
 	if "guild" in z or "inn" in z or "temple" in z or "depot" in z:
 		return INTERIOR
-	if "forest" in z or "wilds" in z or "heights" in z or "fields" in z:
+	if "forest" in z or "wilds" in z or "heights" in z or "fields" in z or "skog" in z:
 		return FOREST
 	if "town" in z or "coast" in z or "castle" in z or "docks" in z:
 		return TOWN

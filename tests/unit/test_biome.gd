@@ -18,13 +18,14 @@ func test_classify_hot_zones_as_volcano():
 	assert_eq(Biome.classify("volcano"), Biome.VOLCANO)
 	assert_eq(Biome.classify("demon_temple"), Biome.VOLCANO)
 	assert_eq(Biome.classify("orc_rift"), Biome.VOLCANO)
+	assert_eq(Biome.classify("drakboet"), Biome.VOLCANO)
 
 func test_classify_ice_and_desert():
 	assert_eq(Biome.classify("ice"), Biome.ICE)
 	assert_eq(Biome.classify("desert"), Biome.DESERT)
 
 func test_classify_outdoor_nature_as_forest():
-	for z in ["forest", "thais_wilds", "thais_heights", "thais_fields"]:
+	for z in ["forest", "thais_wilds", "thais_heights", "thais_fields", "urskogens_hjarta"]:
 		assert_eq(Biome.classify(z), Biome.FOREST, z)
 
 func test_classify_interiors():
