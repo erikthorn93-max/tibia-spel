@@ -8,7 +8,28 @@ func before_all():
 	tasks = JSON.parse_string(f.get_as_text())
 
 func test_task_count():
-	assert_eq(tasks.size(), 19)
+	assert_eq(tasks.size(), 46)
+
+func test_endgame_region_tasks_present():
+	# Slayer-täckning för de nyare/tematiska regionerna (tidigare helt otäckta).
+	var krav := {
+		"task_mykonid": "Mykonidäldste",       # svampgrottan
+		"task_okenmumie": "Ökenmumie",         # öken
+		"task_glaciarjatte": "Glaciärjätte",   # is/frost
+		"task_sotdemon": "Sotdemon",           # vulkan
+		"task_djupkraken": "Djupkraken",       # korallavgrunden
+		"task_avgrundsorm": "Avgrundsorm",     # lysdjupet
+		"task_urtidskvaljaren": "Urtidskväljaren",  # urdjupet
+	}
+	for id in krav:
+		assert_true(tasks.has(id), "saknar task: " + id)
+		assert_eq(String(tasks[id]["monster"]), krav[id], id)
+
+func test_slayer_progression_naar_endgame():
+	var max_req := 0
+	for id in tasks:
+		max_req = maxi(max_req, int(tasks[id]["slayer_level_req"]))
+	assert_gte(max_req, 50, "slayer-tasks ska sträcka sig till endgame (nivå 50)")
 
 func test_low_level_tasks_present():
 	for id in ["task_faltmus", "task_krakor", "task_vildsvin"]:

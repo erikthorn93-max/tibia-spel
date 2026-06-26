@@ -163,6 +163,40 @@ func test_unranked_charm_defaults_to_rank_one():
 	assert_eq(cs.rank("wound"), 1)
 	assert_almost_eq(cs.effective_value("wound"), float(cs.charms["wound"]["value"]), 0.0001)
 
+# ── Data-integritet: varje charm måste vara välformad och köpbar ──
+
+func test_alla_charms_valformade():
+	var giltiga_element := ["physical", "fire", "energy", "death"]
+	for id in cs.charms:
+		var c: Dictionary = cs.charms[id]
+		assert_true(c.has("name") and String(c["name"]) != "", "%s: saknar namn" % id)
+		assert_has(["offense", "defense"], String(c.get("type", "")), "%s: ogiltig typ" % id)
+		assert_gt(int(c.get("cost", 0)), 0, "%s: cost måste vara positiv" % id)
+		var ch := float(c.get("chance", 0.0))
+		assert_true(ch > 0.0 and ch <= 1.0, "%s: chance utanför (0,1]" % id)
+		assert_has(["mitigate", "adrenaline"], cs.effect(id), "%s: okänd effekttyp" % id)
+		assert_has(giltiga_element, String(c.get("element", "")), "%s: okänt element" % id)
+
+func test_minst_en_offense_och_en_defense():
+	# En spelare ska alltid kunna bära en full loadout (1 offensiv + 1 defensiv).
+	var offense := 0
+	var defense := 0
+	for id in cs.charms:
+		match String(cs.charms[id].get("type", "")):
+			"offense": offense += 1
+			"defense": defense += 1
+	assert_gt(offense, 0, "ingen offensiv charm finns")
+	assert_gt(defense, 0, "ingen defensiv charm finns")
+
+func test_varje_stridselement_har_en_offensiv_charm():
+	# Charm-skadan färgas per element; varje färglagt element ska gå att uppnå.
+	var element_med_charm := {}
+	for id in cs.charms:
+		if String(cs.charms[id].get("type", "")) == "offense":
+			element_med_charm[String(cs.charms[id].get("element", ""))] = true
+	for el in ["physical", "fire", "energy", "death"]:
+		assert_true(element_med_charm.has(el), "inget offensivt charm för element: %s" % el)
+
 func test_upgrade_raises_rank_and_spends_points():
 	cs.award_points(1000)
 	cs.unlock("wound")                       # kostar 60 → 940 kvar

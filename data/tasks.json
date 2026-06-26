@@ -17,5 +17,39 @@
 	"task_skuggspindel":   {"monster": "Skuggspindel",   "required": 120, "slayer_level_req": 20, "reward_slayer_xp": 2000, "reward_gold": 2800, "repeatable": true},
 	"task_faltmus":        {"monster": "Fältmus",        "required": 25,  "slayer_level_req": 1,  "reward_slayer_xp": 80,   "reward_gold": 100,  "repeatable": true},
 	"task_krakor":         {"monster": "Åkerkråka",      "required": 30,  "slayer_level_req": 1,  "reward_slayer_xp": 120,  "reward_gold": 140,  "repeatable": true},
-	"task_vildsvin":       {"monster": "Vildsvin",       "required": 40,  "slayer_level_req": 3,  "reward_slayer_xp": 250,  "reward_gold": 350,  "repeatable": true}
+	"task_vildsvin":       {"monster": "Vildsvin",       "required": 40,  "slayer_level_req": 3,  "reward_slayer_xp": 250,  "reward_gold": 350,  "repeatable": true},
+
+	"task_sporling":       {"monster": "Sporling",       "required": 60,  "slayer_level_req": 4,  "reward_slayer_xp": 300,  "reward_gold": 350,  "repeatable": true},
+	"task_svampvatte":     {"monster": "Svampvätte",     "required": 70,  "slayer_level_req": 7,  "reward_slayer_xp": 550,  "reward_gold": 650,  "repeatable": true},
+	"task_mykonid":        {"monster": "Mykonidäldste",  "required": 80,  "slayer_level_req": 13, "reward_slayer_xp": 1100, "reward_gold": 1300, "repeatable": true},
+
+	"task_sandskarabe":    {"monster": "Sandskarabé",    "required": 70,  "slayer_level_req": 6,  "reward_slayer_xp": 450,  "reward_gold": 500,  "repeatable": true},
+	"task_glodskorpion":   {"monster": "Glödskorpion",   "required": 70,  "slayer_level_req": 9,  "reward_slayer_xp": 700,  "reward_gold": 800,  "repeatable": true},
+	"task_gravvaktare":    {"monster": "Gravväktare",    "required": 90,  "slayer_level_req": 16, "reward_slayer_xp": 1400, "reward_gold": 1600, "repeatable": true},
+	"task_okenmumie":      {"monster": "Ökenmumie",      "required": 100, "slayer_level_req": 19, "reward_slayer_xp": 1700, "reward_gold": 2000, "repeatable": true},
+	"task_sandvaran":      {"monster": "Sandvaranen",    "required": 100, "slayer_level_req": 24, "reward_slayer_xp": 2400, "reward_gold": 2800, "repeatable": true},
+
+	"task_snouggla":       {"monster": "Snöuggla",       "required": 80,  "slayer_level_req": 11, "reward_slayer_xp": 900,  "reward_gold": 1000, "repeatable": true},
+	"task_frostvarg":      {"monster": "Frostvarg",      "required": 100, "slayer_level_req": 17, "reward_slayer_xp": 1500, "reward_gold": 1700, "repeatable": true},
+	"task_istroll":        {"monster": "Istroll",        "required": 110, "slayer_level_req": 26, "reward_slayer_xp": 2800, "reward_gold": 3000, "repeatable": true},
+	"task_isvaktare":      {"monster": "Isväktare",      "required": 100, "slayer_level_req": 28, "reward_slayer_xp": 3000, "reward_gold": 3300, "repeatable": true},
+	"task_glaciarjatte":   {"monster": "Glaciärjätte",   "required": 120, "slayer_level_req": 34, "reward_slayer_xp": 4200, "reward_gold": 4500, "repeatable": true},
+
+	"task_askhok":         {"monster": "Askhök",         "required": 90,  "slayer_level_req": 14, "reward_slayer_xp": 1200, "reward_gold": 1300, "repeatable": true},
+	"task_lavavarelse":    {"monster": "Lavavarelse",    "required": 100, "slayer_level_req": 20, "reward_slayer_xp": 1900, "reward_gold": 2100, "repeatable": true},
+	"task_sotdemon":       {"monster": "Sotdemon",       "required": 110, "slayer_level_req": 30, "reward_slayer_xp": 3300, "reward_gold": 3600, "repeatable": true},
+
+	"task_revhaj":         {"monster": "Revhaj",         "required": 80,  "slayer_level_req": 12, "reward_slayer_xp": 1000, "reward_gold": 1100, "repeatable": true},
+	"task_korallvaktare":  {"monster": "Korallväktare",  "required": 100, "slayer_level_req": 27, "reward_slayer_xp": 3000, "reward_gold": 3200, "repeatable": true},
+	"task_djupkraken":     {"monster": "Djupkraken",     "required": 110, "slayer_level_req": 36, "reward_slayer_xp": 4600, "reward_gold": 5000, "repeatable": true},
+
+	"task_lyktfisk":       {"monster": "Lyktfisk",       "required": 100, "slayer_level_req": 22, "reward_slayer_xp": 2200, "reward_gold": 2400, "repeatable": true},
+	"task_djupal":         {"monster": "Djupål",         "required": 100, "slayer_level_req": 30, "reward_slayer_xp": 3300, "reward_gold": 3600, "repeatable": true},
+	"task_pansarkrabba":   {"monster": "Pansarkrabba",   "required": 110, "slayer_level_req": 38, "reward_slayer_xp": 4800, "reward_gold": 5200, "repeatable": true},
+	"task_avgrundsorm":    {"monster": "Avgrundsorm",    "required": 120, "slayer_level_req": 44, "reward_slayer_xp": 6200, "reward_gold": 6800, "repeatable": true},
+
+	"task_tomkralare":     {"monster": "Tomkrälare",     "required": 100, "slayer_level_req": 33, "reward_slayer_xp": 3800, "reward_gold": 4000, "repeatable": true},
+	"task_morkersimmare":  {"monster": "Mörkersimmare",  "required": 110, "slayer_level_req": 40, "reward_slayer_xp": 5000, "reward_gold": 5400, "repeatable": true},
+	"task_avgrundsoga":    {"monster": "Avgrundsöga",    "required": 120, "slayer_level_req": 46, "reward_slayer_xp": 6400, "reward_gold": 7000, "repeatable": true},
+	"task_urtidskvaljaren":{"monster": "Urtidskväljaren","required": 130, "slayer_level_req": 50, "reward_slayer_xp": 8200, "reward_gold": 9000, "repeatable": true}
 }
