@@ -210,5 +210,11 @@
 		"category": "outfit",
 		"requires": {},
 		"desc": "Belönas för att ha besegrat alla tre djuphavshärskarna — Nautilex, Abyssos och Nyxoth — och krönts till Djupets mästare."
+	},
+	"outfit_thaishero": {
+		"name": "Thais hjältes regalier",
+		"category": "outfit",
+		"requires": {},
+		"desc": "Belönas av Kung Tibianus III för att ha tämjt hela Thais utkanter — landet, berget, djupet och revet."
 	}
 }

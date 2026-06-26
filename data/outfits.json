@@ -142,5 +142,14 @@
 			"pants": "#0f5a70",
 			"hair": "#ffd86a"
 		}
+	},
+	"outfit_thaishero": {
+		"name": "Thais hjältes regalier",
+		"unlock": "outfit_thaishero",
+		"colors": {
+			"shirt": "#9a1f2a",
+			"pants": "#2a2438",
+			"hair": "#e8c84a"
+		}
 	}
 }

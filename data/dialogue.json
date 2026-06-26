@@ -1522,7 +1522,87 @@
 				"next": "tibianus_thais"
 			},
 			{
+				"text": "Jag har tämjt hela Thais utkanter, ers Majestät.",
+				"next": "tibianus_knight_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_thais_hero"
+					}
+				]
+			},
+			{
+				"text": "Jag står redo att ta emot min ära.",
+				"next": "tibianus_knighting",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_thais_hero",
+						"step": 0
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_thais_hero"
+					}
+				]
+			},
+			{
+				"text": "En hjälte av Thais hälsar er.",
+				"next": "tibianus_hailed",
+				"conditions": [
+					{
+						"type": "quest_completed",
+						"quest": "quest_thais_hero"
+					}
+				]
+			},
+			{
 				"text": "Forgive the intrusion.",
+				"next": null
+			}
+		]
+	},
+	"tibianus_knight_offer": {
+		"speaker": "npc_tibianus",
+		"emotion": "neutral",
+		"text": "Bold words. Yet the reports do not lie — landsbygden tryggad, höjderna och berget rensade, träsket tämjt, kristallernas väktare fälld, revet betvingat och en oskyldig man frigiven ur våra egna celler. En enda hand bakom allt? Then approach, and let the crown judge for itself.",
+		"choices": [
+			{
+				"text": "Jag är redo för er dom.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_thais_hero"
+					}
+				]
+			},
+			{
+				"text": "En annan gång, ers Majestät.",
+				"next": null
+			}
+		]
+	},
+	"tibianus_knighting": {
+		"speaker": "npc_tibianus",
+		"emotion": "friendly",
+		"text": "Knäböj. ...Res dig nu, hjälte av Thais. Få har tjänat denna stad så fullständigt, och ingen sedan vår fars tid. Bär detta sigill — kronans eget märke — och dessa regalier. Thais minns dem som värnar den. Du står evig i våra krönikor.",
+		"choices": [
+			{
+				"text": "Äran är min, ers Majestät.",
+				"next": null
+			}
+		]
+	},
+	"tibianus_hailed": {
+		"speaker": "npc_tibianus",
+		"emotion": "friendly",
+		"text": "Hjälten återvänder. Thais står eternal — och så även ditt namn i dess krönikor. Vad än som kryper ur djupet härnäst, vet vi vem som möter det.",
+		"choices": [
+			{
+				"text": "Alltid till tjänst, ers Majestät.",
 				"next": null
 			}
 		]

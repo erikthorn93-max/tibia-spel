@@ -3386,6 +3386,18 @@
 		"color": "#ffd86a",
 		"desc": "Havets tre härskares kraft smält samman till ett sigill. Bara den som tämjt djupet i sin helhet kan bära det."
 	},
+	"thais_hjaltesigill": {
+		"name": "Thais hjältesigill",
+		"type": "armor",
+		"slot": "amulet",
+		"armor": 8,
+		"crit_chance": 0.1,
+		"def_bonus": 5,
+		"level_req": 50,
+		"value": 9000,
+		"color": "#d8b840",
+		"desc": "Kung Tibianus III:s eget sigill, skänkt till den som tämjt hela Thais utkanter. Bara en sann hjälte bär kronans märke vid sitt bröst."
+	},
 	"hajtand_amulett": {
 		"name": "Hajtandsamulett",
 		"type": "armor",

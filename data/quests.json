@@ -1994,5 +1994,39 @@
 				"cooking": 2500
 			}
 		}
+	},
+	"quest_thais_hero": {
+		"name": "Thais hjälte",
+		"giver": "npc_tibianus",
+		"requires": [
+			"quest_fields_2",
+			"quest_heights_3",
+			"quest_mountains_3",
+			"quest_wilds_2",
+			"quest_gem_2",
+			"quest_reef_2",
+			"quest_jail_4"
+		],
+		"steps": [
+			{
+				"type": "talk_to",
+				"npc": "npc_tibianus",
+				"hint": "Träd inför Kung Tibianus III i tronsalen och gör anspråk på din ära som Thais hjälte."
+			}
+		],
+		"rewards": {
+			"xp": 25000,
+			"gold": 12000,
+			"items": {
+				"thais_hjaltesigill": 1
+			},
+			"skill_xp": {
+				"constitution": 6000
+			},
+			"charm_points": 75,
+			"unlocks": [
+				"outfit_thaishero"
+			]
+		}
 	}
 }
