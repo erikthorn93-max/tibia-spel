@@ -5041,5 +5041,61 @@
 			"fire": 1.4,
 			"death": 0.4
 		}
+	},
+	"Kristallväktaren": {
+		"hp": 1300,
+		"atk": 48,
+		"exp": 3400,
+		"speed": 1.6,
+		"cooldown": 1.5,
+		"aggro": 9,
+		"boss": true,
+		"enrage": true,
+		"color": "#7fd8e8",
+		"desc": "En urgammal väktare av levande kristall, väckt ur Kristallgrottans djupaste geod. Dess lemmar lyser av infångat stjärnljus och splittrar ljuset i tusen färger.",
+		"element_mod": {
+			"energy": 1.4,
+			"death": 1.3,
+			"fire": 0.6,
+			"physical": 0.7
+		},
+		"loot": [
+			{
+				"item": "iron_coin",
+				"min": 250,
+				"max": 500,
+				"chance": 1
+			},
+			{
+				"item": "uncut_diamond",
+				"min": 2,
+				"max": 4,
+				"chance": 0.8
+			},
+			{
+				"item": "uncut_dragonstone",
+				"min": 1,
+				"max": 2,
+				"chance": 0.5
+			},
+			{
+				"item": "dragonstone",
+				"min": 1,
+				"max": 1,
+				"chance": 0.25
+			},
+			{
+				"item": "gem_amulet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.3
+			},
+			{
+				"item": "kristallhjarta",
+				"min": 1,
+				"max": 1,
+				"chance": 0.12
+			}
+		]
 	}
 }

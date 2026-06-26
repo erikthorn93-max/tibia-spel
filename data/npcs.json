@@ -636,5 +636,23 @@
 			"Dimman tjocknar ju närmare hjärtat man kommer. Var aktsam."
 		],
 		"dialogue_root": "forestwarden_root"
+	},
+	"npc_lapidary": {
+		"name": "Sliparen Ozric",
+		"zone": "thais_gemcavern",
+		"position": [
+			100,
+			50
+		],
+		"voice": {
+			"model": "en_GB-alan-medium",
+			"length_scale": 1.05
+		},
+		"barks": [
+			"Hör du hur kristallerna sjunger? De är vakna nu.",
+			"Den finaste dragonsten ligger djupast — och dyrast i blod.",
+			"Jag kom hit för stenarnas skull. Jag stannar av rädsla."
+		],
+		"dialogue_root": "ozric_root"
 	}
 }

@@ -1859,5 +1859,69 @@
 				"thieving": 800
 			}
 		}
+	},
+	"quest_gem_1": {
+		"name": "Kristallernas pris",
+		"giver": "npc_lapidary",
+		"requires": [
+			"quest_trial_3"
+		],
+		"steps": [
+			{
+				"type": "collect",
+				"item": "uncut_dragonstone",
+				"count": 2,
+				"hint": "Bryt 2 oslipade dragonstenar ur Kristallgrottans djupaste ådror."
+			},
+			{
+				"type": "kill",
+				"monster": "Skuggspindel",
+				"count": 8,
+				"hint": "Rensa 8 skuggspindlar som väcktes när väktaren rörde sig."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_lapidary",
+				"hint": "Visa fyndet för Sliparen Ozric vid grottans mynning."
+			}
+		],
+		"rewards": {
+			"xp": 3000,
+			"gold": 1000,
+			"skill_xp": {
+				"mining": 1500
+			}
+		}
+	},
+	"quest_gem_2": {
+		"name": "Geodans väktare",
+		"giver": "npc_lapidary",
+		"requires": [
+			"quest_gem_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Kristallväktaren",
+				"count": 1,
+				"hint": "Besegra Kristallväktaren som vaktar den djupaste geoden."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_lapidary",
+				"hint": "Bär väktarens kristallhjärta tillbaka till Ozric."
+			}
+		],
+		"rewards": {
+			"xp": 6000,
+			"gold": 2500,
+			"items": {
+				"kristallhjarta": 1
+			},
+			"skill_xp": {
+				"mining": 2500
+			},
+			"charm_points": 60
+		}
 	}
 }

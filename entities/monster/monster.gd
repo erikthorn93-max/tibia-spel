@@ -139,6 +139,8 @@ const SPRITE_MAP: Dictionary = {
 	"Avgrundsöga":                "Avgrundsöga",
 	"Urtidskväljaren":            "Urtidskväljaren",
 	"Urguden Nyxoth":             "Urguden_Nyxoth",
+	# Kristallgrottan — kristallväktare delar den isiga väktarens sprite
+	"Kristallväktaren":           "Isväktare",
 }
 
 func _ready() -> void:

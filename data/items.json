@@ -3386,6 +3386,18 @@
 		"color": "#ffd86a",
 		"desc": "Havets tre härskares kraft smält samman till ett sigill. Bara den som tämjt djupet i sin helhet kan bära det."
 	},
+	"kristallhjarta": {
+		"name": "Kristallhjärtat",
+		"type": "armor",
+		"slot": "amulet",
+		"armor": 6,
+		"crit_chance": 0.08,
+		"def_bonus": 3,
+		"level_req": 38,
+		"value": 4200,
+		"color": "#7fd8e8",
+		"desc": "Geoden ur Kristallväktarens bröst, ännu varm av infångat stjärnljus. Bärs av den som vågade ner i Kristallgrottans djup och vann."
+	},
 	"smugglers_signet": {
 		"name": "Smugglarsigill",
 		"type": "armor",

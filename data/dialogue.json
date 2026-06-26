@@ -4958,5 +4958,153 @@
 				"next": null
 			}
 		]
+	},
+	"ozric_root": {
+		"speaker": "npc_lapidary",
+		"emotion": "worried",
+		"text": "En levande själ! Jag trodde jag var ensam kvar härnere. Jag är Ozric — slipare, en gång den bäste i Thais. Jag kom för dragonstenen... men något i djupet vaknade när vi grävde för djupt.",
+		"choices": [
+			{
+				"text": "Vad vaknade?",
+				"next": "ozric_about"
+			},
+			{
+				"text": "Behöver du hjälp att bryta sten?",
+				"next": "ozric_q1_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_gem_1"
+					}
+				]
+			},
+			{
+				"text": "Jag har dragonstenen och spindlarna är rensade.",
+				"next": "ozric_q1_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_gem_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_gem_1"
+					}
+				]
+			},
+			{
+				"text": "Jag är redo att möta väktaren.",
+				"next": "ozric_q2_offer",
+				"conditions": [
+					{
+						"type": "quest_completed",
+						"quest": "quest_gem_1"
+					},
+					{
+						"type": "quest_available",
+						"quest": "quest_gem_2"
+					}
+				]
+			},
+			{
+				"text": "Väktaren är fallen. Jag bär dess hjärta.",
+				"next": "ozric_q2_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_gem_2",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_gem_2"
+					}
+				]
+			},
+			{
+				"text": "Lycka till härnere.",
+				"next": null
+			}
+		]
+	},
+	"ozric_about": {
+		"speaker": "npc_lapidary",
+		"emotion": "worried",
+		"text": "Kristallväktaren. En koloss av levande sten som sover i den djupaste geoden, där dragonstenen är som tjockast. Vi väckte den ur dess vila — och den dödade alla utom mig. Nu sjunger kristallerna dess vrede.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "ozric_root"
+			}
+		]
+	},
+	"ozric_q1_offer": {
+		"speaker": "npc_lapidary",
+		"emotion": "neutral",
+		"text": "Mina händer skakar för mycket för att hålla en hacka nu. Bryt två oslipade dragonstenar ur de djupa ådrorna åt mig — men akta dig, skuggspindlar har spunnit sina nät där väktaren rörde sig. Rensa dem medan du är där.",
+		"choices": [
+			{
+				"text": "Jag tar mig ner i djupet.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_gem_1"
+					}
+				]
+			},
+			{
+				"text": "Inte än.",
+				"next": null
+			}
+		]
+	},
+	"ozric_q1_report": {
+		"speaker": "npc_lapidary",
+		"emotion": "happy",
+		"text": "Två rena dragonstenar — och spindlarna tystade. Du har stadiga händer och stadigare nerver. Det här är mer än jag vågat hoppas på... men den verkliga prövningen väntar ännu i djupet.",
+		"choices": [
+			{
+				"text": "Berätta om väktaren.",
+				"next": "ozric_root"
+			}
+		]
+	},
+	"ozric_q2_offer": {
+		"speaker": "npc_lapidary",
+		"emotion": "worried",
+		"text": "Då finns det bara en väg att tysta kristallernas sång för gott: väktaren måste falla. Den vaktar geoden längst in — sitt hjärta lyser av infångat stjärnljus. Krossa det, så är grottan din. Och dragonstenen med.",
+		"choices": [
+			{
+				"text": "Väktaren faller idag.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_gem_2"
+					}
+				]
+			},
+			{
+				"text": "Jag behöver förbereda mig.",
+				"next": null
+			}
+		]
+	},
+	"ozric_q2_report": {
+		"speaker": "npc_lapidary",
+		"emotion": "happy",
+		"text": "Det lyser ännu... väktarens hjärta, i din hand. Hör — kristallerna tystnar äntligen. Behåll geoden; du vann den med mer mod än jag någonsin ägde. Grottan tillhör dig nu, slipare som vågade där jag flydde.",
+		"choices": [
+			{
+				"text": "Vila nu, Ozric.",
+				"next": null
+			}
+		]
 	}
 }
