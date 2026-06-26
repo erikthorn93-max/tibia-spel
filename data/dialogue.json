@@ -4372,5 +4372,287 @@
 				"next": null
 			}
 		]
+	},
+	"dragonwatcher_root": {
+		"speaker": "npc_dragonwatcher",
+		"emotion": "worried",
+		"text": "Stå still ett ögonblick, främling. Jag är Cael — det enda som kröp ur Drakboet med liv i behåll. Elddraken sover därinne, men dess vrede vaknar för var dag. Någon måste sätta stopp för det innan elden sprider sig ur kratern.",
+		"choices": [
+			{
+				"text": "Vem är du?",
+				"next": "dragonwatcher_who"
+			},
+			{
+				"text": "Hur kan jag hjälpa?",
+				"next": "dragonwatcher_s1",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_drake_1"
+					}
+				]
+			},
+			{
+				"text": "Vägen genom kratern är rensad.",
+				"next": "dragonwatcher_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_drake_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_drake_1"
+					}
+				]
+			},
+			{
+				"text": "Vad väntar därinne?",
+				"next": "dragonwatcher_s2",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_drake_2"
+					}
+				]
+			},
+			{
+				"text": "Elddraken är fälld.",
+				"next": "dragonwatcher_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_drake_2",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_drake_2"
+					}
+				]
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"dragonwatcher_who": {
+		"speaker": "npc_dragonwatcher",
+		"emotion": "neutral",
+		"text": "En före detta drakjägare. Tjugo av oss steg ner i boet med stål och fackla; nitton blev aska. Jag bär brännmärkena som ett löfte: draken ska falla, även om jag själv aldrig mer kan lyfta ett svärd.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "dragonwatcher_root"
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"dragonwatcher_s1": {
+		"speaker": "npc_dragonwatcher",
+		"emotion": "worried",
+		"text": "Kratern kryllar av lavavarelser och sotdemoner som vaktar rämnan ner till boet. Rensa stigen — fäll åtta lavavarelser och fem sotdemoner — så öppnar jag vägen ner till Drakboet åt dig.",
+		"choices": [
+			{
+				"text": "Det ska bli gjort.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_drake_1"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "dragonwatcher_root"
+			}
+		]
+	},
+	"dragonwatcher_s2": {
+		"speaker": "npc_dragonwatcher",
+		"emotion": "worried",
+		"text": "Därinne väntar Elddraken självt — fyra och ett halvt tusen pund av eld och raseri. Den andas brand och blir bara argare ju närmare döden den kommer. Gå in, möt den, och kom tillbaka som drakdräpare.",
+		"choices": [
+			{
+				"text": "Jag avslutar det här.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_drake_2"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "dragonwatcher_root"
+			}
+		]
+	},
+	"dragonwatcher_reward": {
+		"speaker": "npc_dragonwatcher",
+		"emotion": "happy",
+		"text": "Du gjorde det jag aldrig kunde. Kratern andas lugnt igen, och mina kamraters aska kan äntligen vila. Ta det här — du har förtjänat varje gnista av det.",
+		"choices": [
+			{
+				"text": "Tack, Cael.",
+				"next": null
+			},
+			{
+				"text": "Något mer?",
+				"next": "dragonwatcher_root"
+			}
+		]
+	},
+	"forestwarden_root": {
+		"speaker": "npc_forestwarden",
+		"emotion": "worried",
+		"text": "Vänta, vandrare. Jag är Eldrin, väktare av dessa dimmar. En röta sprider sig från urskogens hjärta — träden vissnar, djuren flyr, och dimman bär en stank av förfall. Något uråldrigt har vaknat därinne.",
+		"choices": [
+			{
+				"text": "Vem är du?",
+				"next": "forestwarden_who"
+			},
+			{
+				"text": "Hur kan jag hjälpa?",
+				"next": "forestwarden_s1",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_urskog_1"
+					}
+				]
+			},
+			{
+				"text": "Stigen är röjd.",
+				"next": "forestwarden_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_urskog_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_urskog_1"
+					}
+				]
+			},
+			{
+				"text": "Vad gömmer sig i hjärtat?",
+				"next": "forestwarden_s2",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_urskog_2"
+					}
+				]
+			},
+			{
+				"text": "Urskogsvältaren är besegrad.",
+				"next": "forestwarden_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_urskog_2",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_urskog_2"
+					}
+				]
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"forestwarden_who": {
+		"speaker": "npc_forestwarden",
+		"emotion": "neutral",
+		"text": "Den siste av skogens väktare. Jag har vandrat dessa stigar i fyrtio år och lärt mig läsa trädens språk. Nu skriker de allesammans om samma sak: rötan i hjärtat måste brännas bort, annars dör hela urskogen.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "forestwarden_root"
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"forestwarden_s1": {
+		"speaker": "npc_forestwarden",
+		"emotion": "worried",
+		"text": "Rötan har gjort skogsvargarna ursinniga och lockat fram fantomer ur dimman. Tunna ut dem — fäll åtta skogsvargar och fem fantomer — så pekar jag ut den dolda stigen in till urskogens hjärta.",
+		"choices": [
+			{
+				"text": "Det ska bli gjort.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_urskog_1"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "forestwarden_root"
+			}
+		]
+	},
+	"forestwarden_s2": {
+		"speaker": "npc_forestwarden",
+		"emotion": "worried",
+		"text": "I hjärtat ringlar Urskogsvältaren — en koloss av bark och vrede, äldre än mitt äldsta träd. Den är källan till rötan. Stig in genom dimman, fäll den, och låt skogen läka. Bara så slår hjärtat rent igen.",
+		"choices": [
+			{
+				"text": "Jag avslutar det här.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_urskog_2"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "forestwarden_root"
+			}
+		]
+	},
+	"forestwarden_reward": {
+		"speaker": "npc_forestwarden",
+		"emotion": "happy",
+		"text": "Känner du det? Dimman lättar och rötterna sjunger igen. Du har gett urskogen tillbaka dess hjärta. Ta emot detta — skogen själv tackar dig genom mina händer.",
+		"choices": [
+			{
+				"text": "Tack, Eldrin.",
+				"next": null
+			},
+			{
+				"text": "Något mer?",
+				"next": "forestwarden_root"
+			}
+		]
 	}
 }

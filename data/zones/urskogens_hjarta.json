@@ -1,0 +1,31 @@
+{
+	"name": "Urskogens hjärta",
+	"weather": "fog",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWW",
+		"W......................W",
+		"W..........X...........W",
+		"W..t...v........v...t..W",
+		"W......................W",
+		"W..j................j..W",
+		"W......................W",
+		"W.t....F........F....t.W",
+		"W......................W",
+		"W..v................v..W",
+		"W......................W",
+		"W0P....................W",
+		"WWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"0": { "type": "portal", "to": "dimmoren", "terrain": "." },
+		"X": { "type": "spawn", "monster": "Urskogsvältaren", "respawn": 3600.0, "terrain": "." },
+		"v": { "type": "spawn", "monster": "Skogsvargen", "respawn": 30.0, "terrain": "." },
+		"j": { "type": "spawn", "monster": "Skogsbjörn", "respawn": 35.0, "terrain": "." },
+		"F": { "type": "spawn", "monster": "Fantom", "respawn": 45.0, "terrain": "." },
+		"t": { "type": "node", "node": "yew_tree", "terrain": "." }
+	},
+	"spawn_table": [
+		{ "monster": "Skogsvargen", "count": 2, "respawn": 40.0 },
+		{ "monster": "Fantom", "count": 1, "respawn": 60.0 }
+	]
+}

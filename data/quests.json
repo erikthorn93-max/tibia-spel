@@ -1601,5 +1601,150 @@
 				"outfit_deepmaster"
 			]
 		}
+	},
+	"quest_drake_1": {
+		"name": "Askans väg",
+		"giver": "npc_dragonwatcher",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Lavavarelse",
+				"count": 8,
+				"hint": "Rensa stigen genom kratern — fäll 8 Lavavarelser."
+			},
+			{
+				"type": "kill",
+				"monster": "Sotdemon",
+				"count": 5,
+				"hint": "Skingra röken — besegra 5 Sotdemoner vid lavasjön."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_dragonwatcher",
+				"hint": "Återvänd till Cael med beskedet att vägen är öppen."
+			}
+		],
+		"rewards": {
+			"xp": 3500,
+			"gold": 1600,
+			"items": {
+				"great_health_potion": 4
+			},
+			"skill_xp": {
+				"slayer": 800
+			},
+			"unlocks": [
+				"drakboet"
+			]
+		}
+	},
+	"quest_drake_2": {
+		"name": "Eldens herre",
+		"giver": "npc_dragonwatcher",
+		"requires": [
+			"quest_drake_1"
+		],
+		"steps": [
+			{
+				"type": "explore",
+				"zone": "drakboet",
+				"hint": "Stig in i Drakboet bortom kraterns rämna."
+			},
+			{
+				"type": "kill",
+				"monster": "Elddraken",
+				"count": 1,
+				"hint": "Besegra Elddraken i dess eget bo."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_dragonwatcher",
+				"hint": "Berätta för Cael att draken är fälld."
+			}
+		],
+		"rewards": {
+			"xp": 9000,
+			"gold": 4000,
+			"items": {
+				"great_health_potion": 6,
+				"diamond": 1
+			},
+			"skill_xp": {
+				"constitution": 2200
+			}
+		}
+	},
+	"quest_urskog_1": {
+		"name": "Den ruttnande roten",
+		"giver": "npc_forestwarden",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Skogsvargen",
+				"count": 8,
+				"hint": "Tunna ut flocken — fäll 8 Skogsvargar i dimmoren."
+			},
+			{
+				"type": "kill",
+				"monster": "Fantom",
+				"count": 5,
+				"hint": "Skingra dimman — besegra 5 Fantomer som vaktar stigen."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_forestwarden",
+				"hint": "Återvänd till Eldrin med vad du sett."
+			}
+		],
+		"rewards": {
+			"xp": 1800,
+			"gold": 900,
+			"items": {
+				"great_health_potion": 3
+			},
+			"skill_xp": {
+				"slayer": 500
+			},
+			"unlocks": [
+				"urskogens_hjarta"
+			]
+		}
+	},
+	"quest_urskog_2": {
+		"name": "Urskogens hjärta",
+		"giver": "npc_forestwarden",
+		"requires": [
+			"quest_urskog_1"
+		],
+		"steps": [
+			{
+				"type": "explore",
+				"zone": "urskogens_hjarta",
+				"hint": "Följ stigen in i Urskogens hjärta genom dimman."
+			},
+			{
+				"type": "kill",
+				"monster": "Urskogsvältaren",
+				"count": 1,
+				"hint": "Besegra Urskogsvältaren och bota skogens röta."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_forestwarden",
+				"hint": "Berätta för Eldrin att hjärtat slår rent igen."
+			}
+		],
+		"rewards": {
+			"xp": 4500,
+			"gold": 2000,
+			"items": {
+				"great_health_potion": 4
+			},
+			"skill_xp": {
+				"constitution": 1200
+			}
+		}
 	}
 }

@@ -13,7 +13,7 @@
 			"W,,,,,,,,,,,,,t,,,,,,,,,L,,,,,,,,,,F,,,W",
 			"W,,,,,sss,,B,,t,,,,,,,,,,,ss,,,H,,,,,,,W",
 			"W,,,,,,s~,,,,,,,,,,,..,,,,,s~,,,,,,,,,,W",
-			"W,,,,H,,,,,,,,,,,,,,,,.,,,,,,,,,,,,,,,,W",
+			"W,,,,H,,,,,,,,,,,,,,,,.,,,,,,,,,U,,,,,,W",
 			"W,,,,,,,,,tt,,,,,tt,,,,,,,,G,,,,,A,,,,,W",
 			"W,,,,,,,,E,,,,,,,,,,,,,,,,,,..,,,,,,,,,W",
 			"W,,,,,,,,,,,,,,L,,,I,,tt,,,,,,.,,,,,,,,W",
@@ -25,6 +25,7 @@
 	],
 	"legend": {
 		"0": { "type": "portal", "to": "forest", "terrain": "," },
+		"U": { "type": "portal", "to": "urskogens_hjarta", "unlock": "urskogens_hjarta", "terrain": "," },
 		"D": { "type": "dungeon_entrance", "theme": "katakomber", "terrain": "," },
 		"Y": { "type": "node", "node": "yew_tree", "terrain": "," },
 		"L": { "type": "node", "node": "willow_tree", "terrain": "," },

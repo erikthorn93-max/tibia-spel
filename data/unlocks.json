@@ -1,4 +1,12 @@
 {
+	"drakboet": {
+		"name": "Drakboet",
+		"category": "area"
+	},
+	"urskogens_hjarta": {
+		"name": "Urskogens hjärta",
+		"category": "area"
+	},
 	"spindelhalan": {
 		"name": "Spindelhålan",
 		"category": "area"

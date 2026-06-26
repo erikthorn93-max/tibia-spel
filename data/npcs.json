@@ -600,5 +600,41 @@
 			"Tre härskare sover därnere. Den som väcker dem alla blir en legend."
 		],
 		"dialogue_root": "chronicler_root"
+	},
+	"npc_dragonwatcher": {
+		"name": "Brända Cael",
+		"zone": "volcano",
+		"position": [
+			6,
+			20
+		],
+		"voice": {
+			"model": "en_US-lessac-medium",
+			"length_scale": 1
+		},
+		"barks": [
+			"Jag var en av tjugo som steg ner i boet. Bara jag kom tillbaka.",
+			"Hör du vingslagen? Det är inte vinden. Det är aldrig vinden.",
+			"Elden tog mitt ansikte men inte mitt minne. Draken lever än."
+		],
+		"dialogue_root": "dragonwatcher_root"
+	},
+	"npc_forestwarden": {
+		"name": "Skogsväktaren Eldrin",
+		"zone": "dimmoren",
+		"position": [
+			3,
+			1
+		],
+		"voice": {
+			"model": "en_US-lessac-medium",
+			"length_scale": 1
+		},
+		"barks": [
+			"Något ruttnar i urskogens hjärta. Jag känner det i rötterna.",
+			"Träden viskar om en vandrare av bark och vrede.",
+			"Dimman tjocknar ju närmare hjärtat man kommer. Var aktsam."
+		],
+		"dialogue_root": "forestwarden_root"
 	}
 }

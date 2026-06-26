@@ -1,0 +1,31 @@
+{
+	"name": "Drakboet",
+	"weather": "dynamic",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWW",
+		"WccccccccccccccccccccccW",
+		"WccccccccccXcccccccccccW",
+		"WccccacccccccccccccacccW",
+		"WccccccccccccccccccccccW",
+		"Wcccccccc~~~~~~ccccccccW",
+		"Wcccccccc~~~~~~ccccccccW",
+		"Wcccccccc~~~~~~ccccccccW",
+		"WccccdcccccccccccccdcccW",
+		"WcccccccccccmccccccccccW",
+		"WccccacccccccccccccacccW",
+		"WccccccccccccccccccccccW",
+		"W0PccccccccccccccccccccW",
+		"WWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"0": { "type": "portal", "to": "volcano", "terrain": "c" },
+		"X": { "type": "spawn", "monster": "Elddraken", "respawn": 3600.0, "terrain": "c" },
+		"a": { "type": "spawn", "monster": "Lavavarelse", "respawn": 30.0, "terrain": "c" },
+		"d": { "type": "spawn", "monster": "Sotdemon", "respawn": 45.0, "terrain": "c" },
+		"m": { "type": "spawn", "monster": "Glödmask", "respawn": 25.0, "terrain": "c" }
+	},
+	"spawn_table": [
+		{ "monster": "Askhök", "count": 3, "respawn": 24.0 },
+		{ "monster": "Lavavarelse", "count": 2, "respawn": 34.0 }
+	]
+}
