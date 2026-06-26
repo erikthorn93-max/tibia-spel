@@ -54,8 +54,10 @@ func _set_magic(lvl: int) -> void:
 
 # ── Laddning ─────────────────────────────────────────────────────────────────
 func test_spells_loaded() -> void:
-	assert_eq(SpellSystem.spells.size(), 16, "16 spells ska laddas från spells.json")
+	assert_eq(SpellSystem.spells.size(), 18, "18 spells ska laddas från spells.json")
 	assert_true(SpellSystem.spells.has("light_healing"))
+	assert_true(SpellSystem.spells.has("energy_wave"))
+	assert_true(SpellSystem.spells.has("death_wave"))
 
 func test_cast_def_for_rune() -> void:
 	var d := SpellSystem.cast_def("fire_rune")
@@ -241,6 +243,17 @@ func test_conjure_spells_reference_real_items() -> void:
 
 func test_blank_rune_exists() -> void:
 	assert_true(ItemDB.items.has("blank_rune"), "blank_rune ska finnas i items.json")
+
+func test_elemental_waves_complete() -> void:
+	# Varje stridselement ska ha både en riktad strike och en AoE-våg.
+	var waves := {"fire": "fire_wave", "ice": "ice_wave", "energy": "energy_wave", "death": "death_wave"}
+	for elem in waves:
+		var id: String = waves[elem]
+		var d: Dictionary = SpellSystem.spells.get(id, {})
+		assert_false(d.is_empty(), "%s saknas" % id)
+		assert_eq(String(d.get("target", "")), "area", "%s ska vara area-target" % id)
+		assert_eq(String(d.get("element", "")), elem, "%s ska ha element %s" % [id, elem])
+		assert_gt(int(d.get("radius", 0)), 0, "%s ska ha radius" % id)
 
 func test_aoe_runes_have_area_target() -> void:
 	for rid in ["fire_bomb_rune", "ice_wave_rune"]:

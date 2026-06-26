@@ -145,6 +145,39 @@
 		"radius": 1,
 		"price": 1000
 	},
+	"energy_wave": {
+		"name": "Energy Wave",
+		"words": "exevo vis hur",
+		"type": "attack",
+		"target": "area",
+		"element": "energy",
+		"base_power": 27,
+		"mana_cost": 55,
+		"magic_lvl": 16,
+		"cooldown": 4.0,
+		"range": 5,
+		"radius": 1,
+		"price": 750
+	},
+	"death_wave": {
+		"name": "Death Wave",
+		"words": "exevo mort hur",
+		"type": "attack",
+		"target": "area",
+		"element": "death",
+		"base_power": 40,
+		"mana_cost": 75,
+		"magic_lvl": 22,
+		"cooldown": 5.0,
+		"range": 5,
+		"radius": 1,
+		"price": 1200,
+		"status": {
+			"type": "poison",
+			"duration": 8,
+			"power": 5
+		}
+	},
 	"berserk": {
 		"name": "Berserk",
 		"words": "exori",
