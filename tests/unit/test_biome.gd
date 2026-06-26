@@ -23,6 +23,29 @@ func test_classify_hot_zones_as_volcano():
 func test_classify_ice_and_desert():
 	assert_eq(Biome.classify("ice"), Biome.ICE)
 	assert_eq(Biome.classify("desert"), Biome.DESERT)
+	assert_eq(Biome.classify("frostavgrunden"), Biome.ICE)
+	assert_eq(Biome.classify("glodoknen"), Biome.DESERT)
+	assert_eq(Biome.classify("solgraven"), Biome.DESERT)
+
+func test_classify_deepsea_and_grotta_as_cave():
+	for z in ["korallavgrunden", "lysdjupet", "urdjupet", "svampgrotta"]:
+		assert_eq(Biome.classify(z), Biome.CAVE, z)
+
+func test_classify_arena_and_isle():
+	assert_eq(Biome.classify("knight_arena"), Biome.INTERIOR)
+	assert_eq(Biome.classify("thais_fishing_isle"), Biome.TOWN)
+
+func test_nästan_alla_zoner_har_stamning():
+	# Endast medvetet neutrala zoner får falla till DEFAULT.
+	var tillatna_default := {"thais_mountains": true}
+	var saknar := []
+	for fn in DirAccess.get_files_at("res://data/zones"):
+		if not fn.ends_with(".json"):
+			continue
+		var zid := fn.trim_suffix(".json")
+		if Biome.classify(zid) == Biome.DEFAULT and not tillatna_default.has(zid):
+			saknar.append(zid)
+	assert_eq(saknar, [], "zoner utan biom-stämning: %s" % str(saknar))
 
 func test_classify_outdoor_nature_as_forest():
 	for z in ["forest", "thais_wilds", "thais_heights", "thais_fields", "urskogens_hjarta"]:

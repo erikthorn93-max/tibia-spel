@@ -24,18 +24,19 @@ static func classify(zone_id: String) -> String:
 		return VOLCANO
 	if "swamp" in z or "dimmoren" in z:
 		return SWAMP
-	if "ice" in z:
+	if "ice" in z or "frost" in z:
 		return ICE
-	if "desert" in z:
+	if "desert" in z or "okn" in z or "solgrav" in z:
 		return DESERT
+	# Djuphav och svenska grottor: svalt, mörkt, instängt → samma stämning som grottor.
 	if "cave" in z or "mine" in z or "cavern" in z or "crypt" in z \
-		or "maze" in z or "jail" in z:
+		or "maze" in z or "jail" in z or "grotta" in z or "korall" in z or "djup" in z:
 		return CAVE
-	if "guild" in z or "inn" in z or "temple" in z or "depot" in z:
+	if "guild" in z or "inn" in z or "temple" in z or "depot" in z or "arena" in z:
 		return INTERIOR
 	if "forest" in z or "wilds" in z or "heights" in z or "fields" in z or "skog" in z:
 		return FOREST
-	if "town" in z or "coast" in z or "castle" in z or "docks" in z:
+	if "town" in z or "coast" in z or "castle" in z or "docks" in z or "isle" in z:
 		return TOWN
 	return DEFAULT
 
