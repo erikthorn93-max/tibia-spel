@@ -115,5 +115,14 @@
 			"pants": "#1f6f90",
 			"hair": "#cfe8f0"
 		}
+	},
+	"outfit_leviathan": {
+		"name": "Leviatanens regalier",
+		"unlock": "outfit_leviathan",
+		"colors": {
+			"shirt": "#5a3a8a",
+			"pants": "#3a2a5a",
+			"hair": "#7fe8d8"
+		}
 	}
 }

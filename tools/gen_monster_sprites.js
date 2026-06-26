@@ -369,6 +369,78 @@ function drawSeaKing(im, c) {  // sjökungen nautilex — boss
   for (const s of [-1, 1]) tri(im, cx + s * 7, cy - 4, cx + s * 11, cy - 4, cx + s * 9, cy - 10, gold); // skuldertaggar
   for (const [dx, dy] of [[-12, -2], [12, -4], [11, 6], [-11, 7]]) px(im, cx + dx, cy + dy, [180, 230, 240, 200]); // bubblor
 }
+const GLOWEYE = [255, 250, 160, 255];
+function drawLanternFish(im, c) {  // lyktfisk — djuphavsfisk med lyslampa
+  const cx = 15, cy = 17, glow = [255, 240, 150, 255];
+  tri(im, cx + 6, cy - 4, cx + 6, cy + 4, cx + 12, cy, LITE(c));      // stjärtfena
+  oval(im, cx, cy, 8, 5, c);                                         // kropp
+  oval(im, cx - 2, cy - 1, 5, 2, LITE(c));                           // highlight
+  tri(im, cx - 8, cy, cx - 3, cy - 2, cx - 3, cy + 3, scale(c, 0.95)); // nos/käke
+  rect(im, cx - 8, cy + 1, 6, 1, [240, 240, 245, 255]);             // tandrad
+  px(im, cx - 4, cy - 1, GLOWEYE);                                   // öga
+  line(im, cx - 2, cy - 5, cx - 1, cy - 9, scale(c, 0.8), 1);        // lyktspö
+  disc(im, cx - 1, cy - 10, 2, glow);                               // lyslampa
+  disc(im, cx - 1, cy - 10, 3, [255, 240, 150, 90]);               // gloria
+  tri(im, cx, cy - 5, cx + 3, cy - 5, cx + 1, cy - 9, scale(c, 0.85)); // ryggfena
+}
+function drawDeepEel(im, c) {  // djupål — elektrisk ål
+  const cx = 16, cy = 16;
+  let px0 = cx - 11, py0 = cy + 6;                                   // ringlande kropp
+  for (const [x, y] of [[cx - 11, cy + 6], [cx - 6, cy + 2], [cx - 1, cy + 5], [cx + 4, cy + 1], [cx + 9, cy + 4], [cx + 12, cy - 2]]) {
+    line(im, px0, py0, x, y, c, 3); px0 = x; py0 = y;
+  }
+  disc(im, cx - 11, cy + 6, 3, scale(c, 0.95));                     // huvud
+  px(im, cx - 12, cy + 5, GLOWEYE);
+  tri(im, cx - 13, cy + 7, cx - 10, cy + 8, cx - 11, cy + 10, [240, 240, 245, 255]); // käke
+  for (const [x, y] of [[cx - 6, cy + 2], [cx + 4, cy + 1], [cx + 9, cy + 4]]) px(im, x, y - 4, [180, 220, 255, 220]); // gnistor
+  for (const [x, y] of [[cx - 3, cy], [cx + 6, cy - 2], [cx + 11, cy - 4]]) px(im, x, y, [200, 235, 255, 200]);
+}
+function drawArmorCrab(im, c) {  // pansarkrabba — bepansrad djuphavskrabba
+  const cx = 16, cy = 17;
+  for (const s of [-1, 1]) { line(im, cx + s * 5, cy + 3, cx + s * 9, cy + 8, DARK(c), 2); line(im, cx + s * 7, cy + 2, cx + s * 11, cy + 6, DARK(c), 2); } // ben
+  oval(im, cx, cy, 9, 6, c);                                        // skal
+  oval(im, cx - 2, cy - 2, 6, 3, LITE(c));                          // skal-highlight
+  for (let x = -6; x <= 6; x += 3) px(im, cx + x, cy - 3, scale(c, 0.8)); // pansarknottror
+  for (const s of [-1, 1]) {                                        // klor
+    line(im, cx + s * 8, cy - 1, cx + s * 12, cy - 5, scale(c, 0.9), 2);
+    tri(im, cx + s * 12, cy - 8, cx + s * 15, cy - 6, cx + s * 12, cy - 3, scale(c, 0.95));
+    tri(im, cx + s * 11, cy - 6, cx + s * 14, cy - 4, cx + s * 11, cy - 2, c);
+  }
+  px(im, cx - 3, cy - 1, GLOWEYE); px(im, cx + 3, cy - 1, GLOWEYE); // ögon
+  line(im, cx - 3, cy - 4, cx - 4, cy - 7, scale(c, 0.8), 1); line(im, cx + 3, cy - 4, cx + 4, cy - 7, scale(c, 0.8), 1); // ögonstjälkar
+}
+function drawAbyssSerpent(im, c) {  // avgrundsorm — lysande havsorm
+  const cx = 16, cy = 14;
+  let px0 = cx - 9, py0 = cy + 11;                                  // ringlande kropp
+  for (const [x, y] of [[cx - 9, cy + 11], [cx - 4, cy + 6], [cx + 2, cy + 9], [cx + 7, cy + 3], [cx + 4, cy - 3], [cx - 2, cy - 6]]) {
+    line(im, px0, py0, x, y, c, 4); px0 = x; py0 = y;
+  }
+  for (const [x, y] of [[cx - 4, cy + 6], [cx + 2, cy + 9], [cx + 7, cy + 3]]) px(im, x, y, LITE(c)); // lysslem
+  disc(im, cx - 2, cy - 6, 4, scale(c, 0.95));                      // huvud
+  px(im, cx - 4, cy - 7, GLOWEYE); px(im, cx, cy - 7, GLOWEYE);
+  tri(im, cx - 5, cy - 3, cx + 1, cy - 3, cx - 2, cy + 1, scale(c, 0.85)); // käke
+  for (let i = 0; i < 3; i++) px(im, cx - 4 + i * 2, cy - 2, [240, 240, 245, 255]); // tänder
+  tri(im, cx - 4, cy - 9, cx - 2, cy - 13, cx, cy - 9, LITE(c));    // pannhorn
+}
+function drawLeviathan(im, c) {  // leviatanen abyssos — boss
+  const cx = 16, cy = 15, deepglow = [180, 160, 255, 255], maw = [40, 20, 60, 255];
+  for (const s of [-1, 1]) {                                        // fenor/vingar
+    tri(im, cx + s * 6, cy - 2, cx + s * 14, cy - 8, cx + s * 13, cy + 2, scale(c, 0.8));
+    line(im, cx + s * 7, cy - 4, cx + s * 13, cy - 7, scale(c, 0.6), 1);
+  }
+  oval(im, cx, cy, 9, 8, c);                                        // kropp
+  oval(im, cx - 2, cy - 3, 6, 4, LITE(c));                          // ryggljus
+  for (let x = -6; x <= 6; x += 3) disc(im, cx + x, cy - 6, 1, deepglow); // ryggfenor som lyser
+  disc(im, cx, cy + 2, 4, scale(c, 0.9));                          // buk
+  // huvud med gap
+  disc(im, cx, cy - 9, 6, scale(c, 0.95));
+  tri(im, cx - 5, cy - 7, cx + 5, cy - 7, cx, cy - 2, maw);         // käftgap
+  for (let i = -4; i <= 4; i += 2) { tri(im, cx + i, cy - 7, cx + i + 1, cy - 7, cx + i, cy - 4, [235, 235, 240, 255]); } // övre tänder
+  disc(im, cx - 3, cy - 11, 2, GLOWEYE); disc(im, cx + 3, cy - 11, 2, GLOWEYE); // lysande ögon
+  px(im, cx - 3, cy - 11, maw); px(im, cx + 3, cy - 11, maw);       // pupiller
+  for (const s of [-1, 1]) { line(im, cx + s * 5, cy - 14, cx + s * 7, cy - 18, deepglow, 1); disc(im, cx + s * 7, cy - 18, 1, deepglow); } // antenn-lyktor
+  for (const [dx, dy] of [[-12, -2], [12, -3], [11, 7], [-11, 8], [0, 12]]) px(im, cx + dx, cy + dy, [160, 140, 230, 200]); // sporljus
+}
 const MONSTERS = [
   ["Glödskorpion", "Glödskorpion", "#e0641e", "scorpion"],
   ["Sandskarabé", "Sandskarabé", "#3a8a5a", "scarab"],
@@ -401,6 +473,12 @@ const MONSTERS = [
   ["Korallväktare", "Korallväktare", "#d06f7a", "coralguardian"],
   ["Djupkraken", "Djupkraken", "#6a4a8a", "deepkraken"],
   ["Sjökungen Nautilex", "Sjökungen_Nautilex", "#2f9fc0", "seaking"],
+  // Lysdjupet — bioluminescent undervattensgrotta bortom Korallavgrunden
+  ["Lyktfisk", "Lyktfisk", "#5fd0c0", "lanternfish"],
+  ["Djupål", "Djupål", "#3a6f8a", "deepeel"],
+  ["Pansarkrabba", "Pansarkrabba", "#8a5a4a", "armorcrab"],
+  ["Avgrundsorm", "Avgrundsorm", "#4a3a6a", "abyssserpent"],
+  ["Leviatanen Abyssos", "Leviatanen_Abyssos", "#5a3a8a", "leviathan"],
 ];
 
 let made = 0;
@@ -434,6 +512,11 @@ for (const [name, file, color, kind] of MONSTERS) {
   else if (kind === "coralguardian") drawCoralGuardian(im, c);
   else if (kind === "deepkraken") drawDeepKraken(im, c);
   else if (kind === "seaking") drawSeaKing(im, c);
+  else if (kind === "lanternfish") drawLanternFish(im, c);
+  else if (kind === "deepeel") drawDeepEel(im, c);
+  else if (kind === "armorcrab") drawArmorCrab(im, c);
+  else if (kind === "abyssserpent") drawAbyssSerpent(im, c);
+  else if (kind === "leviathan") drawLeviathan(im, c);
   outline(im);
   fs.writeFileSync(path.join(OUT, file + ".png"), encodePNG(im));
   console.log("  ✓", file + ".png  (" + name + ")");

@@ -3203,5 +3203,90 @@
 		"level_req": 32,
 		"value": 1800,
 		"color": "#dff4f8"
+	},
+	"lantern_organ": {
+		"name": "Lyktorgan",
+		"type": "material",
+		"value": 26,
+		"color": "#7fe8d8"
+	},
+	"eel_hide": {
+		"name": "Ålskinn",
+		"type": "material",
+		"value": 38,
+		"color": "#4a7a90"
+	},
+	"abyssal_crystal": {
+		"name": "Avgrundskristall",
+		"type": "material",
+		"value": 70,
+		"color": "#9a7fe0"
+	},
+	"leviathan_scale": {
+		"name": "Leviatanfjäll",
+		"type": "material",
+		"value": 150,
+		"color": "#7a5ab0"
+	},
+	"lumen_kelp": {
+		"name": "Lystång",
+		"type": "food",
+		"value": 22,
+		"color": "#5fe0c0",
+		"heal": 50
+	},
+	"glowfish_stew": {
+		"name": "Lysfiskgryta",
+		"type": "food",
+		"value": 90,
+		"color": "#6fe8d0",
+		"heal": 100,
+		"buff": {
+			"stat": "armor",
+			"amount": 5,
+			"duration": 50
+		}
+	},
+	"leviathan_blade": {
+		"name": "Leviatanklingan",
+		"type": "weapon",
+		"slot": "weapon",
+		"skill": "sword",
+		"atk": 52,
+		"crit_chance": 0.1,
+		"level_req": 40,
+		"value": 5200,
+		"color": "#7a4ab0",
+		"desc": "En klinga slipad ur en leviatans hugg, som lyser med avgrundens kalla ljus och dränker sina offer i mörker."
+	},
+	"lumen_shield": {
+		"name": "Lyktsköld",
+		"type": "armor",
+		"slot": "offhand",
+		"armor": 9,
+		"shielding_bonus": 8,
+		"level_req": 34,
+		"value": 1900,
+		"color": "#5fd0c0"
+	},
+	"abyssal_plate": {
+		"name": "Avgrundspansar",
+		"type": "armor",
+		"slot": "body",
+		"armor": 22,
+		"def_bonus": 8,
+		"level_req": 37,
+		"value": 3000,
+		"color": "#6a4a8a"
+	},
+	"glow_amulet": {
+		"name": "Lysamulett",
+		"type": "armor",
+		"slot": "amulet",
+		"armor": 7,
+		"crit_chance": 0.07,
+		"level_req": 36,
+		"value": 2100,
+		"color": "#7fe8d8"
 	}
 }

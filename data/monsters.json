@@ -4471,5 +4471,284 @@
 			"energy": 1.4,
 			"fire": 0.5
 		}
+	},
+	"Lyktfisk": {
+		"hp": 110,
+		"atk": 30,
+		"exp": 95,
+		"speed": 3.4,
+		"cooldown": 1,
+		"aggro_range": 9,
+		"color": "#5fd0c0",
+		"desc": "En lyktfisk vars spöklika ljus lockar bytet närmare i det becksvarta djupet. Den jagar i stim där solen aldrig nått.",
+		"ability": {
+			"type": "poison",
+			"chance": 0.2,
+			"duration": 8,
+			"tick_dmg": 4
+		},
+		"loot": [
+			{
+				"item": "lantern_organ",
+				"min": 1,
+				"max": 1,
+				"chance": 0.45
+			},
+			{
+				"item": "lumen_kelp",
+				"min": 1,
+				"max": 2,
+				"chance": 0.3
+			},
+			{
+				"item": "iron_coin",
+				"min": 10,
+				"max": 28,
+				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 1,
+				"max": 4,
+				"chance": 0.1
+			}
+		],
+		"element_mod": {
+			"energy": 1.6,
+			"fire": 0.6
+		}
+	},
+	"Djupål": {
+		"hp": 190,
+		"atk": 40,
+		"exp": 185,
+		"speed": 3,
+		"cooldown": 1.1,
+		"aggro_range": 10,
+		"color": "#3a6f8a",
+		"desc": "En elektrisk ål lång som en mast, som sänder stötar genom det svarta vattnet. Dess bett förlamar offret innan strömmen hinner släppa.",
+		"ability": {
+			"type": "stun",
+			"chance": 0.3,
+			"duration": 1.8,
+			"tick_dmg": 0
+		},
+		"loot": [
+			{
+				"item": "eel_hide",
+				"min": 1,
+				"max": 2,
+				"chance": 0.5
+			},
+			{
+				"item": "lantern_organ",
+				"min": 1,
+				"max": 1,
+				"chance": 0.25
+			},
+			{
+				"item": "iron_coin",
+				"min": 18,
+				"max": 48,
+				"chance": 1
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 1,
+				"chance": 0.04
+			},
+			{
+				"item": "gold_coin",
+				"min": 2,
+				"max": 6,
+				"chance": 0.13
+			}
+		],
+		"element_mod": {
+			"energy": 1.5,
+			"fire": 0.6
+		}
+	},
+	"Pansarkrabba": {
+		"hp": 340,
+		"atk": 52,
+		"exp": 320,
+		"speed": 1.4,
+		"cooldown": 1.7,
+		"aggro_range": 6,
+		"color": "#8a5a4a",
+		"desc": "En kolossal djuphavskrabba bepansrad i kalk och korall. Dess klor knäcker sten — och ben — med samma lätthet.",
+		"ability": {
+			"type": "stun",
+			"chance": 0.32,
+			"duration": 1.6,
+			"tick_dmg": 0
+		},
+		"loot": [
+			{
+				"item": "abyssal_crystal",
+				"min": 1,
+				"max": 2,
+				"chance": 0.45
+			},
+			{
+				"item": "eel_hide",
+				"min": 1,
+				"max": 1,
+				"chance": 0.3
+			},
+			{
+				"item": "iron_coin",
+				"min": 26,
+				"max": 64,
+				"chance": 1
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 1,
+				"chance": 0.09
+			},
+			{
+				"item": "gold_coin",
+				"min": 4,
+				"max": 9,
+				"chance": 0.16
+			}
+		],
+		"element_mod": {
+			"energy": 1.5,
+			"fire": 0.5
+		}
+	},
+	"Avgrundsorm": {
+		"hp": 620,
+		"atk": 64,
+		"exp": 640,
+		"speed": 1.8,
+		"cooldown": 1.4,
+		"aggro_range": 10,
+		"color": "#4a3a6a",
+		"desc": "En urtida orm som ringlar fram ur avgrundens spricka, höljd i lysande slem. Den slukar allt i sin väg och kräks upp benen.",
+		"ability": {
+			"type": "drain",
+			"chance": 0.4,
+			"duration": 0,
+			"tick_dmg": 22
+		},
+		"loot": [
+			{
+				"item": "leviathan_scale",
+				"min": 1,
+				"max": 2,
+				"chance": 0.4
+			},
+			{
+				"item": "abyssal_crystal",
+				"min": 1,
+				"max": 2,
+				"chance": 0.4
+			},
+			{
+				"item": "eel_hide",
+				"min": 1,
+				"max": 2,
+				"chance": 0.35
+			},
+			{
+				"item": "gold_coin",
+				"min": 10,
+				"max": 28,
+				"chance": 1
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.04
+			}
+		],
+		"element_mod": {
+			"energy": 1.5,
+			"fire": 0.5
+		}
+	},
+	"Leviatanen Abyssos": {
+		"hp": 3000,
+		"atk": 92,
+		"exp": 3600,
+		"speed": 1.9,
+		"cooldown": 1.2,
+		"aggro_range": 11,
+		"color": "#5a3a8a",
+		"boss": true,
+		"desc": "Avgrundens uråldriga leviatan, en mörkrets gud med ögon som lyser i djupets natt. Den har sovit sedan havet var ungt — och vredgas över att väckas.",
+		"ability": {
+			"type": "stun",
+			"chance": 0.45,
+			"duration": 2.6,
+			"tick_dmg": 0
+		},
+		"loot": [
+			{
+				"item": "leviathan_blade",
+				"min": 1,
+				"max": 1,
+				"chance": 0.12
+			},
+			{
+				"item": "glow_amulet",
+				"min": 1,
+				"max": 1,
+				"chance": 0.15
+			},
+			{
+				"item": "leviathan_scale",
+				"min": 4,
+				"max": 8,
+				"chance": 1
+			},
+			{
+				"item": "abyssal_crystal",
+				"min": 3,
+				"max": 6,
+				"chance": 1
+			},
+			{
+				"item": "lantern_organ",
+				"min": 2,
+				"max": 4,
+				"chance": 1
+			},
+			{
+				"item": "gold_coin",
+				"min": 55,
+				"max": 120,
+				"chance": 1
+			},
+			{
+				"item": "ancient_coin",
+				"min": 3,
+				"max": 7,
+				"chance": 0.5
+			},
+			{
+				"item": "sapphire",
+				"min": 1,
+				"max": 3,
+				"chance": 0.4
+			},
+			{
+				"item": "diamond",
+				"min": 1,
+				"max": 1,
+				"chance": 0.22
+			}
+		],
+		"element_mod": {
+			"energy": 1.4,
+			"fire": 0.4
+		}
 	}
 }

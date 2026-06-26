@@ -1,0 +1,101 @@
+{
+	"name": "Lysdjupet",
+	"weather": "fog",
+	"tiles": [
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"W,,o,,V,,,,~~,,,,o,,,,,,l,,,,W",
+		"W,,,,,,,,,,,~,,,,,,,,,,,,,,,,W",
+		"W,,,WW,,,,,,,,,,y,,,,,WW,,,,,W",
+		"W,,o,,,,,,,,l,,,,,,,,,,,,o,,,W",
+		"W,,,,,,,,,,,,,,,,,~~,,,,,,,,,W",
+		"W,G,,,,,,,,,,,,,,,~,,,,,,,m,,W",
+		"W,,,,,,,,y,,,,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,,,G,,W",
+		"W,,,,~~,,,,,o,,,,,,,,,,,,,,,,W",
+		"W,,,,,,,,,,,,,,,,,,WW,,,,,,,,W",
+		"W,A,T,C,,,,,,,,~~,,,,,,,,m,,,W",
+		"W,,,,,,,,,,,,,,,,,,,,,,,B,,,,W",
+		"W,P,0,,,,,,,,,,,,,,,,,,,,,,,,W",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+	],
+	"legend": {
+		"0": {
+			"type": "portal",
+			"to": "korallavgrunden",
+			"terrain": ","
+		},
+		"A": {
+			"type": "station",
+			"station": "anvil",
+			"terrain": ","
+		},
+		"T": {
+			"type": "station",
+			"station": "stove",
+			"terrain": ","
+		},
+		"C": {
+			"type": "station",
+			"station": "crafting_bench",
+			"terrain": ","
+		},
+		"V": {
+			"type": "node",
+			"node": "deep_glow_vent",
+			"terrain": ","
+		},
+		"G": {
+			"type": "node",
+			"node": "lumen_kelp_bed",
+			"terrain": ","
+		},
+		"o": {
+			"type": "spawn",
+			"monster": "Lyktfisk",
+			"respawn": 18,
+			"terrain": ","
+		},
+		"l": {
+			"type": "spawn",
+			"monster": "Djupål",
+			"respawn": 26,
+			"terrain": ","
+		},
+		"y": {
+			"type": "spawn",
+			"monster": "Pansarkrabba",
+			"respawn": 40,
+			"terrain": ","
+		},
+		"m": {
+			"type": "spawn",
+			"monster": "Avgrundsorm",
+			"respawn": 55,
+			"terrain": ","
+		},
+		"B": {
+			"type": "spawn",
+			"monster": "Leviatanen Abyssos",
+			"respawn": 3600,
+			"terrain": ","
+		}
+	},
+	"spawn_table": [
+		{
+			"monster": "Lyktfisk",
+			"count": 4,
+			"respawn": 22
+		},
+		{
+			"monster": "Djupål",
+			"count": 3,
+			"respawn": 28
+		},
+		{
+			"monster": "Pansarkrabba",
+			"count": 1,
+			"respawn": 45
+		}
+	]
+}

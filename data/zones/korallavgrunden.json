@@ -16,13 +16,18 @@
 		"Wsssssssssssssssssss~~sssssW",
 		"WsAsTsCsssssss~~sssssssssssW",
 		"WsssssssssssssssssssssmsBssW",
-		"WsPs0ssssssssssssssssssssssW",
+		"WsPs0s9ssssssssssssssssssssW",
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWW"
 	],
 	"legend": {
 		"0": {
 			"type": "portal",
 			"to": "coast",
+			"terrain": "s"
+		},
+		"9": {
+			"type": "portal",
+			"to": "lysdjupet",
 			"terrain": "s"
 		},
 		"A": {

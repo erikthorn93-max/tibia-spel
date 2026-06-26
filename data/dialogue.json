@@ -3857,5 +3857,194 @@
 				"next": "tidewarden_root"
 			}
 		]
+	},
+	"deepkeeper_root": {
+		"speaker": "npc_deepkeeper",
+		"emotion": "neutral",
+		"text": "Stanna i lyktans sken, främling. Jag är Caldros — jag följde en lysfisk genom sprickan och fann en värld utan sol. Något uråldrigt rör sig i mörkret här, och min lykta räcker inte längre.",
+		"choices": [
+			{
+				"text": "Vem är du?",
+				"next": "deepkeeper_who"
+			},
+			{
+				"text": "Vad rör sig i mörkret?",
+				"next": "deepkeeper_s1",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_deep_1"
+					}
+				]
+			},
+			{
+				"text": "Stimmen är skingrade.",
+				"next": "deepkeeper_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_deep_1",
+						"step": 3
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_deep_1"
+					}
+				]
+			},
+			{
+				"text": "Vad vaktar djupets botten?",
+				"next": "deepkeeper_s2",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_deep_2"
+					}
+				]
+			},
+			{
+				"text": "Här är avgrundskristallerna du bad om.",
+				"next": "deepkeeper_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_deep_2",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_deep_2"
+					}
+				]
+			},
+			{
+				"text": "Vem härskar i avgrundens natt?",
+				"next": "deepkeeper_s3",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_deep_3"
+					}
+				]
+			},
+			{
+				"text": "Leviatanen är besegrad.",
+				"next": "deepkeeper_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_deep_3",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_deep_3"
+					}
+				]
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"deepkeeper_who": {
+		"speaker": "npc_deepkeeper",
+		"emotion": "neutral",
+		"text": "Lyktbärare från Lysdjupets gräns. Jag kartlägger mörkret meter för meter med biolyset från fiskarna jag fångar. Men ju djupare jag når, desto mer vaknar det som borde förbli sovande.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "deepkeeper_root"
+			},
+			{
+				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"deepkeeper_s1": {
+		"speaker": "npc_deepkeeper",
+		"emotion": "worried",
+		"text": "Lyktfiskar svärmar kring mitt sken och Djupålar sänder stötar genom vattnet när de känner värme. Fäll tolv lyktfiskar och åtta ålar, så vågar jag bära lyktan djupare ner.",
+		"choices": [
+			{
+				"text": "Det ska bli gjort.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_deep_1"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "deepkeeper_root"
+			}
+		]
+	},
+	"deepkeeper_s2": {
+		"speaker": "npc_deepkeeper",
+		"emotion": "worried",
+		"text": "På botten vaktar Pansarkrabbor — kolosser av kalk och korall. Krossa åtta av dem och bryt loss avgrundskristallerna ur deras skal; de lyser med samma ljus som leviatanens ögon, och jag måste förstå det.",
+		"choices": [
+			{
+				"text": "Jag bryter loss kristallerna.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_deep_2"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "deepkeeper_root"
+			}
+		]
+	},
+	"deepkeeper_s3": {
+		"speaker": "npc_deepkeeper",
+		"emotion": "worried",
+		"text": "Kristallerna bekräftar min fasa: Leviatanen Abyssos vaknar på avgrundens botten, vaktad av Avgrundsormar. Stiger den ur djupet slukar mörkret allt ljus i havet. Bana väg och söv den för evigt.",
+		"choices": [
+			{
+				"text": "Jag avslutar det här.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_deep_3"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "deepkeeper_root"
+			}
+		]
+	},
+	"deepkeeper_reward": {
+		"speaker": "npc_deepkeeper",
+		"emotion": "happy",
+		"text": "Mörkret viker undan — min lykta brinner klarare än på år. Ingen har nått så djupt och burit ljus tillbaka. Ta det här, du har förtjänat varenda gnista.",
+		"choices": [
+			{
+				"text": "Tack, Caldros.",
+				"next": null
+			},
+			{
+				"text": "Något mer?",
+				"next": "deepkeeper_root"
+			}
+		]
 	}
 }

@@ -1341,5 +1341,120 @@
 				"outfit_seaking"
 			]
 		}
+	},
+	"quest_deep_1": {
+		"name": "Mörkrets fauna",
+		"giver": "npc_deepkeeper",
+		"requires": [],
+		"steps": [
+			{
+				"type": "explore",
+				"zone": "lysdjupet",
+				"hint": "Stig ner i Lysdjupet via sprickan i Korallavgrundens botten."
+			},
+			{
+				"type": "kill",
+				"monster": "Lyktfisk",
+				"count": 12,
+				"hint": "Skingra stimmet — fäll 12 Lyktfiskar i mörkret."
+			},
+			{
+				"type": "kill",
+				"monster": "Djupål",
+				"count": 8,
+				"hint": "Tysta 8 Djupålar innan deras stötar lamslår dig."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_deepkeeper",
+				"hint": "Rapportera till Lyktbäraren Caldros vid lyktan."
+			}
+		],
+		"rewards": {
+			"xp": 3000,
+			"gold": 1400,
+			"items": {
+				"great_health_potion": 4
+			},
+			"skill_xp": {
+				"slayer": 600
+			}
+		}
+	},
+	"quest_deep_2": {
+		"name": "Pansarets kärna",
+		"giver": "npc_deepkeeper",
+		"requires": [
+			"quest_deep_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Pansarkrabba",
+				"count": 8,
+				"hint": "Krossa 8 Pansarkrabbor på avgrundens botten."
+			},
+			{
+				"type": "collect",
+				"item": "abyssal_crystal",
+				"count": 6,
+				"hint": "Bryt loss 6 Avgrundskristaller ur deras skal."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_deepkeeper",
+				"hint": "Lämna avgrundskristallerna till Caldros."
+			}
+		],
+		"rewards": {
+			"xp": 4500,
+			"gold": 2200,
+			"items": {
+				"great_health_potion": 6
+			},
+			"skill_xp": {
+				"slayer": 1000
+			}
+		}
+	},
+	"quest_deep_3": {
+		"name": "Leviatanens vrede",
+		"giver": "npc_deepkeeper",
+		"requires": [
+			"quest_deep_2"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Avgrundsorm",
+				"count": 3,
+				"hint": "Bana väg till botten — fäll 3 Avgrundsormar."
+			},
+			{
+				"type": "kill",
+				"monster": "Leviatanen Abyssos",
+				"count": 1,
+				"hint": "Besegra Leviatanen Abyssos i avgrundens natt."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_deepkeeper",
+				"hint": "Återvänd till Caldros med beskedet att mörkret är brutet."
+			}
+		],
+		"rewards": {
+			"xp": 11000,
+			"gold": 5500,
+			"items": {
+				"great_health_potion": 6,
+				"diamond": 2
+			},
+			"skill_xp": {
+				"constitution": 3000
+			},
+			"unlocks": [
+				"outfit_leviathan"
+			]
+		}
 	}
 }

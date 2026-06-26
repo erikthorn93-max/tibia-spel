@@ -184,5 +184,11 @@
 		"category": "outfit",
 		"requires": {},
 		"desc": "Belönas för att ha besegrat Sjökungen Nautilex i Korallavgrunden."
+	},
+	"outfit_leviathan": {
+		"name": "Leviatanens regalier",
+		"category": "outfit",
+		"requires": {},
+		"desc": "Belönas för att ha besegrat Leviatanen Abyssos i Lysdjupet."
 	}
 }

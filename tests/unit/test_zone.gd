@@ -796,3 +796,85 @@ func test_korallavgrunden_crit_gear_feeds_bonus():
 	gs.equipment["amulet"] = "pearl_amulet"  # +0.06
 	assert_almost_eq(gs.total_crit_bonus(), 0.14, 0.0001)
 	gs.free()
+
+## ── Lysdjupet: bioluminescent undervattensgrotta bortom Korallavgrunden ──
+
+func test_korallavgrunden_links_to_lysdjupet():
+	var z = _make_zone("korallavgrunden")
+	assert_true(z.portals.values().has("lysdjupet"), "Korallavgrunden saknar portal till Lysdjupet")
+	var pt = null
+	for t in z.portals:
+		if String(z.portals[t]) == "lysdjupet":
+			pt = t
+			break
+	assert_not_null(pt)
+	assert_gt(z.find_path(z.player_start, pt).size(), 0, "Lysdjupet-portalen är inte nåbar")
+
+func test_lysdjupet_loads_with_content():
+	var z = _make_zone("lysdjupet")
+	assert_eq(z.zone_name, "Lysdjupet")
+	assert_true(z.is_walkable(z.player_start), "startrutan ska vara gångbar")
+	assert_true(z.portals.values().has("korallavgrunden"), "saknar portal tillbaka till Korallavgrunden")
+	for name in ["Lyktfisk", "Djupål", "Pansarkrabba"]:
+		assert_gt(z.spawn_points.filter(func(s): return s["monster"] == name).size(), 0,
+			"lysdjupet saknar " + name)
+	var bt = null
+	for s in z.spawn_points:
+		if s["monster"] == "Leviatanen Abyssos":
+			bt = s["tile"]
+			break
+	assert_not_null(bt, "Leviatanen Abyssos spawnar inte i zonen")
+	assert_gt(z.find_path_adjacent(z.player_start, bt).size(), 0, "bossen är inte nåbar")
+	var nodes = z.node_points.map(func(n): return n["node"])
+	assert_has(nodes, "deep_glow_vent")
+	assert_has(nodes, "lumen_kelp_bed")
+	var stations = z.station_points.map(func(s): return s["station"])
+	assert_has(stations, "anvil")
+	assert_has(stations, "crafting_bench")
+
+func test_lysdjupet_monsters_registered_with_desc():
+	for name in ["Lyktfisk", "Djupål", "Pansarkrabba", "Avgrundsorm", "Leviatanen Abyssos"]:
+		assert_true(MonsterDB.monsters.has(name), "saknar monster " + name)
+		assert_ne(String(MonsterDB.monsters[name].get("desc", "")), "", name + " saknar bestiary-text")
+	assert_true(MonsterDB.monsters["Leviatanen Abyssos"].get("boss", false), "Abyssos ska vara boss")
+	# Djuphavsvarelser ska vara svaga mot energi och tåliga mot eld (havs-konvention).
+	var mod: Dictionary = MonsterDB.monsters["Djupål"]["element_mod"]
+	assert_gt(float(mod.get("energy", 1.0)), 1.0, "djupål ska vara svag mot energi")
+	assert_lt(float(mod.get("fire", 1.0)), 1.0, "djupål ska tåla eld")
+
+func test_lysdjupet_items_registered():
+	for id in ["lantern_organ", "eel_hide", "abyssal_crystal", "leviathan_scale", "lumen_kelp",
+			"glowfish_stew", "leviathan_blade", "lumen_shield", "abyssal_plate", "glow_amulet"]:
+		assert_true(ItemDB.items.has(id), "saknar item " + id)
+
+func test_lysdjupet_recipes_exist_with_real_ingredients():
+	var anvil_ids: Array = ItemDB.recipes["anvil"].map(func(r): return r["id"])
+	for id in ["leviathan_blade", "lumen_shield"]:
+		assert_has(anvil_ids, id)
+	var bench_ids: Array = ItemDB.recipes["crafting_bench"].map(func(r): return r["id"])
+	for id in ["abyssal_plate", "glow_amulet"]:
+		assert_has(bench_ids, id)
+	var stove_ids: Array = ItemDB.recipes["stove"].map(func(r): return r["id"])
+	assert_has(stove_ids, "glowfish_stew")
+	for station in ["anvil", "crafting_bench", "stove"]:
+		for r in ItemDB.recipes[station]:
+			for ing in r["ingredients"]:
+				assert_true(ItemDB.items.has(ing), "recept %s saknar item %s" % [r["id"], ing])
+
+func test_lysdjupet_quest_chain():
+	for id in ["quest_deep_1", "quest_deep_2", "quest_deep_3"]:
+		assert_true(QuestSystem.quests.has(id), "saknar quest " + id)
+		assert_eq(String(QuestSystem.quests[id]["giver"]), "npc_deepkeeper", id + " har fel giver")
+	assert_eq(QuestSystem.quests["quest_deep_2"]["requires"], ["quest_deep_1"])
+	assert_eq(QuestSystem.quests["quest_deep_3"]["requires"], ["quest_deep_2"])
+	var last: Dictionary = QuestSystem.quests["quest_deep_3"]
+	assert_eq(String(last["steps"][1]["monster"]), "Leviatanen Abyssos")
+	assert_has(last["rewards"]["unlocks"], "outfit_leviathan")
+
+func test_lysdjupet_crit_gear_feeds_bonus():
+	# Knyter ihop med crit-systemet: leviatanklingan + lysamulett ska ge crit-bonus.
+	var gs = load("res://autoload/game_state.gd").new()
+	gs.equipment["weapon"] = "leviathan_blade"  # +0.10
+	gs.equipment["amulet"] = "glow_amulet"      # +0.07
+	assert_almost_eq(gs.total_crit_bonus(), 0.17, 0.0001)
+	gs.free()

@@ -546,5 +546,23 @@
 			"Varje pärla här nere är köpt med en sjömans liv."
 		],
 		"dialogue_root": "tidewarden_root"
+	},
+	"npc_deepkeeper": {
+		"name": "Lyktbäraren Caldros",
+		"zone": "lysdjupet",
+		"position": [
+			5,
+			14
+		],
+		"voice": {
+			"model": "en_US-lessac-medium",
+			"length_scale": 1
+		},
+		"barks": [
+			"Håll dig i ljuset. Mörkret här har tänder.",
+			"Leviatanen drömmer ännu. Väck den inte i onödan.",
+			"Min lykta är det enda som håller djupet borta."
+		],
+		"dialogue_root": "deepkeeper_root"
 	}
 }

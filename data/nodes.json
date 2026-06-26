@@ -1193,5 +1193,33 @@
 		"respawn": 30,
 		"color": "#3f8f6a",
 		"label": "Tångruska"
+	},
+	"deep_glow_vent": {
+		"skill": "mining",
+		"level": 32,
+		"tool": "pickaxe",
+		"yields": "abyssal_crystal",
+		"xp": 40,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 38,
+		"color": "#9a7fe0",
+		"label": "Lysspricka"
+	},
+	"lumen_kelp_bed": {
+		"skill": "herbalism",
+		"level": 28,
+		"tool": "sickle",
+		"yields": "lumen_kelp",
+		"xp": 30,
+		"charges": [
+			3,
+			5
+		],
+		"respawn": 32,
+		"color": "#5fe0c0",
+		"label": "Lystångsbädd"
 	}
 }

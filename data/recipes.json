@@ -508,6 +508,27 @@
 				"coral_shard": 4,
 				"siren_scale": 1
 			}
+		},
+		{
+			"id": "leviathan_blade",
+			"skill": "smithing",
+			"level": 48,
+			"xp": 95,
+			"ingredients": {
+				"leviathan_scale": 3,
+				"eel_hide": 2,
+				"abyssal_crystal": 4
+			}
+		},
+		{
+			"id": "lumen_shield",
+			"skill": "smithing",
+			"level": 38,
+			"xp": 55,
+			"ingredients": {
+				"abyssal_crystal": 4,
+				"eel_hide": 2
+			}
 		}
 	],
 	"stove": [
@@ -722,6 +743,16 @@
 			"ingredients": {
 				"sea_kelp": 2,
 				"kraken_ink": 1
+			}
+		},
+		{
+			"id": "glowfish_stew",
+			"skill": "cooking",
+			"level": 30,
+			"xp": 80,
+			"ingredients": {
+				"lumen_kelp": 2,
+				"lantern_organ": 1
 			}
 		}
 	],
@@ -1798,6 +1829,26 @@
 			"ingredients": {
 				"abyss_pearl": 1,
 				"sapphire": 2
+			}
+		},
+		{
+			"id": "abyssal_plate",
+			"skill": "crafting",
+			"level": 40,
+			"xp": 165,
+			"ingredients": {
+				"eel_hide": 6,
+				"abyssal_crystal": 3
+			}
+		},
+		{
+			"id": "glow_amulet",
+			"skill": "crafting",
+			"level": 36,
+			"xp": 140,
+			"ingredients": {
+				"leviathan_scale": 1,
+				"lantern_organ": 3
 			}
 		}
 	],
