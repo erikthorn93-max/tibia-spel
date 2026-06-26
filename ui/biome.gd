@@ -24,7 +24,7 @@ static func classify(zone_id: String) -> String:
 		return VOLCANO
 	if "swamp" in z or "dimmoren" in z:
 		return SWAMP
-	if "ice" in z or "frost" in z:
+	if "ice" in z or "frost" in z or "mountain" in z:  # snöklädda bergspass
 		return ICE
 	if "desert" in z or "okn" in z or "solgrav" in z:
 		return DESERT
