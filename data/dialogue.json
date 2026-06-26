@@ -3136,7 +3136,129 @@
 				"next": "fishmaster_tip"
 			},
 			{
+				"text": "Finns det arbete för en fiskare här ute?",
+				"next": "silja_q1_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_reef_1"
+					}
+				]
+			},
+			{
+				"text": "Fångsten är klar — svärdfisk och tonfisk.",
+				"next": "silja_q1_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_reef_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_reef_1"
+					}
+				]
+			},
+			{
+				"text": "Jag är redo för revets största utmaning.",
+				"next": "silja_q2_offer",
+				"conditions": [
+					{
+						"type": "quest_completed",
+						"quest": "quest_reef_1"
+					},
+					{
+						"type": "quest_available",
+						"quest": "quest_reef_2"
+					}
+				]
+			},
+			{
+				"text": "Piraterna är borta och hajen är landad.",
+				"next": "silja_q2_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_reef_2",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_reef_2"
+					}
+				]
+			},
+			{
 				"text": "Hej då.",
+				"next": null
+			}
+		]
+	},
+	"silja_q1_offer": {
+		"speaker": "npc_fishmaster",
+		"emotion": "neutral",
+		"text": "Alltid. Revet prövar den som vill kalla sig fiskare. Dra upp tre svärdfiskar ur stimmen och fyra tonfiskar ur de djupare vattnen. Klarar du det är du värd din plats här ute.",
+		"choices": [
+			{
+				"text": "Jag tar spöet och ger mig ut.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_reef_1"
+					}
+				]
+			},
+			{
+				"text": "Senare.",
+				"next": null
+			}
+		]
+	},
+	"silja_q1_report": {
+		"speaker": "npc_fishmaster",
+		"emotion": "happy",
+		"text": "Svärdfisk OCH tonfisk, rena och hela. Du har handlag, det syns. Stek dem vid elden så ska du känna styrkan revet ger. Men den verkliga prövningen — den simmar ännu djupare.",
+		"choices": [
+			{
+				"text": "Vad menar du?",
+				"next": "fishmaster_root"
+			}
+		]
+	},
+	"silja_q2_offer": {
+		"speaker": "npc_fishmaster",
+		"emotion": "worried",
+		"text": "Strandade pirater har slagit läger på revet och skrämmer bort fisken. Rensa dem — åtta stycken, minst. Och sen: landa den stora hajen ur djupvattnet. Det kräver Fishing 50 och nerver av stål. Lyckas du är du revets herre.",
+		"choices": [
+			{
+				"text": "Revet ska bli rent och hajen min.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_reef_2"
+					}
+				]
+			},
+			{
+				"text": "Inte än.",
+				"next": null
+			}
+		]
+	},
+	"silja_q2_report": {
+		"speaker": "npc_fishmaster",
+		"emotion": "happy",
+		"text": "Vid alla stormar — du landade den! Och piraterna med. Ingen sedan jag själv var ung har tämjt det här revet så. Här, jag snidade den här ur hajens tand åt dig. Bär den med stolthet, revets herre.",
+		"choices": [
+			{
+				"text": "Tack, Silja.",
 				"next": null
 			}
 		]

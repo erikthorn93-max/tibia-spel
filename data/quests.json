@@ -1923,5 +1923,76 @@
 			},
 			"charm_points": 60
 		}
+	},
+	"quest_reef_1": {
+		"name": "Stormrevets fångst",
+		"giver": "npc_fishmaster",
+		"requires": [
+			"quest_fiskemastaren"
+		],
+		"steps": [
+			{
+				"type": "collect",
+				"item": "raw_swordfish",
+				"count": 3,
+				"hint": "Fånga 3 svärdfiskar vid revets stim (Fishing 35)."
+			},
+			{
+				"type": "collect",
+				"item": "raw_tuna",
+				"count": 4,
+				"hint": "Dra upp 4 tonfiskar ur de djupare stimmen (Fishing 40)."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_fishmaster",
+				"hint": "Visa dagens fångst för Fiskemästare Silja."
+			}
+		],
+		"rewards": {
+			"xp": 2600,
+			"gold": 900,
+			"skill_xp": {
+				"fishing": 3000,
+				"cooking": 1500
+			}
+		}
+	},
+	"quest_reef_2": {
+		"name": "Revets herre",
+		"giver": "npc_fishmaster",
+		"requires": [
+			"quest_reef_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Pirat",
+				"count": 8,
+				"hint": "Rensa de strandade piraterna som skrämmer bort fisken från revet."
+			},
+			{
+				"type": "collect",
+				"item": "raw_shark",
+				"count": 1,
+				"hint": "Landa Stormrevets stora haj — bara en mästare på Fishing 50 lyckas."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_fishmaster",
+				"hint": "Bär hajen till Silja vid elden på revet."
+			}
+		],
+		"rewards": {
+			"xp": 5200,
+			"gold": 2000,
+			"items": {
+				"hajtand_amulett": 1
+			},
+			"skill_xp": {
+				"fishing": 5000,
+				"cooking": 2500
+			}
+		}
 	}
 }

@@ -3386,6 +3386,17 @@
 		"color": "#ffd86a",
 		"desc": "Havets tre härskares kraft smält samman till ett sigill. Bara den som tämjt djupet i sin helhet kan bära det."
 	},
+	"hajtand_amulett": {
+		"name": "Hajtandsamulett",
+		"type": "armor",
+		"slot": "amulet",
+		"armor": 4,
+		"crit_chance": 0.06,
+		"level_req": 35,
+		"value": 2600,
+		"color": "#9fc7d4",
+		"desc": "Snidad ur tanden från Stormrevets största haj. Fiskemästare Silja band den åt dig — ett bevis på att du tämjt revets djup."
+	},
 	"kristallhjarta": {
 		"name": "Kristallhjärtat",
 		"type": "armor",
