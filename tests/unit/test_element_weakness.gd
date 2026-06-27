@@ -3,7 +3,7 @@ extends GutTest
 ## sig till de fyra giltiga charm-elementen, och varje boss måste ha minst en
 ## svaghet (>1) så att eld/energi/död/fysisk-taktiken alltid biter på höjdpunkterna.
 
-const GILTIGA := ["fire", "energy", "death", "physical"]
+const GILTIGA := ["fire", "energy", "death", "physical", "ice"]
 
 func test_element_mod_anvander_bara_giltiga_element() -> void:
 	# En felstavad nyckel (t.ex. "ice") tystas annars: element_modifier faller

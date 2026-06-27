@@ -355,8 +355,9 @@ func test_resisted_damage_resistant_min_one():
 	assert_eq(cs.resisted_damage(1, 0.3), 1)
 
 func test_data_monsters_have_valid_element_mods():
-	# Alla element_mod i datan ska peka på kända charm-element.
-	var valid := {"fire": true, "energy": true, "death": true, "physical": true}
+	# element_mod väger nu både charm-element och attackspells; ice tillkommer
+	# för is-magin (charms har inget ice, men ice_strike/ice_wave gör).
+	var valid := {"fire": true, "energy": true, "death": true, "physical": true, "ice": true}
 	var found := 0
 	for mname in MonsterDB.monsters:
 		var mods = MonsterDB.monsters[mname].get("element_mod", {})

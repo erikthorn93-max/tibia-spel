@@ -1142,7 +1142,8 @@
 		],
 		"element_mod": {
 			"fire": 0,
-			"energy": 1.5
+			"energy": 1.5,
+			"ice": 1.5
 		},
 		"desc": "En kropp av levande sten och glödande sprickor. Den lämnar brinnande fotspår var den går."
 	},
@@ -1188,7 +1189,8 @@
 		],
 		"element_mod": {
 			"fire": 0.4,
-			"energy": 1.4
+			"energy": 1.4,
+			"ice": 1.5
 		},
 		"desc": "En rovfågel som häckar i rök och gnistor. Dyker ur askmolnen med klor som hett järn."
 	},
@@ -1272,7 +1274,8 @@
 		],
 		"element_mod": {
 			"fire": 0,
-			"energy": 1.4
+			"energy": 1.4,
+			"ice": 1.4
 		},
 		"desc": "Vulkanens kärna gjuten till kung. Där han stiger fram smälter sten till sjöar och luften själv tar eld."
 	},
@@ -1324,7 +1327,8 @@
 		],
 		"element_mod": {
 			"fire": 1.5,
-			"energy": 0.6
+			"energy": 0.6,
+			"ice": 0.4
 		},
 		"desc": "En frostbiten troll som jagar i snöyran. Långsam men obönhörlig, med nävar som krossar is och ben."
 	},
@@ -1369,7 +1373,8 @@
 			}
 		],
 		"element_mod": {
-			"fire": 1.5
+			"fire": 1.5,
+			"ice": 0.5
 		},
 		"desc": "En vit rovfågel med vingar vassa som issplitter. Slår ner ljudlöst ur snöstormen."
 	},
@@ -1453,7 +1458,8 @@
 		],
 		"element_mod": {
 			"fire": 1.6,
-			"energy": 0.5
+			"energy": 0.5,
+			"ice": 0.4
 		},
 		"desc": "Den uråldriga frostdraken som sover under glaciären. Dess andedräkt fryser floder och dess vrede väcker laviner."
 	},
@@ -1768,7 +1774,8 @@
 		],
 		"element_mod": {
 			"fire": 0,
-			"energy": 1.5
+			"energy": 1.5,
+			"ice": 1.5
 		},
 		"desc": "En larv som äter sig genom vulkanberget. Dess inälvor lyser av smält malm."
 	},
@@ -1826,7 +1833,8 @@
 		],
 		"element_mod": {
 			"fire": 0.4,
-			"death": 1.5
+			"death": 1.5,
+			"ice": 1.4
 		},
 		"desc": "En mindre eldande sprungen ur kraterns djup. Sotsvart hud, ögon som kol — och en törst efter att bränna."
 	},
@@ -1871,7 +1879,8 @@
 			}
 		],
 		"element_mod": {
-			"fire": 1.4
+			"fire": 1.4,
+			"ice": 0.5
 		},
 		"desc": "En tyst jägare med blick som ser genom yrsnö. Vacker — tills klorna träffar."
 	},
@@ -1923,7 +1932,8 @@
 		],
 		"element_mod": {
 			"fire": 1.6,
-			"energy": 0.5
+			"energy": 0.5,
+			"ice": 0.3
 		},
 		"desc": "En gestalt av kristalliserad köld. Dess beröring bränner som eld och stelnar blodet."
 	},
@@ -3096,7 +3106,8 @@
 		],
 		"element_mod": {
 			"fire": 0,
-			"energy": 1.5
+			"energy": 1.5,
+			"ice": 1.5
 		},
 		"desc": "En äldre elddrake vars vingslag väcker stormar av glöd. Hela byar har blivit aska för mindre än ett ögonkast av dess vrede."
 	},
@@ -3180,7 +3191,8 @@
 		],
 		"element_mod": {
 			"fire": 0.4,
-			"death": 1.4
+			"death": 1.4,
+			"ice": 1.4
 		},
 		"desc": "Avgrundens furste, frammanad av de mest hädiska ritualer. Att möta honom är att stirra in i världens ände — och de flesta blinkar."
 	},

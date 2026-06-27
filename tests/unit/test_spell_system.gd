@@ -8,8 +8,10 @@ class FakeMonster:
 	var tile := Vector2i.ZERO
 	var dead := false
 	var hits := 0
-	func take_damage(_d: float, _c := false) -> void:
+	var last_element := "<none>"
+	func take_damage(_d: float, _c := false, element := "") -> void:
 		hits += 1
+		last_element = element
 	func apply_status(_a: String, _b: float, _c: float) -> void:
 		pass
 
@@ -225,6 +227,17 @@ func test_area_hits_monsters_within_radius() -> void:
 	assert_eq(m1.hits, 1)
 	assert_eq(m2.hits, 1)
 	assert_eq(m3.hits, 0, "monster utanför radien ska inte träffas")
+
+func test_attack_passes_spell_element_to_monster() -> void:
+	# Elementtaktiken bygger på att casten skickar sitt element vidare till
+	# monstret, som väger det mot sin element_mod. Verifiera ledningen.
+	_fake_zone = Node2D.new()
+	var m := FakeMonster.new(); m.tile = Vector2i(3, 3)
+	_fake_zone.add_child(m)
+	World.current_zone = _fake_zone
+	GameState.learned_spells = ["ice_strike"]
+	SpellSystem.resolve_cast("ice_strike", null, Vector2i(3, 3))
+	assert_eq(m.last_element, "ice", "ice_strike ska skicka element 'ice' till take_damage")
 
 # ── Dataintegritet ───────────────────────────────────────────────────────────
 func test_all_spells_have_required_fields() -> void:

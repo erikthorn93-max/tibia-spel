@@ -417,13 +417,31 @@ func _step_to(next: Vector2i) -> void:
 func _make_elite(m: Node2D) -> void:
 	pass   # kallas inte härifrån, finns i world.gd
 
-func take_damage(dmg: float, crit := false) -> void:
+## Vanlig skada. Med element != "" tillämpas monstrets element_mod (samma
+## svaghets-/resistensdata som charm-systemet) så magi väger element mot fiende:
+## en eldspell biter hårt på ett istroll men studsar på en eldvarelse. Tomt
+## element (närstrid utan elementär laddning) ger neutral skada som förr.
+func take_damage(dmg: float, crit := false, element := "") -> void:
 	if dead:
 		return
-	hp = maxi(hp - int(dmg), 0)
+	var final_dmg := int(dmg)
+	if element != "" and element != "none":
+		var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
+		var modifier := CharmSystem.element_modifier(d, element)
+		if modifier != 1.0:
+			final_dmg = CharmSystem.resisted_damage(int(dmg), modifier)
+			if final_dmg <= 0:
+				# Immunt — visa "immun" istället för en tom nolla.
+				_spawn_element_tag("immun", Color(0.6, 0.6, 0.6))
+				return
+			if modifier > 1.0:
+				_spawn_element_tag("svag!", Color(1.0, 0.85, 0.2))
+			else:
+				_spawn_element_tag("tål", Color(0.6, 0.7, 1.0))
+	hp = maxi(hp - final_dmg, 0)
 	_check_enrage()
 	_refresh_label()
-	_spawn_damage_number(dmg, crit)
+	_spawn_damage_number(final_dmg, crit)
 	# --- ANIMATION: röd blink vid träff ---
 	_flash_hit()
 	if crit:
@@ -432,6 +450,15 @@ func take_damage(dmg: float, crit := false) -> void:
 		_die()
 	elif not crit:
 		Sfx.hit()
+
+## Liten flytande etikett ("svag!"/"tål"/"immun") ovanför monstret som förklarar
+## varför skadesiffran avviker — gör elementtaktiken läsbar för spelaren.
+func _spawn_element_tag(text: String, color: Color) -> void:
+	var parent := get_parent() if get_parent() != null else self
+	var t: Node2D = preload("res://entities/floating_text.gd").new()
+	parent.add_child(t)
+	t.global_position = global_position + Vector2(randf_range(-6, 6), -24)
+	t.setup(text, color, 11)
 
 ## Elementär bonusskada från en offensiv charm. Egen färgad siffra + charm-ljud,
 ## så den läses som ett separat tillägg ovanpå den vanliga träffen.
@@ -446,10 +473,7 @@ func take_charm_damage(dmg: float, element: String) -> int:
 	var parent := get_parent() if get_parent() != null else self
 	if final_dmg <= 0:
 		# Immunt mot detta element — visa "immun" istället för en nolla.
-		var imm: Node2D = preload("res://entities/floating_text.gd").new()
-		parent.add_child(imm)
-		imm.global_position = global_position + Vector2(randf_range(-6, 6), -16)
-		imm.setup("immun", Color(0.6, 0.6, 0.6), 11)
+		_spawn_element_tag("immun", Color(0.6, 0.6, 0.6))
 		return 0
 	hp = maxi(hp - final_dmg, 0)
 	_check_enrage()

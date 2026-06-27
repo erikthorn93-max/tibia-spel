@@ -59,7 +59,7 @@ func _rebuild() -> void:
 				elbl.modulate = Color(0.6, 0.8, 0.95)
 				_list.add_child(elbl)
 
-const _ELEM_NAMES := {"fire": "Eld", "energy": "Energi", "death": "Död", "physical": "Fysisk"}
+const _ELEM_NAMES := {"fire": "Eld", "energy": "Energi", "death": "Död", "physical": "Fysisk", "ice": "Is"}
 
 ## Formaterar element_mod till t.ex. "Svag: Eld · Tål: Död" för bestiariet.
 func _element_text(mods) -> String:
