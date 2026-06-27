@@ -29,6 +29,8 @@ func can_unlock(id: String) -> bool:
 		return false
 	if r.has("quest") and not QuestSystem.completed.has(String(r["quest"])):
 		return false
+	if r.has("all_quests") and bool(r["all_quests"]) and not QuestSystem.all_completed():
+		return false
 	if r.has("task_completed") and not TaskSystem.completed.has(String(r["task_completed"])):
 		return false
 	if r.has("boss_killed") and not TaskSystem.boss_kill_times.has(String(r["boss_killed"])):
@@ -44,6 +46,12 @@ func try_unlock(id: String) -> bool:
 		return false
 	unlock(id)
 	return true
+
+## Försöker låsa upp alla krav-drivna unlocks vars villkor nu är uppfyllda.
+## Anropas t.ex. när en quest slutförs så belöningar syns direkt.
+func try_unlock_all() -> void:
+	for id in defs:
+		try_unlock(String(id))
 
 func display_name(id: String) -> String:
 	return String(defs.get(id, {}).get("name", id))

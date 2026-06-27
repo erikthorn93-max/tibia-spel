@@ -178,5 +178,14 @@
 			"pants": "#1a1a3a",
 			"hair": "#cfd8ff"
 		}
+	},
+	"outfit_questcape": {
+		"name": "Questkappa",
+		"unlock": "outfit_questcape",
+		"colors": {
+			"shirt": "#6a2f8a",
+			"pants": "#2a1840",
+			"hair": "#e8c84a"
+		}
 	}
 }

@@ -137,7 +137,35 @@ func _complete(id: String) -> void:
 		CharmSystem.award_points(int(r["charm_points"]))
 	active.erase(id)
 	completed[id] = true
+	# Försök låsa upp krav-drivna belöningar (t.ex. Questkappan) direkt vid
+	# slutförande — annars syns de först när garderoben öppnas.
+	UnlockSystem.try_unlock_all()
 	quest_completed.emit(id)
+
+# ── Questpoäng (OSRS-stil) ──────────────────────────────────────────────────
+# Poäng per quest härleds ur svårigheten — en källa till sanning (difficulty).
+const QP_FOR : Dictionary = {
+	"Nybörjare": 1, "Lätt": 1, "Medel": 2, "Svår": 3, "Mästare": 5,
+}
+
+func quest_points(id: String) -> int:
+	return int(QP_FOR.get(String(quests.get(id, {}).get("difficulty", "Medel")), 2))
+
+func total_quest_points() -> int:
+	var sum := 0
+	for id in completed:
+		sum += quest_points(id)
+	return sum
+
+func max_quest_points() -> int:
+	var sum := 0
+	for id in quests:
+		sum += quest_points(id)
+	return sum
+
+## True när varje quest i spelet är slutförd (driver Questkappan).
+func all_completed() -> bool:
+	return not quests.is_empty() and completed.size() >= quests.size()
 
 func reset() -> void:
 	active.clear()

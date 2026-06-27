@@ -234,5 +234,14 @@
 		"category": "outfit",
 		"requires": {},
 		"desc": "Belönas av Muriel för att ha klarat Runans Mening i Trollkarlsgillet."
+	},
+	"outfit_questcape": {
+		"name": "Questkappa",
+		"category": "outfit",
+		"requires": {
+			"all_quests": true
+		},
+		"desc": "Bärs av den som slutfört varje quest i landet — questmästarens tecken.",
+		"hint": "Slutför alla quests för att förtjäna Questkappan."
 	}
 }

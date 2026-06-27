@@ -94,6 +94,17 @@ func _rebuild() -> void:
 	title.add_theme_font_size_override("font_size", 16)
 	_list.add_child(title)
 
+	# Questpoäng (OSRS-stil) + Questkappa-status
+	var sub := Label.new()
+	sub.text = "Questpoäng: %d / %d" % [QuestSystem.total_quest_points(), QuestSystem.max_quest_points()]
+	sub.add_theme_font_size_override("font_size", 12)
+	if QuestSystem.all_completed():
+		sub.text += "    ★ Questkappan förtjänad!"
+		sub.modulate = Color(0.92, 0.78, 0.40)
+	else:
+		sub.modulate = Color(0.70, 0.72, 0.78)
+	_list.add_child(sub)
+
 	_group("Pågående", groups["active"])
 	_group("Tillgängliga", groups["avail"])
 	_group("Låsta", groups["locked"])
@@ -165,9 +176,9 @@ func _quest_row(id: String) -> void:
 func _details(id: String, st: String) -> void:
 	var q: Dictionary = QuestSystem.quests[id]
 
-	# Svårighet
+	# Svårighet + questpoäng
 	var diff := _difficulty(id)
-	_detail_line("Svårighet: %s" % diff, _diff_color(diff))
+	_detail_line("Svårighet: %s   (%d questpoäng)" % [diff, QuestSystem.quest_points(id)], _diff_color(diff))
 
 	# Givare + plats
 	var giver := String(q.get("giver", ""))
