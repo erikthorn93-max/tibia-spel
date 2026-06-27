@@ -151,5 +151,32 @@
 			"pants": "#2a2438",
 			"hair": "#e8c84a"
 		}
+	},
+	"outfit_knight": {
+		"name": "Riddarens rustning",
+		"unlock": "outfit_knight",
+		"colors": {
+			"shirt": "#9aa0ad",
+			"pants": "#3a3f4a",
+			"hair": "#5a4632"
+		}
+	},
+	"outfit_paladin": {
+		"name": "Paladinens mundering",
+		"unlock": "outfit_paladin",
+		"colors": {
+			"shirt": "#2f5a3a",
+			"pants": "#3a4a2a",
+			"hair": "#caa14a"
+		}
+	},
+	"outfit_sorcerer": {
+		"name": "Trollkarlens skrud",
+		"unlock": "outfit_sorcerer",
+		"colors": {
+			"shirt": "#2a2f6a",
+			"pants": "#1a1a3a",
+			"hair": "#cfd8ff"
+		}
 	}
 }

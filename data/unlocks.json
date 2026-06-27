@@ -216,5 +216,23 @@
 		"category": "outfit",
 		"requires": {},
 		"desc": "Belönas av Kung Tibianus III för att ha tämjt hela Thais utkanter — landet, berget, djupet och revet."
+	},
+	"outfit_knight": {
+		"name": "Riddarens rustning",
+		"category": "outfit",
+		"requires": {},
+		"desc": "Belönas av Gregor för att ha klarat Murens Prov i Riddargillet."
+	},
+	"outfit_paladin": {
+		"name": "Paladinens mundering",
+		"category": "outfit",
+		"requires": {},
+		"desc": "Belönas av Galuna för att ha klarat Tro och Stål i paladingillets övre hall."
+	},
+	"outfit_sorcerer": {
+		"name": "Trollkarlens skrud",
+		"category": "outfit",
+		"requires": {},
+		"desc": "Belönas av Muriel för att ha klarat Runans Mening i Trollkarlsgillet."
 	}
 }

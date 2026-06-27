@@ -1262,6 +1262,33 @@
 				"next": "gregor_about"
 			},
 			{
+				"text": "Ge mig ett riktigt prov.",
+				"next": "gregor_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_guild_knight"
+					}
+				]
+			},
+			{
+				"text": "Muren står. Trollen föll.",
+				"next": "gregor_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_guild_knight",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_guild_knight"
+					}
+				]
+			},
+			{
 				"text": "Goodbye.",
 				"next": null
 			}
@@ -1311,6 +1338,33 @@
 				"next": "elane_who"
 			},
 			{
+				"text": "Lär mig sikta på riktigt.",
+				"next": "elane_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_guild_marksman"
+					}
+				]
+			},
+			{
+				"text": "Målen föll. Handen är stadig.",
+				"next": "elane_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_guild_marksman",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_guild_marksman"
+					}
+				]
+			},
+			{
 				"text": "Goodbye.",
 				"next": null
 			}
@@ -1356,6 +1410,33 @@
 				"next": "galuna_about"
 			},
 			{
+				"text": "Jag är redo för övre hallens prov.",
+				"next": "galuna_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_guild_paladin"
+					}
+				]
+			},
+			{
+				"text": "Orköverherren är fälld.",
+				"next": "galuna_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_guild_paladin",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_guild_paladin"
+					}
+				]
+			},
+			{
 				"text": "Goodbye.",
 				"next": null
 			}
@@ -1388,6 +1469,33 @@
 			{
 				"text": "What's below the guild?",
 				"next": "muriel_below"
+			},
+			{
+				"text": "Lär mig att mena runan.",
+				"next": "muriel_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_guild_sorcerer"
+					}
+				]
+			},
+			{
+				"text": "De döda föll för runan.",
+				"next": "muriel_reward",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_guild_sorcerer",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_guild_sorcerer"
+					}
+				]
 			},
 			{
 				"text": "Goodbye.",
@@ -5305,6 +5413,134 @@
 		"choices": [
 			{
 				"text": "Vila nu, Ozric.",
+				"next": null
+			}
+		]
+	},
+	"gregor_offer": {
+		"speaker": "npc_knight_guild_master",
+		"emotion": "neutral",
+		"text": "Vill du ha ett riktigt prov? Trollen kommer ner från bergen och prövar muren. Fäll tio i passet, och deras hövding i grottan. Då pratar vi vidare.",
+		"choices": [
+			{
+				"text": "Muren håller. Jag tar det.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_guild_knight"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "gregor_root"
+			}
+		]
+	},
+	"gregor_reward": {
+		"speaker": "npc_knight_guild_master",
+		"emotion": "friendly",
+		"text": "Tio troll och en hövding. Din arm svek inte när den tröttnade — där börjar riddaren. Bär detta med stolthet; muren står tack vare dig.",
+		"choices": [
+			{
+				"text": "För Thais.",
+				"next": null
+			}
+		]
+	},
+	"elane_offer": {
+		"speaker": "npc_elane",
+		"emotion": "neutral",
+		"text": "Vill du härda handen? Vargarna i Höjderna rör sig snabbt — tio av dem lär dig tålamodet. Sedan sex goblinsoldater, som inte står still de heller.",
+		"choices": [
+			{
+				"text": "Jag siktar lugnt.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_guild_marksman"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "elane_root"
+			}
+		]
+	},
+	"elane_reward": {
+		"speaker": "npc_elane",
+		"emotion": "friendly",
+		"text": "Stadig hand, jämn andning. Ta den här bågen — den är ärligare än de flesta människor. Galuna i övre hallen tar emot dig nu; du har förtjänat trappan.",
+		"choices": [
+			{
+				"text": "Tack, Elane.",
+				"next": null
+			}
+		]
+	},
+	"galuna_offer": {
+		"speaker": "npc_galuna",
+		"emotion": "neutral",
+		"text": "Elane sänder dig upp — bra. Här lär vi det som kommer efter bågen. Orkklyftan vräker fram tolv orcher och en överherre. Fäll dem, så vet jag vad du är gjord av.",
+		"choices": [
+			{
+				"text": "Tro och stål. Jag går.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_guild_paladin"
+					}
+				]
+			},
+			{
+				"text": "Inte än.",
+				"next": "galuna_root"
+			}
+		]
+	},
+	"galuna_reward": {
+		"speaker": "npc_galuna",
+		"emotion": "friendly",
+		"text": "Överherren föll för din hand allena. Tro bär stålet, stålet bär dig. Du hör hemma i övre hallen nu — bär paladinens regalier som en av oss.",
+		"choices": [
+			{
+				"text": "Med ära.",
+				"next": null
+			}
+		]
+	},
+	"muriel_offer": {
+		"speaker": "npc_muriel",
+		"emotion": "neutral",
+		"text": "Vill du lära runan att betyda något? Öva den på de viljelösa döda i Grottan — tolv skelett, sedan fem skelettkrigare som faktiskt slår tillbaka. Mena varje stavelse.",
+		"choices": [
+			{
+				"text": "Jag menar den.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_guild_sorcerer"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "muriel_root"
+			}
+		]
+	},
+	"muriel_reward": {
+		"speaker": "npc_muriel",
+		"emotion": "friendly",
+		"text": "Du sa runan och världen lyssnade. Det är skillnaden mellan att skrika och att tala. Ta dessa — och regalierna. De impatienta begraver vi; du studerade rätt.",
+		"choices": [
+			{
+				"text": "Tack, mästare.",
 				"next": null
 			}
 		]

@@ -2028,5 +2028,142 @@
 				"outfit_thaishero"
 			]
 		}
+	},
+	"quest_guild_knight": {
+		"name": "Murens Prov",
+		"giver": "npc_knight_guild_master",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Troll",
+				"count": 10,
+				"hint": "Trollen kommer ner från bergen. Fäll tio i Bergspasset."
+			},
+			{
+				"type": "kill",
+				"monster": "Trollhövding",
+				"count": 1,
+				"hint": "Bryt deras vilja — döda en Trollhövding i Trollgrottan."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_knight_guild_master",
+				"hint": "Återvänd till Gregor i Riddargillet."
+			}
+		],
+		"rewards": {
+			"xp": 700,
+			"gold": 450,
+			"items": {
+				"steel_platebody": 1
+			},
+			"unlocks": [
+				"outfit_knight"
+			]
+		}
+	},
+	"quest_guild_marksman": {
+		"name": "Den Stadiga Handen",
+		"giver": "npc_elane",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Varg",
+				"count": 10,
+				"hint": "Snabba mål härdar handen. Fäll tio vargar i Höjderna."
+			},
+			{
+				"type": "kill",
+				"monster": "Goblinsoldat",
+				"count": 6,
+				"hint": "Goblinsoldater rör sig i flock — sex pilar, sex träffar."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_elane",
+				"hint": "Visa Elane att handen sitter stadigt."
+			}
+		],
+		"rewards": {
+			"xp": 450,
+			"gold": 300,
+			"items": {
+				"oak_bow": 1,
+				"oak_arrow": 60
+			}
+		}
+	},
+	"quest_guild_paladin": {
+		"name": "Tro och Stål",
+		"giver": "npc_galuna",
+		"requires": [
+			"quest_guild_marksman"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Ork",
+				"count": 12,
+				"hint": "Övre hallen kräver mer. Rensa tolv orcher i Orkklyftan."
+			},
+			{
+				"type": "kill",
+				"monster": "Orköverherre",
+				"count": 1,
+				"hint": "När bågen inte räcker — fäll Orköverherren själv."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_galuna",
+				"hint": "Återvänd till Galuna i paladingillets övre hall."
+			}
+		],
+		"rewards": {
+			"xp": 1000,
+			"gold": 700,
+			"items": {
+				"steel_bow": 1
+			},
+			"unlocks": [
+				"outfit_paladin"
+			]
+		}
+	},
+	"quest_guild_sorcerer": {
+		"name": "Runans Mening",
+		"giver": "npc_muriel",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Skelett",
+				"count": 12,
+				"hint": "Öva runan på de viljelösa döda i Grottan — tolv skelett."
+			},
+			{
+				"type": "kill",
+				"monster": "Skelettkrigare",
+				"count": 5,
+				"hint": "Fem skelettkrigare står emot — mena varje rune du kastar."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_muriel",
+				"hint": "Återvänd till Muriel i Trollkarlsgillet."
+			}
+		],
+		"rewards": {
+			"xp": 700,
+			"gold": 450,
+			"items": {
+				"energy_rune": 8,
+				"great_mana_potion": 3
+			},
+			"unlocks": [
+				"outfit_sorcerer"
+			]
+		}
 	}
 }
