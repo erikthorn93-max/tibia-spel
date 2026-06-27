@@ -40,6 +40,35 @@ const COL_BG       := Color(0.05, 0.05, 0.08, 0.90)
 const COL_BORDER   := Color(0.46, 0.46, 0.64, 0.88)
 const COL_TITLE    := Color(0.90, 0.82, 0.52)
 
+# POI-tjänster (bank/handlare/lärare/stationer) + vanliga NPC:er
+const COL_BANK     := Color(0.92, 0.77, 0.26)   # $ guld
+const COL_SHOP     := Color(0.95, 0.58, 0.22)   # handlare orange
+const COL_TEACH    := Color(0.64, 0.50, 0.93)   # runlärare lila
+const COL_STATION  := Color(0.70, 0.74, 0.82)   # hantverksstation stål
+const COL_NPC      := Color(0.50, 0.80, 0.96)   # pratbar NPC lugn blå
+const COL_GLYPH_FG := Color(0.06, 0.05, 0.09)   # mörk glyf på färgad bricka
+
+# Glyf per station-typ (ASCII — ritas pålitligt av fallback-fonten)
+const STATION_GLYPH : Dictionary = {
+	"stove":          "C",   # cook
+	"anvil":          "A",
+	"crafting_bench": "W",
+	"workbench":      "W",
+	"alchemy_table":  "P",   # potion
+	"rune_altar":     "R",
+	"prayer_altar":   "B",   # bön
+}
+# Svenskt etikettnamn per station-typ (fullkartan)
+const STATION_LABEL : Dictionary = {
+	"stove":          "Spis",
+	"anvil":          "Städ",
+	"crafting_bench": "Hantverksbänk",
+	"workbench":      "Arbetsbänk",
+	"alchemy_table":  "Alkemibord",
+	"rune_altar":     "Runaltare",
+	"prayer_altar":   "Bönaltare",
+}
+
 var _full_open  := false
 var _blink_t    := 0.0
 var _last_zone  : Node2D = null
@@ -128,14 +157,16 @@ func _draw_mini() -> void:
 	var px   := vp.x - side - 6.0
 	var py   := 6.0
 	var panel := Rect2(Vector2(px, py), Vector2(side, side))
+	var font := ThemeDB.fallback_font
 
-	# Bakgrundspanel
-	draw_rect(panel, COL_BG)
-	draw_rect(panel, COL_BORDER, false, 1.5)
+	# Putsad bakgrundspanel (skugg-glow + dubbelram + hörn-accenter)
+	_draw_frame(panel)
 
 	var ox := px + PANEL_PAD
 	var oy := py + PANEL_PAD
 	var pt := _player_tile()
+	var center := Vector2(ox + MINI_RADIUS * MINI_TILE + MINI_TILE * 0.5,
+						  oy + MINI_RADIUS * MINI_TILE + MINI_TILE * 0.5)
 
 	# Terräng
 	for dy in range(-MINI_RADIUS, MINI_RADIUS + 1):
@@ -148,7 +179,7 @@ func _draw_mini() -> void:
 					  Vector2(MINI_TILE, MINI_TILE)),
 				col)
 
-	# Portaler
+	# Portaler inom vyn (prick) — utanför vyn ritas som kantpilar längre ner
 	for t: Vector2i in zone.portals:
 		_mini_dot(t, pt, ox, oy, COL_PORTAL, 2)
 
@@ -164,14 +195,25 @@ func _draw_mini() -> void:
 	for gi in _ground_items(zone):
 		_mini_dot(gi.tile, pt, ox, oy, COL_LOOT, 2)
 
+	# Tjänste-POI:er (bank/handlare/lärare/stationer) som glyf-brickor
+	for poi in _pois(zone):
+		_mini_glyph(poi["tile"], pt, center, String(poi["glyph"]), poi["col"], font, 8)
+
+	# NPC:er: quest-markör (! / ?) om de har en quest, annars liten lugn prick
+	for n in _npcs_all(zone):
+		if String(n["status"]) != "":
+			_mini_glyph(n["tile"], pt, center,
+				"!" if n["status"] == "start" else "?",
+				COL_QUEST_START if n["status"] == "start" else COL_QUEST_ACTIVE, font, 9)
+		else:
+			_mini_dot(n["tile"], pt, ox, oy, COL_NPC, 2)
+
 	# Gravsten (vit prick) om spelaren dog i denna zon
 	if GameState.grave_zone == zone.zone_id and GameState.grave_tile.x >= 0:
 		_mini_dot(GameState.grave_tile, pt, ox, oy, COL_GRAVE, 3)
 
-	# Quest-markörer (gul/grå prickar)
-	for q in _quest_givers(zone):
-		_mini_dot(q["tile"], pt, ox, oy,
-			COL_QUEST_START if q["status"] == "start" else COL_QUEST_ACTIVE, 3)
+	# Kantpilar mot utgångar utanför vyn — alltid veta vart vägarna leder
+	_draw_edge_arrows(panel, center, pt, zone, font)
 
 	# Spelare – blinkar (vit prick i mitten)
 	var blink := 1.0 if fmod(_blink_t, 1.0) < 0.65 else 0.0
@@ -182,7 +224,6 @@ func _draw_mini() -> void:
 		Color(COL_PLAYER.r, COL_PLAYER.g, COL_PLAYER.b, blink))
 
 	# Kompassrosa – liten "N" längst upp
-	var font := ThemeDB.fallback_font
 	draw_string(font,
 		Vector2(px + side * 0.5 - 3.0, py + PANEL_PAD + 1.0),
 		"N", HORIZONTAL_ALIGNMENT_LEFT, -1, 7,
@@ -206,6 +247,76 @@ func _mini_dot(tile: Vector2i, player_tile: Vector2i,
 					  oy + (dy + MINI_RADIUS) * MINI_TILE + off),
 			  Vector2(size, size)),
 		col)
+
+## Glyf-bricka på minivyn vid en tile (om inom radien).
+func _mini_glyph(tile: Vector2i, player_tile: Vector2i, center: Vector2,
+				 glyph: String, col: Color, font: Font, fs: int) -> void:
+	var dx := tile.x - player_tile.x
+	var dy := tile.y - player_tile.y
+	if absi(dx) > MINI_RADIUS or absi(dy) > MINI_RADIUS:
+		return
+	_glyph_badge(center + Vector2(dx, dy) * MINI_TILE, glyph, col, font, fs)
+
+## Putsad panelram: mjuk skugg-gloria, fylld bakgrund, dubbelram + hörn-ticks.
+func _draw_frame(panel: Rect2) -> void:
+	# mjuk skugg-gloria runt panelen
+	draw_rect(panel.grow(2.0), Color(0.0, 0.0, 0.0, 0.25))
+	draw_rect(panel, COL_BG)
+	# inre highlight + yttre ram = "putsad" känsla
+	draw_rect(panel, COL_BORDER, false, 1.5)
+	draw_rect(panel.grow(-2.0), Color(COL_BORDER.r, COL_BORDER.g, COL_BORDER.b, 0.25), false, 1.0)
+	# hörn-accenter
+	var c := COL_TITLE
+	var L := 7.0
+	for corner in [
+		[panel.position, Vector2(L, 0), Vector2(0, L)],
+		[panel.position + Vector2(panel.size.x, 0), Vector2(-L, 0), Vector2(0, L)],
+		[panel.position + Vector2(0, panel.size.y), Vector2(L, 0), Vector2(0, -L)],
+		[panel.position + panel.size, Vector2(-L, 0), Vector2(0, -L)],
+	]:
+		draw_line(corner[0], corner[0] + corner[1], c, 1.5)
+		draw_line(corner[0], corner[0] + corner[2], c, 1.5)
+
+## Kantpilar: för varje portal utanför minivyns radie, en pil vid panelkanten
+## som pekar mot utgången, med förkortat zonnamn. Gör det lätt att orientera sig.
+func _draw_edge_arrows(panel: Rect2, center: Vector2, pt: Vector2i,
+					   zone: Node2D, font: Font) -> void:
+	var inner := panel.grow(-4.0)
+	var half  := inner.size * 0.5
+	var ictr  := inner.position + half
+	for t: Vector2i in zone.portals:
+		var dx := t.x - pt.x
+		var dy := t.y - pt.y
+		if absi(dx) <= MINI_RADIUS and absi(dy) <= MINI_RADIUS:
+			continue   # inom vyn — ritas som prick
+		var dir := Vector2(dx, dy)
+		if dir.length() < 0.001:
+			continue
+		dir = dir.normalized()
+		# projicera riktningen till panelens innerkant
+		var sx := half.x / maxf(absf(dir.x), 0.0001)
+		var sy := half.y / maxf(absf(dir.y), 0.0001)
+		var edge := ictr + dir * minf(sx, sy)
+		# pil-triangel pekande utåt
+		var perp := Vector2(-dir.y, dir.x)
+		var tip  := edge
+		var base := edge - dir * 7.0
+		var col  := COL_PORTAL
+		draw_colored_polygon(PackedVector2Array([
+			tip, base + perp * 4.0, base - perp * 4.0]), col)
+		# förkortat zonnamn, draget en bit inåt från pilen
+		var nm := String(_portal_names.get(t, ""))
+		if nm == "":
+			continue
+		if nm.length() > 11:
+			nm = nm.substr(0, 10) + "…"
+		var nsz := font.get_string_size(nm, HORIZONTAL_ALIGNMENT_LEFT, -1, 7)
+		var lp  := edge - dir * 11.0 - Vector2(nsz.x * 0.5, -2.0)
+		lp.x = clampf(lp.x, inner.position.x + 1.0, inner.position.x + inner.size.x - nsz.x - 1.0)
+		lp.y = clampf(lp.y, inner.position.y + nsz.y, inner.position.y + inner.size.y - 1.0)
+		draw_rect(Rect2(lp + Vector2(-2, -nsz.y), nsz + Vector2(4, 3)), Color(0.04, 0.03, 0.07, 0.80))
+		draw_string(font, lp.round(), nm, HORIZONTAL_ALIGNMENT_LEFT, -1, 7,
+			Color(0.82, 0.74, 0.96))
 
 # ────────────── Fullskärmskarta (M-tangent) ────────────────
 
@@ -307,6 +418,15 @@ func _draw_full_overlay() -> void:
 	for t: Vector2i in zone.portals:
 		_draw_full_portal_label(t, clip, ft, font)
 
+	# Tjänste-POI:er (bank/handlare/lärare/stationer) som glyf-brickor + namn
+	for poi in _pois(zone):
+		_full_glyph_clipped(poi["tile"], clip, ft, String(poi["glyph"]), poi["col"], font, String(poi["label"]))
+
+	# Vanliga NPC:er (utan aktiv quest) — liten lugn prick (quest-givare nedan)
+	for n in _npcs_all(zone):
+		if String(n["status"]) == "":
+			_full_dot_clipped(n["tile"], clip, COL_NPC, ft)
+
 	# Monster
 	for mn in _monsters(zone):
 		_full_dot_clipped(mn.tile, clip, COL_MONSTER, ft)
@@ -340,7 +460,7 @@ func _draw_full_overlay() -> void:
 		HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color(0.38, 0.38, 0.44))
 
 	# Teckenförklaring
-	_draw_legend(panel_x + panel_w - 122.0, panel_y + panel_h - 130.0)
+	_draw_legend(panel_x + panel_w - 122.0, panel_y + panel_h - 210.0)
 
 ## Ritar en quest-markör (! / ?) med mörk bakgrund vid en NPC-tile på fullkartan.
 func _full_quest_marker(tile: Vector2i, clip: Rect2, ft: int, font: Font, status: String) -> void:
@@ -370,6 +490,21 @@ func _full_dot_clipped(tile: Vector2i, clip: Rect2, col: Color, ft: int) -> void
 		_full_map_origin.y + tile.y * ft + off)
 	if clip.has_point(p):
 		draw_rect(Rect2(p, Vector2(ds, ds)), col)
+
+## POI-glyf-bricka på fullkartan, klippt; namn ritas under vid hög zoom.
+func _full_glyph_clipped(tile: Vector2i, clip: Rect2, ft: int,
+						 glyph: String, col: Color, font: Font, label: String) -> void:
+	var center := Vector2(_full_map_origin.x + tile.x * ft + ft * 0.5,
+						  _full_map_origin.y + tile.y * ft + ft * 0.5)
+	if not clip.has_point(center):
+		return
+	_glyph_badge(center, glyph, col, font, 9)
+	if ft >= 7 and label != "":
+		var nsz := font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 8)
+		var lp  := Vector2(center.x - nsz.x * 0.5, center.y + 11.0)
+		if clip.has_point(lp) and clip.has_point(lp + Vector2(nsz.x, 0)):
+			draw_rect(Rect2(lp + Vector2(-2, -nsz.y + 1), nsz + Vector2(4, 3)), Color(0.04, 0.03, 0.07, 0.82))
+			draw_string(font, lp.round(), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 8, col.lightened(0.3))
 
 ## Ritar målzonens namn vid en portalprick i fullkartan (med skugga, klippt).
 func _draw_full_portal_label(tile: Vector2i, clip: Rect2, ft: int, font: Font) -> void:
@@ -421,6 +556,11 @@ func _draw_legend(lx: float, ly: float) -> void:
 	var font := ThemeDB.fallback_font
 	var items : Array = [
 		[COL_PLAYER,  "Spelare"],
+		[COL_NPC,     "NPC"],
+		[COL_BANK,    "$ Bank"],
+		[COL_SHOP,    "H Handlare"],
+		[COL_TEACH,   "L Runlärare"],
+		[COL_STATION, "Station"],
 		[COL_MONSTER, "Monster"],
 		[COL_LOOT,    "Föremål"],
 		[COL_GRAVE,   "Gravsten"],
@@ -429,6 +569,10 @@ func _draw_legend(lx: float, ly: float) -> void:
 		[COL_QUEST_START,  "Quest (! starta)"],
 		[COL_QUEST_ACTIVE, "Quest (? pågår)"],
 	]
+	# Bakgrundsruta så förklaringen är läsbar mot kartan
+	var bg := Rect2(Vector2(lx - 5.0, ly - 5.0), Vector2(122.0, items.size() * 15.0 + 6.0))
+	draw_rect(bg, Color(0.05, 0.05, 0.08, 0.86))
+	draw_rect(bg, COL_BORDER, false, 1.0)
 	for i in items.size():
 		var c   : Color  = items[i][0]
 		var lbl : String = items[i][1]
@@ -436,7 +580,7 @@ func _draw_legend(lx: float, ly: float) -> void:
 		draw_string(font,
 			Vector2(lx + 11.0, ly + i * 15.0 + 8.0),
 			lbl, HORIZONTAL_ALIGNMENT_LEFT, -1, 9,
-			Color(0.60, 0.60, 0.60))
+			Color(0.72, 0.72, 0.72))
 
 # ──────────────────────────────── Input ────────────────────────────────
 
@@ -618,3 +762,47 @@ func _quest_givers(zone: Node2D) -> Array:
 			if status != "":
 				out.append({"tile": child.tile, "status": status})
 	return out
+
+## Alla pratbara NPC:er i zonen: [{tile, name, status}]. status "" = ingen quest.
+func _npcs_all(zone: Node2D) -> Array:
+	var out : Array = []
+	for child in zone.get_children():
+		if child is DialogueNpc:
+			out.append({
+				"tile": child.tile,
+				"name": String(DialogueDB.npcs.get(child.npc_id, {}).get("name", child.npc_id)),
+				"status": QuestSystem.giver_marker(child.npc_id),
+			})
+	return out
+
+## Tjänste-POI:er i zonen: [{tile, glyph, col, label}] för bank/handlare/lärare/stationer.
+func _pois(zone: Node2D) -> Array:
+	var out : Array = []
+	for t: Vector2i in zone.bank_points:
+		out.append({"tile": t, "glyph": "$", "col": COL_BANK, "label": "Bank"})
+	for t: Vector2i in zone.shop_points:
+		out.append({"tile": t, "glyph": "H", "col": COL_SHOP, "label": "Handlare"})
+	for t: Vector2i in zone.spell_teacher_points:
+		out.append({"tile": t, "glyph": "L", "col": COL_TEACH, "label": "Runlärare"})
+	for sp in zone.station_points:
+		var st := String(sp["station"])
+		out.append({
+			"tile": sp["tile"],
+			"glyph": String(STATION_GLYPH.get(st, "+")),
+			"col": COL_STATION,
+			"label": String(STATION_LABEL.get(st, st)),
+		})
+	return out
+
+## Ritar en färgad glyf-bricka (rundad känsla via dubbel kant) centrerad på en
+## pixelpunkt. Returnerar brickans Rect2 (för ev. kollisionsundvikning).
+func _glyph_badge(center: Vector2, glyph: String, col: Color, font: Font, fs: int) -> Rect2:
+	var sz := maxf(fs + 4.0, 9.0)
+	var r  := Rect2(Vector2(center.x - sz * 0.5, center.y - sz * 0.5).round(), Vector2(sz, sz))
+	draw_rect(r, col)                                   # färgad bricka
+	draw_rect(r, col.lightened(0.35), false, 1.0)       # ljus kant = putsad känsla
+	draw_rect(Rect2(r.position + Vector2.ONE, r.size - Vector2(2, 2)), col.darkened(0.25), false, 1.0)
+	var gsz := font.get_string_size(glyph, HORIZONTAL_ALIGNMENT_LEFT, -1, fs)
+	draw_string(font, Vector2(center.x - gsz.x * 0.5, center.y + gsz.y * 0.32).round(),
+		glyph, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, COL_GLYPH_FG)
+	return r
