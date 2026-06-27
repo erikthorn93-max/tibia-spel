@@ -11,6 +11,18 @@ const COL_HINT := Color(0.75, 0.72, 0.6)
 const COL_OK := Color(0.55, 0.9, 0.55)
 const COL_MISS := Color(0.95, 0.5, 0.45)
 
+# Svårighetsgrad (OSRS-stil) — färg + rangordning för sortering
+const DIFF_COLOR : Dictionary = {
+	"Nybörjare": Color(0.55, 0.85, 0.55),
+	"Lätt":      Color(0.66, 0.88, 0.45),
+	"Medel":     Color(0.95, 0.85, 0.40),
+	"Svår":      Color(0.96, 0.62, 0.30),
+	"Mästare":   Color(0.96, 0.45, 0.42),
+}
+const DIFF_RANK : Dictionary = {
+	"Nybörjare": 0, "Lätt": 1, "Medel": 2, "Svår": 3, "Mästare": 4,
+}
+
 var _scroll: ScrollContainer
 var _list: VBoxContainer
 var _expanded: Dictionary = {}      # quest_id -> true (utfällda rader)
@@ -56,6 +68,15 @@ func _status_color(st: String) -> Color:
 		"avail": return COL_AVAIL
 		_: return COL_LOCKED
 
+func _difficulty(id: String) -> String:
+	return String(QuestSystem.quests.get(id, {}).get("difficulty", "Medel"))
+
+func _diff_color(diff: String) -> Color:
+	return DIFF_COLOR.get(diff, Color(0.85, 0.85, 0.85))
+
+func _diff_rank(id: String) -> int:
+	return int(DIFF_RANK.get(_difficulty(id), 2))
+
 # ── Bygg ──────────────────────────────────────────────────────────────────
 
 func _rebuild() -> void:
@@ -81,7 +102,13 @@ func _rebuild() -> void:
 func _group(header: String, ids: Array) -> void:
 	if ids.is_empty():
 		return
-	ids.sort_custom(func(a, b): return String(QuestSystem.quests[a]["name"]) < String(QuestSystem.quests[b]["name"]))
+	# Sortera efter svårighet (lättast först), sedan namn — naturlig progression.
+	ids.sort_custom(func(a, b):
+		var ra := _diff_rank(a)
+		var rb := _diff_rank(b)
+		if ra != rb:
+			return ra < rb
+		return String(QuestSystem.quests[a]["name"]) < String(QuestSystem.quests[b]["name"]))
 	var lbl := Label.new()
 	lbl.text = "— %s (%d) —" % [header, ids.size()]
 	lbl.add_theme_font_size_override("font_size", 13)
@@ -103,9 +130,24 @@ func _quest_row(id: String) -> void:
 	elif st == "locked":
 		mark = "   🔒"
 
+	# Rad = [färgad svårighets-badge] + [quest-knapp]. Badgen bär svårighetsfärgen,
+	# knapptexten bär status-färgen (klar/pågår/tillgänglig/låst) — som i OSRS.
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 4)
+
+	var diff := _difficulty(id)
+	var badge := Label.new()
+	badge.custom_minimum_size = Vector2(64, 0)
+	badge.text = diff
+	badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	badge.add_theme_font_size_override("font_size", 11)
+	badge.add_theme_color_override("font_color", _diff_color(diff))
+	row.add_child(badge)
+
 	var btn := Button.new()
 	btn.flat = true
 	btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	btn.text = "%s%s%s" % [arrow, String(q["name"]), mark]
 	btn.add_theme_font_size_override("font_size", 13)
 	btn.add_theme_color_override("font_color", _status_color(st))
@@ -114,13 +156,18 @@ func _quest_row(id: String) -> void:
 		if _expanded.has(id): _expanded.erase(id)
 		else: _expanded[id] = true
 		_rebuild())
-	_list.add_child(btn)
+	row.add_child(btn)
+	_list.add_child(row)
 
 	if is_open:
 		_details(id, st)
 
 func _details(id: String, st: String) -> void:
 	var q: Dictionary = QuestSystem.quests[id]
+
+	# Svårighet
+	var diff := _difficulty(id)
+	_detail_line("Svårighet: %s" % diff, _diff_color(diff))
 
 	# Givare + plats
 	var giver := String(q.get("giver", ""))

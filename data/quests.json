@@ -23,7 +23,8 @@
 		"rewards": {
 			"xp": 200,
 			"gold": 100
-		}
+		},
+		"difficulty": "Nybörjare"
 	},
 	"quest_lost_ore": {
 		"name": "The Lost Ore",
@@ -50,7 +51,8 @@
 			"items": {
 				"steel_sword": 1
 			}
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_snakes": {
 		"name": "Serpents in the Grass",
@@ -72,7 +74,8 @@
 		"rewards": {
 			"xp": 800,
 			"gold": 300
-		}
+		},
+		"difficulty": "Nybörjare"
 	},
 	"quest_crypt": {
 		"name": "Into the Crypt",
@@ -105,7 +108,8 @@
 		"rewards": {
 			"xp": 1200,
 			"gold": 400
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_ghoul_king": {
 		"name": "The Ghoul King's Shadow",
@@ -129,7 +133,8 @@
 		"rewards": {
 			"xp": 3000,
 			"gold": 1500
-		}
+		},
+		"difficulty": "Svår"
 	},
 	"quest_sjovagen": {
 		"name": "Sjövägen",
@@ -151,7 +156,8 @@
 		"rewards": {
 			"xp": 1500,
 			"gold": 600
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_desert_1": {
 		"name": "Sandormsjägaren",
@@ -178,7 +184,8 @@
 		"rewards": {
 			"xp": 400,
 			"gold": 200
-		}
+		},
+		"difficulty": "Lätt"
 	},
 	"quest_desert_2": {
 		"name": "Skarabéernas hemlighet",
@@ -205,7 +212,8 @@
 			"items": {
 				"ancient_bandage": 3
 			}
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_desert_3": {
 		"name": "Faraos fall",
@@ -229,7 +237,8 @@
 		"rewards": {
 			"xp": 1500,
 			"gold": 800
-		}
+		},
+		"difficulty": "Mästare"
 	},
 	"quest_ice_1": {
 		"name": "Köldens Välkomnande",
@@ -256,7 +265,8 @@
 		"rewards": {
 			"xp": 500,
 			"gold": 300
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_ice_2": {
 		"name": "Frostörnarnas Tid",
@@ -283,7 +293,8 @@
 			"items": {
 				"is_kristall": 2
 			}
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_ice_3": {
 		"name": "Isdraken Faller",
@@ -307,7 +318,8 @@
 		"rewards": {
 			"xp": 2000,
 			"gold": 1200
-		}
+		},
+		"difficulty": "Mästare"
 	},
 	"quest_fields_1": {
 		"name": "Vägens väktare",
@@ -329,7 +341,8 @@
 		"rewards": {
 			"xp": 600,
 			"gold": 250
-		}
+		},
+		"difficulty": "Lätt"
 	},
 	"quest_fields_2": {
 		"name": "Björnens hjärta",
@@ -359,7 +372,8 @@
 			"skill_xp": {
 				"crafting": 300
 			}
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_wilds_1": {
 		"name": "Paddans gift",
@@ -381,7 +395,8 @@
 		"rewards": {
 			"xp": 700,
 			"gold": 350
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_wilds_2": {
 		"name": "Orkernas framfart",
@@ -408,7 +423,8 @@
 			"items": {
 				"antidote_potion": 3
 			}
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_heights_1": {
 		"name": "Goblinhotet",
@@ -430,7 +446,8 @@
 		"rewards": {
 			"xp": 700,
 			"gold": 300
-		}
+		},
+		"difficulty": "Nybörjare"
 	},
 	"quest_heights_2": {
 		"name": "Vargarna i höjderna",
@@ -457,7 +474,8 @@
 			"items": {
 				"leather_legs": 1
 			}
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_heights_3": {
 		"name": "Krigsbandet",
@@ -487,7 +505,8 @@
 			"skill_xp": {
 				"slayer": 400
 			}
-		}
+		},
+		"difficulty": "Lätt"
 	},
 	"quest_mountains_1": {
 		"name": "Bergspassets plåga",
@@ -509,7 +528,8 @@
 		"rewards": {
 			"xp": 1200,
 			"gold": 500
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_mountains_2": {
 		"name": "Spindelnästet",
@@ -536,7 +556,8 @@
 			"items": {
 				"steel_platebody": 1
 			}
-		}
+		},
+		"difficulty": "Svår"
 	},
 	"quest_mountains_3": {
 		"name": "Dvärgarnas vrede",
@@ -567,7 +588,8 @@
 			"skill_xp": {
 				"mining": 600
 			}
-		}
+		},
+		"difficulty": "Svår"
 	},
 	"quest_trial_1": {
 		"name": "Gruvarbetarens prov",
@@ -592,7 +614,8 @@
 			"skill_xp": {
 				"smithing": 500
 			}
-		}
+		},
+		"difficulty": "Lätt"
 	},
 	"quest_trial_2": {
 		"name": "Smedens prov",
@@ -619,7 +642,8 @@
 			"skill_xp": {
 				"smithing": 1000
 			}
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_trial_3": {
 		"name": "Mästarens prov",
@@ -649,7 +673,8 @@
 			"unlocks": [
 				"outfit_champion"
 			]
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_fiskemastaren": {
 		"name": "Fiskemästarens prov",
@@ -685,7 +710,8 @@
 			"items": {
 				"lobster_dinner": 3
 			}
-		}
+		},
+		"difficulty": "Svår"
 	},
 	"quest_spider_crypt_1": {
 		"name": "Väven i Mörkret",
@@ -720,7 +746,8 @@
 			"items": {
 				"web_boots": 1
 			}
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_spider_crypt_2": {
 		"name": "Drottningens Fall",
@@ -756,7 +783,8 @@
 			"items": {
 				"silk_robe": 1
 			}
-		}
+		},
+		"difficulty": "Mästare"
 	},
 	"quest_fields_pests": {
 		"name": "Skadedjur på åkrarna",
@@ -787,7 +815,8 @@
 			"items": {
 				"leather_cap": 1
 			}
-		}
+		},
+		"difficulty": "Nybörjare"
 	},
 	"quest_appr_mining": {
 		"name": "Lärling: Gruvan",
@@ -812,7 +841,8 @@
 			"skill_xp": {
 				"mining": 200
 			}
-		}
+		},
+		"difficulty": "Nybörjare"
 	},
 	"quest_appr_woodcutting": {
 		"name": "Lärling: Skogen",
@@ -839,7 +869,8 @@
 			"skill_xp": {
 				"woodcutting": 200
 			}
-		}
+		},
+		"difficulty": "Lätt"
 	},
 	"quest_appr_cooking": {
 		"name": "Lärling: Härden",
@@ -867,7 +898,8 @@
 				"fishing": 200,
 				"cooking": 200
 			}
-		}
+		},
+		"difficulty": "Lätt"
 	},
 	"quest_glod_1": {
 		"name": "Glödöknens prövning",
@@ -897,7 +929,8 @@
 			"items": {
 				"great_health_potion": 3
 			}
-		}
+		},
+		"difficulty": "Lätt"
 	},
 	"quest_glod_2": {
 		"name": "Gravdammens hemlighet",
@@ -933,7 +966,8 @@
 			"skill_xp": {
 				"slayer": 500
 			}
-		}
+		},
+		"difficulty": "Lätt"
 	},
 	"quest_glod_3": {
 		"name": "Solkonungens vrede",
@@ -972,7 +1006,8 @@
 			"unlocks": [
 				"outfit_sunking"
 			]
-		}
+		},
+		"difficulty": "Mästare"
 	},
 	"quest_charm_intro": {
 		"name": "Bestians gåva",
@@ -995,7 +1030,8 @@
 			"xp": 200,
 			"gold": 50,
 			"charm_points": 100
-		}
+		},
+		"difficulty": "Nybörjare"
 	},
 	"quest_svamp_1": {
 		"name": "Det lysande mörkret",
@@ -1034,7 +1070,8 @@
 			"skill_xp": {
 				"herbalism": 250
 			}
-		}
+		},
+		"difficulty": "Nybörjare"
 	},
 	"quest_svamp_2": {
 		"name": "Mycelets viskningar",
@@ -1076,7 +1113,8 @@
 			"skill_xp": {
 				"slayer": 500
 			}
-		}
+		},
+		"difficulty": "Lätt"
 	},
 	"quest_svamp_3": {
 		"name": "Sporkungens fall",
@@ -1110,7 +1148,8 @@
 			"unlocks": [
 				"outfit_mykonid"
 			]
-		}
+		},
+		"difficulty": "Mästare"
 	},
 	"quest_frost_1": {
 		"name": "Avgrundens köld",
@@ -1149,7 +1188,8 @@
 			"skill_xp": {
 				"slayer": 400
 			}
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_frost_2": {
 		"name": "Väktarnas is",
@@ -1185,7 +1225,8 @@
 			"skill_xp": {
 				"slayer": 700
 			}
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_frost_3": {
 		"name": "Frostmonarkens tron",
@@ -1225,7 +1266,8 @@
 			"unlocks": [
 				"outfit_frostmonarch"
 			]
-		}
+		},
+		"difficulty": "Mästare"
 	},
 	"quest_abyss_1": {
 		"name": "Revets rovdjur",
@@ -1264,7 +1306,8 @@
 			"skill_xp": {
 				"slayer": 400
 			}
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_abyss_2": {
 		"name": "Revets hjärta",
@@ -1300,7 +1343,8 @@
 			"skill_xp": {
 				"slayer": 700
 			}
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_abyss_3": {
 		"name": "Sjökungens tron",
@@ -1340,7 +1384,8 @@
 			"unlocks": [
 				"outfit_seaking"
 			]
-		}
+		},
+		"difficulty": "Mästare"
 	},
 	"quest_deep_1": {
 		"name": "Mörkrets fauna",
@@ -1379,7 +1424,8 @@
 			"skill_xp": {
 				"slayer": 600
 			}
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_deep_2": {
 		"name": "Pansarets kärna",
@@ -1415,7 +1461,8 @@
 			"skill_xp": {
 				"slayer": 1000
 			}
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_deep_3": {
 		"name": "Leviatanens vrede",
@@ -1455,7 +1502,8 @@
 			"unlocks": [
 				"outfit_leviathan"
 			]
-		}
+		},
+		"difficulty": "Mästare"
 	},
 	"quest_void_1": {
 		"name": "Tomrummets yngel",
@@ -1494,7 +1542,8 @@
 			"skill_xp": {
 				"slayer": 900
 			}
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_void_2": {
 		"name": "Den vakande blicken",
@@ -1530,7 +1579,8 @@
 			"skill_xp": {
 				"slayer": 1400
 			}
-		}
+		},
+		"difficulty": "Svår"
 	},
 	"quest_void_3": {
 		"name": "Urgudens sömn",
@@ -1570,7 +1620,8 @@
 			"unlocks": [
 				"outfit_voidgod"
 			]
-		}
+		},
+		"difficulty": "Mästare"
 	},
 	"quest_deep_master": {
 		"name": "Djupets mästare",
@@ -1600,7 +1651,8 @@
 			"unlocks": [
 				"outfit_deepmaster"
 			]
-		}
+		},
+		"difficulty": "Mästare"
 	},
 	"quest_drake_1": {
 		"name": "Askans väg",
@@ -1637,7 +1689,8 @@
 			"unlocks": [
 				"drakboet"
 			]
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_drake_2": {
 		"name": "Eldens herre",
@@ -1673,7 +1726,8 @@
 			"skill_xp": {
 				"constitution": 2200
 			}
-		}
+		},
+		"difficulty": "Mästare"
 	},
 	"quest_urskog_1": {
 		"name": "Den ruttnande roten",
@@ -1710,7 +1764,8 @@
 			"unlocks": [
 				"urskogens_hjarta"
 			]
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_urskog_2": {
 		"name": "Urskogens hjärta",
@@ -1745,7 +1800,8 @@
 			"skill_xp": {
 				"constitution": 1200
 			}
-		}
+		},
+		"difficulty": "Svår"
 	},
 	"quest_jail_1": {
 		"name": "Mannen i cellen",
@@ -1766,7 +1822,8 @@
 		"rewards": {
 			"xp": 1200,
 			"gold": 300
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_jail_2": {
 		"name": "Smugglarnas spår",
@@ -1796,7 +1853,8 @@
 		"rewards": {
 			"xp": 2200,
 			"gold": 600
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_jail_3": {
 		"name": "Black Berts pris",
@@ -1829,7 +1887,8 @@
 			"items": {
 				"gold_ring": 1
 			}
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_jail_4": {
 		"name": "Rättvisa i Thais",
@@ -1858,7 +1917,8 @@
 			"skill_xp": {
 				"thieving": 800
 			}
-		}
+		},
+		"difficulty": "Mästare"
 	},
 	"quest_gem_1": {
 		"name": "Kristallernas pris",
@@ -1891,7 +1951,8 @@
 			"skill_xp": {
 				"mining": 1500
 			}
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_gem_2": {
 		"name": "Geodans väktare",
@@ -1922,7 +1983,8 @@
 				"mining": 2500
 			},
 			"charm_points": 60
-		}
+		},
+		"difficulty": "Mästare"
 	},
 	"quest_reef_1": {
 		"name": "Stormrevets fångst",
@@ -1956,7 +2018,8 @@
 				"fishing": 3000,
 				"cooking": 1500
 			}
-		}
+		},
+		"difficulty": "Svår"
 	},
 	"quest_reef_2": {
 		"name": "Revets herre",
@@ -1993,7 +2056,8 @@
 				"fishing": 5000,
 				"cooking": 2500
 			}
-		}
+		},
+		"difficulty": "Medel"
 	},
 	"quest_thais_hero": {
 		"name": "Thais hjälte",
@@ -2027,7 +2091,8 @@
 			"unlocks": [
 				"outfit_thaishero"
 			]
-		}
+		},
+		"difficulty": "Mästare"
 	},
 	"quest_guild_knight": {
 		"name": "Murens Prov",
@@ -2061,7 +2126,8 @@
 			"unlocks": [
 				"outfit_knight"
 			]
-		}
+		},
+		"difficulty": "Svår"
 	},
 	"quest_guild_marksman": {
 		"name": "Den Stadiga Handen",
@@ -2093,7 +2159,8 @@
 				"oak_bow": 1,
 				"oak_arrow": 60
 			}
-		}
+		},
+		"difficulty": "Lätt"
 	},
 	"quest_guild_paladin": {
 		"name": "Tro och Stål",
@@ -2129,7 +2196,8 @@
 			"unlocks": [
 				"outfit_paladin"
 			]
-		}
+		},
+		"difficulty": "Svår"
 	},
 	"quest_guild_sorcerer": {
 		"name": "Runans Mening",
@@ -2164,6 +2232,7 @@
 			"unlocks": [
 				"outfit_sorcerer"
 			]
-		}
+		},
+		"difficulty": "Medel"
 	}
 }

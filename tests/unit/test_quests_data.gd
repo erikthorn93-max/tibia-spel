@@ -67,6 +67,13 @@ func test_dialogue_refs():
 				if a.has("item"):
 					assert_true(ItemDB.items.has(String(a["item"])), "%s: action mot okänt item" % nid)
 
+func test_varje_quest_har_giltig_svarighet():
+	# OSRS-stil svårighetsgrad — krävs av questloggen för badge/sortering.
+	var giltiga := ["Nybörjare", "Lätt", "Medel", "Svår", "Mästare"]
+	for id in quests:
+		var d := String(quests[id].get("difficulty", ""))
+		assert_has(giltiga, d, "%s: saknar/ogiltig svårighet '%s'" % [id, d])
+
 func test_every_quest_startable_via_dialogue():
 	var started := {}
 	for nid in nodes:

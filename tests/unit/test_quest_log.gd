@@ -83,3 +83,20 @@ func test_expansion_toggle_lagger_till_detaljrader():
 	p._expanded["quest_guild_paladin"] = true   # låst quest => visar förkrav
 	p._rebuild()
 	assert_gt(p._list.get_child_count(), before, "utfällning gav inga extra detaljrader")
+
+# ── Svårighetsgrad ─────────────────────────────────────────────────────────
+
+func test_difficulty_lases_fran_questdata():
+	# quest_welcome är satt till Nybörjare av svårighetsheuristiken.
+	assert_eq(_panel()._difficulty("quest_welcome"), "Nybörjare")
+
+func test_difficulty_har_egen_farg_per_grad():
+	var p = _panel()
+	# Varje grad ska ge en distinkt färg (inte default-vit).
+	for d in ["Nybörjare", "Lätt", "Medel", "Svår", "Mästare"]:
+		assert_true(p.DIFF_COLOR.has(d), "saknar färg för %s" % d)
+	assert_ne(p._diff_color("Mästare"), p._diff_color("Nybörjare"))
+
+func test_diff_rank_ordnar_latt_fore_svar():
+	var p = _panel()
+	assert_lt(p.DIFF_RANK["Nybörjare"], p.DIFF_RANK["Mästare"], "Nybörjare ska rankas före Mästare")
