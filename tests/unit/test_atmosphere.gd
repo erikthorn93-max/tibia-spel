@@ -74,3 +74,36 @@ func test_flicker_actually_varies():
 		lo = minf(lo, v)
 		hi = maxf(hi, v)
 	assert_gt(hi - lo, 0.05, "flimret ska variera märkbart")
+
+# ── Äkta 2D-ljus: CanvasModulate-ton ──
+
+func test_canvas_tint_midday_is_neutral():
+	# Middag → ingen mörkläggning, multiplikator nära vit.
+	var c := Atmosphere.canvas_tint(0.5)
+	assert_gt(c.r, 0.95, "middag ska vara ljus")
+	assert_gt(c.g, 0.95)
+	assert_gt(c.b, 0.95)
+
+func test_canvas_tint_midnight_is_dark_and_cool():
+	var c := Atmosphere.canvas_tint(0.0)
+	assert_lt(c.r, 0.5, "midnatt ska mörklägga världen")
+	assert_gt(c.b, c.r, "natten ska vara kall (blå dominerar)")
+	assert_gt(c.r, 0.0, "aldrig becksvart — svaga konturer ska synas")
+
+func test_canvas_tint_dusk_is_warm():
+	# 18:00 → varm ton (röd > blå) men ändå nedtonad.
+	var c := Atmosphere.canvas_tint(0.75)
+	assert_gt(c.r, c.b, "skymning ska vara varm")
+	assert_lt(c.r, 1.0, "skymningen ska vara nedtonad mot natten")
+
+# ── Äkta 2D-ljus: ljuskällornas styrka över dygnet ──
+
+func test_light_energy_zero_at_midday():
+	assert_lt(Atmosphere.light_energy(0.5), 0.05, "ljuskällor ska inte överexponera dagsljus")
+
+func test_light_energy_full_at_midnight():
+	assert_gt(Atmosphere.light_energy(0.0), 0.9, "facklor ska lysa starkt på natten")
+
+func test_light_energy_rises_into_night():
+	# Skymningen (frac 0.7) ska ge mer ljus än eftermiddagen (frac 0.55).
+	assert_gt(Atmosphere.light_energy(0.7), Atmosphere.light_energy(0.55))

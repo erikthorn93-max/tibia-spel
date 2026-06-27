@@ -72,3 +72,31 @@ static func glow_strength(light_level: float, day_fraction: float) -> float:
 static func flicker(t: float) -> float:
 	var f := sin(t * 11.0) * 0.5 + sin(t * 6.3 + 1.7) * 0.5
 	return clampf(0.9 + f * 0.1, 0.78, 1.0)
+
+# ── Äkta 2D-ljus (CanvasModulate + PointLight2D) ──────────────────────────────
+# Ersätter det gamla skärm-overlayt: CanvasModulate mörklägger hela världen
+# (även sprites/tiles), riktiga PointLight2D-noder lägger tillbaka ljus → natten
+# blir genuint mörk med lokala ljusöar runt facklor, spelaren och spells.
+
+const NIGHT_FLOOR := 0.30   # hur mörk världen blir vid midnatt (0=svart, 1=ingen)
+
+## Multiplikator-färg för en CanvasModulate vid given dygnsfraktion. Vit mitt på
+## dagen (ingen påverkan), mörk och sval mot midnatt, varmt tonad i gryning och
+## skymning. RGB skalas runt en ljusstyrka; alpha alltid 1 (CanvasModulate
+## multiplicerar färgen rakt på scenen).
+static func canvas_tint(day_fraction: float) -> Color:
+	var darkness := (cos(day_fraction * TAU) + 1.0) * 0.5   # 1 midnatt .. 0 middag
+	var bright := lerpf(1.0, NIGHT_FLOOR, darkness)
+	var twilight := clampf(1.0 - absf(darkness - 0.5) * 2.0, 0.0, 1.0)
+	# Hyfsat neutral vid middag; blå dragning på natten, varm i övergångarna.
+	var r := bright * (1.0 + 0.22 * twilight - 0.06 * darkness)
+	var g := bright * (1.0 + 0.04 * twilight - 0.02 * darkness)
+	var b := bright * (1.0 - 0.06 * twilight + 0.12 * darkness)
+	return Color(clampf(r, 0.0, 1.0), clampf(g, 0.0, 1.0), clampf(b, 0.0, 1.0), 1.0)
+
+## Hur starkt världens ljuskällor (facklor, spelarsken, spells) ska lysa vid en
+## dygnsfraktion: 0 mitt på dagen (annars överexponeras additivt ljus mot den
+## ljusa scenen), upp mot 1 vid midnatt. Mjuk kurva så facklor tänds i skymningen.
+static func light_energy(day_fraction: float) -> float:
+	var darkness := (cos(day_fraction * TAU) + 1.0) * 0.5
+	return smoothstep(0.12, 0.85, darkness)

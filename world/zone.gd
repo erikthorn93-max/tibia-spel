@@ -5,6 +5,7 @@ extends Node2D
 const TILE := 32
 const DungeonGen = preload("res://world/dungeon_generator.gd")
 const Weather = preload("res://ui/weather.gd")
+const Lighting = preload("res://world/lighting.gd")
 
 var zone_id := ""
 var zone_name := ""
@@ -295,8 +296,16 @@ func _add_portal_marker(t: Vector2i) -> void:
 	inner.color = Color(0.6, 0.6, 0.65) if locked else Color(0.85, 0.72, 1.0)
 	inner.position = c
 	add_child(inner)
+	var plight: PointLight2D = null
 	if not locked:
 		_pulse_marker(inner)   # levande glow → "gå hit"
+		# Magiskt portalsken: en pulserande ljusö som lyser i mörkret.
+		plight = Lighting.make_light(Color(0.62, 0.40, 0.95), 0.25, 64.0)
+		plight.position = c
+		add_child(plight)
+		var ltw := plight.create_tween().set_loops()
+		ltw.tween_property(plight, "energy", 0.55, 0.9).set_trans(Tween.TRANS_SINE)
+		ltw.tween_property(plight, "energy", 0.25, 0.9).set_trans(Tween.TRANS_SINE)
 	var lbl := Label.new()
 	lbl.text = "Låst: %s" % UnlockSystem.display_name(portal_locks[t]) if locked \
 		else "→ " + _zone_display_name(String(portals[t]))
@@ -307,6 +316,8 @@ func _add_portal_marker(t: Vector2i) -> void:
 	lbl.modulate = Color(0.7, 0.7, 0.7) if locked else Color(0.88, 0.78, 1.0)
 	add_child(lbl)
 	_portal_marker_nodes[t] = [swirl, inner, lbl]
+	if plight != null:
+		_portal_marker_nodes[t].append(plight)
 
 func _add_entrance_marker(t: Vector2i) -> void:
 	var c := Vector2(t) * TILE + Vector2(TILE / 2.0, TILE / 2.0)

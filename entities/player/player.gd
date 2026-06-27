@@ -22,12 +22,38 @@ var _status_aura: CPUParticles2D = null
 
 @onready var visual: CharacterVisual = $CharacterVisual
 
+const Atmosphere = preload("res://ui/atmosphere.gd")
+const Lighting = preload("res://world/lighting.gd")
+
+var _light: PointLight2D = null   # spelarens eget sken (starkare med fackla)
+var _light_t := 0.0               # tidsackumulator för fackelflimmer
+
 func _ready() -> void:
 	visual.apply_appearance(GameState.appearance)
 	GameState.appearance_changed.connect(func(): visual.apply_appearance(GameState.appearance))
 	GameState.player_hit.connect(_on_player_hit)
 	_build_status_aura()
 	GameState.status_changed.connect(_update_status_aura)
+	_build_player_light()
+
+## Spelarens följeljus: ett svagt närvarosken alltid, kraftigt fackelsken när en
+## ljuskälla är utrustad. Tänds bara i mörker (energy skalas av dygnet) så det
+## inte överexponerar dagsljus.
+func _build_player_light() -> void:
+	_light = Lighting.make_light(Color(1.0, 0.82, 0.52), 0.0, 96.0)
+	add_child(_light)
+
+func _update_player_light(delta: float) -> void:
+	if _light == null:
+		return
+	_light_t += delta
+	var dark := Atmosphere.light_energy(TimeOfDay.day_fraction)
+	# Bär man fackla/lykta lyser man både starkare och längre.
+	var carry := GameState.light_level()           # 0..1
+	var reach := 80.0 + carry * 120.0              # närvaro → fackla
+	var base := 0.45 + carry * 1.05
+	_light.texture_scale = reach / (Lighting.TEX_SIZE * 0.5)
+	_light.energy = base * dark * Atmosphere.flicker(_light_t)
 
 ## Bygger en partikel-aura som visar pågående status (gift/brand) runt spelaren.
 func _build_status_aura() -> void:
@@ -129,6 +155,7 @@ func _process(delta: float) -> void:
 	_update_attack(delta)
 	_update_gather(delta)
 	_update_spells()
+	_update_player_light(delta)
 
 func _update_movement(delta: float) -> void:
 	if GameState.has_status("stun"):
@@ -374,19 +401,38 @@ func _play_spell_fx(res: Dictionary) -> void:
 	match ctype:
 		"heal":
 			SpellFx.heal_sparkle(parent, global_position)
+			_spawn_spell_flash(parent, global_position, color, 0.9, 90.0)
 		"support":
 			SpellFx.ring(parent, global_position, color, 24.0)
 			SpellFx.burst(parent, global_position, color, 10, 70.0)
+			_spawn_spell_flash(parent, global_position, color, 0.9, 90.0)
 		"conjure":
 			SpellFx.burst(parent, global_position, color, 10, 70.0)
+			_spawn_spell_flash(parent, global_position, color, 0.7, 80.0)
 		"attack":
 			var target_type := String(fx.get("target_type", "target"))
 			if target_type == "area_self" or center_tile == tile:
 				SpellFx.burst(parent, center_pos, color, 18, 110.0)
+				_spawn_spell_flash(parent, center_pos, color, 1.8, 150.0)
 			else:
 				# Projektil från spelaren → nedslag vid målet
 				SpellFx.projectile(parent, global_position, center_pos, color,
-					func(): SpellFx.burst(parent, center_pos, color, 16, 110.0))
+					func():
+						SpellFx.burst(parent, center_pos, color, 16, 110.0)
+						_spawn_spell_flash(parent, center_pos, color, 1.6, 130.0))
+
+## Kort ljusblixt vid en besvärjelses nedslag — "lyser upp rummet" ett ögonblick.
+## Skalas inte av dygnet (till skillnad från ambient-ljus) så blixten alltid syns
+## som tydlig träff-feedback, även i dagsljus. Tonar ut och städar sig själv.
+func _spawn_spell_flash(parent: Node, pos: Vector2, color: Color, peak: float, radius: float) -> void:
+	if parent == null:
+		return
+	var fl := Lighting.make_light(color, peak, radius)
+	fl.global_position = pos
+	parent.add_child(fl)
+	var tw := fl.create_tween()
+	tw.tween_property(fl, "energy", 0.0, 0.35).set_trans(Tween.TRANS_QUAD)
+	tw.tween_callback(fl.queue_free)
 
 func _check_portal() -> void:
 	if zone.dungeon_entrances.has(tile):

@@ -1,13 +1,20 @@
 extends Node2D
 ## Spelets rotscen. Registrerar sig hos World och startar.
 
+const Atmosphere = preload("res://ui/atmosphere.gd")
+
 var _fps_log_timer := 0.0
 var _perftest := false
 var _perftest_elapsed := 0.0
 var _fps_samples: Array = []
+var _canvas_mod: CanvasModulate   # äkta dag/natt-mörkläggning av hela världen
 
 func _ready() -> void:
 	World.game_root = self
+	# CanvasModulate mörklägger world-lagret (sprites + tiles); PointLight2D-noder
+	# på spelaren, portaler och spells lägger tillbaka ljus → ljusöar i mörkret.
+	_canvas_mod = CanvasModulate.new()
+	add_child(_canvas_mod)
 	var hud := preload("res://ui/hud.tscn").instantiate()
 	add_child(hud)
 	var aim := Node2D.new()
@@ -56,6 +63,8 @@ func _debug_spawn_rats() -> void:
 	print_debug("DEBUG: spawnade %d råttor" % spawned)
 
 func _process(delta: float) -> void:
+	if _canvas_mod != null:
+		_canvas_mod.color = Atmosphere.canvas_tint(TimeOfDay.day_fraction)
 	_fps_log_timer += delta
 	if _fps_log_timer >= 2.0:
 		_fps_log_timer = 0.0

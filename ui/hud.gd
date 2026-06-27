@@ -467,19 +467,16 @@ func _update_night_overlay() -> void:
 		return
 	var h := TimeOfDay.hour
 	var frac := TimeOfDay.day_fraction   # 0.0 = midnatt, 0.5 = middag
-	# Dygnsfärgning: varm gryning/skymning, sval natt, klar middag.
-	var sky := Atmosphere.overlay_color(frac)
-	# Utrustad ljuskälla (fackla/lykta) lättar upp mörkret runt spelaren.
-	var light_factor := clampf(1.0 - GameState.light_level(), 0.15, 1.0)
-	_night_overlay.color = Color(sky.r, sky.g, sky.b, sky.a * light_factor)
-	# Vinjetten följer dygnet (mörkare hörn på natten) och ljuskällan.
-	if _vignette:
-		_vignette.modulate.a = Atmosphere.vignette_strength(frac) * light_factor
-	# Lokalt fackelsken: lyser bara upp när det är mörkt och spelaren bär ljus.
-	# Ett organiskt flimmer ovanpå gör lågan levande istället för en platt cirkel.
+	# Dag/natt-mörkläggningen sköts numera av en CanvasModulate i världen
+	# (game_root) så att riktiga PointLight2D-ljus kan skära genom mörkret. Det
+	# gamla skärm-overlayt och fackelglowen behålls som noder men hålls släckta.
+	if _night_overlay:
+		_night_overlay.color.a = 0.0
 	if _light_glow:
-		var glow := Atmosphere.glow_strength(GameState.light_level(), frac)
-		_light_glow.modulate.a = glow * Atmosphere.flicker(_glow_t)
+		_light_glow.modulate.a = 0.0
+	# Vinjetten lever kvar som filmisk inramning och följer dygnet.
+	if _vignette:
+		_vignette.modulate.a = Atmosphere.vignette_strength(frac)
 	# Biom-färggradering: stämningston för den aktuella platstypen.
 	if _biome_overlay:
 		var zid: String = World.current_zone.zone_id if World.current_zone != null \
