@@ -284,7 +284,7 @@ func _draw_edge_arrows(panel: Rect2, center: Vector2, pt: Vector2i,
 	var inner := panel.grow(-4.0)
 	var half  := inner.size * 0.5
 	var ictr  := inner.position + half
-	for t: Vector2i in zone.portals:
+	for t: Vector2i in _unique_portals(zone):
 		var dx := t.x - pt.x
 		var dy := t.y - pt.y
 		if absi(dx) <= MINI_RADIUS and absi(dy) <= MINI_RADIUS:
@@ -413,9 +413,9 @@ func _draw_full_overlay() -> void:
 	for t: Vector2i in zone.dungeon_entrances:
 		_full_dot_clipped(t, clip, COL_DUNGEON, ft)
 
-	# Portalnamn (destinationszon) — ritas ovanpå prickarna
+	# Portalnamn (destinationszon) — en etikett per unik destination (ej per ruta)
 	_label_rects.clear()
-	for t: Vector2i in zone.portals:
+	for t: Vector2i in _unique_portals(zone):
 		_draw_full_portal_label(t, clip, ft, font)
 
 	# Tjänste-POI:er (bank/handlare/lärare/stationer) som glyf-brickor + namn
@@ -761,6 +761,20 @@ func _quest_givers(zone: Node2D) -> Array:
 			var status := QuestSystem.giver_marker(child.npc_id)
 			if status != "":
 				out.append({"tile": child.tile, "status": status})
+	return out
+
+## En representativ portal-tile per unik destinationszon. Zoner har ofta flera
+## portalrutor till samma mål (t.ex. en bred ingång) — utan dedup ritas namnet
+## en gång per ruta, vilket blir plottrigt.
+func _unique_portals(zone: Node2D) -> Array:
+	var seen : Dictionary = {}
+	var out  : Array = []
+	for t: Vector2i in zone.portals:
+		var dest := String(zone.portals[t])
+		if seen.has(dest):
+			continue
+		seen[dest] = true
+		out.append(t)
 	return out
 
 ## Alla pratbara NPC:er i zonen: [{tile, name, status}]. status "" = ingen quest.

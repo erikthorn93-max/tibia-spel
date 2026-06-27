@@ -11,6 +11,7 @@ class StubZone extends Node2D:
 	var shop_points: Array = []
 	var spell_teacher_points: Array = []
 	var station_points: Array = []
+	var portals: Dictionary = {}
 
 var mm
 
@@ -71,3 +72,14 @@ func test_okand_station_far_fallback_glyf():
 	z.station_points = [{"tile": Vector2i(0, 0), "station": "nonexistent"}]
 	var pois: Array = mm._pois(z)
 	assert_eq(String(pois[0]["glyph"]), "+", "okänd station ska få fallback-glyfen +")
+
+func test_unique_portals_dedupar_per_destination():
+	# Två portalrutor till samma zon ska ge EN etikett (mot plottriga dubbletter).
+	var z = autofree(StubZone.new()) as Node2D
+	z.portals = {Vector2i(5, 0): "town", Vector2i(6, 0): "town", Vector2i(0, 9): "forest"}
+	var uniq: Array = mm._unique_portals(z)
+	assert_eq(uniq.size(), 2, "tre rutor men två destinationer → två etiketter")
+	var dests := {}
+	for t in uniq:
+		dests[String(z.portals[t])] = true
+	assert_true(dests.has("town") and dests.has("forest"), "båda destinationerna ska representeras")
