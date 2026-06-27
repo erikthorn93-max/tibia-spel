@@ -87,7 +87,10 @@
 				"chance": 0.03
 			}
 		],
-		"desc": "En vanlig jaktspindel. Dess bett svider men dödar sällan — fler ben än mod."
+		"desc": "En vanlig jaktspindel. Dess bett svider men dödar sällan — fler ben än mod.",
+		"element_mod": {
+			"fire": 1.3
+		}
 	},
 	"Skelett": {
 		"hp": 45,
@@ -245,7 +248,10 @@
 				"chance": 0.03
 			}
 		],
-		"desc": "Stor som en hund och dubbelt så hungrig. Dess huggtänder dryper av förlamande gift."
+		"desc": "Stor som en hund och dubbelt så hungrig. Dess huggtänder dryper av förlamande gift.",
+		"element_mod": {
+			"fire": 1.4
+		}
 	},
 	"Skelettkrigare": {
 		"hp": 200,
@@ -409,7 +415,10 @@
 			"tick_dmg": 3,
 			"duration": 6
 		},
-		"desc": "En uppsvälld padda vars hud svettas gift. Krossa den på avstånd, eller ångra det."
+		"desc": "En uppsvälld padda vars hud svettas gift. Krossa den på avstånd, eller ångra det.",
+		"element_mod": {
+			"fire": 1.3
+		}
 	},
 	"Träskdjävul": {
 		"hp": 230,
@@ -457,7 +466,11 @@
 				"chance": 0.04
 			}
 		],
-		"desc": "En slemtäckt best som reser sig ur dyn. Den drar ner offer i gyttjan och låter träsket göra resten."
+		"desc": "En slemtäckt best som reser sig ur dyn. Den drar ner offer i gyttjan och låter träsket göra resten.",
+		"element_mod": {
+			"fire": 1.3,
+			"physical": 0.7
+		}
 	},
 	"Ghulkungen": {
 		"hp": 800,
@@ -547,7 +560,11 @@
 				"chance": 0.018
 			}
 		],
-		"desc": "En argsint pansarkrabba som vaktar tidvattnet. Klorna knäcker ben — och oförsiktiga fingrar."
+		"desc": "En argsint pansarkrabba som vaktar tidvattnet. Klorna knäcker ben — och oförsiktiga fingrar.",
+		"element_mod": {
+			"energy": 1.4,
+			"physical": 0.7
+		}
 	},
 	"Sjöorm": {
 		"hp": 140,
@@ -589,7 +606,10 @@
 				"chance": 0.04
 			}
 		],
-		"desc": "En slingrande havsorm som jagar i bränningen. Glittrande fjäll, dödligt grepp."
+		"desc": "En slingrande havsorm som jagar i bränningen. Glittrande fjäll, dödligt grepp.",
+		"element_mod": {
+			"energy": 1.5
+		}
 	},
 	"Pirat": {
 		"hp": 180,
@@ -793,7 +813,11 @@
 			}
 		],
 		"enrage": true,
-		"desc": "Bränningens skräck, med ett öga av glas och ett hjärta av krut. Hans skatt är legendarisk — hans grymhet ännu mer."
+		"desc": "Bränningens skräck, med ett öga av glas och ett hjärta av krut. Hans skatt är legendarisk — hans grymhet ännu mer.",
+		"element_mod": {
+			"energy": 1.3,
+			"physical": 0.7
+		}
 	},
 	"Urskogsvältaren": {
 		"hp": 600,
@@ -854,7 +878,11 @@
 				"chance": 0.03
 			}
 		],
-		"desc": "En urgammal lövklädd jätte, vredgad väktare av skogens hjärta. Den krossar inkräktare som torra kvistar."
+		"desc": "En urgammal lövklädd jätte, vredgad väktare av skogens hjärta. Den krossar inkräktare som torra kvistar.",
+		"element_mod": {
+			"fire": 1.5,
+			"physical": 0.6
+		}
 	},
 	"Sandorm": {
 		"hp": 90,
@@ -902,7 +930,10 @@
 				"chance": 0.022
 			}
 		],
-		"desc": "En blek mask som simmar genom sanden. Den känner steg på avstånd och slår underifrån."
+		"desc": "En blek mask som simmar genom sanden. Den känner steg på avstånd och slår underifrån.",
+		"element_mod": {
+			"fire": 1.3
+		}
 	},
 	"Ökenmumie": {
 		"hp": 160,
@@ -1057,7 +1088,11 @@
 				"chance": 0.03
 			}
 		],
-		"desc": "Den begravde gudkonungen, väckt ur sin gyllene sarkofag. Hans vrede har legat och jäst i tusen år av tystnad."
+		"desc": "Den begravde gudkonungen, väckt ur sin gyllene sarkofag. Hans vrede har legat och jäst i tusen år av tystnad.",
+		"element_mod": {
+			"death": 0.2,
+			"fire": 1.4
+		}
 	},
 	"Lavavarelse": {
 		"hp": 200,
@@ -1546,7 +1581,10 @@
 				"chance": 0.018
 			}
 		],
-		"desc": "En blodigel stor som en underarm. Fäster sig och suger tills den spricker."
+		"desc": "En blodigel stor som en underarm. Fäster sig och suger tills den spricker.",
+		"element_mod": {
+			"fire": 1.3
+		}
 	},
 	"Sumpvarelse": {
 		"hp": 175,
@@ -1594,7 +1632,11 @@
 				"chance": 0.05
 			}
 		],
-		"desc": "En vandrande klump av rötter, lera och något som en gång levde. Träsket självt har lärt sig att hata."
+		"desc": "En vandrande klump av rötter, lera och något som en gång levde. Träsket självt har lärt sig att hata.",
+		"element_mod": {
+			"fire": 1.4,
+			"physical": 0.7
+		}
 	},
 	"Ökengam": {
 		"hp": 65,
@@ -1672,7 +1714,11 @@
 				"chance": 0.022
 			}
 		],
-		"desc": "En pansrad ödla som basar på heta klippor. Snabbare än den ser ut — och svältfödd."
+		"desc": "En pansrad ödla som basar på heta klippor. Snabbare än den ser ut — och svältfödd.",
+		"element_mod": {
+			"fire": 1.3,
+			"physical": 0.7
+		}
 	},
 	"Glödmask": {
 		"hp": 80,
@@ -2101,7 +2147,11 @@
 				"chance": 0.02
 			}
 		],
-		"desc": "En klumpig bergstroll med aptit på allt som rör sig. Stark, dum och förvånansvärt seg."
+		"desc": "En klumpig bergstroll med aptit på allt som rör sig. Stark, dum och förvånansvärt seg.",
+		"element_mod": {
+			"fire": 1.3,
+			"physical": 0.7
+		}
 	},
 	"Trollhövding": {
 		"hp": 480,
@@ -2175,7 +2225,11 @@
 				"chance": 0.03
 			}
 		],
-		"desc": "Den största och argaste i flocken, krönt med ben och ärr. Att fälla honom bryter trollens vilja."
+		"desc": "Den största och argaste i flocken, krönt med ben och ärr. Att fälla honom bryter trollens vilja.",
+		"element_mod": {
+			"fire": 1.4,
+			"physical": 0.7
+		}
 	},
 	"Ork": {
 		"hp": 190,
@@ -2283,7 +2337,11 @@
 				"chance": 0.022
 			}
 		],
-		"desc": "En orch som mumlar till mörka andar. Lagar sina krigares sår och förbannar deras fiender."
+		"desc": "En orch som mumlar till mörka andar. Lagar sina krigares sår och förbannar deras fiender.",
+		"element_mod": {
+			"energy": 1.3,
+			"death": 0.6
+		}
 	},
 	"Orköverherre": {
 		"hp": 900,
@@ -2351,7 +2409,11 @@
 				"chance": 0.03
 			}
 		],
-		"desc": "Klyftans krigsherre, byggd som en mur och dubbelt så hård. Hans rytande får hela rådet att darra."
+		"desc": "Klyftans krigsherre, byggd som en mur och dubbelt så hård. Hans rytande får hela rådet att darra.",
+		"element_mod": {
+			"energy": 1.4,
+			"physical": 0.6
+		}
 	},
 	"Minotaur": {
 		"hp": 350,
@@ -2405,7 +2467,11 @@
 				"chance": 0.028
 			}
 		],
-		"desc": "En tjurhövdad best som vaktar irrgångarna. Den känner labyrinten utantill — och du gör det inte."
+		"desc": "En tjurhövdad best som vaktar irrgångarna. Den känner labyrinten utantill — och du gör det inte.",
+		"element_mod": {
+			"energy": 1.3,
+			"physical": 0.7
+		}
 	},
 	"MinotaurVakt": {
 		"hp": 480,
@@ -2465,7 +2531,11 @@
 				"chance": 0.014
 			}
 		],
-		"desc": "En elitminotaur i tung rustning, satt att vakta de inre salarna. Tålamod av sten, yxa av järn."
+		"desc": "En elitminotaur i tung rustning, satt att vakta de inre salarna. Tålamod av sten, yxa av järn.",
+		"element_mod": {
+			"energy": 1.3,
+			"physical": 0.6
+		}
 	},
 	"MinotaurKungen": {
 		"hp": 1400,
@@ -2545,7 +2615,11 @@
 				"chance": 0.03
 			}
 		],
-		"desc": "Labyrintens krönta tjur, härskare över irrgångarnas mörker. Ingen som mött hans yxa har funnit vägen ut."
+		"desc": "Labyrintens krönta tjur, härskare över irrgångarnas mörker. Ingen som mött hans yxa har funnit vägen ut.",
+		"element_mod": {
+			"energy": 1.4,
+			"physical": 0.6
+		}
 	},
 	"Dvärg": {
 		"hp": 160,
@@ -2593,7 +2667,11 @@
 				"chance": 0.05
 			}
 		],
-		"desc": "En grävande gruvdvärg, snar till vrede över inkräktare i sina tunnlar. Hackan duger lika bra mot kött som mot sten."
+		"desc": "En grävande gruvdvärg, snar till vrede över inkräktare i sina tunnlar. Hackan duger lika bra mot kött som mot sten.",
+		"element_mod": {
+			"energy": 1.3,
+			"physical": 0.7
+		}
 	},
 	"DvärgenSmeden": {
 		"hp": 280,
@@ -2647,7 +2725,12 @@
 				"chance": 0.03
 			}
 		],
-		"desc": "En mästersmed som svingar sin slägga i strid. Hans rustning bär hundra års gnistor."
+		"desc": "En mästersmed som svingar sin slägga i strid. Hans rustning bär hundra års gnistor.",
+		"element_mod": {
+			"energy": 1.4,
+			"fire": 0.6,
+			"physical": 0.7
+		}
 	},
 	"Vampyr": {
 		"hp": 550,
@@ -3147,7 +3230,10 @@
 				"max": 1,
 				"chance": 0.025
 			}
-		]
+		],
+		"element_mod": {
+			"fire": 1.3
+		}
 	},
 	"Giftvävare": {
 		"hp": 175,
@@ -3201,7 +3287,10 @@
 				"max": 1,
 				"chance": 0.022
 			}
-		]
+		],
+		"element_mod": {
+			"fire": 1.3
+		}
 	},
 	"Skuggspindel": {
 		"hp": 250,
@@ -3255,7 +3344,10 @@
 				"max": 1,
 				"chance": 0.03
 			}
-		]
+		],
+		"element_mod": {
+			"fire": 1.3
+		}
 	},
 	"Spindeldrottningen Morwena": {
 		"hp": 1700,
@@ -3335,7 +3427,10 @@
 				"max": 2,
 				"chance": 0.028
 			}
-		]
+		],
+		"element_mod": {
+			"fire": 1.4
+		}
 	},
 	"Fältmus": {
 		"hp": 10,
@@ -3567,7 +3662,10 @@
 				"max": 2,
 				"chance": 0.05
 			}
-		]
+		],
+		"element_mod": {
+			"fire": 1.3
+		}
 	},
 	"Sandvålnad": {
 		"hp": 72,
