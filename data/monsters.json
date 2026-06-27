@@ -20,7 +20,8 @@
 				"max": 1,
 				"chance": 0.015
 			}
-		]
+		],
+		"desc": "En skabbig kloakråtta. Ofarlig styck, men de kommer sällan ensamma — nybörjarens första byte."
 	},
 	"Orm": {
 		"hp": 15,
@@ -55,7 +56,8 @@
 			"chance": 0.12,
 			"tick_dmg": 1,
 			"duration": 4
-		}
+		},
+		"desc": "En giftlös snok som ringlar i gräs och grottspringor. Snabb att hugga, lätt att trampa ihjäl."
 	},
 	"Spindel": {
 		"hp": 20,
@@ -84,7 +86,8 @@
 				"max": 1,
 				"chance": 0.03
 			}
-		]
+		],
+		"desc": "En vanlig jaktspindel. Dess bett svider men dödar sällan — fler ben än mod."
 	},
 	"Skelett": {
 		"hp": 45,
@@ -135,7 +138,8 @@
 		"element_mod": {
 			"death": 0.3,
 			"fire": 1.4
-		}
+		},
+		"desc": "Kvarlevorna av en sedan länge fallen krigare, väckt av grottans gamla illvilja. Faller lika lätt som det en gång reste sig."
 	},
 	"Ghoul": {
 		"hp": 95,
@@ -192,7 +196,8 @@
 		"element_mod": {
 			"death": 0.3,
 			"fire": 1.4
-		}
+		},
+		"desc": "En människoätare som frossar på lik i mörkret. Lukten avslöjar den långt innan klorna gör det."
 	},
 	"Jättespindel": {
 		"hp": 160,
@@ -239,7 +244,8 @@
 				"max": 1,
 				"chance": 0.03
 			}
-		]
+		],
+		"desc": "Stor som en hund och dubbelt så hungrig. Dess huggtänder dryper av förlamande gift."
 	},
 	"Skelettkrigare": {
 		"hp": 200,
@@ -296,7 +302,8 @@
 		"element_mod": {
 			"death": 0.3,
 			"fire": 1.3
-		}
+		},
+		"desc": "Ett skelett som mins sin svärdshand. Bär rostig rustning och en vrede som överlevt döden."
 	},
 	"Fantom": {
 		"hp": 260,
@@ -353,7 +360,8 @@
 		"element_mod": {
 			"death": 0,
 			"energy": 1.4
-		}
+		},
+		"desc": "En rastlös ande bunden vid platsen där den dog. Vapen biter dåligt på det som redan är borta."
 	},
 	"Giftpadda": {
 		"hp": 120,
@@ -400,7 +408,8 @@
 			"chance": 0.18,
 			"tick_dmg": 3,
 			"duration": 6
-		}
+		},
+		"desc": "En uppsvälld padda vars hud svettas gift. Krossa den på avstånd, eller ångra det."
 	},
 	"Träskdjävul": {
 		"hp": 230,
@@ -447,7 +456,8 @@
 				"max": 1,
 				"chance": 0.04
 			}
-		]
+		],
+		"desc": "En slemtäckt best som reser sig ur dyn. Den drar ner offer i gyttjan och låter träsket göra resten."
 	},
 	"Ghulkungen": {
 		"hp": 800,
@@ -500,7 +510,8 @@
 		"element_mod": {
 			"death": 0.3,
 			"fire": 1.3
-		}
+		},
+		"desc": "Härskaren över kryptans vandöda — en gång en furste, nu en krönt as. Den som fäller honom tystar hela grottans hunger."
 	},
 	"Strandkrabba": {
 		"hp": 60,
@@ -535,7 +546,8 @@
 				"max": 1,
 				"chance": 0.018
 			}
-		]
+		],
+		"desc": "En argsint pansarkrabba som vaktar tidvattnet. Klorna knäcker ben — och oförsiktiga fingrar."
 	},
 	"Sjöorm": {
 		"hp": 140,
@@ -576,7 +588,8 @@
 				"max": 1,
 				"chance": 0.04
 			}
-		]
+		],
+		"desc": "En slingrande havsorm som jagar i bränningen. Glittrande fjäll, dödligt grepp."
 	},
 	"Pirat": {
 		"hp": 180,
@@ -623,7 +636,8 @@
 				"max": 1,
 				"chance": 0.03
 			}
-		]
+		],
+		"desc": "En härdad sjörövare med kortsvärd och kortare tålamod. Slåss smutsigt, dör skränande."
 	},
 	"Pirat Skytt": {
 		"hp": 150,
@@ -664,7 +678,8 @@
 				"max": 1,
 				"chance": 0.03
 			}
-		]
+		],
+		"desc": "En pirat med musköt och vasst öga. Håll dig inte stilla — och håll dig inte långt borta."
 	},
 	"Drunknad sjöman": {
 		"hp": 110,
@@ -709,7 +724,8 @@
 		"element_mod": {
 			"death": 0.4,
 			"fire": 1.3
-		}
+		},
+		"desc": "En sjöman som havet tog och spottade tillbaka. Vandrar stranden, sökande efter ett skepp som aldrig kommer."
 	},
 	"Piratkapten Svartöga": {
 		"hp": 950,
@@ -776,7 +792,8 @@
 				"chance": 0.025
 			}
 		],
-		"enrage": true
+		"enrage": true,
+		"desc": "Bränningens skräck, med ett öga av glas och ett hjärta av krut. Hans skatt är legendarisk — hans grymhet ännu mer."
 	},
 	"Urskogsvältaren": {
 		"hp": 600,
@@ -836,7 +853,8 @@
 				"max": 1,
 				"chance": 0.03
 			}
-		]
+		],
+		"desc": "En urgammal lövklädd jätte, vredgad väktare av skogens hjärta. Den krossar inkräktare som torra kvistar."
 	},
 	"Sandorm": {
 		"hp": 90,
@@ -883,7 +901,8 @@
 				"max": 1,
 				"chance": 0.022
 			}
-		]
+		],
+		"desc": "En blek mask som simmar genom sanden. Den känner steg på avstånd och slår underifrån."
 	},
 	"Ökenmumie": {
 		"hp": 160,
@@ -945,7 +964,8 @@
 		"element_mod": {
 			"death": 0.3,
 			"fire": 1.5
-		}
+		},
+		"desc": "En balsamerad död som vägrar vila. Dess lindor döljer förbannelser äldre än kungariket."
 	},
 	"Farao Khem-Ra": {
 		"hp": 1200,
@@ -1036,7 +1056,8 @@
 				"max": 2,
 				"chance": 0.03
 			}
-		]
+		],
+		"desc": "Den begravde gudkonungen, väckt ur sin gyllene sarkofag. Hans vrede har legat och jäst i tusen år av tystnad."
 	},
 	"Lavavarelse": {
 		"hp": 200,
@@ -1087,7 +1108,8 @@
 		"element_mod": {
 			"fire": 0,
 			"energy": 1.5
-		}
+		},
+		"desc": "En kropp av levande sten och glödande sprickor. Den lämnar brinnande fotspår var den går."
 	},
 	"Askhök": {
 		"hp": 120,
@@ -1132,7 +1154,8 @@
 		"element_mod": {
 			"fire": 0.4,
 			"energy": 1.4
-		}
+		},
+		"desc": "En rovfågel som häckar i rök och gnistor. Dyker ur askmolnen med klor som hett järn."
 	},
 	"Smältkonungen": {
 		"hp": 2000,
@@ -1215,7 +1238,8 @@
 		"element_mod": {
 			"fire": 0,
 			"energy": 1.4
-		}
+		},
+		"desc": "Vulkanens kärna gjuten till kung. Där han stiger fram smälter sten till sjöar och luften själv tar eld."
 	},
 	"Istroll": {
 		"hp": 280,
@@ -1266,7 +1290,8 @@
 		"element_mod": {
 			"fire": 1.5,
 			"energy": 0.6
-		}
+		},
+		"desc": "En frostbiten troll som jagar i snöyran. Långsam men obönhörlig, med nävar som krossar is och ben."
 	},
 	"Frostörn": {
 		"hp": 150,
@@ -1310,7 +1335,8 @@
 		],
 		"element_mod": {
 			"fire": 1.5
-		}
+		},
+		"desc": "En vit rovfågel med vingar vassa som issplitter. Slår ner ljudlöst ur snöstormen."
 	},
 	"Isdraken": {
 		"hp": 3500,
@@ -1393,7 +1419,8 @@
 		"element_mod": {
 			"fire": 1.6,
 			"energy": 0.5
-		}
+		},
+		"desc": "Den uråldriga frostdraken som sover under glaciären. Dess andedräkt fryser floder och dess vrede väcker laviner."
 	},
 	"Skogsvargen": {
 		"hp": 80,
@@ -1428,7 +1455,8 @@
 				"max": 1,
 				"chance": 0.02
 			}
-		]
+		],
+		"desc": "En mager skogsvarg som jagar i flock. Ensam är den feg; med sina bröder är den döden."
 	},
 	"Skogsbjörn": {
 		"hp": 220,
@@ -1481,7 +1509,8 @@
 				"max": 1,
 				"chance": 0.02
 			}
-		]
+		],
+		"desc": "En revirhävdande brunbjörn. Lämna ungarna i fred — eller bli ett varnande exempel."
 	},
 	"Sumpkräla": {
 		"hp": 35,
@@ -1516,7 +1545,8 @@
 				"max": 1,
 				"chance": 0.018
 			}
-		]
+		],
+		"desc": "En blodigel stor som en underarm. Fäster sig och suger tills den spricker."
 	},
 	"Sumpvarelse": {
 		"hp": 175,
@@ -1563,7 +1593,8 @@
 				"max": 2,
 				"chance": 0.05
 			}
-		]
+		],
+		"desc": "En vandrande klump av rötter, lera och något som en gång levde. Träsket självt har lärt sig att hata."
 	},
 	"Ökengam": {
 		"hp": 65,
@@ -1592,7 +1623,8 @@
 				"max": 1,
 				"chance": 0.018
 			}
-		]
+		],
+		"desc": "En tålmodig asätare som kretsar över de döende. Hugger först när du är för svag att värja dig."
 	},
 	"Sandvaranen": {
 		"hp": 230,
@@ -1639,7 +1671,8 @@
 				"max": 1,
 				"chance": 0.022
 			}
-		]
+		],
+		"desc": "En pansrad ödla som basar på heta klippor. Snabbare än den ser ut — och svältfödd."
 	},
 	"Glödmask": {
 		"hp": 80,
@@ -1690,7 +1723,8 @@
 		"element_mod": {
 			"fire": 0,
 			"energy": 1.5
-		}
+		},
+		"desc": "En larv som äter sig genom vulkanberget. Dess inälvor lyser av smält malm."
 	},
 	"Sotdemon": {
 		"hp": 320,
@@ -1747,7 +1781,8 @@
 		"element_mod": {
 			"fire": 0.4,
 			"death": 1.5
-		}
+		},
+		"desc": "En mindre eldande sprungen ur kraterns djup. Sotsvart hud, ögon som kol — och en törst efter att bränna."
 	},
 	"Snöuggla": {
 		"hp": 70,
@@ -1791,7 +1826,8 @@
 		],
 		"element_mod": {
 			"fire": 1.4
-		}
+		},
+		"desc": "En tyst jägare med blick som ser genom yrsnö. Vacker — tills klorna träffar."
 	},
 	"Isvarelse": {
 		"hp": 185,
@@ -1842,7 +1878,8 @@
 		"element_mod": {
 			"fire": 1.6,
 			"energy": 0.5
-		}
+		},
+		"desc": "En gestalt av kristalliserad köld. Dess beröring bränner som eld och stelnar blodet."
 	},
 	"Varg": {
 		"hp": 40,
@@ -1877,7 +1914,8 @@
 				"max": 1,
 				"chance": 0.02
 			}
-		]
+		],
+		"desc": "En grå slättvarg, hungrig och hänsynslös. Den första riktiga tanden en vandrare möter."
 	},
 	"Goblin": {
 		"hp": 55,
@@ -1918,7 +1956,8 @@
 				"max": 2,
 				"chance": 0.04
 			}
-		]
+		],
+		"desc": "En liten gnällig grönhud med rostig dolk. Mer mod än vett, mer antal än mod."
 	},
 	"Goblinsoldat": {
 		"hp": 90,
@@ -1965,7 +2004,8 @@
 				"max": 1,
 				"chance": 0.02
 			}
-		]
+		],
+		"desc": "En goblin som hittat en hjälm och en idé om disciplin. Farligare i led än ensam."
 	},
 	"Bandit": {
 		"hp": 80,
@@ -2006,7 +2046,8 @@
 				"max": 1,
 				"chance": 0.02
 			}
-		]
+		],
+		"desc": "En vägrövare som hellre tar än arbetar. Bär ofta det stulna guldet på sig."
 	},
 	"Troll": {
 		"hp": 250,
@@ -2059,7 +2100,8 @@
 				"max": 1,
 				"chance": 0.02
 			}
-		]
+		],
+		"desc": "En klumpig bergstroll med aptit på allt som rör sig. Stark, dum och förvånansvärt seg."
 	},
 	"Trollhövding": {
 		"hp": 480,
@@ -2132,7 +2174,8 @@
 				"max": 1,
 				"chance": 0.03
 			}
-		]
+		],
+		"desc": "Den största och argaste i flocken, krönt med ben och ärr. Att fälla honom bryter trollens vilja."
 	},
 	"Ork": {
 		"hp": 190,
@@ -2179,7 +2222,8 @@
 				"max": 1,
 				"chance": 0.03
 			}
-		]
+		],
+		"desc": "En muskulös krigare ur orchklanerna. Lever för strid och dör med ett rytande på läpparna."
 	},
 	"Orkshamanen": {
 		"hp": 160,
@@ -2238,7 +2282,8 @@
 				"max": 1,
 				"chance": 0.022
 			}
-		]
+		],
+		"desc": "En orch som mumlar till mörka andar. Lagar sina krigares sår och förbannar deras fiender."
 	},
 	"Orköverherre": {
 		"hp": 900,
@@ -2305,7 +2350,8 @@
 				"max": 2,
 				"chance": 0.03
 			}
-		]
+		],
+		"desc": "Klyftans krigsherre, byggd som en mur och dubbelt så hård. Hans rytande får hela rådet att darra."
 	},
 	"Minotaur": {
 		"hp": 350,
@@ -2358,7 +2404,8 @@
 				"max": 2,
 				"chance": 0.028
 			}
-		]
+		],
+		"desc": "En tjurhövdad best som vaktar irrgångarna. Den känner labyrinten utantill — och du gör det inte."
 	},
 	"MinotaurVakt": {
 		"hp": 480,
@@ -2417,7 +2464,8 @@
 				"max": 1,
 				"chance": 0.014
 			}
-		]
+		],
+		"desc": "En elitminotaur i tung rustning, satt att vakta de inre salarna. Tålamod av sten, yxa av järn."
 	},
 	"MinotaurKungen": {
 		"hp": 1400,
@@ -2496,7 +2544,8 @@
 				"max": 2,
 				"chance": 0.03
 			}
-		]
+		],
+		"desc": "Labyrintens krönta tjur, härskare över irrgångarnas mörker. Ingen som mött hans yxa har funnit vägen ut."
 	},
 	"Dvärg": {
 		"hp": 160,
@@ -2543,7 +2592,8 @@
 				"max": 2,
 				"chance": 0.05
 			}
-		]
+		],
+		"desc": "En grävande gruvdvärg, snar till vrede över inkräktare i sina tunnlar. Hackan duger lika bra mot kött som mot sten."
 	},
 	"DvärgenSmeden": {
 		"hp": 280,
@@ -2596,7 +2646,8 @@
 				"max": 2,
 				"chance": 0.03
 			}
-		]
+		],
+		"desc": "En mästersmed som svingar sin slägga i strid. Hans rustning bär hundra års gnistor."
 	},
 	"Vampyr": {
 		"hp": 550,
@@ -2653,7 +2704,8 @@
 		"element_mod": {
 			"death": 0.3,
 			"fire": 1.4
-		}
+		},
+		"desc": "En blek odödlig som törstar efter blod. Den läker av varje sår den slår mot dig."
 	},
 	"VampyrHerre": {
 		"hp": 1800,
@@ -2736,7 +2788,8 @@
 		"element_mod": {
 			"death": 0.3,
 			"fire": 1.3
-		}
+		},
+		"desc": "En urgammal blodsfurste, elegant och obarmhärtig. Sekler av törst har gjort honom till en mardröm med hovmanér."
 	},
 	"Nekromant": {
 		"hp": 480,
@@ -2799,7 +2852,8 @@
 		"element_mod": {
 			"death": 0.4,
 			"fire": 1.3
-		}
+		},
+		"desc": "En förrädare mot livet självt, som reser de döda till sin tjänst. Döda honom snabbt — annars blir de fler."
 	},
 	"Lich": {
 		"hp": 1000,
@@ -2870,7 +2924,8 @@
 		"element_mod": {
 			"death": 0.2,
 			"fire": 1.3
-		}
+		},
+		"desc": "En trollkarl som bytte sin själ mot odödlighet. Bakom de tomma ögonhålorna brinner en evig, beräknande ondska."
 	},
 	"Elddraken": {
 		"hp": 4500,
@@ -2959,7 +3014,8 @@
 		"element_mod": {
 			"fire": 0,
 			"energy": 1.5
-		}
+		},
+		"desc": "En äldre elddrake vars vingslag väcker stormar av glöd. Hela byar har blivit aska för mindre än ett ögonkast av dess vrede."
 	},
 	"Ärkedemonen": {
 		"hp": 6000,
@@ -3042,7 +3098,8 @@
 		"element_mod": {
 			"fire": 0.4,
 			"death": 1.4
-		}
+		},
+		"desc": "Avgrundens furste, frammanad av de mest hädiska ritualer. Att möta honom är att stirra in i världens ände — och de flesta blinkar."
 	},
 	"Grottspindel": {
 		"hp": 110,
