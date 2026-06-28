@@ -57,6 +57,20 @@ static func charge_spec(energy: float, amount := SPEC_GAIN) -> float:
 static func spec_ready(energy: float) -> bool:
 	return energy >= SPEC_MAX
 
-## Kraftslagets skada: vapnets toppvärde gånger spec-multiplikatorn.
-static func spec_damage(base_dmg: float) -> float:
-	return base_dmg * SPEC_MULTIPLIER
+## Kraftslagets skada: vapnets toppvärde gånger en multiplikator (default = vapentyp-
+## oberoende standard). Vapentyper skickar in sin egen mult via spec_profile.
+static func spec_damage(base_dmg: float, mult := SPEC_MULTIPLIER) -> float:
+	return base_dmg * mult
+
+## Kraftslagets karaktär per vapentyp. Rena parametrar → testbara.
+##   power  — ett hårt enkelmålsslag (svärd m.fl.)
+##   cleave — träffar målet + intilliggande fiender (yxa)
+##   crush  — enkelmål + bedövar (klubba)
+##   double — två snabba skott mot målet (båge)
+## mult = skademultiplikator per träff; stun = bedövningstid i sek (0 = ingen).
+static func spec_profile(weapon_skill: String) -> Dictionary:
+	match weapon_skill:
+		"axe":      return {"kind": "cleave", "mult": 1.8, "stun": 0.0}
+		"club":     return {"kind": "crush",  "mult": 1.8, "stun": 2.5}
+		"distance": return {"kind": "double", "mult": 1.3, "stun": 0.0}
+		_:          return {"kind": "power",  "mult": SPEC_MULTIPLIER, "stun": 0.0}

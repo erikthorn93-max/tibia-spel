@@ -40,6 +40,31 @@ func test_spec_damage_applies_multiplier():
 	assert_almost_eq(CF.spec_damage(40.0), 40.0 * CF.SPEC_MULTIPLIER, 0.001)
 	assert_gt(CF.SPEC_MULTIPLIER, 1.0, "kraftslaget ska slå hårdare än ett vanligt slag")
 
+func test_spec_damage_custom_mult():
+	assert_almost_eq(CF.spec_damage(50.0, 1.8), 90.0, 0.001)
+
+# ── Vapentyps-kraftslag ──
+
+func test_spec_profile_per_weapon_kind():
+	assert_eq(String(CF.spec_profile("axe")["kind"]), "cleave")
+	assert_eq(String(CF.spec_profile("club")["kind"]), "crush")
+	assert_eq(String(CF.spec_profile("distance")["kind"]), "double")
+	assert_eq(String(CF.spec_profile("sword")["kind"]), "power")
+
+func test_spec_profile_unknown_weapon_defaults_to_power():
+	var p := CF.spec_profile("fist")
+	assert_eq(String(p["kind"]), "power")
+	assert_almost_eq(float(p["mult"]), CF.SPEC_MULTIPLIER, 0.001)
+
+func test_only_club_stuns():
+	assert_gt(float(CF.spec_profile("club")["stun"]), 0.0)
+	for w in ["axe", "distance", "sword", "fist"]:
+		assert_eq(float(CF.spec_profile(w)["stun"]), 0.0, "%s ska inte bedöva" % w)
+
+func test_all_spec_profiles_have_positive_mult():
+	for w in ["axe", "club", "distance", "sword", "fist"]:
+		assert_gt(float(CF.spec_profile(w)["mult"]), 0.0)
+
 # ── GameState-integration: laddning & urladdning ──
 
 func test_gamestate_spec_charges_and_consumes():

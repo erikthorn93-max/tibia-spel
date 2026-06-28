@@ -285,6 +285,9 @@ func _process(delta: float) -> void:
 		position = _from.lerp(_to, _move_t)
 		return
 
+	if has_status("stun"):                           # bedövad: kan varken slå eller jaga
+		return
+
 	if dist <= 1:                                    # intill: slå
 		if _atk_timer <= 0.0:
 			_atk_timer = cooldown

@@ -334,7 +334,7 @@ func try_special() -> void:
 	else:
 		base = CombatFormulas.max_melee(GameState.level,
 			GameState.effective_skill_level(wskill), atk_total)
-	# Allt klart — töm mätaren och slå.
+	# Allt klart — töm mätaren och slå utifrån vapentypens kraftslag.
 	GameState.consume_spec()
 	if weapon_range > 1 and ammo_id != "":
 		GameState.consume_ammo(ammo_id)
@@ -342,19 +342,65 @@ func try_special() -> void:
 	if to_dir != Vector2i.ZERO:
 		facing = to_dir
 		visual.face(facing)
-	var dmg := CombatFormulas.spec_damage(base) \
-		* TaskSystem.damage_multiplier(target.monster_name) \
-		* CombatStance.damage_mult(GameState.combat_stance)
 	visual.play_attack(facing)
-	target.take_damage(dmg, true)   # crit=true → guldsiffra + kritljud
+	var prof := CombatFormulas.spec_profile(wskill)
+	var stance_mult := CombatStance.damage_mult(GameState.combat_stance)
+	var mult := float(prof["mult"])
+	var msg := "Kraftslag!"
+	match String(prof["kind"]):
+		"cleave":
+			msg = "Klyv!"
+			# Målet + alla levande fiender intill målet får var sin träff.
+			for m in _monsters_near(target.tile, 1):
+				_spec_hit(m, base, mult, stance_mult)
+		"crush":
+			msg = "Krossa!"
+			_spec_hit(target, base, mult, stance_mult)
+			if is_instance_valid(target) and not target.dead:
+				target.apply_status("stun", float(prof["stun"]), 0.0)
+				if target.has_method("_spawn_element_tag"):
+					target._spawn_element_tag("bedövad", Color(1.0, 0.9, 0.4))
+		"double":
+			msg = "Dubbelskott!"
+			_spec_hit(target, base, mult, stance_mult)
+			if is_instance_valid(target) and not target.dead:
+				_spec_hit(target, base, mult, stance_mult)
+		_:  # power
+			_spec_hit(target, base, mult, stance_mult)
 	_apply_offense_charm(target)
 	GameState.gain_skill_xp(wskill, 2)
 	Sfx.crit()
-	World.hud.show_message("Kraftslag!")
-	# Kraftfull guldblixt vid nedslaget.
+	World.hud.show_message(msg)
+
+## Levande monster (med take_damage) inom Chebyshev-radie kring en ruta.
+func _monsters_near(center: Vector2i, radius: int) -> Array:
+	var out: Array = []
 	var parent := get_parent()
-	if parent != null and is_instance_valid(target):
-		_spawn_spell_flash(parent, target.global_position, Color(1.0, 0.85, 0.35), 1.9, 140.0)
+	if parent == null:
+		return out
+	for c in parent.get_children():
+		if c == self or not is_instance_valid(c):
+			continue
+		if not c.has_method("take_damage") or c.get("dead"):
+			continue
+		var ct = c.get("tile")
+		if ct == null:
+			continue
+		if maxi(absi(ct.x - center.x), absi(ct.y - center.y)) <= radius:
+			out.append(c)
+	return out
+
+## En enskild kraftslags-träff på ett mål: skada (garanterad crit), charm-effekt
+## hanteras av anroparen, plus en guldblixt vid nedslaget.
+func _spec_hit(m, base: float, mult: float, stance_mult: float) -> void:
+	if m == null or not is_instance_valid(m) or m.get("dead"):
+		return
+	var dmg := CombatFormulas.spec_damage(base, mult) \
+		* TaskSystem.damage_multiplier(m.monster_name) * stance_mult
+	m.take_damage(dmg, true)   # crit=true → guldsiffra + kritljud
+	var parent := get_parent()
+	if parent != null and is_instance_valid(m):
+		_spawn_spell_flash(parent, m.global_position, Color(1.0, 0.85, 0.35), 1.9, 140.0)
 
 ## Grön "+N" ovanför spelaren när en leech-charm läker.
 func _spawn_heal_float(amount: float) -> void:
