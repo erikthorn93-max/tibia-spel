@@ -21,6 +21,7 @@ signal status_changed
 signal satiation_changed(seconds: float, max_seconds: float)
 signal blessings_changed(count: int)
 signal stance_changed(stance: String)
+signal spec_changed(energy: float)
 
 const SKILL_XP_BASE := 50.0
 const SKILL_XP_GROWTH := 1.1
@@ -79,6 +80,7 @@ var learned_spells: Array = [] # id:n för inlärda instant-spells (SpellSystem)
 var status_effects: Dictionary = {}  # id -> {tick_dmg, time_left, tick_acc}
 var bank: Dictionary = {}            # item_id -> qty (bankförvar, sparas i save)
 var combat_stance := CombatStance.DEFAULT   # offensiv/balanserad/defensiv (sparas)
+var spec_energy := 0.0                       # specialattack-laddning 0..100 (sparas)
 var satiation := 0.0                 # sekunder av kvarvarande mättnad/regen
 var _regen_acc := 0.0                # ackumulator för regen-intervallet
 
@@ -651,6 +653,21 @@ func set_combat_stance(stance: String) -> void:
 func cycle_combat_stance() -> String:
 	set_combat_stance(CombatStance.cycle(combat_stance))
 	return combat_stance
+
+## Laddar specialattack-mätaren (vid landat vapenslag) och meddelar HUD:en.
+func add_spec(amount: float) -> void:
+	var e := CombatFormulas.charge_spec(spec_energy, amount)
+	if e != spec_energy:
+		spec_energy = e
+		spec_changed.emit(e)
+
+## Tömmer mätaren om den är full. Returnerar true om kraftslaget fick släppas.
+func consume_spec() -> bool:
+	if not CombatFormulas.spec_ready(spec_energy):
+		return false
+	spec_energy = 0.0
+	spec_changed.emit(0.0)
+	return true
 
 ## Bakåtkompatibel wrapper — anropar equip("weapon", item_id).
 func equip_weapon(item_id: String) -> bool:

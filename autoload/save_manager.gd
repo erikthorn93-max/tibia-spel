@@ -56,6 +56,7 @@ func save_game() -> void:
 		"quests_completed": QuestSystem.completed,
 		"learned_spells": GameState.learned_spells,
 		"combat_stance": GameState.combat_stance,
+		"spec_energy": GameState.spec_energy,
 		"bank": GameState.bank,
 		"satiation": GameState.satiation,
 		"home_zone": GameState.home_zone,
@@ -136,6 +137,8 @@ func load_game() -> bool:
 	GameState.learned_spells = ls_raw if ls_raw is Array else []
 	# v11: stridsställning — gamla saves utan fältet faller till balanserad
 	GameState.combat_stance = CombatStance.normalize(String(s.get("combat_stance", CombatStance.DEFAULT)))
+	# v12: specialattack-laddning — gamla saves börjar otömda (0)
+	GameState.spec_energy = clampf(float(s.get("spec_energy", 0.0)), 0.0, CombatFormulas.SPEC_MAX)
 	# v8: bankförvar
 	var bank_raw = s.get("bank", {})
 	GameState.bank = bank_raw if bank_raw is Dictionary else {}

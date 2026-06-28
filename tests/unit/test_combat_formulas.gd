@@ -19,6 +19,40 @@ func test_roll_melee_within_bounds():
 		var d = CF.roll_melee(10, 30, 14)
 		assert_between(d, 0, CF.max_melee(10, 30, 14))
 
+# ── Specialattack (kraftslag) ──
+
+func test_max_ranged_is_roll_ranged_ceiling():
+	# Toppvärdet ska vara roll_ranged utan ±15%-variationen.
+	for i in 50:
+		assert_lte(CF.roll_ranged(40, 20), CF.max_ranged(40, 20) * 1.151)
+
+func test_charge_spec_accumulates_and_caps():
+	assert_almost_eq(CF.charge_spec(0.0, CF.SPEC_GAIN), CF.SPEC_GAIN, 0.001)
+	assert_eq(CF.charge_spec(CF.SPEC_MAX, CF.SPEC_GAIN), CF.SPEC_MAX)   # tak
+	assert_eq(CF.charge_spec(50.0, 1000.0), CF.SPEC_MAX)
+	assert_eq(CF.charge_spec(0.0, -50.0), 0.0)                          # golv
+
+func test_spec_ready_only_when_full():
+	assert_false(CF.spec_ready(CF.SPEC_MAX - 0.1))
+	assert_true(CF.spec_ready(CF.SPEC_MAX))
+
+func test_spec_damage_applies_multiplier():
+	assert_almost_eq(CF.spec_damage(40.0), 40.0 * CF.SPEC_MULTIPLIER, 0.001)
+	assert_gt(CF.SPEC_MULTIPLIER, 1.0, "kraftslaget ska slå hårdare än ett vanligt slag")
+
+# ── GameState-integration: laddning & urladdning ──
+
+func test_gamestate_spec_charges_and_consumes():
+	GameState.spec_energy = 0.0
+	watch_signals(GameState)
+	GameState.add_spec(CF.SPEC_GAIN)
+	assert_almost_eq(GameState.spec_energy, CF.SPEC_GAIN, 0.001)
+	assert_signal_emitted(GameState, "spec_changed")
+	assert_false(GameState.consume_spec(), "får inte släppa kraftslag innan mätaren är full")
+	GameState.spec_energy = CF.SPEC_MAX
+	assert_true(GameState.consume_spec(), "full mätare ska kunna släppas")
+	assert_eq(GameState.spec_energy, 0.0, "mätaren ska tömmas av kraftslaget")
+
 func test_mitigate_reduces():
 	assert_lt(CF.mitigate(20, 30, 5), 20)
 

@@ -273,6 +273,7 @@ func _update_attack(delta: float) -> void:
 			target.take_damage(dmg, crit)
 			_apply_offense_charm(target)
 			GameState.gain_skill_xp(wskill, 1)
+			GameState.add_spec(CombatFormulas.SPEC_GAIN)   # ladda kraftslaget
 			visual.play_attack(facing)
 		else:
 			# Närstrid
@@ -290,6 +291,7 @@ func _update_attack(delta: float) -> void:
 			target.take_damage(dmg, crit)
 			_apply_offense_charm(target)
 			GameState.gain_skill_xp(wskill, 1)
+			GameState.add_spec(CombatFormulas.SPEC_GAIN)   # ladda kraftslaget
 			visual.play_attack(facing)   # närstrids-stöt mot målet
 
 ## Slår den bärna offensiva charmen mot målet och lägger på elementär bonusskada.
@@ -304,6 +306,55 @@ func _apply_offense_charm(target) -> void:
 			var healed := float(dealt) * ls
 			GameState.heal(healed)
 			_spawn_heal_float(healed)
+
+## Släpper kraftslaget (specialattack) mot nuvarande mål om mätaren är full.
+## Ett enda hårt, garanterat kritiskt slag som tömmer mätaren. Anropas av HUD:en.
+func try_special() -> void:
+	if target == null or not is_instance_valid(target) or target.dead:
+		World.hud.show_message("Inget mål för kraftslag.")
+		return
+	var weapon: Dictionary = ItemDB.items.get(GameState.equipped_weapon, {})
+	var weapon_range := int(weapon.get("range", 1))
+	if _chebyshev(target.tile) > weapon_range:
+		World.hud.show_message("Målet är utom räckhåll.")
+		return
+	if not CombatFormulas.spec_ready(GameState.spec_energy):
+		World.hud.show_message("Kraftslaget är inte laddat.")
+		Sfx.denied()
+		return
+	var wskill := GameState.weapon_skill()
+	var atk_total := int(weapon.get("atk", 5)) + GameState.total_atk_bonus()
+	var ammo_id := String(weapon.get("ammo", ""))
+	var base: float
+	if weapon_range > 1:
+		if ammo_id != "" and not GameState.has_ammo(ammo_id):
+			World.hud.show_message("Inga pilar kvar!")
+			return
+		base = CombatFormulas.max_ranged(GameState.effective_skill_level(wskill), atk_total)
+	else:
+		base = CombatFormulas.max_melee(GameState.level,
+			GameState.effective_skill_level(wskill), atk_total)
+	# Allt klart — töm mätaren och slå.
+	GameState.consume_spec()
+	if weapon_range > 1 and ammo_id != "":
+		GameState.consume_ammo(ammo_id)
+	var to_dir := Vector2i(signi(target.tile.x - tile.x), signi(target.tile.y - tile.y))
+	if to_dir != Vector2i.ZERO:
+		facing = to_dir
+		visual.face(facing)
+	var dmg := CombatFormulas.spec_damage(base) \
+		* TaskSystem.damage_multiplier(target.monster_name) \
+		* CombatStance.damage_mult(GameState.combat_stance)
+	visual.play_attack(facing)
+	target.take_damage(dmg, true)   # crit=true → guldsiffra + kritljud
+	_apply_offense_charm(target)
+	GameState.gain_skill_xp(wskill, 2)
+	Sfx.crit()
+	World.hud.show_message("Kraftslag!")
+	# Kraftfull guldblixt vid nedslaget.
+	var parent := get_parent()
+	if parent != null and is_instance_valid(target):
+		_spawn_spell_flash(parent, target.global_position, Color(1.0, 0.85, 0.35), 1.9, 140.0)
 
 ## Grön "+N" ovanför spelaren när en leech-charm läker.
 func _spawn_heal_float(amount: float) -> void:

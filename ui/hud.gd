@@ -6,8 +6,10 @@ const Weather = preload("res://ui/weather.gd")
 
 var hp_bar: Panel       # fyllnad (anchor_right driver nivån) — byggs i _build_bars()
 var mana_bar: Panel
+var spec_bar: Panel     # specialattack-laddning (kraftslag)
 var _hp_val: Label
 var _mana_val: Label
+var _spec_val: Label
 var _hp_pulse_t := 0.0
 @onready var stats: Label = $StatsLabel
 @onready var buffs_lbl: Label = $BuffsLabel
@@ -212,6 +214,11 @@ func _refresh() -> void:
 	if mana_bar:
 		mana_bar.anchor_right = mp_ratio
 		_mana_val.text = "%d / %d" % [roundi(GameState.mana), roundi(GameState.max_mana)]
+	if spec_bar:
+		spec_bar.anchor_right = clampf(GameState.spec_energy / CombatFormulas.SPEC_MAX, 0.0, 1.0)
+		var ready := CombatFormulas.spec_ready(GameState.spec_energy)
+		_spec_val.text = "KRAFTSLAG (F)" if ready else "Spec %d%%" % roundi(GameState.spec_energy)
+		spec_bar.self_modulate = Color(1.3, 1.15, 0.6) if ready else Color.WHITE
 	var wskill := GameState.weapon_skill()
 	stats.text = "Lv %d  XP %d/%d  Guld %d  %s %d" % [
 		GameState.level, GameState.experience, GameState.xp_to_next, GameState.gold,
@@ -323,6 +330,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		var st := GameState.cycle_combat_stance()
 		show_message("Stridsställning: %s" % CombatStance.label(st))
 		Sfx.craft()
+	elif event.is_action_pressed("weapon_spec"):
+		if World.player != null and is_instance_valid(World.player):
+			World.player.try_special()
 	elif event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		recipe_panel.visible = false
 		shop_panel.visible = false
@@ -536,6 +546,10 @@ func _build_bars() -> void:
 	mana_bar = _make_bar(34.0,
 		Color(0.26, 0.46, 0.96), Color(0.14, 0.20, 0.50, 0.95))   # blått + mörk kant
 	_mana_val = _make_bar_label(34.0)
+	spec_bar = _make_bar(54.0,
+		Color(0.95, 0.74, 0.20), Color(0.45, 0.32, 0.06, 0.95))   # guld + mörk kant
+	_spec_val = _make_bar_label(54.0)
+	GameState.spec_changed.connect(func(_e): _refresh())
 
 ## Liten pixel-ikon (hjärta / mana-droppe) till vänster om en bar.
 func _make_stat_icon(top: float, kind: String) -> void:
