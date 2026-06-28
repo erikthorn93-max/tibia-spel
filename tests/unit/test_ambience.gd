@@ -13,6 +13,16 @@ func test_clear_outdoor_is_silent():
 func test_rain_is_audible():
 	assert_gt(Ambience.profile(Weather.RAIN, Biome.TOWN)["gain"], 0.0)
 
+func test_storm_is_louder_than_rain():
+	# Ovädret ska höras tydligare än vanligt regn — men fortfarande inom taket.
+	assert_gt(Ambience.profile(Weather.STORM, Biome.TOWN)["gain"],
+		Ambience.profile(Weather.RAIN, Biome.TOWN)["gain"])
+
+func test_storm_overrides_biome():
+	# Skyfallet hörs överallt, oavsett bakomliggande biom.
+	assert_eq(Ambience.profile(Weather.STORM, Biome.CAVE),
+		Ambience.profile(Weather.STORM, Biome.FOREST))
+
 func test_weather_overrides_biome():
 	# Regn i en grotta (otroligt men logiskt): vädret vinner ljudbilden.
 	assert_eq(Ambience.profile(Weather.RAIN, Biome.CAVE),

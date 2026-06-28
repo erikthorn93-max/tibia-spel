@@ -25,9 +25,10 @@ var _swell := 0.0       # långsam vindsvällning
 ## Väder väger tyngst (regn hörs överallt); annars ger biomet rums-ton.
 static func profile(weather: String, biome: String) -> Dictionary:
 	match weather:
-		Weather.RAIN: return {"gain": 0.12, "cutoff": 0.45}   # ljust regnsus
-		Weather.SNOW: return {"gain": 0.06, "cutoff": 0.16}   # tunn vind
-		Weather.FOG:  return {"gain": 0.05, "cutoff": 0.10}   # dov dis-vind
+		Weather.STORM: return {"gain": 0.18, "cutoff": 0.40}  # tungt fräsande skyfall
+		Weather.RAIN:  return {"gain": 0.12, "cutoff": 0.45}   # ljust regnsus
+		Weather.SNOW:  return {"gain": 0.06, "cutoff": 0.16}   # tunn vind
+		Weather.FOG:   return {"gain": 0.05, "cutoff": 0.10}   # dov dis-vind
 	match biome:
 		Biome.CAVE:    return {"gain": 0.05, "cutoff": 0.05}  # lågt grottrummel
 		Biome.VOLCANO: return {"gain": 0.07, "cutoff": 0.04}  # djupt mullrande
