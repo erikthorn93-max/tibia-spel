@@ -15,6 +15,33 @@ static func crit_chance(skill: int, bonus := 0.0) -> float:
 static func roll_crit(skill: int, bonus := 0.0) -> bool:
 	return randf() < crit_chance(skill, bonus)
 
+# ── Träffchans & undvikande ──────────────────────────────────────────────────
+# Spelarens vapenslag vägs mot monstrets undvikande. Medvetet förlåtande: ett
+# högt golv gör att tidiga nivåer aldrig känns hopplösa, och taket garanterar att
+# inget slag är 100 % säkert mot vigare fiender. Rena funktioner → testbara.
+
+const HIT_BASE := 0.80         # träffchans när accuracy == evasion
+const HIT_PER_DIFF := 0.01     # ±chans per stegs skillnad i accuracy − evasion
+const HIT_FLOOR := 0.40        # lägsta möjliga träffchans
+const HIT_CEIL := 0.99         # högsta möjliga träffchans
+const EVASION_PER_SPEED := 3.0 # monstrets undvikande härleds ur dess fart
+
+## Spelarens träffvärde: stridsskill + nivå.
+static func accuracy(level: int, skill: int) -> int:
+	return level + skill
+
+## Monstrets undvikande härlett ur dess fart (snabba fiender väjer mer).
+static func monster_evasion(speed: float) -> int:
+	return int(speed * EVASION_PER_SPEED)
+
+## Träffchans (0–1) givet accuracy mot evasion, klamrad mellan golv och tak.
+static func hit_chance(acc: int, eva: int) -> float:
+	return clampf(HIT_BASE + (acc - eva) * HIT_PER_DIFF, HIT_FLOOR, HIT_CEIL)
+
+## Slår om ett slag träffar.
+static func roll_hit(acc: int, eva: int) -> bool:
+	return randf() < hit_chance(acc, eva)
+
 static func max_melee(level: int, skill: int, weapon_atk: int) -> int:
 	return maxi(int(weapon_atk * (skill + 4) / 28.0 + level / 10.0), 1)
 

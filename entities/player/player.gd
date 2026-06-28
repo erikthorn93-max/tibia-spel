@@ -261,6 +261,9 @@ func _update_attack(delta: float) -> void:
 				return
 			if ammo_id != "":
 				GameState.consume_ammo(ammo_id)
+			if not _rolls_hit(wskill):
+				_on_attack_miss(wskill)
+				return
 			dmg = CombatFormulas.roll_ranged(
 				GameState.effective_skill_level(wskill),
 				int(weapon.get("atk", 5)) + GameState.total_atk_bonus()) \
@@ -279,6 +282,9 @@ func _update_attack(delta: float) -> void:
 			# Närstrid
 			if dist > 1:
 				return
+			if not _rolls_hit(wskill):
+				_on_attack_miss(wskill)
+				return
 			dmg = CombatFormulas.roll_melee(GameState.level,
 				GameState.effective_skill_level(wskill),
 				int(weapon.get("atk", 5)) + GameState.total_atk_bonus()) \
@@ -293,6 +299,21 @@ func _update_attack(delta: float) -> void:
 			GameState.gain_skill_xp(wskill, 1)
 			GameState.add_spec(CombatFormulas.SPEC_GAIN)   # ladda kraftslaget
 			visual.play_attack(facing)   # närstrids-stöt mot målet
+
+## Slår om det aktuella slaget träffar målet (spelarens accuracy mot monstrets
+## undvikande). Garanterar inget — högt golv håller tidig spelning förlåtande.
+func _rolls_hit(wskill: String) -> bool:
+	var acc := CombatFormulas.accuracy(GameState.level, GameState.effective_skill_level(wskill))
+	var eva := CombatFormulas.monster_evasion(float(target.speed))
+	return CombatFormulas.roll_hit(acc, eva)
+
+## Ett bommat slag: svingen syns, "miss" visas och skickligheten tränas ändå
+## (förlåtande), men ingen skada, charm-effekt eller spec-laddning sker.
+func _on_attack_miss(wskill: String) -> void:
+	visual.play_attack(facing)
+	if is_instance_valid(target) and target.has_method("show_miss"):
+		target.show_miss()
+	GameState.gain_skill_xp(wskill, 1)
 
 ## Slår den bärna offensiva charmen mot målet och lägger på elementär bonusskada.
 func _apply_offense_charm(target) -> void:

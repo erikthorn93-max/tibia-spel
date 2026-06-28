@@ -2,6 +2,38 @@ extends GutTest
 
 const CF = preload("res://combat/combat_formulas.gd")
 
+# ── Träffchans & undvikande ──
+
+func test_hit_chance_base_when_even():
+	assert_almost_eq(CF.hit_chance(20, 20), CF.HIT_BASE, 0.001)
+
+func test_hit_chance_rises_with_accuracy_advantage():
+	assert_gt(CF.hit_chance(50, 10), CF.hit_chance(20, 10))
+
+func test_hit_chance_respects_floor_and_ceiling():
+	assert_eq(CF.hit_chance(0, 9999), CF.HIT_FLOOR)
+	assert_eq(CF.hit_chance(9999, 0), CF.HIT_CEIL)
+	for acc in [0, 50, 9999]:
+		for eva in [0, 50, 9999]:
+			assert_between(CF.hit_chance(acc, eva), CF.HIT_FLOOR, CF.HIT_CEIL)
+
+func test_accuracy_combines_level_and_skill():
+	assert_eq(CF.accuracy(10, 30), 40)
+
+func test_faster_monsters_evade_more():
+	assert_gt(CF.monster_evasion(3.0), CF.monster_evasion(2.0))
+
+func test_roll_hit_within_chance_band():
+	# Över många slag ska träffandelen ligga nära den teoretiska chansen.
+	var acc := 30
+	var eva := 10
+	var hits := 0
+	for i in 2000:
+		if CF.roll_hit(acc, eva):
+			hits += 1
+	var rate := float(hits) / 2000.0
+	assert_almost_eq(rate, CF.hit_chance(acc, eva), 0.06)
+
 func test_max_melee_grows_with_skill():
 	var low = CF.max_melee(1, 10, 8)
 	var high = CF.max_melee(1, 50, 8)

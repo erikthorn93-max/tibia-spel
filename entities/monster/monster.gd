@@ -469,6 +469,10 @@ func _spawn_element_tag(text: String, color: Color) -> void:
 	t.global_position = global_position + Vector2(randf_range(-6, 6), -24)
 	t.setup(text, color, 11)
 
+## Visar en "miss"-etikett när spelarens slag bommar (träffchans missade).
+func show_miss() -> void:
+	_spawn_element_tag("miss", Color(0.72, 0.72, 0.72))
+
 ## Elementär bonusskada från en offensiv charm. Egen färgad siffra + charm-ljud,
 ## så den läses som ett separat tillägg ovanpå den vanliga träffen.
 ## Elementär bonusskada från en offensiv charm. Returnerar faktiskt utdelad skada
