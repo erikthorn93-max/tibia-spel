@@ -3469,7 +3469,7 @@
 	"fishmaster_tip": {
 		"speaker": "npc_fishmaster",
 		"emotion": "friendly",
-		"text": "Håll dig nära vattenbrynet och akta piraterna som strandat på revet. Och ta med dig stekspaden — färsk fångst som tillagas på plats smakar bäst.",
+		"text": "Håll dig nära vattenbrynet och akta piraterna som strandat på revet. Och ta med dig stekspaden — färsk fångst som tillagas på plats smakar bäst. Ett sista råd: kasta linan när ovädret rasar som värst. Åskan rör upp djupet och då nappar det som aldrig annars.",
 		"choices": [
 			{
 				"text": "Tillbaka.",

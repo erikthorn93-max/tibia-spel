@@ -2,11 +2,17 @@ class_name GatherNode
 extends Node2D
 ## Generisk gathering-nod. Typdata från ItemDB.nodes (data/nodes.json).
 
+const Weather = preload("res://ui/weather.gd")
+
+## Hur mycket oväder höjer fångstchansen för fiske ("djupet rörs upp").
+const STORM_FISHING_BONUS := 0.15
+
 var node_type := ""
 var def: Dictionary = {}
 var tile := Vector2i.ZERO
 var charges := 0
 var depleted := false
+var _storm_catch := false   # skedde senaste försök med oväders-bonus?
 
 @onready var _sprite: Sprite2D = $Sprite2D
 @onready var name_lbl: Label = $NameLabel
@@ -14,6 +20,13 @@ var depleted := false
 
 static func success_chance(level: int, req_level: int) -> float:
 	return clampf(0.40 + 0.02 * float(level - req_level), 0.05, 0.90)
+
+## Väderbonus till fångstchansen. Oväder rör upp djupet → fisket nappar bättre.
+## Ren funktion (testbar): bara fiske under storm påverkas, annars 0.
+static func weather_bonus(skill: String, weather: String) -> float:
+	if skill == "fishing" and weather == Weather.STORM:
+		return STORM_FISHING_BONUS
+	return 0.0
 
 func setup(type: String, t: Vector2i) -> void:
 	node_type = type
@@ -50,15 +63,26 @@ func attempt() -> String:
 	var tool_id := String(def.get("tool", ""))
 	if tool_id != "" and not GameState.has_tool(tool_id):
 		return "no_tool"
-	if GameState.effective_skill_level(String(def["skill"])) < int(def["level"]):
+	var skill := String(def["skill"])
+	var lvl := GameState.effective_skill_level(skill)
+	if lvl < int(def["level"]):
 		return "low_level"
-	var success := randf() <= success_chance(
-		GameState.effective_skill_level(String(def["skill"])), int(def["level"]))
+	var bonus := weather_bonus(skill, _current_weather())
+	_storm_catch = bonus > 0.0
+	var chance := clampf(success_chance(lvl, int(def["level"])) + bonus, 0.05, 0.95)
+	var success := randf() <= chance
 	react(success)
 	if success:
 		_on_success()
 		return "ok"
 	return "miss"
+
+## Det upplösta vädret i nodens zon just nu (för väderbonusen).
+func _current_weather() -> String:
+	var z := World.current_zone
+	if z != null and is_instance_valid(z) and "weather" in z:
+		return Weather.resolve(z.weather, WeatherSystem.current)
+	return Weather.CLEAR
 
 ## Visuell reaktion på en sving: noden squashar till, och vid lyckat
 ## försök sprutar en liten gnistskur i nodens färg.
@@ -109,7 +133,11 @@ func _on_success() -> void:
 			amt = randi_range(int(def["yield_min"]), int(def["yield_max"]))
 		GameState.add_item(String(def["yields"]), amt)
 		var yname := String(ItemDB.items.get(String(def["yields"]), {}).get("name", def["yields"]))
-		_spawn_float("+%d %s" % [amt, yname], Color(0.96, 0.94, 0.55))   # mjukt guld
+		if _storm_catch:
+			# Oväders-fångst: stormblå text med blixt markerar bonus-nappet.
+			_spawn_float("+%d %s ⚡" % [amt, yname], Color(0.62, 0.80, 1.0))
+		else:
+			_spawn_float("+%d %s" % [amt, yname], Color(0.96, 0.94, 0.55))   # mjukt guld
 	else:
 		_spawn_float("+%d xp" % int(def["xp"]), Color(0.6, 0.85, 1.0))   # ljusblå
 	GameState.gain_skill_xp(String(def["skill"]), int(def["xp"]))

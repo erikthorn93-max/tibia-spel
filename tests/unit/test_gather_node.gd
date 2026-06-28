@@ -8,6 +8,28 @@ func test_success_chance_formula():
 	assert_almost_eq(GatherNodeScript.success_chance(99, 1), 0.90, 0.001)  # tak
 	assert_almost_eq(GatherNodeScript.success_chance(1, 30), 0.05, 0.001)  # golv
 
+const Weather = preload("res://ui/weather.gd")
+
+func test_weather_bonus_only_for_fishing_in_storm():
+	assert_almost_eq(GatherNodeScript.weather_bonus("fishing", Weather.STORM),
+		GatherNodeScript.STORM_FISHING_BONUS, 0.001)
+
+func test_weather_bonus_zero_for_fishing_in_calm():
+	assert_eq(GatherNodeScript.weather_bonus("fishing", Weather.CLEAR), 0.0)
+	assert_eq(GatherNodeScript.weather_bonus("fishing", Weather.RAIN), 0.0)
+
+func test_weather_bonus_zero_for_other_skills():
+	# Endast fisket gynnas av ovädret — gruvbrytning m.m. påverkas inte.
+	assert_eq(GatherNodeScript.weather_bonus("mining", Weather.STORM), 0.0)
+	assert_eq(GatherNodeScript.weather_bonus("woodcutting", Weather.STORM), 0.0)
+
+func test_storm_raises_fishing_chance_within_cap():
+	# Bonusen lyfter chansen men aldrig över 0.95-taket.
+	var base := GatherNodeScript.success_chance(1, 1)
+	var boosted: float = clampf(base + GatherNodeScript.weather_bonus("fishing", Weather.STORM), 0.05, 0.95)
+	assert_gt(boosted, base)
+	assert_lte(boosted, 0.95)
+
 func _make_node() -> Node2D:
 	var n: Node2D = preload("res://entities/gather_node.tscn").instantiate()
 	add_child_autofree(n)
