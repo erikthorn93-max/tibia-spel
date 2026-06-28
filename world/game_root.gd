@@ -2,6 +2,7 @@ extends Node2D
 ## Spelets rotscen. Registrerar sig hos World och startar.
 
 const Atmosphere = preload("res://ui/atmosphere.gd")
+const Weather = preload("res://ui/weather.gd")
 
 var _fps_log_timer := 0.0
 var _perftest := false
@@ -9,12 +10,20 @@ var _perftest_elapsed := 0.0
 var _fps_samples: Array = []
 var _canvas_mod: CanvasModulate   # äkta dag/natt-mörkläggning av hela världen
 
+# ── Åska: blixtnedslag lyser upp CanvasModulate, dundret följer efter ──
+var _rng := RandomNumberGenerator.new()
+var _storm := false          # visar aktuell zon åska just nu?
+var _strike_in := 0.0        # sekunder till nästa blixt
+var _flash_t := 99.0         # sekunder sedan senaste blixt (>= FLASH_DUR = inget sken)
+var _thunder_in := -1.0      # sekunder kvar tills dundret efter blixten (<0 = inget väntar)
+
 func _ready() -> void:
 	World.game_root = self
 	# CanvasModulate mörklägger world-lagret (sprites + tiles); PointLight2D-noder
 	# på spelaren, portaler och spells lägger tillbaka ljus → ljusöar i mörkret.
 	_canvas_mod = CanvasModulate.new()
 	add_child(_canvas_mod)
+	_rng.randomize()
 	var hud := preload("res://ui/hud.tscn").instantiate()
 	add_child(hud)
 	var aim := Node2D.new()
@@ -64,7 +73,8 @@ func _debug_spawn_rats() -> void:
 
 func _process(delta: float) -> void:
 	if _canvas_mod != null:
-		_canvas_mod.color = Atmosphere.canvas_tint(TimeOfDay.day_fraction)
+		var tint := Atmosphere.canvas_tint(TimeOfDay.day_fraction)
+		_canvas_mod.color = _apply_lightning(tint, delta)
 	_fps_log_timer += delta
 	if _fps_log_timer >= 2.0:
 		_fps_log_timer = 0.0
@@ -77,3 +87,39 @@ func _process(delta: float) -> void:
 			var rest: Array = _fps_samples.slice(1)
 			print("PERFTEST: samples=%s min=%d" % [str(rest), rest.min() if rest else 0])
 			get_tree().quit()
+
+## True om spelaren just nu står i en zon vars upplösta väder är åska.
+func _storm_active() -> bool:
+	var z := World.current_zone
+	if z == null or not is_instance_valid(z) or not ("weather" in z):
+		return false
+	return Weather.resolve(z.weather, WeatherSystem.current) == Weather.STORM
+
+## Driver blixt & dunder och returnerar dygnstonen ev. uppljust av en blixt.
+## Under åska schemaläggs nedslag; varje blixt lyser upp världen (mot vitt) och
+## triggar ett dunder en stund senare (ljudet hinner ikapp ljuset).
+func _apply_lightning(tint: Color, delta: float) -> Color:
+	var active := _storm_active()
+	if active and not _storm:
+		_strike_in = Weather.next_strike_delay(_rng.randf())   # första nedslaget
+	_storm = active
+
+	if active:
+		_strike_in -= delta
+		if _strike_in <= 0.0:
+			_flash_t = 0.0
+			_thunder_in = Weather.thunder_delay(_rng.randf())
+			_strike_in = Weather.next_strike_delay(_rng.randf())
+
+	# Dundret efter blixten (löper även om man hinner lämna zonen mitt i).
+	if _thunder_in >= 0.0:
+		_thunder_in -= delta
+		if _thunder_in < 0.0:
+			Sfx.thunder()
+
+	# Själva uppljusningen av världen.
+	if _flash_t < Weather.FLASH_DUR:
+		_flash_t += delta
+		var b := Weather.lightning_brightness(_flash_t)
+		return tint.lerp(Color(1, 1, 1, tint.a), b * 0.9)
+	return tint

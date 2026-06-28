@@ -43,6 +43,29 @@ static func synth(freqs: Array, note_dur: float, vol := 0.3) -> PackedVector2Arr
 			out.append(Vector2(s, s))
 	return out
 
+## Syntar en åskknall: lågt rullande muller (brus filtrerat mot djupa frekvenser)
+## med långsam attack och lång avklingning. Statisk & seedstyrd → testbar utan
+## ljuduppspelning och identisk varje gång för ett givet `seed`.
+static func synth_thunder(seed: int, dur := 1.4, vol := 0.35) -> PackedVector2Array:
+	var out := PackedVector2Array()
+	var n := int(dur * MIX_RATE)
+	if n <= 0:
+		return out
+	var rng := RandomNumberGenerator.new()
+	rng.seed = seed
+	var lp := 0.0   # enkel lågpass → mörkt muller istället för vasst brus
+	for i in range(n):
+		var f := float(i) / float(n)
+		# Mjuk attack (rullar in) × lång exponentiell svans (mullret dör ut).
+		var env: float = minf(f * 14.0, 1.0) * exp(-3.2 * f)
+		var noise := rng.randf_range(-1.0, 1.0)
+		lp += (noise - lp) * 0.04        # tung lågpass → dovt
+		# Lågfrekvent svaj ger knallen rullande "åsk"-karaktär.
+		var roll: float = 1.0 + 0.4 * sin(TAU * 18.0 * f * dur)
+		var s: float = lp * env * roll * vol
+		out.append(Vector2(s, s))
+	return out
+
 func _enqueue(buf: PackedVector2Array) -> void:
 	if buf.is_empty():
 		return
@@ -100,6 +123,14 @@ func cast(ctype: String) -> void:
 ## Nekande "wah" nedåt när en cast blockeras (mana/cooldown/krav saknas).
 func denied() -> void:
 	_enqueue(synth([349.23, 261.63, 196.0], 0.07, 0.20))
+
+var _thunder_seed := 1
+
+## Rullande åskknall efter en blixt. Varje knall får ett nytt seed → de låter
+## olika. Spelas av game_root när blixtens dunder-fördröjning löpt ut.
+func thunder() -> void:
+	_thunder_seed += 1
+	_enqueue(synth_thunder(_thunder_seed))
 
 var _last_hit_ms := 0
 

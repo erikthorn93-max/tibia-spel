@@ -45,8 +45,11 @@ func test_resolve_fixed_ignores_ambient():
 func test_ambient_rain_clears_on_low_roll():
 	assert_eq(Weather.next_ambient(Weather.RAIN, 0.0), Weather.CLEAR)
 
-func test_ambient_rain_persists_on_high_roll():
-	assert_eq(Weather.next_ambient(Weather.RAIN, 0.99), Weather.RAIN)
+func test_ambient_rain_persists_on_mid_roll():
+	assert_eq(Weather.next_ambient(Weather.RAIN, 0.7), Weather.RAIN)
+
+func test_ambient_rain_escalates_to_storm_on_high_roll():
+	assert_eq(Weather.next_ambient(Weather.RAIN, 0.99), Weather.STORM)
 
 func test_ambient_clear_can_start_raining():
 	assert_eq(Weather.next_ambient(Weather.CLEAR, 0.0), Weather.RAIN)
@@ -54,16 +57,29 @@ func test_ambient_clear_can_start_raining():
 func test_ambient_clear_usually_stays_clear():
 	assert_eq(Weather.next_ambient(Weather.CLEAR, 0.99), Weather.CLEAR)
 
+func test_ambient_clear_never_jumps_straight_to_storm():
+	# Åska byggs alltid upp genom regn — aldrig direkt ur klart väder.
+	for i in 101:
+		assert_ne(Weather.next_ambient(Weather.CLEAR, i / 100.0), Weather.STORM)
+
+func test_ambient_storm_decays_to_rain():
+	assert_eq(Weather.next_ambient(Weather.STORM, 0.0), Weather.RAIN)
+
+func test_ambient_storm_can_persist():
+	assert_eq(Weather.next_ambient(Weather.STORM, 0.99), Weather.STORM)
+
 func test_ambient_pool_is_temperate():
-	# Dynamiskt väder ska aldrig ge dimma eller snö.
+	# Dynamiskt väder ska aldrig ge dimma eller snö (men åska ingår).
 	assert_false(Weather.SNOW in Weather.AMBIENT_POOL)
 	assert_false(Weather.FOG in Weather.AMBIENT_POOL)
+	assert_true(Weather.STORM in Weather.AMBIENT_POOL)
 
 # ── Nederbörd ──
 
-func test_precip_only_rain_and_snow():
+func test_precip_rain_snow_and_storm():
 	assert_true(Weather.has_precip(Weather.RAIN))
 	assert_true(Weather.has_precip(Weather.SNOW))
+	assert_true(Weather.has_precip(Weather.STORM))
 	assert_false(Weather.has_precip(Weather.FOG))
 	assert_false(Weather.has_precip(Weather.CLEAR))
 
@@ -118,6 +134,54 @@ func test_rain_has_streak_snow_is_dot():
 
 func test_snow_more_opaque_than_rain():
 	assert_gt(Weather.particle_alpha(Weather.SNOW), Weather.particle_alpha(Weather.RAIN))
+
+# ── Åska: utseende ──
+
+func test_storm_is_drawable_type():
+	assert_true(Weather.STORM in Weather.TYPES)
+	assert_eq(Weather.normalize(Weather.STORM), Weather.STORM)
+
+func test_storm_allowed_as_zone_weather():
+	assert_eq(Weather.from_zone_data({"weather": "storm"}), Weather.STORM)
+
+func test_storm_tint_darker_than_rain():
+	var storm := Weather.tint(Weather.STORM)
+	var rain := Weather.tint(Weather.RAIN)
+	assert_gt(storm.a, rain.a, "åska ska mörklägga mer än regn")
+	assert_lt(storm.r + storm.g + storm.b, rain.r + rain.g + rain.b, "åska ska vara dystrare")
+
+func test_storm_denser_and_faster_than_rain():
+	var area := 1_000_000.0
+	assert_gt(Weather.particle_count(Weather.STORM, area), Weather.particle_count(Weather.RAIN, area))
+	assert_gt(Weather.velocity(Weather.STORM).y, Weather.velocity(Weather.RAIN).y)
+	assert_gt(Weather.streak_length(Weather.STORM), Weather.streak_length(Weather.RAIN))
+
+# ── Åska: blixt & dunder ──
+
+func test_strike_delay_within_bounds():
+	assert_eq(Weather.next_strike_delay(0.0), Weather.STRIKE_MIN)
+	assert_eq(Weather.next_strike_delay(1.0), Weather.STRIKE_MAX)
+	var mid := Weather.next_strike_delay(0.5)
+	assert_gt(mid, Weather.STRIKE_MIN)
+	assert_lt(mid, Weather.STRIKE_MAX)
+
+func test_lightning_brightest_at_strike():
+	assert_almost_eq(Weather.lightning_brightness(0.0), 1.0, 0.001)
+
+func test_lightning_zero_outside_window():
+	assert_eq(Weather.lightning_brightness(-0.1), 0.0)
+	assert_eq(Weather.lightning_brightness(Weather.FLASH_DUR), 0.0)
+	assert_eq(Weather.lightning_brightness(Weather.FLASH_DUR + 1.0), 0.0)
+
+func test_lightning_decays_after_strike():
+	# Slutet av blixtfönstret ska vara mörkare än början.
+	assert_lt(Weather.lightning_brightness(0.5), Weather.lightning_brightness(0.0))
+
+func test_thunder_follows_lightning():
+	# Dundret kommer alltid efter blixten (positiv fördröjning), närmare för
+	# närgångna oväder och senare för avlägsna.
+	assert_gt(Weather.thunder_delay(0.0), 0.0)
+	assert_gt(Weather.thunder_delay(1.0), Weather.thunder_delay(0.0))
 
 # ── Kantåtervinning ──
 

@@ -1,5 +1,6 @@
 {
 	"name": "Stormrevet",
+	"weather": "storm",
 	"spawn_table": [
 		{
 			"count": 3,

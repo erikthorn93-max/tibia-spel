@@ -52,7 +52,28 @@ func test_sound_methods_callable_without_error():
 	sfx.monster_die()
 	sfx.player_hurt()
 	sfx.player_died()
+	sfx.thunder()
 	pass_test("alla ljudmetoder gick att anropa")
+
+func test_thunder_is_low_and_in_range():
+	# Åskan ska vara en icke-tom vågform inom [-1, 1] och deterministisk per seed.
+	var a: PackedVector2Array = Sfx.synth_thunder(42)
+	var b: PackedVector2Array = Sfx.synth_thunder(42)
+	assert_gt(a.size(), 0, "åska ska ge ljud")
+	assert_eq(a.size(), b.size(), "samma seed → samma längd")
+	var out_of_range := false
+	var maxv := 0.0
+	for fr in a:
+		if fr.x < -1.0 or fr.x > 1.0:
+			out_of_range = true
+		maxv = maxf(maxv, absf(fr.x))
+	assert_false(out_of_range, "alla sampel ska ligga inom [-1, 1]")
+	assert_gt(maxv, 0.0, "åskan ska inte vara tyst")
+
+func test_thunder_seed_varies_waveform():
+	var a: PackedVector2Array = Sfx.synth_thunder(1)
+	var b: PackedVector2Array = Sfx.synth_thunder(2)
+	assert_true(a != b, "olika seed → olika muller")
 
 func test_hit_is_throttled():
 	# Två träffar tätt inpå varandra ska inte båda passera throttlen.
