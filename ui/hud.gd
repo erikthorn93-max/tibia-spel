@@ -2,6 +2,7 @@ extends CanvasLayer
 
 const Atmosphere = preload("res://ui/atmosphere.gd")
 const Biome = preload("res://ui/biome.gd")
+const Weather = preload("res://ui/weather.gd")
 
 var hp_bar: Panel       # fyllnad (anchor_right driver nivån) — byggs i _build_bars()
 var mana_bar: Panel
@@ -482,9 +483,15 @@ func _update_night_overlay() -> void:
 		var zid: String = World.current_zone.zone_id if World.current_zone != null \
 			and is_instance_valid(World.current_zone) and "zone_id" in World.current_zone else ""
 		_biome_overlay.color = Biome.grade(Biome.classify(zid))
-	# Klocka + ikon
+	# Klocka: sol/måne för dygnet + ev. väderikon för aktuell zon + timme.
 	var icon := "☀" if not TimeOfDay.is_night else "🌙"
-	_clock_lbl.text = "%s %02d:00" % [icon, h]
+	var wx := Weather.CLEAR
+	if World.current_zone != null and is_instance_valid(World.current_zone) \
+			and "weather" in World.current_zone:
+		wx = Weather.resolve(World.current_zone.weather, WeatherSystem.current)
+	var w_icon := Weather.icon(wx)
+	var prefix := icon if w_icon == "" else "%s%s" % [icon, w_icon]
+	_clock_lbl.text = "%s %02d:00" % [prefix, h]
 
 ## Bygger uppfräschade HP/mana-barer: rundad ram med skugga, glansig fyllning
 ## (sheen-list upptill) och centrerat värde "X / Y". Fyllnadsgraden styrs av

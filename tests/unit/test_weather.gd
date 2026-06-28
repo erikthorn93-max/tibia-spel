@@ -183,6 +183,20 @@ func test_thunder_follows_lightning():
 	assert_gt(Weather.thunder_delay(0.0), 0.0)
 	assert_gt(Weather.thunder_delay(1.0), Weather.thunder_delay(0.0))
 
+# ── HUD-ikon ──
+
+func test_clear_has_no_weather_icon():
+	# Klart väder visar bara dygnets sol/måne, ingen egen väderikon.
+	assert_eq(Weather.icon(Weather.CLEAR), "")
+
+func test_each_precip_type_has_distinct_icon():
+	var icons := {}
+	for w in [Weather.RAIN, Weather.STORM, Weather.SNOW, Weather.FOG]:
+		var ic := Weather.icon(w)
+		assert_ne(ic, "", "%s ska ha en ikon" % w)
+		assert_false(icons.has(ic), "ikonen för %s ska vara unik" % w)
+		icons[ic] = true
+
 # ── Kantåtervinning ──
 
 func test_wrap_below_bottom_returns_to_top():

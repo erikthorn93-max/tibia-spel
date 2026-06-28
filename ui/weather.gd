@@ -55,6 +55,16 @@ static func next_ambient(current: String, roll: float) -> String:
 static func has_precip(w: String) -> bool:
 	return w == RAIN or w == SNOW or w == STORM
 
+## Liten väderikon för HUD-klockan. Klart väder har ingen egen ikon (klockan
+## visar redan sol/måne för dygnet) → "".
+static func icon(w: String) -> String:
+	match w:
+		RAIN:  return "🌧"
+		STORM: return "⛈"
+		SNOW:  return "❄"
+		FOG:   return "🌫"
+		_:     return ""
+
 ## Heltäckande färgtvätt för vädret. Regn kyler & mörkar, dimma bleker &
 ## sänker kontrasten, snö ger en ljus sval slöja. "clear" → osynlig.
 static func tint(w: String) -> Color:
