@@ -290,9 +290,11 @@ func _process(delta: float) -> void:
 			_atk_timer = cooldown
 			play_attack(player_tile - tile)
 			var raw := CombatFormulas.roll_monster(atk)
+			var armor := GameState.total_armor() + GameState.total_def_bonus() \
+				+ CombatStance.mitigation_bonus(GameState.combat_stance)
 			var dmg := CombatFormulas.mitigate(raw,
 				GameState.effective_skill_level("shielding") + GameState.total_shielding_bonus(),
-				GameState.total_armor() + GameState.total_def_bonus())
+				maxi(armor, 0))
 			if dmg > 0:
 				GameState.take_damage(dmg)
 				GameState.gain_skill_xp("shielding", 1)

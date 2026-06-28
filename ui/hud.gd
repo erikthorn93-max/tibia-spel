@@ -40,6 +40,7 @@ var _ambient_overlay: Control  # eldflugor/damm/glödflagor per biom
 var _biome_overlay: ColorRect  # biom-färggradering (stämningston per platstyp)
 var _glow_t := 0.0             # tidsackumulator för fackelskenets flimmer
 var _clock_lbl: Label          # spelklocka HH:MM
+var _stance_lbl: Label         # stridsställning (⚔/⚖/🛡)
 var _poison_lbl: Label    # "Giftig!"-chip
 var _fed_lbl: Label       # "Mätt"-chip (passiv regen aktiv)
 var _bless_lbl: Label     # "Välsignad"-chip (antal aktiva välsignelser)
@@ -318,6 +319,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		equipment_panel.toggle()
 	elif event.is_action_pressed("toggle_spellbook"):
 		spellbook_panel.toggle()
+	elif event.is_action_pressed("cycle_stance"):
+		var st := GameState.cycle_combat_stance()
+		show_message("Stridsställning: %s" % CombatStance.label(st))
+		Sfx.craft()
 	elif event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		recipe_panel.visible = false
 		shop_panel.visible = false
@@ -449,7 +454,29 @@ func _build_night_overlay() -> void:
 	_clock_lbl.offset_bottom = 148.0
 	_clock_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	add_child(_clock_lbl)
+	_stance_lbl = Label.new()
+	_stance_lbl.add_theme_font_size_override("font_size", 11)
+	_stance_lbl.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	_stance_lbl.offset_left = -140.0
+	_stance_lbl.offset_top  = 148.0
+	_stance_lbl.offset_right = -6.0
+	_stance_lbl.offset_bottom = 166.0
+	_stance_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	add_child(_stance_lbl)
+	GameState.stance_changed.connect(func(_s): _refresh_stance())
+	_refresh_stance()
 	_update_night_overlay()
+
+## Uppdaterar stridsställnings-indikatorn (symbol + namn, färgad efter ställning).
+func _refresh_stance() -> void:
+	if _stance_lbl == null:
+		return
+	var st := GameState.combat_stance
+	_stance_lbl.text = "%s %s" % [CombatStance.icon(st), CombatStance.label(st)]
+	match st:
+		CombatStance.OFFENSIVE: _stance_lbl.add_theme_color_override("font_color", Color(0.95, 0.55, 0.45))
+		CombatStance.DEFENSIVE: _stance_lbl.add_theme_color_override("font_color", Color(0.55, 0.75, 0.95))
+		_:                      _stance_lbl.add_theme_color_override("font_color", Color(0.85, 0.83, 0.62))
 
 func _build_weather_overlay() -> void:
 	_weather_overlay = preload("res://ui/weather_overlay.gd").new()

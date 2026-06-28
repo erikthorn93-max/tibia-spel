@@ -20,6 +20,7 @@ signal player_respawned
 signal status_changed
 signal satiation_changed(seconds: float, max_seconds: float)
 signal blessings_changed(count: int)
+signal stance_changed(stance: String)
 
 const SKILL_XP_BASE := 50.0
 const SKILL_XP_GROWTH := 1.1
@@ -77,6 +78,7 @@ var active_rune := ""          # DEPRECERAD: gamla run-spåret, migreras bort
 var learned_spells: Array = [] # id:n för inlärda instant-spells (SpellSystem)
 var status_effects: Dictionary = {}  # id -> {tick_dmg, time_left, tick_acc}
 var bank: Dictionary = {}            # item_id -> qty (bankförvar, sparas i save)
+var combat_stance := CombatStance.DEFAULT   # offensiv/balanserad/defensiv (sparas)
 var satiation := 0.0                 # sekunder av kvarvarande mättnad/regen
 var _regen_acc := 0.0                # ackumulator för regen-intervallet
 
@@ -636,6 +638,19 @@ func total_crit_bonus() -> float:
 ## Total regen-bonus (regen) från utrustning — adderas till passiv HP-regen.
 func total_regen() -> int:
 	return int(_sum_equip_field("regen"))
+
+## Sätter stridsställning (validerad) och meddelar lyssnare om den ändrades.
+func set_combat_stance(stance: String) -> void:
+	var s := CombatStance.normalize(stance)
+	if s == combat_stance:
+		return
+	combat_stance = s
+	stance_changed.emit(s)
+
+## Växlar till nästa ställning i cykeln. Returnerar den nya ställningen.
+func cycle_combat_stance() -> String:
+	set_combat_stance(CombatStance.cycle(combat_stance))
+	return combat_stance
 
 ## Bakåtkompatibel wrapper — anropar equip("weapon", item_id).
 func equip_weapon(item_id: String) -> bool:

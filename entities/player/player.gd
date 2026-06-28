@@ -264,7 +264,8 @@ func _update_attack(delta: float) -> void:
 			dmg = CombatFormulas.roll_ranged(
 				GameState.effective_skill_level(wskill),
 				int(weapon.get("atk", 5)) + GameState.total_atk_bonus()) \
-				* TaskSystem.damage_multiplier(target.monster_name)
+				* TaskSystem.damage_multiplier(target.monster_name) \
+				* CombatStance.damage_mult(GameState.combat_stance)
 			var crit := CombatFormulas.roll_crit(
 				GameState.effective_skill_level(wskill), GameState.total_crit_bonus())
 			if crit:
@@ -280,7 +281,8 @@ func _update_attack(delta: float) -> void:
 			dmg = CombatFormulas.roll_melee(GameState.level,
 				GameState.effective_skill_level(wskill),
 				int(weapon.get("atk", 5)) + GameState.total_atk_bonus()) \
-				* TaskSystem.damage_multiplier(target.monster_name)   # bestiary-tierbonus
+				* TaskSystem.damage_multiplier(target.monster_name) \
+				* CombatStance.damage_mult(GameState.combat_stance)   # bestiary-tier + ställning
 			var crit := CombatFormulas.roll_crit(
 				GameState.effective_skill_level(wskill), GameState.total_crit_bonus())
 			if crit:
