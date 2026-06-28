@@ -3,6 +3,7 @@ extends Node2D
 
 const TILE_SIZE := 32
 const BAR_W := 28.0   # bredden på HpBar i tscn (-14 .. +14)
+const SpriteFx = preload("res://world/sprite_fx.gd")
 
 var monster_name := ""
 var hp := 10
@@ -144,6 +145,8 @@ const SPRITE_MAP: Dictionary = {
 }
 
 func _ready() -> void:
+	# Markskugga vid fötterna (z bakom spriten) → monstret lyfter från marken.
+	add_child(SpriteFx.make_shadow(13.0))
 	# Lägg till bakgrundsbar direkt bakom HpBar
 	var bg := ColorRect.new()
 	bg.offset_left   = -14.0
@@ -200,6 +203,7 @@ func _load_sprite() -> void:
 			tex = load(path) as Texture2D
 	if tex != null:
 		_sprite.texture = tex
+		_sprite.material = SpriteFx.outline_material()   # tunn kontur → läsbarhet
 	else:
 		_add_fallback_shape()   # säkerställ att monstret aldrig blir osynligt
 

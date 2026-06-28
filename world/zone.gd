@@ -152,6 +152,7 @@ func build_from_data(data: Dictionary, id: String) -> void:
 	_build_shore_overlay()
 	_build_fringe_overlay()
 	_build_decor_overlay()
+	_build_water_overlay()
 
 	_astar.region = Rect2i(Vector2i.ZERO, grid_size)
 	_astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
@@ -227,6 +228,22 @@ func _build_decor_overlay() -> void:
 	add_child(layer)
 	for d in _decor:
 		layer.set_cell(d[0], 0, Vector2i(int(d[1]), 0))
+
+## Lägger ett animerat shimmer-lager ovanpå vattenrutorna (täcker bas-vattnet,
+## under skummet). Drivs av en shader → levande ljusvågor. Återanvänder bas-
+## atlasen. Läggs direkt ovanför bas-tilemap så skum/frans/dekor hamnar ovanpå.
+func _build_water_overlay() -> void:
+	if _water.is_empty():
+		return
+	var layer := TileMapLayer.new()
+	layer.tile_set = tilemap.tile_set
+	var mat := ShaderMaterial.new()
+	mat.shader = preload("res://assets/shaders/water.gdshader")
+	layer.material = mat
+	add_child(layer)
+	move_child(layer, tilemap.get_index() + 1)   # precis ovanför marken
+	for t: Vector2i in _water:
+		layer.set_cell(t, 0, Vector2i(PlaceholderTiles.TERRAIN["~"], PlaceholderTiles.variant_for(t)))
 
 ## En tile räknas som "land" mot skummet om den är inom kartan och inte vatten.
 ## Kartkanten (utanför) ger inget skum så vattnet inte ramas in vid världsranden.

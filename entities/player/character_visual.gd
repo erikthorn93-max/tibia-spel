@@ -7,14 +7,19 @@ const BOB_AMP := 3.0       # studs-höjd (px) mitt i ett steg
 const BREATH_AMP := 0.03   # andnings-amplitud (skala)
 const BREATH_SPEED := 2.2
 
+const SpriteFx = preload("res://world/sprite_fx.gd")
+
 var _sprite: Sprite2D
 var _walking := false
 var _walk_progress := 0.0
 var _breath_t := 0.0
 
 func _ready() -> void:
+	# Markskugga vid fötterna (under spriten) → spelaren lyfter från marken.
+	add_child(SpriteFx.make_shadow(BASE_Y + 16.0))
 	_sprite = Sprite2D.new()
 	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_sprite.material = SpriteFx.outline_material()   # tunn kontur → läsbarhet
 	var tex: Texture2D = load("res://assets/sprites/player.png") as Texture2D
 	if tex:
 		_sprite.texture = tex

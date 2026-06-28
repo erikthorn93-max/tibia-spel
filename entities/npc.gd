@@ -15,6 +15,7 @@ var _bark_timer := 0.0
 var _breath_t := 0.0      # idle-andning, slumpad fas så NPC:er inte andas i takt
 var _quest_marker: Label
 const MARKER_BASE_Y := -56.0
+const SpriteFx = preload("res://world/sprite_fx.gd")
 
 @onready var _sprite: Sprite2D = $Sprite2D
 @onready var click_area: Area2D = $ClickArea
@@ -35,6 +36,8 @@ func _ready() -> void:
 		_sprite.texture = load(spec_path)
 	else:
 		_sprite.texture = load("res://assets/sprites/npcs/dialogue_npc.png")
+	_sprite.material = SpriteFx.outline_material()   # kontur → läsbarhet
+	add_child(SpriteFx.make_shadow(13.0))             # markskugga
 	click_area.input_event.connect(_on_click)
 	_breath_t = randf() * 10.0
 	_build_quest_marker()
