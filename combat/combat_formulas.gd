@@ -20,11 +20,12 @@ static func roll_crit(skill: int, bonus := 0.0) -> bool:
 # högt golv gör att tidiga nivåer aldrig känns hopplösa, och taket garanterar att
 # inget slag är 100 % säkert mot vigare fiender. Rena funktioner → testbara.
 
-const HIT_BASE := 0.80         # träffchans när accuracy == evasion
-const HIT_PER_DIFF := 0.01     # ±chans per stegs skillnad i accuracy − evasion
-const HIT_FLOOR := 0.40        # lägsta möjliga träffchans
-const HIT_CEIL := 0.99         # högsta möjliga träffchans
-const EVASION_PER_SPEED := 3.0 # monstrets undvikande härleds ur dess fart
+const HIT_BASE := 0.80          # träffchans när accuracy == evasion
+const HIT_PER_DIFF := 0.01      # ±chans per stegs skillnad i accuracy − evasion
+const HIT_FLOOR := 0.40         # lägsta träffchans för spelarens slag
+const HIT_CEIL := 0.99          # högsta möjliga träffchans
+const MONSTER_HIT_FLOOR := 0.55 # monster träffar alltid minst så här ofta (max ~45 % väjning)
+const EVASION_PER_SPEED := 3.0  # monstrets undvikande härleds ur dess fart
 
 ## Spelarens träffvärde: stridsskill + nivå.
 static func accuracy(level: int, skill: int) -> int:
@@ -34,13 +35,22 @@ static func accuracy(level: int, skill: int) -> int:
 static func monster_evasion(speed: float) -> int:
 	return int(speed * EVASION_PER_SPEED)
 
+## Spelarens undvikande: agility väger tyngst, sköldvana bidrar lite.
+static func player_evasion(agility: int, shielding: int) -> int:
+	return agility + shielding / 2
+
+## Monstrets träffvärde härlett ur dess attack (hårdare fiender träffar säkrare).
+static func monster_accuracy(atk: int) -> int:
+	return 12 + atk
+
 ## Träffchans (0–1) givet accuracy mot evasion, klamrad mellan golv och tak.
-static func hit_chance(acc: int, eva: int) -> float:
-	return clampf(HIT_BASE + (acc - eva) * HIT_PER_DIFF, HIT_FLOOR, HIT_CEIL)
+## `floor` låter försvarssidan ha ett högre golv (monster missar mer sällan).
+static func hit_chance(acc: int, eva: int, floor := HIT_FLOOR) -> float:
+	return clampf(HIT_BASE + (acc - eva) * HIT_PER_DIFF, floor, HIT_CEIL)
 
 ## Slår om ett slag träffar.
-static func roll_hit(acc: int, eva: int) -> bool:
-	return randf() < hit_chance(acc, eva)
+static func roll_hit(acc: int, eva: int, floor := HIT_FLOOR) -> bool:
+	return randf() < hit_chance(acc, eva, floor)
 
 static func max_melee(level: int, skill: int, weapon_atk: int) -> int:
 	return maxi(int(weapon_atk * (skill + 4) / 28.0 + level / 10.0), 1)

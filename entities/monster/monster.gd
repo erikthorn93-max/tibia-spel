@@ -292,6 +292,16 @@ func _process(delta: float) -> void:
 		if _atk_timer <= 0.0:
 			_atk_timer = cooldown
 			play_attack(player_tile - tile)
+			# Spelaren kan väja undan (agility/sköld mot monstrets träffsäkerhet).
+			var p_eva := CombatFormulas.player_evasion(
+				GameState.effective_skill_level("agility"),
+				GameState.effective_skill_level("shielding"))
+			if not CombatFormulas.roll_hit(CombatFormulas.monster_accuracy(atk),
+					p_eva, CombatFormulas.MONSTER_HIT_FLOOR):
+				if World.player != null and World.player.has_method("show_dodge"):
+					World.player.show_dodge()
+				GameState.gain_skill_xp("agility", 1)   # undvikande tränar agility
+				return
 			var raw := CombatFormulas.roll_monster(atk)
 			var armor := GameState.total_armor() + GameState.total_def_bonus() \
 				+ CombatStance.mitigation_bonus(GameState.combat_stance)

@@ -23,6 +23,23 @@ func test_accuracy_combines_level_and_skill():
 func test_faster_monsters_evade_more():
 	assert_gt(CF.monster_evasion(3.0), CF.monster_evasion(2.0))
 
+func test_player_evasion_scales_with_agility_and_shielding():
+	assert_gt(CF.player_evasion(50, 0), CF.player_evasion(20, 0))
+	assert_gt(CF.player_evasion(20, 40), CF.player_evasion(20, 0), "sköld ska bidra")
+	assert_gt(CF.player_evasion(40, 0), CF.player_evasion(0, 40),
+		"agility ska väga tyngre än sköld")
+
+func test_monster_accuracy_grows_with_atk():
+	assert_gt(CF.monster_accuracy(50), CF.monster_accuracy(5))
+
+func test_monster_hit_floor_is_higher_than_player_floor():
+	# Monster ska missa mer sällan än spelaren kan — väjning trivialiserar inte faran.
+	assert_gt(CF.MONSTER_HIT_FLOOR, CF.HIT_FLOOR)
+	assert_eq(CF.hit_chance(0, 9999, CF.MONSTER_HIT_FLOOR), CF.MONSTER_HIT_FLOOR)
+
+func test_custom_floor_does_not_affect_ceiling():
+	assert_eq(CF.hit_chance(9999, 0, CF.MONSTER_HIT_FLOOR), CF.HIT_CEIL)
+
 func test_roll_hit_within_chance_band():
 	# Över många slag ska träffandelen ligga nära den teoretiska chansen.
 	var acc := 30

@@ -423,6 +423,13 @@ func _spec_hit(m, base: float, mult: float, stance_mult: float) -> void:
 	if parent != null and is_instance_valid(m):
 		_spawn_spell_flash(parent, m.global_position, Color(1.0, 0.85, 0.35), 1.9, 140.0)
 
+## Flytande "väjer!" ovanför spelaren när ett monsterslag undviks.
+func show_dodge() -> void:
+	var ft: Node2D = preload("res://entities/floating_text.gd").new()
+	get_parent().add_child(ft)
+	ft.global_position = global_position + Vector2(0, -20)
+	ft.setup("väjer!", Color(0.75, 0.9, 1.0), 12)
+
 ## Grön "+N" ovanför spelaren när en leech-charm läker.
 func _spawn_heal_float(amount: float) -> void:
 	var ft: Node2D = preload("res://entities/floating_text.gd").new()
