@@ -11,6 +11,10 @@ func before_each():
 	ArenaSystem.reset()
 	GameState.inventory.clear()
 	GameState.gold = 0
+	UnlockSystem.unlocked.erase(ArenaSystem.CHAMPION_UNLOCK)
+
+func after_each():
+	UnlockSystem.unlocked.erase(ArenaSystem.CHAMPION_UNLOCK)
 
 func _total_monsters() -> int:
 	var n := 0
@@ -81,6 +85,25 @@ func test_alla_vagor_klaras_och_ger_beloning():
 	assert_signal_emitted(ArenaSystem, "arena_won")
 	assert_false(ArenaSystem.is_active(), "arenan ska vara avslutad")
 	assert_eq(int(GameState.inventory.get(REWARD_ID, 0)), 1, "Triumfklingan ska delas ut")
+
+func test_unik_klinga_bara_forsta_segern_sedan_repeat_reward():
+	# Första segern: unika klingan + champion-unlock.
+	ArenaSystem.start()
+	for _i in range(_total_monsters()):
+		ArenaSystem.record_kill("dummy")
+	assert_eq(int(GameState.inventory.get(REWARD_ID, 0)), 1, "första segern ska ge klingan")
+	assert_true(UnlockSystem.is_unlocked(ArenaSystem.CHAMPION_UNLOCK),
+		"första segern ska sätta arena_champion-unlock")
+	# Andra segern: ingen ny klinga, men omspelsbelöning (guld) delas ut.
+	# (Guld är valuta → GameState.gold, inte inventory.)
+	GameState.inventory.clear()
+	var gold_before := GameState.gold
+	ArenaSystem.reset()
+	ArenaSystem.start()
+	for _i in range(_total_monsters()):
+		ArenaSystem.record_kill("dummy")
+	assert_eq(int(GameState.inventory.get(REWARD_ID, 0)), 0, "omspel ska inte ge ny klinga")
+	assert_gt(GameState.gold, gold_before, "omspel ska ge guld (repeat_reward)")
 
 func test_kill_utan_aktiv_omgang_ignoreras():
 	ArenaSystem.record_kill("dummy")  # ska inte krascha eller starta något

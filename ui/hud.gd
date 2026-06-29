@@ -50,6 +50,7 @@ var _boss_panel: PanelContainer  # boss HP-bar, synlig under bossfight
 var _boss_name_lbl: Label
 var _boss_hp_bar: ColorRect
 var _boss_hp_bg: ColorRect
+var _arena_lbl: Label           # beständig arena-status (våg X/Y, fiender kvar)
 # ANIMATIONER
 var _levelup_lbl: Label        # "★ LEVEL UP!" popup
 var _skillup_lbl: Label        # "+Skill nivå X" popup
@@ -101,6 +102,7 @@ func _ready() -> void:
 	add_child(preload("res://ui/death_screen.gd").new())
 	_build_bars()
 	_build_boss_bar()
+	_build_arena_banner()
 	_build_night_overlay()
 	_build_weather_overlay()
 	_build_levelup_labels()
@@ -706,6 +708,39 @@ func _build_boss_bar() -> void:
 	_boss_hp_bar.anchor_bottom = 1.0
 	_boss_hp_bar.anchor_right  = 1.0
 	_boss_hp_bg.add_child(_boss_hp_bar)
+
+## Beständig arena-status högst upp i mitten under en pågående omgång.
+## Lyssnar på ArenaSystem så våg/kvarvarande fiender uppdateras live.
+func _build_arena_banner() -> void:
+	_arena_lbl = Label.new()
+	_arena_lbl.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	_arena_lbl.offset_top = 14.0
+	_arena_lbl.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_arena_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_arena_lbl.add_theme_color_override("font_color", Color(1.0, 0.82, 0.3))
+	_arena_lbl.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.85))
+	_arena_lbl.add_theme_constant_override("outline_size", 4)
+	_arena_lbl.add_theme_font_size_override("font_size", 16)
+	_arena_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_arena_lbl.visible = false
+	add_child(_arena_lbl)
+	ArenaSystem.wave_started.connect(func(_i, _s): _refresh_arena_banner())
+	ArenaSystem.wave_progress.connect(func(_r): _refresh_arena_banner())
+	ArenaSystem.wave_cleared.connect(func(_i): _refresh_arena_banner())
+	ArenaSystem.arena_won.connect(func(): _refresh_arena_banner())
+	ArenaSystem.arena_failed.connect(func(_w): _refresh_arena_banner())
+
+func _refresh_arena_banner() -> void:
+	if _arena_lbl == null:
+		return
+	if not ArenaSystem.is_active():
+		_arena_lbl.visible = false
+		return
+	var label := String(ArenaSystem.waves[ArenaSystem.current_wave].get("name", ""))
+	_arena_lbl.visible = true
+	_arena_lbl.text = "⚔ Arena — Våg %d/%d%s   •   %d kvar" % [
+		ArenaSystem.current_wave + 1, ArenaSystem.wave_count(),
+		("  " + label) if label != "" else "", ArenaSystem.remaining()]
 
 func _refresh_boss_bar() -> void:
 	if _boss_panel == null:

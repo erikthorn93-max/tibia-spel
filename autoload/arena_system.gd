@@ -10,14 +10,19 @@ extends Node
 ## (xp/gold/items/skill_xp/unlocks/charm_points) — en källa till sanning.
 
 signal wave_started(index: int, spawns: Array)
+signal wave_progress(remaining: int)
 signal wave_cleared(index: int)
 signal arena_won()
 signal arena_failed(at_wave: int)
 
 const ARENA_ZONE := "knight_arena"
+## Sätts vid första segern (persisteras via UnlockSystem). Styr att den unika
+## belöningen bara delas ut en gång — omspel ger repeat_reward (xp/guld/charm).
+const CHAMPION_UNLOCK := "arena_champion"
 
 var waves: Array = []
 var reward: Dictionary = {}
+var repeat_reward: Dictionary = {}
 
 var active := false
 var current_wave := -1
@@ -29,6 +34,7 @@ func _init() -> void:
 	var data: Dictionary = parsed if parsed is Dictionary else {}
 	waves = data.get("waves", [])
 	reward = data.get("reward", {})
+	repeat_reward = data.get("repeat_reward", {})
 
 func wave_count() -> int:
 	return waves.size()
@@ -65,6 +71,7 @@ func record_kill(_monster_name: String) -> void:
 		return
 	kills_remaining -= 1
 	if kills_remaining > 0:
+		wave_progress.emit(kills_remaining)
 		return
 	kills_remaining = 0
 	var cleared := current_wave
@@ -78,7 +85,10 @@ func _win() -> void:
 	active = false
 	current_wave = -1
 	kills_remaining = 0
-	_grant(reward)
+	# Den unika klingan delas bara ut första gången; därefter belönar omspel
+	# med xp/guld/charm. reward.unlocks sätter CHAMPION_UNLOCK vid första segern.
+	var first_clear := not UnlockSystem.is_unlocked(CHAMPION_UNLOCK)
+	_grant(reward if first_clear else repeat_reward)
 	arena_won.emit()
 
 ## Avbryter pågående omgång (spelaren dör eller lämnar arenan). Ingen belöning.

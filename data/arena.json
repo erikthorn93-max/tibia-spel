@@ -84,6 +84,20 @@
 		"items": {
 			"triumph_blade": 1,
 			"great_health_potion": 5
+		},
+		"unlocks": [
+			"arena_champion"
+		]
+	},
+	"repeat_reward": {
+		"xp": 4500,
+		"gold": 2000,
+		"charm_points": 15,
+		"skill_xp": {
+			"slayer": 600
+		},
+		"items": {
+			"great_health_potion": 2
 		}
 	}
 }
