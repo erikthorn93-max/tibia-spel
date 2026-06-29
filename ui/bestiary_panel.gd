@@ -58,6 +58,13 @@ func _rebuild() -> void:
 				elbl.add_theme_font_size_override("font_size", 10)
 				elbl.modulate = Color(0.6, 0.8, 0.95)
 				_list.add_child(elbl)
+			# Giftimmunitet — så spelaren vet att lämna giftvapnet hemma
+			if CombatFormulas.monster_poison_immune(MonsterDB.monsters[mname]):
+				var plbl := Label.new()
+				plbl.text = "   Giftimmun — gift biter inte"
+				plbl.add_theme_font_size_override("font_size", 10)
+				plbl.modulate = Color(0.6, 0.78, 0.6)
+				_list.add_child(plbl)
 
 const _ELEM_NAMES := {"fire": "Eld", "energy": "Energi", "death": "Död", "physical": "Fysisk", "ice": "Is"}
 
