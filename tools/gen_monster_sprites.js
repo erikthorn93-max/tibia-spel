@@ -509,7 +509,69 @@ function drawVoidGod(im, c) {  // urguden nyxoth — boss
   for (const s of [-1, 1]) tri(im, cx + s * 6, cy - 2, cx + s * 11, cy - 2, cx + s * 9, cy - 9, god); // skuldertaggar
   for (const [dx, dy] of [[-13, -3], [13, -5], [12, 8], [-12, 9], [0, 13]]) px(im, cx + dx, cy + dy, VOIDGLOW); // gudastoft
 }
+
+// --- dvärgar (Dvärgsgruvan) ---
+const DSKIN = [206, 166, 134, 255];
+function drawDwarf(im, c, kind) {
+  const cx = 16;
+  const big = kind === "king";
+  const beardCol = kind === "king" ? [162, 152, 146, 255]
+    : kind === "geomant" ? [190, 185, 196, 255]
+      : [120, 88, 58, 255];
+  const bodyW = big ? 16 : 12;
+  const top = big ? 14 : 16;          // torso-topp
+  const headY = big ? 10 : 11;
+  // ben + stövlar
+  rect(im, cx - 4, 25, 3, 5, DARK(c)); rect(im, cx + 1, 25, 3, 5, DARK(c));
+  rect(im, cx - 5, 29, 4, 2, [55, 42, 32, 255]); rect(im, cx + 1, 29, 4, 2, [55, 42, 32, 255]);
+  // torso
+  rect(im, cx - (bodyW >> 1), top, bodyW, 26 - top, c);
+  rect(im, cx - (bodyW >> 1) + 1, top + 1, bodyW - 3, 4, LITE(c));
+  // armar
+  rect(im, cx - (bodyW >> 1) - 2, top + 1, 3, 8, scale(c, 0.82));
+  rect(im, cx + (bodyW >> 1) - 1, top + 1, 3, 8, scale(c, 0.82));
+  // huvud
+  disc(im, cx, headY, 4, DSKIN);
+  px(im, cx - 2, headY - 1, [30, 25, 28, 255]); px(im, cx + 2, headY - 1, [30, 25, 28, 255]);
+  px(im, cx, headY + 1, [182, 122, 100, 255]);   // näsa
+  // skägg
+  oval(im, cx, headY + 6, 5, 5, beardCol);
+  tri(im, cx - 5, headY + 3, cx + 5, headY + 3, cx, headY + 13, beardCol);
+  // huvudbonad
+  if (kind === "geomant") {
+    tri(im, cx - 6, headY - 1, cx + 6, headY - 1, cx, headY - 8, scale(c, 0.8));   // spetshuva
+  } else {
+    rect(im, cx - 5, headY - 5, 11, 3, scale(c, 0.7));   // hjälmband
+    oval(im, cx, headY - 4, 5, 3, scale(c, 0.92));       // hjälmkupa
+    if (kind === "soldier") { px(im, cx, headY - 8, [222, 210, 120, 255]); line(im, cx, headY - 7, cx, headY - 5, [222, 210, 120, 255], 1); }
+  }
+  if (kind === "soldier") {
+    rect(im, cx - 11, top - 1, 5, 12, scale(c, 0.6));    // tornsköld
+    rect(im, cx - 10, top, 3, 10, scale(c, 0.95));
+    px(im, cx - 9, top + 5, [222, 200, 110, 255]);
+    line(im, cx + 9, top - 4, cx + 9, top + 10, [112, 82, 55, 255], 1);   // yxskaft
+    tri(im, cx + 9, top - 4, cx + 14, top - 2, cx + 9, top + 2, [202, 207, 216, 255]); // yxblad
+  } else if (kind === "geomant") {
+    line(im, cx + 8, top - 6, cx + 8, top + 11, [120, 85, 55, 255], 1);   // stav
+    disc(im, cx + 8, top - 8, 3, [255, 140, 40, 255]);   // magmaklot
+    disc(im, cx + 8, top - 8, 1, [255, 232, 162, 255]);
+    px(im, cx - 2, top + 4, [255, 130, 40, 255]); px(im, cx + 2, top + 6, [255, 130, 40, 255]); // glödsprickor
+  } else if (kind === "king") {
+    for (const [dx, dy] of [[-4, 18], [3, 20], [-1, 16], [5, 22], [-6, 21]]) px(im, cx + dx, dy, [255, 120, 40, 255]); // magmasprickor
+    for (let i = -5; i <= 5; i += 2) line(im, cx + i, headY - 6, cx + i, headY - 9, [236, 206, 92, 255], 1); // krona
+    rect(im, cx - 6, headY - 6, 13, 2, [236, 206, 92, 255]);
+    px(im, cx, headY - 11, [122, 222, 202, 255]);        // kronjuvel
+    px(im, cx - 2, headY - 1, [255, 150, 50, 255]); px(im, cx + 2, headY - 1, [255, 150, 50, 255]); // glödande ögon
+    line(im, cx + 9, top - 5, cx + 9, top + 11, [90, 70, 55, 255], 2);    // släggskaft
+    rect(im, cx + 6, top - 9, 8, 5, scale(c, 0.72));     // slägghuvud
+    rect(im, cx + 7, top - 8, 6, 3, scale(c, 0.96));
+  }
+}
+
 const MONSTERS = [
+  ["Dvärgsoldat", "Dvärgsoldat", "#7a6a55", "dwarfsoldier"],
+  ["Dvärggeomant", "Dvärggeomant", "#9a5a3a", "dwarfgeomant"],
+  ["Stenkungen Brokk", "Stenkungen_Brokk", "#5a4a3a", "dwarfking"],
   ["Glödskorpion", "Glödskorpion", "#e0641e", "scorpion"],
   ["Sandskarabé", "Sandskarabé", "#3a8a5a", "scarab"],
   ["Sandvålnad", "Sandvålnad", "#cdbb92", "wraith"],
@@ -560,7 +622,10 @@ const onlyNew = process.argv.includes("--only-new");
 for (const [name, file, color, kind] of MONSTERS) {
   if (onlyNew && fs.existsSync(path.join(OUT, file + ".png"))) continue;
   const im = img(); const c = hex(color);
-  if (kind === "spider") drawSpider(im, c, false);
+  if (kind === "dwarfsoldier") drawDwarf(im, c, "soldier");
+  else if (kind === "dwarfgeomant") drawDwarf(im, c, "geomant");
+  else if (kind === "dwarfking") drawDwarf(im, c, "king");
+  else if (kind === "spider") drawSpider(im, c, false);
   else if (kind === "spiderboss") drawSpider(im, c, true);
   else if (kind === "scorpion") drawScorpion(im, c);
   else if (kind === "scarab") drawScarab(im, c);
