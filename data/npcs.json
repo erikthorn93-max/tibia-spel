@@ -816,5 +816,113 @@
 			"model": "en_US-joe-medium",
 			"length_scale": 1.07
 		}
+	},
+	"npc_temple_templar": {
+		"name": "Syster Vigdis, fången tempelriddare",
+		"zone": "demon_temple",
+		"position": [
+			22,
+			2
+		],
+		"barks": [
+			"Lågorna viskar mitt namn …",
+			"Ljuset överger inte den som tror.",
+			"Spring medan du kan, vandrare."
+		],
+		"dialogue_root": "npc_temple_templar_root",
+		"voice": {
+			"model": "en_GB-alan-medium",
+			"length_scale": 1.06
+		}
+	},
+	"npc_dragon_hunter": {
+		"name": "Roderik, ensam drakjägare",
+		"zone": "drakboet",
+		"position": [
+			2,
+			11
+		],
+		"barks": [
+			"Min lans bröts mot dess fjäll.",
+			"Hettan … man vänjer sig aldrig.",
+			"Var är de andra? Borta. Alla borta."
+		],
+		"dialogue_root": "npc_dragon_hunter_root",
+		"voice": {
+			"model": "en_US-joe-medium",
+			"length_scale": 1.02
+		}
+	},
+	"npc_maze_wanderer": {
+		"name": "Vilbert, vilsen i labyrinten",
+		"zone": "minotaur_maze",
+		"position": [
+			15,
+			3
+		],
+		"barks": [
+			"Vänster? Höger? Jag minns inte …",
+			"Väggarna flyttar sig, svär jag.",
+			"Följ tråden — om du har någon."
+		],
+		"dialogue_root": "npc_maze_wanderer_root",
+		"voice": {
+			"model": "en_US-joe-medium",
+			"length_scale": 1.08
+		}
+	},
+	"npc_rift_scout": {
+		"name": "Greta, spejare",
+		"zone": "orc_rift",
+		"position": [
+			21,
+			8
+		],
+		"barks": [
+			"Ner med huvudet — de spejar.",
+			"Trummorna betyder krig.",
+			"Räkna dem inte. Det deprimerar."
+		],
+		"dialogue_root": "npc_rift_scout_root",
+		"voice": {
+			"model": "en_US-amy-medium",
+			"length_scale": 1
+		}
+	},
+	"npc_crypt_weaver": {
+		"name": "Alvar, fastvävd i nät",
+		"zone": "spider_crypt",
+		"position": [
+			3,
+			2
+		],
+		"barks": [
+			"Jag känner inte mina ben längre …",
+			"Skär loss mig, för stenfäders skull!",
+			"Den kommer när jag rör mig …"
+		],
+		"dialogue_root": "npc_crypt_weaver_root",
+		"voice": {
+			"model": "en_US-joe-medium",
+			"length_scale": 1.04
+		}
+	},
+	"npc_vampire_hunter": {
+		"name": "Pater Cornelius, vampyrjägare",
+		"zone": "vampire_crypt",
+		"position": [
+			22,
+			4
+		],
+		"barks": [
+			"Vigvattnet sinar …",
+			"Korset håller dem borta. Knappt.",
+			"De fruktar gryningen. Det gör inte jag."
+		],
+		"dialogue_root": "npc_vampire_hunter_root",
+		"voice": {
+			"model": "en_GB-alan-medium",
+			"length_scale": 1.05
+		}
 	}
 }

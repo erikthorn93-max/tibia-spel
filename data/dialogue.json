@@ -6020,5 +6020,251 @@
 				"next": null
 			}
 		]
+	},
+	"npc_temple_templar_root_b1": {
+		"speaker": "npc_temple_templar",
+		"emotion": "worried",
+		"text": "Ärkedemonen. Den sitter förseglad i templets innersta, och kulten göder dess länkar med själar — den ena efter den andra. Bryts förseglingen vältrar den ut i världen. Det får inte ske, vandrare. Hellre dör jag på denna sten.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_temple_templar_root"
+			}
+		]
+	},
+	"npc_temple_templar_root_b2": {
+		"speaker": "npc_temple_templar",
+		"emotion": "neutral",
+		"text": "Mina band lossnar inte förrän kulten skingras, och de skingras inte förrän deras herre faller. Möt Ärkedemonen om du vågar — bär heligt stål och eld, för dess hud äter vanliga slag. Lyckas du, ber jag för din själ var natt jag har kvar.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_temple_templar_root"
+			}
+		]
+	},
+	"npc_temple_templar_root": {
+		"speaker": "npc_temple_templar",
+		"emotion": "neutral",
+		"text": "Du där — kom inte närmare altaret! Jag är Vigdis, svuren till ljuset, kommen hit för att rena templet. Kulten överraskade mig och band mig till deras sten. Nu väntar jag på att bli nästa offer åt det de dyrkar.",
+		"choices": [
+			{
+				"text": "Vad dyrkas här?",
+				"next": "npc_temple_templar_root_b1"
+			},
+			{
+				"text": "Hur kan jag hjälpa?",
+				"next": "npc_temple_templar_root_b2"
+			},
+			{
+				"text": "Farväl.",
+				"next": null
+			}
+		]
+	},
+	"npc_dragon_hunter_root_b1": {
+		"speaker": "npc_dragon_hunter",
+		"emotion": "worried",
+		"text": "Vi trängde in djärvt, sköldar höjda, namn på läpparna. Sen kom ljuset — en flodvåg av eld ur dess gap. När jag kvicknade till låg fem rustningar smälta i stenen, och draken hade redan vänt åter till sitt guld. Mod skyddar inte mot sådan hetta.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_dragon_hunter_root"
+			}
+		]
+	},
+	"npc_dragon_hunter_root_b2": {
+		"speaker": "npc_dragon_hunter",
+		"emotion": "neutral",
+		"text": "Av rätt arm, ja. Dess fjäll tål eld men hatar köld — kall stål och isande magi biter där lågan glider av. Sikta mot buken när den reser sig. Fäller du Elddraken hämnar du fem goda själar, och jag kan äntligen gå hem och sörja i frid.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_dragon_hunter_root"
+			}
+		]
+	},
+	"npc_dragon_hunter_root": {
+		"speaker": "npc_dragon_hunter",
+		"emotion": "neutral",
+		"text": "Stanna … andas långsamt. Jag är Roderik, kom hit med fem svurna drakdräpare. Nu är jag en. Elddraken tog dem i ett enda andetag, och jag har inte kunnat förmå mig att gå vidare — eller hem.",
+		"choices": [
+			{
+				"text": "Vad hände ditt sällskap?",
+				"next": "npc_dragon_hunter_root_b1"
+			},
+			{
+				"text": "Kan draken fällas?",
+				"next": "npc_dragon_hunter_root_b2"
+			},
+			{
+				"text": "Farväl.",
+				"next": null
+			}
+		]
+	},
+	"npc_maze_wanderer_root_b1": {
+		"speaker": "npc_maze_wanderer",
+		"emotion": "worried",
+		"text": "Labyrinten lever, säger jag dig. Jag ristar märken i väggen, går ett varv, och märkena är borta — eller flyttade. Eller så är det jag som flyttats. Det enda fasta är vrålet från mitten. Det blir aldrig svagare, hur långt jag än går.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_maze_wanderer_root"
+			}
+		]
+	},
+	"npc_maze_wanderer_root_b2": {
+		"speaker": "npc_maze_wanderer",
+		"emotion": "neutral",
+		"text": "Minotaurkungen, krönt av horn och vrede, vaktar sin hög av guld i labyrintens hjärta. Vrålet du hör är hans. De som går mot ljudet återvänder aldrig — men kanske är det enda vägen ut att fälla honom och tysta murarna för gott.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_maze_wanderer_root"
+			}
+		]
+	},
+	"npc_maze_wanderer_root": {
+		"speaker": "npc_maze_wanderer",
+		"emotion": "neutral",
+		"text": "Åh, äntligen någon med klar blick! Vilbert heter jag, gick in efter en skatt och har irrat i — dagar? veckor? — utan att finna ut. Varje gång jag tror mig hitta porten står jag åter mitt i stenen.",
+		"choices": [
+			{
+				"text": "Hittar du inte ut?",
+				"next": "npc_maze_wanderer_root_b1"
+			},
+			{
+				"text": "Vad finns i mitten?",
+				"next": "npc_maze_wanderer_root_b2"
+			},
+			{
+				"text": "Farväl.",
+				"next": null
+			}
+		]
+	},
+	"npc_rift_scout_root_b1": {
+		"speaker": "npc_rift_scout",
+		"emotion": "worried",
+		"text": "Ett härtåg mot lågländerna. Orköverherren har enat klanerna under sitt baner, och shamanerna eggar dem med blodtrummor och besvärjelser. När de marscherar brinner byar. Någon måste skära huvudet av ormen innan kroppen rör sig.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_rift_scout_root"
+			}
+		]
+	},
+	"npc_rift_scout_root_b2": {
+		"speaker": "npc_rift_scout",
+		"emotion": "neutral",
+		"text": "Om din arm är stark — nej. Tunna ut deras led, fäll deras shamaner, och sök dig in mot Orköverherren själv. Faller han bryts banret, och klanerna vänder sina yxor mot varandra som förr. Gör det, så får Thais andas ut. Jag täcker din rygg härifrån.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_rift_scout_root"
+			}
+		]
+	},
+	"npc_rift_scout_root": {
+		"speaker": "npc_rift_scout",
+		"emotion": "neutral",
+		"text": "Tyst! Ner i skrevan med dig, innan en vaktpost ser oss. Jag är Greta, spejare ut från Thais. Jag har räknat orchernas styrkor i tre dygn, och siffran gör mig kall i magen. De rustar för krig, vandrare.",
+		"choices": [
+			{
+				"text": "Vad samlas orcherna till?",
+				"next": "npc_rift_scout_root_b1"
+			},
+			{
+				"text": "Borde jag vända om?",
+				"next": "npc_rift_scout_root_b2"
+			},
+			{
+				"text": "Farväl.",
+				"next": null
+			}
+		]
+	},
+	"npc_crypt_weaver_root_b1": {
+		"speaker": "npc_crypt_weaver",
+		"emotion": "worried",
+		"text": "Yngelet först, de små jägarna i mörkret. Men det är hon därnere som råder — Spindeldrottningen Morwena, stor som en vagn, med gift som löser kött från ben. Varje tråd i kryptan löper till hennes lya. Du går i hennes nät redan nu.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_crypt_weaver_root"
+			}
+		]
+	},
+	"npc_crypt_weaver_root_b2": {
+		"speaker": "npc_crypt_weaver",
+		"emotion": "happy",
+		"text": "Välsignad vare du! Bränn näten där du kan — eld är det enda de fruktar. Och se uppåt, alltid uppåt: Morwena faller från taket när du minst anar det. Fäll henne, så slappnar trådarna och jag kan kanske känna mina ben igen.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_crypt_weaver_root"
+			}
+		]
+	},
+	"npc_crypt_weaver_root": {
+		"speaker": "npc_crypt_weaver",
+		"emotion": "neutral",
+		"text": "Hjälp … hitåt, vid väggen. Jag är Alvar — eller var det. Näten tog mig vid ingången och har hållit mig sedan dess. Rör jag mig för mycket känner hon det i trådarna och kommer ner för att … nej. Var bara stilla med mig en stund.",
+		"choices": [
+			{
+				"text": "Vem vävde in dig?",
+				"next": "npc_crypt_weaver_root_b1"
+			},
+			{
+				"text": "Håll ut — jag rensar vägen.",
+				"next": "npc_crypt_weaver_root_b2"
+			},
+			{
+				"text": "Farväl.",
+				"next": null
+			}
+		]
+	},
+	"npc_vampire_hunter_root_b1": {
+		"speaker": "npc_vampire_hunter",
+		"emotion": "worried",
+		"text": "Vampyrherren, blek furste över ett hov av törstande döda. Han läker av varje sår han slår och kallar sina barn ur skuggorna. De flyr eld och soljus — men här nere finns inget av endera, bara mörker och hans hunger. Var beredd att möta din egen död i ögonen.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_vampire_hunter_root"
+			}
+		]
+	},
+	"npc_vampire_hunter_root_b2": {
+		"speaker": "npc_vampire_hunter",
+		"emotion": "neutral",
+		"text": "Gå dit jag inte längre orkar. Sök dig in till furstens sal och gör slut på honom — fäller du herren faller hovet med honom. Bär eld och en vass tro. Lyckas du, lämnar mörkret denna krypta för gott, och min vakt var inte förgäves.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_vampire_hunter_root"
+			}
+		]
+	},
+	"npc_vampire_hunter_root": {
+		"speaker": "npc_vampire_hunter",
+		"emotion": "neutral",
+		"text": "Stig in i ljuskretsen, fort. Jag är Cornelius, jägare av det som dricker blod. Jag höll porten med vigvatten och tro, men såren tär och flaskorna sinar. Längre in väntar något äldre och hungrigare än de jag redan bränt.",
+		"choices": [
+			{
+				"text": "Vad lurar i kryptan?",
+				"next": "npc_vampire_hunter_root_b1"
+			},
+			{
+				"text": "Behöver du hjälp?",
+				"next": "npc_vampire_hunter_root_b2"
+			},
+			{
+				"text": "Farväl.",
+				"next": null
+			}
+		]
 	}
 }

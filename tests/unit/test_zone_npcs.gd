@@ -13,6 +13,12 @@ const NEW_NPCS := {
 	"npc_swamp_hermit": "swamp",
 	"npc_depot_keeper": "thais_depot_lower",
 	"npc_troll_captive": "troll_cave",
+	"npc_temple_templar": "demon_temple",
+	"npc_dragon_hunter": "drakboet",
+	"npc_maze_wanderer": "minotaur_maze",
+	"npc_rift_scout": "orc_rift",
+	"npc_crypt_weaver": "spider_crypt",
+	"npc_vampire_hunter": "vampire_crypt",
 }
 
 var _zone_cache: Dictionary = {}
@@ -55,6 +61,17 @@ func test_alla_dialognoder_har_giltiga_lankar():
 	# eller vara null (avsluta samtalet). Inga brutna länkar.
 	for id in NEW_NPCS:
 		_assert_node_links_valid(id + "_root", id)
+
+func test_orc_rift_byggs_och_dorroppningar_ar_gangbara():
+	# Regression: 'e'-rutorna var felaktigt typade som "entrance" (utan "to"),
+	# vilket kraschade bygget och stängde in orc-rummen. De ska vara gångbara
+	# dörröppningar in till rummen.
+	var z = preload("res://world/zone.gd").new()
+	z.build_from_data(_zone_data("orc_rift"), "orc_rift")
+	for door in [Vector2i(5, 7), Vector2i(15, 7), Vector2i(5, 15), Vector2i(5, 23)]:
+		assert_true(z.is_walkable(door),
+			"dörröppningen %s i orc_rift ska vara gångbar" % str(door))
+	z.free()
 
 func _assert_node_links_valid(node_id: String, owner: String) -> void:
 	assert_true(DialogueDB.nodes.has(node_id), "%s: nod %s saknas" % [owner, node_id])
