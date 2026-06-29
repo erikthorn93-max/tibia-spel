@@ -2302,5 +2302,90 @@
 			}
 		},
 		"difficulty": "Mästare"
+	},
+	"quest_free_alvar": {
+		"name": "Alvars trådar",
+		"giver": "npc_crypt_weaver",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Spindeldrottningen Morwena",
+				"count": 1,
+				"hint": "Fäll Spindeldrottningen Morwena djupt i kryptan — se uppåt, hon faller från taket."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_crypt_weaver",
+				"hint": "Återvänd till Alvar och skär loss honom ur näten."
+			}
+		],
+		"rewards": {
+			"xp": 13000,
+			"gold": 5600,
+			"charm_points": 42,
+			"items": {
+				"great_health_potion": 4,
+				"great_mana_potion": 2,
+				"antidote_potion": 3
+			}
+		},
+		"difficulty": "Mästare"
+	},
+	"quest_warlord_greta": {
+		"name": "Hövdingens fall",
+		"giver": "npc_rift_scout",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Orköverherre",
+				"count": 1,
+				"hint": "Tränga in till Orköverherren i klyftans hjärta och fäll honom — då bryts banret."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_rift_scout",
+				"hint": "Smyg tillbaka till Greta i skrevan med beskedet."
+			}
+		],
+		"rewards": {
+			"xp": 8000,
+			"gold": 3600,
+			"charm_points": 30,
+			"items": {
+				"great_health_potion": 3,
+				"great_mana_potion": 1
+			}
+		},
+		"difficulty": "Svår"
+	},
+	"quest_maze_vilbert": {
+		"name": "Labyrintens tystnad",
+		"giver": "npc_maze_wanderer",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "MinotaurKungen",
+				"count": 1,
+				"hint": "Följ vrålet till labyrintens hjärta och fäll Minotaurkungen — tysta murarna."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_maze_wanderer",
+				"hint": "Hitta tillbaka till Vilbert med beskedet om kungens fall."
+			}
+		],
+		"rewards": {
+			"xp": 11000,
+			"gold": 4800,
+			"charm_points": 38,
+			"items": {
+				"great_health_potion": 4,
+				"great_mana_potion": 1
+			}
+		},
+		"difficulty": "Mästare"
 	}
 }

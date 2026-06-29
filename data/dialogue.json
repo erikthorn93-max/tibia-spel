@@ -6220,6 +6220,33 @@
 				"next": "npc_maze_wanderer_root_b2"
 			},
 			{
+				"text": "Jag fäller kungen och tystar labyrinten.",
+				"next": "quest_maze_vilbert_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_maze_vilbert"
+					}
+				]
+			},
+			{
+				"text": "Kungen är död. Vrålet har tystnat.",
+				"next": "quest_maze_vilbert_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_maze_vilbert",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_maze_vilbert"
+					}
+				]
+			},
+			{
 				"text": "Farväl.",
 				"next": null
 			}
@@ -6261,6 +6288,33 @@
 				"next": "npc_rift_scout_root_b2"
 			},
 			{
+				"text": "Jag fäller Orköverherren och bryter banret.",
+				"next": "quest_warlord_greta_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_warlord_greta"
+					}
+				]
+			},
+			{
+				"text": "Överherren är fälld. Klanerna splittras.",
+				"next": "quest_warlord_greta_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_warlord_greta",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_warlord_greta"
+					}
+				]
+			},
+			{
 				"text": "Farväl.",
 				"next": null
 			}
@@ -6300,6 +6354,33 @@
 			{
 				"text": "Håll ut — jag rensar vägen.",
 				"next": "npc_crypt_weaver_root_b2"
+			},
+			{
+				"text": "Jag fäller drottningen och skär loss dig.",
+				"next": "quest_free_alvar_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_free_alvar"
+					}
+				]
+			},
+			{
+				"text": "Morwena är död. Näten slappnar redan.",
+				"next": "quest_free_alvar_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_free_alvar",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_free_alvar"
+					}
+				]
 			},
 			{
 				"text": "Farväl.",
@@ -6437,6 +6518,102 @@
 		"speaker": "npc_temple_templar",
 		"emotion": "happy",
 		"text": "Bojorna … de faller av sig själva. Templet andas ut, och mörkret viker för första gången på sekel. Du gjorde vad en hel orden inte mäktade. Tag denna gärd ur altarets skatt — och min eviga tacksamhet. Ljuset står i skuld till dig i natt, vandrare.",
+		"choices": [
+			{
+				"text": "Lycka till där ute.",
+				"next": null
+			}
+		]
+	},
+	"quest_free_alvar_offer": {
+		"speaker": "npc_crypt_weaver",
+		"emotion": "worried",
+		"text": "Skulle du våga? Då finns det hopp. Varje tråd här löper till Morwena — fäller du henne slappnar hela väven, och jag kan kanske känna mina ben igen. Men akta giftet, det löser kött från ben. Bränn näten där du kan, och se uppåt. Alltid uppåt.",
+		"choices": [
+			{
+				"text": "Håll ut. Jag bränner mig fram till henne.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_free_alvar"
+					}
+				]
+			},
+			{
+				"text": "Inte än — hennes gift skrämmer mig.",
+				"next": "npc_crypt_weaver_root"
+			}
+		]
+	},
+	"quest_free_alvar_report": {
+		"speaker": "npc_crypt_weaver",
+		"emotion": "happy",
+		"text": "Jag känner det … trådarna mjuknar, slaknar, släpper. Mina fingrar rör sig! Tag det här ur det yngelet samlat — guld och flaskor från dem hon redan tog. Hjälp mig upp, så kryper vi mot ljuset tillsammans. Jag ska aldrig mer sätta min fot i en krypta.",
+		"choices": [
+			{
+				"text": "Lycka till där ute.",
+				"next": null
+			}
+		]
+	},
+	"quest_warlord_greta_offer": {
+		"speaker": "npc_rift_scout",
+		"emotion": "worried",
+		"text": "Då hör på, för det här kan rädda hundra byar: hela hären hålls samman av ett enda baner, och bakom det står Orköverherren. Hugg huvudet av ormen innan kroppen rör sig. Faller han vänder klanerna sina yxor mot varandra som förr. Jag täcker din rygg härifrån.",
+		"choices": [
+			{
+				"text": "Banret faller med honom. Jag ger mig in.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_warlord_greta"
+					}
+				]
+			},
+			{
+				"text": "Jag behöver mer stål bakom mig först.",
+				"next": "npc_rift_scout_root"
+			}
+		]
+	},
+	"quest_warlord_greta_report": {
+		"speaker": "npc_rift_scout",
+		"emotion": "happy",
+		"text": "Trummorna har tystnat … och jag hör dem redan gräla därinne. Du gjorde det, spejare — du skar huvudet av kriget innan det började. Tag soldlönen jag bär; Thais skulle gett dig tusen gånger mer om de visste. Gå nu, innan en klan minns att slåss enade igen.",
+		"choices": [
+			{
+				"text": "Lycka till där ute.",
+				"next": null
+			}
+		]
+	},
+	"quest_maze_vilbert_offer": {
+		"speaker": "npc_maze_wanderer",
+		"emotion": "worried",
+		"text": "Du hör vrålet, va? Det kommer från mitten, från honom. Jag är övertygad — det är hans vrede som får murarna att skifta och håller oss fångna. Fäll Minotaurkungen, så kanske stenen stelnar och släpper oss ut. Följ ljudet du annars flyr ifrån. Det är enda vägen in.",
+		"choices": [
+			{
+				"text": "Jag går mot vrålet. Håll ut.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_maze_vilbert"
+					}
+				]
+			},
+			{
+				"text": "Jag vågar inte gå mot ljudet än.",
+				"next": "npc_maze_wanderer_root"
+			}
+		]
+	},
+	"quest_maze_vilbert_report": {
+		"speaker": "npc_maze_wanderer",
+		"emotion": "happy",
+		"text": "Tyst … det är tyst. För första gången på — hur länge? — hör jag bara min egen andhämtning. Murarna känns fasta nu, ärliga. Jag ser stigen ut, klart som dagsljus! Tag guldet jag bar in efter; det vägde bara ner mig. Kom, vandrare, vi går mot solen — och jag tänker aldrig leta skatt igen.",
 		"choices": [
 			{
 				"text": "Lycka till där ute.",

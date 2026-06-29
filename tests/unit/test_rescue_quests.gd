@@ -20,6 +20,21 @@ const RESCUES := {
 		offer = "Jag möter Ärkedemonen och bryter kultens makt.",
 		report = "Ärkedemonen är besegrad. Du är fri.",
 	},
+	"quest_free_alvar": {
+		npc = "npc_crypt_weaver", boss = "Spindeldrottningen Morwena", root = "npc_crypt_weaver_root",
+		offer = "Jag fäller drottningen och skär loss dig.",
+		report = "Morwena är död. Näten slappnar redan.",
+	},
+	"quest_warlord_greta": {
+		npc = "npc_rift_scout", boss = "Orköverherre", root = "npc_rift_scout_root",
+		offer = "Jag fäller Orköverherren och bryter banret.",
+		report = "Överherren är fälld. Klanerna splittras.",
+	},
+	"quest_maze_vilbert": {
+		npc = "npc_maze_wanderer", boss = "MinotaurKungen", root = "npc_maze_wanderer_root",
+		offer = "Jag fäller kungen och tystar labyrinten.",
+		report = "Kungen är död. Vrålet har tystnat.",
+	},
 }
 
 func before_each():
