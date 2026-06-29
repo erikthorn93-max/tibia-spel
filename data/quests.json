@@ -2059,6 +2059,65 @@
 		},
 		"difficulty": "Medel"
 	},
+	"quest_urskog_1": {
+		"name": "Den vissnande hjärtveden",
+		"giver": "npc_urskog_guardian",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Fantom",
+				"count": 8,
+				"hint": "Skövla 8 fantomer som driver röten vidare bland stammarna i Urskogens hjärta."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_urskog_guardian",
+				"hint": "Återvänd till väktarinnan Lunda vid stigens mynning."
+			}
+		],
+		"rewards": {
+			"xp": 4200,
+			"gold": 1500,
+			"charm_points": 15,
+			"items": {
+				"great_health_potion": 3
+			},
+			"unlocks": [
+				"urskogens_hjarta"
+			]
+		},
+		"difficulty": "Svår"
+	},
+	"quest_urskog_2": {
+		"name": "Urskogens väktare",
+		"giver": "npc_urskog_guardian",
+		"requires": [
+			"quest_urskog_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Urskogsvältaren",
+				"count": 1,
+				"hint": "Fäll Urskogsvältaren i hjärtats mitt — elden biter på dess murkna bark."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_urskog_guardian",
+				"hint": "Bär budet om Välters fall till Lunda."
+			}
+		],
+		"rewards": {
+			"xp": 13000,
+			"gold": 5000,
+			"charm_points": 40,
+			"items": {
+				"urskog_amulett": 1
+			}
+		},
+		"difficulty": "Mästare"
+	},
 	"quest_thais_hero": {
 		"name": "Thais hjälte",
 		"giver": "npc_tibianus",

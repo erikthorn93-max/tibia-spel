@@ -3481,6 +3481,154 @@
 			}
 		]
 	},
+	"lunda_root": {
+		"speaker": "npc_urskog_guardian",
+		"emotion": "neutral",
+		"text": "Stanna, vandrare. Få hittar ända in till skogens hjärta — färre lämnar det igen. Jag är Lunda, väktarinna sedan innan Thais murar restes. Något ruttnar i urskogen, och jag är för rotad för att jaga det själv.",
+		"choices": [
+			{
+				"text": "Vad plågar skogens hjärta?",
+				"next": "lunda_lore"
+			},
+			{
+				"text": "Finns det något jag kan göra?",
+				"next": "lunda_q1_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_urskog_1"
+					}
+				]
+			},
+			{
+				"text": "Fantomerna är skövlade.",
+				"next": "lunda_q1_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_urskog_1",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_urskog_1"
+					}
+				]
+			},
+			{
+				"text": "Jag är redo att möta Välter.",
+				"next": "lunda_q2_offer",
+				"conditions": [
+					{
+						"type": "quest_completed",
+						"quest": "quest_urskog_1"
+					},
+					{
+						"type": "quest_available",
+						"quest": "quest_urskog_2"
+					}
+				]
+			},
+			{
+				"text": "Urskogsvältaren har fallit.",
+				"next": "lunda_q2_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_urskog_2",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_urskog_2"
+					}
+				]
+			},
+			{
+				"text": "Farväl, väktarinna.",
+				"next": null
+			}
+		]
+	},
+	"lunda_lore": {
+		"speaker": "npc_urskog_guardian",
+		"emotion": "worried",
+		"text": "En förruttnelse kröp upp ur rötterna och drev de döda ur sin vila. Skogens egen väktare, Urskogsvältaren, har vridits av sveda och slår nu blint mot allt levande. Först måste de vandöda fantomerna rensas — de bär röt-veden vidare som gnistor i torrt gräs.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "lunda_root"
+			}
+		]
+	},
+	"lunda_q1_offer": {
+		"speaker": "npc_urskog_guardian",
+		"emotion": "neutral",
+		"text": "Då ber jag dig: skövla åtta fantomer som driver bland stammarna. Varje besegrad ande är en glödhärd mindre i röten. Gör det, så öppnar jag den sista stigen för dig.",
+		"choices": [
+			{
+				"text": "Det ska bli gjort.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_urskog_1"
+					}
+				]
+			},
+			{
+				"text": "Inte än.",
+				"next": "lunda_root"
+			}
+		]
+	},
+	"lunda_q1_report": {
+		"speaker": "npc_urskog_guardian",
+		"emotion": "happy",
+		"text": "Luften lättar redan — jag känner det i barken. Du har handlag och mod, vandrare. Men röten har en källa, och den slår nu med lövklädda nävar. Vila, samla kraft. Den verkliga prövningen väntar.",
+		"choices": [
+			{
+				"text": "Vad menar du?",
+				"next": "lunda_root"
+			}
+		]
+	},
+	"lunda_q2_offer": {
+		"speaker": "npc_urskog_guardian",
+		"emotion": "worried",
+		"text": "Urskogsvältaren — skogens egen väktare — är förlorad i sin vrede. Bara döden kan ge den frid nu. Möt den i hjärtats mitt och fäll den. Elden biter på dess murkna bark, men akta dig: den krossar inkräktare som torra kvistar.",
+		"choices": [
+			{
+				"text": "Jag fäller Välter och ger skogen ro.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_urskog_2"
+					}
+				]
+			},
+			{
+				"text": "Jag behöver rusta mig först.",
+				"next": "lunda_root"
+			}
+		]
+	},
+	"lunda_q2_report": {
+		"speaker": "npc_urskog_guardian",
+		"emotion": "happy",
+		"text": "Det är över. Jag känner hur röten viker och hur nya skott söker ljuset. Du gav skogens hjärta dess slag tillbaka. Tag detta — en knöl av levande idegranskärna. Bär den, så låter urskogen dina sår gro igen som ny bark.",
+		"choices": [
+			{
+				"text": "Tack, väktarinna.",
+				"next": null
+			}
+		]
+	},
 	"sunseeker_root": {
 		"speaker": "npc_sunseeker",
 		"emotion": "neutral",

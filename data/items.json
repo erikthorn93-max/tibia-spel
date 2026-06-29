@@ -3409,6 +3409,17 @@
 		"color": "#9fc7d4",
 		"desc": "Snidad ur tanden från Stormrevets största haj. Fiskemästare Silja band den åt dig — ett bevis på att du tämjt revets djup."
 	},
+	"urskog_amulett": {
+		"name": "Urskogens amulett",
+		"type": "armor",
+		"slot": "amulet",
+		"armor": 5,
+		"regen": 2,
+		"level_req": 40,
+		"value": 3200,
+		"color": "#3e6b2a",
+		"desc": "En levande knöl av idegranskärna som väktarinnan Lunda väckte ur skogens hjärta. Den andas svagt mot huden och låter bärarens sår gro igen som ny bark."
+	},
 	"kristallhjarta": {
 		"name": "Kristallhjärtat",
 		"type": "armor",

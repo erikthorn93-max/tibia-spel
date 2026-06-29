@@ -458,6 +458,24 @@
 			"length_scale": 1
 		}
 	},
+	"npc_urskog_guardian": {
+		"name": "Lunda, urskogens väktarinna",
+		"zone": "urskogens_hjarta",
+		"position": [
+			5,
+			11
+		],
+		"barks": [
+			"Skogens hjärta minns allt — även dina steg.",
+			"Lyssna … träden viskar om det som ruttnar inifrån.",
+			"Var varsam. Här är allt äldre än kungar."
+		],
+		"dialogue_root": "lunda_root",
+		"voice": {
+			"model": "en_US-amy-medium",
+			"length_scale": 1.08
+		}
+	},
 	"npc_sunseeker": {
 		"name": "Khaira Solsökare",
 		"zone": "glodoknen",
