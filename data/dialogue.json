@@ -6016,6 +6016,33 @@
 				"next": "npc_troll_captive_root_b2"
 			},
 			{
+				"text": "Jag fäller hövdingen och får ut dig.",
+				"next": "quest_rescue_tobbe_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_rescue_tobbe"
+					}
+				]
+			},
+			{
+				"text": "Hövdingen är fälld. Kom, vi går.",
+				"next": "quest_rescue_tobbe_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_rescue_tobbe",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_rescue_tobbe"
+					}
+				]
+			},
+			{
 				"text": "Farväl.",
 				"next": null
 			}
@@ -6057,6 +6084,33 @@
 				"next": "npc_temple_templar_root_b2"
 			},
 			{
+				"text": "Jag möter Ärkedemonen och bryter kultens makt.",
+				"next": "quest_free_vigdis_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_free_vigdis"
+					}
+				]
+			},
+			{
+				"text": "Ärkedemonen är besegrad. Du är fri.",
+				"next": "quest_free_vigdis_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_free_vigdis",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_free_vigdis"
+					}
+				]
+			},
+			{
 				"text": "Farväl.",
 				"next": null
 			}
@@ -6096,6 +6150,33 @@
 			{
 				"text": "Kan draken fällas?",
 				"next": "npc_dragon_hunter_root_b2"
+			},
+			{
+				"text": "Jag fäller Elddraken — för dina fem.",
+				"next": "quest_revenge_roderik_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_revenge_roderik"
+					}
+				]
+			},
+			{
+				"text": "Elddraken är död. Dina vänner är hämnade.",
+				"next": "quest_revenge_roderik_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_revenge_roderik",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_revenge_roderik"
+					}
+				]
 			},
 			{
 				"text": "Farväl.",
@@ -6263,6 +6344,102 @@
 			},
 			{
 				"text": "Farväl.",
+				"next": null
+			}
+		]
+	},
+	"quest_rescue_tobbe_offer": {
+		"speaker": "npc_troll_captive",
+		"emotion": "worried",
+		"text": "Skulle du? Stenfäder välsigne dig! Hövdingen sitter längst in — fäller du honom skingras flocken i panik, och då kan jag äntligen krypa ut ur den här vrån. Var bara snabb … jag vet inte hur många måltider de tänkt spara mig till.",
+		"choices": [
+			{
+				"text": "Håll ut. Jag återvänder med hövdingens huvud.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_rescue_tobbe"
+					}
+				]
+			},
+			{
+				"text": "Inte än — jag måste rusta mig.",
+				"next": "npc_troll_captive_root"
+			}
+		]
+	},
+	"quest_rescue_tobbe_report": {
+		"speaker": "npc_troll_captive",
+		"emotion": "happy",
+		"text": "Du … du gjorde det. Jag hör inga vrål längre, bara min egen hjärtklappning. Tag den här pungen — allt jag har, och det är inte nog. Nu springer jag mot dagsljuset och ser mig aldrig om. Ölet i Thais står på mig, vän, resten av mitt liv!",
+		"choices": [
+			{
+				"text": "Lycka till där ute.",
+				"next": null
+			}
+		]
+	},
+	"quest_revenge_roderik_offer": {
+		"speaker": "npc_dragon_hunter",
+		"emotion": "worried",
+		"text": "Du menar det … jag ser det i din blick. Då ber jag dig om det jag inte längre förmår: gå in dit och släck den elden för gott. Möt Elddraken med köld och kallt stål, sikta mot buken när den reser sig. Gör det för fem goda själar som aldrig fick komma hem.",
+		"choices": [
+			{
+				"text": "Dina vänner ska hämnas. Det svär jag.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_revenge_roderik"
+					}
+				]
+			},
+			{
+				"text": "Jag är inte redo att möta draken än.",
+				"next": "npc_dragon_hunter_root"
+			}
+		]
+	},
+	"quest_revenge_roderik_report": {
+		"speaker": "npc_dragon_hunter",
+		"emotion": "happy",
+		"text": "Borta … äntligen borta. Jag känner hettan vika från mina drömmar för första gången sedan den natten. Tag detta — drakdräparlönen vi aldrig hann dela. Mina vänner kan vila nu, och jag kan gå hem. Tack, vandrare. Du bar en börda som var min.",
+		"choices": [
+			{
+				"text": "Lycka till där ute.",
+				"next": null
+			}
+		]
+	},
+	"quest_free_vigdis_offer": {
+		"speaker": "npc_temple_templar",
+		"emotion": "worried",
+		"text": "Må ljuset gå med dig då, modiga själ. Bryt förseglingen där den är som starkast — fäll Ärkedemonen själv, så slocknar kultens makt och deras band lossnar, även mina. Vanligt stål studsar mot dess hud; bär eld och en vass tro. Jag ber för dig med varje andetag jag har kvar.",
+		"choices": [
+			{
+				"text": "Behåll hoppet. Jag återvänder och befriar dig.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_free_vigdis"
+					}
+				]
+			},
+			{
+				"text": "Jag måste samla kraft först.",
+				"next": "npc_temple_templar_root"
+			}
+		]
+	},
+	"quest_free_vigdis_report": {
+		"speaker": "npc_temple_templar",
+		"emotion": "happy",
+		"text": "Bojorna … de faller av sig själva. Templet andas ut, och mörkret viker för första gången på sekel. Du gjorde vad en hel orden inte mäktade. Tag denna gärd ur altarets skatt — och min eviga tacksamhet. Ljuset står i skuld till dig i natt, vandrare.",
+		"choices": [
+			{
+				"text": "Lycka till där ute.",
 				"next": null
 			}
 		]
