@@ -818,6 +818,60 @@
 				]
 			},
 			{
+				"text": "Ghulkungen restes — men av vem?",
+				"next": "quest_lich_1_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_lich_1"
+					}
+				]
+			},
+			{
+				"text": "Här är dödsrullarna från nekromanterna.",
+				"next": "quest_lich_1_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_lich_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_lich_1"
+					}
+				]
+			},
+			{
+				"text": "Lichen måste förgöras. Visa mig vägen.",
+				"next": "quest_lich_2_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_lich_2"
+					}
+				]
+			},
+			{
+				"text": "Lichen är förgjord. Kärnan är krossad.",
+				"next": "quest_lich_2_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_lich_2",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_lich_2"
+					}
+				]
+			},
+			{
 				"text": "Goodbye.",
 				"next": null
 			}
@@ -6424,6 +6478,60 @@
 				"next": "npc_vampire_hunter_root_b2"
 			},
 			{
+				"text": "Hur kan jag hjälpa mot furstens hov?",
+				"next": "quest_vampire_1_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_vampire_1"
+					}
+				]
+			},
+			{
+				"text": "Hovet är tunnat. Här är vampyrstoftet.",
+				"next": "quest_vampire_1_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_vampire_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_vampire_1"
+					}
+				]
+			},
+			{
+				"text": "Visa mig furstens kammare — jag gör slut på honom.",
+				"next": "quest_vampire_2_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_vampire_2"
+					}
+				]
+			},
+			{
+				"text": "Vampyrherren är aska. Kryptan är fri.",
+				"next": "quest_vampire_2_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_vampire_2",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_vampire_2"
+					}
+				]
+			},
+			{
 				"text": "Farväl.",
 				"next": null
 			}
@@ -6895,6 +7003,134 @@
 			{
 				"text": "Farväl.",
 				"next": null
+			}
+		]
+	},
+	"quest_vampire_1_offer": {
+		"speaker": "npc_vampire_hunter",
+		"emotion": "worried",
+		"text": "Furstens barn väller upp ur skuggorna fortare än jag kan bränna dem. Tunna ut hovet åt mig, och bär hem deras stoft — vigt och strött i en cirkel avslöjar det var fursten själv vilar. Utan den riten famlar vi blint i mörkret tills hungern tar oss.",
+		"choices": [
+			{
+				"text": "Jag tunnar ut hovet och bär hem stoftet.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_vampire_1"
+					}
+				]
+			},
+			{
+				"text": "Jag måste rusta mig mot deras törst först.",
+				"next": "npc_vampire_hunter_root"
+			}
+		]
+	},
+	"quest_vampire_1_report": {
+		"speaker": "npc_vampire_hunter",
+		"emotion": "happy",
+		"text": "Låt mig strö det … där. Ser du hur stoftet driver mot östra valvet trots att ingen vind rör sig? Det pekar mot hans kammare. Furstens vila är inte längre dold för oss. Vila nu och vässa ditt stål — den verkliga jakten börjar vid nästa gryning vi inte ser här nere.",
+		"choices": [
+			{
+				"text": "Tack.",
+				"next": "npc_vampire_hunter_root"
+			}
+		]
+	},
+	"quest_vampire_2_offer": {
+		"speaker": "npc_vampire_hunter",
+		"emotion": "worried",
+		"text": "Östra valvet, dit stoftet pekade. Där vilar Vampyrherren i sin kista av svart sten. Han läker av varje sår han slår, så bär eld och en vass tro — bränn honom snabbare än han hinner sluka dig. Faller fursten faller hela hovet med honom. Gå, och låt gryningen äntligen nå denna krypta.",
+		"choices": [
+			{
+				"text": "Furstens natt tar slut i natt.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_vampire_2"
+					}
+				]
+			},
+			{
+				"text": "En sådan strid kräver att jag är redo.",
+				"next": "npc_vampire_hunter_root"
+			}
+		]
+	},
+	"quest_vampire_2_report": {
+		"speaker": "npc_vampire_hunter",
+		"emotion": "happy",
+		"text": "Jag känner det — kylan viker, och för första gången på år hör jag min egen puls utan att frukta den. Du gjorde vad en hel orden inte mäktade. Tag min signet, jägare; den har följt mitt skrå genom sju släkten av mörkerjakt. Bär den, så biter ditt stål vassare där ondskan är som tjockast. Ljuset står i skuld till dig.",
+		"choices": [
+			{
+				"text": "Tack.",
+				"next": "npc_vampire_hunter_root"
+			}
+		]
+	},
+	"quest_lich_1_offer": {
+		"speaker": "npc_scholar",
+		"emotion": "worried",
+		"text": "Jag har grubblat på det sedan du fällde honom. En ghulkung reser sig inte själv — någon drog i trådarna, och spåren leder till Demontemplet. Nekromanter samlas där och mässar över de döda. Tysta dem och bär hem deras dödsrullar, så läser jag vilken ritual som väckte kungen — och vem som höll pennan.",
+		"choices": [
+			{
+				"text": "Jag hämtar dödsrullarna.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_lich_1"
+					}
+				]
+			},
+			{
+				"text": "Senare — det här kräver förberedelse.",
+				"next": "scholar_root"
+			}
+		]
+	},
+	"quest_lich_1_report": {
+		"speaker": "npc_scholar",
+		"emotion": "happy",
+		"text": "Låt mig se … å, vid alla heliga. Det här är ingen vanlig svartkonst. Mästaren bakom dem har gått längre än döden själv — bundit sin själ i en fästekärna och rest sig som en Lich, deathless och beräknande. Ghulkungen var bara hans handske. Så länge hans kärna är hel reser han de döda om och om igen. Vi måste krossa honom — och den.",
+		"choices": [
+			{
+				"text": "Tack.",
+				"next": "scholar_root"
+			}
+		]
+	},
+	"quest_lich_2_offer": {
+		"speaker": "npc_scholar",
+		"emotion": "worried",
+		"text": "Längst in i templet, där mörkret är som tätast, tronar Lichen vid sin fästekärna. Krossa honom — men minns: så länge kärnan är hel reser han sig igen ur sin egen aska. Bär helig eld och slå mot bådadera. Lyckas du bryts kedjan av odöd som plågat kryptorna sedan Ghulkungens dagar. Det här avslutar allt vi börjat.",
+		"choices": [
+			{
+				"text": "Jag bryter lichens förbannelse.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_lich_2"
+					}
+				]
+			},
+			{
+				"text": "Jag samlar kraft först.",
+				"next": "scholar_root"
+			}
+		]
+	},
+	"quest_lich_2_report": {
+		"speaker": "npc_scholar",
+		"emotion": "happy",
+		"text": "Då är det äntligen över. De döda ligger stilla i sina gravar, och kryptornas viskningar har tystnat. Du nystade upp en tråd som började med en enda ghul och slutade vid dödens egen tröskel. Tag detta — en splittra av hans krossade kärna, slipad till en sten. Själssten, kallar de gamla den; den värnar din ande där andra faller. Tack, vän. Vila nu. Du har förtjänat det.",
+		"choices": [
+			{
+				"text": "Tack.",
+				"next": "scholar_root"
 			}
 		]
 	}

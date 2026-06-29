@@ -3452,5 +3452,27 @@
 		"value": 4200,
 		"level_req": 30,
 		"color": "#ff5522"
+	},
+	"vampyrjagarens_signet": {
+		"name": "Vampyrjägarens signet",
+		"type": "armor",
+		"slot": "ring",
+		"armor": 2,
+		"atk_bonus": 3,
+		"crit_chance": 0.05,
+		"value": 3800,
+		"level_req": 28,
+		"color": "#7a1f3a"
+	},
+	"sjalssten": {
+		"name": "Själssten",
+		"type": "armor",
+		"slot": "amulet",
+		"armor": 5,
+		"def_bonus": 3,
+		"regen": 1,
+		"value": 4000,
+		"level_req": 30,
+		"color": "#6a4a8a"
 	}
 }

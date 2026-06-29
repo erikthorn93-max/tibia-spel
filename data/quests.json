@@ -2518,5 +2518,131 @@
 			}
 		},
 		"difficulty": "Mästare"
+	},
+	"quest_vampire_1": {
+		"name": "Den blodlösa vakten",
+		"giver": "npc_vampire_hunter",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Vampyr",
+				"count": 8,
+				"hint": "Bränn 8 Vampyrer som vaktar furstens vila."
+			},
+			{
+				"type": "collect",
+				"item": "vampire_dust",
+				"count": 5,
+				"hint": "Samla 5 mått Vampyrstoft åt Cornelius vigningsrit."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_vampire_hunter",
+				"hint": "Bär stoftet till Cornelius vid porten."
+			}
+		],
+		"rewards": {
+			"xp": 6000,
+			"gold": 2500,
+			"items": {
+				"great_health_potion": 2
+			}
+		},
+		"difficulty": "Svår"
+	},
+	"quest_vampire_2": {
+		"name": "Vampyrherrens fall",
+		"giver": "npc_vampire_hunter",
+		"requires": [
+			"quest_vampire_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "VampyrHerre",
+				"count": 1,
+				"hint": "Stig in i östra valvet och gör slut på Vampyrherren."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_vampire_hunter",
+				"hint": "Bär budet om furstens fall till Cornelius."
+			}
+		],
+		"rewards": {
+			"xp": 14000,
+			"gold": 6000,
+			"charm_points": 45,
+			"items": {
+				"vampyrjagarens_signet": 1,
+				"great_health_potion": 4
+			}
+		},
+		"difficulty": "Mästare"
+	},
+	"quest_lich_1": {
+		"name": "Den som reste kungen",
+		"giver": "npc_scholar",
+		"requires": [
+			"quest_ghoul_king"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Nekromant",
+				"count": 6,
+				"hint": "Tysta 6 Nekromanter inne i Demontemplet."
+			},
+			{
+				"type": "collect",
+				"item": "death_scroll",
+				"count": 4,
+				"hint": "Samla 4 Dödsrullar ur deras händer."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_scholar",
+				"hint": "Bär dödsrullarna till Maelis i depån."
+			}
+		],
+		"rewards": {
+			"xp": 6500,
+			"gold": 2800,
+			"items": {
+				"great_mana_potion": 3
+			}
+		},
+		"difficulty": "Svår"
+	},
+	"quest_lich_2": {
+		"name": "Lichens förbannelse",
+		"giver": "npc_scholar",
+		"requires": [
+			"quest_lich_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Lich",
+				"count": 1,
+				"hint": "Stig in i Demontemplets innersta och förgör Lichen vid dess fästekärna."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_scholar",
+				"hint": "Bär budet om Lichens fall till Maelis."
+			}
+		],
+		"rewards": {
+			"xp": 15000,
+			"gold": 6500,
+			"charm_points": 48,
+			"items": {
+				"sjalssten": 1,
+				"great_mana_potion": 3
+			}
+		},
+		"difficulty": "Mästare"
 	}
 }
