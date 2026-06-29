@@ -3497,7 +3497,7 @@
 		"color": "#4a5a32",
 		"ability": {
 			"type": "poison",
-			"chance": 0.30,
+			"chance": 0.3,
 			"duration": 7,
 			"tick_dmg": 9
 		}
@@ -3542,5 +3542,32 @@
 		"value": 1700,
 		"level_req": 20,
 		"color": "#d9a72e"
+	},
+	"solkungens_diadem": {
+		"name": "Solkungens diadem",
+		"type": "armor",
+		"slot": "amulet",
+		"armor": 7,
+		"atk_bonus": 3,
+		"crit_chance": 0.08,
+		"regen": 2,
+		"level_req": 37,
+		"value": 4500,
+		"color": "#ffce40",
+		"desc": "Diademet Akh-Mortis bar i graven, smitt av smält guld kring en solskärva som aldrig svalnar. Aurelius läste kungens namn ur väggen och väckte honom — den som fällde honom bär nu solens vrede vid sin egen hals."
+	},
+	"dimvaktarens_bage": {
+		"name": "Dimväktarens båge",
+		"type": "weapon",
+		"slot": "weapon",
+		"skill": "distance",
+		"atk": 30,
+		"range": 5,
+		"ammo": "wooden_arrow",
+		"crit_chance": 0.07,
+		"level_req": 22,
+		"value": 2800,
+		"color": "#3f6b3a",
+		"desc": "Den förste skogsväktarens båge, skuren ur ett träd som stod innan Dimmoren fick sitt namn. Banditerna slet den ur hans gravröse; Eldrin tog tillbaka den och lade den i händerna på den som lät hans bröder vila. Strängen sjunger lågt när dimman tätnar."
 	}
 }

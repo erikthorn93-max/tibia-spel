@@ -3223,5 +3223,209 @@
 			}
 		},
 		"difficulty": "Mästare"
+	},
+	"quest_tomb_1": {
+		"name": "Stenens viskningar",
+		"giver": "npc_tomb_seeker",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Sandvålnad",
+				"count": 10,
+				"hint": "Skingra 10 Sandvålnader — deras vandring suddar Aurelius inskriptioner."
+			},
+			{
+				"type": "collect",
+				"item": "tomb_dust",
+				"count": 6,
+				"hint": "Samla 6 Gravdamm; Aurelius läser de dödas ord ur dammet de lämnar."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_tomb_seeker",
+				"hint": "Bär gravdammet till Aurelius i Solgraven."
+			}
+		],
+		"rewards": {
+			"xp": 1500,
+			"gold": 700,
+			"items": {
+				"health_potion": 5
+			}
+		},
+		"difficulty": "Medel"
+	},
+	"quest_tomb_2": {
+		"name": "Kungens namn",
+		"giver": "npc_tomb_seeker",
+		"requires": [
+			"quest_tomb_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Gravväktare",
+				"count": 10,
+				"hint": "Fäll 10 Gravväktare som murat in den förseglade kammaren."
+			},
+			{
+				"type": "collect",
+				"item": "ancient_coin",
+				"count": 5,
+				"hint": "Bärga 5 Forntida mynt — varje bär en glyf ur solkungens namn."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_tomb_seeker",
+				"hint": "Visa mynten för Aurelius så han kan tyda namnet."
+			}
+		],
+		"rewards": {
+			"xp": 2800,
+			"gold": 1400,
+			"items": {
+				"great_health_potion": 3
+			},
+			"skill_xp": {
+				"slayer": 800
+			}
+		},
+		"difficulty": "Svår"
+	},
+	"quest_tomb_3": {
+		"name": "Solkungens vrede",
+		"giver": "npc_tomb_seeker",
+		"requires": [
+			"quest_tomb_2"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Solkonungen Akh-Mortis",
+				"count": 1,
+				"hint": "Namnet väckte Solkonungen Akh-Mortis. Fäll den odöde solkungen vid hans sarkofag."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_tomb_seeker",
+				"hint": "Återvänd till Aurelius — graven är äntligen tyst."
+			}
+		],
+		"rewards": {
+			"xp": 5500,
+			"gold": 2800,
+			"charm_points": 34,
+			"items": {
+				"solkungens_diadem": 1,
+				"great_health_potion": 4
+			}
+		},
+		"difficulty": "Mästare"
+	},
+	"quest_dimm_1": {
+		"name": "Dimmans rovdjur",
+		"giver": "npc_forestwarden",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Skogsvargen",
+				"count": 10,
+				"hint": "Rötan har gjort Skogsvargenarna rabiata — tunna ut 10 av dem som jagar de flyende djuren."
+			},
+			{
+				"type": "collect",
+				"item": "wolf_pelt",
+				"count": 6,
+				"hint": "Bärga 6 vargskinn; Eldrin läser hur djupt rötan nått i hårens färg."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_forestwarden",
+				"hint": "Bär skinnen till Eldrin vid Dimmorens kant."
+			}
+		],
+		"rewards": {
+			"xp": 1300,
+			"gold": 600,
+			"items": {
+				"health_potion": 5
+			}
+		},
+		"difficulty": "Medel"
+	},
+	"quest_dimm_2": {
+		"name": "De vanvördade gravarna",
+		"giver": "npc_forestwarden",
+		"requires": [
+			"quest_dimm_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Skelettkrigare",
+				"count": 10,
+				"hint": "Rötan väcker de gamla väktarna ur deras rösen — lägg 10 Skelettkrigare till ro igen."
+			},
+			{
+				"type": "collect",
+				"item": "bone_chips",
+				"count": 8,
+				"hint": "Samla 8 benflisor ur de skändade gravarna så Eldrin kan begrava sina bröder på nytt."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_forestwarden",
+				"hint": "Återlämna benflisorna till Eldrin."
+			}
+		],
+		"rewards": {
+			"xp": 2600,
+			"gold": 1300,
+			"items": {
+				"great_health_potion": 3
+			},
+			"skill_xp": {
+				"slayer": 700
+			}
+		},
+		"difficulty": "Svår"
+	},
+	"quest_dimm_3": {
+		"name": "Den siste väktarens arv",
+		"giver": "npc_forestwarden",
+		"requires": [
+			"quest_dimm_2"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Bandit",
+				"count": 8,
+				"hint": "Banditerna plundrade den förste väktarens gravröse — fäll 8 Bandit och ta tillbaka det de stal."
+			},
+			{
+				"type": "kill",
+				"monster": "Fantom",
+				"count": 6,
+				"hint": "Sorgen ur den skändade graven har fött Fantomer som vaktar reliken — skingra 6 av dem."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_forestwarden",
+				"hint": "Bär budet om den återfunna reliken till Eldrin."
+			}
+		],
+		"rewards": {
+			"xp": 5200,
+			"gold": 2600,
+			"charm_points": 30,
+			"items": {
+				"dimvaktarens_bage": 1,
+				"great_health_potion": 4
+			}
+		},
+		"difficulty": "Mästare"
 	}
 }

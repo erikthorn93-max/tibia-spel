@@ -5244,6 +5244,87 @@
 				]
 			},
 			{
+				"text": "Kan jag göra dimmarna säkrare?",
+				"next": "quest_dimm_1_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_dimm_1"
+					}
+				]
+			},
+			{
+				"text": "Rovdjuren är tunnade — här är vargskinnen.",
+				"next": "quest_dimm_1_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_dimm_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_dimm_1"
+					}
+				]
+			},
+			{
+				"text": "Vad var det du sa om gravarna?",
+				"next": "quest_dimm_2_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_dimm_2"
+					}
+				]
+			},
+			{
+				"text": "Dina bröder vilar igen — här är benflisorna.",
+				"next": "quest_dimm_2_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_dimm_2",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_dimm_2"
+					}
+				]
+			},
+			{
+				"text": "Berätta om den förste väktaren.",
+				"next": "quest_dimm_3_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_dimm_3"
+					}
+				]
+			},
+			{
+				"text": "Reliken är återfunnen och vakten skingrad.",
+				"next": "quest_dimm_3_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_dimm_3",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_dimm_3"
+					}
+				]
+			},
+			{
 				"text": "Hej då.",
 				"next": null
 			}
@@ -6657,6 +6738,87 @@
 			{
 				"text": "Varför riskera detta?",
 				"next": "npc_tomb_seeker_root_b2"
+			},
+			{
+				"text": "Kan jag hjälpa dig läsa väggarna?",
+				"next": "quest_tomb_1_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_tomb_1"
+					}
+				]
+			},
+			{
+				"text": "Välnaderna är skingrade — här är gravdammet.",
+				"next": "quest_tomb_1_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_tomb_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_tomb_1"
+					}
+				]
+			},
+			{
+				"text": "Vad sa dammet om kungen?",
+				"next": "quest_tomb_2_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_tomb_2"
+					}
+				]
+			},
+			{
+				"text": "Väktarna föll — här är de forntida mynten.",
+				"next": "quest_tomb_2_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_tomb_2",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_tomb_2"
+					}
+				]
+			},
+			{
+				"text": "Du läste namnet — vad händer nu?",
+				"next": "quest_tomb_3_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_tomb_3"
+					}
+				]
+			},
+			{
+				"text": "Solkungen är fälld. Graven är tyst.",
+				"next": "quest_tomb_3_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_tomb_3",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_tomb_3"
+					}
+				]
 			},
 			{
 				"text": "Farväl.",
@@ -8238,6 +8400,198 @@
 			{
 				"text": "Tack, Branka.",
 				"next": "npc_marooned_mate_root"
+			}
+		]
+	},
+	"quest_tomb_1_offer": {
+		"speaker": "npc_tomb_seeker",
+		"emotion": "worried",
+		"text": "Du vill verkligen hjälpa? Då lyssna: väggarna talar, men Sandvälnaderna sveper genom kammaren och nöter bort skriften med varje varv de går. Skingra dem — och samla gravdammet de lämnar efter sig. I dammet ligger orden de slet loss ur stenen. Jag läser de döda bättre än de levande.",
+		"choices": [
+			{
+				"text": "Jag skingrar välnaderna och samlar dammet.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_tomb_1"
+					}
+				]
+			},
+			{
+				"text": "Senare — jag är inte rustad för odöda än.",
+				"next": "npc_tomb_seeker_root"
+			}
+		]
+	},
+	"quest_tomb_1_report": {
+		"speaker": "npc_tomb_seeker",
+		"emotion": "happy",
+		"text": "Låt mig sila det mellan fingrarna … ja. Hör du? Stavelser, gång på gång, samma fyra tecken. Det är en titel — \"solkonung\". Men hans namn är murat bakom Gravväktarna, ristat i mynt de bär som ögon. Utan namnet kan jag inte väcka eller binda honom. Och tro mig: det ena kräver det andra.",
+		"choices": [
+			{
+				"text": "Då hämtar jag mynten.",
+				"next": "npc_tomb_seeker_root"
+			}
+		]
+	},
+	"quest_tomb_2_offer": {
+		"speaker": "npc_tomb_seeker",
+		"emotion": "worried",
+		"text": "Dammet gav mig titeln, inte namnet. Gravväktarna bär forntida mynt i sina lindor — varje mynt en glyf ur kungens fulla namn. Fäll dem och bärga mynten. Läggs glyferna i rätt ordning kan jag äntligen läsa väggens sista rad. Men varna dig: ett namn uttalat i en grav är aldrig bara ett ord.",
+		"choices": [
+			{
+				"text": "Jag bärgar mynten ur väktarna.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_tomb_2"
+					}
+				]
+			},
+			{
+				"text": "Sådan vakt kräver förberedelse.",
+				"next": "npc_tomb_seeker_root"
+			}
+		]
+	},
+	"quest_tomb_2_report": {
+		"speaker": "npc_tomb_seeker",
+		"emotion": "worried",
+		"text": "Glyf för glyf … där. \"Akh-Mortis, krönt i guld och hat.\" Jag läser namnet högt utan att tänka — och stenen svarar. Hör du sanden rinna ur sarkofagen? Jag har inte bara läst kungens sanning. Jag har väckt honom. Han reser sig nu, balsamerad i smält guld och solens vrede. Jag kan inte ta tillbaka ordet. Vi måste fälla honom — annars kallar han hela graven till tjänst.",
+		"choices": [
+			{
+				"text": "Då möter vi honom.",
+				"next": "npc_tomb_seeker_root"
+			}
+		]
+	},
+	"quest_tomb_3_offer": {
+		"speaker": "npc_tomb_seeker",
+		"emotion": "worried",
+		"text": "Akh-Mortis står redan vid sin sarkofag, och guldet i hans ådror lyser som ugnsglöd. Jag är gravforskare, ingen krigare — min plats är bakom dig, med pennan, medan du håller honom. Bryt solkungen, så tystnar graven för gott. Faller du … blir vi båda en rad till i hans väggar.",
+		"choices": [
+			{
+				"text": "Håll dig bakom mig — jag fäller honom.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_tomb_3"
+					}
+				]
+			},
+			{
+				"text": "Ge mig en stund att rusta mig.",
+				"next": "npc_tomb_seeker_root"
+			}
+		]
+	},
+	"quest_tomb_3_report": {
+		"speaker": "npc_tomb_seeker",
+		"emotion": "happy",
+		"text": "Det är över. Guldet svalnar i hans ådror och väggarna … de andas ut. Tusen år av lögner, äntligen lästa och äntligen lagda till ro. Ta detta — Solkungens diadem, solskärvan i dess mitt brinner ännu. Du väckte hans vrede med mitt ord; bär den nu rättare än han gjorde. Och nästa grav jag läser — den läser jag tystare.",
+		"choices": [
+			{
+				"text": "Vila i frid, Aurelius gjorde sitt.",
+				"next": "npc_tomb_seeker_root"
+			}
+		]
+	},
+	"quest_dimm_1_offer": {
+		"speaker": "npc_forestwarden",
+		"emotion": "worried",
+		"text": "Du vill hjälpa de levande, inte bara jaga det döda? Då hör: rötan kryper in i de vanliga djuren först. Skogsvargarna har blivit rabiata och river allt som flyr undan dimman — även de djur jag svurit att skydda. Tunna ut dem. Och bärga skinnen åt mig; färgen på håret säger hur djupt förfallet redan nått.",
+		"choices": [
+			{
+				"text": "Jag gör vägen säker och hämtar skinnen.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_dimm_1"
+					}
+				]
+			},
+			{
+				"text": "Inte nu.",
+				"next": "forestwarden_root"
+			}
+		]
+	},
+	"quest_dimm_1_report": {
+		"speaker": "npc_forestwarden",
+		"emotion": "neutral",
+		"text": "Låt mig se … grått ända in till roten. Värre än jag fruktade. Tack — djuren kan andas igen ett tag. Men det här bekymrar mig mer: rötan väcker inte bara de levande. Den rör vid de döda med. Mina företrädare ligger i rösen härinne, väktare som föll före mig. Och de börjar resa sig.",
+		"choices": [
+			{
+				"text": "Dina företrädare?",
+				"next": "forestwarden_root"
+			}
+		]
+	},
+	"quest_dimm_2_offer": {
+		"speaker": "npc_forestwarden",
+		"emotion": "worried",
+		"text": "De gamla väktarna begravdes där de föll, med vapen och allt, så skogen skulle minnas dem. Nu drar rötan upp dem ur jorden som skelettkrigare — de vandrar utan att veta vad de en gång vaktade. Lägg dem till ro igen. Och samla benflisorna ur de uppbrutna rösena; jag kan inte låta mina bröder ligga skändade i leran.",
+		"choices": [
+			{
+				"text": "Jag lägger dem till ro och samlar benen.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_dimm_2"
+					}
+				]
+			},
+			{
+				"text": "Sådant kräver mod.",
+				"next": "forestwarden_root"
+			}
+		]
+	},
+	"quest_dimm_2_report": {
+		"speaker": "npc_forestwarden",
+		"emotion": "happy",
+		"text": "Jag begraver dem på nytt i kväll, djupare den här gången, med rätt ord. De har förtjänat sin vila. … Men ett röse återstår, det äldsta — den förste väktarens. Det fann jag tomt. Banditerna kom dit före rötan och plundrade det. Hans båge, hans märke, allt borta. Det finns saker man inte stjäl ur en grav.",
+		"choices": [
+			{
+				"text": "Vad var det de tog?",
+				"next": "forestwarden_root"
+			}
+		]
+	},
+	"quest_dimm_3_offer": {
+		"speaker": "npc_forestwarden",
+		"emotion": "worried",
+		"text": "Den förste väktaren skar sin båge ur ett träd som stod innan Dimmoren ens hade ett namn. Den lades i hans grav för att skogen skulle minnas. Banditerna bär den nu som byte i sitt läger — och kring den skändade graven har sorgen själv fött fantomer som inte låter någon nalkas. Fäll banditerna, skingra fantomerna, och för bågen åter till ljuset. Den hör inte hemma i tjuvhänder.",
+		"choices": [
+			{
+				"text": "Jag tar tillbaka bågen.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_dimm_3"
+					}
+				]
+			},
+			{
+				"text": "Ge mig en stund att rusta mig.",
+				"next": "forestwarden_root"
+			}
+		]
+	},
+	"quest_dimm_3_report": {
+		"speaker": "npc_forestwarden",
+		"emotion": "happy",
+		"text": "Du har den … efter allt detta. Känn hur strängen sjunger — den minns. Jag är den siste väktaren, och när jag faller finns ingen att lägga i mitt röse. Så ta du den. Bättre att den förste väktarens båge vandrar med någon som hedrar de döda än att den ruttnar med mig i dimman. Bär den väl. Skogen ser dig nu.",
+		"choices": [
+			{
+				"text": "Tack, Eldrin. Den ska hedras.",
+				"next": "forestwarden_root"
 			}
 		]
 	}
