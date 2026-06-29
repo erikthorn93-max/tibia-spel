@@ -2387,5 +2387,136 @@
 			}
 		},
 		"difficulty": "Mästare"
+	},
+	"quest_volcano_1": {
+		"name": "Askans omen",
+		"giver": "npc_volcano_smith",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Askhök",
+				"count": 8,
+				"hint": "Skjut ner 8 Askhökar som cirklar tätt över kratern."
+			},
+			{
+				"type": "kill",
+				"monster": "Glödmask",
+				"count": 6,
+				"hint": "Krossa 6 Glödmaskar som bryter upp ur den heta stenen."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_volcano_smith",
+				"hint": "Återvänd till Mara vid kraterns kant."
+			}
+		],
+		"rewards": {
+			"xp": 1800,
+			"gold": 700,
+			"items": {
+				"health_potion": 3
+			}
+		},
+		"difficulty": "Medel"
+	},
+	"quest_volcano_2": {
+		"name": "Glödande ådror",
+		"giver": "npc_volcano_smith",
+		"requires": [
+			"quest_volcano_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Lavavarelse",
+				"count": 10,
+				"hint": "Släck 10 Lavavarelser som vällter fram ur de glödande ådrorna."
+			},
+			{
+				"type": "collect",
+				"item": "lava_shard",
+				"count": 6,
+				"hint": "Samla 6 Lavaskärvor — Mara läser hettan ur dem."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_volcano_smith",
+				"hint": "Bär skärvorna till Mara."
+			}
+		],
+		"rewards": {
+			"xp": 2600,
+			"gold": 1100,
+			"items": {
+				"great_health_potion": 2
+			}
+		},
+		"difficulty": "Svår"
+	},
+	"quest_volcano_3": {
+		"name": "Rök ur djupet",
+		"giver": "npc_volcano_smith",
+		"requires": [
+			"quest_volcano_2"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Sotdemon",
+				"count": 7,
+				"hint": "Skingra 7 Sotdemoner som väller upp ur de djupa schakten."
+			},
+			{
+				"type": "collect",
+				"item": "ash_feather",
+				"count": 5,
+				"hint": "Samla 5 Askfjädrar ur röken."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_volcano_smith",
+				"hint": "Återvänd till Mara med det du funnit."
+			}
+		],
+		"rewards": {
+			"xp": 4200,
+			"gold": 1800,
+			"charm_points": 20,
+			"items": {
+				"great_health_potion": 3
+			}
+		},
+		"difficulty": "Svår"
+	},
+	"quest_volcano_4": {
+		"name": "Smältkonungens fall",
+		"giver": "npc_volcano_smith",
+		"requires": [
+			"quest_volcano_3"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Smältkonungen",
+				"count": 1,
+				"hint": "Stig ner i kraterns hjärta och fäll Smältkonungen innan han reser sig helt."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_volcano_smith",
+				"hint": "Bär budet om kungens fall till Mara."
+			}
+		],
+		"rewards": {
+			"xp": 16000,
+			"gold": 7000,
+			"charm_points": 50,
+			"items": {
+				"smaltkonungens_hjarta": 1,
+				"great_health_potion": 4
+			}
+		},
+		"difficulty": "Mästare"
 	}
 }

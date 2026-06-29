@@ -924,5 +924,23 @@
 			"model": "en_GB-alan-medium",
 			"length_scale": 1.05
 		}
+	},
+	"npc_volcano_smith": {
+		"name": "Mara Glödsmed",
+		"zone": "volcano",
+		"position": [
+			2,
+			17
+		],
+		"barks": [
+			"Hör du? Berget andas tyngre för var dag.",
+			"Sådan glöd … man kan smida sagor i den.",
+			"Stå inte still på het sten, vandrare."
+		],
+		"dialogue_root": "volcano_smith_root",
+		"voice": {
+			"model": "en_US-amy-medium",
+			"length_scale": 1.02
+		}
 	}
 }

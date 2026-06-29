@@ -3441,5 +3441,16 @@
 		"value": 1200,
 		"color": "#8a6f3a",
 		"desc": "Black Berts sigillring — märket som öppnade dörrar i Thais undre värld. Jack Springer gav dig den när cellen äntligen slog upp."
+	},
+	"smaltkonungens_hjarta": {
+		"name": "Smältkonungens hjärta",
+		"type": "armor",
+		"slot": "amulet",
+		"armor": 6,
+		"atk_bonus": 4,
+		"regen": 1,
+		"value": 4200,
+		"level_req": 30,
+		"color": "#ff5522"
 	}
 }

@@ -6620,5 +6620,282 @@
 				"next": null
 			}
 		]
+	},
+	"volcano_smith_who": {
+		"speaker": "npc_volcano_smith",
+		"emotion": "neutral",
+		"text": "Smed från Thais, men ingen vanlig. Jag jagar den levande glöden — malm som bara föds i en vulkans hjärta. En klinga härdad i sådan eld går aldrig av. Men jag kom efter mer än jag anade: berget vaknar, och jag behöver en arm som tål hettan.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "volcano_smith_root"
+			}
+		]
+	},
+	"volcano_smith_omen": {
+		"speaker": "npc_volcano_smith",
+		"emotion": "worried",
+		"text": "Kratern har sovit i sekler, men nu pulserar lavan som ett hjärta. Gammalt folk talade om en härskare under stenen — Smältkonungen — som stelnade när elden svalnade. Svalnar den inte längre … då reser han sig, och hela kratern svämmar över. Vi måste förstå vad som väcker honom innan det är för sent.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "volcano_smith_root"
+			}
+		]
+	},
+	"quest_volcano_1_offer": {
+		"speaker": "npc_volcano_smith",
+		"emotion": "worried",
+		"text": "Se upp mot himlen — Askhökarna samlas i flock, och marken kräks ur sig Glödmaskar. Djuren känner det före oss: något rör sig därnere. Tunna ut dem så jag får arbetsro, och håll ögonen öppna efter tecken på vad som driver dem ur sina hålor.",
+		"choices": [
+			{
+				"text": "Jag rensar himlen och stenen.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_volcano_1"
+					}
+				]
+			},
+			{
+				"text": "Senare — hettan tar på mig.",
+				"next": "volcano_smith_root"
+			}
+		]
+	},
+	"quest_volcano_1_report": {
+		"speaker": "npc_volcano_smith",
+		"emotion": "happy",
+		"text": "Bra gjort — luften är klarare redan. Men det här var bara ytan som skälver. Jag la örat mot stenen medan du var borta, och lavan därnere rör sig fel. Vila lite. Vi har just börjat förstå vad kratern bär på.",
+		"choices": [
+			{
+				"text": "Tack, Mara.",
+				"next": "volcano_smith_root"
+			}
+		]
+	},
+	"quest_volcano_2_offer": {
+		"speaker": "npc_volcano_smith",
+		"emotion": "worried",
+		"text": "Ådrorna svämmar över av Lavavarelser — kroppar av levande sten, och de blir fler för var timme. Släck så många du kan och bär hem deras skärvor. I glödens färg läser jag hur djupt hettan stiger. Något matar elden underifrån, och jag vill veta hur nära det är.",
+		"choices": [
+			{
+				"text": "Jag hämtar skärvorna ur elden.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_volcano_2"
+					}
+				]
+			},
+			{
+				"text": "Jag behöver rusta mig mot lågorna först.",
+				"next": "volcano_smith_root"
+			}
+		]
+	},
+	"quest_volcano_2_report": {
+		"speaker": "npc_volcano_smith",
+		"emotion": "happy",
+		"text": "Låt mig se … nej. Glöden i dem brinner i fel ton, en färg jag bara läst om i de gamla smedernas böcker. Det är ingen naturlig hetta. En vilja rör sig under oss, vandrare — och den vaknar. Snart vet vi vems.",
+		"choices": [
+			{
+				"text": "Tack, Mara.",
+				"next": "volcano_smith_root"
+			}
+		]
+	},
+	"quest_volcano_3_offer": {
+		"speaker": "npc_volcano_smith",
+		"emotion": "worried",
+		"text": "Nu vällter Sotdemoner upp ur de djupaste schakten, och de kommer inte av sig själva — något driver dem framför sig som rök för en eld. Skingra dem och bär hem askfjädrarna de lämnar. Jag tror vi närmar oss källan nu, och jag fruktar att jag redan vet dess namn.",
+		"choices": [
+			{
+				"text": "Jag går in i röken.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_volcano_3"
+					}
+				]
+			},
+			{
+				"text": "Inte än — jag samlar kraft.",
+				"next": "volcano_smith_root"
+			}
+		]
+	},
+	"quest_volcano_3_report": {
+		"speaker": "npc_volcano_smith",
+		"emotion": "happy",
+		"text": "Det är som jag fruktade. Askan bär hans signum — Smältkonungen rör sig i kraterns hjärta, och schakten öppnar sig framför honom. Reser han sig helt brister berget och Thais brinner. Det finns bara en väg kvar nu, och den leder rakt ner i elden.",
+		"choices": [
+			{
+				"text": "Tack, Mara.",
+				"next": "volcano_smith_root"
+			}
+		]
+	},
+	"quest_volcano_4_offer": {
+		"speaker": "npc_volcano_smith",
+		"emotion": "worried",
+		"text": "Då ber jag dig om det ingen smed borde be: gå dit jag inte kan och släck en kung av eld. Han är stelnad ännu, halvt sten — slå hårt medan han vaknar, för väcks han helt smälter stål och mod likafullt. Lyckas du, svalnar kratern igen — och jag har en sista eld kvar att tända för din skull.",
+		"choices": [
+			{
+				"text": "Berget ska sova igen. Det svär jag.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_volcano_4"
+					}
+				]
+			},
+			{
+				"text": "En sådan strid kräver att jag är redo.",
+				"next": "volcano_smith_root"
+			}
+		]
+	},
+	"quest_volcano_4_report": {
+		"speaker": "npc_volcano_smith",
+		"emotion": "happy",
+		"text": "Jag känner det genom fotsulorna — hettan sjunker, berget andas lugnt. Du gjorde vad ingen orden mäktade. Och se här: ur kungens ännu glödande kärna har jag smitt detta åt dig. Bär Smältkonungens hjärta vid din hals — det slår med kraterns egen glöd och driver din arm snabbare än stål borde tillåta. Gå nu, drakdräpare. Sägnerna ska minnas ditt namn.",
+		"choices": [
+			{
+				"text": "Tack, Mara.",
+				"next": "volcano_smith_root"
+			}
+		]
+	},
+	"volcano_smith_root": {
+		"speaker": "npc_volcano_smith",
+		"emotion": "neutral",
+		"text": "Akta var du sätter foten — stenen lever här. Jag är Mara, smed och dåre nog att söka mig till en vulkans hjärta. Men berget vaknar under mina händer, och jag är rädd att jag väckt något jag inte kan släcka ensam.",
+		"choices": [
+			{
+				"text": "Vem är du?",
+				"next": "volcano_smith_who"
+			},
+			{
+				"text": "Vad är på väg att hända här?",
+				"next": "volcano_smith_omen"
+			},
+			{
+				"text": "Vad oroar dig vid kratern?",
+				"next": "quest_volcano_1_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_volcano_1"
+					}
+				]
+			},
+			{
+				"text": "Hökarna och maskarna är nedtagna.",
+				"next": "quest_volcano_1_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_volcano_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_volcano_1"
+					}
+				]
+			},
+			{
+				"text": "Vad säger lavan dig nu?",
+				"next": "quest_volcano_2_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_volcano_2"
+					}
+				]
+			},
+			{
+				"text": "Här är lavaskärvorna du bad om.",
+				"next": "quest_volcano_2_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_volcano_2",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_volcano_2"
+					}
+				]
+			},
+			{
+				"text": "Röken tätnar — vad betyder det?",
+				"next": "quest_volcano_3_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_volcano_3"
+					}
+				]
+			},
+			{
+				"text": "Demonerna är skingrade. Här är fjädrarna.",
+				"next": "quest_volcano_3_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_volcano_3",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_volcano_3"
+					}
+				]
+			},
+			{
+				"text": "Jag stiger ner och fäller Smältkonungen.",
+				"next": "quest_volcano_4_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_volcano_4"
+					}
+				]
+			},
+			{
+				"text": "Smältkonungen har falnat. Kratern sover.",
+				"next": "quest_volcano_4_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_volcano_4",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_volcano_4"
+					}
+				]
+			},
+			{
+				"text": "Farväl.",
+				"next": null
+			}
+		]
 	}
 }
