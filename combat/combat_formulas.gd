@@ -99,6 +99,15 @@ static func spec_ready(energy: float) -> bool:
 static func spec_damage(base_dmg: float, mult := SPEC_MULTIPLIER) -> float:
 	return base_dmg * mult
 
+## True om ett monster (givet dess MonsterDB-data) står emot gift. Immunt om
+## datan har poison_immune=true (odöda, elementarer, konstruktioner) ELLER om
+## varelsen själv utsöndrar gift — en giftpadda kan inte förgiftas av sitt eget
+## gift. Ren funktion (datan injiceras) → testbar.
+static func monster_poison_immune(data: Dictionary) -> bool:
+	if bool(data.get("poison_immune", false)):
+		return true
+	return String(data.get("ability", {}).get("type", "")) == "poison"
+
 ## Avgör om ett vapens giftbeläggning proccar denna träff, givet ett slumptal i
 ## [0,1). Giftvapen (venom_blade m.fl.) bär ability {type:poison, chance,
 ## duration, tick_dmg}. Returnerar {apply:true, duration, tick_dmg} när giftet

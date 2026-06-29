@@ -142,7 +142,8 @@
 			"death": 0.3,
 			"fire": 1.4
 		},
-		"desc": "Kvarlevorna av en sedan länge fallen krigare, väckt av grottans gamla illvilja. Faller lika lätt som det en gång reste sig."
+		"desc": "Kvarlevorna av en sedan länge fallen krigare, väckt av grottans gamla illvilja. Faller lika lätt som det en gång reste sig.",
+		"poison_immune": true
 	},
 	"Ghoul": {
 		"hp": 95,
@@ -200,7 +201,8 @@
 			"death": 0.3,
 			"fire": 1.4
 		},
-		"desc": "En människoätare som frossar på lik i mörkret. Lukten avslöjar den långt innan klorna gör det."
+		"desc": "En människoätare som frossar på lik i mörkret. Lukten avslöjar den långt innan klorna gör det.",
+		"poison_immune": true
 	},
 	"Jättespindel": {
 		"hp": 160,
@@ -309,7 +311,8 @@
 			"death": 0.3,
 			"fire": 1.3
 		},
-		"desc": "Ett skelett som mins sin svärdshand. Bär rostig rustning och en vrede som överlevt döden."
+		"desc": "Ett skelett som mins sin svärdshand. Bär rostig rustning och en vrede som överlevt döden.",
+		"poison_immune": true
 	},
 	"Fantom": {
 		"hp": 260,
@@ -367,7 +370,8 @@
 			"death": 0,
 			"energy": 1.4
 		},
-		"desc": "En rastlös ande bunden vid platsen där den dog. Vapen biter dåligt på det som redan är borta."
+		"desc": "En rastlös ande bunden vid platsen där den dog. Vapen biter dåligt på det som redan är borta.",
+		"poison_immune": true
 	},
 	"Giftpadda": {
 		"hp": 120,
@@ -524,7 +528,8 @@
 			"death": 0.3,
 			"fire": 1.3
 		},
-		"desc": "Härskaren över kryptans vandöda — en gång en furste, nu en krönt as. Den som fäller honom tystar hela grottans hunger."
+		"desc": "Härskaren över kryptans vandöda — en gång en furste, nu en krönt as. Den som fäller honom tystar hela grottans hunger.",
+		"poison_immune": true
 	},
 	"Strandkrabba": {
 		"hp": 60,
@@ -745,7 +750,8 @@
 			"death": 0.4,
 			"fire": 1.3
 		},
-		"desc": "En sjöman som havet tog och spottade tillbaka. Vandrar stranden, sökande efter ett skepp som aldrig kommer."
+		"desc": "En sjöman som havet tog och spottade tillbaka. Vandrar stranden, sökande efter ett skepp som aldrig kommer.",
+		"poison_immune": true
 	},
 	"Piratkapten Svartöga": {
 		"hp": 950,
@@ -996,7 +1002,8 @@
 			"death": 0.3,
 			"fire": 1.5
 		},
-		"desc": "En balsamerad död som vägrar vila. Dess lindor döljer förbannelser äldre än kungariket."
+		"desc": "En balsamerad död som vägrar vila. Dess lindor döljer förbannelser äldre än kungariket.",
+		"poison_immune": true
 	},
 	"Farao Khem-Ra": {
 		"hp": 1200,
@@ -1092,7 +1099,8 @@
 		"element_mod": {
 			"death": 0.2,
 			"fire": 1.4
-		}
+		},
+		"poison_immune": true
 	},
 	"Lavavarelse": {
 		"hp": 200,
@@ -1145,7 +1153,8 @@
 			"energy": 1.5,
 			"ice": 1.5
 		},
-		"desc": "En kropp av levande sten och glödande sprickor. Den lämnar brinnande fotspår var den går."
+		"desc": "En kropp av levande sten och glödande sprickor. Den lämnar brinnande fotspår var den går.",
+		"poison_immune": true
 	},
 	"Askhök": {
 		"hp": 120,
@@ -1277,7 +1286,8 @@
 			"energy": 1.4,
 			"ice": 1.4
 		},
-		"desc": "Vulkanens kärna gjuten till kung. Där han stiger fram smälter sten till sjöar och luften själv tar eld."
+		"desc": "Vulkanens kärna gjuten till kung. Där han stiger fram smälter sten till sjöar och luften själv tar eld.",
+		"poison_immune": true
 	},
 	"Istroll": {
 		"hp": 280,
@@ -1836,7 +1846,8 @@
 			"death": 1.5,
 			"ice": 1.4
 		},
-		"desc": "En mindre eldande sprungen ur kraterns djup. Sotsvart hud, ögon som kol — och en törst efter att bränna."
+		"desc": "En mindre eldande sprungen ur kraterns djup. Sotsvart hud, ögon som kol — och en törst efter att bränna.",
+		"poison_immune": true
 	},
 	"Snöuggla": {
 		"hp": 70,
@@ -1935,7 +1946,8 @@
 			"energy": 0.5,
 			"ice": 0.3
 		},
-		"desc": "En gestalt av kristalliserad köld. Dess beröring bränner som eld och stelnar blodet."
+		"desc": "En gestalt av kristalliserad köld. Dess beröring bränner som eld och stelnar blodet.",
+		"poison_immune": true
 	},
 	"Varg": {
 		"hp": 40,
@@ -2798,7 +2810,8 @@
 			"death": 0.3,
 			"fire": 1.4
 		},
-		"desc": "En blek odödlig som törstar efter blod. Den läker av varje sår den slår mot dig."
+		"desc": "En blek odödlig som törstar efter blod. Den läker av varje sår den slår mot dig.",
+		"poison_immune": true
 	},
 	"VampyrHerre": {
 		"hp": 1800,
@@ -2882,7 +2895,8 @@
 			"death": 0.3,
 			"fire": 1.3
 		},
-		"desc": "En urgammal blodsfurste, elegant och obarmhärtig. Sekler av törst har gjort honom till en mardröm med hovmanér."
+		"desc": "En urgammal blodsfurste, elegant och obarmhärtig. Sekler av törst har gjort honom till en mardröm med hovmanér.",
+		"poison_immune": true
 	},
 	"Nekromant": {
 		"hp": 480,
@@ -2946,7 +2960,8 @@
 			"death": 0.4,
 			"fire": 1.3
 		},
-		"desc": "En förrädare mot livet självt, som reser de döda till sin tjänst. Döda honom snabbt — annars blir de fler."
+		"desc": "En förrädare mot livet självt, som reser de döda till sin tjänst. Döda honom snabbt — annars blir de fler.",
+		"poison_immune": true
 	},
 	"Lich": {
 		"hp": 1000,
@@ -3018,7 +3033,8 @@
 			"death": 0.2,
 			"fire": 1.3
 		},
-		"desc": "En trollkarl som bytte sin själ mot odödlighet. Bakom de tomma ögonhålorna brinner en evig, beräknande ondska."
+		"desc": "En trollkarl som bytte sin själ mot odödlighet. Bakom de tomma ögonhålorna brinner en evig, beräknande ondska.",
+		"poison_immune": true
 	},
 	"Elddraken": {
 		"hp": 4500,
@@ -3194,7 +3210,8 @@
 			"death": 1.4,
 			"ice": 1.4
 		},
-		"desc": "Avgrundens furste, frammanad av de mest hädiska ritualer. Att möta honom är att stirra in i världens ände — och de flesta blinkar."
+		"desc": "Avgrundens furste, frammanad av de mest hädiska ritualer. Att möta honom är att stirra in i världens ände — och de flesta blinkar.",
+		"poison_immune": true
 	},
 	"Grottspindel": {
 		"hp": 110,
@@ -3735,7 +3752,8 @@
 		"element_mod": {
 			"death": 0,
 			"fire": 1.3
-		}
+		},
+		"poison_immune": true
 	},
 	"Gravväktare": {
 		"hp": 120,
@@ -3793,7 +3811,8 @@
 		"element_mod": {
 			"death": 0.3,
 			"fire": 1.3
-		}
+		},
+		"poison_immune": true
 	},
 	"Solkonungen Akh-Mortis": {
 		"hp": 1500,
@@ -3877,7 +3896,8 @@
 			"death": 0.3,
 			"fire": 0.5,
 			"energy": 1.4
-		}
+		},
+		"poison_immune": true
 	},
 	"Sporling": {
 		"hp": 45,
@@ -4235,7 +4255,8 @@
 		"element_mod": {
 			"fire": 1.5,
 			"energy": 0.5
-		}
+		},
+		"poison_immune": true
 	},
 	"Glaciärjätte": {
 		"hp": 440,
@@ -4520,7 +4541,8 @@
 		"element_mod": {
 			"energy": 1.5,
 			"fire": 0.6
-		}
+		},
+		"poison_immune": true
 	},
 	"Djupkraken": {
 		"hp": 480,
@@ -5263,6 +5285,7 @@
 				"max": 1,
 				"chance": 0.12
 			}
-		]
+		],
+		"poison_immune": true
 	}
 }

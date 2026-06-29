@@ -29,6 +29,7 @@ var _breath_t := 0.0       # idle-andning, slumpad fas
 var _sprite_base_y := 0.0  # spritens vilo-y (för gång-studs)
 var _attacking := false    # pausar livs-anim medan attack-stöten spelas
 var _status_aura: CPUParticles2D = null   # gift/brand-partiklar
+var _shown_poison_immune := false          # visa "gift biter ej" bara en gång
 
 @onready var _hp_bar: ColorRect  = $HpBar
 @onready var _name_lbl: Label    = $NameLabel
@@ -354,11 +355,21 @@ func play_attack(dir: Vector2i) -> void:
 ## en aktiv DoT förnyas bara av en starkare proc (högre tick_dmg) — lika/svagare
 ## ignoreras så att spelarens gift inte heller blir permanent via spam.
 func apply_status(id: String, duration: float, tick_dmg: float) -> void:
+	if id == "poison" and poison_immune():
+		if not _shown_poison_immune:
+			_shown_poison_immune = true
+			_spawn_element_tag("gift biter ej", Color(0.6, 0.72, 0.6))
+		return
 	if tick_dmg > 0.0 and status_effects.has(id) \
 			and tick_dmg <= float(status_effects[id]["tick_dmg"]):
 		return
 	status_effects[id] = {"tick_dmg": tick_dmg, "time_left": duration, "tick_acc": 0.0}
 	_update_status_aura()
+
+## True om monstret står emot gift (odöda, elementarer eller varelser som själva
+## utsöndrar gift). Regeln bor i CombatFormulas så den kan testas rent.
+func poison_immune() -> bool:
+	return CombatFormulas.monster_poison_immune(MonsterDB.monsters.get(monster_name, {}))
 
 func has_status(id: String) -> bool:
 	return status_effects.has(id)
