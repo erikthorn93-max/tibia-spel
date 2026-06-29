@@ -2644,5 +2644,104 @@
 			}
 		},
 		"difficulty": "Mästare"
+	},
+	"quest_coast_1": {
+		"name": "Saltvikens plåga",
+		"giver": "npc_marooned_mate",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Pirat",
+				"count": 10,
+				"hint": "Driv tillbaka 10 Pirater som plundrar Saltviks hamn."
+			},
+			{
+				"type": "collect",
+				"item": "sea_chart",
+				"count": 4,
+				"hint": "Ta 4 Sjökort från Piratskyttarna — Branka behöver vrakets läge."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_marooned_mate",
+				"hint": "Bär sjökorten till Branka vid kajen."
+			}
+		],
+		"rewards": {
+			"xp": 1600,
+			"gold": 800,
+			"items": {
+				"great_health_potion": 2
+			}
+		},
+		"difficulty": "Medel"
+	},
+	"quest_coast_2": {
+		"name": "Vrakets viskningar",
+		"giver": "npc_marooned_mate",
+		"requires": [
+			"quest_coast_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Drunknad sjöman",
+				"count": 8,
+				"hint": "Lägg 8 Drunknade sjömän till ro kring det sjunkna skeppet."
+			},
+			{
+				"type": "kill",
+				"monster": "Sjöorm",
+				"count": 5,
+				"hint": "Rensa 5 Sjöormar ur farleden in mot vraket."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_marooned_mate",
+				"hint": "Berätta för Branka att vägen till vraket är fri."
+			}
+		],
+		"rewards": {
+			"xp": 3000,
+			"gold": 1500,
+			"items": {
+				"great_health_potion": 3
+			},
+			"skill_xp": {
+				"slayer": 800
+			}
+		},
+		"difficulty": "Svår"
+	},
+	"quest_coast_3": {
+		"name": "Svartögas fall",
+		"giver": "npc_marooned_mate",
+		"requires": [
+			"quest_coast_2"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Piratkapten Svartöga",
+				"count": 1,
+				"hint": "Stig ombord på vraket och gör slut på Piratkapten Svartöga."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_marooned_mate",
+				"hint": "Bär budet om kaptenens fall till Branka."
+			}
+		],
+		"rewards": {
+			"xp": 9000,
+			"gold": 4500,
+			"charm_points": 40,
+			"items": {
+				"svartogas_sabel": 1,
+				"great_health_potion": 4
+			}
+		},
+		"difficulty": "Mästare"
 	}
 }

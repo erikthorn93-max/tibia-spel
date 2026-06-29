@@ -942,5 +942,23 @@
 			"model": "en_US-amy-medium",
 			"length_scale": 1.02
 		}
+	},
+	"npc_marooned_mate": {
+		"name": "Branka Saltskägg",
+		"zone": "coast",
+		"position": [
+			6,
+			7
+		],
+		"barks": [
+			"Havet glömmer aldrig en svekfull kapten.",
+			"Jag tjänade Svartöga en gång … aldrig mer.",
+			"Vraket därute ropar mitt namn om nätterna."
+		],
+		"dialogue_root": "npc_marooned_mate_root",
+		"voice": {
+			"model": "en_GB-northern_english_male-medium",
+			"length_scale": 1.0
+		}
 	}
 }

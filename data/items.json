@@ -3474,5 +3474,16 @@
 		"value": 4000,
 		"level_req": 30,
 		"color": "#6a4a8a"
+	},
+	"svartogas_sabel": {
+		"name": "Svartögas sabel",
+		"type": "weapon",
+		"slot": "weapon",
+		"skill": "sword",
+		"atk": 44,
+		"crit_chance": 0.08,
+		"value": 4000,
+		"level_req": 26,
+		"color": "#2b2b3a"
 	}
 }

@@ -7133,5 +7133,223 @@
 				"next": "scholar_root"
 			}
 		]
+	},
+	"npc_marooned_mate_root": {
+		"speaker": "npc_marooned_mate",
+		"emotion": "neutral",
+		"text": "Salt i såren och sand i skägget — välkommen till Saltvik, vandrare. Jag är Branka Saltskägg, en gång styrman åt Piratkapten Svartöga, tills han lät mig sjunka med vraket han plundrade. Havet kastade upp mig igen. Nu väntar jag på den dag någon vågar segla ut och göra slut på honom.",
+		"choices": [
+			{
+				"text": "Vem är Svartöga?",
+				"next": "npc_marooned_mate_root_b1"
+			},
+			{
+				"text": "Varför hjälper du inte själv?",
+				"next": "npc_marooned_mate_root_b2"
+			},
+			{
+				"text": "Hamnen kryllar av pirater — kan jag hjälpa till?",
+				"next": "quest_coast_1_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_coast_1"
+					}
+				]
+			},
+			{
+				"text": "Piraterna är skingrade — här är sjökorten.",
+				"next": "quest_coast_1_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_coast_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_coast_1"
+					}
+				]
+			},
+			{
+				"text": "Vad döljer sig kring vraket?",
+				"next": "quest_coast_2_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_coast_2"
+					}
+				]
+			},
+			{
+				"text": "Farleden till vraket är fri nu.",
+				"next": "quest_coast_2_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_coast_2",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_coast_2"
+					}
+				]
+			},
+			{
+				"text": "Det är dags att ta itu med kaptenen själv.",
+				"next": "quest_coast_3_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_coast_3"
+					}
+				]
+			},
+			{
+				"text": "Svartöga är död. Det är över.",
+				"next": "quest_coast_3_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_coast_3",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_coast_3"
+					}
+				]
+			},
+			{
+				"text": "Farväl.",
+				"next": null
+			}
+		]
+	},
+	"npc_marooned_mate_root_b1": {
+		"speaker": "npc_marooned_mate",
+		"emotion": "worried",
+		"text": "Den grymmaste kaparen som någonsin hissat svart segel. Han brände hamnar för nöjes skull och svek sin egen besättning när bytet skulle delas. Nu ruvar han i ett sjunket skepp utanför kusten, omgiven av de drunknade han dragit med sig i djupet. Så länge han andas är ingen kust trygg.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_marooned_mate_root"
+			}
+		]
+	},
+	"npc_marooned_mate_root_b2": {
+		"speaker": "npc_marooned_mate",
+		"emotion": "sad",
+		"text": "Se på mina händer — de skakar för mycket för att hålla en sabel sedan jag halv-drunknade. Mitt mod ligger kvar på havets botten. Men jag känner vraket bättre än någon levande själ, och jag kan visa dig vägen. Modet får du stå för.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_marooned_mate_root"
+			}
+		]
+	},
+	"quest_coast_1_offer": {
+		"speaker": "npc_marooned_mate",
+		"emotion": "worried",
+		"text": "Svartögas folk vågar sig allt längre in i hamnen — pirater och skyttar som tar vad de pekar på. Driv tillbaka dem och ryck åt dig piratskyttarnas sjökort. Utan vrakets exakta läge seglar vi bara i blindo.",
+		"choices": [
+			{
+				"text": "Jag rensar kajen och hämtar korten.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_coast_1"
+					}
+				]
+			},
+			{
+				"text": "Senare — jag måste rusta mig först.",
+				"next": "npc_marooned_mate_root"
+			}
+		]
+	},
+	"quest_coast_1_report": {
+		"speaker": "npc_marooned_mate",
+		"emotion": "happy",
+		"text": "Bra gjort — kajen andas lättare redan, och korten … ja, här är det. Vraket ligger längre ut än jag mindes, och farvattnen omkring kryllar av sådant som inte vill bli stört. Vi närmar oss, men det värsta ligger kvar därute.",
+		"choices": [
+			{
+				"text": "Vad väntar oss vid vraket?",
+				"next": "npc_marooned_mate_root"
+			}
+		]
+	},
+	"quest_coast_2_offer": {
+		"speaker": "npc_marooned_mate",
+		"emotion": "worried",
+		"text": "Drunknade sjömän vaktar vägen in — Svartögas gamla besättning, för envisa för att stanna döda. Och sjöormarna har gjort farleden till sitt näste. Röj en väg in mot vraket, annars dör vi innan vi ens ser kaptenen.",
+		"choices": [
+			{
+				"text": "Jag öppnar vägen till vraket.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_coast_2"
+					}
+				]
+			},
+			{
+				"text": "Jag samlar mig först.",
+				"next": "npc_marooned_mate_root"
+			}
+		]
+	},
+	"quest_coast_2_report": {
+		"speaker": "npc_marooned_mate",
+		"emotion": "happy",
+		"text": "Då är farleden fri — för första gången på år kan en köl nå fram till vraket utan att slukas. Bortom där väntar bara han. Vila nu, vandrare, och slipa din egg. Nästa gång vi talas vid är det Svartöga själv du ska möta.",
+		"choices": [
+			{
+				"text": "Jag är redo snart.",
+				"next": "npc_marooned_mate_root"
+			}
+		]
+	},
+	"quest_coast_3_offer": {
+		"speaker": "npc_marooned_mate",
+		"emotion": "angry",
+		"text": "Då är stunden inne. Stig ombord på det sjunkna skeppet och möt Piratkapten Svartöga i hans eget mörker. Visa honom att havet inte glömmer dem han svek. Gör slut på honom — för mig, och för var kust han brände.",
+		"choices": [
+			{
+				"text": "Jag seglar ut och fäller honom.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_coast_3"
+					}
+				]
+			},
+			{
+				"text": "Inte än — jag måste vara helt säker.",
+				"next": "npc_marooned_mate_root"
+			}
+		]
+	},
+	"quest_coast_3_report": {
+		"speaker": "npc_marooned_mate",
+		"emotion": "happy",
+		"text": "Så är det äntligen sant … Svartöga vilar på havets botten där han hör hemma. Du gav ro åt en hel kust och åt en gammal styrmans nätter. Tag hans sabel — jag bar den åt honom en gång, men i din hand ska den stå för något bättre. Tack, vän. Havet är ditt nu.",
+		"choices": [
+			{
+				"text": "Tack, Branka.",
+				"next": "npc_marooned_mate_root"
+			}
+		]
 	}
 }
