@@ -5692,5 +5692,333 @@
 				"next": null
 			}
 		]
+	},
+	"npc_cave_miner_root_b1": {
+		"speaker": "npc_cave_miner",
+		"emotion": "worried",
+		"text": "Gångarna grenar sig som rötter och blir bara värre. Längre ner kröp något vitt och torrt förbi — ben utan kött, men det rörde sig. Jag vände genast. Gå inte dit utan eld och stål.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_cave_miner_root"
+			}
+		]
+	},
+	"npc_cave_miner_root_b2": {
+		"speaker": "npc_cave_miner",
+		"emotion": "neutral",
+		"text": "Girighet, vad annars. En åder av glittrande malm lockade mig steg för steg tills väggarna såg likadana ut åt alla håll. Lär dig av en gammal dåre: märk din väg, eller låt berget behålla dig.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_cave_miner_root"
+			}
+		]
+	},
+	"npc_cave_miner_root": {
+		"speaker": "npc_cave_miner",
+		"emotion": "neutral",
+		"text": "Åh — en levande själ! Jag är Gråberg, gick in för att bryta järn och tappade bort stigen för tre dygn sen. Råttorna bet mig och spindlarna gillrar nät i varje gång. Säg, vet du vägen mot dagsljuset?",
+		"choices": [
+			{
+				"text": "Vad finns djupare in?",
+				"next": "npc_cave_miner_root_b1"
+			},
+			{
+				"text": "Hur hamnade du här?",
+				"next": "npc_cave_miner_root_b2"
+			},
+			{
+				"text": "Farväl.",
+				"next": null
+			}
+		]
+	},
+	"npc_desert_nomad_root_b1": {
+		"speaker": "npc_desert_nomad",
+		"emotion": "worried",
+		"text": "Mumier som vandrar på torra senor, och djupast inne Farao Khem-Ra själv — insvept och vred, kung över en grav utan slut. Hans blick vissnar modet. Bär eld; det gamla linnet brinner villigt.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_desert_nomad_root"
+			}
+		]
+	},
+	"npc_desert_nomad_root_b2": {
+		"speaker": "npc_desert_nomad",
+		"emotion": "neutral",
+		"text": "Sigillsmycken, skarabéer av guld, krukor förseglade sedan tidens början. Allt har sitt pris — och öknen tar betalt i törst och svek. Ändå återvänder jag varje gryning. Sanden viskar löften man inte kan släppa.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_desert_nomad_root"
+			}
+		]
+	},
+	"npc_desert_nomad_root": {
+		"speaker": "npc_desert_nomad",
+		"emotion": "neutral",
+		"text": "Stanna i skuggan, främling, innan solen kokar din hjärna. Jag är Nadira och gräver fram det de döda lämnade. Ruinerna är rika — men de vaktas av sådant som inte längre andas.",
+		"choices": [
+			{
+				"text": "Vad vaktar ruinerna?",
+				"next": "npc_desert_nomad_root_b1"
+			},
+			{
+				"text": "Vad gräver du efter?",
+				"next": "npc_desert_nomad_root_b2"
+			},
+			{
+				"text": "Farväl.",
+				"next": null
+			}
+		]
+	},
+	"npc_mine_dwarf_root_b1": {
+		"speaker": "npc_mine_dwarf",
+		"emotion": "worried",
+		"text": "Aj. Djupt ner har de gamla schakten väckts. Något hamrar i mörkret när vi tystnar — inte dvärgar, inte gruvras. Vi har murat igen de nedersta gångarna och ber stenfäderna att murarna håller.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_mine_dwarf_root"
+			}
+		]
+	},
+	"npc_mine_dwarf_root_b2": {
+		"speaker": "npc_mine_dwarf",
+		"emotion": "happy",
+		"text": "Järn så rent att det sjunger mot städet, och ådror av silver i de djupare lagren. Ta dig en bit malm om du svingar en hacka — men lämna mer än du tar, så håller gruvan dig vänligt sinnad.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_mine_dwarf_root"
+			}
+		]
+	},
+	"npc_mine_dwarf_root": {
+		"speaker": "npc_mine_dwarf",
+		"emotion": "neutral",
+		"text": "Hå! En långben i min gruva. Durin Stenbroder, sjunde sonen i sjunde gången, bryter järn här sen skägget var dun. Malmen är god — men på sistone svarar berget med slag tillbaka.",
+		"choices": [
+			{
+				"text": "Svarar berget tillbaka?",
+				"next": "npc_mine_dwarf_root_b1"
+			},
+			{
+				"text": "Vad bryts här?",
+				"next": "npc_mine_dwarf_root_b2"
+			},
+			{
+				"text": "Farväl.",
+				"next": null
+			}
+		]
+	},
+	"npc_ice_hunter_root_b1": {
+		"speaker": "npc_ice_hunter",
+		"emotion": "worried",
+		"text": "Trollen kommer ner från snödrivorna, och varelser av ren köld glider mellan flaken. Längst in, där isen blir blå som natt, sägs en drake sova. Väck den inte. Frosten är redan kall nog.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_ice_hunter_root"
+			}
+		]
+	},
+	"npc_ice_hunter_root_b2": {
+		"speaker": "npc_ice_hunter",
+		"emotion": "neutral",
+		"text": "Tjock päls, het eld och tålamod. Fjorden ger åt den som respekterar den: kött, skinn och kristaller som glittrar i drivan. Men vänd ryggen mot kölden en gång för mycket, och den tar dig sovande.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_ice_hunter_root"
+			}
+		]
+	},
+	"npc_ice_hunter_root": {
+		"speaker": "npc_ice_hunter",
+		"emotion": "neutral",
+		"text": "Dra upp huvan, vandrare — köldens fjord förlåter ingen bar hud. Jag är Yrsa, jagar säl och frostörn längs iskanten. Få söker sig hit, och färre stannar när vinternätterna sänker sig.",
+		"choices": [
+			{
+				"text": "Vad lurar på isen?",
+				"next": "npc_ice_hunter_root_b1"
+			},
+			{
+				"text": "Hur överlever du här?",
+				"next": "npc_ice_hunter_root_b2"
+			},
+			{
+				"text": "Farväl.",
+				"next": null
+			}
+		]
+	},
+	"npc_tomb_seeker_root_b1": {
+		"speaker": "npc_tomb_seeker",
+		"emotion": "worried",
+		"text": "Solkonungen Akh-Mortis, krönt i guld och hat. Han band sin själ till graven för att aldrig möta mörkret. Nu vandrar hans vålnad bland pelarna och kallar de döda till tjänst. Den som öppnar hans kammare väcker en kung utan nåd.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_tomb_seeker_root"
+			}
+		]
+	},
+	"npc_tomb_seeker_root_b2": {
+		"speaker": "npc_tomb_seeker",
+		"emotion": "neutral",
+		"text": "För att glömskan är en värre död än någon grav. Om ingen läser dessa väggar dör Akh-Mortis sanning för andra gången — och denna gång för alltid. Det är värt sanden i mina lungor och frosten i min nacke.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_tomb_seeker_root"
+			}
+		]
+	},
+	"npc_tomb_seeker_root": {
+		"speaker": "npc_tomb_seeker",
+		"emotion": "neutral",
+		"text": "Tyst — lyssna till stenen. Jag är Aurelius, läser de murkna väggarnas skrift i Solgraven. Här vilar en kung som vägrade dö. Jag söker hans sanning, inte hans guld — men graven skiljer inte på besökarnas avsikt.",
+		"choices": [
+			{
+				"text": "Vem vilar här?",
+				"next": "npc_tomb_seeker_root_b1"
+			},
+			{
+				"text": "Varför riskera detta?",
+				"next": "npc_tomb_seeker_root_b2"
+			},
+			{
+				"text": "Farväl.",
+				"next": null
+			}
+		]
+	},
+	"npc_swamp_hermit_root_b1": {
+		"speaker": "npc_swamp_hermit",
+		"emotion": "worried",
+		"text": "Allt som rör sig här bär gift i tand eller körtel. Paddor som svettas etter, kräla som spottar galla, och själva luften ruttnar i lungorna. Bär motgift, alltid. Den som går grön i ansiktet räknar sina sista andetag.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_swamp_hermit_root"
+			}
+		]
+	},
+	"npc_swamp_hermit_root_b2": {
+		"speaker": "npc_swamp_hermit",
+		"emotion": "happy",
+		"text": "Sumpmossa mot feber, glödlav mot köld, och en blek blomma som bara öppnar sig i månsken över multnande stockar. Naturens apotek ligger i dess giftigaste vrå — så har det alltid varit. Liv och död delar samma rot.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_swamp_hermit_root"
+			}
+		]
+	},
+	"npc_swamp_hermit_root": {
+		"speaker": "npc_swamp_hermit",
+		"emotion": "neutral",
+		"text": "Sakta i backarna — ett felsteg och dyn slukar dig till knäna. Jag är Sippa, plockar örter och mossa där ingen annan vågar. Träsket är giftigt, ja, men det göder också botemedel åt den som vet var den letar.",
+		"choices": [
+			{
+				"text": "Är träsket farligt?",
+				"next": "npc_swamp_hermit_root_b1"
+			},
+			{
+				"text": "Vilka örter söker du?",
+				"next": "npc_swamp_hermit_root_b2"
+			},
+			{
+				"text": "Farväl.",
+				"next": null
+			}
+		]
+	},
+	"npc_depot_keeper_root_b1": {
+		"speaker": "npc_depot_keeper",
+		"emotion": "neutral",
+		"text": "Det du lämnar i ditt depå ovanför, och mycket därtill: vakternas beslag, arvegods utan arvtagare, och en och annan kista vars ägare aldrig kom tillbaka från sitt äventyr. Jag dammar dem ändå. Någon bör minnas dem.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_depot_keeper_root"
+			}
+		]
+	},
+	"npc_depot_keeper_root_b2": {
+		"speaker": "npc_depot_keeper",
+		"emotion": "happy",
+		"text": "Längre än trappstegen är slitna. Jag såg unga äventyrare gå härifrån med blanka svärd och hopp i blick. En del kom åter, rikare och tystare. Andra blev till en kista i mitt mörker. Sköt om dig där ute, du.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_depot_keeper_root"
+			}
+		]
+	},
+	"npc_depot_keeper_root": {
+		"speaker": "npc_depot_keeper",
+		"emotion": "neutral",
+		"text": "Ner i källaren, va? Här nere håller jag, Magnhild, ordning på det staden helst glömmer — gamla lådor, beslagtaget gods och kistor som ingen hämtat på år. Stök inte till min ordning, så är vi vänner.",
+		"choices": [
+			{
+				"text": "Vad förvaras här nere?",
+				"next": "npc_depot_keeper_root_b1"
+			},
+			{
+				"text": "Har du varit här länge?",
+				"next": "npc_depot_keeper_root_b2"
+			},
+			{
+				"text": "Farväl.",
+				"next": null
+			}
+		]
+	},
+	"npc_troll_captive_root_b1": {
+		"speaker": "npc_troll_captive",
+		"emotion": "worried",
+		"text": "Fler än jag vågar räkna, och längst in sitter hövdingen — en best större än två män, med en klubba av en hel trädstam. De andra lyder honom blint. Fäller du honom skingras flocken. Men gör det inte halvhjärtat.",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_troll_captive_root"
+			}
+		]
+	},
+	"npc_troll_captive_root_b2": {
+		"speaker": "npc_troll_captive",
+		"emotion": "happy",
+		"text": "Stenfäder välsigne dig! Jag kryper efter i dina spår och håller mig i skuggorna. Slå hårt, slå först, och se dig aldrig om efter ett trollvrål. Få ut oss båda härifrån, så bjuder jag på öl i Thais resten av ditt liv!",
+		"choices": [
+			{
+				"text": "Tillbaka.",
+				"next": "npc_troll_captive_root"
+			}
+		]
+	},
+	"npc_troll_captive_root": {
+		"speaker": "npc_troll_captive",
+		"emotion": "neutral",
+		"text": "Psst! Hitåt — men för stenfäders skull, var tyst! Jag är Tobbe, trollen släpade hit mig för tre nätter sen och sparar mig till nästa måltid. Jag vågar inte röra mig … men du, du ser ut som någon som kan svinga ett svärd.",
+		"choices": [
+			{
+				"text": "Hur många troll finns här?",
+				"next": "npc_troll_captive_root_b1"
+			},
+			{
+				"text": "Håll ut — jag röjer väg.",
+				"next": "npc_troll_captive_root_b2"
+			},
+			{
+				"text": "Farväl.",
+				"next": null
+			}
+		]
 	}
 }

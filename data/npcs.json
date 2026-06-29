@@ -672,5 +672,149 @@
 			"Jag kom hit för stenarnas skull. Jag stannar av rädsla."
 		],
 		"dialogue_root": "ozric_root"
+	},
+	"npc_cave_miner": {
+		"name": "Gråberg, vilsen gruvletare",
+		"zone": "cave",
+		"position": [
+			2,
+			14
+		],
+		"barks": [
+			"Vilken väg var det nu ut …",
+			"Hör du också skrapandet i mörkret?",
+			"Min lykta räcker inte mycket längre."
+		],
+		"dialogue_root": "npc_cave_miner_root",
+		"voice": {
+			"model": "en_US-joe-medium",
+			"length_scale": 1.05
+		}
+	},
+	"npc_desert_nomad": {
+		"name": "Nadira, relikjägerska",
+		"zone": "desert",
+		"position": [
+			2,
+			11
+		],
+		"barks": [
+			"Sanden döljer kungar och kapital.",
+			"Drick. Öknen tar den som törstar.",
+			"Rör inga sigill du inte kan läsa."
+		],
+		"dialogue_root": "npc_desert_nomad_root",
+		"voice": {
+			"model": "en_US-amy-medium",
+			"length_scale": 1.04
+		}
+	},
+	"npc_mine_dwarf": {
+		"name": "Durin Stenbroder",
+		"zone": "dwarf_mine",
+		"position": [
+			2,
+			17
+		],
+		"barks": [
+			"Sten skvallrar för den som lyssnar.",
+			"Min hammare har inga lediga dagar.",
+			"Något gräver tillbaka mot oss …"
+		],
+		"dialogue_root": "npc_mine_dwarf_root",
+		"voice": {
+			"model": "en_US-joe-medium",
+			"length_scale": 0.98
+		}
+	},
+	"npc_ice_hunter": {
+		"name": "Yrsa Pälsjägare",
+		"zone": "ice",
+		"position": [
+			2,
+			25
+		],
+		"barks": [
+			"Stå still för länge och du fryser fast.",
+			"Pälsen håller — knappt.",
+			"Fjorden knakar. Den lyssnar."
+		],
+		"dialogue_root": "npc_ice_hunter_root",
+		"voice": {
+			"model": "en_US-amy-medium",
+			"length_scale": 1.06
+		}
+	},
+	"npc_tomb_seeker": {
+		"name": "Aurelius, gravforskare",
+		"zone": "solgraven",
+		"position": [
+			2,
+			8
+		],
+		"barks": [
+			"Varje vägg här bär en berättelse.",
+			"Stör inte de sovande … ännu.",
+			"Solguden ser allt, även oss."
+		],
+		"dialogue_root": "npc_tomb_seeker_root",
+		"voice": {
+			"model": "en_GB-alan-medium",
+			"length_scale": 1.08
+		}
+	},
+	"npc_swamp_hermit": {
+		"name": "Sippa, träskeremit",
+		"zone": "swamp",
+		"position": [
+			2,
+			12
+		],
+		"barks": [
+			"Mossan minns mer än människor.",
+			"Trampa lätt — kärret är hungrigt.",
+			"Allt här läker eller dödar. Ofta båda."
+		],
+		"dialogue_root": "npc_swamp_hermit_root",
+		"voice": {
+			"model": "en_US-amy-medium",
+			"length_scale": 1.1
+		}
+	},
+	"npc_depot_keeper": {
+		"name": "Magnhild, lagerföreståndare",
+		"zone": "thais_depot_lower",
+		"position": [
+			2,
+			4
+		],
+		"barks": [
+			"Allt på sin plats, och en plats för allt.",
+			"Damm igen. Alltid damm.",
+			"Kvitto? Nej? Då står lådan kvar."
+		],
+		"dialogue_root": "npc_depot_keeper_root",
+		"voice": {
+			"model": "en_US-amy-medium",
+			"length_scale": 1
+		}
+	},
+	"npc_troll_captive": {
+		"name": "Tobbe, fången vandrare",
+		"zone": "troll_cave",
+		"position": [
+			2,
+			16
+		],
+		"barks": [
+			"Psst! Hitåt — men tyst!",
+			"Trollen sover lätt, vän …",
+			"Få ut mig härifrån, snälla!"
+		],
+		"dialogue_root": "npc_troll_captive_root",
+		"voice": {
+			"model": "en_US-joe-medium",
+			"length_scale": 1.07
+		}
 	}
 }
