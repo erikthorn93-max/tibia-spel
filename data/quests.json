@@ -3025,5 +3025,104 @@
 			}
 		},
 		"difficulty": "Svår"
+	},
+	"quest_icehunt_1": {
+		"name": "Iskantens jakt",
+		"giver": "npc_ice_hunter",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Frostörn",
+				"count": 10,
+				"hint": "Fäll 10 Frostörnar som slår ner på Yrsas fångst."
+			},
+			{
+				"type": "collect",
+				"item": "frostfjäder",
+				"count": 6,
+				"hint": "Plocka 6 Frostfjädrar — Yrsa fodrar sina pilar med dem."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_ice_hunter",
+				"hint": "Bär fjädrarna till Yrsa vid iskanten."
+			}
+		],
+		"rewards": {
+			"xp": 1500,
+			"gold": 700,
+			"items": {
+				"frost_resist_potion": 3
+			}
+		},
+		"difficulty": "Medel"
+	},
+	"quest_icehunt_2": {
+		"name": "Det som driver bytet",
+		"giver": "npc_ice_hunter",
+		"requires": [
+			"quest_icehunt_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Isvarelse",
+				"count": 8,
+				"hint": "Skingra 8 Isvarelser som driver bytet bort från fjorden."
+			},
+			{
+				"type": "collect",
+				"item": "is_kristall",
+				"count": 5,
+				"hint": "Bärga 5 Iskristaller ur de fallna åt Yrsa."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_ice_hunter",
+				"hint": "Visa kristallerna för Yrsa."
+			}
+		],
+		"rewards": {
+			"xp": 2600,
+			"gold": 1300,
+			"items": {
+				"frost_stew": 3
+			},
+			"skill_xp": {
+				"slayer": 700
+			}
+		},
+		"difficulty": "Svår"
+	},
+	"quest_icehunt_3": {
+		"name": "Trollet på jaktmarken",
+		"giver": "npc_ice_hunter",
+		"requires": [
+			"quest_icehunt_2"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Istroll",
+				"count": 5,
+				"hint": "Driv bort 5 Istroll som gjort Yrsas jaktmark till sin."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_ice_hunter",
+				"hint": "Återvänd till Yrsa — jaktmarken är hennes igen."
+			}
+		],
+		"rewards": {
+			"xp": 5000,
+			"gold": 2400,
+			"charm_points": 30,
+			"items": {
+				"yrsas_palsmantel": 1,
+				"great_health_potion": 3
+			}
+		},
+		"difficulty": "Mästare"
 	}
 }

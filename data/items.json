@@ -3520,5 +3520,16 @@
 		"value": 600,
 		"level_req": 12,
 		"color": "#ffd27a"
+	},
+	"yrsas_palsmantel": {
+		"name": "Yrsas pälsmantel",
+		"type": "armor",
+		"slot": "body",
+		"armor": 14,
+		"def_bonus": 5,
+		"regen": 1,
+		"value": 1500,
+		"level_req": 22,
+		"color": "#b9a98c"
 	}
 }

@@ -6264,8 +6264,185 @@
 				"next": "npc_ice_hunter_root_b2"
 			},
 			{
+				"text": "Behöver du en hand med jakten?",
+				"next": "quest_icehunt_1_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_icehunt_1"
+					}
+				]
+			},
+			{
+				"text": "Örnarna är fällda — här är fjädrarna.",
+				"next": "quest_icehunt_1_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_icehunt_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_icehunt_1"
+					}
+				]
+			},
+			{
+				"text": "Vad är det som driver bort bytet?",
+				"next": "quest_icehunt_2_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_icehunt_2"
+					}
+				]
+			},
+			{
+				"text": "Isvarelserna är skingrade — se kristallerna.",
+				"next": "quest_icehunt_2_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_icehunt_2",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_icehunt_2"
+					}
+				]
+			},
+			{
+				"text": "Vill du att jag tar itu med trollen?",
+				"next": "quest_icehunt_3_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_icehunt_3"
+					}
+				]
+			},
+			{
+				"text": "Trollen är bortdrivna. Marken är din igen.",
+				"next": "quest_icehunt_3_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_icehunt_3",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_icehunt_3"
+					}
+				]
+			},
+			{
 				"text": "Farväl.",
 				"next": null
+			}
+		]
+	},
+	"quest_icehunt_1_offer": {
+		"speaker": "npc_ice_hunter",
+		"emotion": "worried",
+		"text": "En hand? Jag tar två om de håller i en båge. Frostörnarna har blivit djärva — de slår ner och river bytet ur mina egna fällor innan jag hinner dit. Tunna ut flocken, och plocka deras fjädrar åt mig. Inget fodrar en pil mot köld så väl som en frostörns egen vinge.",
+		"choices": [
+			{
+				"text": "Jag jagar örnarna och hämtar fjädrarna.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_icehunt_1"
+					}
+				]
+			},
+			{
+				"text": "Senare — kylan tär på mig.",
+				"next": "npc_ice_hunter_root"
+			}
+		]
+	},
+	"quest_icehunt_1_report": {
+		"speaker": "npc_ice_hunter",
+		"emotion": "happy",
+		"text": "Bra skjutet — fällorna får stå i fred nu. Men något är fel ändå. Bytet drar sig undan, längre ut än någonsin, som om det flyr från något inne i fjorden. Sälen vågar sig inte upp på isen längre. Något har skrämt dem, och jag vill veta vad.",
+		"choices": [
+			{
+				"text": "Jag tar reda på vad det är.",
+				"next": "npc_ice_hunter_root"
+			}
+		]
+	},
+	"quest_icehunt_2_offer": {
+		"speaker": "npc_ice_hunter",
+		"emotion": "worried",
+		"text": "Isvarelser — vandrande klumpar av frusen ilska — har glidit in över fjorden, och där de drar fram flyr allt levande. Det är dem bytet flyr ifrån. Skingra dem, och bärga kristallerna ur deras kärnor. I deras färg läser jag hur djupt kölden sjunkit — och om något värre väntar bakom dem.",
+		"choices": [
+			{
+				"text": "Jag skingrar dem och tar kristallerna.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_icehunt_2"
+					}
+				]
+			},
+			{
+				"text": "Jag behöver bättre skydd mot köld först.",
+				"next": "npc_ice_hunter_root"
+			}
+		]
+	},
+	"quest_icehunt_2_report": {
+		"speaker": "npc_ice_hunter",
+		"emotion": "worried",
+		"text": "Kristallerna brinner blått ända in i kärnan … de kom inte hit av sig själva. Något tyngre rör sig längst in på jaktmarken och driver dem framför sig. Jag har sett spåren — breda som en björns, men med klövar av is. Istroll. En hel flock har gjort min mark till sin. Det får inte fortsätta.",
+		"choices": [
+			{
+				"text": "Då gör jag marken till din igen.",
+				"next": "npc_ice_hunter_root"
+			}
+		]
+	},
+	"quest_icehunt_3_offer": {
+		"speaker": "npc_ice_hunter",
+		"emotion": "angry",
+		"text": "Istrollen. Tunga som klippblock och dubbelt så envisa, och de har slagit läger mitt på min bästa jaktmark. Så länge de står där svälter jag innan vintern är slut. Driv bort dem — fäll dem om du måste. Ge mig tillbaka fjorden, så jakten kan börja om.",
+		"choices": [
+			{
+				"text": "Jag driver trollen från din mark.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_icehunt_3"
+					}
+				]
+			},
+			{
+				"text": "Inte än — sådana best kräver förberedelse.",
+				"next": "npc_ice_hunter_root"
+			}
+		]
+	},
+	"quest_icehunt_3_report": {
+		"speaker": "npc_ice_hunter",
+		"emotion": "happy",
+		"text": "Marken är tyst, och bytet vänder redan tillbaka mot iskanten. Du gav mig min jakt åter, vandrare — och en hel vinters mat. Här. Jag sydde den av de tjockaste pälsarna jag har: Yrsas pälsmantel. Den har hållit mig varm genom tjugo vintrar; nu ska den hålla dig. Köldens fjord förlåter ingen bar hud — men den här manteln, den förlåter.",
+		"choices": [
+			{
+				"text": "Tack, Yrsa.",
+				"next": "npc_ice_hunter_root"
 			}
 		]
 	},
