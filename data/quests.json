@@ -3124,5 +3124,104 @@
 			}
 		},
 		"difficulty": "Mästare"
+	},
+	"quest_relic_1": {
+		"name": "Sandens väktare",
+		"giver": "npc_desert_nomad",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Sandvaranen",
+				"count": 10,
+				"hint": "Röj 10 Sandvaraner som vaktar vägen mot den glömda graven."
+			},
+			{
+				"type": "collect",
+				"item": "sand_scale",
+				"count": 6,
+				"hint": "Samla 6 Sandfjäll — Nadira läser kartan i deras mönster."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_desert_nomad",
+				"hint": "Bär fjällen till Nadira."
+			}
+		],
+		"rewards": {
+			"xp": 1400,
+			"gold": 700,
+			"items": {
+				"antidote_potion": 4
+			}
+		},
+		"difficulty": "Medel"
+	},
+	"quest_relic_2": {
+		"name": "Mumiernas sigill",
+		"giver": "npc_desert_nomad",
+		"requires": [
+			"quest_relic_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Ökenmumie",
+				"count": 8,
+				"hint": "Lägg 8 Ökenmumier till ro och ryck sigillskärvorna ur deras lindor."
+			},
+			{
+				"type": "collect",
+				"item": "scarab_shell",
+				"count": 5,
+				"hint": "Bärga 5 Skarabéskal — varje bär en del av sigillets skrift."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_desert_nomad",
+				"hint": "Visa skalen för Nadira så hon kan tyda sigillet."
+			}
+		],
+		"rewards": {
+			"xp": 2600,
+			"gold": 1300,
+			"items": {
+				"great_health_potion": 3
+			},
+			"skill_xp": {
+				"slayer": 700
+			}
+		},
+		"difficulty": "Svår"
+	},
+	"quest_relic_3": {
+		"name": "Den sista sigillen",
+		"giver": "npc_desert_nomad",
+		"requires": [
+			"quest_relic_2"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Ökenmumie",
+				"count": 6,
+				"hint": "Sigillet väcker gravens väktare — fäll de 6 Ökenmumier som reser sig."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_desert_nomad",
+				"hint": "Bär den hela reliken till Nadira."
+			}
+		],
+		"rewards": {
+			"xp": 5200,
+			"gold": 2500,
+			"charm_points": 32,
+			"items": {
+				"okenkungens_sigill": 1,
+				"great_health_potion": 3
+			}
+		},
+		"difficulty": "Mästare"
 	}
 }

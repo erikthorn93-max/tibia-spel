@@ -3531,5 +3531,16 @@
 		"value": 1500,
 		"level_req": 22,
 		"color": "#b9a98c"
+	},
+	"okenkungens_sigill": {
+		"name": "Ökenkungens sigill",
+		"type": "armor",
+		"slot": "ring",
+		"armor": 1,
+		"atk_bonus": 3,
+		"crit_chance": 0.06,
+		"value": 1700,
+		"level_req": 20,
+		"color": "#d9a72e"
 	}
 }

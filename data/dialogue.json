@@ -6001,8 +6001,185 @@
 				"next": "npc_desert_nomad_root_b2"
 			},
 			{
+				"text": "Kan jag hjälpa dig gräva?",
+				"next": "quest_relic_1_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_relic_1"
+					}
+				]
+			},
+			{
+				"text": "Varanerna är röjda — här är sandfjällen.",
+				"next": "quest_relic_1_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_relic_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_relic_1"
+					}
+				]
+			},
+			{
+				"text": "Vad säger kartan i fjällen?",
+				"next": "quest_relic_2_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_relic_2"
+					}
+				]
+			},
+			{
+				"text": "Här är skarabéskalen ur mumiernas lindor.",
+				"next": "quest_relic_2_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_relic_2",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_relic_2"
+					}
+				]
+			},
+			{
+				"text": "Sigillet är tytt — ska vi hämta reliken?",
+				"next": "quest_relic_3_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_relic_3"
+					}
+				]
+			},
+			{
+				"text": "Väktarna föll. Reliken är hel.",
+				"next": "quest_relic_3_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_relic_3",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_relic_3"
+					}
+				]
+			},
+			{
 				"text": "Farväl.",
 				"next": null
+			}
+		]
+	},
+	"quest_relic_1_offer": {
+		"speaker": "npc_desert_nomad",
+		"emotion": "worried",
+		"text": "Hjälpa? Du har stadigare hand än någon jag mött i den här sandhålan. Jag har spårat en grav ingen plundrare återvänt från — en kung äldre än Khem-Ra själv. Men Sandvaranerna har gjort vägen dit till sin lya. Röj dem, och bärga deras fjäll. Mönstret på en varan-rygg är samma karta de gamla ristade i sten.",
+		"choices": [
+			{
+				"text": "Jag röjer vägen och hämtar fjällen.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_relic_1"
+					}
+				]
+			},
+			{
+				"text": "Senare — jag måste fylla vattnet först.",
+				"next": "npc_desert_nomad_root"
+			}
+		]
+	},
+	"quest_relic_1_report": {
+		"speaker": "npc_desert_nomad",
+		"emotion": "happy",
+		"text": "Låt mig se … ja. Lägg fjällen sida vid sida, så löper mönstret samman till en stig. Där, under den tredje dynen — en nedgång, förseglad med ett sigill jag inte kan läsa. Och sigill vaktas alltid. Mumierna rör redan på sig därnere; jag hör linnet släpa mot sten.",
+		"choices": [
+			{
+				"text": "Vad väntar bakom sigillet?",
+				"next": "npc_desert_nomad_root"
+			}
+		]
+	},
+	"quest_relic_2_offer": {
+		"speaker": "npc_desert_nomad",
+		"emotion": "worried",
+		"text": "Sigillet är inte ett lås utan en gåta — dess skrift ligger splittrad, en skärva på var mumie som vaktar nedgången. Lägg dem till ro och ryck skarabéskalen ur deras lindor; varje skal bär en rad av besvärjelsen. Bär dem till mig, så tyder jag vad de gamle ville dölja.",
+		"choices": [
+			{
+				"text": "Jag samlar skalen ur lindorna.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_relic_2"
+					}
+				]
+			},
+			{
+				"text": "Sådan vakt kräver förberedelse.",
+				"next": "npc_desert_nomad_root"
+			}
+		]
+	},
+	"quest_relic_2_report": {
+		"speaker": "npc_desert_nomad",
+		"emotion": "worried",
+		"text": "Rad för rad … nu kan jag läsa det. Det är ingen förbannelse — det är en varning. \"Den som tar Ökenkungens sigill väcker hans gravvakt.\" Reliken är verklig, då. En ring buren av en kung före kungarna, sägs skänka solens egen vrede åt bäraren. Men i samma stund vi bryter sigillet reser sig allt som lagts till vila därinne. Är du redo för det?",
+		"choices": [
+			{
+				"text": "Då bryter vi sigillet.",
+				"next": "npc_desert_nomad_root"
+			}
+		]
+	},
+	"quest_relic_3_offer": {
+		"speaker": "npc_desert_nomad",
+		"emotion": "worried",
+		"text": "Jag bryter sigillet på ditt ord — men i samma andetag väcks gravvakten. Mumier, ältre och argare än de vid nedgången, kommer att resa sig kring sarkofagen där reliken vilar. Håll dem borta från mig medan jag lyfter den. Faller de, är Ökenkungens sigill vårt. Faller vi … delar vi deras grav.",
+		"choices": [
+			{
+				"text": "Bryt sigillet — jag håller vakten borta.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_relic_3"
+					}
+				]
+			},
+			{
+				"text": "Ge mig en stund att rusta mig.",
+				"next": "npc_desert_nomad_root"
+			}
+		]
+	},
+	"quest_relic_3_report": {
+		"speaker": "npc_desert_nomad",
+		"emotion": "happy",
+		"text": "Det är över — och vi står kvar. Se hur den fångar solen … Ökenkungens sigill, helt och oskadat efter tusen år i mörker. Jag är relikjägerska, men somliga fynd ska bäras, inte säljas. Ta den. Du höll vakten när det gällde, och utan dig hade jag legat kvar därnere bland de andra plundrarna. Måtte solens vrede tjäna dig bättre än den tjänade honom.",
+		"choices": [
+			{
+				"text": "Tack, Nadira.",
+				"next": "npc_desert_nomad_root"
 			}
 		]
 	},
