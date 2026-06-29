@@ -5988,8 +5988,185 @@
 				"next": "npc_swamp_hermit_root_b2"
 			},
 			{
+				"text": "Något oroar dig med träsket?",
+				"next": "quest_swamp_1_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_swamp_1"
+					}
+				]
+			},
+			{
+				"text": "Paddorna är krossade — här är essensen.",
+				"next": "quest_swamp_1_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_swamp_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_swamp_1"
+					}
+				]
+			},
+			{
+				"text": "Vad var det som rörde sig i dyn?",
+				"next": "quest_swamp_2_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_swamp_2"
+					}
+				]
+			},
+			{
+				"text": "Sumpvarelserna är nedhuggna.",
+				"next": "quest_swamp_2_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_swamp_2",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_swamp_2"
+					}
+				]
+			},
+			{
+				"text": "Det är dags att gå mot träskets hjärta.",
+				"next": "quest_swamp_3_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_swamp_3"
+					}
+				]
+			},
+			{
+				"text": "Träskdjävlarna är fällda. Vägen är fri.",
+				"next": "quest_swamp_3_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_swamp_3",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_swamp_3"
+					}
+				]
+			},
+			{
 				"text": "Farväl.",
 				"next": null
+			}
+		]
+	},
+	"quest_swamp_1_offer": {
+		"speaker": "npc_swamp_hermit",
+		"emotion": "worried",
+		"text": "Giftpaddorna har förökat sig bortom allt vett, och deras etter sipprar ner i källorna jag dricker ur. Krossa så många du kan — på avstånd, om du är klok — och bär hem träskessens ur de mest ruttna pölarna. Jag brygger ett skydd, men jag behöver råvaran ren.",
+		"choices": [
+			{
+				"text": "Jag tar paddorna och hämtar essensen.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_swamp_1"
+					}
+				]
+			},
+			{
+				"text": "Senare — jag behöver motgift först.",
+				"next": "npc_swamp_hermit_root"
+			}
+		]
+	},
+	"quest_swamp_1_report": {
+		"speaker": "npc_swamp_hermit",
+		"emotion": "happy",
+		"text": "Tack, vän — vattnet klarnar redan. Men se på essensen … den är mörkare än den borde, tjock som tjära. Sådan röta kommer inte från paddor. Något därinne föder giftet, och det vandrar. Jag har sett formerna röra sig längre in än förr.",
+		"choices": [
+			{
+				"text": "Vad är det som vandrar?",
+				"next": "npc_swamp_hermit_root"
+			}
+		]
+	},
+	"quest_swamp_2_offer": {
+		"speaker": "npc_swamp_hermit",
+		"emotion": "worried",
+		"text": "Sumpvarelserna — klumpar av rötter, lera och något som en gång levde. De blir fler, och de drar sig inåt, som om något kallar på dem. Hugg ner dem innan de når mitt vide. Träsket självt har lärt sig att hata, och jag vill veta varför.",
+		"choices": [
+			{
+				"text": "Jag rensar dem ur dyn.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_swamp_2"
+					}
+				]
+			},
+			{
+				"text": "Jag måste rusta mig först.",
+				"next": "npc_swamp_hermit_root"
+			}
+		]
+	},
+	"quest_swamp_2_report": {
+		"speaker": "npc_swamp_hermit",
+		"emotion": "worried",
+		"text": "De drog alla åt samma håll, säger du — mot grinden, mot hjärtat. Då vet jag. Det är Träskdjävlarna; de släpar sina offer dit ner och låter rötan göra resten, och deras näste pumpar gift genom hela träsket. Källan ligger bakom grinden. Vi måste dit — men först måste vakterna falla.",
+		"choices": [
+			{
+				"text": "Då tar vi oss till hjärtat.",
+				"next": "npc_swamp_hermit_root"
+			}
+		]
+	},
+	"quest_swamp_3_offer": {
+		"speaker": "npc_swamp_hermit",
+		"emotion": "worried",
+		"text": "Träskdjävlarna vaktar vägen till hjärtat, och så länge de står kvar förblir grinden låst för oss alla. Fäll dem — bryt deras grepp om dyn — så öppnar sig stigen in dit ingen vandrat på mannaminne. Var beredd: det som väntar bakom grinden är inte vänligt sinnat.",
+		"choices": [
+			{
+				"text": "Jag bryter deras grepp om träsket.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_swamp_3"
+					}
+				]
+			},
+			{
+				"text": "Inte än — jag måste vara redo.",
+				"next": "npc_swamp_hermit_root"
+			}
+		]
+	},
+	"quest_swamp_3_report": {
+		"speaker": "npc_swamp_hermit",
+		"emotion": "happy",
+		"text": "Känner du det? Luften är lättare, dyn andas ut. Grinden till träskets hjärta står öppen för första gången på mitt liv — du bröt djävlarnas grepp. Tag den här: en klubba jag lindade med essensen du bar hem, så att träskets eget gift nu tjänar din hand. Gå dit in när du vågar, vän. Och var försiktig — hjärtat slår ännu.",
+		"choices": [
+			{
+				"text": "Tack, Sippa.",
+				"next": "npc_swamp_hermit_root"
 			}
 		]
 	},

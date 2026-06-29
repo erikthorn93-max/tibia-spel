@@ -2743,5 +2743,101 @@
 			}
 		},
 		"difficulty": "Mästare"
+	},
+	"quest_swamp_1": {
+		"name": "Träskets feber",
+		"giver": "npc_swamp_hermit",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Giftpadda",
+				"count": 10,
+				"hint": "Krossa 10 Giftpaddor innan deras etter förpestar källorna."
+			},
+			{
+				"type": "collect",
+				"item": "swamp_essence",
+				"count": 5,
+				"hint": "Samla 5 mått Träskessens åt Sippas brygd."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_swamp_hermit",
+				"hint": "Bär essensen till Sippa vid videt."
+			}
+		],
+		"rewards": {
+			"xp": 1800,
+			"gold": 900,
+			"items": {
+				"antidote_potion": 5
+			}
+		},
+		"difficulty": "Medel"
+	},
+	"quest_swamp_2": {
+		"name": "Den vandrande förruttnelsen",
+		"giver": "npc_swamp_hermit",
+		"requires": [
+			"quest_swamp_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Sumpvarelse",
+				"count": 8,
+				"hint": "Skär ner 8 Sumpvarelser — träsket självt har lärt sig att hata."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_swamp_hermit",
+				"hint": "Berätta för Sippa vad du sett röra sig i dyn."
+			}
+		],
+		"rewards": {
+			"xp": 3200,
+			"gold": 1600,
+			"items": {
+				"great_health_potion": 3
+			},
+			"skill_xp": {
+				"slayer": 900
+			}
+		},
+		"difficulty": "Svår"
+	},
+	"quest_swamp_3": {
+		"name": "Träskdjävulens näste",
+		"giver": "npc_swamp_hermit",
+		"requires": [
+			"quest_swamp_2"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Träskdjävul",
+				"count": 6,
+				"hint": "Fäll 6 Träskdjävlar som drar offren ner mot träskets hjärta."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_swamp_hermit",
+				"hint": "Återvänd till Sippa — vägen till hjärtat borde nu ligga öppen."
+			}
+		],
+		"rewards": {
+			"xp": 9500,
+			"gold": 4800,
+			"charm_points": 42,
+			"items": {
+				"dypolsklubban": 1,
+				"great_health_potion": 4
+			},
+			"unlocks": [
+				"traskets_hjarta"
+			]
+		},
+		"difficulty": "Mästare"
 	}
 }
