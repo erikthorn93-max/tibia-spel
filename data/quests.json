@@ -2932,5 +2932,98 @@
 			}
 		},
 		"difficulty": "Mästare"
+	},
+	"quest_cave_1": {
+		"name": "Ljus i mörkret",
+		"giver": "npc_cave_miner",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Grottspindel",
+				"count": 10,
+				"hint": "Bränn bort 10 Grottspindlar som gillrar nät i varje gång."
+			},
+			{
+				"type": "collect",
+				"item": "spider_silk",
+				"count": 6,
+				"hint": "Samla 6 Spindelsilke — Gråberg spinner en livlina i mörkret."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_cave_miner",
+				"hint": "Bär silket till Gråberg."
+			}
+		],
+		"rewards": {
+			"xp": 600,
+			"gold": 300,
+			"items": {
+				"health_potion": 3
+			}
+		},
+		"difficulty": "Lätt"
+	},
+	"quest_cave_2": {
+		"name": "Skrapandet i mörkret",
+		"giver": "npc_cave_miner",
+		"requires": [
+			"quest_cave_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Jättespindel",
+				"count": 6,
+				"hint": "Spåra skrapandet till dess källa och fäll 6 Jättespindlar."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_cave_miner",
+				"hint": "Berätta för Gråberg vad som skrapade i mörkret."
+			}
+		],
+		"rewards": {
+			"xp": 1100,
+			"gold": 600,
+			"items": {
+				"health_potion": 4
+			},
+			"skill_xp": {
+				"slayer": 400
+			}
+		},
+		"difficulty": "Medel"
+	},
+	"quest_cave_3": {
+		"name": "Vägen ut",
+		"giver": "npc_cave_miner",
+		"requires": [
+			"quest_cave_2"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Skelettkrigare",
+				"count": 8,
+				"hint": "Röj vägen mot dagsljuset — 8 Skelettkrigare spärrar uppgången."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_cave_miner",
+				"hint": "Led Gråberg upp mot ljuset och ta farväl."
+			}
+		],
+		"rewards": {
+			"xp": 2400,
+			"gold": 1200,
+			"charm_points": 20,
+			"items": {
+				"graberg_lykta": 1,
+				"great_health_potion": 2
+			}
+		},
+		"difficulty": "Svår"
 	}
 }

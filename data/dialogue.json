@@ -5783,8 +5783,185 @@
 				"next": "npc_cave_miner_root_b2"
 			},
 			{
+				"text": "Kan jag hjälpa dig härifrån?",
+				"next": "quest_cave_1_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_cave_1"
+					}
+				]
+			},
+			{
+				"text": "Spindlarna är brända — här är silket.",
+				"next": "quest_cave_1_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_cave_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_cave_1"
+					}
+				]
+			},
+			{
+				"text": "Vad var det egentligen som skrapade?",
+				"next": "quest_cave_2_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_cave_2"
+					}
+				]
+			},
+			{
+				"text": "Skrapandet har tystnat — jättespindlarna är döda.",
+				"next": "quest_cave_2_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_cave_2",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_cave_2"
+					}
+				]
+			},
+			{
+				"text": "Då tar vi oss ut härifrån.",
+				"next": "quest_cave_3_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_cave_3"
+					}
+				]
+			},
+			{
+				"text": "Vägen upp är röjd. Du är fri.",
+				"next": "quest_cave_3_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_cave_3",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_cave_3"
+					}
+				]
+			},
+			{
 				"text": "Farväl.",
 				"next": null
+			}
+		]
+	},
+	"quest_cave_1_offer": {
+		"speaker": "npc_cave_miner",
+		"emotion": "worried",
+		"text": "Hjälpa? Du anar inte hur länge jag bett om det. Men jag tar inte ett steg medan spindlarna äger gångarna — de gillrar nät snabbare än jag river dem. Bränn bort dem, och bärga deras silke åt mig. Spinner jag en livlina genom mörkret hittar vi tillbaka, du och jag.",
+		"choices": [
+			{
+				"text": "Jag rensar gångarna och hämtar silket.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_cave_1"
+					}
+				]
+			},
+			{
+				"text": "Håll ut — jag kommer tillbaka.",
+				"next": "npc_cave_miner_root"
+			}
+		]
+	},
+	"quest_cave_1_report": {
+		"speaker": "npc_cave_miner",
+		"emotion": "happy",
+		"text": "Ah, gott silke — starkt nog att bära oss båda. Men hör … där, längre in. Det där djupa skrapandet, det är ingen vanlig spindel. Jag har hört det varje natt i tre dygn, närmare och närmare. Jag vågar inte gå mot det ensam.",
+		"choices": [
+			{
+				"text": "Då går jag mot skrapandet.",
+				"next": "npc_cave_miner_root"
+			}
+		]
+	},
+	"quest_cave_2_offer": {
+		"speaker": "npc_cave_miner",
+		"emotion": "worried",
+		"text": "Det är de stora. Jättespindlar, feta som hundar, gömda där taket sänker sig. Det är deras klor mot stenen jag hör om nätterna. Så länge de lever kommer ingen levande själ förbi den passagen — och det är just den vägen som leder ut. Fäll dem.",
+		"choices": [
+			{
+				"text": "Jag möter dem i mörkret.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_cave_2"
+					}
+				]
+			},
+			{
+				"text": "Jag behöver rusta mig först.",
+				"next": "npc_cave_miner_root"
+			}
+		]
+	},
+	"quest_cave_2_report": {
+		"speaker": "npc_cave_miner",
+		"emotion": "happy",
+		"text": "Tyst. Det är … tyst. För första gången på tre dygn hör jag inte skrapandet. Du gjorde det, långben. Nu återstår bara uppgången — och den är full av de rastlösa döda. Men med dig vid min sida vågar jag äntligen gå. Ge mig ett ögonblick att samla mod.",
+		"choices": [
+			{
+				"text": "Säg till när du är redo.",
+				"next": "npc_cave_miner_root"
+			}
+		]
+	},
+	"quest_cave_3_offer": {
+		"speaker": "npc_cave_miner",
+		"emotion": "worried",
+		"text": "Uppgången mot dagsljuset vaktas av Skelettkrigare — gamla gruvarbetare som aldrig fann vägen ut, precis som jag höll på att gå samma öde till mötes. Röj dem, snälla. Inte med hat — med barmhärtighet. Lägg dem till vila, så går vi ut tillsammans.",
+		"choices": [
+			{
+				"text": "Jag röjer vägen mot ljuset.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_cave_3"
+					}
+				]
+			},
+			{
+				"text": "Inte än — jag måste vara redo.",
+				"next": "npc_cave_miner_root"
+			}
+		]
+	},
+	"quest_cave_3_report": {
+		"speaker": "npc_cave_miner",
+		"emotion": "happy",
+		"text": "Dagsljus … jag kände nästan glömt hur det luktar. Tre dygn i mörkret, och du ledde mig ut på en enda kväll. Jag har inget guld kvar — men ta detta: min gruvlykta, fylld med det sista oljan jag äger och slipad att lysa starkare än någon annans. Måtte du aldrig behöva frukta mörkret som jag gjorde. Tack, vän. Verkligen.",
+		"choices": [
+			{
+				"text": "Ta hand om dig, Gråberg.",
+				"next": "npc_cave_miner_root"
 			}
 		]
 	},

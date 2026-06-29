@@ -3511,5 +3511,14 @@
 		"value": 3400,
 		"level_req": 32,
 		"color": "#5a4a3a"
+	},
+	"graberg_lykta": {
+		"name": "Gråbergs gruvlykta",
+		"type": "light",
+		"slot": "light",
+		"light": 0.95,
+		"value": 600,
+		"level_req": 12,
+		"color": "#ffd27a"
 	}
 }
