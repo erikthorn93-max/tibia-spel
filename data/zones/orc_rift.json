@@ -50,7 +50,7 @@
 			"terrain": ","
 		},
 		"e": {
-			"type": "entrance",
+			"type": "floor",
 			"terrain": ","
 		},
 		"o": {
