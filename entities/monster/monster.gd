@@ -564,6 +564,7 @@ func _die() -> void:
 		gi.setup(drops, tile)
 	TaskSystem.record_kill(monster_name)
 	QuestSystem.record_kill(monster_name)
+	ArenaSystem.record_kill(monster_name)
 	# --- DÖDSSKUR: typad effekt (ben/slem/glöd/is/stoft) + glitter om loot föll ---
 	var fx_parent := get_parent()
 	if fx_parent != null:

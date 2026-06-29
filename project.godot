@@ -32,6 +32,7 @@ Sfx="*res://autoload/sfx.gd"
 WeatherSystem="*res://autoload/weather_system.gd"
 Ambience="*res://autoload/ambience.gd"
 CharmSystem="*res://autoload/charm_system.gd"
+ArenaSystem="*res://autoload/arena_system.gd"
 
 [display]
 

@@ -1650,6 +1650,25 @@
 				"next": "arena_master_rules"
 			},
 			{
+				"text": "Jag kliver in på sanden.",
+				"next": "arena_master_begin",
+				"conditions": [
+					{
+						"type": "arena_active",
+						"not": true
+					}
+				]
+			},
+			{
+				"text": "Hur går min omgång?",
+				"next": "arena_master_status",
+				"conditions": [
+					{
+						"type": "arena_active"
+					}
+				]
+			},
+			{
 				"text": "Not today.",
 				"next": null
 			}
@@ -8592,6 +8611,37 @@
 			{
 				"text": "Tack, Eldrin. Den ska hedras.",
 				"next": "forestwarden_root"
+			}
+		]
+	},
+	"arena_master_begin": {
+		"speaker": "npc_arena_master",
+		"emotion": "neutral",
+		"text": "Modigt. Reglerna är enkla: fem vågor, var och en värre än den förra. Inga pauser, ingen nåd — faller du eller flyr från sanden är allt förlorat och du börjar om från första vågen. Överlever du den sista … då räcker jag dig Triumfklingan med egna händer. Är du redo? Sanden väntar inte.",
+		"choices": [
+			{
+				"text": "Släpp in dem. Jag är redo.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_arena"
+					}
+				]
+			},
+			{
+				"text": "Ge mig ett ögonblick.",
+				"next": "arena_master_root"
+			}
+		]
+	},
+	"arena_master_status": {
+		"speaker": "npc_arena_master",
+		"emotion": "friendly",
+		"text": "Du står ännu kvar — det är mer än de flesta. Vänd dig om och möt det som reser sig ur sanden. Jag dömer härifrån; du slåss därute. Sluta inte förrän den sista vågen ligger still.",
+		"choices": [
+			{
+				"text": "Tillbaka till striden.",
+				"next": null
 			}
 		]
 	}

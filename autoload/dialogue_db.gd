@@ -47,11 +47,18 @@ func eval_condition(c: Dictionary) -> bool:
 			ok = UnlockSystem.is_unlocked(String(c["id"]))
 		"gold":
 			ok = GameState.gold >= int(c["amount"])
+		"arena_active":
+			ok = ArenaSystem.is_active()
 	return not ok if bool(c.get("not", false)) else ok
 
 func run_actions(actions: Array, npc_id: String) -> void:
 	for a in actions:
 		match String(a["type"]):
+			"start_arena":
+				if ArenaSystem.start():
+					if World.hud: World.hud.show_message("Arenan vaknar! Överlev alla vågor.")
+				elif World.hud:
+					World.hud.show_message("Arenan är redan i gång.")
 			"start_quest":
 				QuestSystem.start(String(a["quest"]))
 			"advance_quest":

@@ -40,6 +40,11 @@ func _obtainable() -> Dictionary:
 	for id in q:
 		for item_id in q[id].get("rewards", {}).get("items", {}):
 			src[String(item_id)] = true
+	# Arena-belöning (vågbaserad gladiatorarena)
+	var arena = _json("res://data/arena.json")
+	if arena is Dictionary:
+		for item_id in arena.get("reward", {}).get("items", {}):
+			src[String(item_id)] = true
 	# Dialog give_item
 	var dlg = _json("res://data/dialogue.json")
 	for nid in dlg:

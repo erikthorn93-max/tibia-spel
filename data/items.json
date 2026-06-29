@@ -3569,5 +3569,17 @@
 		"value": 2800,
 		"color": "#3f6b3a",
 		"desc": "Den förste skogsväktarens båge, skuren ur ett träd som stod innan Dimmoren fick sitt namn. Banditerna slet den ur hans gravröse; Eldrin tog tillbaka den och lade den i händerna på den som lät hans bröder vila. Strängen sjunger lågt när dimman tätnar."
+	},
+	"triumph_blade": {
+		"name": "Triumfklingan",
+		"type": "weapon",
+		"slot": "weapon",
+		"skill": "sword",
+		"atk": 43,
+		"crit_chance": 0.09,
+		"level_req": 28,
+		"value": 4400,
+		"color": "#d4b24a",
+		"desc": "Klingan Arenamästaren Torben räcker den som överlever sandens alla vågor. Var och en av dess repor är en motståndare som föll, och mängden vittnar om att ingen bär den utan att ha förtjänat publikens rytande. Stålet minns varje seger."
 	}
 }

@@ -1,0 +1,89 @@
+{
+	"waves": [
+		{
+			"name": "Sandens valpar",
+			"spawns": [
+				{
+					"monster": "Goblin",
+					"count": 4
+				},
+				{
+					"monster": "Varg",
+					"count": 3
+				}
+			]
+		},
+		{
+			"name": "Legoknektar",
+			"spawns": [
+				{
+					"monster": "Bandit",
+					"count": 4
+				},
+				{
+					"monster": "Skogsbjörn",
+					"count": 2
+				}
+			]
+		},
+		{
+			"name": "Vildmarkens vrede",
+			"spawns": [
+				{
+					"monster": "Goblinsoldat",
+					"count": 4
+				},
+				{
+					"monster": "Troll",
+					"count": 2
+				},
+				{
+					"monster": "Skuggspindel",
+					"count": 1
+				}
+			]
+		},
+		{
+			"name": "Tjurarnas timme",
+			"spawns": [
+				{
+					"monster": "Minotaur",
+					"count": 3
+				},
+				{
+					"monster": "MinotaurVakt",
+					"count": 2
+				}
+			]
+		},
+		{
+			"name": "Mästarens prövning",
+			"spawns": [
+				{
+					"monster": "Sotdemon",
+					"count": 2
+				},
+				{
+					"monster": "Pansarkrabba",
+					"count": 2
+				},
+				{
+					"monster": "Vampyr",
+					"count": 1
+				}
+			]
+		}
+	],
+	"reward": {
+		"xp": 9000,
+		"gold": 4000,
+		"charm_points": 40,
+		"skill_xp": {
+			"slayer": 1500
+		},
+		"items": {
+			"triumph_blade": 1,
+			"great_health_potion": 5
+		}
+	}
+}

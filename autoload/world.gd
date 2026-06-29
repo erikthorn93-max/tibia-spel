@@ -21,6 +21,9 @@ var last_surface_tile := Vector2i(-1, -1)
 func _ready() -> void:
 	GameState.player_died.connect(_on_player_died)
 	GameState.player_respawned.connect(_on_player_respawned)
+	ArenaSystem.wave_started.connect(_on_arena_wave_started)
+	ArenaSystem.arena_won.connect(_on_arena_won)
+	ArenaSystem.arena_failed.connect(_on_arena_failed)
 
 ## Bygger om hemzonen och flyttar spelaren dit efter återuppståndelse.
 func _on_player_respawned() -> void:
@@ -29,6 +32,9 @@ func _on_player_respawned() -> void:
 	start_game(GameState.current_zone, GameState.player_tile)
 
 func start_game(zone_id: String, at_tile := Vector2i(-1, -1)) -> void:
+	# Lämnar man arenan mitt i en omgång räknas det som uppgivet.
+	if ArenaSystem.is_active() and zone_id != ArenaSystem.ARENA_ZONE:
+		ArenaSystem.abort()
 	if current_zone:
 		# Rädda spelaren ur den gamla zonen innan vi river den
 		if player and is_instance_valid(player) and player.get_parent() == current_zone:
@@ -197,6 +203,8 @@ func drop_item(item_id: String, qty: int = 1) -> void:
 ## Andelen styrs av death_drop_fraction() (ryggsäck + välsignelser minskar den).
 ## Graven persisteras i GameState så looten överlever respawn/zon-ombyggnad.
 func _on_player_died() -> void:
+	# Faller man i arenan är omgången förlorad.
+	ArenaSystem.abort()
 	if current_zone == null:
 		return
 	var drop_frac := GameState.death_drop_fraction()
@@ -227,3 +235,44 @@ func _spawn_grave_if_here() -> void:
 	gi.setup(GameState.grave_drops, GameState.grave_tile)
 	gi.persistent = true
 	gi.is_grave = true
+
+# ── Arena ─────────────────────────────────────────────────────────────────────
+## Spawnar nästa arenavåg på lediga rutor en bit från spelaren.
+func _on_arena_wave_started(index: int, spawns: Array) -> void:
+	if current_zone == null or player == null or not is_instance_valid(player):
+		return
+	var tiles := _arena_spawn_tiles()
+	var ti := 0
+	for s in spawns:
+		for _i in range(int(s.get("count", 0))):
+			if ti >= tiles.size():
+				break
+			spawn_monster(String(s["monster"]), tiles[ti], -1.0)
+			ti += 1
+	if hud != null and is_instance_valid(hud):
+		var label := String(ArenaSystem.waves[index].get("name", ""))
+		hud.show_message("Våg %d/%d%s" % [index + 1, ArenaSystem.wave_count(),
+			(" — " + label) if label != "" else ""])
+
+## Lediga, gångbara rutor minst 2 steg från spelaren, blandade.
+func _arena_spawn_tiles() -> Array:
+	var ptile: Vector2i = player.tile
+	var out: Array = []
+	for y in range(current_zone.grid_size.y):
+		for x in range(current_zone.grid_size.x):
+			var t := Vector2i(x, y)
+			if not current_zone.is_walkable(t) or current_zone.is_occupied(t):
+				continue
+			if maxi(absi(t.x - ptile.x), absi(t.y - ptile.y)) < 2:
+				continue
+			out.append(t)
+	out.shuffle()
+	return out
+
+func _on_arena_won() -> void:
+	if hud != null and is_instance_valid(hud):
+		hud.show_message("Du har besegrat arenan! Publiken ropar ditt namn.")
+
+func _on_arena_failed(_at_wave: int) -> void:
+	if hud != null and is_instance_valid(hud):
+		hud.show_message("Du lämnade sanden. Arenan glömmer dig.")
