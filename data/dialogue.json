@@ -5865,8 +5865,189 @@
 				"next": "npc_mine_dwarf_root_b2"
 			},
 			{
+				"text": "Vad är det som slår tillbaka mot er?",
+				"next": "quest_mine_1_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_mine_1"
+					}
+				]
+			},
+			{
+				"text": "Soldaterna är slagna — här är skäggflätorna.",
+				"next": "quest_mine_1_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_mine_1",
+						"step": 2
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_mine_1"
+					}
+				]
+			},
+			{
+				"text": "Vad var det geomanterna mässade?",
+				"next": "quest_mine_2_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_mine_2"
+					}
+				]
+			},
+			{
+				"text": "Geomanterna är tystade.",
+				"next": "quest_mine_2_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_mine_2",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_mine_2"
+					}
+				]
+			},
+			{
+				"text": "Det är dags att möta det som väckts i djupet.",
+				"next": "quest_mine_3_offer",
+				"conditions": [
+					{
+						"type": "quest_available",
+						"quest": "quest_mine_3"
+					}
+				]
+			},
+			{
+				"text": "Stenkungen Brokk vilar igen. Det är över.",
+				"next": "quest_mine_3_report",
+				"conditions": [
+					{
+						"type": "quest_step",
+						"quest": "quest_mine_3",
+						"step": 1
+					}
+				],
+				"actions": [
+					{
+						"type": "advance_quest",
+						"quest": "quest_mine_3"
+					}
+				]
+			},
+			{
+				"text": "Vad bryts här?",
+				"next": "npc_mine_dwarf_root_b2"
+			},
+			{
 				"text": "Farväl.",
 				"next": null
+			}
+		]
+	},
+	"quest_mine_1_offer": {
+		"speaker": "npc_mine_dwarf",
+		"emotion": "worried",
+		"text": "Mina egna fränder, det är skammen. Dvärgsoldaterna i de nedre tunnlarna har vänt sina yxor mot oss — som om berget viskar i deras öron och de lyssnar. Slå tillbaka dem, men bärga deras skäggflätor åt mig. En dvärg begravs inte utan sitt skägg, hur vilse han än gått.",
+		"choices": [
+			{
+				"text": "Jag håller tunnlarna och hedrar de fallna.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_mine_1"
+					}
+				]
+			},
+			{
+				"text": "Senare — jag måste rusta mig.",
+				"next": "npc_mine_dwarf_root"
+			}
+		]
+	},
+	"quest_mine_1_report": {
+		"speaker": "npc_mine_dwarf",
+		"emotion": "sad",
+		"text": "Tack. Var fläta är en broder jag känt. De dog inte av vrede — se på deras ögon i minnet, långben: de var rädda. Något därnere skrämmer även en dvärg från vettet. Och jag tror jag vet vem som mässar i mörkret. Vila. Jag måste tänka.",
+		"choices": [
+			{
+				"text": "Vem mässar i mörkret?",
+				"next": "npc_mine_dwarf_root"
+			}
+		]
+	},
+	"quest_mine_2_offer": {
+		"speaker": "npc_mine_dwarf",
+		"emotion": "worried",
+		"text": "Geomanterna — dvärgar som lärt sig tala med berget — har gått för djupt och börjat svara det. De kallar magma ur sprickorna och mässar ett namn jag inte vågar säga högt. Tysta dem innan deras sång väcker mer än sten. Lyssna på vad de ropar när de faller; jag måste veta.",
+		"choices": [
+			{
+				"text": "Jag tystar dem och lyssnar.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_mine_2"
+					}
+				]
+			},
+			{
+				"text": "Jag behöver bättre skydd mot eld först.",
+				"next": "npc_mine_dwarf_root"
+			}
+		]
+	},
+	"quest_mine_2_report": {
+		"speaker": "npc_mine_dwarf",
+		"emotion": "worried",
+		"text": "\"Brokk reser sig\", ropade de. Då är det sant. Stenkungen Brokk — den förste av oss, kungen vi begravde så djupt att legenden glömt honom. Stenen har ätit sig in i hans kött och kallar honom tillbaka till en tron som ruttnat bort. Han kommer inte sluta gräva mot oss. Vi måste ner till honom — och en av oss måste fälla honom.",
+		"choices": [
+			{
+				"text": "Då går jag ner i djupet.",
+				"next": "npc_mine_dwarf_root"
+			}
+		]
+	},
+	"quest_mine_3_offer": {
+		"speaker": "npc_mine_dwarf",
+		"emotion": "angry",
+		"text": "Längst ner, där schaktet slutar och berget blir hett, sitter han på sin stentron. Stenkungen Brokk. Jag är för gammal för att svinga släggan mot min egen kungs minne — men du är inte bunden av vår sorg. Gå ner. Ge honom den vila vi en gång nekade honom. Krossa stenen som håller honom vaken.",
+		"choices": [
+			{
+				"text": "Jag lägger kungen till vila.",
+				"next": null,
+				"actions": [
+					{
+						"type": "start_quest",
+						"quest": "quest_mine_3"
+					}
+				]
+			},
+			{
+				"text": "Inte än — jag måste vara helt redo.",
+				"next": "npc_mine_dwarf_root"
+			}
+		]
+	},
+	"quest_mine_3_report": {
+		"speaker": "npc_mine_dwarf",
+		"emotion": "happy",
+		"text": "Berget är tyst. För första gången på månader hör jag bara mitt eget hjärta, inte hans grävande. Du gav ro åt en kung och frid åt ett helt folk. Tag detta — Stenkungens harnesk, smitt av den första malmen som någonsin bröts här. Bär det med heder, långben. Du är dvärgavän nu, och det är inte många långben som förtjänar det ordet.",
+		"choices": [
+			{
+				"text": "Tack, Durin.",
+				"next": "npc_mine_dwarf_root"
 			}
 		]
 	},

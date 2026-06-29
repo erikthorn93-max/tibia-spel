@@ -2839,5 +2839,98 @@
 			]
 		},
 		"difficulty": "Mästare"
+	},
+	"quest_mine_1": {
+		"name": "Berget slår tillbaka",
+		"giver": "npc_mine_dwarf",
+		"requires": [],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Dvärgsoldat",
+				"count": 10,
+				"hint": "Slå tillbaka 10 Dvärgsoldater som vänt sina vapen mot Durins folk."
+			},
+			{
+				"type": "collect",
+				"item": "dwarf_beard",
+				"count": 6,
+				"hint": "Bärga 6 skäggflätor från de fallna — Durin hedrar sina döda."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_mine_dwarf",
+				"hint": "Bär flätorna till Durin Stenbroder."
+			}
+		],
+		"rewards": {
+			"xp": 2000,
+			"gold": 1000,
+			"items": {
+				"great_health_potion": 2
+			}
+		},
+		"difficulty": "Medel"
+	},
+	"quest_mine_2": {
+		"name": "Stenens röst",
+		"giver": "npc_mine_dwarf",
+		"requires": [
+			"quest_mine_1"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Dvärggeomant",
+				"count": 8,
+				"hint": "Tysta 8 Dvärggeomanter innan de väcker mer av berget."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_mine_dwarf",
+				"hint": "Berätta för Durin vad geomanterna mässade i djupet."
+			}
+		],
+		"rewards": {
+			"xp": 3400,
+			"gold": 1700,
+			"items": {
+				"great_mana_potion": 3
+			},
+			"skill_xp": {
+				"slayer": 950
+			}
+		},
+		"difficulty": "Svår"
+	},
+	"quest_mine_3": {
+		"name": "Stenkungens tron",
+		"giver": "npc_mine_dwarf",
+		"requires": [
+			"quest_mine_2"
+		],
+		"steps": [
+			{
+				"type": "kill",
+				"monster": "Stenkungen Brokk",
+				"count": 1,
+				"hint": "Stig ner i den djupaste schaktet och lägg Stenkungen Brokk till vila."
+			},
+			{
+				"type": "talk_to",
+				"npc": "npc_mine_dwarf",
+				"hint": "Bär budet om kungens vila till Durin."
+			}
+		],
+		"rewards": {
+			"xp": 11000,
+			"gold": 5500,
+			"charm_points": 46,
+			"items": {
+				"stenkungens_harnesk": 1,
+				"great_health_potion": 4
+			}
+		},
+		"difficulty": "Mästare"
 	}
 }

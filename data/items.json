@@ -3501,5 +3501,15 @@
 			"duration": 7,
 			"tick_dmg": 9
 		}
+	},
+	"stenkungens_harnesk": {
+		"name": "Stenkungens harnesk",
+		"type": "armor",
+		"slot": "body",
+		"armor": 21,
+		"def_bonus": 8,
+		"value": 3400,
+		"level_req": 32,
+		"color": "#5a4a3a"
 	}
 }

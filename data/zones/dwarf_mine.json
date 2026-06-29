@@ -59,5 +59,22 @@
 			"type": "decoration",
 			"id": "ore_vein"
 		}
-	}
+	},
+	"spawn_table": [
+		{
+			"monster": "Dvärgsoldat",
+			"count": 4,
+			"respawn": 40.0
+		},
+		{
+			"monster": "Dvärggeomant",
+			"count": 3,
+			"respawn": 45.0
+		},
+		{
+			"monster": "Stenkungen Brokk",
+			"count": 1,
+			"respawn": 3600.0
+		}
+	]
 }
