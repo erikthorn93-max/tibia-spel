@@ -275,6 +275,7 @@ func _update_attack(delta: float) -> void:
 				dmg *= CombatFormulas.CRIT_MULTIPLIER
 			target.take_damage(dmg, crit)
 			_apply_offense_charm(target)
+			_apply_weapon_ability(target)
 			GameState.gain_skill_xp(wskill, 1)
 			GameState.add_spec(CombatFormulas.SPEC_GAIN)   # ladda kraftslaget
 			visual.play_attack(facing)
@@ -296,6 +297,7 @@ func _update_attack(delta: float) -> void:
 				dmg *= CombatFormulas.CRIT_MULTIPLIER
 			target.take_damage(dmg, crit)
 			_apply_offense_charm(target)
+			_apply_weapon_ability(target)
 			GameState.gain_skill_xp(wskill, 1)
 			GameState.add_spec(CombatFormulas.SPEC_GAIN)   # ladda kraftslaget
 			visual.play_attack(facing)   # närstrids-stöt mot målet
@@ -314,6 +316,20 @@ func _on_attack_miss(wskill: String) -> void:
 	if is_instance_valid(target) and target.has_method("show_miss"):
 		target.show_miss()
 	GameState.gain_skill_xp(wskill, 1)
+
+## Slår vapnets giftbeläggning mot målet vid en landad träff. Giftvapen
+## (venom_blade m.fl.) bär ability {type:poison, ...}; proccar den får monstret
+## en gift-DoT — spegelbilden av hur monstergift drabbar spelaren.
+func _apply_weapon_ability(target) -> void:
+	if not is_instance_valid(target) or target.dead:
+		return
+	var ability: Dictionary = ItemDB.items.get(GameState.equipped_weapon, {}).get("ability", {})
+	var proc := CombatFormulas.weapon_poison_proc(ability, randf())
+	if not proc.get("apply", false):
+		return
+	target.apply_status("poison", float(proc["duration"]), float(proc["tick_dmg"]))
+	if target.has_method("_spawn_element_tag"):
+		target._spawn_element_tag("förgiftad", Color(0.4, 0.95, 0.4))
 
 ## Slår den bärna offensiva charmen mot målet och lägger på elementär bonusskada.
 func _apply_offense_charm(target) -> void:
@@ -389,6 +405,7 @@ func try_special() -> void:
 		_:  # power
 			_spec_hit(target, base, mult, stance_mult)
 	_apply_offense_charm(target)
+	_apply_weapon_ability(target)
 	GameState.gain_skill_xp(wskill, 2)
 	Sfx.crit()
 	World.hud.show_message(msg)

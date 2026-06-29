@@ -38,7 +38,7 @@ func test_quest_chain_present_and_linked():
 
 func test_capstone_targets_boss_and_rewards_amulet():
 	var q: Dictionary = quests["quest_urskog_2"]
-	var kills := q["steps"].filter(func(s): return String(s["type"]) == "kill")
+	var kills: Array = q["steps"].filter(func(s): return String(s["type"]) == "kill")
 	assert_eq(String(kills[0]["monster"]), "Urskogsvältaren")
 	assert_true(q["rewards"]["items"].has("urskog_amulett"))
 

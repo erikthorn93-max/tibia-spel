@@ -99,6 +99,21 @@ static func spec_ready(energy: float) -> bool:
 static func spec_damage(base_dmg: float, mult := SPEC_MULTIPLIER) -> float:
 	return base_dmg * mult
 
+## Avgör om ett vapens giftbeläggning proccar denna träff, givet ett slumptal i
+## [0,1). Giftvapen (venom_blade m.fl.) bär ability {type:poison, chance,
+## duration, tick_dmg}. Returnerar {apply:true, duration, tick_dmg} när giftet
+## fastnar, annars {apply:false}. Slumptalet injiceras → ren och testbar.
+static func weapon_poison_proc(ability: Dictionary, roll: float) -> Dictionary:
+	if String(ability.get("type", "")) != "poison":
+		return {"apply": false}
+	if roll >= float(ability.get("chance", 0.0)):
+		return {"apply": false}
+	return {
+		"apply": true,
+		"duration": float(ability.get("duration", 5.0)),
+		"tick_dmg": float(ability.get("tick_dmg", 4.0)),
+	}
+
 ## Kraftslagets karaktär per vapentyp. Rena parametrar → testbara.
 ##   power  — ett hårt enkelmålsslag (svärd m.fl.)
 ##   cleave — träffar målet + intilliggande fiender (yxa)
