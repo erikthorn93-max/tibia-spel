@@ -90,7 +90,9 @@ function hasOutline(W, H, d) {
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
     const i = (y * W + x) * 4;
     if (d[i + 3] < ALPHA_FLOOR) continue;
-    let boundary = x === 0 || y === 0 || x === W - 1 || y === H - 1;
+    // Endast pixlar mot transparens räknas — bildkanten är ingen kontur
+    // (full-bleed-tiles ska inte trigga outline-försök på nytt).
+    let boundary = false;
     for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
       const nx = x + dx, ny = y + dy;
       if (nx >= 0 && ny >= 0 && nx < W && ny < H && d[(ny * W + nx) * 4 + 3] < ALPHA_FLOOR) boundary = true;
@@ -121,23 +123,33 @@ function applyOutline(W, H, d) {
 }
 
 // ── Steg 2: kontrast ──────────────────────────────────────────────────────────
-// Mild percentilsträckning av luma på opaka pixlar → konsekvent "pop" mellan
-// handritade och Blender-renderade sprites. No-op om spannet redan är brett.
+// Mild percentilsträckning → konsekvent "pop" mellan handritade och
+// Blender-renderade sprites. Percentiler beräknas på kanalvärden (inte luma)
+// så att sträckningen landar exakt på målspannet — då blir en andra körning
+// garanterat no-op (spannet ≥ 180 ⇒ hoppa över). Måste köras FÖRE outline
+// så att outline-färgen inte förvanskas.
+// Pixlar i outline-färgen lämnas orörda av kontrasten: annars ljusas befintliga
+// konturer upp, hasOutline känner inte igen dem, och nästa körning lägger en
+// ring till. Tolerans ±6 räcker för exakta gen_*-konturer.
+function isOutlinePx(d, i) {
+  return Math.abs(d[i] - OUTLINE[0]) <= 6 && Math.abs(d[i + 1] - OUTLINE[1]) <= 6 && Math.abs(d[i + 2] - OUTLINE[2]) <= 6;
+}
+
 function applyContrast(W, H, d) {
-  const lumas = [];
+  const vals = [];
   for (let p = 0; p < W * H; p++) {
-    if (d[p * 4 + 3] < 128) continue;
-    lumas.push(0.299 * d[p * 4] + 0.587 * d[p * 4 + 1] + 0.114 * d[p * 4 + 2]);
+    if (d[p * 4 + 3] < 128 || isOutlinePx(d, p * 4)) continue;
+    vals.push(d[p * 4], d[p * 4 + 1], d[p * 4 + 2]);
   }
-  if (lumas.length < 8) return false;
-  lumas.sort((a, b) => a - b);
-  const lo = lumas[Math.floor(lumas.length * 0.02)];
-  const hi = lumas[Math.min(lumas.length - 1, Math.floor(lumas.length * 0.98))];
+  if (vals.length < 24) return false;
+  vals.sort((a, b) => a - b);
+  const lo = vals[Math.floor(vals.length * 0.02)];
+  const hi = vals[Math.min(vals.length - 1, Math.floor(vals.length * 0.98))];
   const range = hi - lo;
   if (range >= 180 || range < 8) return false; // redan bra kontrast / enfärgad
   const TLO = 20, THI = 235, gain = (THI - TLO) / range;
   for (let p = 0; p < W * H; p++) {
-    if (d[p * 4 + 3] < ALPHA_FLOOR) continue;
+    if (d[p * 4 + 3] < ALPHA_FLOOR || isOutlinePx(d, p * 4)) continue;
     for (let ch = 0; ch < 3; ch++) {
       const v = TLO + (d[p * 4 + ch] - lo) * gain;
       d[p * 4 + ch] = v < 0 ? 0 : v > 255 ? 255 : Math.round(v);
@@ -146,18 +158,28 @@ function applyContrast(W, H, d) {
   return true;
 }
 
+// Kör kontrasten till fixpunkt (avrundning kan lämna spannet strax under
+// tröskeln efter första sträckningen — då behövs ett varv till).
+function applyContrastStable(W, H, d) {
+  let changed = false;
+  for (let i = 0; i < 4 && applyContrast(W, H, d); i++) changed = true;
+  return changed;
+}
+
 // ── Huvudfunktion ─────────────────────────────────────────────────────────────
 function postprocessFile(file, opts = {}) {
   const { W, H, d } = decodePNG(fs.readFileSync(file));
   // Nolla AA-spill med mycket låg alfa så outline inte lägger sig runt "spöken".
   for (let p = 0; p < W * H; p++) if (d[p * 4 + 3] < ALPHA_FLOOR) d[p * 4 + 3] = 0;
 
+  // Ordning: kontrast FÖRE outline — annars förvanskar sträckningen
+  // outline-färgen och nästa körning lägger en ring till (ej idempotent).
   const result = { file, outline: "hoppade över", contrast: "oförändrad" };
+  if (opts.contrast !== false) result.contrast = applyContrastStable(W, H, d) ? "sträckt" : "oförändrad";
   if (opts.outline !== false) {
     if (hasOutline(W, H, d)) result.outline = "fanns redan";
     else result.outline = `+${applyOutline(W, H, d)} px`;
   }
-  if (opts.contrast !== false) result.contrast = applyContrast(W, H, d) ? "sträckt" : "oförändrad";
   fs.writeFileSync(file, encodePNG(W, H, d));
   return result;
 }
