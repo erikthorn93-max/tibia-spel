@@ -8,3 +8,8 @@ godot_log.txt
 
 # Piper-röstmodeller (~300 MB, laddas ner av tools/generate_voices.py)
 tools/voices/
+
+node_modules/
+
+# Meshy GLB-cache trackas tills vidare (kan bli git-lfs eller ignoreras senare)
+# assets/_meshy_cache/*.glb
