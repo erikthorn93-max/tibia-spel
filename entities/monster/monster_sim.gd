@@ -13,6 +13,7 @@ extends RefCounted
 signal damaged(amount: int, crit: bool)            # hp redan uppdaterat
 signal charm_damaged(amount: int, element: String) # elementär charm-bonusskada
 signal element_reaction(kind: String)  # "weak" | "resist" | "immune" | "poison_immune"
+                                       # + noteringar: "miss" | "poisoned" | "stunned"
 signal status_changed()                # status lades till eller tickade ut
 signal enrage_started()                # enrage-fas aktiverad (speed/atk höjda)
 signal died(drops: Array)              # exp/kills bokförda; drops = utrullad loot
@@ -165,6 +166,11 @@ func poison_immune() -> bool:
 
 func has_status(id: String) -> bool:
 	return status_effects.has(id)
+
+## Ber vyn visa en förklarande etikett ("miss"/"förgiftad"/"bedövad") — anropas
+## av angriparen (PlayerSim) så taggen bara visas när spelaren utlöste den.
+func note(kind: String) -> void:
+	element_reaction.emit(kind)
 
 ## Applicerar en statuseffekt. Speglar GameState.apply_status: en aktiv DoT
 ## förnyas bara av en starkare proc (högre tick_dmg) — lika/svagare ignoreras

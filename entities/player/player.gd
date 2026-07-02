@@ -5,7 +5,6 @@ extends Node2D
 ## interpolerar position ur sim.move_progress och delegerar bakåtkompatibelt.
 
 const TILE := 32
-const ATTACK_COOLDOWN := 1.0
 const GATHER_INTERVAL := 2.0
 
 var sim: PlayerSim
@@ -18,7 +17,6 @@ var zone: Node2D:                     # sätts av World vid zonladdning
 var _from := Vector2.ZERO
 var _to := Vector2.ZERO
 var target: Node2D = null
-var _attack_timer := 0.0
 var gather_target: Node2D = null
 var _gather_timer := 0.0
 var _status_aura: CPUParticles2D = null
@@ -40,6 +38,11 @@ func _init() -> void:
 	sim.step_completed.connect(_on_sim_step_completed)
 	sim.facing_changed.connect(_on_sim_facing_changed)
 	sim.message.connect(_on_sim_message)
+	sim.attack_swung.connect(_on_sim_attack_swung)
+	sim.healed.connect(_on_sim_healed)
+	sim.spec_flash.connect(_on_sim_spec_flash)
+	sim.spec_denied.connect(func(): Sfx.denied())
+	sim.spec_released.connect(func(): Sfx.crit())
 
 @onready var visual: CharacterVisual = $CharacterVisual
 
@@ -140,6 +143,7 @@ func set_target(m: Node2D) -> void:
 	if target and is_instance_valid(target):
 		target.modulate = Color.WHITE
 	target = m
+	sim.target = m.sim if m != null else null
 	gather_target = null
 	sim.auto_path = []
 	if target:
@@ -175,7 +179,11 @@ func _process(delta: float) -> void:
 	sim.advance(delta, intent)
 	position = _from.lerp(_to, sim.move_progress)
 	visual.set_walk(sim.move_progress < 1.0, sim.move_progress)   # gång-studs/andning
-	_update_attack(delta)
+	# Målnoden kan ha frigjorts (zonbyte/despawn) — nolla sim-målet i så fall.
+	if target != null and not is_instance_valid(target):
+		target = null
+		sim.target = null
+	sim.attack_tick(delta)
 	_update_gather(delta)
 	_update_spells()
 	_update_player_light(delta)
@@ -196,178 +204,31 @@ func _on_sim_facing_changed(dir: Vector2i) -> void:
 func _on_sim_message(text: String) -> void:
 	World.hud.show_message(text)
 
-func _update_attack(delta: float) -> void:
-	_attack_timer = maxf(_attack_timer - delta, 0.0)
-	if target and is_instance_valid(target) and not target.dead and _attack_timer <= 0.0:
-		var wskill := GameState.weapon_skill()
-		var weapon: Dictionary = ItemDB.items.get(GameState.equipped_weapon, {})
-		var weapon_range := int(weapon.get("range", 1))
-		var dist := _chebyshev(target.tile)
-		if dist > weapon_range:
-			return   # utom räckvidd
-		_attack_timer = ATTACK_COOLDOWN / (1.0 + GameState.total_speed_bonus())
-		# Vänd dig mot målet inför slaget (gäller både närstrid och bågskytte)
-		var to_dir := Vector2i(signi(target.tile.x - tile.x), signi(target.tile.y - tile.y))
-		if to_dir != Vector2i.ZERO:
-			facing = to_dir
-			visual.face(facing)
-		var dmg: float
-		if weapon_range > 1:
-			# Bågskjutning: kräver ammunition i inventory
-			var ammo_id := String(weapon.get("ammo", ""))
-			if ammo_id != "" and not GameState.has_ammo(ammo_id):
-				World.hud.show_message("Inga pilar kvar!")
-				return
-			if ammo_id != "":
-				GameState.consume_ammo(ammo_id)
-			if not _rolls_hit(wskill):
-				_on_attack_miss(wskill)
-				return
-			dmg = CombatFormulas.roll_ranged(
-				GameState.effective_skill_level(wskill),
-				int(weapon.get("atk", 5)) + GameState.total_atk_bonus()) \
-				* TaskSystem.damage_multiplier(target.monster_name) \
-				* CombatStance.damage_mult(GameState.combat_stance)
-			var crit := CombatFormulas.roll_crit(
-				GameState.effective_skill_level(wskill), GameState.total_crit_bonus())
-			if crit:
-				dmg *= CombatFormulas.CRIT_MULTIPLIER
-			target.take_damage(dmg, crit)
-			_apply_offense_charm(target)
-			_apply_weapon_ability(target)
-			GameState.gain_skill_xp(wskill, 1)
-			GameState.add_spec(CombatFormulas.SPEC_GAIN)   # ladda kraftslaget
-			visual.play_attack(facing)
-		else:
-			# Närstrid
-			if dist > 1:
-				return
-			if not _rolls_hit(wskill):
-				_on_attack_miss(wskill)
-				return
-			dmg = CombatFormulas.roll_melee(GameState.level,
-				GameState.effective_skill_level(wskill),
-				int(weapon.get("atk", 5)) + GameState.total_atk_bonus()) \
-				* TaskSystem.damage_multiplier(target.monster_name) \
-				* CombatStance.damage_mult(GameState.combat_stance)   # bestiary-tier + ställning
-			var crit := CombatFormulas.roll_crit(
-				GameState.effective_skill_level(wskill), GameState.total_crit_bonus())
-			if crit:
-				dmg *= CombatFormulas.CRIT_MULTIPLIER
-			target.take_damage(dmg, crit)
-			_apply_offense_charm(target)
-			_apply_weapon_ability(target)
-			GameState.gain_skill_xp(wskill, 1)
-			GameState.add_spec(CombatFormulas.SPEC_GAIN)   # ladda kraftslaget
-			visual.play_attack(facing)   # närstrids-stöt mot målet
+## Sving utförd (träff eller miss): spela attack-stöten mot facing-riktningen.
+func _on_sim_attack_swung(dir: Vector2i) -> void:
+	visual.play_attack(dir)
 
-## Slår om det aktuella slaget träffar målet (spelarens accuracy mot monstrets
-## undvikande). Garanterar inget — högt golv håller tidig spelning förlåtande.
-func _rolls_hit(wskill: String) -> bool:
-	var acc := CombatFormulas.accuracy(GameState.level, GameState.effective_skill_level(wskill))
-	var eva := CombatFormulas.monster_evasion(float(target.speed))
-	return CombatFormulas.roll_hit(acc, eva)
+## Leech-charm läkte: grön "+N" ovanför spelaren.
+func _on_sim_healed(amount: float) -> void:
+	_spawn_heal_float(amount)
 
-## Ett bommat slag: svingen syns, "miss" visas och skickligheten tränas ändå
-## (förlåtande), men ingen skada, charm-effekt eller spec-laddning sker.
-func _on_attack_miss(wskill: String) -> void:
-	visual.play_attack(facing)
-	if is_instance_valid(target) and target.has_method("show_miss"):
-		target.show_miss()
-	GameState.gain_skill_xp(wskill, 1)
+## Kraftslags-nedslag: guldblixt vid den träffade tilen.
+func _on_sim_spec_flash(t: Vector2i) -> void:
+	var parent := get_parent()
+	if parent != null and zone != null:
+		_spawn_spell_flash(parent, zone.tile_to_world(t), Color(1.0, 0.85, 0.35), 1.9, 140.0)
 
-## Slår vapnets giftbeläggning mot målet vid en landad träff. Giftvapen
-## (venom_blade m.fl.) bär ability {type:poison, ...}; proccar den får monstret
-## en gift-DoT — spegelbilden av hur monstergift drabbar spelaren.
-func _apply_weapon_ability(target) -> void:
-	if not is_instance_valid(target) or target.dead:
-		return
-	var ability: Dictionary = ItemDB.items.get(GameState.equipped_weapon, {}).get("ability", {})
-	var proc := CombatFormulas.weapon_poison_proc(ability, randf())
-	if not proc.get("apply", false):
-		return
-	target.apply_status("poison", float(proc["duration"]), float(proc["tick_dmg"]))
-	if target.has_method("_spawn_element_tag"):
-		target._spawn_element_tag("förgiftad", Color(0.4, 0.95, 0.4))
-
-## Slår den bärna offensiva charmen mot målet och lägger på elementär bonusskada.
-func _apply_offense_charm(target) -> void:
-	if not is_instance_valid(target) or target.dead:
-		return
-	var r := CharmSystem.roll_offense(float(target.max_hp))
-	if r.get("triggered", false):
-		var dealt: int = target.take_charm_damage(float(r["amount"]), String(r["element"]))
-		var ls := CharmSystem.lifesteal(String(r["id"]))
-		if ls > 0.0 and dealt > 0 and GameState.health < GameState.max_health:
-			var healed := float(dealt) * ls
-			GameState.heal(healed)
-			_spawn_heal_float(healed)
-
-## Släpper kraftslaget (specialattack) mot nuvarande mål om mätaren är full.
-## Ett enda hårt, garanterat kritiskt slag som tömmer mätaren. Anropas av HUD:en.
+## Släpper kraftslaget (specialattack) mot nuvarande mål. Anropas av HUD:en.
+## Vyn samlar in MonsterSims nära målet (för cleave) och låter sim avgöra allt.
 func try_special() -> void:
-	if target == null or not is_instance_valid(target) or target.dead:
-		World.hud.show_message("Inget mål för kraftslag.")
-		return
-	var weapon: Dictionary = ItemDB.items.get(GameState.equipped_weapon, {})
-	var weapon_range := int(weapon.get("range", 1))
-	if _chebyshev(target.tile) > weapon_range:
-		World.hud.show_message("Målet är utom räckhåll.")
-		return
-	if not CombatFormulas.spec_ready(GameState.spec_energy):
-		World.hud.show_message("Kraftslaget är inte laddat.")
-		Sfx.denied()
-		return
-	var wskill := GameState.weapon_skill()
-	var atk_total := int(weapon.get("atk", 5)) + GameState.total_atk_bonus()
-	var ammo_id := String(weapon.get("ammo", ""))
-	var base: float
-	if weapon_range > 1:
-		if ammo_id != "" and not GameState.has_ammo(ammo_id):
-			World.hud.show_message("Inga pilar kvar!")
-			return
-		base = CombatFormulas.max_ranged(GameState.effective_skill_level(wskill), atk_total)
-	else:
-		base = CombatFormulas.max_melee(GameState.level,
-			GameState.effective_skill_level(wskill), atk_total)
-	# Allt klart — töm mätaren och slå utifrån vapentypens kraftslag.
-	GameState.consume_spec()
-	if weapon_range > 1 and ammo_id != "":
-		GameState.consume_ammo(ammo_id)
-	var to_dir := Vector2i(signi(target.tile.x - tile.x), signi(target.tile.y - tile.y))
-	if to_dir != Vector2i.ZERO:
-		facing = to_dir
-		visual.face(facing)
-	visual.play_attack(facing)
-	var prof := CombatFormulas.spec_profile(wskill)
-	var stance_mult := CombatStance.damage_mult(GameState.combat_stance)
-	var mult := float(prof["mult"])
-	var msg := "Kraftslag!"
-	match String(prof["kind"]):
-		"cleave":
-			msg = "Klyv!"
-			# Målet + alla levande fiender intill målet får var sin träff.
-			for m in _monsters_near(target.tile, 1):
-				_spec_hit(m, base, mult, stance_mult)
-		"crush":
-			msg = "Krossa!"
-			_spec_hit(target, base, mult, stance_mult)
-			if is_instance_valid(target) and not target.dead:
-				target.apply_status("stun", float(prof["stun"]), 0.0)
-				if target.has_method("_spawn_element_tag"):
-					target._spawn_element_tag("bedövad", Color(1.0, 0.9, 0.4))
-		"double":
-			msg = "Dubbelskott!"
-			_spec_hit(target, base, mult, stance_mult)
-			if is_instance_valid(target) and not target.dead:
-				_spec_hit(target, base, mult, stance_mult)
-		_:  # power
-			_spec_hit(target, base, mult, stance_mult)
-	_apply_offense_charm(target)
-	_apply_weapon_ability(target)
-	GameState.gain_skill_xp(wskill, 2)
-	Sfx.crit()
-	World.hud.show_message(msg)
+	if target != null and not is_instance_valid(target):
+		target = null
+		sim.target = null
+	var nearby: Array = []
+	if target != null:
+		for m in _monsters_near(target.tile, 1):
+			nearby.append(m.sim)
+	sim.try_special(nearby)
 
 ## Levande monster (med take_damage) inom Chebyshev-radie kring en ruta.
 func _monsters_near(center: Vector2i, radius: int) -> Array:
@@ -386,18 +247,6 @@ func _monsters_near(center: Vector2i, radius: int) -> Array:
 		if maxi(absi(ct.x - center.x), absi(ct.y - center.y)) <= radius:
 			out.append(c)
 	return out
-
-## En enskild kraftslags-träff på ett mål: skada (garanterad crit), charm-effekt
-## hanteras av anroparen, plus en guldblixt vid nedslaget.
-func _spec_hit(m, base: float, mult: float, stance_mult: float) -> void:
-	if m == null or not is_instance_valid(m) or m.get("dead"):
-		return
-	var dmg := CombatFormulas.spec_damage(base, mult) \
-		* TaskSystem.damage_multiplier(m.monster_name) * stance_mult
-	m.take_damage(dmg, true)   # crit=true → guldsiffra + kritljud
-	var parent := get_parent()
-	if parent != null and is_instance_valid(m):
-		_spawn_spell_flash(parent, m.global_position, Color(1.0, 0.85, 0.35), 1.9, 140.0)
 
 ## Flytande "väjer!" ovanför spelaren när ett monsterslag undviks.
 func show_dodge() -> void:

@@ -384,13 +384,16 @@ func _on_sim_damaged(amount: int, crit: bool) -> void:
 	elif sim.hp > 0:
 		Sfx.hit()   # dödsträffen låter via monster_die() istället
 
-## Elementreaktion: flytande etikett som förklarar varför skadan avviker.
+## Elementreaktion/notering: flytande etikett som förklarar vad som hände.
 func _on_sim_element_reaction(kind: String) -> void:
 	match kind:
 		"weak":          _spawn_element_tag("svag!", Color(1.0, 0.85, 0.2))
 		"resist":        _spawn_element_tag("tål", Color(0.6, 0.7, 1.0))
 		"immune":        _spawn_element_tag("immun", Color(0.6, 0.6, 0.6))
 		"poison_immune": _spawn_element_tag("gift biter ej", Color(0.6, 0.72, 0.6))
+		"miss":          _spawn_element_tag("miss", Color(0.72, 0.72, 0.72))
+		"poisoned":      _spawn_element_tag("förgiftad", Color(0.4, 0.95, 0.4))
+		"stunned":       _spawn_element_tag("bedövad", Color(1.0, 0.9, 0.4))
 
 ## Status lades till/tickade ut: uppdatera aura och HP-barens burn-puls.
 func _on_sim_status_changed() -> void:

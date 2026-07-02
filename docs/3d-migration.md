@@ -98,8 +98,16 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       `step_completed`, `facing_changed`, `message`. Vyn läser input-intent
       och interpolerar ur `move_progress`. Headless-tester i
       `tests/unit/test_player_sim_movement.gd` (12 tester).
-- [ ] Player: attack-ticks, gathering och spellcasting till PlayerSim
-      (kräver mål via MonsterSim, inte monster-noder)
+- [x] Player: auto-attack + kraftslag i PlayerSim (2026-07-02) — target är
+      en `MonsterSim`; träffrull/crit/charm/giftvapen/spec-profiler
+      (cleave/crush/double/power) körs i sim med signaler `attack_swung`,
+      `healed`, `spec_flash`, `spec_denied`, `spec_released`.
+      `MonsterSim.note(kind)` låter angriparen begära feedback-taggar
+      ("miss"/"förgiftad"/"bedövad") via monster-vyn. Vyn nollar sim-målet
+      när målnoden frigörs (zonbyte/despawn) och samlar cleave-kandidater.
+      Headless-tester i `tests/unit/test_player_sim_combat.gd` (11 tester).
+- [ ] Player: gathering-tick och spell-fx-plumbing till sim (låg prioritet —
+      gather-noder och aim/fx är i praktiken presentationsbundna)
 - [ ] `world.gd` typas om mot sim-klasserna
 
 ### Steg 4 — 3D-slice *(parallellt spår när steg 2–3 är klara)*
