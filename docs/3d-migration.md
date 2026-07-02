@@ -115,11 +115,26 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       läses ur modellen. `current_zone` är nu enbart vy-container (add_child).
       En 3D-vy kan därmed återanvända world.gd:s spawn-orkestrering rakt av.
 
-### Steg 4 — 3D-slice *(parallellt spår när steg 2–3 är klara)*
-- `Zone3D` + `Monster3D`/`Player3D` som *alternativa vyer* över samma modeller
-- En zon (bit av Thais), gridrörelse, en monstertyp, en skill, en quest
-- Assets: GLB:er från `_meshy_cache` — **måste decimeras i Blender först**
-  (råa Meshy-modeller är 15–40 MB st)
+### Steg 4 — 3D-slice *(pågår)*
+- [x] `Zone3D` (2026-07-02, `world/zone3d.gd`): renderar ZoneModel med
+      MultiMesh — en batch per terrängtyp (≤13 draw calls för marken), ETT
+      delat material med per-instans-färg (pooling). Väggar/träd/tak reser
+      sig ur marken, vatten nedsänkt. Portal-/genvägs-/ingångsmarkers som
+      emissiva kuber; prenumererar på modellens signaler precis som 2D-vyn.
+- [x] `Player3D` (2026-07-02, `entities/player/player3d.gd`): samma PlayerSim
+      som 2D — läser input-intent, interpolerar ur `move_progress`, vrider
+      visualen efter `facing_changed`. Platshållarkapsel tills GLB är klar.
+- [x] `world/game3d.tscn` + `game3d.gd`: startbar slice (F6) — thais_fields
+      som ZoneModel, 3/4-kamera (barn av spelaren), sol + billig sky-env.
+      Ingen SSIL/post-processing, enligt prestandakraven.
+- [x] Headless-tester i `tests/unit/test_zone3d.gd` (8 st): koordinat-
+      mappning, full terrängtäckning, materialpooling, markers,
+      snap/interpolation/facing.
+- [ ] `Monster3D` som vy över MonsterSim (AI-tick + interpolation som 2D)
+- [ ] Portalsteg/zonbyte i 3D (game3d lyssnar på `step_completed`)
+- [ ] En skill + en quest körbar i slicen (HUD-brygga)
+- [ ] Assets: GLB:er från `_meshy_cache` — **måste decimeras i Blender först**
+  (råa Meshy-modeller är 15–40 MB st); ersätter platshållarkapsel/kuber
 
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1
