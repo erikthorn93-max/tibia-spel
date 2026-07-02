@@ -84,6 +84,26 @@ async function meshyGet(apiKey, taskId) {
   return JSON.parse(text);
 }
 
+// Upsertar assetens post i assets/manifest.json (skapas om det saknas).
+// Full omsynk görs av tools/build-manifest.js — här uppdateras bara egna posten.
+function updateManifest(entry) {
+  const manifestPath = path.join(ROOT, "assets", "manifest.json");
+  let doc = { generated: null, count: 0, assets: [] };
+  if (fs.existsSync(manifestPath)) {
+    try { doc = JSON.parse(fs.readFileSync(manifestPath, "utf8")); }
+    catch (e) { console.warn("⚠ manifest.json gick inte att läsa, skriver om:", e.message); }
+  }
+  if (!Array.isArray(doc.assets)) doc.assets = [];
+  const i = doc.assets.findIndex((a) => a.id === entry.id);
+  if (i >= 0) doc.assets[i] = { ...doc.assets[i], ...entry };
+  else doc.assets.push(entry);
+  doc.assets.sort((a, b) => a.id.localeCompare(b.id, "sv"));
+  doc.generated = new Date().toISOString();
+  doc.count = doc.assets.length;
+  fs.writeFileSync(manifestPath, JSON.stringify(doc, null, 2) + "\n");
+  return manifestPath;
+}
+
 // Pollar en task tills SUCCEEDED. Avbryter vid FAILED/moderation eller timeout.
 async function pollTask(apiKey, taskId, label) {
   const started = Date.now();
@@ -188,10 +208,22 @@ async function main() {
   if (r.status !== 0) die("Blender-rendering misslyckades (se utskrift ovan).");
   if (!fs.existsSync(outPath)) die("Blender producerade ingen PNG — okänt fel.");
 
-  // Steg 5: sammanfattning.
+  // Steg 5: uppdatera manifestet.
+  const manifestPath = updateManifest({
+    id: name,
+    category,
+    prompt,
+    glb: path.relative(ROOT, glbPath).split(path.sep).join("/"),
+    sprite: path.relative(ROOT, outPath).split(path.sep).join("/"),
+    renderParams: { size: TARGET_SIZE, angle: "3/4", script: "tools/blender_render_icon.py" },
+    source: "meshy",
+  });
+
+  // Steg 6: sammanfattning.
   console.log("\n✔ Klar!");
   console.log(`  Ikon:        ${path.relative(ROOT, outPath)}  (${TARGET_SIZE}×${TARGET_SIZE})`);
   console.log(`  GLB-cache:   ${path.relative(ROOT, glbPath)}`);
+  console.log(`  Manifest:    ${path.relative(ROOT, manifestPath)} (post "${name}" uppdaterad)`);
   if (meta.cached) {
     console.log("  Meshy:       (cachad — ingen ny generering, 0 credits)");
   } else {

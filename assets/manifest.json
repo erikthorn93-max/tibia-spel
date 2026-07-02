@@ -1,0 +1,4245 @@
+{
+  "generated": "2026-07-02T08:36:59.871Z",
+  "count": 471,
+  "assets": [
+    {
+      "id": "absolute_zero_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/absolute_zero_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "adamant_helmet",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/adamant_helmet.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "adamant_legs",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/adamant_legs.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "adamant_ore",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/adamant_ore.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "adamant_platebody",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/adamant_platebody.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "adamant_shield",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/adamant_shield.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "adamant_sword",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/adamant_sword.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "alchemy_table",
+      "category": "stations",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/stations/alchemy_table.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "amethyst",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/amethyst.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "ancient_bandage",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/ancient_bandage.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "ancient_bark_shield",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/ancient_bark_shield.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "ancient_coin",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/ancient_coin.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "annihilation_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/annihilation_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "antidote_potion",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/antidote_potion.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "anvil",
+      "category": "stations",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/stations/anvil.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "armageddon_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/armageddon_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "arrow_shaft",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/arrow_shaft.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "ash_feather",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/ash_feather.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "askhok",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/askhok.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "attack_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/attack_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Avgrundsorm",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Avgrundsorm.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Avgrundsöga",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Avgrundsöga.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "baked_potato",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/baked_potato.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "baker_stall",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/baker_stall.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Bandit",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Bandit.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "bank_npc",
+      "category": "npcs",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/npcs/bank_npc.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "beach",
+      "category": "tiles",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/tiles/beach.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "bear",
+      "category": null,
+      "prompt": "A realistic brown bea[r]...",
+      "glb": "assets/_meshy_cache/bear.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "bear_body",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/bear_body.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "bear_claw",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/bear_claw.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "bear_pelt",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/bear_pelt.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "big_bones",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/big_bones.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "bird_trap",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/bird_trap.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "black_pearl",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/black_pearl.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "blank_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/blank_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "blessed_charm",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/blessed_charm.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "blizzard_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/blizzard_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "bloodleaf_herb",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/bloodleaf_herb.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "bone_chips",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/bone_chips.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "bones",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/bones.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "bookshelf",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/bookshelf.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "boss_crown",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/boss_crown.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "boy",
+      "category": null,
+      "prompt": "A 6 year old boy with...",
+      "glb": "assets/_meshy_cache/boy.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "brass_knuckles",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/brass_knuckles.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "bread",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/bread.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "bronze_axe",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/bronze_axe.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "bush",
+      "category": null,
+      "prompt": "Rounded garden bush",
+      "glb": "assets/_meshy_cache/bush.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "cabbage",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/cabbage.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "cabbage_stew",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/cabbage_stew.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "cactus",
+      "category": null,
+      "prompt": "Saguaro cactus tall",
+      "glb": "assets/_meshy_cache/cactus.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "campfire_spot",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/campfire_spot.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "captains_hat",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/captains_hat.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "charcoal",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/charcoal.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "chimera_hide",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/chimera_hide.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "chimera_robe",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/chimera_robe.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "cliff_climb",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/cliff_climb.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "climbing_wall",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/climbing_wall.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "coal",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/coal.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "cooked_anglerfish",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/cooked_anglerfish.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "cooked_dark_crab",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/cooked_dark_crab.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "cooked_eel",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/cooked_eel.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "cooked_kingfish",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/cooked_kingfish.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "cooked_manta",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/cooked_manta.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "cooked_meat",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/cooked_meat.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "cooked_trout",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/cooked_trout.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "copper_boots",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/copper_boots.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "copper_helmet",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/copper_helmet.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "copper_legs",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/copper_legs.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "copper_ore",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/copper_ore.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "copper_plate",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/copper_plate.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "copper_vein",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/copper_vein.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "corn",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/corn.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "corn_bread",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/corn_bread.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "crafting_bench",
+      "category": "stations",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/stations/crafting_bench.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "curse_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/curse_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "cutlass",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/cutlass.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "dead_tree",
+      "category": null,
+      "prompt": "Dead twisted bare tre[e]...",
+      "glb": "assets/_meshy_cache/dead_tree.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "death_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/death_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "death_scroll",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/death_scroll.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "deep_sea_spot",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/deep_sea_spot.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "demon_heart",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/demon_heart.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "dialogue_npc",
+      "category": "npcs",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/npcs/dialogue_npc.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "diamond",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/diamond.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "dirt",
+      "category": "tiles",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/tiles/dirt.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "divine_heal_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/divine_heal_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "divine_health_potion",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/divine_health_potion.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Djupkraken",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Djupkraken.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Djupål",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Djupål.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "dragon_bones",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/dragon_bones.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "dragon_helmet",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/dragon_helmet.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "dragon_legs",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/dragon_legs.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "dragon_ore",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/dragon_ore.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "dragon_platebody",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/dragon_platebody.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "dragon_potion",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/dragon_potion.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "dragon_scale",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/dragon_scale.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "dragon_shield",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/dragon_shield.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "dragon_sword",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/dragon_sword.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "dragonherb",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/dragonherb.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "drakvapen",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/drakvapen.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "drunknad_sjoman",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/drunknad_sjoman.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "dungeon_floor",
+      "category": "tiles",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/tiles/dungeon_floor.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Dvärg",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Dvärg.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "DvärgenSmeden",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/DvärgenSmeden.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Dvärggeomant",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Dvärggeomant.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Dvärgsoldat",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Dvärgsoldat.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "dwarf_beard",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/dwarf_beard.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "earthquake_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/earthquake_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "eel_spot",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/eel_spot.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Elddraken",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Elddraken.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "elder_arrow",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/elder_arrow.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "elder_bow",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/elder_bow.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "elder_log",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/elder_log.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "elder_plank",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/elder_plank.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "elder_throne",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/elder_throne.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "emerald",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/emerald.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "emerald_sigil",
+      "category": null,
+      "prompt": "Emerald Sigil",
+      "glb": "assets/_meshy_cache/emerald_sigil.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "empty_vial",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/empty_vial.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "energy_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/energy_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "fantom",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/fantom.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "farao_khem-ra",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/farao_khem-ra.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "farm_patch",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/farm_patch.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "feathers",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/feathers.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "fern",
+      "category": null,
+      "prompt": "Green forest fern pla[nt]...",
+      "glb": "assets/_meshy_cache/fern.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "fir_tree_short",
+      "category": null,
+      "prompt": "Short conical fir tre[e]...",
+      "glb": "assets/_meshy_cache/fir_tree_short.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "fire_bomb_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/fire_bomb_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "fire_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/fire_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "fire_sword",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/fire_sword.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "fish_stew",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/fish_stew.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "fishing_rod",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/fishing_rod.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "fishing_spot",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/fishing_spot.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "flame_dart_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/flame_dart_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "fox_cloak",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/fox_cloak.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "fox_fur",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/fox_fur.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "frost_resist_potion",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/frost_resist_potion.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "frost_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/frost_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "frostbite_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/frostbite_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "frostfjäder",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/frostfjäder.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Frostmonarken_Hrimnir",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Frostmonarken_Hrimnir.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "frostorn",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/frostorn.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "frostpetal_herb",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/frostpetal_herb.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Frostvarg",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Frostvarg.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "fruit_stall",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/fruit_stall.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Fältmus",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Fältmus.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "gem",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/gem.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "gem_amulet",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/gem_amulet.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "gem_ring",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/gem_ring.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "gem_stall",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/gem_stall.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "gem_vein",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/gem_vein.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "ghoul",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/ghoul.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "ghoul_hand",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/ghoul_hand.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "ghulkungen",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/ghulkungen.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "giftpadda",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/giftpadda.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Giftvävare",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Giftvävare.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Glaciärjätte",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Glaciärjätte.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "glodmask",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/glodmask.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "glowing_green",
+      "category": null,
+      "prompt": "Glowing green he... (avklippt prompt, oklar)",
+      "glb": "assets/_meshy_cache/glowing_green.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "Glödskorpion",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Glödskorpion.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Goblin",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Goblin.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "goblin_ear",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/goblin_ear.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Goblinsoldat",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Goblinsoldat.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "gold_coin",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/gold_coin.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "gold_necklace",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/gold_necklace.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "gold_nugget",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/gold_nugget.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "gold_ore",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/gold_ore.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "gold_ring",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/gold_ring.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "gold_vein",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/gold_vein.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "golden_apple",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/golden_apple.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "golden_apple_pie",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/golden_apple_pie.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "golden_helmet",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/golden_helmet.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "golden_legs",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/golden_legs.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "golden_platebody",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/golden_platebody.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "grass",
+      "category": "tiles",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/tiles/grass.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Gravväktare",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Gravväktare.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "great_health_potion",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/great_health_potion.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "great_mana_potion",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/great_mana_potion.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "greater_heal_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/greater_heal_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "grilled_mackerel",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/grilled_mackerel.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Grottspindel",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Grottspindel.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "guardian_shield",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/guardian_shield.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "hatchet",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/hatchet.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "healing_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/healing_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "health_potion",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/health_potion.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "hearty_stew",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/hearty_stew.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "hellfire_rod",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/hellfire_rod.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "holy_ash",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/holy_ash.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "holy_symbol",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/holy_symbol.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "hunting_bow",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/hunting_bow.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "hunting_trap",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/hunting_trap.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "ice",
+      "category": "tiles",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/tiles/ice.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "ice_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/ice_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "ice_wave_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/ice_wave_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "inferno_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/inferno_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "iron_axe",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/iron_axe.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "iron_boots",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/iron_boots.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "iron_club",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/iron_club.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "iron_coin",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/iron_coin.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "iron_helmet",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/iron_helmet.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "iron_knuckles",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/iron_knuckles.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "iron_legs",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/iron_legs.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "iron_ore",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/iron_ore.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "iron_platebody",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/iron_platebody.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "iron_shield",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/iron_shield.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "iron_sword",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/iron_sword.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "iron_vein",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/iron_vein.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "is_kristall",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/is_kristall.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "isdraken",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/isdraken.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "istroll",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/istroll.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "isvarelse",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/isvarelse.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Isväktare",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Isväktare.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "jattespindel",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/jattespindel.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "jewelled_goblet",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/jewelled_goblet.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "king",
+      "category": null,
+      "prompt": "A medieval fantasy ki[ng]...",
+      "glb": "assets/_meshy_cache/king.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "Korallväktare",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Korallväktare.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "lava",
+      "category": "tiles",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/tiles/lava.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "lava_shard",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/lava_shard.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "lavavarelse",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/lavavarelse.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "leather_boots",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/leather_boots.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "leather_cap",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/leather_cap.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "leather_legs",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/leather_legs.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "leather_strips",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/leather_strips.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "leather_vest",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/leather_vest.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Leviatanen_Abyssos",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Leviatanen_Abyssos.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Lich",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Lich.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "lich_crown",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/lich_crown.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "lightning_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/lightning_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "lobster_dinner",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/lobster_dinner.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "lobster_pot",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/lobster_pot.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "log",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/log.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "log_balance",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/log_balance.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Lyktfisk",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Lyktfisk.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Lysfluga",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Lysfluga.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "magic_arrow",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/magic_arrow.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "magic_bow",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/magic_bow.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "magic_lectern",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/magic_lectern.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "magic_log",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/magic_log.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "magic_plank",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/magic_plank.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "magic_potion",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/magic_potion.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "magic_stall",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/magic_stall.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "mana_potion",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/mana_potion.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "maple_arrow",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/maple_arrow.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "maple_bow",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/maple_bow.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "maple_log",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/maple_log.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "maple_plank",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/maple_plank.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "maple_table",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/maple_table.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "marsh_herb",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/marsh_herb.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "marsh_patch",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/marsh_patch.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "mass_heal_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/mass_heal_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "meteor_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/meteor_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "middle_aged_man",
+      "category": null,
+      "prompt": "A middle aged male ba...",
+      "glb": "assets/_meshy_cache/middle_aged_man.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "mining_brew",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/mining_brew.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "minor_heal_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/minor_heal_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Minotaur",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Minotaur.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "minotaur_axe",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/minotaur_axe.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "minotaur_horn",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/minotaur_horn.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "MinotaurKungen",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/MinotaurKungen.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "MinotaurVakt",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/MinotaurVakt.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "mint_herb",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/mint_herb.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "mint_patch",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/mint_patch.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "mithril_helmet",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/mithril_helmet.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "mithril_legs",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/mithril_legs.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "mithril_ore",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/mithril_ore.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "mithril_platebody",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/mithril_platebody.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "mithril_shield",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/mithril_shield.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "mithril_sword",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/mithril_sword.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "monkey_bars",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/monkey_bars.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "mossy_rock",
+      "category": null,
+      "prompt": "Mossy rock medium si[ze]...",
+      "glb": "assets/_meshy_cache/mossy_rock.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "Mykonidäldste",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Mykonidäldste.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Mörkersimmare",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Mörkersimmare.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Nekromant",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Nekromant.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "nightshade_herb",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/nightshade_herb.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "nightshade_patch",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/nightshade_patch.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "npc_blacksmith",
+      "category": "npcs",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/npcs/npc_blacksmith.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "npc_captain",
+      "category": "npcs",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/npcs/npc_captain.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "npc_elder",
+      "category": "npcs",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/npcs/npc_elder.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "npc_fisherman",
+      "category": "npcs",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/npcs/npc_fisherman.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "npc_fishmonger",
+      "category": "npcs",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/npcs/npc_fishmonger.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "npc_hunter",
+      "category": "npcs",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/npcs/npc_hunter.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "npc_scholar",
+      "category": "npcs",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/npcs/npc_scholar.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "oak_arrow",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/oak_arrow.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "oak_bench",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/oak_bench.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "oak_bow",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/oak_bow.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "oak_door",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/oak_door.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "oak_log",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/oak_log.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "oak_plank",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/oak_plank.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "oak_tree",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/oak_tree.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "obsidian_blade",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/obsidian_blade.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "okengam",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/okengam.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "okenmumie",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/okenmumie.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "opal",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/opal.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "orc",
+      "category": null,
+      "prompt": "A realistic fantasy o[rc]...",
+      "glb": "assets/_meshy_cache/orc.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "orc_blade",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/orc_blade.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "orc_tooth",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/orc_tooth.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Ork",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Ork.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Orkshamanen",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Orkshamanen.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Orköverherre",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Orköverherre.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "orm",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/orm.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "overload_potion",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/overload_potion.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Pansarkrabba",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Pansarkrabba.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "pearl",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/pearl.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "pebble_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/pebble_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "pharaohs_scepter",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/pharaohs_scepter.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "pickaxe",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/pickaxe.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "pike_spot",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/pike_spot.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "pine_stunted",
+      "category": null,
+      "prompt": "Stunted mountain pine",
+      "glb": "assets/_meshy_cache/pine_stunted.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "pine_tree_tall",
+      "category": null,
+      "prompt": "Tall pine tree dark",
+      "glb": "assets/_meshy_cache/pine_tree_tall.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "pirat",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/pirat.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "pirat_skytt",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/pirat_skytt.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "piratkapten_svartoga",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/piratkapten_svartoga.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "plague_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/plague_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "plank",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/plank.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "poison_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/poison_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "pole_vault",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/pole_vault.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "potato",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/potato.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "prayer_altar",
+      "category": "stations",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/stations/prayer_altar.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "prayer_potion",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/prayer_potion.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "pumpkin",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/pumpkin.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "pumpkin_pie",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/pumpkin_pie.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "rabbit",
+      "category": null,
+      "prompt": "A cute realistic rabb...",
+      "glb": "assets/_meshy_cache/rabbit.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "ranging_potion",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/ranging_potion.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "rat",
+      "category": null,
+      "prompt": "A brown rat realisti...",
+      "glb": "assets/_meshy_cache/rat.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "rat_alt",
+      "category": null,
+      "prompt": "(okand - fanns som rat.glb i godot_rpg, annan fil an rat_meshy)",
+      "glb": "assets/_meshy_cache/rat_alt.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "unknown"
+    },
+    {
+      "id": "ratta",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/ratta.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "raw_anglerfish",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/raw_anglerfish.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "raw_dark_crab",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/raw_dark_crab.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "raw_eel",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/raw_eel.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "raw_kingfish",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/raw_kingfish.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "raw_lobster",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/raw_lobster.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "raw_mackerel",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/raw_mackerel.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "raw_manta",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/raw_manta.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "raw_meat",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/raw_meat.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "raw_pike",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/raw_pike.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "raw_swordfish",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/raw_swordfish.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "raw_trout",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/raw_trout.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Revhaj",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Revhaj.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Rimtass",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Rimtass.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "roof",
+      "category": "tiles",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/tiles/roof.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "rope_swing",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/rope_swing.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "ruby",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/ruby.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "rune_altar",
+      "category": "stations",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/stations/rune_altar.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "runite_helmet",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/runite_helmet.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "runite_legs",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/runite_legs.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "runite_ore",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/runite_ore.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "runite_platebody",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/runite_platebody.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "runite_shield",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/runite_shield.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "runite_sword",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/runite_sword.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "rusty_sword",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/rusty_sword.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "sand_scale",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/sand_scale.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "sandorm",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/sandorm.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Sandskarabé",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Sandskarabé.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "sandvaranen",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/sandvaranen.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Sandvålnad",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Sandvålnad.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "sapphire",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/sapphire.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "scarab_shell",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/scarab_shell.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "sea_chart",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/sea_chart.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "shaman_staff",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/shaman_staff.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "shock_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/shock_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "shop_npc",
+      "category": "npcs",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/npcs/shop_npc.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "sickle",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/sickle.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "silk_stall",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/silk_stall.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "silver_amulet",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/silver_amulet.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "silver_stall",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/silver_stall.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "sjoorm",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/sjoorm.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Sjökungen_Nautilex",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Sjökungen_Nautilex.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "skeleton",
+      "category": null,
+      "prompt": "Realistic human skele[ton]...",
+      "glb": "assets/_meshy_cache/skeleton.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "skelett",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/skelett.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "skelettkrigare",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/skelettkrigare.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "skogsbjorn",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/skogsbjorn.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "skogsvargen",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/skogsvargen.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Skuggspindel",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Skuggspindel.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "sky_bridge",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/sky_bridge.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "smaltkonungen",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/smaltkonungen.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "snake_skin",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/snake_skin.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "snouggla",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/snouggla.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Solkonungen_Akh-Mortis",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Solkonungen_Akh-Mortis.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "sotdemon",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/sotdemon.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "soulfire_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/soulfire_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "spark_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/spark_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "spice_stall",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/spice_stall.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "spider_silk",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/spider_silk.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "spindel",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/spindel.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Spindeldrottningen_Morwena",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Spindeldrottningen_Morwena.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Sporkungen_Myzandros",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Sporkungen_Myzandros.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Sporling",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Sporling.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "stairs",
+      "category": "tiles",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/tiles/stairs.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "steel_axe",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/steel_axe.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "steel_boots",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/steel_boots.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "steel_bow",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/steel_bow.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "steel_club",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/steel_club.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "steel_helmet",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/steel_helmet.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "steel_knuckles",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/steel_knuckles.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "steel_legs",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/steel_legs.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "steel_platebody",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/steel_platebody.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "steel_shield",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/steel_shield.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "steel_sword",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/steel_sword.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Stenkungen_Brokk",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Stenkungen_Brokk.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "stone_blast_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/stone_blast_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "stone_depot",
+      "category": null,
+      "prompt": "Medieval stone depot",
+      "glb": "assets/_meshy_cache/stone_depot.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "stone_staircase",
+      "category": null,
+      "prompt": "Stone staircase desc[ending]...",
+      "glb": "assets/_meshy_cache/stone_staircase.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "stove",
+      "category": "stations",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/stations/stove.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "strandkrabba",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/strandkrabba.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "strength_brew",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/strength_brew.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "sumpkrala",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/sumpkrala.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "sumpvarelse",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/sumpvarelse.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "sunflower_herb",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/sunflower_herb.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "super_health_potion",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/super_health_potion.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "super_mana_potion",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/super_mana_potion.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "super_strength_potion",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/super_strength_potion.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Svampvätte",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Svampvätte.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "swamp",
+      "category": "tiles",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/tiles/swamp.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "swamp_essence",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/swamp_essence.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "swamp_moss",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/swamp_moss.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "swordfish_spot",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/swordfish_spot.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "swordfish_steak",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/swordfish_steak.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "taskmaster_npc",
+      "category": "npcs",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/npcs/taskmaster_npc.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "thunderstorm_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/thunderstorm_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "tightrope",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/tightrope.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "toad_gland",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/toad_gland.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "toddler",
+      "category": null,
+      "prompt": "A 3 year old toddler",
+      "glb": "assets/_meshy_cache/toddler.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "Tomkrälare",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Tomkrälare.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "topaz",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/topaz.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "traskdjavul",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/traskdjavul.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "treasure_chest",
+      "category": null,
+      "prompt": "Medieval RPG treasure...",
+      "glb": "assets/_meshy_cache/treasure_chest.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "treasure_stall",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/treasure_stall.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "tree",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/tree.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Troll",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Troll.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "troll_bone",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/troll_bone.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "troll_club",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/troll_club.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Trollhövding",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Trollhövding.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Tånggast",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Tånggast.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Urguden_Nyxoth",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Urguden_Nyxoth.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "urskogsvaltaren",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/urskogsvaltaren.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Urtidskväljaren",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Urtidskväljaren.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "vampire_cape",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/vampire_cape.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "vampire_dust",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/vampire_dust.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Vampyr",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Vampyr.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "VampyrHerre",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/VampyrHerre.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Varg",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Varg.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "venom_rune",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/venom_rune.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Vildkanin",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Vildkanin.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Vildsvin",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Vildsvin.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "wall",
+      "category": "tiles",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/tiles/wall.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "warding_candle",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/warding_candle.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "water",
+      "category": "tiles",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/tiles/water.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "wheat_grain",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/wheat_grain.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "wildflower",
+      "category": null,
+      "prompt": "Wildflower with stem",
+      "glb": "assets/_meshy_cache/wildflower.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "wildflower_preview",
+      "category": null,
+      "prompt": "Wildflower with stem",
+      "glb": "assets/_meshy_cache/wildflower_preview.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "willow_arrow",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/willow_arrow.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "willow_bow",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/willow_bow.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "willow_log",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/willow_log.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "willow_tree",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/willow_tree.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "wind_tunnel",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/wind_tunnel.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "window",
+      "category": "tiles",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/tiles/window.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "wolf",
+      "category": null,
+      "prompt": "(okand prompt - generiskt filnamn; matchar wolf_meshy.glb)",
+      "glb": "assets/_meshy_cache/wolf.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "wolf_pelt",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/wolf_pelt.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "wooden_arrow",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/wooden_arrow.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "wooden_bow",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/wooden_bow.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "wooden_chair",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/wooden_chair.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "wooden_club",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/wooden_club.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "wooden_floor",
+      "category": "tiles",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/tiles/wooden_floor.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "wooden_shield",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/wooden_shield.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "wooden_table",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/wooden_table.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "yew_arrow",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/yew_arrow.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "yew_bow",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/yew_bow.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "yew_log",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/yew_log.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "yew_plank",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/yew_plank.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "yew_wardrobe",
+      "category": "items",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/items/yew_wardrobe.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "young_woman",
+      "category": null,
+      "prompt": "Young woman long wav[y hair]...",
+      "glb": "assets/_meshy_cache/young_woman.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "zipline",
+      "category": "nodes",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/nodes/zipline.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "zombie",
+      "category": null,
+      "prompt": "(okand prompt - generiskt filnamn; matchar zombie_meshy.glb)",
+      "glb": "assets/_meshy_cache/zombie.glb",
+      "sprite": null,
+      "renderParams": null,
+      "source": "meshy"
+    },
+    {
+      "id": "Åkerkråka",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Åkerkråka.png",
+      "renderParams": null,
+      "source": "manual"
+    },
+    {
+      "id": "Ärkedemonen",
+      "category": "monsters",
+      "prompt": null,
+      "glb": null,
+      "sprite": "assets/sprites/monsters/Ärkedemonen.png",
+      "renderParams": null,
+      "source": "manual"
+    }
+  ]
+}
