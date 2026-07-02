@@ -14,6 +14,7 @@ var _visual: Node3D
 func _init() -> void:
 	sim.moved.connect(_on_sim_moved)
 	sim.facing_changed.connect(_on_facing_changed)
+	sim.attack_swung.connect(_on_attack_swung)
 
 func _ready() -> void:
 	_visual = Node3D.new()
@@ -53,6 +54,7 @@ func _process(delta: float) -> void:
 	elif Input.is_action_pressed("move_left"): intent = Vector2i.LEFT
 	elif Input.is_action_pressed("move_right"): intent = Vector2i.RIGHT
 	sim.advance(delta, intent)
+	sim.attack_tick(delta)
 	position = _from.lerp(_to, sim.move_progress)
 
 ## Steg påbörjat: sätt interpolationsmål (positionen läses ur move_progress).
@@ -64,3 +66,12 @@ func _on_sim_moved(from: Vector2i, to: Vector2i) -> void:
 func _on_facing_changed(dir: Vector2i) -> void:
 	if _visual != null:
 		_visual.rotation.y = atan2(-float(dir.x), -float(dir.y))
+
+## Sving utförd (träff eller miss): snabb stöt mot slagriktningen.
+func _on_attack_swung(dir: Vector2i) -> void:
+	if _visual == null or dir == Vector2i.ZERO:
+		return
+	var lunge := Vector3(dir.x, 0, dir.y).normalized() * 0.22
+	var tw := create_tween()
+	tw.tween_property(_visual, "position", lunge, 0.07).set_ease(Tween.EASE_OUT)
+	tw.tween_property(_visual, "position", Vector3.ZERO, 0.13).set_ease(Tween.EASE_IN_OUT)

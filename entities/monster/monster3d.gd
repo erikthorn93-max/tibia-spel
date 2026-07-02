@@ -18,6 +18,7 @@ var _body_mat: StandardMaterial3D
 var _hp_bar: MeshInstance3D
 var _hp_mat: StandardMaterial3D
 var _flash_tw: Tween
+var _target_ring: MeshInstance3D
 
 func _init() -> void:
 	sim = MonsterSim.new()
@@ -84,6 +85,25 @@ func _refresh_hp_bar() -> void:
 		_hp_mat.albedo_color = Color(0.85, 0.72, 0.1)
 	else:
 		_hp_mat.albedo_color = Color(0.85, 0.12, 0.12)
+
+## Målring under kroppen — visar vilket monster spelaren auto-attackerar.
+## Skapas lazy vid första targeteringen och togglas därefter.
+func set_targeted(on: bool) -> void:
+	if _target_ring == null:
+		if not on:
+			return
+		_target_ring = MeshInstance3D.new()
+		var torus := TorusMesh.new()
+		torus.inner_radius = 0.38
+		torus.outer_radius = 0.48
+		_target_ring.mesh = torus
+		var mat := StandardMaterial3D.new()
+		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		mat.albedo_color = Color(1.0, 0.35, 0.25)
+		_target_ring.material_override = mat
+		_target_ring.position.y = 0.04
+		add_child(_target_ring)
+	_target_ring.visible = on
 
 ## Vyns tick: mata AI:n med spelar-tilen och interpolera ur move_progress.
 func _process(delta: float) -> void:

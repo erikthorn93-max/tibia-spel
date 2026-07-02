@@ -141,7 +141,12 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       hint), dungeon-nedgångar via DungeonGen (exit tillbaka till ytrutan),
       monster-respawn per zon-epok, spelardöd → Tibia-återkomst till
       hemzonen. Mini-HUD (HP + meddelanden) tills riktiga HUD:en bryggas.
-- [ ] Spelarattack i 3D: targeting (klick-ray mot Monster3D) + attack_tick
+- [x] Spelarattack i 3D (2026-07-02): vänsterklick projiceras mot markplanet
+      → tile; monster på rutan blir auto-attack-mål (röd målring, behålls
+      medan man går — Tibia-stil), tom mark ger klick-för-att-gå via
+      `walk_to`. Player3D kör `sim.attack_tick` och spelar sving-stöten
+      via `attack_swung`. Målet nollas vid zonbyte. Kraftslag (spec) och
+      healed-feedback återstår till HUD-bryggan.
 - [ ] En skill + en quest körbar i slicen (HUD-brygga)
 - [ ] Assets: GLB:er från `_meshy_cache` — **måste decimeras i Blender först**
   (råa Meshy-modeller är 15–40 MB st); ersätter platshållarkapsel/kuber

@@ -106,6 +106,41 @@ func test_game3d_portal_step_changes_zone():
 	assert_eq(GameState.current_zone, dest, "zonbytet ska bokföras i GameState")
 	assert_eq(g.player.sim.zone, g.model, "spelarsimmen ska peka på nya modellen")
 
+# ── game3d: klick-targeting och gå-till ───────────────────────────────────────
+
+func _free_tile_near_start(g: Node3D) -> Vector2i:
+	for d in [Vector2i.RIGHT, Vector2i.LEFT, Vector2i.DOWN, Vector2i.UP]:
+		var t: Vector2i = g.model.player_start + d
+		if g.model.is_walkable(t) and not g.model.is_occupied(t):
+			return t
+	return Vector2i(-1, -1)
+
+func test_click_monster_sets_target():
+	var g := _boot_game3d()
+	var t := _free_tile_near_start(g)
+	assert_ne(t, Vector2i(-1, -1), "det ska finnas en ledig ruta intill start")
+	g._spawn_monster3d({"tile": t, "monster": "Råtta", "respawn": -1.0})
+	g._click_tile(t)
+	assert_not_null(g.player.sim.target, "klick på monster ska sätta auto-attack-mål")
+	assert_eq(g.player.sim.target.tile, t)
+	assert_true(g._target_view._target_ring.visible, "målringen ska synas")
+
+func test_click_ground_starts_autowalk():
+	var g := _boot_game3d()
+	var t := _free_tile_near_start(g)
+	g._click_tile(t)
+	assert_null(g.player.sim.target, "klick på tom mark ska inte sätta mål")
+	assert_gt(g.player.sim.auto_path.size(), 0, "klick på mark ska starta auto-walk")
+
+func test_target_cleared_on_zone_change():
+	var g := _boot_game3d()
+	var t := _free_tile_near_start(g)
+	g._spawn_monster3d({"tile": t, "monster": "Råtta", "respawn": -1.0})
+	g._click_tile(t)
+	assert_not_null(g.player.sim.target)
+	g.load_zone("town")
+	assert_null(g.player.sim.target, "zonbyte ska nollställa auto-attack-målet")
+
 func test_game3d_locked_portal_blocks():
 	var g := _boot_game3d()
 	UnlockSystem.unlocked.erase("__testlock_3d")

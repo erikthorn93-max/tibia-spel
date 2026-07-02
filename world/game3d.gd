@@ -22,6 +22,7 @@ var _last_surface_tile := Vector2i(-1, -1)
 var _hud_hp: Label
 var _hud_msg: Label
 var _msg_tw: Tween
+var _target_view: Monster3D = null   # vyn för spelarens auto-attack-mål
 
 func _ready() -> void:
 	player = Player3D.new()
@@ -61,6 +62,8 @@ func _apply_model(data: Dictionary, zone_id: String, at_tile := Vector2i(-1, -1)
 	_monsters_root = Node3D.new()
 	add_child(_monsters_root)
 	player.sim.zone = model
+	player.sim.target = null   # målet hörde till förra zonen
+	_target_view = null
 	player.snap_to(at_tile if at_tile.x >= 0 else model.player_start)
 	_spawn_monsters()
 
@@ -82,6 +85,46 @@ func _on_player_step_completed(t: Vector2i) -> void:
 	if GameState.current_zone.begins_with("dungeon:") and dest == _last_surface_zone:
 		dest_tile = _last_surface_tile
 	load_zone.call_deferred(dest, dest_tile)
+
+# ── Klick: targeta monster eller gå-till (samma UX som 2D) ────────────────────
+## Vänsterklick projiceras som stråle mot markplanet (y=0) → tile.
+func _unhandled_input(event: InputEvent) -> void:
+	var mb := event as InputEventMouseButton
+	if mb == null or not mb.pressed or mb.button_index != MOUSE_BUTTON_LEFT:
+		return
+	var cam := get_viewport().get_camera_3d()
+	if cam == null:
+		return
+	var origin := cam.project_ray_origin(mb.position)
+	var dir := cam.project_ray_normal(mb.position)
+	if absf(dir.y) < 0.0001:
+		return   # strålen parallell med marken — inget nedslag
+	var hit := origin - dir * (origin.y / dir.y)
+	_click_tile(Zone3D.world3_to_tile(hit))
+
+## Monster på rutan → auto-attack-mål; annars klick-för-att-gå.
+## Målet behålls medan man går (Tibia-stil: attacken följer med).
+func _click_tile(t: Vector2i) -> void:
+	var m := _monster_at(t)
+	if m != null:
+		_set_target(m)
+		return
+	player.sim.walk_to(t)
+
+func _monster_at(t: Vector2i) -> Monster3D:
+	if _monsters_root == null:
+		return null
+	for m in _monsters_root.get_children():
+		if m is Monster3D and not m.sim.dead and m.sim.tile == t:
+			return m
+	return null
+
+func _set_target(m: Monster3D) -> void:
+	if _target_view != null and is_instance_valid(_target_view):
+		_target_view.set_targeted(false)
+	_target_view = m
+	m.set_targeted(true)
+	player.sim.target = m.sim
 
 # ── Monster ───────────────────────────────────────────────────────────────────
 func _spawn_monsters() -> void:
