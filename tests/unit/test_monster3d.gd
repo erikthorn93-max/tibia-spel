@@ -8,17 +8,20 @@ const Game3DScene = preload("res://world/game3d.tscn")
 var _saved_zone: String
 var _saved_tile: Vector2i
 var _saved_health: float
+var _saved_spec: float
 
 func before_each():
 	_saved_zone = GameState.current_zone
 	_saved_tile = GameState.player_tile
 	_saved_health = GameState.health
+	_saved_spec = GameState.spec_energy
 	GameState.health = GameState.max_health   # inga döds-flöden mitt i testet
 
 func after_each():
 	GameState.current_zone = _saved_zone
 	GameState.player_tile = _saved_tile
 	GameState.health = _saved_health
+	GameState.spec_energy = _saved_spec
 
 ## Liten öppen testyta: 6×4 gräs, spelarstart mitt på.
 func _flat_model() -> ZoneModel:
@@ -140,6 +143,31 @@ func test_target_cleared_on_zone_change():
 	assert_not_null(g.player.sim.target)
 	g.load_zone("town")
 	assert_null(g.player.sim.target, "zonbyte ska nollställa auto-attack-målet")
+
+func test_spec_hits_target_and_drains_meter():
+	var g := _boot_game3d()
+	var t := _free_tile_near_start(g)
+	g._spawn_monster3d({"tile": t, "monster": "Råtta", "respawn": -1.0})
+	g._click_tile(t)
+	GameState.spec_energy = CombatFormulas.SPEC_MAX
+	var target: MonsterSim = g.player.sim.target
+	var hp_before: int = target.hp
+	g._try_special()
+	assert_true(target.hp < hp_before or target.dead,
+		"kraftslaget ska skada målet")
+	assert_lt(GameState.spec_energy, CombatFormulas.SPEC_MAX,
+		"kraftslaget ska tömma spec-mätaren")
+
+func test_spec_without_charge_is_denied():
+	var g := _boot_game3d()
+	var t := _free_tile_near_start(g)
+	g._spawn_monster3d({"tile": t, "monster": "Råtta", "respawn": -1.0})
+	g._click_tile(t)
+	GameState.spec_energy = 0.0
+	var target: MonsterSim = g.player.sim.target
+	var hp_before: int = target.hp
+	g._try_special()
+	assert_eq(target.hp, hp_before, "utan laddning ska inget kraftslag ske")
 
 func test_game3d_locked_portal_blocks():
 	var g := _boot_game3d()

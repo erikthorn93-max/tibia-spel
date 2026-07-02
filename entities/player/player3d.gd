@@ -7,6 +7,7 @@ extends Node3D
 ## decimerad (steg 4-assets).
 
 var sim := PlayerSim.new()
+var fx: FloatingText3D = null   # delad flyttext-pool, sätts av game3d
 var _from := Vector3.ZERO
 var _to := Vector3.ZERO
 var _visual: Node3D
@@ -15,6 +16,7 @@ func _init() -> void:
 	sim.moved.connect(_on_sim_moved)
 	sim.facing_changed.connect(_on_facing_changed)
 	sim.attack_swung.connect(_on_attack_swung)
+	sim.healed.connect(_on_healed)
 
 func _ready() -> void:
 	_visual = Node3D.new()
@@ -75,3 +77,8 @@ func _on_attack_swung(dir: Vector2i) -> void:
 	var tw := create_tween()
 	tw.tween_property(_visual, "position", lunge, 0.07).set_ease(Tween.EASE_OUT)
 	tw.tween_property(_visual, "position", Vector3.ZERO, 0.13).set_ease(Tween.EASE_IN_OUT)
+
+## Leech-charm läkte: grön "+N" ovanför spelaren (som 2D-vyn).
+func _on_healed(amount: float) -> void:
+	if fx != null:
+		fx.show_heal(position, int(amount))

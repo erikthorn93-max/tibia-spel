@@ -20,14 +20,20 @@ var _zone_epoch := 0        # ogiltigförklarar respawn-timers vid zonbyte
 var _last_surface_zone := ""   # för dungeonexit tillbaka till ytan
 var _last_surface_tile := Vector2i(-1, -1)
 var _hud_hp: Label
+var _hud_spec: Label
 var _hud_msg: Label
 var _msg_tw: Tween
 var _target_view: Monster3D = null   # vyn för spelarens auto-attack-mål
+var _fx: FloatingText3D              # delad flyttext-pool (skada/läkning/taggar)
 
 func _ready() -> void:
+	_fx = FloatingText3D.new()
+	add_child(_fx)
 	player = Player3D.new()
 	add_child(player)
+	player.fx = _fx
 	player.sim.step_completed.connect(_on_player_step_completed)
+	player.sim.spec_flash.connect(_on_spec_flash)
 	GameState.player_died.connect(_on_player_died)
 	_setup_camera()
 	_setup_light()
@@ -86,6 +92,41 @@ func _on_player_step_completed(t: Vector2i) -> void:
 		dest_tile = _last_surface_tile
 	load_zone.call_deferred(dest, dest_tile)
 
+# ── Tangenter: kraftslag (F) och hälsodryck — samma actions som 2D ────────────
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("weapon_spec"):
+		_try_special()
+	if Input.is_action_just_pressed("use_potion"):
+		if not GameState.use_item("health_potion"):
+			_show_msg("Ingen hälsodryck.")
+
+## Släpper kraftslaget mot nuvarande mål. Vyn samlar in MonsterSims inom
+## 1 tile från målet (cleave-kandidater) — samma kontrakt som player.gd.
+func _try_special() -> void:
+	var target: MonsterSim = player.sim.target
+	var nearby: Array = []
+	if target != null and not target.dead and _monsters_root != null:
+		for m in _monsters_root.get_children():
+			if m is Monster3D and not m.sim.dead \
+					and maxi(absi(m.sim.tile.x - target.tile.x),
+						absi(m.sim.tile.y - target.tile.y)) <= 1:
+				nearby.append(m.sim)
+	player.sim.try_special(nearby)
+
+## Kraftslags-nedslag: guldstjärna + kort ljuspuls vid den träffade tilen.
+## (Sällsynt händelse — engångsljuset är OK trots allokeringen.)
+func _on_spec_flash(t: Vector2i) -> void:
+	_fx.show_text(Zone3D.tile_to_world3(t), "✦", Color(1.0, 0.85, 0.2))
+	var light := OmniLight3D.new()
+	light.light_color = Color(1.0, 0.8, 0.3)
+	light.light_energy = 2.0
+	light.omni_range = 3.0
+	light.position = Zone3D.tile_to_world3(t) + Vector3(0, 0.8, 0)
+	add_child(light)
+	var tw := light.create_tween()
+	tw.tween_property(light, "light_energy", 0.0, 0.3)
+	tw.tween_callback(light.queue_free)
+
 # ── Klick: targeta monster eller gå-till (samma UX som 2D) ────────────────────
 ## Vänsterklick projiceras som stråle mot markplanet (y=0) → tile.
 func _unhandled_input(event: InputEvent) -> void:
@@ -140,6 +181,7 @@ func _spawn_monster3d(sp: Dictionary) -> void:
 	var m := Monster3D.new()
 	_monsters_root.add_child(m)
 	m.player_sim = player.sim
+	m.fx = _fx
 	m.setup(mname, sp["tile"], model)
 	# Samma elite-regel som world.gd: 5 % dag, 15 % natt.
 	if randf() < (0.15 if TimeOfDay.is_night else 0.05):
@@ -195,16 +237,30 @@ func _setup_hud() -> void:
 	_hud_hp = Label.new()
 	_hud_hp.position = Vector2(12, 8)
 	cl.add_child(_hud_hp)
+	_hud_spec = Label.new()
+	_hud_spec.position = Vector2(12, 34)
+	cl.add_child(_hud_spec)
 	_hud_msg = Label.new()
-	_hud_msg.position = Vector2(12, 34)
+	_hud_msg.position = Vector2(12, 60)
 	_hud_msg.modulate = Color(1.0, 0.9, 0.5)
 	cl.add_child(_hud_msg)
 	GameState.hp_changed.connect(_on_hp_changed)
 	_on_hp_changed(GameState.health, GameState.max_health)
+	GameState.spec_changed.connect(_on_spec_changed)
+	_on_spec_changed(GameState.spec_energy)
 	player.sim.message.connect(_show_msg)
 
 func _on_hp_changed(h: float, mh: float) -> void:
 	_hud_hp.text = "HP %d/%d" % [int(h), int(mh)]
+
+## Spec-mätaren: procent under laddning, uppmaning när kraftslaget är redo.
+func _on_spec_changed(energy: float) -> void:
+	if CombatFormulas.spec_ready(energy):
+		_hud_spec.text = "KRAFTSLAG (F)"
+		_hud_spec.modulate = Color(1.0, 0.85, 0.2)
+	else:
+		_hud_spec.text = "Spec %d%%" % roundi(energy)
+		_hud_spec.modulate = Color(0.8, 0.8, 0.8)
 
 func _show_msg(text: String) -> void:
 	_hud_msg.text = text

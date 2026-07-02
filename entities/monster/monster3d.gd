@@ -9,6 +9,7 @@ const BAR_W := 0.8
 
 var sim: MonsterSim
 var player_sim: PlayerSim = null   # sätts av game3d — matar AI:n med spelar-tilen
+var fx: FloatingText3D = null      # delad flyttext-pool, sätts av game3d
 
 var _from := Vector3.ZERO
 var _to := Vector3.ZERO
@@ -23,6 +24,8 @@ var _target_ring: MeshInstance3D
 func _init() -> void:
 	sim = MonsterSim.new()
 	sim.damaged.connect(_on_sim_damaged)
+	sim.charm_damaged.connect(_on_sim_charm_damaged)
+	sim.element_reaction.connect(_on_sim_element_reaction)
 	sim.moved.connect(_on_sim_moved)
 	sim.attack_started.connect(_on_sim_attack_started)
 	sim.enrage_started.connect(_on_sim_enraged)
@@ -136,8 +139,10 @@ func _on_sim_attack_started(dir: Vector2i) -> void:
 
 ## Träff: uppdatera baren + kort vit emission-blink (parameter-tween, ingen
 ## materialallokering).
-func _on_sim_damaged(_amount: int, crit: bool) -> void:
+func _on_sim_damaged(amount: int, crit: bool) -> void:
 	_refresh_hp_bar()
+	if fx != null:
+		fx.show_damage(position, amount, crit)
 	if _body_mat == null:
 		return
 	if _flash_tw != null and _flash_tw.is_valid():
@@ -152,6 +157,25 @@ func _on_sim_damaged(_amount: int, crit: bool) -> void:
 	_flash_tw.tween_callback(func():
 		_body_mat.emission = rest_color
 		_body_mat.emission_enabled = sim.is_elite)
+
+## Elementär charm-bonusskada: violett siffra skild från vapenskadan.
+func _on_sim_charm_damaged(amount: int, _element: String) -> void:
+	_refresh_hp_bar()
+	if fx != null:
+		fx.show_text(position, str(amount), Color(0.75, 0.45, 1.0))
+
+## Elementreaktion/notering — samma etiketter och färger som 2D-vyn.
+func _on_sim_element_reaction(kind: String) -> void:
+	if fx == null:
+		return
+	match kind:
+		"weak":          fx.show_text(position, "svag!", Color(1.0, 0.85, 0.2))
+		"resist":        fx.show_text(position, "tål", Color(0.6, 0.7, 1.0))
+		"immune":        fx.show_text(position, "immun", Color(0.6, 0.6, 0.6))
+		"poison_immune": fx.show_text(position, "gift biter ej", Color(0.6, 0.72, 0.6))
+		"miss":          fx.show_text(position, "miss", Color(0.72, 0.72, 0.72))
+		"poisoned":      fx.show_text(position, "förgiftad", Color(0.4, 0.95, 0.4))
+		"stunned":       fx.show_text(position, "bedövad", Color(1.0, 0.9, 0.4))
 
 func _on_sim_enraged() -> void:
 	_body_mat.emission_enabled = true

@@ -145,8 +145,14 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       → tile; monster på rutan blir auto-attack-mål (röd målring, behålls
       medan man går — Tibia-stil), tom mark ger klick-för-att-gå via
       `walk_to`. Player3D kör `sim.attack_tick` och spelar sving-stöten
-      via `attack_swung`. Målet nollas vid zonbyte. Kraftslag (spec) och
-      healed-feedback återstår till HUD-bryggan.
+      via `attack_swung`. Målet nollas vid zonbyte.
+- [x] Stridsfeedback i 3D (2026-07-02): `world/floating_text_3d.gd` — poolade
+      billboardade Label3D (fast pool om 12, ingen per-träff-allokering) för
+      skadesiffror (guld vid crit), charm-skada, element-taggar
+      ("miss"/"förgiftad"/…) och läkning (+N). Kraftslag på F
+      (`weapon_spec`-action som 2D) med cleave-insamling, guldstjärna +
+      ljuspuls vid nedslag; hälsodryck på use_potion-knappen. HUD:en visar
+      spec-mätaren ("Spec N%" → "KRAFTSLAG (F)").
 - [ ] En skill + en quest körbar i slicen (HUD-brygga)
 - [ ] Assets: GLB:er från `_meshy_cache` — **måste decimeras i Blender först**
   (råa Meshy-modeller är 15–40 MB st); ersätter platshållarkapsel/kuber
