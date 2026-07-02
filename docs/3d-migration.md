@@ -130,8 +130,18 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
 - [x] Headless-tester i `tests/unit/test_zone3d.gd` (8 st): koordinat-
       mappning, full terrängtäckning, materialpooling, markers,
       snap/interpolation/facing.
-- [ ] `Monster3D` som vy över MonsterSim (AI-tick + interpolation som 2D)
-- [ ] Portalsteg/zonbyte i 3D (game3d lyssnar på `step_completed`)
+- [x] `Monster3D` (2026-07-02, `entities/monster/monster3d.gd`): vy över
+      MonsterSim — AI-tick matas med spelar-tilen, interpolation ur
+      `move_progress`, hp-bar, elite/enrage-emission, attack-stöt och
+      dödskrympning. Material skapas EN gång per monster; träff-blink
+      tweenar bara parametrar. Loot-drops på marken hoppas över i slicen
+      (exp/kills bokförs av simmen).
+- [x] Zonbyten i 3D (2026-07-02, `game3d.gd`): portalsteg via
+      `step_completed` med samma regler som player.gd (lås → try_unlock +
+      hint), dungeon-nedgångar via DungeonGen (exit tillbaka till ytrutan),
+      monster-respawn per zon-epok, spelardöd → Tibia-återkomst till
+      hemzonen. Mini-HUD (HP + meddelanden) tills riktiga HUD:en bryggas.
+- [ ] Spelarattack i 3D: targeting (klick-ray mot Monster3D) + attack_tick
 - [ ] En skill + en quest körbar i slicen (HUD-brygga)
 - [ ] Assets: GLB:er från `_meshy_cache` — **måste decimeras i Blender först**
   (råa Meshy-modeller är 15–40 MB st); ersätter platshållarkapsel/kuber
