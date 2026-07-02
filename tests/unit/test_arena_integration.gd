@@ -12,6 +12,7 @@ const PlayerScene = preload("res://entities/player/player.tscn")
 var _zone: Node2D
 var _player: Node2D
 var _saved_zone
+var _saved_model
 var _saved_player
 
 func before_each():
@@ -19,11 +20,13 @@ func before_each():
 	GameState.inventory.clear()
 	UnlockSystem.unlocked.erase(ArenaSystem.CHAMPION_UNLOCK)
 	_saved_zone = World.current_zone
+	_saved_model = World.zone_model
 	_saved_player = World.player
 	_zone = ZoneScript.new()
 	add_child_autofree(_zone)
 	_zone.build(ArenaSystem.ARENA_ZONE)
 	World.current_zone = _zone
+	World.zone_model = _zone.model
 	_player = PlayerScene.instantiate()
 	_zone.add_child(_player)
 	_player.zone = _zone
@@ -32,6 +35,7 @@ func before_each():
 
 func after_each():
 	World.current_zone = _saved_zone
+	World.zone_model = _saved_model
 	World.player = _saved_player
 	ArenaSystem.reset()
 	UnlockSystem.unlocked.erase(ArenaSystem.CHAMPION_UNLOCK)

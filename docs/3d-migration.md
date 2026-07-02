@@ -108,7 +108,12 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       Headless-tester i `tests/unit/test_player_sim_combat.gd` (11 tester).
 - [ ] Player: gathering-tick och spell-fx-plumbing till sim (låg prioritet —
       gather-noder och aim/fx är i praktiken presentationsbundna)
-- [ ] `world.gd` typas om mot sim-klasserna
+- [x] `world.gd` typas om mot modellagret (2026-07-02): nytt fält
+      `World.zone_model: ZoneModel` sätts vid zonbygge; all zondata
+      (spawn/node/station/shop/bank/taskmaster/spell_teacher/chest-punkter,
+      player_start, grid_size, zone_id, dungeon_theme, is_walkable/is_occupied)
+      läses ur modellen. `current_zone` är nu enbart vy-container (add_child).
+      En 3D-vy kan därmed återanvända world.gd:s spawn-orkestrering rakt av.
 
 ### Steg 4 — 3D-slice *(parallellt spår när steg 2–3 är klara)*
 - `Zone3D` + `Monster3D`/`Player3D` som *alternativa vyer* över samma modeller
