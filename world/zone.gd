@@ -64,7 +64,7 @@ func lock_at(t: Vector2i) -> String: return model.lock_at(t)
 func is_walkable(t: Vector2i) -> bool: return model.is_walkable(t)
 func find_path(from: Vector2i, to: Vector2i) -> Array[Vector2i]: return model.find_path(from, to)
 func find_path_adjacent(from: Vector2i, to: Vector2i) -> Array: return model.find_path_adjacent(from, to)
-func occupy(t: Vector2i, monster: Node) -> void: model.occupy(t, monster)
+func occupy(t: Vector2i, occupant: Object) -> void: model.occupy(t, occupant)
 func vacate(t: Vector2i) -> void: model.vacate(t)
 func is_occupied(t: Vector2i) -> bool: return model.is_occupied(t)
 

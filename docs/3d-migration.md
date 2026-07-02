@@ -85,8 +85,12 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       `status_changed`, `enrage_started`, `died(drops)`. `monster.gd` är vy
       (sprite, damage numbers, auror, ljud, dödsanim) med bakåtkompatibel
       delegation.
-- [ ] Monster: AI-tick + movement-intent till sim (kräver spelar-position
-      via abstraktion, inte `World.player`)
+- [x] Monster: AI-tick + movement-intent i sim (2026-07-02) — `ai_tick(delta,
+      player_tile)` äger jakt/attack/steg mot ZoneModel (occupancy flyttad
+      till sim, `place()`); nya signaler `moved`, `attack_started`,
+      `player_dodged`. Vyn interpolerar position ur `move_progress` och
+      matar in spelar-tilen. Headless AI-testsvit i
+      `tests/unit/test_monster_sim_ai.gd` (11 tester).
 - [ ] `PlayerSim`: gridrörelse, attack-ticks, gathering, spellcasting
 - [ ] `world.gd` typas om mot sim-klasserna
 

@@ -12,11 +12,7 @@ const SpriteFx = preload("res://world/sprite_fx.gd")
 var sim: MonsterSim
 var respawn_time := -1.0
 var zone: Node2D
-var tile := Vector2i.ZERO
 
-var _path: Array = []
-var _atk_timer := 0.0
-var _move_t := 1.0
 var _from := Vector2.ZERO
 var _to   := Vector2.ZERO
 var _breath_t := 0.0       # idle-andning, slumpad fas
@@ -28,6 +24,9 @@ var _status_aura: CPUParticles2D = null   # gift/brand-partiklar
 var monster_name: String:
 	get: return sim.monster_name
 	set(v): sim.monster_name = v
+var tile: Vector2i:
+	get: return sim.tile
+	set(v): sim.tile = v
 var hp: int:
 	get: return sim.hp
 	set(v): sim.hp = v
@@ -81,6 +80,9 @@ func _init() -> void:
 	sim.status_changed.connect(_on_sim_status_changed)
 	sim.enrage_started.connect(_on_sim_enraged)
 	sim.died.connect(_on_sim_died)
+	sim.moved.connect(_on_sim_moved)
+	sim.attack_started.connect(_on_sim_attack_started)
+	sim.player_dodged.connect(_on_sim_player_dodged)
 
 @onready var _hp_bar: ColorRect  = $HpBar
 @onready var _name_lbl: Label    = $NameLabel
@@ -277,12 +279,11 @@ func _add_fallback_shape() -> void:
 func setup(mname: String, t: Vector2i, z: Node2D, respawn := -1.0) -> void:
 	# Natt-buff: +20 % atk och exp vid spawn under natten
 	sim.init_stats(mname, TimeOfDay.is_night)
-	tile = t
 	zone = z
 	respawn_time = respawn
-	position = zone.tile_to_world(tile)
-	_from = position; _to = position; _move_t = 1.0
-	zone.occupy(tile, self)
+	sim.place(t, z.model)
+	position = zone.tile_to_world(t)
+	_from = position; _to = position
 	_load_sprite()
 	_breath_t = randf() * 10.0        # slumpad fas så monster inte andas i takt
 	if _sprite != null:
@@ -315,58 +316,17 @@ func _refresh_label() -> void:
 	else:
 		_hp_bar.color = Color(0.85, 0.12, 0.12)
 
+## Vyns tick: livs-anim + vidarebefordran till simuleringens AI-tick.
+## Positionen interpoleras ur sim.move_progress (1.0 = vilande på _to).
 func _process(delta: float) -> void:
 	if dead:
 		return
 	_update_life_anim(delta)
-	_atk_timer = maxf(_atk_timer - delta, 0.0)
-	sim.tick_statuses(delta)
-
-	if not is_instance_valid(zone) or World.player == null:
-		return
-	var player_tile: Vector2i = World.player.tile
-	var dist := maxi(absi(tile.x - player_tile.x), absi(tile.y - player_tile.y))
-
-	if _move_t < 1.0:                                # pågående steg
-		_move_t = minf(_move_t + delta * speed, 1.0)
-		position = _from.lerp(_to, _move_t)
-		return
-
-	if has_status("stun"):                           # bedövad: kan varken slå eller jaga
-		return
-
-	if dist <= 1:                                    # intill: slå
-		if _atk_timer <= 0.0:
-			_atk_timer = cooldown
-			play_attack(player_tile - tile)
-			# Spelaren kan väja undan (agility/sköld mot monstrets träffsäkerhet).
-			var p_eva := CombatFormulas.player_evasion(
-				GameState.effective_skill_level("agility"),
-				GameState.effective_skill_level("shielding"))
-			if not CombatFormulas.roll_hit(CombatFormulas.monster_accuracy(atk),
-					p_eva, CombatFormulas.MONSTER_HIT_FLOOR):
-				if World.player != null and World.player.has_method("show_dodge"):
-					World.player.show_dodge()
-				GameState.gain_skill_xp("agility", 1)   # undvikande tränar agility
-				return
-			var raw := CombatFormulas.roll_monster(atk)
-			var armor := GameState.total_armor() + GameState.total_def_bonus() \
-				+ CombatStance.mitigation_bonus(GameState.combat_stance)
-			var dmg := CombatFormulas.mitigate(raw,
-				GameState.effective_skill_level("shielding") + GameState.total_shielding_bonus(),
-				maxi(armor, 0))
-			if dmg > 0:
-				GameState.take_damage(dmg)
-				GameState.gain_skill_xp("shielding", 1)
-			_try_apply_ability()
-		return
-
-	if dist <= aggro_range:                          # jaga
-		_path = zone.find_path(tile, player_tile)
-		if _path.size() > 1:
-			var next: Vector2i = _path[1]
-			if next != player_tile and zone.is_walkable(next) and not zone.is_occupied(next):
-				_step_to(next)
+	var player_tile: Variant = null
+	if is_instance_valid(zone) and World.player != null:
+		player_tile = World.player.tile
+	sim.ai_tick(delta, player_tile)
+	position = _from.lerp(_to, sim.move_progress)
 
 ## Karaktärsliv: gång-studs under ett steg, annars subtil idle-andning.
 ## Delar hjälpfunktioner med spelare/NPC via CharacterVisual.
@@ -374,8 +334,8 @@ func _update_life_anim(delta: float) -> void:
 	if _sprite == null or _attacking:
 		return
 	_breath_t += delta
-	if _move_t < 1.0:                       # mitt i ett steg → studsa
-		_sprite.position.y = _sprite_base_y + CharacterVisual.walk_bob(_move_t)
+	if sim.move_progress < 1.0:             # mitt i ett steg → studsa
+		_sprite.position.y = _sprite_base_y + CharacterVisual.walk_bob(sim.move_progress)
 		_sprite.scale.y = 1.0
 	else:                                   # stillastående → andas
 		_sprite.position.y = _sprite_base_y
@@ -397,44 +357,23 @@ func play_attack(dir: Vector2i) -> void:
 	tw.tween_property(_sprite, "position", rest, 0.13).set_ease(Tween.EASE_IN_OUT)
 	tw.tween_callback(func(): _attacking = false)
 
-## Försöker applicera monsterets ability-effekt på spelaren.
-func _try_apply_ability() -> void:
-	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
-	var ab: Dictionary = d.get("ability", {})
-	if ab.is_empty():
-		return
-	if randf() >= float(ab.get("chance", 0.0)):
-		return
-	match String(ab.get("type", "")):
-		"poison":
-			GameState.apply_status("poison",
-				float(ab.get("duration", 10.0)),
-				float(ab.get("tick_dmg", 3.0)))
-		"burn":
-			GameState.apply_status("burn",
-				float(ab.get("duration", 6.0)),
-				float(ab.get("tick_dmg", 6.0)))
-		"drain":
-			GameState.drain_mana(float(ab.get("tick_dmg", 10.0)))
-		"stun":
-			GameState.apply_status("stun",
-				float(ab.get("duration", 2.0)), 0.0)
-		"slow":
-			GameState.apply_status("slow",
-				float(ab.get("duration", 3.0)), 0.0)
-
-func _step_to(next: Vector2i) -> void:
-	zone.vacate(tile)
-	zone.occupy(next, self)
-	# Vänd spriten mot rörelseriktningen (vänster/höger)
-	if _sprite != null and next.x != tile.x:
-		_sprite.scale.x = -1.0 if next.x < tile.x else 1.0
-	tile = next
-	_from = position
-	_to = zone.tile_to_world(next)
-	_move_t = 0.0
-
 # ── Reaktioner på simuleringens signaler (rent visuellt + ljud) ───────────────
+## Steg påbörjat: sätt interpolationsmål och vänd spriten mot riktningen.
+func _on_sim_moved(from: Vector2i, to: Vector2i) -> void:
+	if _sprite != null and to.x != from.x:
+		_sprite.scale.x = -1.0 if to.x < from.x else 1.0
+	_from = position
+	_to = zone.tile_to_world(to)
+
+## Attack inledd (före träffrull): spela lunge-stöten mot spelaren.
+func _on_sim_attack_started(dir: Vector2i) -> void:
+	play_attack(dir)
+
+## Spelaren väjde: låt spelarens vy visa "undvek"-effekten.
+func _on_sim_player_dodged() -> void:
+	if World.player != null and World.player.has_method("show_dodge"):
+		World.player.show_dodge()
+
 ## Träff registrerad: uppdatera bar/label, skadesiffra, röd blink och ljud.
 func _on_sim_damaged(amount: int, crit: bool) -> void:
 	_refresh_label()
@@ -500,11 +439,10 @@ func _spawn_damage_number(dmg: float, crit := false) -> void:
 	dn.global_position = global_position + Vector2(randf_range(-6, 6), -8)
 	dn.setup(dmg, crit)
 
-## Döden är redan bokförd i sim (exp, kills, loot-rull) — vyn frigör tilen,
-## spawnar ground items, spelar dödsskur/ljud, schemalägger respawn och tonar ut.
+## Döden är redan bokförd i sim (exp, kills, loot-rull, tilen frigjord) —
+## vyn spawnar ground items, spelar dödsskur/ljud, schemalägger respawn
+## och tonar ut.
 func _on_sim_died(drops: Array) -> void:
-	if is_instance_valid(zone):
-		zone.vacate(tile)
 	if not drops.is_empty():
 		var gi := preload("res://entities/ground_item.gd").new()
 		var parent := get_parent() if get_parent() != null else self

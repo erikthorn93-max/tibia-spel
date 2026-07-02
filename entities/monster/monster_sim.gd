@@ -16,8 +16,15 @@ signal element_reaction(kind: String)  # "weak" | "resist" | "immune" | "poison_
 signal status_changed()                # status lades till eller tickade ut
 signal enrage_started()                # enrage-fas aktiverad (speed/atk höjda)
 signal died(drops: Array)              # exp/kills bokförda; drops = utrullad loot
+signal moved(from: Vector2i, to: Vector2i)  # steg påbörjat (move_progress 0→1)
+signal attack_started(dir: Vector2i)   # attack mot spelaren inledd (före träffrull)
+signal player_dodged()                 # spelaren väjde undan attacken
 
 var monster_name := ""
+var tile := Vector2i.ZERO
+var zone: ZoneModel = null             # sätts via place(); äger occupancy
+var move_progress := 1.0               # 0..1; <1 = mitt i ett steg, 1 = stilla
+var _atk_timer := 0.0
 var hp := 10
 var max_hp := 10
 var atk := 3
@@ -44,6 +51,104 @@ func init_stats(mname: String, night := false) -> void:
 	if night:
 		atk = int(float(atk) * 1.2)
 		exp = int(float(exp) * 1.2)
+
+## Placerar monstret i en zon och registrerar tilen i kollisionskartan.
+func place(t: Vector2i, z: ZoneModel) -> void:
+	zone = z
+	tile = t
+	move_progress = 1.0
+	if zone != null:
+		zone.occupy(tile, self)
+
+## AI-tick: timers, statuseffekter, pågående steg, attack och jakt.
+## player_tile = null (t.ex. ingen spelare) fryser AI:n men tickar statusar.
+func ai_tick(delta: float, player_tile: Variant = null) -> void:
+	if dead:
+		return
+	_atk_timer = maxf(_atk_timer - delta, 0.0)
+	tick_statuses(delta)
+
+	if zone == null or player_tile == null:
+		return
+	if move_progress < 1.0:                          # pågående steg
+		move_progress = minf(move_progress + delta * speed, 1.0)
+		return
+	if has_status("stun"):                           # bedövad: kan varken slå eller jaga
+		return
+
+	var pt: Vector2i = player_tile
+	var dist := maxi(absi(tile.x - pt.x), absi(tile.y - pt.y))
+	if dist <= 1:                                    # intill: slå
+		if _atk_timer <= 0.0:
+			_atk_timer = cooldown
+			_attack_player(pt - tile)
+		return
+	if dist <= aggro_range:                          # jaga
+		var path := zone.find_path(tile, pt)
+		if path.size() > 1:
+			var next: Vector2i = path[1]
+			if next != pt and zone.is_walkable(next) and not zone.is_occupied(next):
+				_step_to(next)
+
+## Attack mot spelaren: träffrull mot evasion, mitigering mot armor/sköld,
+## och chans på monstrets ability. Vyn spelar stöten via attack_started.
+func _attack_player(dir: Vector2i) -> void:
+	attack_started.emit(dir)
+	# Spelaren kan väja undan (agility/sköld mot monstrets träffsäkerhet).
+	var p_eva := CombatFormulas.player_evasion(
+		GameState.effective_skill_level("agility"),
+		GameState.effective_skill_level("shielding"))
+	if not CombatFormulas.roll_hit(CombatFormulas.monster_accuracy(atk),
+			p_eva, CombatFormulas.MONSTER_HIT_FLOOR):
+		player_dodged.emit()
+		GameState.gain_skill_xp("agility", 1)   # undvikande tränar agility
+		return
+	var raw := CombatFormulas.roll_monster(atk)
+	var armor := GameState.total_armor() + GameState.total_def_bonus() \
+		+ CombatStance.mitigation_bonus(GameState.combat_stance)
+	var dmg := CombatFormulas.mitigate(raw,
+		GameState.effective_skill_level("shielding") + GameState.total_shielding_bonus(),
+		maxi(armor, 0))
+	if dmg > 0:
+		GameState.take_damage(dmg)
+		GameState.gain_skill_xp("shielding", 1)
+	_try_apply_ability()
+
+## Försöker applicera monsterets ability-effekt på spelaren.
+func _try_apply_ability() -> void:
+	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
+	var ab: Dictionary = d.get("ability", {})
+	if ab.is_empty():
+		return
+	if randf() >= float(ab.get("chance", 0.0)):
+		return
+	match String(ab.get("type", "")):
+		"poison":
+			GameState.apply_status("poison",
+				float(ab.get("duration", 10.0)),
+				float(ab.get("tick_dmg", 3.0)))
+		"burn":
+			GameState.apply_status("burn",
+				float(ab.get("duration", 6.0)),
+				float(ab.get("tick_dmg", 6.0)))
+		"drain":
+			GameState.drain_mana(float(ab.get("tick_dmg", 10.0)))
+		"stun":
+			GameState.apply_status("stun",
+				float(ab.get("duration", 2.0)), 0.0)
+		"slow":
+			GameState.apply_status("slow",
+				float(ab.get("duration", 3.0)), 0.0)
+
+## Påbörjar ett steg till en granntile: flyttar kollisionsregistreringen och
+## nollar move_progress. Vyn interpolerar positionen via moved-signalen.
+func _step_to(next: Vector2i) -> void:
+	zone.vacate(tile)
+	zone.occupy(next, self)
+	var from := tile
+	tile = next
+	move_progress = 0.0
+	moved.emit(from, next)
 
 ## Elite-variant: dubbla HP, +50 % atk, 3× exp.
 func make_elite() -> void:
@@ -150,10 +255,13 @@ func _check_enrage() -> void:
 	atk = int(float(atk) * 1.5)
 	enrage_started.emit()
 
-## Bokför döden (exp, vapenskill-xp, task/quest/arena-kills), rullar loot och
-## emitterar died(drops). Vyn sköter dödsanimation, ground items och respawn.
+## Bokför döden (exp, vapenskill-xp, task/quest/arena-kills), frigör tilen,
+## rullar loot och emitterar died(drops). Vyn sköter dödsanimation,
+## ground items och respawn.
 func _die() -> void:
 	dead = true
+	if zone != null:
+		zone.vacate(tile)
 	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
 	GameState.gain_exp(exp)
 	GameState.gain_skill_xp(GameState.weapon_skill(), exp)

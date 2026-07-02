@@ -234,9 +234,9 @@ func find_path_adjacent(from: Vector2i, to: Vector2i) -> Array:
 			best = p
 	return best
 
-## Monster-kollision: registrera ett monster på en tile.
-func occupy(t: Vector2i, monster: Node) -> void:
-	_monster_tiles[t] = monster
+## Monster-kollision: registrera en enhet (nod eller sim) på en tile.
+func occupy(t: Vector2i, occupant: Object) -> void:
+	_monster_tiles[t] = occupant
 
 ## Monster-kollision: frigör en tile när monstret lämnar eller dör.
 func vacate(t: Vector2i) -> void:
