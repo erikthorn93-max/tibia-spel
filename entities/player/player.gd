@@ -1,24 +1,45 @@
 class_name Player
 extends Node2D
-## Tile-baserad rörelse + targeting + auto-attack + gathering (Tibia/OSRS-stil).
+## Vy för spelaren: targeting + auto-attack + gathering + spells + ljus/auror.
+## Gridrörelsen (steg, auto-walk, facing, bump-unlock) bor i PlayerSim — vyn
+## interpolerar position ur sim.move_progress och delegerar bakåtkompatibelt.
 
 const TILE := 32
 const ATTACK_COOLDOWN := 1.0
 const GATHER_INTERVAL := 2.0
 
-var zone: Node2D                      # sätts av World vid zonladdning
-var tile := Vector2i.ZERO
-var _move_t := 1.0                    # 0..1 under pågående steg
+var sim: PlayerSim
+var _zone_node: Node2D
+var zone: Node2D:                     # sätts av World vid zonladdning
+	get: return _zone_node
+	set(z):
+		_zone_node = z
+		sim.zone = z.model if z != null else null
 var _from := Vector2.ZERO
 var _to := Vector2.ZERO
-var move_speed := 4.0                 # tiles/sek
-var facing := Vector2i.DOWN
 var target: Node2D = null
 var _attack_timer := 0.0
 var gather_target: Node2D = null
 var _gather_timer := 0.0
-var _auto_path: Array = []
 var _status_aura: CPUParticles2D = null
+
+# ── Delegation till simuleringen (bakåtkompatibelt API) ───────────────────────
+var tile: Vector2i:
+	get: return sim.tile
+	set(v): sim.tile = v
+var facing: Vector2i:
+	get: return sim.facing
+	set(v): sim.facing = v
+var move_speed: float:                # tiles/sek
+	get: return sim.move_speed
+	set(v): sim.move_speed = v
+
+func _init() -> void:
+	sim = PlayerSim.new()
+	sim.moved.connect(_on_sim_moved)
+	sim.step_completed.connect(_on_sim_step_completed)
+	sim.facing_changed.connect(_on_sim_facing_changed)
+	sim.message.connect(_on_sim_message)
 
 @onready var visual: CharacterVisual = $CharacterVisual
 
@@ -110,18 +131,17 @@ func _on_charm_feedback(text: String, color: Color) -> void:
 	ft.setup(text, color, 12)
 
 func snap_to(t: Vector2i) -> void:
-	tile = t
+	sim.snap_to(t)
 	position = zone.tile_to_world(t)
-	_move_t = 1.0
-	GameState.player_tile = t
-	QuestSystem.record_position(GameState.current_zone, t)
+	_from = position
+	_to = position
 
 func set_target(m: Node2D) -> void:
 	if target and is_instance_valid(target):
 		target.modulate = Color.WHITE
 	target = m
 	gather_target = null
-	_auto_path = []
+	sim.auto_path = []
 	if target:
 		target.modulate = Color(1.4, 0.9, 0.9)   # röd markering som Tibia
 
@@ -129,123 +149,52 @@ func set_gather_target(n: Node2D) -> void:
 	set_target(null)
 	gather_target = n
 	_gather_timer = 0.0
-	if n:
-		_auto_path = zone.find_path_adjacent(tile, n.tile)
-		if _auto_path.is_empty() and _chebyshev(n.tile) > 1:
-			World.hud.show_message("Kan inte nå dit.")
-			gather_target = null
+	if n and not sim.walk_adjacent_to(n.tile):
+		gather_target = null
 
 ## Klick-för-att-gå: pathfinda till en ruta och auto-walka dit.
 ## Går ända fram till rutan (portaler/dörrar utlöses när spelaren kliver på).
 func walk_to(t: Vector2i) -> void:
 	set_target(null)
 	gather_target = null
-	_auto_path = []
-	if t == tile:
-		return
-	if not zone.is_walkable(t):
-		# Låst gate/genväg intill? ge hint istället för tyst avbrott.
-		if zone.lock_at(t) != "":
-			_try_bump_unlock(t)
-		else:
-			World.hud.show_message("Kan inte nå dit.")
-		return
-	var path: Array = zone.find_path(tile, t)
-	if path.is_empty():
-		World.hud.show_message("Kan inte nå dit.")
-		return
-	_auto_path = path
+	sim.walk_to(t)
 
 func _chebyshev(t: Vector2i) -> int:
-	return maxi(absi(t.x - tile.x), absi(t.y - tile.y))
+	return sim.chebyshev(t)
 
+## Vyns tick: läs input-intent, mata simuleringen, interpolera positionen och
+## driv anfall/gathering/spells/ljus (flyttas i senare migrationssteg).
 func _process(delta: float) -> void:
-	_update_movement(delta)
-	visual.set_walk(_move_t < 1.0, _move_t)   # gång-studs under steg, annars andning
+	var intent := Vector2i.ZERO
+	if Input.is_action_pressed("move_up"): intent = Vector2i.UP
+	elif Input.is_action_pressed("move_down"): intent = Vector2i.DOWN
+	elif Input.is_action_pressed("move_left"): intent = Vector2i.LEFT
+	elif Input.is_action_pressed("move_right"): intent = Vector2i.RIGHT
+	if intent != Vector2i.ZERO:
+		gather_target = null     # manuell rörelse avbryter gather
+	sim.advance(delta, intent)
+	position = _from.lerp(_to, sim.move_progress)
+	visual.set_walk(sim.move_progress < 1.0, sim.move_progress)   # gång-studs/andning
 	_update_attack(delta)
 	_update_gather(delta)
 	_update_spells()
 	_update_player_light(delta)
 
-func _update_movement(delta: float) -> void:
-	if GameState.has_status("stun"):
-		return   # stun-status: spelaren kan inte röra sig
-	var effective_speed := move_speed * (0.5 if GameState.has_status("slow") else 1.0)
-	# Förbruka hela frame-budgeten: avsluta pågående steg och fortsätt sömlöst in
-	# i nästa (carry-over) så det inte uppstår en stillastående frame vid varje
-	# tile-gräns — det är det som ger den synliga hackningen.
-	var budget := delta
-	while budget > 0.0:
-		if _move_t < 1.0:
-			var need := (1.0 - _move_t) / effective_speed   # tid kvar för steget
-			if budget < need:
-				_move_t += budget * effective_speed
-				position = _from.lerp(_to, _move_t)
-				return
-			# Steget hinner bli klart denna frame — förbruka exakt så mycket tid.
-			budget -= need
-			_move_t = 1.0
-			position = _to
-			var prev_zone := zone
-			GameState.player_tile = tile
-			QuestSystem.record_position(GameState.current_zone, tile)
-			_check_portal()
-			if zone != prev_zone:
-				return   # zonbyte skedde — ny zon/position hanterar resten
-		elif not _begin_next_step():
-			return        # ingen input/auto-path — stå stilla
+# ── Reaktioner på simuleringens signaler ──────────────────────────────────────
+## Steg påbörjat: sätt interpolationsmål (positionen läses ur move_progress).
+func _on_sim_moved(from: Vector2i, to: Vector2i) -> void:
+	_from = zone.tile_to_world(from)
+	_to = zone.tile_to_world(to)
 
-## Väljer nästa rörelseriktning (manuell input > auto-walk). Returnerar true
-## om ett steg faktiskt startades.
-func _begin_next_step() -> bool:
-	var dir := Vector2i.ZERO
-	if Input.is_action_pressed("move_up"): dir = Vector2i.UP
-	elif Input.is_action_pressed("move_down"): dir = Vector2i.DOWN
-	elif Input.is_action_pressed("move_left"): dir = Vector2i.LEFT
-	elif Input.is_action_pressed("move_right"): dir = Vector2i.RIGHT
-	if dir != Vector2i.ZERO:
-		_auto_path = []          # manuell rörelse avbryter auto-walk
-		gather_target = null
-		return _step(dir)
-	if _auto_path.size() > 1:    # auto-walk mot gather-mål
-		var next: Vector2i = _auto_path[1]
-		_auto_path.remove_at(0)
-		var d := next - tile
-		if d != Vector2i.ZERO and zone.is_walkable(next):
-			return _step(d)
-	return false
+## Landade på en tile: portaler/dörrar/trappor utlöses av vyn (World-anrop).
+func _on_sim_step_completed(_t: Vector2i) -> void:
+	_check_portal()
 
-func _step(dir: Vector2i) -> bool:
-	facing = dir
+func _on_sim_facing_changed(dir: Vector2i) -> void:
 	visual.face(dir)
-	var next := tile + dir
-	if not zone.is_walkable(next):
-		_try_bump_unlock(next)
-		return false
-	_from = position
-	_to = zone.tile_to_world(next)
-	tile = next
-	_move_t = 0.0
-	GameState.gain_skill_xp("agility", 1)   # gång tränar agility
-	# Agility-bonus: rörelsehastighetsmultiplikator baserad på agility-nivå
-	var ag := GameState.effective_skill_level("agility")
-	if ag >= 60:
-		move_speed = 5.2
-	elif ag >= 40:
-		move_speed = 4.8
-	elif ag >= 20:
-		move_speed = 4.4
-	else:
-		move_speed = 4.0
-	return true
 
-## Gå mot låst gate/genväg: lås upp om kraven är uppfyllda, annars visa hint.
-func _try_bump_unlock(t: Vector2i) -> void:
-	var uid: String = zone.lock_at(t)
-	if uid == "":
-		return
-	if not UnlockSystem.try_unlock(uid):
-		World.hud.show_message(UnlockSystem.hint_for(uid))
+func _on_sim_message(text: String) -> void:
+	World.hud.show_message(text)
 
 func _update_attack(delta: float) -> void:
 	_attack_timer = maxf(_attack_timer - delta, 0.0)

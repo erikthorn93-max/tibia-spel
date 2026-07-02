@@ -91,7 +91,15 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       `player_dodged`. Vyn interpolerar position ur `move_progress` och
       matar in spelar-tilen. Headless AI-testsvit i
       `tests/unit/test_monster_sim_ai.gd` (11 tester).
-- [ ] `PlayerSim`: gridrörelse, attack-ticks, gathering, spellcasting
+- [x] `PlayerSim` — rörelsekärnan (2026-07-02): gridsteg med frame-budget/
+      carry-over, auto-walk via A*, facing, bump-unlock, agility-tiers och
+      portalsteg (`step_completed` → vyn portal-checkar; zonbyte avbryter
+      budget-loopen via zon-referensjämförelse). Signaler `moved`,
+      `step_completed`, `facing_changed`, `message`. Vyn läser input-intent
+      och interpolerar ur `move_progress`. Headless-tester i
+      `tests/unit/test_player_sim_movement.gd` (12 tester).
+- [ ] Player: attack-ticks, gathering och spellcasting till PlayerSim
+      (kräver mål via MonsterSim, inte monster-noder)
 - [ ] `world.gd` typas om mot sim-klasserna
 
 ### Steg 4 — 3D-slice *(parallellt spår när steg 2–3 är klara)*
