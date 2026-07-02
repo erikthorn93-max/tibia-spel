@@ -1,0 +1,10 @@
+{
+    "name":  "bear",
+    "prompt":  "A realistic brown bea[r]...",
+    "source":  "meshy",
+    "stage":  "texture",
+    "date":  "2026-05-21",
+    "originalFile":  "Meshy_AI_A_realistic_brown_bea_0521224531_texture.glb",
+    "rescued":  true,
+    "altCopy":  "godot_rpg/assets/monsters/bear_meshy.glb"
+}

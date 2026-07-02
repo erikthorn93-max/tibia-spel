@@ -11,5 +11,6 @@ tools/voices/
 
 node_modules/
 
-# Meshy GLB-cache trackas tills vidare (kan bli git-lfs eller ignoreras senare)
-# assets/_meshy_cache/*.glb
+# Meshy GLB-cache: modellerna är för stora för GitHub (~1,5 GB, två filer >100 MB).
+# Endast .meshy.json-metadatan trackas — GLB:erna finns lokalt och kan regenereras via Meshy.
+assets/_meshy_cache/*.glb

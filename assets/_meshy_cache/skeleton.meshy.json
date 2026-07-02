@@ -1,0 +1,10 @@
+{
+    "name":  "skeleton",
+    "prompt":  "Realistic human skele[ton]...",
+    "source":  "meshy",
+    "stage":  "generate",
+    "date":  "2026-05-23",
+    "originalFile":  "Meshy_AI_Realistic_human_skele_0523114112_generate.glb",
+    "rescued":  true,
+    "altCopy":  "godot_rpg/assets/monsters/skeleton_meshy.glb"
+}

@@ -1,0 +1,10 @@
+{
+    "name":  "rabbit",
+    "prompt":  "A cute realistic rabb...",
+    "source":  "meshy",
+    "stage":  "texture",
+    "date":  "2026-05-22",
+    "originalFile":  "Meshy_AI_A_cute_realistic_rabb_0522163159_texture.glb",
+    "rescued":  true,
+    "altCopy":  "godot_rpg/assets/monsters/rabbit_meshy.glb"
+}

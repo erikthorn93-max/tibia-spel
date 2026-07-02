@@ -1,0 +1,10 @@
+{
+    "name":  "orc",
+    "prompt":  "A realistic fantasy o[rc]...",
+    "source":  "meshy",
+    "stage":  "texture",
+    "date":  "2026-05-22",
+    "originalFile":  "Meshy_AI_A_realistic_fantasy_o_0522164736_texture.glb",
+    "rescued":  true,
+    "altCopy":  "godot_rpg/assets/monsters/orc_meshy.glb"
+}

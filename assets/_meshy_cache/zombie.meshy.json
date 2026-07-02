@@ -1,0 +1,10 @@
+{
+    "name":  "zombie",
+    "prompt":  "(okand prompt - generiskt filnamn; matchar zombie_meshy.glb)",
+    "source":  "meshy",
+    "stage":  "texture",
+    "date":  "2026-05-23",
+    "originalFile":  "Meshy_AI_Text_to_3D_prompt__0523121019_texture.glb",
+    "rescued":  true,
+    "altCopy":  "godot_rpg/assets/monsters/zombie_meshy.glb"
+}

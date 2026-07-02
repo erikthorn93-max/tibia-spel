@@ -1,0 +1,10 @@
+{
+    "name":  "wolf",
+    "prompt":  "(okand prompt - generiskt filnamn; matchar wolf_meshy.glb)",
+    "source":  "meshy",
+    "stage":  "texture",
+    "date":  "2026-05-22",
+    "originalFile":  "Meshy_AI_Text_to_3D_prompt__0522155211_texture.glb",
+    "rescued":  true,
+    "altCopy":  "godot_rpg/assets/monsters/wolf_meshy.glb"
+}

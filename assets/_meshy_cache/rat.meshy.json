@@ -1,0 +1,10 @@
+{
+    "name":  "rat",
+    "prompt":  "A brown rat realisti...",
+    "source":  "meshy",
+    "stage":  "texture",
+    "date":  "2026-05-20",
+    "originalFile":  "Meshy_AI_A_brown_rat_realisti_0520130437_texture.glb",
+    "rescued":  true,
+    "altCopy":  "godot_rpg/assets/monsters/rat_meshy.glb"
+}
