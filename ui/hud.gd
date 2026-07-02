@@ -59,6 +59,7 @@ var _prev_hp := 150.0          # för att detektera riktning av HP-förändring
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS    # måste fungera när trädet pausas vid död
 	World.hud = self
+	World.world_message.connect(show_message)
 	skill_panel = preload("res://ui/skill_panel.gd").new()
 	skill_panel.offset_left = 940.0
 	skill_panel.offset_top = 16.0

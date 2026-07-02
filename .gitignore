@@ -14,3 +14,7 @@ node_modules/
 # Meshy GLB-cache: modellerna är för stora för GitHub (~1,5 GB, två filer >100 MB).
 # Endast .meshy.json-metadatan trackas — GLB:erna finns lokalt och kan regenereras via Meshy.
 assets/_meshy_cache/*.glb
+
+# Godot-importartefakter ur GLB:erna (mappen har .gdignore, men för säkerhets skull)
+assets/_meshy_cache/*.jpg
+assets/_meshy_cache/*.png

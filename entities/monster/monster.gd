@@ -25,6 +25,7 @@ var _to   := Vector2.ZERO
 var dead := false          # publik — läses av player.gd
 var status_effects: Dictionary = {}  # id -> {tick_dmg, time_left, tick_acc}
 var enraged := false       # publik — enrage-fas aktiv
+var is_elite := false      # publik — elite-variant (dubbla stats, se make_elite)
 var _breath_t := 0.0       # idle-andning, slumpad fas
 var _sprite_base_y := 0.0  # spritens vilo-y (för gång-studs)
 var _attacking := false    # pausar livs-anim medan attack-stöten spelas
@@ -251,9 +252,11 @@ func setup(mname: String, t: Vector2i, z: Node2D, respawn := -1.0) -> void:
 func _refresh_label() -> void:
 	if not is_node_ready():
 		return
-	_name_lbl.text = monster_name
+	_name_lbl.text = ("★ " + monster_name) if is_elite else monster_name
 	if enraged:
 		_name_lbl.add_theme_color_override("font_color", Color(1.0, 0.15, 0.15))
+	elif is_elite:
+		_name_lbl.add_theme_color_override("font_color", Color(1.0, 0.5, 0.0))
 	else:
 		_name_lbl.remove_theme_color_override("font_color")
 	var ratio := float(hp) / float(max_hp) if max_hp > 0 else 0.0
@@ -447,8 +450,16 @@ func _step_to(next: Vector2i) -> void:
 	_to = zone.tile_to_world(next)
 	_move_t = 0.0
 
-func _make_elite(m: Node2D) -> void:
-	pass   # kallas inte härifrån, finns i world.gd
+## Förvandlar monstret till en elite-variant: dubbla HP, +50 % atk, 3× exp.
+## Simuleringsändring + flagga — presentationen (★ + orange namn) sköts av
+## _refresh_label() så att vyn kan bytas ut (t.ex. mot 3D) utan att röra detta.
+func make_elite() -> void:
+	is_elite = true
+	hp = hp * 2
+	max_hp = max_hp * 2
+	atk = int(float(atk) * 1.5)
+	exp = exp * 3
+	_refresh_label()
 
 ## Vanlig skada. Med element != "" tillämpas monstrets element_mod (samma
 ## svaghets-/resistensdata som charm-systemet) så magi väger element mot fiende:

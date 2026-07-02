@@ -1,6 +1,9 @@
 extends Node
 ## Autoload: World. Laddar zoner, äger spelarinstansen.
 
+## Meddelanden till spelaren — HUD:en prenumererar (World rör inte UI direkt).
+signal world_message(text: String)
+
 const ZoneScript = preload("res://world/zone.gd")
 const PlayerScene = preload("res://entities/player/player.tscn")
 const DungeonGen = preload("res://world/dungeon_generator.gd")
@@ -120,24 +123,11 @@ func spawn_monster(monster_name: String, t: Vector2i, respawn := -1.0) -> Node2D
 	var m: Node2D = load(MONSTER_SCENE_PATH).instantiate()
 	current_zone.add_child(m)
 	m.setup(monster_name, t, current_zone, respawn)
-	# Elite-chans: 5 % dag, 15 % natt
+	# Elite-chans: 5 % dag, 15 % natt. Stats + presentation ägs av monstret.
 	var elite_chance := 0.15 if TimeOfDay.is_night else 0.05
 	if randf() < elite_chance:
-		_make_elite(m)
+		m.make_elite()
 	return m
-
-## Förvandlar ett monster till en elite-variant.
-func _make_elite(m: Node2D) -> void:
-	m.hp     = m.hp * 2
-	m.max_hp = m.max_hp * 2
-	m.atk    = int(float(m.atk) * 1.5)
-	m.exp    = m.exp * 3
-	# Orange namnlabel (tillgänglig efter add_child → _ready)
-	if m.has_node("NameLabel"):
-		var lbl: Label = m.get_node("NameLabel")
-		lbl.text = "★ " + lbl.text
-		lbl.add_theme_color_override("font_color", Color(1.0, 0.5, 0.0))
-	m._refresh_label()
 
 func _spawn_one(sp: Dictionary) -> void:
 	var mname := String(sp["monster"])
@@ -249,10 +239,9 @@ func _on_arena_wave_started(index: int, spawns: Array) -> void:
 				break
 			spawn_monster(String(s["monster"]), tiles[ti], -1.0)
 			ti += 1
-	if hud != null and is_instance_valid(hud):
-		var label := String(ArenaSystem.waves[index].get("name", ""))
-		hud.show_message("Våg %d/%d%s" % [index + 1, ArenaSystem.wave_count(),
-			(" — " + label) if label != "" else ""])
+	var label := String(ArenaSystem.waves[index].get("name", ""))
+	world_message.emit("Våg %d/%d%s" % [index + 1, ArenaSystem.wave_count(),
+		(" — " + label) if label != "" else ""])
 
 ## Lediga, gångbara rutor minst 2 steg från spelaren, blandade.
 func _arena_spawn_tiles() -> Array:
@@ -270,9 +259,7 @@ func _arena_spawn_tiles() -> Array:
 	return out
 
 func _on_arena_won() -> void:
-	if hud != null and is_instance_valid(hud):
-		hud.show_message("Du har besegrat arenan! Publiken ropar ditt namn.")
+	world_message.emit("Du har besegrat arenan! Publiken ropar ditt namn.")
 
 func _on_arena_failed(_at_wave: int) -> void:
-	if hud != null and is_instance_valid(hud):
-		hud.show_message("Du lämnade sanden. Arenan glömmer dig.")
+	world_message.emit("Du lämnade sanden. Arenan glömmer dig.")

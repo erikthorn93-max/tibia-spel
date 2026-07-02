@@ -32,6 +32,7 @@ func _ready() -> void:
 	visual.apply_appearance(GameState.appearance)
 	GameState.appearance_changed.connect(func(): visual.apply_appearance(GameState.appearance))
 	GameState.player_hit.connect(_on_player_hit)
+	GameState.charm_feedback.connect(_on_charm_feedback)
 	_build_status_aura()
 	GameState.status_changed.connect(_update_status_aura)
 	_build_player_light()
@@ -98,6 +99,15 @@ func _on_player_hit(dmg: float, dmg_type: String) -> void:
 	add_child(dn)
 	dn.setup(dmg, false, color)
 	dn.position = Vector2(0, -20)   # lite ovanför spelarens mittpunkt
+
+## Floating text ovanför spelaren när en defensiv charm parerat (signal från GameState).
+func _on_charm_feedback(text: String, color: Color) -> void:
+	if get_parent() == null:
+		return
+	var ft: Node2D = preload("res://entities/floating_text.gd").new()
+	get_parent().add_child(ft)
+	ft.global_position = global_position + Vector2(0, -20)
+	ft.setup(text, color, 12)
 
 func snap_to(t: Vector2i) -> void:
 	tile = t

@@ -22,6 +22,7 @@ signal satiation_changed(seconds: float, max_seconds: float)
 signal blessings_changed(count: int)
 signal stance_changed(stance: String)
 signal spec_changed(energy: float)
+signal charm_feedback(text: String, color: Color)   # defensiv charm parerade — vyn visar floating text
 
 const SKILL_XP_BASE := 50.0
 const SKILL_XP_GROWTH := 1.1
@@ -201,8 +202,8 @@ func take_damage(dmg: float, dmg_type: String = "physical") -> void:
 	hp_changed.emit(health, max_health)
 	player_hit.emit(dmg, dmg_type)
 	gain_skill_xp("constitution", 1)   # skada tränar constitution
-	if World.player and World.player.visual:
-		World.player.visual.play_hurt()   # röd blink på spelaren
+	# Träff-blink ägs av vyn: player.gd lyssnar på player_hit och blinkar
+	# vid fysiska slag (medvetet inte vid DoT-ticks).
 	Sfx.player_hurt()
 	# Adrenalin-charm: överlever du slaget med lågt HP kan farten skjuta i höjden.
 	if health > 0.0 and max_health > 0.0:
@@ -214,19 +215,14 @@ func take_damage(dmg: float, dmg_type: String = "physical") -> void:
 		Sfx.player_died()
 		player_died.emit()
 
-## Visuell/ljud-feedback när en defensiv charm parerar eller helt undviker ett slag.
+## Ljud + signal när en defensiv charm parerar eller helt undviker ett slag.
+## Floating text spawnas av vyn (player.gd) — GameState rör inte scenträdet.
 func _show_charm_block(charm_id: String, fully_avoided: bool) -> void:
 	Sfx.charm_block()
-	var p = World.player
-	if p == null or not is_instance_valid(p):
-		return
 	var cname := String(CharmSystem.charms.get(charm_id, {}).get("name", "Charm"))
 	var text := cname + "!" if fully_avoided else cname
 	var color := Color(0.5, 0.95, 1.0) if fully_avoided else Color(0.7, 0.85, 1.0)
-	var ft: Node2D = preload("res://entities/floating_text.gd").new()
-	p.get_parent().add_child(ft)
-	ft.global_position = p.global_position + Vector2(0, -20)
-	ft.setup(text, color, 12)
+	charm_feedback.emit(text, color)
 
 func heal(amount: float) -> void:
 	health = minf(health + amount, max_health)
