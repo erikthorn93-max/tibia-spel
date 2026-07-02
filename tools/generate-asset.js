@@ -208,6 +208,12 @@ async function main() {
   if (r.status !== 0) die("Blender-rendering misslyckades (se utskrift ovan).");
   if (!fs.existsSync(outPath)) die("Blender producerade ingen PNG — okänt fel.");
 
+  // Steg 4b: enhetlig efterbehandling (1px outline + kontrast) — samma stil
+  // som de handritade sprites från gen_sprites.js/gen_monster_sprites.js.
+  console.log("▶ Efterbehandlar (outline + kontrast) ...");
+  const pp = require("./postprocess_sprite.js").postprocessFile(outPath);
+  console.log(`  outline: ${pp.outline}, kontrast: ${pp.contrast}`);
+
   // Steg 5: uppdatera manifestet.
   const manifestPath = updateManifest({
     id: name,
@@ -215,7 +221,7 @@ async function main() {
     prompt,
     glb: path.relative(ROOT, glbPath).split(path.sep).join("/"),
     sprite: path.relative(ROOT, outPath).split(path.sep).join("/"),
-    renderParams: { size: TARGET_SIZE, angle: "3/4", script: "tools/blender_render_icon.py" },
+    renderParams: { size: TARGET_SIZE, angle: "3/4", script: "tools/blender_render_icon.py", postprocess: { outline: true, contrast: true } },
     source: "meshy",
   });
 
