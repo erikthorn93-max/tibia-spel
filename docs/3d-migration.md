@@ -65,11 +65,15 @@ efter varje steg.
 - Känt kvarvarande: entities/ui anropar `World.hud.show_message` direkt på
   ~40 ställen — de är vy→vy-anrop och flyttas naturligt i steg 3.
 
-### Steg 2 — Extrahera `ZoneModel` *(en session)*
-`RefCounted`-klass med grid, walkable, portaler, trappor, gates, AStar,
-occupy/vacate, find_path. `zone.gd` (Node2D) äger en `ZoneModel` och blir ren
-vy (tiles, markers, overlays). `world.gd` och entities pratar med modellen.
-Vinst: helt headless-testbar världslogik.
+### Steg 2 — Extrahera `ZoneModel` *(klart 2026-07-02)*
+- [x] `world/zone_model.gd` (RefCounted): parse av zondata, terräng/walkable,
+      AStar, portaler/trappor/gates/genvägar, spawn_table, occupy/vacate,
+      apply_unlock — med signaler (`tile_opened`, `shortcut_opened`,
+      `portal_unlocked`) som vyer prenumererar på
+- [x] `zone.gd` (Node2D) är ren vy: tiles, overlays, markers. Bakåtkompatibla
+      delegerande properties/metoder så world.gd/entities/ui är oförändrade
+- [x] `test_spawn_table.gd` testar ZoneModel headless (inga noder)
+- Hela sviten grön efter steget: 90 scripts, 1035 tester, 11650 asserts
 
 ### Steg 3 — Extrahera `MonsterSim`/`PlayerSim` *(2–3 sessioner)*
 Rena klasser med hp/statuses/AI-tick/movement-intent och signaler
