@@ -153,7 +153,14 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       (`weapon_spec`-action som 2D) med cleave-insamling, guldstjärna +
       ljuspuls vid nedslag; hälsodryck på use_potion-knappen. HUD:en visar
       spec-mätaren ("Spec N%" → "KRAFTSLAG (F)").
-- [ ] En skill + en quest körbar i slicen (HUD-brygga)
+- [x] Skills + quests synliga i slicen (2026-07-02): togglebar HUD-panel på
+      samma actions som 2D (`toggle_skills`/`toggle_quest_log`) som listar
+      färdigheter med nivåer resp. aktiva uppdrag med ledtrådar,
+      live-uppdaterad via `skill_changed`/quest-signalerna. Skills tränas
+      och quests fortskrider redan i 3D eftersom simarna äger logiken
+      (gång→agility, strid→vapenskill, utforskning/kills→quests).
+- [ ] Riktig HUD-brygga: återanvänd 2D-panelernas scener (inventory,
+      spellbook, bestiarium) ovanpå 3D-vyn
 - [ ] Assets: GLB:er från `_meshy_cache` — **måste decimeras i Blender först**
   (råa Meshy-modeller är 15–40 MB st); ersätter platshållarkapsel/kuber
 

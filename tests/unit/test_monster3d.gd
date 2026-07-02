@@ -169,6 +169,33 @@ func test_spec_without_charge_is_denied():
 	g._try_special()
 	assert_eq(target.hp, hp_before, "utan laddning ska inget kraftslag ske")
 
+# ── game3d: HUD-paneler (skills/quests) ───────────────────────────────────────
+
+func test_skills_panel_toggles_and_lists_skills():
+	var g := _boot_game3d()
+	var had_agility: bool = GameState.skills.has("agility")
+	if not had_agility:
+		GameState.skills["agility"] = {"level": 1, "xp": 0}
+	assert_false(g._hud_panel.visible, "panelen ska starta dold")
+	g._toggle_panel("skills")
+	assert_true(g._hud_panel.visible)
+	assert_string_contains(g._hud_panel.text, "FÄRDIGHETER")
+	var namn := String(GameState.skill_defs.get("agility", {}).get("name", "agility"))
+	assert_string_contains(g._hud_panel.text, namn, "agility ska listas med sitt visningsnamn")
+	g._toggle_panel("skills")
+	assert_false(g._hud_panel.visible, "samma tangent igen ska stänga panelen")
+	if not had_agility:
+		GameState.skills.erase("agility")
+
+func test_quest_panel_shows_active_or_empty():
+	var g := _boot_game3d()
+	g._toggle_panel("quests")
+	assert_true(g._hud_panel.visible)
+	assert_string_contains(g._hud_panel.text, "UPPDRAG")
+	g._toggle_panel("skills")
+	assert_string_contains(g._hud_panel.text, "FÄRDIGHETER",
+		"byte av läge ska byta innehåll utan att stänga")
+
 func test_game3d_locked_portal_blocks():
 	var g := _boot_game3d()
 	UnlockSystem.unlocked.erase("__testlock_3d")

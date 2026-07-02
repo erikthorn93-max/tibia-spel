@@ -22,6 +22,8 @@ var _last_surface_tile := Vector2i(-1, -1)
 var _hud_hp: Label
 var _hud_spec: Label
 var _hud_msg: Label
+var _hud_panel: Label      # togglebar informationspanel (skills/quests)
+var _panel_mode := ""      # "" | "skills" | "quests"
 var _msg_tw: Tween
 var _target_view: Monster3D = null   # vyn för spelarens auto-attack-mål
 var _fx: FloatingText3D              # delad flyttext-pool (skada/läkning/taggar)
@@ -99,6 +101,10 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("use_potion"):
 		if not GameState.use_item("health_potion"):
 			_show_msg("Ingen hälsodryck.")
+	if Input.is_action_just_pressed("toggle_skills"):
+		_toggle_panel("skills")
+	if Input.is_action_just_pressed("toggle_quest_log"):
+		_toggle_panel("quests")
 
 ## Släpper kraftslaget mot nuvarande mål. Vyn samlar in MonsterSims inom
 ## 1 tile från målet (cleave-kandidater) — samma kontrakt som player.gd.
@@ -244,10 +250,19 @@ func _setup_hud() -> void:
 	_hud_msg.position = Vector2(12, 60)
 	_hud_msg.modulate = Color(1.0, 0.9, 0.5)
 	cl.add_child(_hud_msg)
+	_hud_panel = Label.new()
+	_hud_panel.position = Vector2(12, 96)
+	_hud_panel.visible = false
+	cl.add_child(_hud_panel)
 	GameState.hp_changed.connect(_on_hp_changed)
 	_on_hp_changed(GameState.health, GameState.max_health)
 	GameState.spec_changed.connect(_on_spec_changed)
 	_on_spec_changed(GameState.spec_energy)
+	# Panelen uppdateras live medan den är öppen.
+	GameState.skill_changed.connect(func(_s): _refresh_panel())
+	QuestSystem.quest_started.connect(func(_id): _refresh_panel())
+	QuestSystem.step_advanced.connect(func(_id): _refresh_panel())
+	QuestSystem.quest_completed.connect(func(_id): _refresh_panel())
 	player.sim.message.connect(_show_msg)
 
 func _on_hp_changed(h: float, mh: float) -> void:
@@ -261,6 +276,42 @@ func _on_spec_changed(energy: float) -> void:
 	else:
 		_hud_spec.text = "Spec %d%%" % roundi(energy)
 		_hud_spec.modulate = Color(0.8, 0.8, 0.8)
+
+# ── Informationspanel: färdigheter (V) och uppdrag (L) — samma actions som 2D ─
+func _toggle_panel(mode: String) -> void:
+	_panel_mode = "" if _panel_mode == mode else mode
+	_refresh_panel()
+
+func _refresh_panel() -> void:
+	if _hud_panel == null:
+		return
+	if _panel_mode == "":
+		_hud_panel.visible = false
+		return
+	_hud_panel.visible = true
+	_hud_panel.text = _skills_text() if _panel_mode == "skills" else _quests_text()
+
+func _skills_text() -> String:
+	var lines := ["— FÄRDIGHETER —", "Nivå %d" % GameState.level]
+	var ids: Array = GameState.skills.keys()
+	ids.sort()
+	for id in ids:
+		var namn := String(GameState.skill_defs.get(id, {}).get("name", id))
+		lines.append("%s: %d" % [namn, int(GameState.skills[id]["level"])])
+	return "\n".join(lines)
+
+func _quests_text() -> String:
+	var lines := ["— UPPDRAG —"]
+	if QuestSystem.active.is_empty():
+		lines.append("Inga aktiva uppdrag.")
+	for id in QuestSystem.active:
+		var q: Dictionary = QuestSystem.quests.get(id, {})
+		var hint := QuestSystem.hint(id)
+		lines.append("• %s%s" % [String(q.get("name", id)),
+			(" — " + hint) if hint != "" else ""])
+	if not QuestSystem.completed.is_empty():
+		lines.append("Slutförda: %d" % QuestSystem.completed.size())
+	return "\n".join(lines)
 
 func _show_msg(text: String) -> void:
 	_hud_msg.text = text
