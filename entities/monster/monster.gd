@@ -1,18 +1,15 @@
 extends Node2D
-## Monster-entity. Spawnas av World._spawn_monsters().
+## Vy för ett monster. Spawnas av World._spawn_monsters().
+## All stridslogik (skada, status, enrage, död) bor i MonsterSim — den här
+## noden ritar, animerar och låter, och delegerar bakåtkompatibelt så
+## befintliga anropare (player.gd, spell_system, world.gd) är oförändrade.
+## AI/rörelse ligger kvar här tills nästa migrationssteg.
 
 const TILE_SIZE := 32
 const BAR_W := 28.0   # bredden på HpBar i tscn (-14 .. +14)
 const SpriteFx = preload("res://world/sprite_fx.gd")
 
-var monster_name := ""
-var hp := 10
-var max_hp := 10
-var atk := 3
-var exp := 5
-var aggro_range := 5
-var speed := 3.0
-var cooldown := 1.0
+var sim: MonsterSim
 var respawn_time := -1.0
 var zone: Node2D
 var tile := Vector2i.ZERO
@@ -22,15 +19,68 @@ var _atk_timer := 0.0
 var _move_t := 1.0
 var _from := Vector2.ZERO
 var _to   := Vector2.ZERO
-var dead := false          # publik — läses av player.gd
-var status_effects: Dictionary = {}  # id -> {tick_dmg, time_left, tick_acc}
-var enraged := false       # publik — enrage-fas aktiv
-var is_elite := false      # publik — elite-variant (dubbla stats, se make_elite)
 var _breath_t := 0.0       # idle-andning, slumpad fas
 var _sprite_base_y := 0.0  # spritens vilo-y (för gång-studs)
 var _attacking := false    # pausar livs-anim medan attack-stöten spelas
 var _status_aura: CPUParticles2D = null   # gift/brand-partiklar
-var _shown_poison_immune := false          # visa "gift biter ej" bara en gång
+
+# ── Delegation till simuleringen (bakåtkompatibelt API) ───────────────────────
+var monster_name: String:
+	get: return sim.monster_name
+	set(v): sim.monster_name = v
+var hp: int:
+	get: return sim.hp
+	set(v): sim.hp = v
+var max_hp: int:
+	get: return sim.max_hp
+	set(v): sim.max_hp = v
+var atk: int:
+	get: return sim.atk
+	set(v): sim.atk = v
+var exp: int:
+	get: return sim.exp
+	set(v): sim.exp = v
+var aggro_range: int:
+	get: return sim.aggro_range
+	set(v): sim.aggro_range = v
+var speed: float:
+	get: return sim.speed
+	set(v): sim.speed = v
+var cooldown: float:
+	get: return sim.cooldown
+	set(v): sim.cooldown = v
+var dead: bool:            # publik — läses av player.gd
+	get: return sim.dead
+	set(v): sim.dead = v
+var enraged: bool:         # publik — enrage-fas aktiv
+	get: return sim.enraged
+	set(v): sim.enraged = v
+var is_elite: bool:        # publik — elite-variant (dubbla stats, se make_elite)
+	get: return sim.is_elite
+	set(v): sim.is_elite = v
+var status_effects: Dictionary:
+	get: return sim.status_effects
+
+func has_status(id: String) -> bool: return sim.has_status(id)
+func poison_immune() -> bool: return sim.poison_immune()
+func apply_status(id: String, duration: float, tick_dmg: float) -> void:
+	sim.apply_status(id, duration, tick_dmg)
+func take_damage(dmg: float, crit := false, element := "") -> void:
+	sim.take_damage(dmg, crit, element)
+func take_charm_damage(dmg: float, element: String) -> int:
+	return sim.take_charm_damage(dmg, element)
+func make_elite() -> void:
+	sim.make_elite()
+	_refresh_label()
+
+func _init() -> void:
+	sim = MonsterSim.new()
+	sim.damaged.connect(_on_sim_damaged)
+	sim.charm_damaged.connect(_on_sim_charm_damaged)
+	sim.element_reaction.connect(_on_sim_element_reaction)
+	sim.status_changed.connect(_on_sim_status_changed)
+	sim.enrage_started.connect(_on_sim_enraged)
+	sim.died.connect(_on_sim_died)
 
 @onready var _hp_bar: ColorRect  = $HpBar
 @onready var _name_lbl: Label    = $NameLabel
@@ -225,21 +275,11 @@ func _add_fallback_shape() -> void:
 	push_warning("Monster sprite saknas (%s) — använder fallback-form" % monster_name)
 
 func setup(mname: String, t: Vector2i, z: Node2D, respawn := -1.0) -> void:
-	monster_name = mname
+	# Natt-buff: +20 % atk och exp vid spawn under natten
+	sim.init_stats(mname, TimeOfDay.is_night)
 	tile = t
 	zone = z
 	respawn_time = respawn
-	var d: Dictionary = MonsterDB.monsters.get(mname, {})
-	hp = int(d.get("hp", 10)); max_hp = hp
-	atk = int(d.get("atk", 3))
-	exp = int(d.get("exp", 5))
-	aggro_range = int(d.get("aggro_range", 5))
-	speed = float(d.get("speed", 3.0))
-	cooldown = float(d.get("cooldown", 1.0))
-	# Natt-buff: +20 % atk och exp vid spawn under natten
-	if TimeOfDay.is_night:
-		atk = int(float(atk) * 1.2)
-		exp = int(float(exp) * 1.2)
 	position = zone.tile_to_world(tile)
 	_from = position; _to = position; _move_t = 1.0
 	zone.occupy(tile, self)
@@ -280,7 +320,7 @@ func _process(delta: float) -> void:
 		return
 	_update_life_anim(delta)
 	_atk_timer = maxf(_atk_timer - delta, 0.0)
-	_tick_statuses(delta)
+	sim.tick_statuses(delta)
 
 	if not is_instance_valid(zone) or World.player == null:
 		return
@@ -357,62 +397,6 @@ func play_attack(dir: Vector2i) -> void:
 	tw.tween_property(_sprite, "position", rest, 0.13).set_ease(Tween.EASE_IN_OUT)
 	tw.tween_callback(func(): _attacking = false)
 
-## Applicerar en statuseffekt på monstret. Speglar GameState.apply_status:
-## en aktiv DoT förnyas bara av en starkare proc (högre tick_dmg) — lika/svagare
-## ignoreras så att spelarens gift inte heller blir permanent via spam.
-func apply_status(id: String, duration: float, tick_dmg: float) -> void:
-	if id == "poison" and poison_immune():
-		if not _shown_poison_immune:
-			_shown_poison_immune = true
-			_spawn_element_tag("gift biter ej", Color(0.6, 0.72, 0.6))
-		return
-	if tick_dmg > 0.0 and status_effects.has(id) \
-			and tick_dmg <= float(status_effects[id]["tick_dmg"]):
-		return
-	status_effects[id] = {"tick_dmg": tick_dmg, "time_left": duration, "tick_acc": 0.0}
-	_update_status_aura()
-
-## True om monstret står emot gift (odöda, elementarer eller varelser som själva
-## utsöndrar gift). Regeln bor i CombatFormulas så den kan testas rent.
-func poison_immune() -> bool:
-	return CombatFormulas.monster_poison_immune(MonsterDB.monsters.get(monster_name, {}))
-
-func has_status(id: String) -> bool:
-	return status_effects.has(id)
-
-## Tickar burn/andra statuseffekter på monstret (1 tick/s).
-func _tick_statuses(delta: float) -> void:
-	if status_effects.is_empty():
-		return
-	var burn_active_before := has_status("burn")
-	for id in status_effects.keys():
-		var s: Dictionary = status_effects[id]
-		s["time_left"] -= delta
-		s["tick_acc"]  += delta
-		if s["tick_acc"] >= 1.0:
-			s["tick_acc"] -= 1.0
-			take_damage(float(s["tick_dmg"]), false)
-		if s["time_left"] <= 0.0:
-			status_effects.erase(id)
-	# Uppdatera HP-baren om burn-status ändrades (puls → normal)
-	if burn_active_before != has_status("burn"):
-		_refresh_label()
-	_update_status_aura()   # släck/uppdatera auran när status tickar ut
-
-## Kontrollerar om monstret ska gå in i enrage-fas (kallas från take_damage).
-func _check_enrage() -> void:
-	if enraged:
-		return   # enrage kan bara triggas en gång
-	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
-	if not bool(d.get("enrage", false)):
-		return
-	if float(hp) > float(max_hp) * 0.5:
-		return
-	enraged = true
-	speed   *= 1.5
-	atk      = int(float(atk) * 1.5)
-	_refresh_label()
-
 ## Försöker applicera monsterets ability-effekt på spelaren.
 func _try_apply_ability() -> void:
 	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
@@ -450,50 +434,33 @@ func _step_to(next: Vector2i) -> void:
 	_to = zone.tile_to_world(next)
 	_move_t = 0.0
 
-## Förvandlar monstret till en elite-variant: dubbla HP, +50 % atk, 3× exp.
-## Simuleringsändring + flagga — presentationen (★ + orange namn) sköts av
-## _refresh_label() så att vyn kan bytas ut (t.ex. mot 3D) utan att röra detta.
-func make_elite() -> void:
-	is_elite = true
-	hp = hp * 2
-	max_hp = max_hp * 2
-	atk = int(float(atk) * 1.5)
-	exp = exp * 3
+# ── Reaktioner på simuleringens signaler (rent visuellt + ljud) ───────────────
+## Träff registrerad: uppdatera bar/label, skadesiffra, röd blink och ljud.
+func _on_sim_damaged(amount: int, crit: bool) -> void:
 	_refresh_label()
-
-## Vanlig skada. Med element != "" tillämpas monstrets element_mod (samma
-## svaghets-/resistensdata som charm-systemet) så magi väger element mot fiende:
-## en eldspell biter hårt på ett istroll men studsar på en eldvarelse. Tomt
-## element (närstrid utan elementär laddning) ger neutral skada som förr.
-func take_damage(dmg: float, crit := false, element := "") -> void:
-	if dead:
-		return
-	var final_dmg := int(dmg)
-	if element != "" and element != "none":
-		var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
-		var modifier := CharmSystem.element_modifier(d, element)
-		if modifier != 1.0:
-			final_dmg = CharmSystem.resisted_damage(int(dmg), modifier)
-			if final_dmg <= 0:
-				# Immunt — visa "immun" istället för en tom nolla.
-				_spawn_element_tag("immun", Color(0.6, 0.6, 0.6))
-				return
-			if modifier > 1.0:
-				_spawn_element_tag("svag!", Color(1.0, 0.85, 0.2))
-			else:
-				_spawn_element_tag("tål", Color(0.6, 0.7, 1.0))
-	hp = maxi(hp - final_dmg, 0)
-	_check_enrage()
-	_refresh_label()
-	_spawn_damage_number(final_dmg, crit)
-	# --- ANIMATION: röd blink vid träff ---
+	_spawn_damage_number(amount, crit)
 	_flash_hit()
 	if crit:
 		Sfx.crit()
-	if hp <= 0:
-		_die()
-	elif not crit:
-		Sfx.hit()
+	elif sim.hp > 0:
+		Sfx.hit()   # dödsträffen låter via monster_die() istället
+
+## Elementreaktion: flytande etikett som förklarar varför skadan avviker.
+func _on_sim_element_reaction(kind: String) -> void:
+	match kind:
+		"weak":          _spawn_element_tag("svag!", Color(1.0, 0.85, 0.2))
+		"resist":        _spawn_element_tag("tål", Color(0.6, 0.7, 1.0))
+		"immune":        _spawn_element_tag("immun", Color(0.6, 0.6, 0.6))
+		"poison_immune": _spawn_element_tag("gift biter ej", Color(0.6, 0.72, 0.6))
+
+## Status lades till/tickade ut: uppdatera aura och HP-barens burn-puls.
+func _on_sim_status_changed() -> void:
+	_update_status_aura()
+	_refresh_label()
+
+## Enrage: sim har redan höjt speed/atk — vyn visar rött namn + röd bar.
+func _on_sim_enraged() -> void:
+	_refresh_label()
 
 ## Liten flytande etikett ("svag!"/"tål"/"immun") ovanför monstret som förklarar
 ## varför skadesiffran avviker — gör elementtaktiken läsbar för spelaren.
@@ -508,33 +475,17 @@ func _spawn_element_tag(text: String, color: Color) -> void:
 func show_miss() -> void:
 	_spawn_element_tag("miss", Color(0.72, 0.72, 0.72))
 
-## Elementär bonusskada från en offensiv charm. Egen färgad siffra + charm-ljud,
-## så den läses som ett separat tillägg ovanpå den vanliga träffen.
-## Elementär bonusskada från en offensiv charm. Returnerar faktiskt utdelad skada
-## (0 vid immunitet) så anroparen kan basera t.ex. leech på den.
-func take_charm_damage(dmg: float, element: String) -> int:
-	if dead:
-		return 0
-	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
-	var modifier := CharmSystem.element_modifier(d, element)
-	var final_dmg := CharmSystem.resisted_damage(int(dmg), modifier)
-	var parent := get_parent() if get_parent() != null else self
-	if final_dmg <= 0:
-		# Immunt mot detta element — visa "immun" istället för en nolla.
-		_spawn_element_tag("immun", Color(0.6, 0.6, 0.6))
-		return 0
-	hp = maxi(hp - final_dmg, 0)
-	_check_enrage()
+## Charm-bonusskada: egen färgad siffra + charm-ljud, så den läses som ett
+## separat tillägg ovanpå den vanliga träffen.
+func _on_sim_charm_damaged(amount: int, element: String) -> void:
 	_refresh_label()
 	var dn: Node2D = preload("res://entities/damage_number.gd").new()
+	var parent := get_parent() if get_parent() != null else self
 	parent.add_child(dn)
 	dn.global_position = global_position + Vector2(randf_range(-6, 6), -16)
-	dn.setup(final_dmg, false, CharmSystem.element_color(element))
+	dn.setup(amount, false, CharmSystem.element_color(element))
 	_flash_hit()
 	Sfx.charm(element)
-	if hp <= 0:
-		_die()
-	return final_dmg
 
 ## Kort röd blink när monstret tar skada.
 func _flash_hit() -> void:
@@ -549,36 +500,20 @@ func _spawn_damage_number(dmg: float, crit := false) -> void:
 	dn.global_position = global_position + Vector2(randf_range(-6, 6), -8)
 	dn.setup(dmg, crit)
 
-func _die() -> void:
-	dead = true
+## Döden är redan bokförd i sim (exp, kills, loot-rull) — vyn frigör tilen,
+## spawnar ground items, spelar dödsskur/ljud, schemalägger respawn och tonar ut.
+func _on_sim_died(drops: Array) -> void:
 	if is_instance_valid(zone):
 		zone.vacate(tile)
-	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
-	GameState.gain_exp(exp)
-	var wskill := GameState.weapon_skill()
-	GameState.gain_skill_xp(wskill, exp)
-	# Rulla loot → samla drops, spawna som GroundItem i zonen
-	var loot_table: Array = d.get("loot", [])
-	var drops: Array = []
-	for entry in loot_table:
-		if randf() < float(entry.get("chance", 0.0)):
-			var qty_min := int(entry.get("min", int(entry.get("qty", 1))))
-			var qty_max := int(entry.get("max", qty_min))
-			drops.append({
-				"item": String(entry["item"]),
-				"qty":  randi_range(qty_min, qty_max)
-			})
 	if not drops.is_empty():
 		var gi := preload("res://entities/ground_item.gd").new()
 		var parent := get_parent() if get_parent() != null else self
 		parent.add_child(gi)
 		gi.setup(drops, tile)
-	TaskSystem.record_kill(monster_name)
-	QuestSystem.record_kill(monster_name)
-	ArenaSystem.record_kill(monster_name)
 	# --- DÖDSSKUR: typad effekt (ben/slem/glöd/is/stoft) + glitter om loot föll ---
 	var fx_parent := get_parent()
 	if fx_parent != null:
+		var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
 		var base_col := Color(String(d.get("color", "#aa3333")))
 		var kind := SpellFx.death_kind(monster_name)
 		SpellFx.death_burst(fx_parent, global_position, base_col, kind)

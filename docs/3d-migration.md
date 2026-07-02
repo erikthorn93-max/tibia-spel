@@ -75,10 +75,20 @@ efter varje steg.
 - [x] `test_spawn_table.gd` testar ZoneModel headless (inga noder)
 - Hela sviten grön efter steget: 90 scripts, 1035 tester, 11650 asserts
 
-### Steg 3 — Extrahera `MonsterSim`/`PlayerSim` *(2–3 sessioner)*
+### Steg 3 — Extrahera `MonsterSim`/`PlayerSim` *(pågår)*
 Rena klasser med hp/statuses/AI-tick/movement-intent och signaler
 (`damaged`, `moved`, `died`, `status_changed`). Nod-scripten blir vyer som
 prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
+- [x] `entities/monster/monster_sim.gd` (RefCounted, 2026-07-02): stats,
+      skada/elementmod, statuseffekter, enrage, elite, död (exp/loot/kills) —
+      signaler `damaged`, `charm_damaged`, `element_reaction`,
+      `status_changed`, `enrage_started`, `died(drops)`. `monster.gd` är vy
+      (sprite, damage numbers, auror, ljud, dödsanim) med bakåtkompatibel
+      delegation.
+- [ ] Monster: AI-tick + movement-intent till sim (kräver spelar-position
+      via abstraktion, inte `World.player`)
+- [ ] `PlayerSim`: gridrörelse, attack-ticks, gathering, spellcasting
+- [ ] `world.gd` typas om mot sim-klasserna
 
 ### Steg 4 — 3D-slice *(parallellt spår när steg 2–3 är klara)*
 - `Zone3D` + `Monster3D`/`Player3D` som *alternativa vyer* över samma modeller
