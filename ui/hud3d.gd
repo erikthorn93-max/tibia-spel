@@ -1,0 +1,105 @@
+class_name Hud3D
+extends CanvasLayer
+## HUD-bryggan för 3D-slicen: återanvänder 2D-spelets riktiga paneler —
+## ryggsäck, färdigheter, besvärjelsebok, bestiarium, questlogg och utrustning —
+## ovanpå 3D-vyn. Panelerna pratar bara med autoloads och är därmed
+## renderer-agnostiska; bryggan äger toggle-tangenterna (samma actions som 2D)
+## och basraden (HP + spec + meddelanden) som tidigare låg i game3d.
+##
+## Sätter World.hud = self så panelernas show_message-anrop (t.ex. spellbookens
+## köpbesked) når 3D-HUD:en utan att panelerna ändras.
+
+var inv_panel: PanelContainer
+var skill_panel: PanelContainer
+var bestiary_panel: PanelContainer
+var spellbook_panel: PanelContainer
+var quest_log: PanelContainer
+var equipment_panel: PanelContainer
+
+var _hp_lbl: Label
+var _spec_lbl: Label
+var _msg_lbl: Label
+var _msg_tw: Tween
+
+func _ready() -> void:
+	World.hud = self
+	World.world_message.connect(show_message)
+	inv_panel = preload("res://ui/inventory_panel.gd").new()
+	add_child(inv_panel)
+	skill_panel = preload("res://ui/skill_panel.gd").new()
+	skill_panel.offset_left = 940.0
+	skill_panel.offset_top = 16.0
+	add_child(skill_panel)
+	bestiary_panel = preload("res://ui/bestiary_panel.gd").new()
+	add_child(bestiary_panel)
+	spellbook_panel = preload("res://ui/spellbook_panel.gd").new()
+	add_child(spellbook_panel)
+	quest_log = preload("res://ui/quest_log.gd").new()
+	add_child(quest_log)
+	equipment_panel = preload("res://ui/equipment_panel.gd").new()
+	add_child(equipment_panel)
+	_build_labels()
+	GameState.hp_changed.connect(_on_hp_changed)
+	_on_hp_changed(GameState.health, GameState.max_health)
+	GameState.spec_changed.connect(_on_spec_changed)
+	_on_spec_changed(GameState.spec_energy)
+
+## Basraden: HP + spec-mätare + meddelanderad (mini-HUD:en från game3d).
+func _build_labels() -> void:
+	_hp_lbl = Label.new()
+	_hp_lbl.position = Vector2(12, 8)
+	add_child(_hp_lbl)
+	_spec_lbl = Label.new()
+	_spec_lbl.position = Vector2(12, 34)
+	add_child(_spec_lbl)
+	_msg_lbl = Label.new()
+	_msg_lbl.position = Vector2(12, 60)
+	_msg_lbl.modulate = Color(1.0, 0.9, 0.5)
+	add_child(_msg_lbl)
+
+func show_message(text: String) -> void:
+	_msg_lbl.text = text
+	_msg_lbl.modulate.a = 1.0
+	if _msg_tw != null and _msg_tw.is_valid():
+		_msg_tw.kill()
+	_msg_tw = create_tween()
+	_msg_tw.tween_interval(2.0)
+	_msg_tw.tween_property(_msg_lbl, "modulate:a", 0.0, 0.8)
+
+func _on_hp_changed(h: float, mh: float) -> void:
+	_hp_lbl.text = "HP %d/%d" % [int(h), int(mh)]
+
+## Spec-mätaren: procent under laddning, uppmaning när kraftslaget är redo.
+func _on_spec_changed(energy: float) -> void:
+	if CombatFormulas.spec_ready(energy):
+		_spec_lbl.text = "KRAFTSLAG (F)"
+		_spec_lbl.modulate = Color(1.0, 0.85, 0.2)
+	else:
+		_spec_lbl.text = "Spec %d%%" % roundi(energy)
+		_spec_lbl.modulate = Color(0.8, 0.8, 0.8)
+
+## Samma toggle-actions som 2D-HUD:en (hud.gd). Kraftslag/dryck ägs av game3d
+## som känner till monstren (cleave-kandidater) — inte av bryggan.
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_inventory"):
+		inv_panel.toggle()
+	elif event.is_action_pressed("toggle_skills"):
+		skill_panel.visible = not skill_panel.visible
+	elif event.is_action_pressed("toggle_bestiary"):
+		bestiary_panel.toggle()
+	elif event.is_action_pressed("toggle_quest_log"):
+		quest_log.toggle()
+	elif event.is_action_pressed("toggle_spellbook"):
+		spellbook_panel.toggle()
+	elif event.is_action_pressed("toggle_equipment"):
+		equipment_panel.toggle()
+	elif event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+		close_all()
+
+func close_all() -> void:
+	inv_panel.visible = false
+	skill_panel.visible = false
+	bestiary_panel.visible = false
+	spellbook_panel.visible = false
+	quest_log.visible = false
+	equipment_panel.visible = false

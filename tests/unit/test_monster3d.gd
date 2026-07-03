@@ -9,12 +9,14 @@ var _saved_zone: String
 var _saved_tile: Vector2i
 var _saved_health: float
 var _saved_spec: float
+var _saved_hud
 
 func before_each():
 	_saved_zone = GameState.current_zone
 	_saved_tile = GameState.player_tile
 	_saved_health = GameState.health
 	_saved_spec = GameState.spec_energy
+	_saved_hud = World.hud   # Hud3D sätter World.hud = self vid _ready
 	GameState.health = GameState.max_health   # inga döds-flöden mitt i testet
 
 func after_each():
@@ -22,6 +24,7 @@ func after_each():
 	GameState.player_tile = _saved_tile
 	GameState.health = _saved_health
 	GameState.spec_energy = _saved_spec
+	World.hud = _saved_hud
 
 ## Liten öppen testyta: 6×4 gräs, spelarstart mitt på.
 func _flat_model() -> ZoneModel:
@@ -169,32 +172,44 @@ func test_spec_without_charge_is_denied():
 	g._try_special()
 	assert_eq(target.hp, hp_before, "utan laddning ska inget kraftslag ske")
 
-# ── game3d: HUD-paneler (skills/quests) ───────────────────────────────────────
+# ── game3d: HUD-bryggan (2D-panelerna ovanpå 3D-vyn) ──────────────────────────
 
-func test_skills_panel_toggles_and_lists_skills():
-	var g := _boot_game3d()
-	var had_agility: bool = GameState.skills.has("agility")
-	if not had_agility:
-		GameState.skills["agility"] = {"level": 1, "xp": 0}
-	assert_false(g._hud_panel.visible, "panelen ska starta dold")
-	g._toggle_panel("skills")
-	assert_true(g._hud_panel.visible)
-	assert_string_contains(g._hud_panel.text, "FÄRDIGHETER")
-	var namn := String(GameState.skill_defs.get("agility", {}).get("name", "agility"))
-	assert_string_contains(g._hud_panel.text, namn, "agility ska listas med sitt visningsnamn")
-	g._toggle_panel("skills")
-	assert_false(g._hud_panel.visible, "samma tangent igen ska stänga panelen")
-	if not had_agility:
-		GameState.skills.erase("agility")
+func _action(action_name: String) -> InputEventAction:
+	var ev := InputEventAction.new()
+	ev.action = action_name
+	ev.pressed = true
+	return ev
 
-func test_quest_panel_shows_active_or_empty():
+func test_hud3d_reuses_2d_panels_hidden_at_start():
 	var g := _boot_game3d()
-	g._toggle_panel("quests")
-	assert_true(g._hud_panel.visible)
-	assert_string_contains(g._hud_panel.text, "UPPDRAG")
-	g._toggle_panel("skills")
-	assert_string_contains(g._hud_panel.text, "FÄRDIGHETER",
-		"byte av läge ska byta innehåll utan att stänga")
+	for p in [g.hud.inv_panel, g.hud.skill_panel, g.hud.bestiary_panel,
+			g.hud.spellbook_panel, g.hud.quest_log, g.hud.equipment_panel]:
+		assert_not_null(p, "bryggan ska instansiera alla 2D-paneler")
+		assert_false(p.visible, "panelerna ska starta dolda")
+	assert_eq(World.hud, g.hud,
+		"World.hud ska peka på bryggan så panelernas show_message-anrop når 3D-HUD:en")
+
+func test_hud3d_toggle_actions_open_and_close():
+	var g := _boot_game3d()
+	g.hud._unhandled_input(_action("toggle_skills"))
+	assert_true(g.hud.skill_panel.visible, "toggle_skills ska öppna skillpanelen")
+	g.hud._unhandled_input(_action("toggle_inventory"))
+	assert_true(g.hud.inv_panel.visible, "toggle_inventory ska öppna ryggsäcken")
+	g.hud._unhandled_input(_action("toggle_quest_log"))
+	assert_true(g.hud.quest_log.visible, "toggle_quest_log ska öppna questloggen")
+	g.hud._unhandled_input(_action("toggle_skills"))
+	assert_false(g.hud.skill_panel.visible, "samma tangent igen ska stänga panelen")
+	var esc := InputEventKey.new()
+	esc.pressed = true
+	esc.keycode = KEY_ESCAPE
+	g.hud._unhandled_input(esc)
+	assert_false(g.hud.inv_panel.visible, "Escape ska stänga alla paneler")
+	assert_false(g.hud.quest_log.visible, "Escape ska stänga alla paneler")
+
+func test_hud3d_message_row():
+	var g := _boot_game3d()
+	g._show_msg("Hej 3D")
+	assert_eq(g.hud._msg_lbl.text, "Hej 3D", "meddelanden ska gå via bryggan")
 
 func test_game3d_locked_portal_blocks():
 	var g := _boot_game3d()

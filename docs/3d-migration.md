@@ -159,8 +159,17 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       live-uppdaterad via `skill_changed`/quest-signalerna. Skills tränas
       och quests fortskrider redan i 3D eftersom simarna äger logiken
       (gång→agility, strid→vapenskill, utforskning/kills→quests).
-- [ ] Riktig HUD-brygga: återanvänd 2D-panelernas scener (inventory,
-      spellbook, bestiarium) ovanpå 3D-vyn
+- [x] Riktig HUD-brygga (2026-07-03, `ui/hud3d.gd`): Hud3D (CanvasLayer)
+      återanvänder 2D-spelets riktiga paneler ovanpå 3D-vyn — ryggsäck,
+      skillpanel, besvärjelsebok, bestiarium, questlogg och utrustning — med
+      samma toggle-actions som 2D (I/K/P/B/J/C, Escape stänger allt).
+      Panelerna pratar bara med autoloads och behövde inte ändras; bryggan
+      sätter `World.hud = self` så panelernas show_message-anrop landar i
+      3D-HUD:ens meddelanderad. Inventoryt bröts ut ur hud.gd till
+      `ui/inventory_panel.gd` (InventoryPanel) som nu delas av båda HUD:arna;
+      game3d:s texbaserade mini-panel togs bort. Kvar för senare: minimap,
+      hotkey-bar och NPC-panelerna (shop/bank/recipes/dialog) som kräver
+      NPC-interaktion i 3D-slicen först.
 - [x] Assets, karaktärer (2026-07-03): `tools/decimate_glb.py` (Blender
       headless) decimerar Meshy-GLB:erna från `_meshy_cache` till
       `assets/models3d/` — polygonbudget per modell, texturer till 512px,

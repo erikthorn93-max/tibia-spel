@@ -16,10 +16,9 @@ var _hp_pulse_t := 0.0
 @onready var tasks_lbl: Label = $TasksLabel
 @onready var quests_lbl: Label = $QuestsLabel
 @onready var msg_lbl: Label = $MessageLabel
-@onready var inv_panel: PanelContainer = $InventoryPanel
-@onready var inv_list: VBoxContainer = $InventoryPanel/InvScroll/InvList
 @onready var death_lbl: Label = $DeathLabel
 
+var inv_panel: PanelContainer
 var skill_panel: PanelContainer
 var recipe_panel: PanelContainer
 var shop_panel: PanelContainer
@@ -60,6 +59,8 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS    # måste fungera när trädet pausas vid död
 	World.hud = self
 	World.world_message.connect(show_message)
+	inv_panel = preload("res://ui/inventory_panel.gd").new()
+	add_child(inv_panel)
 	skill_panel = preload("res://ui/skill_panel.gd").new()
 	skill_panel.offset_left = 940.0
 	skill_panel.offset_top = 16.0
@@ -124,7 +125,6 @@ func _ready() -> void:
 	GameState.crafted.connect(_on_crafted)
 	GameState.item_used.connect(_on_item_used)
 	GameState.level_up.connect(_on_level_up_anim)
-	GameState.inventory_changed.connect(_refresh_inv)
 	GameState.inventory_changed.connect(func(): if hotkey_bar: hotkey_bar._refresh_all())
 	GameState.status_changed.connect(_refresh_status)
 	_build_status_chips()
@@ -132,7 +132,6 @@ func _ready() -> void:
 	GameState.player_died.connect(_on_death)
 	_build_fade_overlay()   # sist → överst, täcker hela HUD vid zon-fade
 	_refresh()
-	_refresh_inv()
 	_refresh_buffs()
 	_refresh_tasks()
 	_refresh_quests()
@@ -243,77 +242,9 @@ func _refresh_quests() -> void:
 	var id: String = QuestSystem.active.keys().back()   # senast startade
 	quests_lbl.text = "%s — %s" % [QuestSystem.quests[id]["name"], QuestSystem.hint(id)]
 
-func _refresh_inv() -> void:
-	for c in inv_list.get_children():
-		c.queue_free()
-	for id in GameState.inventory:
-		var d: Dictionary = ItemDB.items.get(id, {})
-		if d.is_empty():
-			continue
-		var qty := int(GameState.inventory[id])
-		if d.has("slot"):
-			var slot := String(d["slot"])
-			inv_list.add_child(_inv_row(id, qty, "Utrusta", func(): GameState.equip(slot, id)))
-		elif d.has("heal") or d.has("mana") or d.has("buff") or d.get("usable", false):
-			inv_list.add_child(_inv_row(id, qty, "Använd", func(): GameState.use_item(id)))
-		else:
-			inv_list.add_child(_inv_row(id, qty, "", Callable()))
-
-func _load_item_sprite(item_id: String) -> Texture2D:
-	return ItemIcons.texture(item_id)
-
-func _make_drag_preview(item_id: String) -> Control:
-	var p := Control.new()
-	p.custom_minimum_size = Vector2(40, 40)
-	var t := TextureRect.new()
-	t.texture = _load_item_sprite(item_id)
-	t.custom_minimum_size = Vector2(40, 40)
-	t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	p.add_child(t)
-	return p
-
-func _inv_row(id: String, qty: int, action: String, cb: Callable) -> HBoxContainer:
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 4)
-	row.mouse_filter = Control.MOUSE_FILTER_STOP
-	var _row_id := id
-	row.mouse_entered.connect(func():
-		ItemTooltip.show_for(_row_id, row.get_global_rect().position + Vector2(row.size.x + 4, 0)))
-	row.mouse_exited.connect(func(): ItemTooltip.hide_tooltip())
-	# Sprite (drag-källa)
-	var tex := TextureRect.new()
-	tex.custom_minimum_size = Vector2(36, 36)
-	tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	tex.texture = _load_item_sprite(id)
-	tex.mouse_filter = Control.MOUSE_FILTER_STOP
-	var _id := id; var _qty := qty
-	tex.set_drag_forwarding(
-		func(_pos: Vector2):
-			tex.set_drag_preview(_make_drag_preview(_id))
-			return {"item_id": _id, "qty": _qty, "source": "inventory"},
-		func(_pos, _data) -> bool: return false,
-		func(_pos, _data): pass
-	)
-	row.add_child(tex)
-	# Namn + antal
-	var lbl := Label.new()
-	var d: Dictionary = ItemDB.items.get(id, {})
-	lbl.text = "%s  x%d" % [String(d.get("name", id)), qty]
-	lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	lbl.add_theme_font_size_override("font_size", 11)
-	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	row.add_child(lbl)
-	if action != "":
-		var btn := Button.new()
-		btn.text = action
-		btn.add_theme_font_size_override("font_size", 10)
-		btn.pressed.connect(cb)
-		row.add_child(btn)
-	return row
-
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_inventory"):
-		inv_panel.visible = not inv_panel.visible
+		inv_panel.toggle()
 	elif event.is_action_pressed("toggle_skills"):
 		skill_panel.visible = not skill_panel.visible
 	elif event.is_action_pressed("toggle_bestiary"):
