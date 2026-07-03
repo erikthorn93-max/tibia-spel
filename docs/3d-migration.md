@@ -172,10 +172,20 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       `material_overlay` per monster — fungerar oavsett GLB:ns egna
       material, fortfarande utan per-träff-allokering. Modellernas framåt
       antas vara glTF-+Z (inre rotation PI) — finjusteras vid speltest.
-- [ ] Assets, miljö: träd/stenar/kistor ur `models3d` in i Zone3D
-      (MultiMesh-scatter i stället för lådorna); fler monster-/NPC-modeller
-      decimeras vid behov (`bush.glb` är kvar på 21 MB — texturtung, ta i
-      nästa Blender-pass)
+- [x] Assets, miljö (2026-07-03): GLB-scatter i Zone3D via MultiMesh — träd
+      (`t`, deterministiskt val ur pine_tree_tall/fir_tree_short/pine_stunted
+      per ruta), klippor (`r` → mossy_rock), kistpunkter (treasure_chest,
+      rakt ställda) samt gles vegetation (wildflower på var ~11:e gräsruta,
+      fern på var ~13:e ängsruta — oblockerade rutor). Träd/klippor är nu
+      markplattor med modellen ovanpå i stället för höga lådor. En batch per
+      mesh-del i GLB:n (draw calls följer antalet modellfiler, inte
+      instanser); mesh-delarna cachas statiskt så varje GLB instansieras EN
+      gång per körning. Jitter (rotation/skala/position) är deterministisk
+      per ruta. Scattern rivs och byggs om vid `tile_opened`, som marken.
+- [ ] Assets, miljö-uppföljning: fler monster-/NPC-modeller decimeras vid
+      behov; `bush.glb` är kvar på 21 MB (texturtung — ta i nästa
+      Blender-pass); tema-styrd scatter (t.ex. kaktus i öknen, dead_tree i
+      träsket) när zonerna får fler miljötecken
 
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1

@@ -52,7 +52,7 @@ func test_build_covers_full_terrain():
 	var total := 0
 	var batches := 0
 	for c in z.get_children():
-		if c is MultiMeshInstance3D:
+		if c is MultiMeshInstance3D and String(c.name).begins_with("Terrain_"):
 			batches += 1
 			total += c.multimesh.instance_count
 	assert_gt(batches, 0, "minst en terrängbatch ska skapas")
@@ -65,7 +65,7 @@ func test_batches_share_material():
 	var z := _build_view(_load_model("thais_fields"))
 	var mats := {}
 	for c in z.get_children():
-		if c is MultiMeshInstance3D:
+		if c is MultiMeshInstance3D and String(c.name).begins_with("Terrain_"):
 			mats[c.material_override] = true
 	assert_eq(mats.size(), 1, "alla terrängbatcher ska dela ETT material (pooling)")
 
@@ -82,6 +82,61 @@ func test_portal_markers_created():
 			locked_shortcuts += 1
 	var expected: int = m.portals.size() + locked_shortcuts + m.dungeon_entrances.size()
 	assert_eq(markers, expected, "varje portal/genväg/ingång ska få en marker")
+
+# ── Miljö-scatter (GLB-modeller) ──────────────────────────────────────────────
+
+func _scatter_nodes(z: Zone3D, file: String) -> Array:
+	var out := []
+	for c in z.get_children():
+		if c is MultiMeshInstance3D and String(c.name).begins_with("Scatter_" + file):
+			out.append(c)
+	return out
+
+func test_model_meshes_nonempty_and_cached():
+	var a: Array = Zone3D._model_meshes("treasure_chest")
+	assert_gt(a.size(), 0, "GLB:n ska ge minst en mesh-del")
+	assert_true(is_same(a, Zone3D._model_meshes("treasure_chest")),
+		"mesh-delarna ska cachas — GLB:n instansieras EN gång per körning")
+
+func test_tree_tiles_get_glb_scatter():
+	var m := ZoneModel.new()
+	var tree_tiles: Array[Vector2i] = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0)]
+	for t in tree_tiles:
+		m.terrain[t] = "t"
+	var z := _build_view(m)
+	# Samma deterministiska val som vyn: räkna förväntade instanser per fil.
+	var per_file := {}
+	for t in tree_tiles:
+		var spec: Dictionary = Zone3D.TREE_MODELS[Zone3D._tile_hash(t) % Zone3D.TREE_MODELS.size()]
+		per_file[spec["file"]] = int(per_file.get(spec["file"], 0)) + 1
+	for file in per_file:
+		var nodes := _scatter_nodes(z, String(file))
+		assert_gt(nodes.size(), 0, "trädfilen %s ska få minst en scatter-batch" % file)
+		for c in nodes:
+			assert_eq(c.multimesh.instance_count, int(per_file[file]),
+				"varje trädruta ska ge exakt en instans i sin modellfils batch")
+
+func test_tree_terrain_renders_as_ground_pad():
+	var m := ZoneModel.new()
+	m.terrain[Vector2i(0, 0)] = "t"
+	var z := _build_view(m)
+	var found := false
+	for c in z.get_children():
+		if c is MultiMeshInstance3D and String(c.name) == "Terrain_t":
+			found = true
+			assert_almost_eq((c.multimesh.mesh as BoxMesh).size.y, Zone3D.GROUND_THICK, 0.001,
+				"trädrutan ska vara markplatta — GLB-modellen står ovanpå")
+	assert_true(found, "trädterrängen ska fortfarande få en markbatch")
+
+func test_chest_points_get_chest_model():
+	var m := ZoneModel.new()
+	m.terrain[Vector2i(0, 0)] = "f"
+	m.chest_points = [Vector2i(0, 0)]
+	var z := _build_view(m)
+	var nodes := _scatter_nodes(z, "treasure_chest")
+	assert_gt(nodes.size(), 0, "kistpunkter ska få kistmodellen")
+	for c in nodes:
+		assert_eq(c.multimesh.instance_count, 1, "en instans per kista")
 
 # ── Player3D över PlayerSim ───────────────────────────────────────────────────
 

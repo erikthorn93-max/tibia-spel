@@ -2,17 +2,38 @@ class_name Zone3D
 extends Node3D
 ## 3D-vy för en spelzon: renderar en ZoneModel med MultiMesh — en batch per
 ## terrängtyp (max 13 draw calls för marken, prestandakravet från dag 1).
+## Miljömodeller (träd/klippor/kistor/vegetation ur assets/models3d) scattras
+## också via MultiMesh: en batch per mesh-del i GLB:n, aldrig per instans.
 ## Samma modell som 2D-vyn (zone.gd); ingen spellogik här. Ett gemensamt
-## material för alla batcher (material-pooling) — färgen bor per instans.
+## material för alla terrängbatcher (material-pooling) — färgen bor per instans.
 
 const TILE3D := 1.0            # en tile = 1 meter
 const GROUND_THICK := 0.1
 const WALL_HEIGHT := 2.0
-const TREE_HEIGHT := 1.6
 const WATER_DROP := 0.1        # vattenytan ligger nedsänkt under marknivån
 
-## Terränger som reser sig ur marken (tecken → höjd).
-const TALL := {"W": WALL_HEIGHT, "t": TREE_HEIGHT, "w": WALL_HEIGHT, "r": WALL_HEIGHT}
+## Terränger som reser sig ur marken (tecken → höjd). Träd (t) och klippor (r)
+## renderas som markplattor med GLB-scatter ovanpå — se modellerna nedan.
+const TALL := {"W": WALL_HEIGHT, "w": WALL_HEIGHT}
+
+## Miljömodeller ur assets/models3d (normaliserade till 1,0 m höjd, fötter på
+## y=0) + världshöjd i meter. Trädet väljs deterministiskt per ruta ur listan
+## så skogen varierar utan fler batcher än en per modellfil.
+const TREE_MODELS := [
+	{"file": "pine_tree_tall", "h": 2.3},
+	{"file": "fir_tree_short", "h": 1.7},
+	{"file": "pine_stunted", "h": 1.4},
+]
+const ROCK_MODEL := {"file": "mossy_rock", "h": 0.8}
+const CHEST_MODEL := {"file": "treasure_chest", "h": 0.5}
+const FLOWER_MODEL := {"file": "wildflower", "h": 0.35}
+const FERN_MODEL := {"file": "fern", "h": 0.4}
+const FLOWER_EVERY := 11       # ungefär var elfte gräsruta (.) får en blomma
+const FERN_EVERY := 13         # ungefär var trettonde ängsruta (g) får ormbunke
+
+## Cache av extraherade mesh-delar per modellfil: [{mesh, xform}].
+## Delas mellan zonbyggen — GLB:n instansieras EN gång per körning.
+static var _mesh_cache: Dictionary = {}
 
 var model: ZoneModel
 var _shared_mat: StandardMaterial3D
@@ -35,6 +56,7 @@ func build(m: ZoneModel) -> void:
 	_shared_mat.roughness = 1.0
 
 	_build_terrain()
+	_build_scatter()
 	for t in model.portals:
 		if model.stair_points.has(t):
 			_add_marker(t, Color(0.80, 0.74, 0.48), 0.5)   # trappa
@@ -76,13 +98,117 @@ func _make_batch(ch: String, tiles: Array) -> MultiMeshInstance3D:
 		pos.y = y_center
 		mm.set_instance_transform(i, Transform3D(Basis.IDENTITY, pos))
 		# Deterministisk ljusvariation per ruta — samma idé som variant_for i 2D.
-		var h := absi((t.x * 73856093) ^ (t.y * 19349663))
-		mm.set_instance_color(i, base.lightened(float(h % 13) / 100.0))
+		mm.set_instance_color(i, base.lightened(float(_tile_hash(t) % 13) / 100.0))
 	var inst := MultiMeshInstance3D.new()
 	inst.multimesh = mm
 	inst.material_override = _shared_mat
 	inst.name = "Terrain_" + ch
 	return inst
+
+## Deterministiskt hash per ruta — samma ruta ger samma värde varje besök.
+static func _tile_hash(t: Vector2i) -> int:
+	return absi((t.x * 73856093) ^ (t.y * 19349663))
+
+# ── Miljö-scatter (GLB-modeller via MultiMesh) ────────────────────────────────
+## Träd/klippor/kistor/vegetation grupperade per modellfil → en MultiMesh-batch
+## per mesh-del i GLB:n. Samma draw call-budget som marken: antalet batcher
+## beror på antalet modellfiler, inte antalet instanser.
+func _build_scatter() -> void:
+	var groups: Dictionary = {}   # fil → {"h", "jitter", "tiles"}
+	for t: Vector2i in model.terrain:
+		match model.terrain[t]:
+			"t":
+				_scatter_add(groups, TREE_MODELS[_tile_hash(t) % TREE_MODELS.size()], t, true)
+			"r":
+				_scatter_add(groups, ROCK_MODEL, t, true)
+			".":
+				if _tile_hash(t) % FLOWER_EVERY == 0 and not model.blocked.has(t):
+					_scatter_add(groups, FLOWER_MODEL, t, true)
+			"g":
+				if _tile_hash(t) % FERN_EVERY == 0 and not model.blocked.has(t):
+					_scatter_add(groups, FERN_MODEL, t, true)
+	for t: Vector2i in model.chest_points:
+		_scatter_add(groups, CHEST_MODEL, t, false)
+	for file in groups:
+		_make_scatter(file, groups[file])
+
+func _scatter_add(groups: Dictionary, spec: Dictionary, t: Vector2i, jitter: bool) -> void:
+	var file := String(spec["file"])
+	if not groups.has(file):
+		groups[file] = {"h": float(spec["h"]), "jitter": jitter, "tiles": []}
+	groups[file]["tiles"].append(t)
+
+## Bygger MultiMesh-batcher för en modellfil. Rotation/skala/position jittras
+## deterministiskt per ruta (samma frö-idé som ljusvariationen) så världen ser
+## likadan ut varje besök. Kistor står rakt och ojittrade.
+func _make_scatter(file: String, group: Dictionary) -> void:
+	var parts := _model_meshes(file)
+	if parts.is_empty():
+		return   # GLB saknas/tom — rutan behåller sin markplatta
+	var tiles: Array = group["tiles"]
+	var jitter: bool = group["jitter"]
+	var h: float = group["h"]
+	for pi in parts.size():
+		var part: Dictionary = parts[pi]
+		var mm := MultiMesh.new()
+		mm.transform_format = MultiMesh.TRANSFORM_3D
+		mm.mesh = part["mesh"]
+		mm.instance_count = tiles.size()
+		for i in tiles.size():
+			var t: Vector2i = tiles[i]
+			var hh := _tile_hash(t)
+			var pos := tile_to_world3(t)
+			var rot := 0.0
+			var s := h
+			if jitter:
+				rot = TAU * float(hh % 97) / 97.0
+				s *= 0.85 + 0.3 * float(hh % 31) / 31.0
+				pos.x += (float(hh % 7) / 7.0 - 0.5) * 0.3
+				pos.z += (float(hh % 13) / 13.0 - 0.5) * 0.3
+			var basis := Basis(Vector3.UP, rot).scaled(Vector3.ONE * s)
+			mm.set_instance_transform(i, Transform3D(basis, pos) * part["xform"])
+		var inst := MultiMeshInstance3D.new()
+		inst.multimesh = mm
+		inst.name = "Scatter_%s_%d" % [file, pi]
+		add_child(inst)
+
+## Extraherar mesh-delarna ur en GLB (mesh + transform relativt roten) och
+## cachar dem. Eventuella surface-overrides på instansen bakas in i en kopia
+## av meshen så materialen följer med in i MultiMeshen.
+static func _model_meshes(file: String) -> Array:
+	if _mesh_cache.has(file):
+		return _mesh_cache[file]
+	var parts: Array = []
+	var path := "res://assets/models3d/%s.glb" % file
+	if ResourceLoader.exists(path):
+		var root: Node3D = (load(path) as PackedScene).instantiate()
+		_collect_meshes(root, Transform3D.IDENTITY, parts)
+		root.free()
+	_mesh_cache[file] = parts
+	return parts
+
+static func _collect_meshes(n: Node, xf: Transform3D, out: Array) -> void:
+	if n is Node3D:
+		xf = xf * (n as Node3D).transform
+	var mi := n as MeshInstance3D
+	if mi != null and mi.mesh != null:
+		var mesh: Mesh = mi.mesh
+		var has_override := false
+		for i in mi.get_surface_override_material_count():
+			if mi.get_surface_override_material(i) != null:
+				has_override = true
+				break
+		var am: ArrayMesh = null
+		if has_override:
+			am = mesh.duplicate() as ArrayMesh
+		if am != null:
+			for j in mi.get_surface_override_material_count():
+				if mi.get_surface_override_material(j) != null:
+					am.surface_set_material(j, mi.get_surface_override_material(j))
+			mesh = am
+		out.append({"mesh": mesh, "xform": xf})
+	for c in n.get_children():
+		_collect_meshes(c, xf, out)
 
 # ── Markers ───────────────────────────────────────────────────────────────────
 ## Självlysande liten kub på en interaktionsruta — 3D-motsvarigheten till
@@ -112,12 +238,14 @@ func _add_portal_marker(t: Vector2i) -> void:
 
 # ── Reaktioner på modellens signaler (samma kontrakt som 2D-vyn) ──────────────
 func _on_tile_opened(_t: Vector2i, _terrain_ch: String) -> void:
-	# Modellen har redan uppdaterat sin terräng — bygg om batcharna.
-	# Händer enstaka gånger per zonvistelse, så en full ombyggnad duger.
+	# Modellen har redan uppdaterat sin terräng — bygg om batcharna (inkl.
+	# scattern: ett öppnat träd ska tappa sin modell). Händer enstaka gånger
+	# per zonvistelse, så en full ombyggnad duger.
 	for c in get_children():
-		if String(c.name).begins_with("Terrain_"):
+		if String(c.name).begins_with("Terrain_") or String(c.name).begins_with("Scatter_"):
 			c.queue_free()
 	_build_terrain.call_deferred()
+	_build_scatter.call_deferred()
 
 func _on_shortcut_opened(t: Vector2i) -> void:
 	if _shortcut_markers.has(t):
