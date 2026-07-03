@@ -1,11 +1,41 @@
 class_name Monster3D
 extends Node3D
 ## 3D-vy för ett monster: samma MonsterSim som 2D-vyn (monster.gd) äger AI,
-## rörelse och strid — den här noden ritar platshållarlådan, hp-baren och
-## attack-stöten. Spawnas av game3d; loot-drops på marken är 2D-bundna och
-## hoppas över i slicen (exp/kills bokförs ändå av simuleringen).
+## rörelse och strid — den här noden ritar kroppen, hp-baren och attack-stöten.
+## Monster med mappning i MODELS får sin GLB-modell (assets/models3d,
+## normaliserad till 1,0 m höjd med fötterna på y=0); övriga behåller
+## platshållarlådan i databasfärg. Spawnas av game3d; loot-drops på marken är
+## 2D-bundna och hoppas över i slicen (exp/kills bokförs ändå av simuleringen).
 
 const BAR_W := 0.8
+
+## GLB per monsternamn + världshöjd i meter (modellerna är 1,0 m höga).
+## Medvetet konservativ mappning — bara naturliga matchningar; resten får
+## platshållarlåda tills fler modeller är decimerade.
+const MODELS := {
+	"Råtta":           {"file": "rat", "h": 0.5},
+	"Fältmus":         {"file": "rat", "h": 0.3},
+	"Vildkanin":       {"file": "rabbit", "h": 0.4},
+	"Varg":            {"file": "wolf", "h": 0.8},
+	"Skogsvargen":     {"file": "wolf", "h": 1.0},
+	"Frostvarg":       {"file": "wolf", "h": 0.85},
+	"Rimtass":         {"file": "wolf", "h": 0.6},
+	"Skogsbjörn":      {"file": "bear", "h": 1.2},
+	"Skelett":         {"file": "skeleton", "h": 1.6},
+	"Skelettkrigare":  {"file": "skeleton", "h": 1.7},
+	"Gravväktare":     {"file": "skeleton", "h": 1.8},
+	"Ghoul":           {"file": "zombie", "h": 1.6},
+	"Drunknad sjöman": {"file": "zombie", "h": 1.6},
+	"Ökenmumie":       {"file": "zombie", "h": 1.6},
+	"Ghulkungen":      {"file": "zombie", "h": 2.0},
+	"Ork":             {"file": "orc", "h": 1.7},
+	"Orkshamanen":     {"file": "orc", "h": 1.7},
+	"Orköverherre":    {"file": "orc", "h": 2.1},
+	"Goblin":          {"file": "orc", "h": 1.1},
+	"Goblinsoldat":    {"file": "orc", "h": 1.2},
+	"Bandit":          {"file": "middle_aged_man", "h": 1.7},
+	"Pirat":           {"file": "middle_aged_man", "h": 1.7},
+}
 
 var sim: MonsterSim
 var player_sim: PlayerSim = null   # sätts av game3d — matar AI:n med spelar-tilen
@@ -14,8 +44,8 @@ var fx: FloatingText3D = null      # delad flyttext-pool, sätts av game3d
 var _from := Vector3.ZERO
 var _to := Vector3.ZERO
 var _visual: Node3D
-var _body: MeshInstance3D
-var _body_mat: StandardMaterial3D
+var _body_root: Node3D             # bär GLB:n/lådan — attack-stöten tweenar denna
+var _tint_mat: StandardMaterial3D  # additiv overlay: träff-blink, elite, enrage
 var _hp_bar: MeshInstance3D
 var _hp_mat: StandardMaterial3D
 var _flash_tw: Tween
@@ -43,27 +73,23 @@ func make_elite() -> void:
 	sim.make_elite()
 	if _visual != null:
 		_visual.scale = Vector3.ONE * 1.2
-		_body_mat.emission_enabled = true
-		_body_mat.emission = Color(1.0, 0.5, 0.0)
-		_body_mat.emission_energy_multiplier = 0.35
+		_tint_mat.albedo_color = _rest_tint()
 	_refresh_hp_bar()
 
-## Platshållarkropp i monstrets databasfärg + hp-bar ovanför. Materialen
-## skapas EN gång här — träffar/enrage tweenar bara parametrar (ingen
-## per-träff-allokering; lärdomen från godot_rpg).
+## Kropp (GLB eller platshållarlåda) + hp-bar ovanför. Material skapas EN gång
+## här — träffar/enrage tweenar bara parametrar (ingen per-träff-allokering;
+## lärdomen från godot_rpg). Blink/elite/enrage görs via en delad additiv
+## material_overlay så den fungerar oavsett GLB:ns egna material.
 func _build_visual() -> void:
 	_visual = Node3D.new()
 	add_child(_visual)
-	var d: Dictionary = MonsterDB.monsters.get(sim.monster_name, {})
-	_body = MeshInstance3D.new()
-	var box := BoxMesh.new()
-	box.size = Vector3(0.6, 0.9, 0.6)
-	_body.mesh = box
-	_body_mat = StandardMaterial3D.new()
-	_body_mat.albedo_color = Color(String(d.get("color", "#aa3333")))
-	_body.material_override = _body_mat
-	_body.position.y = 0.45
-	_visual.add_child(_body)
+	_tint_mat = StandardMaterial3D.new()
+	_tint_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	_tint_mat.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+	_tint_mat.albedo_color = Color.BLACK   # additivt svart = osynlig i vila
+	_body_root = Node3D.new()
+	_visual.add_child(_body_root)
+	var top := _build_body()
 	_hp_bar = MeshInstance3D.new()
 	var bar := BoxMesh.new()
 	bar.size = Vector3(BAR_W, 0.07, 0.07)
@@ -71,9 +97,50 @@ func _build_visual() -> void:
 	_hp_mat = StandardMaterial3D.new()
 	_hp_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	_hp_bar.material_override = _hp_mat
-	_hp_bar.position.y = 1.25
+	_hp_bar.position.y = top + 0.35
 	_visual.add_child(_hp_bar)
 	_refresh_hp_bar()
+
+## Bygger kroppen i _body_root och returnerar dess höjd (för hp-barens läge).
+func _build_body() -> float:
+	var spec: Dictionary = MODELS.get(sim.monster_name, {})
+	var path := "res://assets/models3d/%s.glb" % String(spec.get("file", ""))
+	if not spec.is_empty() and ResourceLoader.exists(path):
+		var inst: Node3D = (load(path) as PackedScene).instantiate()
+		var h := float(spec.get("h", 1.0))
+		inst.scale = Vector3.ONE * h
+		inst.rotation.y = PI   # glTF-framåt är +Z; Godot-framåt är −Z
+		_body_root.add_child(inst)
+		_apply_overlay(inst)
+		return h
+	# Platshållarlåda i monstrets databasfärg (som innan GLB-steget).
+	var d: Dictionary = MonsterDB.monsters.get(sim.monster_name, {})
+	var body := MeshInstance3D.new()
+	var box := BoxMesh.new()
+	box.size = Vector3(0.6, 0.9, 0.6)
+	body.mesh = box
+	var mat := StandardMaterial3D.new()
+	mat.albedo_color = Color(String(d.get("color", "#aa3333")))
+	body.material_override = mat
+	body.position.y = 0.45
+	_body_root.add_child(body)
+	_apply_overlay(body)
+	return 0.9
+
+## Sätter den delade tint-overlayen på alla mesh-instanser i kroppen.
+func _apply_overlay(n: Node) -> void:
+	if n is MeshInstance3D:
+		(n as MeshInstance3D).material_overlay = _tint_mat
+	for c in n.get_children():
+		_apply_overlay(c)
+
+## Tintens viloläge: svart (osynlig), elite-orange eller enrage-röd.
+func _rest_tint() -> Color:
+	if sim.enraged:
+		return Color(0.45, 0.04, 0.04)
+	if sim.is_elite:
+		return Color(0.32, 0.16, 0.0)
+	return Color.BLACK
 
 func _refresh_hp_bar() -> void:
 	if _hp_bar == null:
@@ -128,35 +195,28 @@ func _on_sim_moved(from: Vector2i, to: Vector2i) -> void:
 
 ## Attack-stöt: kroppen lutar sig snabbt mot spelaren och studsar tillbaka.
 func _on_sim_attack_started(dir: Vector2i) -> void:
-	if _body == null or dir == Vector2i.ZERO:
+	if _body_root == null or dir == Vector2i.ZERO:
 		return
 	var lunge := Vector3(dir.x, 0, dir.y).normalized() * 0.25
 	var tw := create_tween()
-	tw.tween_property(_body, "position", Vector3(0, 0.45, 0) + lunge, 0.07) \
+	tw.tween_property(_body_root, "position", lunge, 0.07) \
 		.set_ease(Tween.EASE_OUT)
-	tw.tween_property(_body, "position", Vector3(0, 0.45, 0), 0.13) \
+	tw.tween_property(_body_root, "position", Vector3.ZERO, 0.13) \
 		.set_ease(Tween.EASE_IN_OUT)
 
-## Träff: uppdatera baren + kort vit emission-blink (parameter-tween, ingen
-## materialallokering).
+## Träff: uppdatera baren + kort vit blink via tint-overlayen (parameter-tween,
+## ingen materialallokering).
 func _on_sim_damaged(amount: int, crit: bool) -> void:
 	_refresh_hp_bar()
 	if fx != null:
 		fx.show_damage(position, amount, crit)
-	if _body_mat == null:
+	if _tint_mat == null:
 		return
 	if _flash_tw != null and _flash_tw.is_valid():
 		_flash_tw.kill()
-	var rest_energy := 0.35 if sim.is_elite else 0.0
-	var rest_color := Color(1.0, 0.5, 0.0) if sim.is_elite else Color(1, 1, 1)
-	_body_mat.emission_enabled = true
-	_body_mat.emission = Color(1, 1, 1)
-	_body_mat.emission_energy_multiplier = 2.0 if crit else 1.0
+	_tint_mat.albedo_color = Color(1, 1, 1) * (1.0 if crit else 0.6)
 	_flash_tw = create_tween()
-	_flash_tw.tween_property(_body_mat, "emission_energy_multiplier", rest_energy, 0.18)
-	_flash_tw.tween_callback(func():
-		_body_mat.emission = rest_color
-		_body_mat.emission_enabled = sim.is_elite)
+	_flash_tw.tween_property(_tint_mat, "albedo_color", _rest_tint(), 0.18)
 
 ## Elementär charm-bonusskada: violett siffra skild från vapenskadan.
 func _on_sim_charm_damaged(amount: int, _element: String) -> void:
@@ -178,9 +238,7 @@ func _on_sim_element_reaction(kind: String) -> void:
 		"stunned":       fx.show_text(position, "bedövad", Color(1.0, 0.9, 0.4))
 
 func _on_sim_enraged() -> void:
-	_body_mat.emission_enabled = true
-	_body_mat.emission = Color(1.0, 0.1, 0.1)
-	_body_mat.emission_energy_multiplier = 0.6
+	_tint_mat.albedo_color = _rest_tint()
 	_refresh_hp_bar()
 
 ## Död: simuleringen har bokfört exp/kills och frigjort tilen — krymp och

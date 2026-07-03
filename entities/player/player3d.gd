@@ -3,8 +3,12 @@ extends Node3D
 ## 3D-vy för spelaren: samma PlayerSim som 2D-vyn (player.gd) driver
 ## gridrörelsen — den här noden läser bara input-intent, interpolerar
 ## position ur sim.move_progress och vrider visualen efter facing.
-## Ingen spellogik här; kapseln är platshållare tills GLB-karaktären är
-## decimerad (steg 4-assets).
+## Ingen spellogik här. Kroppen är GLB-hjälten (generisk människa tills
+## outfitsystemet bryggas till 3D); kapseln finns kvar som fallback om
+## modellen inte är importerad.
+
+const MODEL_PATH := "res://assets/models3d/middle_aged_man.glb"
+const MODEL_HEIGHT := 1.7   # modellen är normaliserad till 1,0 m
 
 var sim := PlayerSim.new()
 var fx: FloatingText3D = null   # delad flyttext-pool, sätts av game3d
@@ -21,6 +25,13 @@ func _init() -> void:
 func _ready() -> void:
 	_visual = Node3D.new()
 	add_child(_visual)
+	if ResourceLoader.exists(MODEL_PATH):
+		var inst: Node3D = (load(MODEL_PATH) as PackedScene).instantiate()
+		inst.scale = Vector3.ONE * MODEL_HEIGHT
+		inst.rotation.y = PI   # glTF-framåt är +Z; Godot-framåt är −Z
+		_visual.add_child(inst)
+		return
+	# Fallback: platshållarkapsel med "näsa" framåt (−Z) så facing syns.
 	var body := MeshInstance3D.new()
 	var caps := CapsuleMesh.new()
 	caps.radius = 0.3
@@ -31,7 +42,6 @@ func _ready() -> void:
 	body.material_override = mat
 	body.position.y = 0.6
 	_visual.add_child(body)
-	# "Näsa" framåt (−Z) så facing syns på platshållarkapseln.
 	var nose := MeshInstance3D.new()
 	var nbox := BoxMesh.new()
 	nbox.size = Vector3(0.12, 0.12, 0.2)

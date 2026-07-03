@@ -161,8 +161,21 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       (gång→agility, strid→vapenskill, utforskning/kills→quests).
 - [ ] Riktig HUD-brygga: återanvänd 2D-panelernas scener (inventory,
       spellbook, bestiarium) ovanpå 3D-vyn
-- [ ] Assets: GLB:er från `_meshy_cache` — **måste decimeras i Blender först**
-  (råa Meshy-modeller är 15–40 MB st); ersätter platshållarkapsel/kuber
+- [x] Assets, karaktärer (2026-07-03): `tools/decimate_glb.py` (Blender
+      headless) decimerar Meshy-GLB:erna från `_meshy_cache` till
+      `assets/models3d/` — polygonbudget per modell, texturer till 512px,
+      normaliserade till 1,0 m höjd med fötterna på y=0. Player3D
+      instansierar GLB-hjälten (kapsel kvar som fallback) och Monster3D
+      instansierar via `MODELS`-mappningen (namn → fil + världshöjd;
+      omappade monster behåller platshållarlådan i databasfärg).
+      Träff-blink/elite/enrage omgjort till EN delad additiv
+      `material_overlay` per monster — fungerar oavsett GLB:ns egna
+      material, fortfarande utan per-träff-allokering. Modellernas framåt
+      antas vara glTF-+Z (inre rotation PI) — finjusteras vid speltest.
+- [ ] Assets, miljö: träd/stenar/kistor ur `models3d` in i Zone3D
+      (MultiMesh-scatter i stället för lådorna); fler monster-/NPC-modeller
+      decimeras vid behov (`bush.glb` är kvar på 21 MB — texturtung, ta i
+      nästa Blender-pass)
 
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1
