@@ -167,9 +167,9 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       sätter `World.hud = self` så panelernas show_message-anrop landar i
       3D-HUD:ens meddelanderad. Inventoryt bröts ut ur hud.gd till
       `ui/inventory_panel.gd` (InventoryPanel) som nu delas av båda HUD:arna;
-      game3d:s texbaserade mini-panel togs bort. Kvar för senare:
-      recipes-panelen (kräver hantverksstationer i 3D). Minimap,
-      NPC-panelerna, spellcasting och hotbaren klara — se 2026-07-04/05 nedan.
+      game3d:s texbaserade mini-panel togs bort. HUD-bryggan komplett
+      2026-07-05: minimap, NPC-paneler, spellcasting/hotbar och
+      stationspaneler — se posterna nedan.
 - [x] Assets, karaktärer (2026-07-03): `tools/decimate_glb.py` (Blender
       headless) decimerar Meshy-GLB:erna från `_meshy_cache` till
       `assets/models3d/` — polygonbudget per modell, texturer till 512px,
@@ -223,6 +223,17 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       återanvänds i Hud3D — drag-and-drop, cooldown-overlay, graying och
       cast-blixt följer med gratis. Träffade simmar ger vy-feedback via
       signalerna som vanligt. 9 nya tester i test_spell3d.gd.
+- [x] Hantverksstationer i 3D (2026-07-05, `entities/station3d.gd`):
+      Station3D spawnas ur zonens station-punkter — klickbar låda i
+      stationens signaturfärg (GLB saknas ännu, samma platshållarregel som
+      omappade monster) med billboardad namnskylt. Klick inom 1 ruta öppnar
+      receptpanelen för stationstypen; bönaltaret öppnar prayer-panelen —
+      samma regler som 2D:s CraftingStation (etiketterna delas därifrån).
+      Hud3D fick recipe_panel + prayer_panel med gemensam ömsesidig
+      uteslutning (`_close_service_panels`); game3d:s klick-router
+      generaliserad till `_interactable_at` (allt i _npcs_root med
+      tile + interact()). HUD-bryggan är därmed komplett — alla 2D-paneler
+      finns i 3D. 9 nya tester i test_station3d.gd.
 - [ ] Assets, miljö-uppföljning: fler monster-/NPC-modeller decimeras vid
       behov; `bush.glb` är kvar på 21 MB (texturtung — ta i nästa
       Blender-pass); tema-styrd scatter (t.ex. kaktus i öknen, dead_tree i

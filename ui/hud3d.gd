@@ -19,6 +19,8 @@ var dialogue_box: PanelContainer
 var shop_panel: PanelContainer
 var bank_panel: PanelContainer
 var task_panel: PanelContainer
+var recipe_panel: PanelContainer
+var prayer_panel: PanelContainer
 var minimap: Control
 var hotkey_bar: Node
 
@@ -52,6 +54,10 @@ func _ready() -> void:
 	add_child(bank_panel)
 	task_panel = preload("res://ui/task_panel.gd").new()
 	add_child(task_panel)
+	recipe_panel = preload("res://ui/recipe_panel.gd").new()
+	add_child(recipe_panel)
+	prayer_panel = preload("res://ui/prayer_panel.gd").new()
+	add_child(prayer_panel)
 	minimap = preload("res://ui/minimap.gd").new()
 	minimap.loot_source = func() -> Array: return []   # ingen markloot i slicen
 	add_child(minimap)
@@ -132,32 +138,44 @@ func close_all() -> void:
 	shop_panel.visible = false
 	bank_panel.visible = false
 	task_panel.visible = false
+	recipe_panel.visible = false
+	prayer_panel.visible = false
 	dialogue_box.close()
 
-# ── NPC-öppnare (anropas av Npc3D via World.hud) — samma ömsesidiga
-# uteslutning som 2D-HUD:ens open_*-metoder. ─────────────────────────────────
+# ── NPC-/stationsöppnare (anropas av Npc3D/Station3D via World.hud) — samma
+# ömsesidiga uteslutning som 2D-HUD:ens open_*-metoder. ──────────────────────
 func open_dialogue(npc_id: String) -> void:
-	shop_panel.visible = false
-	bank_panel.visible = false
-	task_panel.visible = false
+	_close_service_panels()
 	dialogue_box.open(npc_id)
 
 func open_shop() -> void:
-	bank_panel.visible = false
-	task_panel.visible = false
+	_close_service_panels()
 	shop_panel.open()
 
 func open_bank() -> void:
-	shop_panel.visible = false
-	task_panel.visible = false
+	_close_service_panels()
 	bank_panel.open()
 
 func open_tasks() -> void:
-	shop_panel.visible = false
-	bank_panel.visible = false
+	_close_service_panels()
 	task_panel.open()
 
 func open_spellbook(learn_mode := false) -> void:
-	shop_panel.visible = false
-	task_panel.visible = false
+	_close_service_panels()
 	spellbook_panel.open(learn_mode)
+
+func open_recipes(station_type: String) -> void:
+	_close_service_panels()
+	recipe_panel.open(station_type)
+
+func open_prayer_altar() -> void:
+	_close_service_panels()
+	prayer_panel.open()
+
+## En interaktion i taget: stäng alla tjänstepaneler innan nästa öppnas.
+func _close_service_panels() -> void:
+	shop_panel.visible = false
+	bank_panel.visible = false
+	task_panel.visible = false
+	recipe_panel.visible = false
+	prayer_panel.visible = false

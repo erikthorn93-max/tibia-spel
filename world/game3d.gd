@@ -160,14 +160,14 @@ func _unhandled_input(event: InputEvent) -> void:
 	var hit := origin - dir * (origin.y / dir.y)
 	_click_tile(Zone3D.world3_to_tile(hit))
 
-## Monster på rutan → auto-attack-mål; NPC → interaktion (dialog/panel);
-## annars klick-för-att-gå. Målet behålls medan man går (Tibia-stil).
+## Monster på rutan → auto-attack-mål; NPC/station → interaktion (dialog/
+## panel); annars klick-för-att-gå. Målet behålls medan man går (Tibia-stil).
 func _click_tile(t: Vector2i) -> void:
 	var m := _monster_at(t)
 	if m != null:
 		_set_target(m)
 		return
-	var n := _npc_at(t)
+	var n := _interactable_at(t)
 	if n != null:
 		n.interact()
 		return
@@ -181,11 +181,13 @@ func _monster_at(t: Vector2i) -> Monster3D:
 			return m
 	return null
 
-func _npc_at(t: Vector2i) -> Npc3D:
+## Klickbar entitet (Npc3D/Station3D) på rutan — allt i _npcs_root har
+## tile + interact() med egna räckviddsregler.
+func _interactable_at(t: Vector2i) -> Node3D:
 	if _npcs_root == null:
 		return null
 	for n in _npcs_root.get_children():
-		if n is Npc3D and n.tile == t:
+		if n.has_method("interact") and n.get("tile") == t:
 			return n
 	return null
 
@@ -196,7 +198,7 @@ func _set_target(m: Monster3D) -> void:
 	m.set_targeted(true)
 	player.sim.target = m.sim
 
-# ── NPC:er (samma urval som world.gd:s _spawn_world_objects) ──────────────────
+# ── NPC:er + stationer (samma urval som world.gd:s _spawn_world_objects) ──────
 func _spawn_npcs() -> void:
 	for t in model.shop_points:
 		_spawn_npc3d("shop", t)
@@ -211,6 +213,10 @@ func _spawn_npcs() -> void:
 		if String(nd["zone"]) == model.zone_id:
 			_spawn_npc3d("dialogue",
 				Vector2i(int(nd["position"][0]), int(nd["position"][1])), id)
+	for sp in model.station_points:
+		var s := Station3D.new()
+		_npcs_root.add_child(s)
+		s.setup(String(sp["station"]), sp["tile"])
 
 func _spawn_npc3d(kind: String, t: Vector2i, id := "") -> void:
 	var n := Npc3D.new()
