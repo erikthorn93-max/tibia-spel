@@ -15,6 +15,10 @@ var bestiary_panel: PanelContainer
 var spellbook_panel: PanelContainer
 var quest_log: PanelContainer
 var equipment_panel: PanelContainer
+var dialogue_box: PanelContainer
+var shop_panel: PanelContainer
+var bank_panel: PanelContainer
+var task_panel: PanelContainer
 
 var _hp_lbl: Label
 var _spec_lbl: Label
@@ -38,6 +42,14 @@ func _ready() -> void:
 	add_child(quest_log)
 	equipment_panel = preload("res://ui/equipment_panel.gd").new()
 	add_child(equipment_panel)
+	dialogue_box = preload("res://ui/dialogue_box.gd").new()
+	add_child(dialogue_box)
+	shop_panel = preload("res://ui/shop_panel.gd").new()
+	add_child(shop_panel)
+	bank_panel = preload("res://ui/bank_panel.gd").new()
+	add_child(bank_panel)
+	task_panel = preload("res://ui/task_panel.gd").new()
+	add_child(task_panel)
 	_build_labels()
 	GameState.hp_changed.connect(_on_hp_changed)
 	_on_hp_changed(GameState.health, GameState.max_health)
@@ -103,3 +115,35 @@ func close_all() -> void:
 	spellbook_panel.visible = false
 	quest_log.visible = false
 	equipment_panel.visible = false
+	shop_panel.visible = false
+	bank_panel.visible = false
+	task_panel.visible = false
+	dialogue_box.close()
+
+# ── NPC-öppnare (anropas av Npc3D via World.hud) — samma ömsesidiga
+# uteslutning som 2D-HUD:ens open_*-metoder. ─────────────────────────────────
+func open_dialogue(npc_id: String) -> void:
+	shop_panel.visible = false
+	bank_panel.visible = false
+	task_panel.visible = false
+	dialogue_box.open(npc_id)
+
+func open_shop() -> void:
+	bank_panel.visible = false
+	task_panel.visible = false
+	shop_panel.open()
+
+func open_bank() -> void:
+	shop_panel.visible = false
+	task_panel.visible = false
+	bank_panel.open()
+
+func open_tasks() -> void:
+	shop_panel.visible = false
+	bank_panel.visible = false
+	task_panel.open()
+
+func open_spellbook(learn_mode := false) -> void:
+	shop_panel.visible = false
+	task_panel.visible = false
+	spellbook_panel.open(learn_mode)

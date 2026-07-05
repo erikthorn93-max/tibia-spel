@@ -191,6 +191,17 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       instanser); mesh-delarna cachas statiskt så varje GLB instansieras EN
       gång per körning. Jitter (rotation/skala/position) är deterministisk
       per ruta. Scattern rivs och byggs om vid `tile_opened`, som marken.
+- [x] NPC:er i 3D (2026-07-04, `entities/npc/npc3d.gd`): dialog-NPC:er
+      (DialogueDB, per zon) och service-NPC:er (handlare/bankir/taskmästare/
+      magiker från zonens legend-punkter) som klickbara Npc3D-noder — samma
+      räckviddsregler som 2D (dialog 2 rutor, service 1, annars "gå närmare").
+      Civila GLB-gestalter väljs deterministiskt per npc-id (kungen för
+      Tibianus), namnskylt + quest-markör (gul !/grå ?) som billboardade
+      Label3D, live-uppdaterad via QuestSystem-signalerna. Hud3D fick
+      dialogruta, butik, bank och taskpanel (2D-panelerna återanvända) med
+      ömsesidig uteslutning; game3d klick-router: monster → mål, NPC →
+      interaktion, mark → gå. Paneler stängs vid zonbyte. Headless-tester i
+      `tests/unit/test_npc3d.gd` (13 st).
 - [ ] Assets, miljö-uppföljning: fler monster-/NPC-modeller decimeras vid
       behov; `bush.glb` är kvar på 21 MB (texturtung — ta i nästa
       Blender-pass); tema-styrd scatter (t.ex. kaktus i öknen, dead_tree i

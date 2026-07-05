@@ -17,6 +17,7 @@ var zone_view: Zone3D
 var player: Player3D
 var hud: Hud3D              # HUD-bryggan: 2D-panelerna + basraden
 var _monsters_root: Node3D
+var _npcs_root: Node3D
 var _zone_epoch := 0        # ogiltigförklarar respawn-timers vid zonbyte
 var _last_surface_zone := ""   # för dungeonexit tillbaka till ytan
 var _last_surface_tile := Vector2i(-1, -1)
@@ -57,6 +58,8 @@ func _apply_model(data: Dictionary, zone_id: String, at_tile := Vector2i(-1, -1)
 		zone_view.queue_free()
 	if _monsters_root != null:
 		_monsters_root.queue_free()
+	if _npcs_root != null:
+		_npcs_root.queue_free()
 	model = ZoneModel.new()
 	model.parse(data, zone_id)
 	GameState.current_zone = zone_id
@@ -66,11 +69,15 @@ func _apply_model(data: Dictionary, zone_id: String, at_tile := Vector2i(-1, -1)
 	zone_view.build(model)
 	_monsters_root = Node3D.new()
 	add_child(_monsters_root)
+	_npcs_root = Node3D.new()
+	add_child(_npcs_root)
 	player.sim.zone = model
 	player.sim.target = null   # målet hörde till förra zonen
 	_target_view = null
 	player.snap_to(at_tile if at_tile.x >= 0 else model.player_start)
 	_spawn_monsters()
+	_spawn_npcs()
+	hud.close_all()   # öppna paneler/dialoger hör till förra zonen
 
 # ── Portalsteg (samma regler som player.gd:s _check_portal) ───────────────────
 func _on_player_step_completed(t: Vector2i) -> void:
@@ -143,12 +150,16 @@ func _unhandled_input(event: InputEvent) -> void:
 	var hit := origin - dir * (origin.y / dir.y)
 	_click_tile(Zone3D.world3_to_tile(hit))
 
-## Monster på rutan → auto-attack-mål; annars klick-för-att-gå.
-## Målet behålls medan man går (Tibia-stil: attacken följer med).
+## Monster på rutan → auto-attack-mål; NPC → interaktion (dialog/panel);
+## annars klick-för-att-gå. Målet behålls medan man går (Tibia-stil).
 func _click_tile(t: Vector2i) -> void:
 	var m := _monster_at(t)
 	if m != null:
 		_set_target(m)
+		return
+	var n := _npc_at(t)
+	if n != null:
+		n.interact()
 		return
 	player.sim.walk_to(t)
 
@@ -160,12 +171,41 @@ func _monster_at(t: Vector2i) -> Monster3D:
 			return m
 	return null
 
+func _npc_at(t: Vector2i) -> Npc3D:
+	if _npcs_root == null:
+		return null
+	for n in _npcs_root.get_children():
+		if n is Npc3D and n.tile == t:
+			return n
+	return null
+
 func _set_target(m: Monster3D) -> void:
 	if _target_view != null and is_instance_valid(_target_view):
 		_target_view.set_targeted(false)
 	_target_view = m
 	m.set_targeted(true)
 	player.sim.target = m.sim
+
+# ── NPC:er (samma urval som world.gd:s _spawn_world_objects) ──────────────────
+func _spawn_npcs() -> void:
+	for t in model.shop_points:
+		_spawn_npc3d("shop", t)
+	for t in model.bank_points:
+		_spawn_npc3d("bank", t)
+	for t in model.taskmaster_points:
+		_spawn_npc3d("taskmaster", t)
+	for t in model.spell_teacher_points:
+		_spawn_npc3d("spell_teacher", t)
+	for id in DialogueDB.npcs:
+		var nd: Dictionary = DialogueDB.npcs[id]
+		if String(nd["zone"]) == model.zone_id:
+			_spawn_npc3d("dialogue",
+				Vector2i(int(nd["position"][0]), int(nd["position"][1])), id)
+
+func _spawn_npc3d(kind: String, t: Vector2i, id := "") -> void:
+	var n := Npc3D.new()
+	_npcs_root.add_child(n)
+	n.setup(kind, t, id)
 
 # ── Monster ───────────────────────────────────────────────────────────────────
 func _spawn_monsters() -> void:
