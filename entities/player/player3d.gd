@@ -16,6 +16,10 @@ var _from := Vector3.ZERO
 var _to := Vector3.ZERO
 var _visual: Node3D
 
+## SpellSystem.resolve_cast läser caster.tile (fx-center för self/area_self).
+var tile: Vector2i:
+	get: return sim.tile
+
 func _init() -> void:
 	sim.moved.connect(_on_sim_moved)
 	sim.facing_changed.connect(_on_facing_changed)
@@ -92,3 +96,65 @@ func _on_attack_swung(dir: Vector2i) -> void:
 func _on_healed(amount: float) -> void:
 	if fx != null:
 		fx.show_heal(position, int(amount))
+
+# ── Spellcasting ──────────────────────────────────────────────────────────────
+## Casting-entrypoint — samma kontrakt som player.gd:s cast_spell (hotbaren
+## anropar caster.cast_spell). 2D:s sikt-läge ersätts i 3D av Tibia-regeln:
+## target/area-spells löses mot nuvarande auto-attack-mål inom räckvidd.
+## Utfallet ägs av SpellSystem; det här är bara input-routing + fx.
+func cast_spell(id: String) -> void:
+	var def := SpellSystem.cast_def(id)
+	if def.is_empty():
+		_msg("Inget att kasta.")
+		return
+	var check := SpellSystem.can_cast(id)
+	if not check["ok"]:
+		_msg(String(check["reason"]))
+		Sfx.denied()
+		return
+	var center := sim.tile
+	if SpellSystem.needs_aim(def):
+		var t: MonsterSim = sim.target
+		if t == null or t.dead:
+			_msg("Inget mål — klicka på ett monster först.")
+			Sfx.denied()
+			return
+		if maxi(absi(t.tile.x - sim.tile.x), absi(t.tile.y - sim.tile.y)) \
+				> int(def["range"]):
+			_msg("För långt bort.")
+			Sfx.denied()
+			return
+		center = t.tile
+	var res := SpellSystem.resolve_cast(id, self, center)
+	_play_spell_fx3d(res)
+	if String(res.get("message", "")) != "":
+		_msg(String(res["message"]))
+
+## Besvärjelse-fx i 3D — medvetet billig: symbol ur den poolade flyttext-
+## poolen + en kort ljuspuls (engångshändelse per cast, jfr kraftslaget).
+func _play_spell_fx3d(res: Dictionary) -> void:
+	var fxd: Dictionary = res.get("fx", {})
+	if fxd.is_empty():
+		return
+	Sfx.cast(String(fxd.get("ctype", "")))
+	var color := SpellFx.element_color(String(fxd.get("element", "none")))
+	var center: Vector2i = fxd.get("center", sim.tile)
+	var pos := Zone3D.tile_to_world3(center)
+	if fx != null:
+		fx.show_text(pos, "✦", color)
+	var parent := get_parent()
+	if parent == null:
+		return
+	var light := OmniLight3D.new()
+	light.light_color = color
+	light.light_energy = 1.8
+	light.omni_range = 2.5 + float(int(fxd.get("radius", 0)))
+	light.position = pos + Vector3(0, 0.8, 0)
+	parent.add_child(light)
+	var tw := light.create_tween()
+	tw.tween_property(light, "light_energy", 0.0, 0.35)
+	tw.tween_callback(light.queue_free)
+
+func _msg(text: String) -> void:
+	if World.hud != null:
+		World.hud.show_message(text)

@@ -167,9 +167,9 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       sätter `World.hud = self` så panelernas show_message-anrop landar i
       3D-HUD:ens meddelanderad. Inventoryt bröts ut ur hud.gd till
       `ui/inventory_panel.gd` (InventoryPanel) som nu delas av båda HUD:arna;
-      game3d:s texbaserade mini-panel togs bort. Kvar för senare: hotkey-bar
-      (kräver spellcasting i 3D) och recipes-panelen (kräver stationer i 3D).
-      Minimap och NPC-panelerna klara — se 2026-07-04/05 nedan.
+      game3d:s texbaserade mini-panel togs bort. Kvar för senare:
+      recipes-panelen (kräver hantverksstationer i 3D). Minimap,
+      NPC-panelerna, spellcasting och hotbaren klara — se 2026-07-04/05 nedan.
 - [x] Assets, karaktärer (2026-07-03): `tools/decimate_glb.py` (Blender
       headless) decimerar Meshy-GLB:erna från `_meshy_cache` till
       `assets/models3d/` — polygonbudget per modell, texturer till 512px,
@@ -212,6 +212,17 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       via `attach_minimap`. Samma minimap + fullkarta (M, zoom/pan) i båda
       HUD:arna utan dubblering. Nya tester i test_minimap.gd (modellcache +
       3D-koppling).
+- [x] Spellcasting + hotbar i 3D (2026-07-05): SpellSystem fick en pluggbar
+      monsterkälla (`monster_source`, med vakt mot fri-ade ägare) — game3d
+      matar den med levande MonsterSim:ar, 2D-standarden läser zonens barn
+      som förut. `Player3D.cast_spell` med samma kontrakt som player.gd:
+      self/area_self löses direkt, target/area mot nuvarande auto-attack-mål
+      inom räckvidd (2D:s sikt-läge ersätts av Tibia-regeln "kasta på
+      targeten"). Billig 3D-fx: poolad flyttext + kort elementfärgad
+      ljuspuls. Hotbaren (ui/hotkey_bar.gd) gjordes caster-pluggbar och
+      återanvänds i Hud3D — drag-and-drop, cooldown-overlay, graying och
+      cast-blixt följer med gratis. Träffade simmar ger vy-feedback via
+      signalerna som vanligt. 9 nya tester i test_spell3d.gd.
 - [ ] Assets, miljö-uppföljning: fler monster-/NPC-modeller decimeras vid
       behov; `bush.glb` är kvar på 21 MB (texturtung — ta i nästa
       Blender-pass); tema-styrd scatter (t.ex. kaktus i öknen, dead_tree i

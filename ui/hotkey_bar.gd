@@ -25,6 +25,10 @@ const DEFAULT_NAMES: Array = [
 # Slot-data: [{key_name, keycode, item_id, pos_x, pos_y}]
 var _slots: Array = []
 
+## Kastaren (äger cast_spell) — standard World.player (2D); Hud3D pekar om
+## den till Player3D. Läses vid varje användning, aldrig cachad som nod.
+var caster: Object = null
+
 # En Control-nod per slot
 var _slot_nodes:    Array = []
 var _slot_icons:    Array = []
@@ -223,19 +227,23 @@ func _use_slot(idx: int) -> void:
 	# Spell-slot → kasta via magisystemet.
 	var spell_id: String = String(_slots[idx].get("spell_id", ""))
 	if spell_id != "":
-		if World.player and is_instance_valid(World.player):
-			World.player.cast_spell(spell_id)
+		_cast_via_caster(spell_id)
 		return
 	var item_id: String = String(_slots[idx].get("item_id", ""))
 	if item_id.is_empty():
 		return
 	# Runor kastas via magisystemet (kan kräva sikte), inte via use_item.
 	if not SpellSystem.cast_def(item_id).is_empty():
-		if World.player and is_instance_valid(World.player):
-			World.player.cast_spell(item_id)
+		_cast_via_caster(item_id)
 		return
 	if not GameState.use_item(item_id):
 		World.hud.show_message("Kan inte använda: %s" % item_id)
+
+func _cast_via_caster(id: String) -> void:
+	if caster != null and is_instance_valid(caster):
+		caster.cast_spell(id)
+	elif World.player and is_instance_valid(World.player):
+		World.player.cast_spell(id)
 
 # ─────────────────────────────────────────────
 func _unhandled_input(event: InputEvent) -> void:

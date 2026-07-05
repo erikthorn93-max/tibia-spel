@@ -20,6 +20,7 @@ var shop_panel: PanelContainer
 var bank_panel: PanelContainer
 var task_panel: PanelContainer
 var minimap: Control
+var hotkey_bar: Node
 
 var _hp_lbl: Label
 var _spec_lbl: Label
@@ -54,6 +55,9 @@ func _ready() -> void:
 	minimap = preload("res://ui/minimap.gd").new()
 	minimap.loot_source = func() -> Array: return []   # ingen markloot i slicen
 	add_child(minimap)
+	hotkey_bar = preload("res://ui/hotkey_bar.gd").new()
+	add_child(hotkey_bar)
+	GameState.inventory_changed.connect(func(): if hotkey_bar: hotkey_bar._refresh_all())
 	_build_labels()
 	GameState.hp_changed.connect(_on_hp_changed)
 	_on_hp_changed(GameState.health, GameState.max_health)

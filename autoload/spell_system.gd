@@ -13,6 +13,11 @@ const DEFAULT_RANGE := 5
 var spells: Dictionary = {}        # spell_id -> def (från spells.json)
 var _cooldowns: Dictionary = {}    # id -> sekunder kvar
 
+## Vy-agnostisk monsterkälla för attack-utfall: -> Array av objekt med
+## tile/dead/take_damage/apply_status (2D-monsternoder eller MonsterSim).
+## Sätts av 3D-orkestreraren (game3d); utan källa läses 2D-zonens barn.
+var monster_source := Callable()
+
 func _ready() -> void:
 	_load()
 
@@ -224,16 +229,26 @@ func _resolve_attack(def: Dictionary, caster: Node, center_tile: Vector2i, magic
 ## Alla levande monster vars tile ligger inom Chebyshev-radius av center.
 func _monsters_in_radius(center: Vector2i, radius: int) -> Array:
 	var out: Array = []
+	for m in _monster_pool():
+		var mt = m.get("tile")
+		if mt == null:
+			continue
+		if maxi(absi(mt.x - center.x), absi(mt.y - center.y)) <= radius:
+			out.append(m)
+	return out
+
+## Kandidatpool: monster_source om satt (och ägaren lever), annars 2D-zonens
+## barn-noder — samma urval som tidigare.
+func _monster_pool() -> Array:
+	if monster_source.is_valid() and monster_source.get_object() != null:
+		return monster_source.call()
+	var out: Array = []
 	if World.current_zone == null:
 		return out
 	for child in World.current_zone.get_children():
 		if not child.has_method("take_damage") or bool(child.get("dead")):
 			continue
-		var mt = child.get("tile")
-		if mt == null:
-			continue
-		if maxi(absi(mt.x - center.x), absi(mt.y - center.y)) <= radius:
-			out.append(child)
+		out.append(child)
 	return out
 
 ## Magic-XP per cast — skalar med manakostnaden så dyra spells tränar mer.

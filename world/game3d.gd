@@ -38,8 +38,16 @@ func _ready() -> void:
 	hud = Hud3D.new()
 	add_child(hud)
 	hud.attach_minimap(_map_monster_tiles, _map_npc_list)
+	hud.hotkey_bar.caster = player           # hotbaren kastar via Player3D
+	SpellSystem.monster_source = _live_monster_sims
 	player.sim.message.connect(_show_msg)
 	load_zone(START_ZONE)
+
+## Autoloads överlever scenen — lämna ingen monsterkälla mot en fri-ad nod.
+func _exit_tree() -> void:
+	if SpellSystem.monster_source.is_valid() \
+			and SpellSystem.monster_source.get_object() == self:
+		SpellSystem.monster_source = Callable()
 
 # ── Zonladdning ───────────────────────────────────────────────────────────────
 func load_zone(zone_id: String, at_tile := Vector2i(-1, -1)) -> void:
@@ -208,6 +216,16 @@ func _spawn_npc3d(kind: String, t: Vector2i, id := "") -> void:
 	var n := Npc3D.new()
 	_npcs_root.add_child(n)
 	n.setup(kind, t, id)
+
+## Attack-spells träffar via SpellSystem — mata den med levande simmar.
+## (Sim-signalerna driver Monster3D-vyns träff-feedback som vanligt.)
+func _live_monster_sims() -> Array:
+	var out: Array = []
+	if _monsters_root != null:
+		for m in _monsters_root.get_children():
+			if m is Monster3D and not m.sim.dead:
+				out.append(m.sim)
+	return out
 
 # ── Minimap-källor: entiteter per tile (terräng läses ur World.zone_model) ────
 func _map_monster_tiles() -> Array:
