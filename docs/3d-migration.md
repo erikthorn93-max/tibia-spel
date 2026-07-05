@@ -167,9 +167,9 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       sätter `World.hud = self` så panelernas show_message-anrop landar i
       3D-HUD:ens meddelanderad. Inventoryt bröts ut ur hud.gd till
       `ui/inventory_panel.gd` (InventoryPanel) som nu delas av båda HUD:arna;
-      game3d:s texbaserade mini-panel togs bort. Kvar för senare: minimap,
-      hotkey-bar och NPC-panelerna (shop/bank/recipes/dialog) som kräver
-      NPC-interaktion i 3D-slicen först.
+      game3d:s texbaserade mini-panel togs bort. Kvar för senare: hotkey-bar
+      (kräver spellcasting i 3D) och recipes-panelen (kräver stationer i 3D).
+      Minimap och NPC-panelerna klara — se 2026-07-04/05 nedan.
 - [x] Assets, karaktärer (2026-07-03): `tools/decimate_glb.py` (Blender
       headless) decimerar Meshy-GLB:erna från `_meshy_cache` till
       `assets/models3d/` — polygonbudget per modell, texturer till 512px,
@@ -202,6 +202,16 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       ömsesidig uteslutning; game3d klick-router: monster → mål, NPC →
       interaktion, mark → gå. Paneler stängs vid zonbyte. Headless-tester i
       `tests/unit/test_npc3d.gd` (13 st).
+- [x] Minimap i 3D (2026-07-05): minimap.gd gjord renderer-agnostisk —
+      terräng/portaler/POI:er läses ur ZoneModel (`World.zone_model`, som
+      game3d nu publicerar vid zonbygge, precis som world.gd) i stället för
+      2D-tilemapen; spelar-tilen ur `GameState.player_tile` (PlayerSim bokför
+      i båda lägena). Entiteter (monster/loot/dialog-NPC:er) läses via
+      utbytbara källor (Callables): 2D-HUD:en behåller standardkällorna
+      (zon-vyns barn), Hud3D pekar om dem mot game3d:s Monster3D/Npc3D-rötter
+      via `attach_minimap`. Samma minimap + fullkarta (M, zoom/pan) i båda
+      HUD:arna utan dubblering. Nya tester i test_minimap.gd (modellcache +
+      3D-koppling).
 - [ ] Assets, miljö-uppföljning: fler monster-/NPC-modeller decimeras vid
       behov; `bush.glb` är kvar på 21 MB (texturtung — ta i nästa
       Blender-pass); tema-styrd scatter (t.ex. kaktus i öknen, dead_tree i

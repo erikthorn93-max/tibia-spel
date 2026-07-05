@@ -19,6 +19,7 @@ var dialogue_box: PanelContainer
 var shop_panel: PanelContainer
 var bank_panel: PanelContainer
 var task_panel: PanelContainer
+var minimap: Control
 
 var _hp_lbl: Label
 var _spec_lbl: Label
@@ -50,6 +51,9 @@ func _ready() -> void:
 	add_child(bank_panel)
 	task_panel = preload("res://ui/task_panel.gd").new()
 	add_child(task_panel)
+	minimap = preload("res://ui/minimap.gd").new()
+	minimap.loot_source = func() -> Array: return []   # ingen markloot i slicen
+	add_child(minimap)
 	_build_labels()
 	GameState.hp_changed.connect(_on_hp_changed)
 	_on_hp_changed(GameState.health, GameState.max_health)
@@ -107,6 +111,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		equipment_panel.toggle()
 	elif event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		close_all()
+
+## Kopplar minimapens entitetskällor till 3D-världen (game3d:s rötter).
+## Terräng, portaler och POI:er läser minimapen själv ur World.zone_model.
+func attach_minimap(monsters: Callable, npcs: Callable) -> void:
+	minimap.monsters_source = monsters
+	minimap.npc_source = npcs
 
 func close_all() -> void:
 	inv_panel.visible = false

@@ -3,6 +3,12 @@ extends Control
 ## Liten vy alltid synlig i övre högra hörnet.
 ## Tryck M för en större, detaljerad hel-karta med hela zonen.
 ## Fullkartan: scrollhjul = zoom in/ut, vänster musknapp + dra = panorera.
+##
+## Renderer-agnostisk: terräng, portaler och POI:er läses ur ZoneModel
+## (World.zone_model) — samma modell i 2D och 3D. Entiteter (monster/loot/
+## NPC:er) bor i respektive vy och läses via utbytbara källor (Callables):
+## 2D-HUD:en behåller standardkällorna (zon-vyns barn-noder), 3D-HUD:en
+## pekar om dem mot game3d:s Monster3D/Npc3D-rötter (Hud3D.attach_minimap).
 
 const MINI_TILE   := 3          # pixlar per tile i minivyn
 const MINI_RADIUS := 18         # tiles-radius → 37×37 tiles = 111×111 px
@@ -71,9 +77,15 @@ const STATION_LABEL : Dictionary = {
 
 var _full_open  := false
 var _blink_t    := 0.0
-var _last_zone  : Node2D = null
+var _last_model : ZoneModel = null
 ## Förberäknad tile-färgkarta för aktuell zon: Vector2i → Color
 var _tile_cache : Dictionary = {}
+
+## Entitetskällor — vyspecifika (sätts före add_child för att ersätta
+## 2D-standarderna; binds annars i _ready).
+var monsters_source := Callable()   # -> Array[Vector2i] (levande monster)
+var loot_source     := Callable()   # -> Array[Vector2i] (markloot)
+var npc_source      := Callable()   # -> Array[{tile, npc_id}] (dialog-NPC:er)
 ## Portaltile → visningsnamn på målzonen (byggs om vid zonbyte)
 var _portal_names : Dictionary = {}
 ## Redan ritade etikett-rutor denna frame (för kollisionsundvikning)
@@ -99,6 +111,12 @@ var _full_panel_rect : Rect2   = Rect2()
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if not monsters_source.is_valid():
+		monsters_source = _monster_tiles_2d
+	if not loot_source.is_valid():
+		loot_source = _loot_tiles_2d
+	if not npc_source.is_valid():
+		npc_source = _npcs_2d
 
 func _process(delta: float) -> void:
 	_blink_t += delta
@@ -108,19 +126,19 @@ func _process(delta: float) -> void:
 # ─────────────────────────── Tile-färgcache ────────────────────────────
 
 func _maybe_rebuild_cache() -> void:
-	var zone := _zone()
-	if zone == _last_zone:
+	var model := _model()
+	if model == _last_model:
 		return
-	_last_zone = zone
+	_last_model = model
 	_tile_cache.clear()
 	_portal_names.clear()
-	if zone == null:
+	if model == null:
 		return
-	for t: Vector2i in zone._walkable:
-		_tile_cache[t] = _read_tile_color(zone, t)
+	for t: Vector2i in model.terrain:
+		_tile_cache[t] = T_COLORS.get(model.terrain[t], COL_UNKNOWN)
 	# Slå upp målzonens namn en gång per portal (inte varje frame)
-	for t: Vector2i in zone.portals:
-		_portal_names[t] = _lookup_zone_name(String(zone.portals[t]))
+	for t: Vector2i in model.portals:
+		_portal_names[t] = _lookup_zone_name(String(model.portals[t]))
 
 ## Läser visningsnamnet för en zon-id ur dess JSON (en gång, cachat ovan).
 func _lookup_zone_name(id: String) -> String:
@@ -129,15 +147,6 @@ func _lookup_zone_name(id: String) -> String:
 		return id
 	var d = JSON.parse_string(f.get_as_text())
 	return String(d["name"]) if d is Dictionary and d.has("name") else id
-
-func _read_tile_color(zone: Node2D, t: Vector2i) -> Color:
-	var coords : Vector2i = zone.tilemap.get_cell_atlas_coords(t)
-	if coords.x < 0:
-		return COL_UNKNOWN
-	for ch: String in PlaceholderTiles.TERRAIN:
-		if PlaceholderTiles.TERRAIN[ch] == coords.x:
-			return T_COLORS.get(ch, COL_UNKNOWN)
-	return COL_UNKNOWN
 
 # ─────────────────────────────── Ritning ───────────────────────────────
 
@@ -149,8 +158,8 @@ func _draw() -> void:
 # ────────────── Minimap (alltid synlig) ────────────────
 
 func _draw_mini() -> void:
-	var zone := _zone()
-	if zone == null:
+	var model := _model()
+	if model == null:
 		return
 	var vp   := get_viewport().get_visible_rect().size
 	var side := float((MINI_RADIUS * 2 + 1) * MINI_TILE + PANEL_PAD * 2)
@@ -180,40 +189,41 @@ func _draw_mini() -> void:
 				col)
 
 	# Portaler inom vyn (prick) — utanför vyn ritas som kantpilar längre ner
-	for t: Vector2i in zone.portals:
+	for t: Vector2i in model.portals:
 		_mini_dot(t, pt, ox, oy, COL_PORTAL, 2)
 
 	# Dungeon-ingångar
-	for t: Vector2i in zone.dungeon_entrances:
+	for t: Vector2i in model.dungeon_entrances:
 		_mini_dot(t, pt, ox, oy, COL_DUNGEON, 2)
 
 	# Monster (röda prickar)
-	for mn in _monsters(zone):
-		_mini_dot(mn.tile, pt, ox, oy, COL_MONSTER, 2)
+	for mt: Vector2i in monsters_source.call():
+		_mini_dot(mt, pt, ox, oy, COL_MONSTER, 2)
 
 	# Ground loot (gula prickar)
-	for gi in _ground_items(zone):
-		_mini_dot(gi.tile, pt, ox, oy, COL_LOOT, 2)
+	for lt: Vector2i in loot_source.call():
+		_mini_dot(lt, pt, ox, oy, COL_LOOT, 2)
 
 	# Tjänste-POI:er (bank/handlare/lärare/stationer) som glyf-brickor
-	for poi in _pois(zone):
+	for poi in _pois(model):
 		_mini_glyph(poi["tile"], pt, center, String(poi["glyph"]), poi["col"], font, 8)
 
 	# NPC:er: quest-markör (! / ?) om de har en quest, annars liten lugn prick
-	for n in _npcs_all(zone):
-		if String(n["status"]) != "":
+	for n in npc_source.call():
+		var status := QuestSystem.giver_marker(String(n["npc_id"]))
+		if status != "":
 			_mini_glyph(n["tile"], pt, center,
-				"!" if n["status"] == "start" else "?",
-				COL_QUEST_START if n["status"] == "start" else COL_QUEST_ACTIVE, font, 9)
+				"!" if status == "start" else "?",
+				COL_QUEST_START if status == "start" else COL_QUEST_ACTIVE, font, 9)
 		else:
 			_mini_dot(n["tile"], pt, ox, oy, COL_NPC, 2)
 
 	# Gravsten (vit prick) om spelaren dog i denna zon
-	if GameState.grave_zone == zone.zone_id and GameState.grave_tile.x >= 0:
+	if GameState.grave_zone == model.zone_id and GameState.grave_tile.x >= 0:
 		_mini_dot(GameState.grave_tile, pt, ox, oy, COL_GRAVE, 3)
 
 	# Kantpilar mot utgångar utanför vyn — alltid veta vart vägarna leder
-	_draw_edge_arrows(panel, center, pt, zone, font)
+	_draw_edge_arrows(panel, center, pt, model, font)
 
 	# Spelare – blinkar (vit prick i mitten)
 	var blink := 1.0 if fmod(_blink_t, 1.0) < 0.65 else 0.0
@@ -280,11 +290,11 @@ func _draw_frame(panel: Rect2) -> void:
 ## Kantpilar: för varje portal utanför minivyns radie, en pil vid panelkanten
 ## som pekar mot utgången, med förkortat zonnamn. Gör det lätt att orientera sig.
 func _draw_edge_arrows(panel: Rect2, center: Vector2, pt: Vector2i,
-					   zone: Node2D, font: Font) -> void:
+					   model, font: Font) -> void:
 	var inner := panel.grow(-4.0)
 	var half  := inner.size * 0.5
 	var ictr  := inner.position + half
-	for t: Vector2i in _unique_portals(zone):
+	for t: Vector2i in _unique_portals(model):
 		var dx := t.x - pt.x
 		var dy := t.y - pt.y
 		if absi(dx) <= MINI_RADIUS and absi(dy) <= MINI_RADIUS:
@@ -321,10 +331,10 @@ func _draw_edge_arrows(panel: Rect2, center: Vector2, pt: Vector2i,
 # ────────────── Fullskärmskarta (M-tangent) ────────────────
 
 func _draw_full_overlay() -> void:
-	var zone := _zone()
-	if zone == null:
+	var model := _model()
+	if model == null:
 		return
-	var gs  : Vector2i = zone.get("grid_size") if zone.get("grid_size") != null else Vector2i.ZERO
+	var gs  := model.grid_size
 	var vp  := get_viewport().get_visible_rect().size
 	var font := ThemeDB.fallback_font
 
@@ -363,7 +373,7 @@ func _draw_full_overlay() -> void:
 	# Titel
 	draw_string(font,
 		Vector2(panel_x + pad, panel_y + title_h - 7.0),
-		"Karta — " + zone.zone_name,
+		"Karta — " + model.zone_name,
 		HORIZONTAL_ALIGNMENT_LEFT, -1, 13, COL_TITLE)
 
 	# Stäng-hint + zoom-info
@@ -406,42 +416,45 @@ func _draw_full_overlay() -> void:
 				draw_rect(pr.intersection(clip), col)
 
 	# Portaler
-	for t: Vector2i in zone.portals:
+	for t: Vector2i in model.portals:
 		_full_dot_clipped(t, clip, COL_PORTAL, ft)
 
 	# Dungeon-ingångar
-	for t: Vector2i in zone.dungeon_entrances:
+	for t: Vector2i in model.dungeon_entrances:
 		_full_dot_clipped(t, clip, COL_DUNGEON, ft)
 
 	# Portalnamn (destinationszon) — en etikett per unik destination (ej per ruta)
 	_label_rects.clear()
-	for t: Vector2i in _unique_portals(zone):
+	for t: Vector2i in _unique_portals(model):
 		_draw_full_portal_label(t, clip, ft, font)
 
 	# Tjänste-POI:er (bank/handlare/lärare/stationer) som glyf-brickor + namn
-	for poi in _pois(zone):
+	for poi in _pois(model):
 		_full_glyph_clipped(poi["tile"], clip, ft, String(poi["glyph"]), poi["col"], font, String(poi["label"]))
 
-	# Vanliga NPC:er (utan aktiv quest) — liten lugn prick (quest-givare nedan)
-	for n in _npcs_all(zone):
-		if String(n["status"]) == "":
+	# NPC:er: quest-givare får markör (nedan), övriga en liten lugn prick
+	var npcs: Array = npc_source.call()
+	for n in npcs:
+		if QuestSystem.giver_marker(String(n["npc_id"])) == "":
 			_full_dot_clipped(n["tile"], clip, COL_NPC, ft)
 
 	# Monster
-	for mn in _monsters(zone):
-		_full_dot_clipped(mn.tile, clip, COL_MONSTER, ft)
+	for mt: Vector2i in monsters_source.call():
+		_full_dot_clipped(mt, clip, COL_MONSTER, ft)
 
 	# Ground loot
-	for gi in _ground_items(zone):
-		_full_dot_clipped(gi.tile, clip, COL_LOOT, ft)
+	for lt: Vector2i in loot_source.call():
+		_full_dot_clipped(lt, clip, COL_LOOT, ft)
 
 	# Gravsten
-	if GameState.grave_zone == zone.zone_id and GameState.grave_tile.x >= 0:
+	if GameState.grave_zone == model.zone_id and GameState.grave_tile.x >= 0:
 		_full_dot_clipped(GameState.grave_tile, clip, COL_GRAVE, ft)
 
 	# Quest-markörer (gul ! = startbar, grå ? = pågående) — ovanpå allt annat
-	for q in _quest_givers(zone):
-		_full_quest_marker(q["tile"], clip, ft, font, String(q["status"]))
+	for n in npcs:
+		var status := QuestSystem.giver_marker(String(n["npc_id"]))
+		if status != "":
+			_full_quest_marker(n["tile"], clip, ft, font, status)
 
 	# Spelare (blinkar)
 	var pt    := _player_tile()
@@ -632,8 +645,8 @@ func _input(event: InputEvent) -> void:
 		var delta := pos - _pan_start_mouse
 		if delta.length() > 2.0:
 			_pan_moved = true
-		var zone  := _zone()
-		var gs    : Vector2i = zone.get("grid_size") if zone != null and zone.get("grid_size") != null else Vector2i.ZERO
+		var model := _model()
+		var gs    := model.grid_size if model != null else Vector2i.ZERO
 		var ft    := float(_full_zoom)
 		var pan   := _pan_start_offset - delta / ft
 		# Klippa panorering till zonens bounds
@@ -684,8 +697,8 @@ func _zoom_at(screen_pos: Vector2, step: int) -> void:
 	# Räkna ut vilken tile som är under muspekaren INNAN zoom
 	var tile_under := (screen_pos - _full_map_origin) / float(old_zoom)
 	# Beräkna ny pan_offset så att samma tile hamnar under pekaren EFTER zoom
-	var zone  := _zone()
-	var gs    : Vector2i = zone.get("grid_size") if zone != null and zone.get("grid_size") != null else Vector2i.ZERO
+	var model := _model()
+	var gs    := model.grid_size if model != null else Vector2i.ZERO
 	var ft    := float(_full_zoom)
 	var canvas_w := minf(float(gs.x * ft), FULL_MAX_W)
 	var canvas_h := minf(float(gs.y * ft), FULL_MAX_H)
@@ -701,10 +714,10 @@ func _zoom_at(screen_pos: Vector2, step: int) -> void:
 
 ## Panorerar fullkartan med ett antal tiles och klipper till zonens bounds.
 func _pan_by_tiles(delta_tiles: Vector2) -> void:
-	var zone := _zone()
-	if zone == null:
+	var model := _model()
+	if model == null:
 		return
-	var gs  : Vector2i = zone.get("grid_size") if zone.get("grid_size") != null else Vector2i.ZERO
+	var gs  := model.grid_size
 	var ft  := float(_full_zoom)
 	var canvas_w := minf(float(gs.x * ft), FULL_MAX_W)
 	var canvas_h := minf(float(gs.y * ft), FULL_MAX_H)
@@ -713,10 +726,10 @@ func _pan_by_tiles(delta_tiles: Vector2) -> void:
 	_pan_offset.y = clampf(_pan_offset.y, 0.0, maxf(0.0, float(gs.y) - canvas_h / ft))
 
 func _center_on_player() -> void:
-	var zone := _zone()
-	if zone == null:
+	var model := _model()
+	if model == null:
 		return
-	var gs  : Vector2i = zone.get("grid_size") if zone.get("grid_size") != null else Vector2i.ZERO
+	var gs  := model.grid_size
 	var ft  := float(_full_zoom)
 	var canvas_w := minf(float(gs.x * ft), FULL_MAX_W)
 	var canvas_h := minf(float(gs.y * ft), FULL_MAX_H)
@@ -728,77 +741,80 @@ func _center_on_player() -> void:
 
 # ─────────────────────────────── Helpers ───────────────────────────────
 
-func _zone() -> Node2D:
+## Logisk zonmodell — sätts av world.gd (2D) och game3d.gd (3D) vid zonbygge.
+func _model() -> ZoneModel:
+	return World.zone_model
+
+## PlayerSim bokför spelar-tilen i GameState i både 2D och 3D.
+func _player_tile() -> Vector2i:
+	return GameState.player_tile
+
+# ── Standardkällor (2D): läser zon-vyns barn-noder, som förut. ─────────────────
+
+func _zone2d() -> Node2D:
 	if not is_instance_valid(World.player):
 		return null
 	return World.player.zone
 
-func _player_tile() -> Vector2i:
-	if not is_instance_valid(World.player):
-		return Vector2i.ZERO
-	return World.player.tile
-
-func _monsters(zone: Node2D) -> Array:
+func _monster_tiles_2d() -> Array:
 	var out : Array = []
+	var zone := _zone2d()
+	if zone == null:
+		return out
 	for child in zone.get_children():
 		if child.has_method("take_damage") and child.has_method("setup"):
 			if not bool(child.get("dead")):
-				out.append(child)
+				out.append(child.tile)
 	return out
 
-func _ground_items(zone: Node2D) -> Array:
+func _loot_tiles_2d() -> Array:
 	var out : Array = []
+	var zone := _zone2d()
+	if zone == null:
+		return out
 	for child in zone.get_children():
 		if child.get("contents") != null:
-			out.append(child)
+			out.append(child.tile)
 	return out
 
-## NPC-questgivare med aktiv markör: [{tile, status}] där status = "start"/"active".
-func _quest_givers(zone: Node2D) -> Array:
+## Alla pratbara NPC:er i zonen: [{tile, npc_id}]. Quest-status slås upp
+## av ritkoden via QuestSystem.giver_marker (samma i 2D och 3D).
+func _npcs_2d() -> Array:
 	var out : Array = []
+	var zone := _zone2d()
+	if zone == null:
+		return out
 	for child in zone.get_children():
 		if child is DialogueNpc:
-			var status := QuestSystem.giver_marker(child.npc_id)
-			if status != "":
-				out.append({"tile": child.tile, "status": status})
+			out.append({"tile": child.tile, "npc_id": child.npc_id})
 	return out
+
+# ── Modell-läsare (otypad param: testerna stubbar med enkla objekt) ───────────
 
 ## En representativ portal-tile per unik destinationszon. Zoner har ofta flera
 ## portalrutor till samma mål (t.ex. en bred ingång) — utan dedup ritas namnet
 ## en gång per ruta, vilket blir plottrigt.
-func _unique_portals(zone: Node2D) -> Array:
+func _unique_portals(model) -> Array:
 	var seen : Dictionary = {}
 	var out  : Array = []
-	for t: Vector2i in zone.portals:
-		var dest := String(zone.portals[t])
+	for t: Vector2i in model.portals:
+		var dest := String(model.portals[t])
 		if seen.has(dest):
 			continue
 		seen[dest] = true
 		out.append(t)
 	return out
 
-## Alla pratbara NPC:er i zonen: [{tile, name, status}]. status "" = ingen quest.
-func _npcs_all(zone: Node2D) -> Array:
-	var out : Array = []
-	for child in zone.get_children():
-		if child is DialogueNpc:
-			out.append({
-				"tile": child.tile,
-				"name": String(DialogueDB.npcs.get(child.npc_id, {}).get("name", child.npc_id)),
-				"status": QuestSystem.giver_marker(child.npc_id),
-			})
-	return out
-
 ## Tjänste-POI:er i zonen: [{tile, glyph, col, label}] för bank/handlare/lärare/stationer.
-func _pois(zone: Node2D) -> Array:
+func _pois(model) -> Array:
 	var out : Array = []
-	for t: Vector2i in zone.bank_points:
+	for t: Vector2i in model.bank_points:
 		out.append({"tile": t, "glyph": "$", "col": COL_BANK, "label": "Bank"})
-	for t: Vector2i in zone.shop_points:
+	for t: Vector2i in model.shop_points:
 		out.append({"tile": t, "glyph": "H", "col": COL_SHOP, "label": "Handlare"})
-	for t: Vector2i in zone.spell_teacher_points:
+	for t: Vector2i in model.spell_teacher_points:
 		out.append({"tile": t, "glyph": "L", "col": COL_TEACH, "label": "Runlärare"})
-	for sp in zone.station_points:
+	for sp in model.station_points:
 		var st := String(sp["station"])
 		out.append({
 			"tile": sp["tile"],

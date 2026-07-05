@@ -37,6 +37,7 @@ func _ready() -> void:
 	_setup_light()
 	hud = Hud3D.new()
 	add_child(hud)
+	hud.attach_minimap(_map_monster_tiles, _map_npc_list)
 	player.sim.message.connect(_show_msg)
 	load_zone(START_ZONE)
 
@@ -62,6 +63,7 @@ func _apply_model(data: Dictionary, zone_id: String, at_tile := Vector2i(-1, -1)
 		_npcs_root.queue_free()
 	model = ZoneModel.new()
 	model.parse(data, zone_id)
+	World.zone_model = model   # minimapen m.fl. läser zondata härifrån (som 2D)
 	GameState.current_zone = zone_id
 	QuestSystem.record_explore(zone_id)
 	zone_view = Zone3D.new()
@@ -206,6 +208,23 @@ func _spawn_npc3d(kind: String, t: Vector2i, id := "") -> void:
 	var n := Npc3D.new()
 	_npcs_root.add_child(n)
 	n.setup(kind, t, id)
+
+# ── Minimap-källor: entiteter per tile (terräng läses ur World.zone_model) ────
+func _map_monster_tiles() -> Array:
+	var out: Array = []
+	if _monsters_root != null:
+		for m in _monsters_root.get_children():
+			if m is Monster3D and not m.sim.dead:
+				out.append(m.sim.tile)
+	return out
+
+func _map_npc_list() -> Array:
+	var out: Array = []
+	if _npcs_root != null:
+		for n in _npcs_root.get_children():
+			if n is Npc3D and n.kind == "dialogue":
+				out.append({"tile": n.tile, "npc_id": n.npc_id})
+	return out
 
 # ── Monster ───────────────────────────────────────────────────────────────────
 func _spawn_monsters() -> void:
