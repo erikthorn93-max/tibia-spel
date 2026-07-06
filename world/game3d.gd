@@ -83,6 +83,7 @@ func _apply_model(data: Dictionary, zone_id: String, at_tile := Vector2i(-1, -1)
 	add_child(_npcs_root)
 	player.sim.zone = model
 	player.sim.target = null   # målet hörde till förra zonen
+	player.gather_target = null
 	_target_view = null
 	player.snap_to(at_tile if at_tile.x >= 0 else model.player_start)
 	_spawn_monsters()
@@ -160,18 +161,24 @@ func _unhandled_input(event: InputEvent) -> void:
 	var hit := origin - dir * (origin.y / dir.y)
 	_click_tile(Zone3D.world3_to_tile(hit))
 
-## Monster på rutan → auto-attack-mål; NPC/station → interaktion (dialog/
-## panel); annars klick-för-att-gå. Målet behålls medan man går (Tibia-stil).
+## Monster på rutan → auto-attack-mål; gather-nod → gather-mål (spelaren
+## auto-walkar intill och tickar); NPC/station → interaktion (dialog/panel);
+## annars klick-för-att-gå. Målet behålls medan man går (Tibia-stil).
 func _click_tile(t: Vector2i) -> void:
 	var m := _monster_at(t)
 	if m != null:
 		_set_target(m)
 		return
+	var g := _gather_at(t)
+	if g != null:
+		_clear_target()
+		player.set_gather_target(g)
+		return
 	var n := _interactable_at(t)
 	if n != null:
 		n.interact()
 		return
-	player.sim.walk_to(t)
+	player.walk_to(t)
 
 func _monster_at(t: Vector2i) -> Monster3D:
 	if _monsters_root == null:
@@ -191,9 +198,24 @@ func _interactable_at(t: Vector2i) -> Node3D:
 			return n
 	return null
 
-func _set_target(m: Monster3D) -> void:
+func _gather_at(t: Vector2i) -> GatherNode3D:
+	if _npcs_root == null:
+		return null
+	for n in _npcs_root.get_children():
+		if n is GatherNode3D and n.tile == t:
+			return n
+	return null
+
+## Släpper auto-attack-målet (röd ring + sim-mål).
+func _clear_target() -> void:
 	if _target_view != null and is_instance_valid(_target_view):
 		_target_view.set_targeted(false)
+	_target_view = null
+	player.sim.target = null
+
+func _set_target(m: Monster3D) -> void:
+	_clear_target()
+	player.gather_target = null   # strid ersätter gather (som 2D:s set_target)
 	_target_view = m
 	m.set_targeted(true)
 	player.sim.target = m.sim
@@ -217,6 +239,11 @@ func _spawn_npcs() -> void:
 		var s := Station3D.new()
 		_npcs_root.add_child(s)
 		s.setup(String(sp["station"]), sp["tile"])
+	for np in model.node_points:
+		var gn := GatherNode3D.new()
+		_npcs_root.add_child(gn)
+		gn.fx = _fx
+		gn.setup(String(np["node"]), np["tile"])
 
 func _spawn_npc3d(kind: String, t: Vector2i, id := "") -> void:
 	var n := Npc3D.new()

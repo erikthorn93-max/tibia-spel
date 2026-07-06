@@ -9,9 +9,12 @@ extends Node3D
 
 const MODEL_PATH := "res://assets/models3d/middle_aged_man.glb"
 const MODEL_HEIGHT := 1.7   # modellen är normaliserad till 1,0 m
+const GATHER_INTERVAL := 2.0   # sekunder mellan gather-försök (som 2D)
 
 var sim := PlayerSim.new()
 var fx: FloatingText3D = null   # delad flyttext-pool, sätts av game3d
+var gather_target: GatherNode3D = null
+var _gather_timer := 0.0
 var _from := Vector3.ZERO
 var _to := Vector3.ZERO
 var _visual: Node3D
@@ -69,9 +72,55 @@ func _process(delta: float) -> void:
 	elif Input.is_action_pressed("move_down"): intent = Vector2i.DOWN
 	elif Input.is_action_pressed("move_left"): intent = Vector2i.LEFT
 	elif Input.is_action_pressed("move_right"): intent = Vector2i.RIGHT
+	if intent != Vector2i.ZERO:
+		gather_target = null     # manuell rörelse avbryter gather (som 2D)
 	sim.advance(delta, intent)
 	sim.attack_tick(delta)
+	_update_gather(delta)
 	position = _from.lerp(_to, sim.move_progress)
+
+# ── Gathering (samma regler och besked som player.gd) ─────────────────────────
+## Gather ersätter strid: siktet nollas och spelaren auto-walkar intill noden.
+## Onåbar nod → inget mål (walk_adjacent_to avgör, som 2D).
+func set_gather_target(n: GatherNode3D) -> void:
+	sim.target = null
+	gather_target = n
+	_gather_timer = 0.0
+	if n != null and not sim.walk_adjacent_to(n.tile):
+		gather_target = null
+
+## Klick-för-att-gå — nollar gather-målet (som 2D:s walk_to).
+func walk_to(t: Vector2i) -> void:
+	gather_target = null
+	sim.walk_to(t)
+
+func _update_gather(delta: float) -> void:
+	if gather_target == null or not is_instance_valid(gather_target):
+		return
+	if maxi(absi(gather_target.tile.x - sim.tile.x),
+			absi(gather_target.tile.y - sim.tile.y)) > 1:
+		return                    # på väg dit via auto-walk
+	_gather_timer -= delta
+	if _gather_timer > 0.0:
+		return
+	_gather_timer = GATHER_INTERVAL
+	match gather_target.attempt():
+		"no_tool":
+			_msg("Du behöver: %s" % ItemDB.items[gather_target.def["tool"]]["name"])
+			gather_target = null
+		"low_level":
+			_msg("Kräver %s %d." % [gather_target.def["skill"], int(gather_target.def["level"])])
+			gather_target = null
+		"depleted":
+			gather_target = null
+		_:
+			# Faktiskt sving-försök (ok/miss): vänd dig mot noden, stöt, ljud
+			var gd := Vector2i(signi(gather_target.tile.x - sim.tile.x),
+				signi(gather_target.tile.y - sim.tile.y))
+			if gd != Vector2i.ZERO:
+				sim.set_facing(gd)   # emittar facing_changed → visualen vrids
+			_on_attack_swung(gd)
+			Sfx.gather()
 
 ## Steg påbörjat: sätt interpolationsmål (positionen läses ur move_progress).
 func _on_sim_moved(from: Vector2i, to: Vector2i) -> void:

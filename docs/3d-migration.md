@@ -106,8 +106,14 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       ("miss"/"förgiftad"/"bedövad") via monster-vyn. Vyn nollar sim-målet
       när målnoden frigörs (zonbyte/despawn) och samlar cleave-kandidater.
       Headless-tester i `tests/unit/test_player_sim_combat.gd` (11 tester).
-- [ ] Player: gathering-tick och spell-fx-plumbing till sim (låg prioritet —
-      gather-noder och aim/fx är i praktiken presentationsbundna)
+- [x] Gathering-kärnan till sim (2026-07-06): `entities/gather_sim.gd`
+      (GatherSim, RefCounted) äger krav/chansrull med väderbonus/skörd/xp/
+      laddningar/uttömning, med signaler (`swung`, `harvested`, `xp_only`,
+      `depleted_now`, `respawned`). `gather_node.gd` är ren vy (sprite,
+      squash, gnistor, flyttext, gråtoning, respawn-timer) med bakåt-
+      kompatibel delegation; vädret skickas in av vyn så kärnan är headless.
+- [ ] Player: spell-fx-plumbing till sim (låg prioritet — aim/fx är i
+      praktiken presentationsbundna)
 - [x] `world.gd` typas om mot modellagret (2026-07-02): nytt fält
       `World.zone_model: ZoneModel` sätts vid zonbygge; all zondata
       (spawn/node/station/shop/bank/taskmaster/spell_teacher/chest-punkter,
@@ -234,6 +240,19 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       generaliserad till `_interactable_at` (allt i _npcs_root med
       tile + interact()). HUD-bryggan är därmed komplett — alla 2D-paneler
       finns i 3D. 9 nya tester i test_station3d.gd.
+- [x] Gathering i 3D (2026-07-06, `entities/gather_node3d.gd`): noder
+      spawnas ur zonens node-punkter — GLB per skill där en naturlig modell
+      finns (mossy_rock/fir_tree_short/wildflower/fern), annars platshållar-
+      låda i nodens signaturfärg (samma regel som stationer). Klick →
+      `Player3D.set_gather_target` med 2 s-tick, auto-walk intill och samma
+      besked som 2D ("Du behöver …"/"Kräver …"); strid, klick-för-att-gå och
+      manuell rörelse nollar gather-målet ömsesidigt, precis som player.gd.
+      Skörd/xp som poolad flyttext, squash-tween per sving (ingen allokering),
+      uttömd nod sjunker ihop och grånar skylten tills respawn. Väderbonusen
+      (storm-fisket) fungerar i 3D via nytt `ZoneModel.weather`-fält som
+      GatherNode3D löser upp mot WeatherSystem. 16 nya tester i
+      test_gather3d.gd (sim-kärna, väder, vy, spawning, klick-routing,
+      gather-tick).
 - [ ] Assets, miljö-uppföljning: fler monster-/NPC-modeller decimeras vid
       behov; `bush.glb` är kvar på 21 MB (texturtung — ta i nästa
       Blender-pass); tema-styrd scatter (t.ex. kaktus i öknen, dead_tree i

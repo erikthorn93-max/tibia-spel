@@ -17,6 +17,8 @@ signal portal_unlocked(t: Vector2i)                   # låst portal upplåst
 var zone_id := ""
 var zone_name := ""
 var dungeon_theme := ""            # satt för genererade dungeons
+var weather := "clear"             # zonens deklarerade väder (rått zon-värde,
+                                   # inkl. "dynamic" — vyer löser upp via Weather.resolve)
 var grid_size := Vector2i.ZERO
 var player_start := Vector2i.ZERO
 var terrain: Dictionary = {}       # Vector2i -> terrängtecken (validerat)
@@ -46,6 +48,7 @@ func parse(data: Dictionary, id: String) -> void:
 	zone_id = id
 	zone_name = data["name"]
 	dungeon_theme = String(data.get("theme", ""))
+	weather = String(data.get("weather", "clear"))
 	var rows: Array = data["tiles"]
 	var legend: Dictionary = data.get("legend", {})
 	grid_size = Vector2i(rows[0].length(), rows.size())
