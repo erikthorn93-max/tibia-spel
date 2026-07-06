@@ -37,7 +37,7 @@ func _ready() -> void:
 	_setup_light()
 	hud = Hud3D.new()
 	add_child(hud)
-	hud.attach_minimap(_map_monster_tiles, _map_npc_list)
+	hud.attach_minimap(_map_monster_tiles, _map_npc_list, _map_loot_tiles)
 	hud.hotkey_bar.caster = player           # hotbaren kastar via Player3D
 	SpellSystem.monster_source = _live_monster_sims
 	player.sim.message.connect(_show_msg)
@@ -88,6 +88,7 @@ func _apply_model(data: Dictionary, zone_id: String, at_tile := Vector2i(-1, -1)
 	player.snap_to(at_tile if at_tile.x >= 0 else model.player_start)
 	_spawn_monsters()
 	_spawn_npcs()
+	_spawn_grave_if_here()
 	hud.close_all()   # öppna paneler/dialoger hör till förra zonen
 
 # ── Portalsteg (samma regler som player.gd:s _check_portal) ───────────────────
@@ -277,6 +278,36 @@ func _map_npc_list() -> Array:
 				out.append({"tile": n.tile, "npc_id": n.npc_id})
 	return out
 
+func _map_loot_tiles() -> Array:
+	var out: Array = []
+	if _npcs_root != null:
+		for n in _npcs_root.get_children():
+			if n is GroundItem3D:
+				out.append(n.tile)
+	return out
+
+# ── Markloot (samma regler som 2D: monsterdrop, grav) ─────────────────────────
+func _spawn_loot3d(drops: Array, t: Vector2i) -> GroundItem3D:
+	var gi := GroundItem3D.new()
+	_npcs_root.add_child(gi)
+	gi.fx = _fx
+	gi.setup(drops, t)
+	return gi
+
+## Monsterdöd: simmen har rullat looten — vyn lägger påsen på dödstilen.
+func _on_monster_dropped(drops: Array, msim: MonsterSim) -> void:
+	if not drops.is_empty() and _npcs_root != null:
+		_spawn_loot3d(drops, msim.tile)
+
+## Återskapar gravens lootpåse om spelaren är i grav-zonen (som world.gd:s
+## _spawn_grave_if_here). Persistent: blinkar inte, rensar graven vid pickup.
+func _spawn_grave_if_here() -> void:
+	if not GameState.has_grave() or GameState.grave_zone != model.zone_id:
+		return
+	var gi := _spawn_loot3d(GameState.grave_drops, GameState.grave_tile)
+	gi.persistent = true
+	gi.is_grave = true
+
 # ── Monster ───────────────────────────────────────────────────────────────────
 func _spawn_monsters() -> void:
 	for sp in model.spawn_points:
@@ -296,6 +327,7 @@ func _spawn_monster3d(sp: Dictionary) -> void:
 	# Samma elite-regel som world.gd: 5 % dag, 15 % natt.
 	if randf() < (0.15 if TimeOfDay.is_night else 0.05):
 		m.make_elite()
+	m.sim.died.connect(_on_monster_dropped.bind(m.sim))
 	if float(sp["respawn"]) >= 0.0:
 		m.sim.died.connect(_on_monster_died.bind(sp, _zone_epoch))
 
@@ -305,9 +337,12 @@ func _on_monster_died(_drops: Array, sp: Dictionary, epoch: int) -> void:
 	if _zone_epoch == epoch:
 		_spawn_monster3d(sp)
 
-# ── Spelardöd (Tibia-återkomst: hemzon, full HP, XP-straff) ───────────────────
+# ── Spelardöd (Tibia-återkomst: hemzon, full HP, XP-straff, gravsten) ─────────
 func _on_player_died() -> void:
 	_show_msg("Du är död.")
+	# Döds-droppen bokförs på dödstilen INNAN respawn flyttar spelaren.
+	# (World._on_player_died är gated på 2D-zonen — bokföringen delas.)
+	World.drop_death_loot()
 	await get_tree().create_timer(1.5).timeout
 	GameState.respawn()
 	load_zone(GameState.current_zone, GameState.player_tile)

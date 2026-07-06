@@ -200,6 +200,13 @@ func _on_player_died() -> void:
 	ArenaSystem.abort()
 	if current_zone == null:
 		return
+	drop_death_loot()
+	_spawn_grave_if_here()
+
+## Rullar döds-droppen och bokför graven i GameState. Renderer-agnostisk
+## (ingen vy-referens) — 3D-vyn anropar den själv vid spelardöd eftersom
+## _on_player_died är gated på 2D-zonen.
+func drop_death_loot() -> void:
 	var drop_frac := GameState.death_drop_fraction()
 	if drop_frac <= 0.0:
 		GameState.clear_grave()   # full välsignelse: inget tappas
@@ -214,7 +221,6 @@ func _on_player_died() -> void:
 		GameState.clear_grave()
 		return
 	GameState.set_grave(GameState.current_zone, GameState.player_tile, drops)
-	_spawn_grave_if_here()
 
 ## Återskapar gravens lootpåse om spelaren är i grav-zonen. Persistent påse:
 ## försvinner inte med tiden och rensar graven när den plockas upp.

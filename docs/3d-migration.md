@@ -253,6 +253,19 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       GatherNode3D löser upp mot WeatherSystem. 16 nya tester i
       test_gather3d.gd (sim-kärna, väder, vy, spawning, klick-routing,
       gather-tick).
+- [x] Markloot + grav i 3D (2026-07-06, `entities/ground_item3d.gd`):
+      GroundItem3D — guldromb med pop-in, långsam snurr, 60 s livstid med
+      slutblink (tider delas med 2D:s GroundItem). Monsterdöd spawnar påsen
+      på dödstilen (`died(drops)`-signalen, som 2D-vyn); klick inom 1 ruta
+      plockar allt via den generiska interactable-routern, med flyttext ur
+      poolen. Döds-bokföringen extraherad till `World.drop_death_loot()`
+      (renderer-agnostisk — 2D:s `_on_player_died` och game3d delar den);
+      graven persisteras i GameState som förut och 3D-zonladdning återskapar
+      den persistenta grav-påsen i grav-zonen. Minimapens loot-källa
+      inkopplad via `attach_minimap` (gula prickar + gravsten fungerar i
+      3D). 12 nya tester i test_loot3d.gd. OBS: drag-ut-ur-ryggsäcken
+      (world_drop_zone → World.drop_item) är fortfarande 2D-bunden — tas
+      om ryggsäcks-drag behövs i 3D.
 - [ ] Assets, miljö-uppföljning: fler monster-/NPC-modeller decimeras vid
       behov; `bush.glb` är kvar på 21 MB (texturtung — ta i nästa
       Blender-pass); tema-styrd scatter (t.ex. kaktus i öknen, dead_tree i

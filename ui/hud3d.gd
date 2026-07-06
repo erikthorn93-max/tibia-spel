@@ -59,7 +59,7 @@ func _ready() -> void:
 	prayer_panel = preload("res://ui/prayer_panel.gd").new()
 	add_child(prayer_panel)
 	minimap = preload("res://ui/minimap.gd").new()
-	minimap.loot_source = func() -> Array: return []   # ingen markloot i slicen
+	minimap.loot_source = func() -> Array: return []   # ersätts av attach_minimap
 	add_child(minimap)
 	hotkey_bar = preload("res://ui/hotkey_bar.gd").new()
 	add_child(hotkey_bar)
@@ -124,9 +124,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## Kopplar minimapens entitetskällor till 3D-världen (game3d:s rötter).
 ## Terräng, portaler och POI:er läser minimapen själv ur World.zone_model.
-func attach_minimap(monsters: Callable, npcs: Callable) -> void:
+func attach_minimap(monsters: Callable, npcs: Callable, loot: Callable) -> void:
 	minimap.monsters_source = monsters
 	minimap.npc_source = npcs
+	minimap.loot_source = loot
 
 func close_all() -> void:
 	inv_panel.visible = false
