@@ -19,6 +19,9 @@ var hud: Hud3D              # HUD-bryggan: 2D-panelerna + basraden
 var _monsters_root: Node3D
 var _npcs_root: Node3D
 var _zone_epoch := 0        # ogiltigförklarar respawn-timers vid zonbyte
+var _sun: DirectionalLight3D
+var _env: Environment
+var _sky_cap := 1.0         # himmelstak per biom (grottor ser aldrig dagsljus)
 var _last_surface_zone := ""   # för dungeonexit tillbaka till ytan
 var _last_surface_tile := Vector2i(-1, -1)
 var _target_view: Monster3D = null   # vyn för spelarens auto-attack-mål
@@ -86,6 +89,7 @@ func _apply_model(data: Dictionary, zone_id: String, at_tile := Vector2i(-1, -1)
 	player.gather_target = null
 	_target_view = null
 	player.snap_to(at_tile if at_tile.x >= 0 else model.player_start)
+	_apply_biome_mood(zone_id)
 	_spawn_monsters()
 	_spawn_npcs()
 	_spawn_grave_if_here()
@@ -113,6 +117,7 @@ func _on_player_step_completed(t: Vector2i) -> void:
 # ── Tangenter: kraftslag (F) och hälsodryck — samma actions som 2D. ──────────
 # Panel-toggles (I/K/B/J/P/C) ägs av HUD-bryggan (Hud3D).
 func _process(_delta: float) -> void:
+	_update_daylight()
 	if Input.is_action_just_pressed("weapon_spec"):
 		_try_special()
 	if Input.is_action_just_pressed("use_potion"):
@@ -363,21 +368,48 @@ func _setup_camera() -> void:
 	cam.make_current()
 
 func _setup_light() -> void:
-	var sun := DirectionalLight3D.new()
-	sun.rotation_degrees = Vector3(-50.0, -30.0, 0.0)
-	sun.shadow_enabled = true
-	add_child(sun)
-	var env := Environment.new()
+	_sun = DirectionalLight3D.new()
+	_sun.rotation_degrees = Vector3(-50.0, -30.0, 0.0)
+	_sun.shadow_enabled = true
+	add_child(_sun)
+	_env = Environment.new()
 	var sky_mat := ProceduralSkyMaterial.new()
 	var sky := Sky.new()
 	sky.sky_material = sky_mat
-	env.background_mode = Environment.BG_SKY
-	env.sky = sky
-	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
-	env.ambient_light_energy = 0.7
+	_env.background_mode = Environment.BG_SKY
+	_env.sky = sky
+	_env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
+	_env.ambient_light_energy = Atmosphere3D.DAY_AMBIENT
 	var we := WorldEnvironment.new()
-	we.environment = env
+	we.environment = _env
 	add_child(we)
+	_update_daylight()
+
+## Dygnsljuset: sol, ambient och himmel följer TimeOfDay (Atmosphere3D:s
+## rena kurvor — 3D-motsvarigheten till 2D:s CanvasModulate-natt). Bara
+## skalära parametersättningar, ingen allokering per frame.
+func _update_daylight() -> void:
+	if _sun == null or _env == null:
+		return
+	var f: float = TimeOfDay.day_fraction
+	_sun.light_energy = Atmosphere3D.sun_energy(f)
+	_sun.light_color = Atmosphere3D.sun_color(f)
+	_env.ambient_light_energy = Atmosphere3D.ambient_energy(f)
+	_env.background_energy_multiplier = Atmosphere3D.sky_energy(f) * _sky_cap
+
+## Biomstämning per zon: tematisk djupdimma (billig exponentiell — ingen
+## volymetrik) och himmelstak (grottor ser aldrig dagsljus).
+func _apply_biome_mood(zone_id: String) -> void:
+	if _env == null:
+		return
+	var biome := Biome.classify(zone_id)
+	_sky_cap = Atmosphere3D.sky_cap(biome)
+	var fog := Atmosphere3D.fog_for(biome)
+	_env.fog_enabled = not fog.is_empty()
+	if not fog.is_empty():
+		_env.fog_light_color = fog["color"]
+		_env.fog_density = fog["density"]
+	_update_daylight()
 
 func _show_msg(text: String) -> void:
 	hud.show_message(text)

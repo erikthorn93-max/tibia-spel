@@ -266,6 +266,16 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       3D). 12 nya tester i test_loot3d.gd. OBS: drag-ut-ur-ryggsäcken
       (world_drop_zone → World.drop_item) är fortfarande 2D-bunden — tas
       om ryggsäcks-drag behövs i 3D.
+- [x] Dygnsljus + biomstämning i 3D (2026-07-09, `world/atmosphere3d.gd`):
+      Atmosphere3D — rena kurvor (3D-motsvarigheten till ui/atmosphere.gd)
+      för sol/ambient/himmel över dygnet: neutral middagssol, varm gryning/
+      skymning, svalt månsken på natten (aldrig beckmörkt), himlen nästan
+      släckt vid midnatt. Biomdimma per zon via Biome.classify — grönt
+      träskdis, tätt grottmörker, rödbrun vulkanaska, frostdis, hetta-dis i
+      öknen; grottor har himmelstak (ser aldrig dagsljus). game3d applicerar
+      per frame (skalära parametrar, ingen allokering) och per zonbyte.
+      Bara billiga medel: exponentiell djupdimma, ingen volymetrik/post.
+      10 nya tester i test_atmosphere3d.gd.
 - [x] Skattkistor i 3D (2026-07-09, `entities/chest3d.gd`): Chest3D spawnas
       ur zonens chest-punkter (dungeons) — treasure_chest-GLB:n med billboardad
       skylt, klick inom 1 ruta via den generiska interactable-routern. Loot-
