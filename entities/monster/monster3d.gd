@@ -208,6 +208,10 @@ func _on_sim_attack_started(dir: Vector2i) -> void:
 ## ingen materialallokering).
 func _on_sim_damaged(amount: int, crit: bool) -> void:
 	_refresh_hp_bar()
+	if crit:
+		Sfx.crit()
+	elif sim.hp > 0:
+		Sfx.hit()   # dödsträffen låter via monster_die() istället (som 2D)
 	if fx != null:
 		fx.show_damage(position, amount, crit)
 	if _tint_mat == null:
@@ -219,8 +223,9 @@ func _on_sim_damaged(amount: int, crit: bool) -> void:
 	_flash_tw.tween_property(_tint_mat, "albedo_color", _rest_tint(), 0.18)
 
 ## Elementär charm-bonusskada: violett siffra skild från vapenskadan.
-func _on_sim_charm_damaged(amount: int, _element: String) -> void:
+func _on_sim_charm_damaged(amount: int, element: String) -> void:
 	_refresh_hp_bar()
+	Sfx.charm(element)
 	if fx != null:
 		fx.show_text(position, str(amount), Color(0.75, 0.45, 1.0))
 
@@ -244,6 +249,7 @@ func _on_sim_enraged() -> void:
 ## Död: simuleringen har bokfört exp/kills och frigjort tilen — krymp och
 ## försvinn. game3d schemalägger ev. respawn via died-signalen.
 func _on_sim_died(_drops: Array) -> void:
+	Sfx.monster_die()
 	if _visual == null:
 		queue_free()
 		return

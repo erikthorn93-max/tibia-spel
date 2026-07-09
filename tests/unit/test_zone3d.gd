@@ -193,6 +193,15 @@ func _first_walkable_dir(m: ZoneModel, from: Vector2i) -> Vector2i:
 			return d
 	return Vector2i.ZERO
 
+func test_player3d_connects_spec_sounds():
+	# Kraftslagets ljud kopplas i _init — samma UX som 2D:s player.gd.
+	var p: Player3D = Player3DScript.new()
+	add_child_autofree(p)
+	assert_gt(p.sim.spec_denied.get_connections().size(), 0,
+		"nekat kraftslag ska ha en ljudkoppling")
+	assert_gt(p.sim.spec_released.get_connections().size(), 0,
+		"utlöst kraftslag ska ha en ljudkoppling")
+
 func test_player3d_snap_places_on_tile_center():
 	var m := _load_model("thais_fields")
 	var p: Player3D = Player3DScript.new()

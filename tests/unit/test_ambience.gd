@@ -48,3 +48,45 @@ func test_all_gains_stay_low_and_safe():
 		for b in [Biome.TOWN, Biome.CAVE, Biome.VOLCANO, Biome.ICE, Biome.FOREST]:
 			var g: float = Ambience.profile(w, b)["gain"]
 			assert_between(g, 0.0, 0.2, "%s/%s" % [w, b])
+
+# ── Zonkällan: den renderer-agnostiska zonmodellen (2D + 3D) ──────────────────
+
+var _saved_model
+var _saved_wx: String
+
+func before_each():
+	_saved_model = World.zone_model
+	_saved_wx = WeatherSystem.current
+
+func after_each():
+	World.zone_model = _saved_model
+	WeatherSystem.current = _saved_wx
+
+## Hämtar autoload-instansen (preloaden överst är bara skriptet).
+func _ambience_node() -> Node:
+	return get_tree().root.get_node("Ambience")
+
+func test_no_zone_model_is_silent():
+	World.zone_model = null
+	assert_eq(_ambience_node()._current_profile()["gain"], 0.0,
+		"utan zonmodell ska bädden tystna")
+
+func test_profile_reads_zone_model_weather_and_biome():
+	var m := ZoneModel.new()
+	m.zone_id = "dungeon:katakomber"   # → CAVE
+	m.weather = Weather.CLEAR
+	World.zone_model = m
+	WeatherSystem.current = Weather.CLEAR
+	assert_eq(_ambience_node()._current_profile(),
+		Ambience.profile(Weather.CLEAR, Biome.CAVE),
+		"grottans rumston ska läsas ur zonmodellen — samma i 2D och 3D")
+
+func test_dynamic_zone_follows_ambient_weather():
+	var m := ZoneModel.new()
+	m.zone_id = "thais_fields"
+	m.weather = Weather.DYNAMIC
+	World.zone_model = m
+	WeatherSystem.current = Weather.STORM
+	assert_eq(_ambience_node()._current_profile(),
+		Ambience.profile(Weather.STORM, Biome.FOREST),
+		"dynamisk zon ska följa omgivningsvädret i ljudbädden")

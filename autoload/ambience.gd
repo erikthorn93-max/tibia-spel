@@ -68,12 +68,12 @@ func _process(delta: float) -> void:
 		var s := _lp * swell_gain
 		_playback.push_frame(Vector2(s, s))
 
-## Upplöser aktuell zons väder + biom till en ljudprofil.
+## Upplöser aktuell zons väder + biom till en ljudprofil. Läser den
+## renderer-agnostiska zonmodellen (sätts av både world.gd och game3d) så
+## bädden ljuder likadant i 2D- och 3D-vyn.
 func _current_profile() -> Dictionary:
-	var zone := World.current_zone
-	if zone == null or not is_instance_valid(zone) or not ("zone_id" in zone):
+	var m: ZoneModel = World.zone_model
+	if m == null:
 		return {"gain": 0.0, "cutoff": 0.2}
-	var wx := Weather.CLEAR
-	if "weather" in zone:
-		wx = Weather.resolve(zone.weather, WeatherSystem.current)
-	return profile(wx, Biome.classify(zone.zone_id))
+	var wx := Weather.resolve(m.weather, WeatherSystem.current)
+	return profile(wx, Biome.classify(m.zone_id))

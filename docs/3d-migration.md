@@ -266,6 +266,14 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       3D). 12 nya tester i test_loot3d.gd. OBS: drag-ut-ur-ryggsäcken
       (world_drop_zone → World.drop_item) är fortfarande 2D-bunden — tas
       om ryggsäcks-drag behövs i 3D.
+- [x] Ljud i 3D (2026-07-09): Ambience-bädden läser nu den renderer-
+      agnostiska zonmodellen (World.zone_model, satt av båda vyerna) i
+      stället för 2D-zonnoden — regnsus/grottrummel/vindsus ljuder därmed
+      även i 3D. Monster3D spelar stridsljuden (hit/crit, charm per element,
+      dödsljud — samma regler som 2D:s monster.gd, dödsträffen låter via
+      monster_die), Player3D kopplar kraftslagets denied/crit i _init som
+      2D. Spelarens hurt/död/charm-block bor redan i GameState och var
+      renderer-agnostiska. 4 nya tester (zonmodell-källan + spec-ljuden).
 - [x] Väder i 3D (2026-07-09, `world/weather_particles3d.gd`): nederbörd som
       EN MultiMesh-batch (regnstrimmor, tätare/längre åskskyfall, dansande
       snöflingor — fart/färg/antal/strimlängd ur ui/weather.gd, samma som 2D);

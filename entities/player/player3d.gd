@@ -28,6 +28,9 @@ func _init() -> void:
 	sim.facing_changed.connect(_on_facing_changed)
 	sim.attack_swung.connect(_on_attack_swung)
 	sim.healed.connect(_on_healed)
+	# Kraftslagets ljud — samma kopplingar som 2D:s player.gd.
+	sim.spec_denied.connect(func(): Sfx.denied())
+	sim.spec_released.connect(func(): Sfx.crit())
 
 func _ready() -> void:
 	_visual = Node3D.new()
