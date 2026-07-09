@@ -266,6 +266,13 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       3D). 12 nya tester i test_loot3d.gd. OBS: drag-ut-ur-ryggsäcken
       (world_drop_zone → World.drop_item) är fortfarande 2D-bunden — tas
       om ryggsäcks-drag behövs i 3D.
+- [x] Ambient-partiklar i 3D (2026-07-09, `world/ambient_particles3d.gd`):
+      eldflugor om natten ute, drivande grottdamm, stigande glödflagor vid
+      vulkanen — samma Biome-regler som 2D-overlayn (typ/färg/fart/antal ur
+      biome.gd; vädret äger stämningen när det pågår). EN MultiMesh-batch av
+      billboardade additiva quads (en draw call, ingen per-frame-allokering);
+      lådan följer spelaren, partiklarna driver med sidledesvandring och
+      wrappar, twinkle via instansfärg. 9 nya tester i test_ambient3d.gd.
 - [x] Dygnsljus + biomstämning i 3D (2026-07-09, `world/atmosphere3d.gd`):
       Atmosphere3D — rena kurvor (3D-motsvarigheten till ui/atmosphere.gd)
       för sol/ambient/himmel över dygnet: neutral middagssol, varm gryning/

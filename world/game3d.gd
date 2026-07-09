@@ -22,6 +22,7 @@ var _zone_epoch := 0        # ogiltigförklarar respawn-timers vid zonbyte
 var _sun: DirectionalLight3D
 var _env: Environment
 var _sky_cap := 1.0         # himmelstak per biom (grottor ser aldrig dagsljus)
+var _ambient: AmbientParticles3D
 var _last_surface_zone := ""   # för dungeonexit tillbaka till ytan
 var _last_surface_tile := Vector2i(-1, -1)
 var _target_view: Monster3D = null   # vyn för spelarens auto-attack-mål
@@ -38,6 +39,8 @@ func _ready() -> void:
 	GameState.player_died.connect(_on_player_died)
 	_setup_camera()
 	_setup_light()
+	_ambient = AmbientParticles3D.new()
+	add_child(_ambient)
 	hud = Hud3D.new()
 	add_child(hud)
 	hud.attach_minimap(_map_monster_tiles, _map_npc_list, _map_loot_tiles)
@@ -118,6 +121,7 @@ func _on_player_step_completed(t: Vector2i) -> void:
 # Panel-toggles (I/K/B/J/P/C) ägs av HUD-bryggan (Hud3D).
 func _process(_delta: float) -> void:
 	_update_daylight()
+	_ambient.position = player.position   # partikellådan följer spelaren
 	if Input.is_action_just_pressed("weapon_spec"):
 		_try_special()
 	if Input.is_action_just_pressed("use_potion"):
