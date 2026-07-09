@@ -31,6 +31,42 @@ const FERN_MODEL := {"file": "fern", "h": 0.4}
 const FLOWER_EVERY := 11       # ungefär var elfte gräsruta (.) får en blomma
 const FERN_EVERY := 13         # ungefär var trettonde ängsruta (g) får ormbunke
 
+## Tema-styrd scatter: trädset per biom (Biome.classify på zon-id) — öknen
+## får kaktusar, träsket och vulkanlandet döda träd, isen tålig barrskog.
+## Biom utan egen rad behåller standardskogen (TREE_MODELS).
+const BIOME_TREES := {
+	Biome.SWAMP:   [{"file": "dead_tree", "h": 1.9}, {"file": "pine_stunted", "h": 1.3}],
+	Biome.DESERT:  [{"file": "cactus", "h": 1.4}],
+	Biome.VOLCANO: [{"file": "dead_tree", "h": 1.8}],
+	Biome.CAVE:    [{"file": "dead_tree", "h": 1.5}],
+	Biome.ICE:     [{"file": "fir_tree_short", "h": 1.7}, {"file": "pine_stunted", "h": 1.4}],
+}
+const CACTUS_SMALL := {"file": "cactus", "h": 0.6}
+const CACTUS_EVERY := 17       # gles ökendekoration — enstaka småkaktusar
+
+static func tree_models_for(biome: String) -> Array:
+	return BIOME_TREES.get(biome, TREE_MODELS)
+
+## Gles markdekor per biom för gräs (.) och äng (g): {"spec", "every"} eller
+## {} = ingen dekor. Öknen får småkaktusar, träsket ormbunkar överallt;
+## is/vulkan/grotta är kala. Standard: blommor på gräs, ormbunkar på äng.
+static func ground_decor_for(biome: String, ch: String) -> Dictionary:
+	match biome:
+		Biome.DESERT:
+			if ch == ".":
+				return {"spec": CACTUS_SMALL, "every": CACTUS_EVERY}
+			return {}
+		Biome.ICE, Biome.VOLCANO, Biome.CAVE:
+			return {}
+		Biome.SWAMP:
+			if ch == ".":
+				return {"spec": FERN_MODEL, "every": FLOWER_EVERY}
+			return {"spec": FERN_MODEL, "every": FERN_EVERY}
+		_:
+			if ch == ".":
+				return {"spec": FLOWER_MODEL, "every": FLOWER_EVERY}
+			return {"spec": FERN_MODEL, "every": FERN_EVERY}
+
 ## Cache av extraherade mesh-delar per modellfil: [{mesh, xform}].
 ## Delas mellan zonbyggen — GLB:n instansieras EN gång per körning.
 static var _mesh_cache: Dictionary = {}
@@ -114,19 +150,21 @@ static func _tile_hash(t: Vector2i) -> int:
 ## per mesh-del i GLB:n. Samma draw call-budget som marken: antalet batcher
 ## beror på antalet modellfiler, inte antalet instanser.
 func _build_scatter() -> void:
+	var biome := Biome.classify(model.zone_id)
+	var trees := tree_models_for(biome)
 	var groups: Dictionary = {}   # fil → {"h", "jitter", "tiles"}
 	for t: Vector2i in model.terrain:
-		match model.terrain[t]:
+		var ch: String = model.terrain[t]
+		match ch:
 			"t":
-				_scatter_add(groups, TREE_MODELS[_tile_hash(t) % TREE_MODELS.size()], t, true)
+				_scatter_add(groups, trees[_tile_hash(t) % trees.size()], t, true)
 			"r":
 				_scatter_add(groups, ROCK_MODEL, t, true)
-			".":
-				if _tile_hash(t) % FLOWER_EVERY == 0 and not model.blocked.has(t):
-					_scatter_add(groups, FLOWER_MODEL, t, true)
-			"g":
-				if _tile_hash(t) % FERN_EVERY == 0 and not model.blocked.has(t):
-					_scatter_add(groups, FERN_MODEL, t, true)
+			".", "g":
+				var decor := ground_decor_for(biome, ch)
+				if not decor.is_empty() and _tile_hash(t) % int(decor["every"]) == 0 \
+						and not model.blocked.has(t):
+					_scatter_add(groups, decor["spec"], t, true)
 	for t: Vector2i in model.chest_points:
 		_scatter_add(groups, CHEST_MODEL, t, false)
 	for file in groups:

@@ -266,10 +266,17 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       3D). 12 nya tester i test_loot3d.gd. OBS: drag-ut-ur-ryggsäcken
       (world_drop_zone → World.drop_item) är fortfarande 2D-bunden — tas
       om ryggsäcks-drag behövs i 3D.
+- [x] Tema-styrd scatter (2026-07-09, `zone3d.gd`): trädset per biom via
+      `Biome.classify(zone_id)` — öknen får kaktusar, träsket/vulkanlandet
+      döda träd, isen tålig barrskog; biom utan egen rad behåller
+      standardskogen. Gles markdekor per biom (`ground_decor_for`):
+      småkaktusar på ökengräs, ormbunkar överallt i träsket, is/vulkan/
+      grotta kala. Samma deterministiska jitter och draw call-budget som
+      förut. 5 nya tester i test_zone3d.gd (trädset, modellfiler, dekor,
+      öken- och träskzoner).
 - [ ] Assets, miljö-uppföljning: fler monster-/NPC-modeller decimeras vid
       behov; `bush.glb` är kvar på 21 MB (texturtung — ta i nästa
-      Blender-pass); tema-styrd scatter (t.ex. kaktus i öknen, dead_tree i
-      träsket) när zonerna får fler miljötecken
+      Blender-pass)
 
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1
