@@ -317,9 +317,14 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       grotta kala. Samma deterministiska jitter och draw call-budget som
       förut. 5 nya tester i test_zone3d.gd (trädset, modellfiler, dekor,
       öken- och träskzoner).
-- [ ] Assets, miljö-uppföljning: fler monster-/NPC-modeller decimeras vid
-      behov; `bush.glb` är kvar på 21 MB (texturtung — ta i nästa
-      Blender-pass)
+- [x] Assets, miljö-uppföljning (2026-07-09): `bush.glb` (21 MB) borttagen ur
+      repot — Meshy-källan är ~292 000 osammanhängande lövkorts-öar i ett
+      mesh, och edge-collapse-decimering kan aldrig gå under en triangel per
+      ö (Blender-pass med join+decimate verifierade golvet). En spelbar
+      buske kräver ombakning till några få alpha-kort; görs bara om busken
+      faktiskt behövs (ingen kod refererade den). Källan finns kvar i
+      gitignorerade `_meshy_cache`. Fler monster-/NPC-modeller decimeras
+      vid behov med `tools/decimate_glb.py`.
 
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1
