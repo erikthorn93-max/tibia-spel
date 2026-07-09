@@ -28,6 +28,7 @@ var _hp_lbl: Label
 var _spec_lbl: Label
 var _msg_lbl: Label
 var _msg_tw: Tween
+var _arena_lbl: Label
 
 func _ready() -> void:
 	World.hud = self
@@ -69,6 +70,7 @@ func _ready() -> void:
 	_on_hp_changed(GameState.health, GameState.max_health)
 	GameState.spec_changed.connect(_on_spec_changed)
 	_on_spec_changed(GameState.spec_energy)
+	_build_arena_banner()
 
 ## Basraden: HP + spec-mätare + meddelanderad (mini-HUD:en från game3d).
 func _build_labels() -> void:
@@ -82,6 +84,45 @@ func _build_labels() -> void:
 	_msg_lbl.position = Vector2(12, 60)
 	_msg_lbl.modulate = Color(1.0, 0.9, 0.5)
 	add_child(_msg_lbl)
+
+## Beständig arena-status högst upp i mitten — samma banner som 2D-HUD:en.
+## Namngivna metod-kopplingar (inte lambdas) så signalerna auto-kopplas bort
+## när HUD-bryggan frigörs vid scenbyte.
+func _build_arena_banner() -> void:
+	_arena_lbl = Label.new()
+	_arena_lbl.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	_arena_lbl.offset_top = 14.0
+	_arena_lbl.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_arena_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_arena_lbl.add_theme_color_override("font_color", Color(1.0, 0.82, 0.3))
+	_arena_lbl.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.85))
+	_arena_lbl.add_theme_constant_override("outline_size", 4)
+	_arena_lbl.add_theme_font_size_override("font_size", 16)
+	_arena_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_arena_lbl.visible = false
+	add_child(_arena_lbl)
+	ArenaSystem.wave_started.connect(_on_arena_state_changed)
+	ArenaSystem.wave_progress.connect(_on_arena_state_changed)
+	ArenaSystem.wave_cleared.connect(_on_arena_state_changed)
+	ArenaSystem.arena_won.connect(_on_arena_state_changed)
+	ArenaSystem.arena_failed.connect(_on_arena_state_changed)
+	_refresh_arena_banner()
+
+## Gemensam mottagare för alla arena-signaler (0–2 args via defaults).
+func _on_arena_state_changed(_a = null, _b = null) -> void:
+	_refresh_arena_banner()
+
+func _refresh_arena_banner() -> void:
+	if _arena_lbl == null:
+		return
+	if not ArenaSystem.is_active():
+		_arena_lbl.visible = false
+		return
+	var label := String(ArenaSystem.waves[ArenaSystem.current_wave].get("name", ""))
+	_arena_lbl.visible = true
+	_arena_lbl.text = "⚔ Arena — Våg %d/%d%s   •   %d kvar" % [
+		ArenaSystem.current_wave + 1, ArenaSystem.wave_count(),
+		("  " + label) if label != "" else "", ArenaSystem.remaining()]
 
 func show_message(text: String) -> void:
 	_msg_lbl.text = text

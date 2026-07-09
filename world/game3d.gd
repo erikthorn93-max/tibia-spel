@@ -57,6 +57,9 @@ func _ready() -> void:
 	hud.hotkey_bar.caster = player           # hotbaren kastar via Player3D
 	SpellSystem.monster_source = _live_monster_sims
 	player.sim.message.connect(_show_msg)
+	ArenaSystem.wave_started.connect(_on_arena_wave_started)
+	ArenaSystem.arena_won.connect(_on_arena_won)
+	ArenaSystem.arena_failed.connect(_on_arena_failed)
 	load_zone(START_ZONE)
 
 ## Autoloads överlever scenen — lämna ingen monsterkälla mot en fri-ad nod.
@@ -78,6 +81,9 @@ func enter_dungeon(theme: String) -> void:
 ## Bygger om världen kring en ny ZoneModel: river gamla vyer/monster,
 ## bokför zonen (samma bokföring som world.gd) och placerar spelaren.
 func _apply_model(data: Dictionary, zone_id: String, at_tile := Vector2i(-1, -1)) -> void:
+	# Lämnar man arenan mitt i en omgång räknas det som uppgivet (som 2D).
+	if ArenaSystem.is_active() and zone_id != ArenaSystem.ARENA_ZONE:
+		ArenaSystem.abort()
 	_zone_epoch += 1
 	if zone_view != null:
 		zone_view.queue_free()
@@ -360,6 +366,47 @@ func _on_monster_died(_drops: Array, sp: Dictionary, epoch: int) -> void:
 	await get_tree().create_timer(float(sp["respawn"])).timeout
 	if _zone_epoch == epoch:
 		_spawn_monster3d(sp)
+
+# ── Arena (samma orkestrering som world.gd, men med Monster3D) ────────────────
+## Spawnar nästa arenavåg på lediga rutor minst 2 steg från spelaren.
+## world.gd:s handler är gated på 2D-zonen — här gäller spegelbilden:
+## bara när 3D-vyn faktiskt visar arenazonen.
+func _on_arena_wave_started(index: int, spawns: Array) -> void:
+	if model == null or model.zone_id != ArenaSystem.ARENA_ZONE:
+		return
+	var tiles := _arena_spawn_tiles()
+	var ti := 0
+	for s in spawns:
+		for _i in range(int(s.get("count", 0))):
+			if ti >= tiles.size():
+				break
+			_spawn_monster3d({"monster": String(s["monster"]),
+				"tile": tiles[ti], "respawn": -1.0})
+			ti += 1
+	var label := String(ArenaSystem.waves[index].get("name", ""))
+	_show_msg("Våg %d/%d%s" % [index + 1, ArenaSystem.wave_count(),
+		(" — " + label) if label != "" else ""])
+
+## Lediga, gångbara rutor minst 2 steg från spelaren, blandade (som world.gd).
+func _arena_spawn_tiles() -> Array:
+	var ptile: Vector2i = player.sim.tile
+	var out: Array = []
+	for y in range(model.grid_size.y):
+		for x in range(model.grid_size.x):
+			var t := Vector2i(x, y)
+			if not model.is_walkable(t) or model.is_occupied(t):
+				continue
+			if maxi(absi(t.x - ptile.x), absi(t.y - ptile.y)) < 2:
+				continue
+			out.append(t)
+	out.shuffle()
+	return out
+
+func _on_arena_won() -> void:
+	_show_msg("Du har besegrat arenan! Publiken ropar ditt namn.")
+
+func _on_arena_failed(_at_wave: int) -> void:
+	_show_msg("Du lämnade sanden. Arenan glömmer dig.")
 
 # ── Spelardöd (Tibia-återkomst: hemzon, full HP, XP-straff, gravsten) ─────────
 func _on_player_died() -> void:

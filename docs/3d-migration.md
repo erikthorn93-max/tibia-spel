@@ -266,6 +266,16 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       3D). 12 nya tester i test_loot3d.gd. OBS: drag-ut-ur-ryggsäcken
       (world_drop_zone → World.drop_item) är fortfarande 2D-bunden — tas
       om ryggsäcks-drag behövs i 3D.
+- [x] Arenan i 3D (2026-07-09): game3d spawnar arenavågorna som Monster3D
+      (samma spawnregler som world.gd — lediga rutor minst 2 steg från
+      spelaren, elite-rullen ingår, ingen respawn); world.gd:s handler är
+      gated på 2D-zonen och game3d:s på arenazonen så exakt en vy spawnar.
+      Att lämna sanden mitt i en omgång avbryter (som 2D:s start_game);
+      döds-abort låg redan i world.gd:s autoload-koppling. Hud3D fick 2D:ns
+      arenabanner (våg/namn/kvar, live via ArenaSystem-signalerna) med
+      namngivna metod-kopplingar som auto-kopplas bort vid scenbyte.
+      Arenastarten via Torbens dialog fungerade redan genom HUD-bryggan.
+      7 nya tester i test_arena3d.gd.
 - [x] Ljud i 3D (2026-07-09): Ambience-bädden läser nu den renderer-
       agnostiska zonmodellen (World.zone_model, satt av båda vyerna) i
       stället för 2D-zonnoden — regnsus/grottrummel/vindsus ljuder därmed
