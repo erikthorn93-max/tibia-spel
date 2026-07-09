@@ -128,15 +128,14 @@ func test_tree_terrain_renders_as_ground_pad():
 				"trädrutan ska vara markplatta — GLB-modellen står ovanpå")
 	assert_true(found, "trädterrängen ska fortfarande få en markbatch")
 
-func test_chest_points_get_chest_model():
+func test_chest_points_are_not_scatter():
+	# Kistor ägs av Chest3D (klickbar entitet) — zonen ska inte scattra dem.
 	var m := ZoneModel.new()
 	m.terrain[Vector2i(0, 0)] = "f"
 	m.chest_points = [Vector2i(0, 0)]
 	var z := _build_view(m)
-	var nodes := _scatter_nodes(z, "treasure_chest")
-	assert_gt(nodes.size(), 0, "kistpunkter ska få kistmodellen")
-	for c in nodes:
-		assert_eq(c.multimesh.instance_count, 1, "en instans per kista")
+	assert_eq(_scatter_nodes(z, "treasure_chest").size(), 0,
+		"kistpunkter ska inte ge scatter — Chest3D äger kistvisualen")
 
 # ── Tema-styrd scatter (biom via zon-id) ──────────────────────────────────────
 

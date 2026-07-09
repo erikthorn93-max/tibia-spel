@@ -266,6 +266,14 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       3D). 12 nya tester i test_loot3d.gd. OBS: drag-ut-ur-ryggsäcken
       (world_drop_zone → World.drop_item) är fortfarande 2D-bunden — tas
       om ryggsäcks-drag behövs i 3D.
+- [x] Skattkistor i 3D (2026-07-09, `entities/chest3d.gd`): Chest3D spawnas
+      ur zonens chest-punkter (dungeons) — treasure_chest-GLB:n med billboardad
+      skylt, klick inom 1 ruta via den generiska interactable-routern. Loot-
+      rullen extraherad till `TreasureChest.open_loot()` (renderer-agnostisk,
+      delas av 2D-kistan); öppnad kista sjunker ihop och grånar skylten (samma
+      idiom som uttömda gathering-noder). Kistan togs bort ur Zone3D-scattern —
+      vyn ägs av entiteten så öppnad-tillståndet syns. 9 nya tester i
+      test_chest3d.gd.
 - [x] Tema-styrd scatter (2026-07-09, `zone3d.gd`): trädset per biom via
       `Biome.classify(zone_id)` — öknen får kaktusar, träsket/vulkanlandet
       döda träd, isen tålig barrskog; biom utan egen rad behåller

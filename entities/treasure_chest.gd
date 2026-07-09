@@ -1,5 +1,7 @@
+class_name TreasureChest
 extends Node2D
 ## Skattkista i dungeon: klick intill → engångsloot (guld + temaloot), gråtonas.
+## Loot-rullen (open_loot) är renderer-agnostisk och delas med 3D-vyn (Chest3D).
 
 const TILE := 32
 const INTERACT_RANGE := 1   # Chebyshev-distans
@@ -62,9 +64,13 @@ func _on_click(_vp, event: InputEvent, _shape) -> void:
 func _open() -> void:
 	_opened = true
 	modulate = Color(0.55, 0.55, 0.55)   # gråtona — öppnad
+	World.hud.show_message(open_loot(_theme_id))
 
+## Renderer-agnostisk loot-rulle: bokför guld + temaloot i GameState och
+## returnerar HUD-beskedet. Delas av 2D-kistan och Chest3D.
+static func open_loot(theme_id: String) -> String:
 	var themes: Dictionary = _load_themes()
-	var th: Dictionary = themes.get(_theme_id, {})
+	var th: Dictionary = themes.get(theme_id, {})
 
 	# Guld
 	var gold_range: Array = th.get("chest_gold", [50, 150])
@@ -72,7 +78,7 @@ func _open() -> void:
 	GameState.gold += gold
 
 	# Items
-	var gained_items: Array = []
+	var parts := ["Du fick %d guld" % gold]
 	for entry in th.get("chest_items", []):
 		var item_id := String(entry[0])
 		var chance := float(entry[1])
@@ -81,12 +87,8 @@ func _open() -> void:
 			var count := randi_range(1, max_count)
 			GameState.inventory[item_id] = int(GameState.inventory.get(item_id, 0)) + count
 			var item_name := String(ItemDB.items.get(item_id, {}).get("name", item_id))
-			gained_items.append("%d × %s" % [count, item_name])
-
-	# HUD-meddelande
-	var parts := ["Du fick %d guld" % gold]
-	parts.append_array(gained_items)
-	World.hud.show_message("Kistan: " + ", ".join(parts) + "!")
+			parts.append("%d × %s" % [count, item_name])
+	return "Kistan: " + ", ".join(parts) + "!"
 
 static func _load_themes() -> Dictionary:
 	var f := FileAccess.open("res://data/dungeon_themes.json", FileAccess.READ)

@@ -2,8 +2,9 @@ class_name Zone3D
 extends Node3D
 ## 3D-vy för en spelzon: renderar en ZoneModel med MultiMesh — en batch per
 ## terrängtyp (max 13 draw calls för marken, prestandakravet från dag 1).
-## Miljömodeller (träd/klippor/kistor/vegetation ur assets/models3d) scattras
-## också via MultiMesh: en batch per mesh-del i GLB:n, aldrig per instans.
+## Miljömodeller (träd/klippor/vegetation ur assets/models3d) scattras också
+## via MultiMesh: en batch per mesh-del i GLB:n, aldrig per instans. Kistor
+## är klickbara entiteter (Chest3D), inte scatter.
 ## Samma modell som 2D-vyn (zone.gd); ingen spellogik här. Ett gemensamt
 ## material för alla terrängbatcher (material-pooling) — färgen bor per instans.
 
@@ -25,7 +26,6 @@ const TREE_MODELS := [
 	{"file": "pine_stunted", "h": 1.4},
 ]
 const ROCK_MODEL := {"file": "mossy_rock", "h": 0.8}
-const CHEST_MODEL := {"file": "treasure_chest", "h": 0.5}
 const FLOWER_MODEL := {"file": "wildflower", "h": 0.35}
 const FERN_MODEL := {"file": "fern", "h": 0.4}
 const FLOWER_EVERY := 11       # ungefär var elfte gräsruta (.) får en blomma
@@ -165,8 +165,6 @@ func _build_scatter() -> void:
 				if not decor.is_empty() and _tile_hash(t) % int(decor["every"]) == 0 \
 						and not model.blocked.has(t):
 					_scatter_add(groups, decor["spec"], t, true)
-	for t: Vector2i in model.chest_points:
-		_scatter_add(groups, CHEST_MODEL, t, false)
 	for file in groups:
 		_make_scatter(file, groups[file])
 

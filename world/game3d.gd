@@ -245,6 +245,10 @@ func _spawn_npcs() -> void:
 		_npcs_root.add_child(gn)
 		gn.fx = _fx
 		gn.setup(String(np["node"]), np["tile"])
+	for t in model.chest_points:
+		var c := Chest3D.new()
+		_npcs_root.add_child(c)
+		c.setup(t, model.dungeon_theme)
 
 func _spawn_npc3d(kind: String, t: Vector2i, id := "") -> void:
 	var n := Npc3D.new()
