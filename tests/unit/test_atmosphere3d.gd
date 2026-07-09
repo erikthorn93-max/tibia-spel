@@ -12,16 +12,20 @@ const DAWN := 0.25
 var _saved_zone: String
 var _saved_tile: Vector2i
 var _saved_hud
+var _saved_weather: String
 
 func before_each():
 	_saved_zone = GameState.current_zone
 	_saved_tile = GameState.player_tile
 	_saved_hud = World.hud
+	_saved_weather = WeatherSystem.current
+	WeatherSystem.current = Weather.CLEAR   # dygnstesterna vill ha klart väder
 
 func after_each():
 	GameState.current_zone = _saved_zone
 	GameState.player_tile = _saved_tile
 	World.hud = _saved_hud
+	WeatherSystem.current = _saved_weather
 
 # ── Rena dygnskurvor ──────────────────────────────────────────────────────────
 

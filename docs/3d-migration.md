@@ -266,6 +266,16 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       3D). 12 nya tester i test_loot3d.gd. OBS: drag-ut-ur-ryggsäcken
       (world_drop_zone → World.drop_item) är fortfarande 2D-bunden — tas
       om ryggsäcks-drag behövs i 3D.
+- [x] Väder i 3D (2026-07-09, `world/weather_particles3d.gd`): nederbörd som
+      EN MultiMesh-batch (regnstrimmor, tätare/längre åskskyfall, dansande
+      snöflingor — fart/färg/antal/strimlängd ur ui/weather.gd, samma som 2D);
+      lådan följer spelaren, deterministiskt frö. Väderdimma + ljusdämpning i
+      miljön via Atmosphere3D (WEATHER_FOG/WEATHER_LIGHT) — vädret äger
+      stämningen över biomdimman, samma företrädesregel som 2D. Blixt &
+      dunder vid åska i game3d med 2D:s exakta Weather-kurvor (nedslags-
+      schemaläggning, dubbelblixt-avklingning, fördröjt dunder via Sfx);
+      blixten lyser upp sol/ambient mot vitt. Dimväder har inga partiklar —
+      env-dimman äger det. 12 nya tester i test_weather3d.gd.
 - [x] Ambient-partiklar i 3D (2026-07-09, `world/ambient_particles3d.gd`):
       eldflugor om natten ute, drivande grottdamm, stigande glödflagor vid
       vulkanen — samma Biome-regler som 2D-overlayn (typ/färg/fart/antal ur

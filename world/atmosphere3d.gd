@@ -61,3 +61,28 @@ static func fog_for(biome: String) -> Dictionary:
 ## oavsett klockslag. Övriga biom följer dygnet fullt ut.
 static func sky_cap(biome: String) -> float:
 	return 0.15 if biome == Biome.CAVE else 1.0
+
+# ── Väderstämning (3D-motsvarigheten till Weather.tint-tvätten i 2D) ──────────
+
+## Väderdimma: när väder pågår äger det stämningen och ersätter biomdimman —
+## samma företrädesregel som 2D-overlayerna. Dimväder är tätast, snö en ljus
+## slöja, regn/åska en sval mörkning.
+const WEATHER_FOG := {
+	Weather.FOG:   {"color": Color(0.62, 0.66, 0.70), "density": 0.065},
+	Weather.SNOW:  {"color": Color(0.80, 0.85, 0.92), "density": 0.02},
+	Weather.RAIN:  {"color": Color(0.30, 0.36, 0.44), "density": 0.015},
+	Weather.STORM: {"color": Color(0.16, 0.20, 0.30), "density": 0.028},
+}
+
+## Ljusdämpning per väder (multipliceras in i sol/ambient/himmel): åskan är
+## tung och mörk, regnet kyler, snö och dis bara dämpar lätt. Klart = 1.0.
+const WEATHER_LIGHT := {
+	Weather.RAIN: 0.75, Weather.STORM: 0.5,
+	Weather.FOG: 0.8, Weather.SNOW: 0.9,
+}
+
+static func weather_fog(wx: String) -> Dictionary:
+	return WEATHER_FOG.get(wx, {})
+
+static func weather_light_scale(wx: String) -> float:
+	return float(WEATHER_LIGHT.get(wx, 1.0))

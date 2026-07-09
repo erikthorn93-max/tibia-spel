@@ -22,7 +22,15 @@ var _zone_epoch := 0        # ogiltigförklarar respawn-timers vid zonbyte
 var _sun: DirectionalLight3D
 var _env: Environment
 var _sky_cap := 1.0         # himmelstak per biom (grottor ser aldrig dagsljus)
+var _biome_fog: Dictionary = {}   # zonens biomdimma (vädret har företräde)
 var _ambient: AmbientParticles3D
+var _weather_fx: WeatherParticles3D
+# Blixt & dunder (åska) — samma tillstånd som 2D:s game_root.
+var _storm := false
+var _strike_in := 0.0        # sekunder till nästa blixt
+var _flash_t := 99.0         # sekunder sedan senaste blixt (>= FLASH_DUR = inget sken)
+var _thunder_in := -1.0      # sekunder kvar tills dundret (<0 = inget väntar)
+var _rng := RandomNumberGenerator.new()
 var _last_surface_zone := ""   # för dungeonexit tillbaka till ytan
 var _last_surface_tile := Vector2i(-1, -1)
 var _target_view: Monster3D = null   # vyn för spelarens auto-attack-mål
@@ -41,6 +49,8 @@ func _ready() -> void:
 	_setup_light()
 	_ambient = AmbientParticles3D.new()
 	add_child(_ambient)
+	_weather_fx = WeatherParticles3D.new()
+	add_child(_weather_fx)
 	hud = Hud3D.new()
 	add_child(hud)
 	hud.attach_minimap(_map_monster_tiles, _map_npc_list, _map_loot_tiles)
@@ -119,9 +129,10 @@ func _on_player_step_completed(t: Vector2i) -> void:
 
 # ── Tangenter: kraftslag (F) och hälsodryck — samma actions som 2D. ──────────
 # Panel-toggles (I/K/B/J/P/C) ägs av HUD-bryggan (Hud3D).
-func _process(_delta: float) -> void:
-	_update_daylight()
-	_ambient.position = player.position   # partikellådan följer spelaren
+func _process(delta: float) -> void:
+	_update_daylight(delta)
+	_ambient.position = player.position   # partikellådorna följer spelaren
+	_weather_fx.position = player.position
 	if Input.is_action_just_pressed("weapon_spec"):
 		_try_special()
 	if Input.is_action_just_pressed("use_potion"):
@@ -389,30 +400,66 @@ func _setup_light() -> void:
 	add_child(we)
 	_update_daylight()
 
-## Dygnsljuset: sol, ambient och himmel följer TimeOfDay (Atmosphere3D:s
-## rena kurvor — 3D-motsvarigheten till 2D:s CanvasModulate-natt). Bara
-## skalära parametersättningar, ingen allokering per frame.
-func _update_daylight() -> void:
+## Dygnsljus + väderstämning: sol/ambient/himmel följer TimeOfDay
+## (Atmosphere3D:s rena kurvor), vädret dämpar ljuset och äger dimman när
+## det pågår (annars biomdimman), och blixtar lyser upp världen under åska.
+## Bara skalära parametersättningar, ingen allokering per frame.
+func _update_daylight(delta := 0.0) -> void:
 	if _sun == null or _env == null:
 		return
 	var f: float = TimeOfDay.day_fraction
-	_sun.light_energy = Atmosphere3D.sun_energy(f)
-	_sun.light_color = Atmosphere3D.sun_color(f)
-	_env.ambient_light_energy = Atmosphere3D.ambient_energy(f)
-	_env.background_energy_multiplier = Atmosphere3D.sky_energy(f) * _sky_cap
-
-## Biomstämning per zon: tematisk djupdimma (billig exponentiell — ingen
-## volymetrik) och himmelstak (grottor ser aldrig dagsljus).
-func _apply_biome_mood(zone_id: String) -> void:
-	if _env == null:
-		return
-	var biome := Biome.classify(zone_id)
-	_sky_cap = Atmosphere3D.sky_cap(biome)
-	var fog := Atmosphere3D.fog_for(biome)
+	var wx := _resolved_weather()
+	var ls := Atmosphere3D.weather_light_scale(wx)
+	var flash := _tick_lightning(wx == Weather.STORM, delta)
+	_sun.light_energy = lerpf(Atmosphere3D.sun_energy(f) * ls,
+		Atmosphere3D.DAY_SUN * 1.5, flash)
+	_sun.light_color = Atmosphere3D.sun_color(f).lerp(Color(1, 1, 1), flash)
+	_env.ambient_light_energy = lerpf(Atmosphere3D.ambient_energy(f) * ls,
+		Atmosphere3D.DAY_AMBIENT * 1.5, flash)
+	_env.background_energy_multiplier = Atmosphere3D.sky_energy(f) * _sky_cap * ls
+	var fog: Dictionary = Atmosphere3D.weather_fog(wx)
+	if fog.is_empty():
+		fog = _biome_fog
 	_env.fog_enabled = not fog.is_empty()
 	if not fog.is_empty():
 		_env.fog_light_color = fog["color"]
 		_env.fog_density = fog["density"]
+
+## Zonens upplösta väder ("dynamic" → det globala omgivningsvädret).
+func _resolved_weather() -> String:
+	if model == null:
+		return Weather.CLEAR
+	return Weather.resolve(model.weather, WeatherSystem.current)
+
+## Blixt & dunder under åska — samma rena Weather-kurvor och schemaläggning
+## som 2D:s game_root. Returnerar blixtens ljusstyrka 0..1 just nu.
+func _tick_lightning(storm_active: bool, delta: float) -> float:
+	if storm_active and not _storm:
+		_strike_in = Weather.next_strike_delay(_rng.randf())   # första nedslaget
+	_storm = storm_active
+	if storm_active:
+		_strike_in -= delta
+		if _strike_in <= 0.0:
+			_flash_t = 0.0
+			_thunder_in = Weather.thunder_delay(_rng.randf())
+			_strike_in = Weather.next_strike_delay(_rng.randf())
+	# Dundret efter blixten (löper även om man hinner lämna zonen mitt i).
+	if _thunder_in >= 0.0:
+		_thunder_in -= delta
+		if _thunder_in < 0.0:
+			Sfx.thunder()
+	if _flash_t < Weather.FLASH_DUR:
+		_flash_t += delta
+		return Weather.lightning_brightness(_flash_t)
+	return 0.0
+
+## Biomstämning per zon: tematisk djupdimma (billig exponentiell — ingen
+## volymetrik) och himmelstak (grottor ser aldrig dagsljus). Dimman läggs
+## på i _update_daylight där vädret har företräde.
+func _apply_biome_mood(zone_id: String) -> void:
+	var biome := Biome.classify(zone_id)
+	_sky_cap = Atmosphere3D.sky_cap(biome)
+	_biome_fog = Atmosphere3D.fog_for(biome)
 	_update_daylight()
 
 func _show_msg(text: String) -> void:
