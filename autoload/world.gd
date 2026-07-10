@@ -16,6 +16,11 @@ const DungeonGen = preload("res://world/dungeon_generator.gd")
 const MONSTER_SCENE_PATH := "res://entities/monster/monster.tscn"
 const CHEST_SCRIPT_PATH := "res://entities/treasure_chest.gd"
 
+## 3D-läge valt i huvudmenyn. Styr vilken spelscen menyn/character creator
+## startar OCH flaggar att 3D-sessionen får spara — F6-devkörningar och
+## testsviten (use_3d = false) rör aldrig spelarens sparfil.
+var use_3d := false
+
 var current_zone: Node2D    # vy-container: zon-tiles + entitetsnoder
 var zone_model: ZoneModel   # logisk zonmodell — all zondata läses härifrån
 var player: Node2D
@@ -26,6 +31,10 @@ var last_surface_zone := ""
 var last_surface_tile := Vector2i(-1, -1)
 # Grav-tillståndet (zon/tile/loot) bor i GameState så det persisteras och
 # överlever zon-ombyggnad. Minimap läser GameState.grave_zone/grave_tile.
+
+## Spelscenen för vald renderare — huvudmenyn och character creator routar hit.
+func game_scene_path() -> String:
+	return "res://world/game3d.tscn" if use_3d else "res://world/game.tscn"
 
 func _ready() -> void:
 	GameState.player_died.connect(_on_player_died)

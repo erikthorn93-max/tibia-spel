@@ -351,6 +351,15 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       tools/inspect_glb.gd), så per-plagg-färger kräver ommappade modeller —
       görs bara om outfits blir viktiga visuellt. Live-uppdatering via
       appearance_changed. 6 nya tester i test_outfit3d.gd.
+- [x] 3D spelbart från huvudmenyn (2026-07-10): "3D-läge"-knapp i menyn sätter
+      `World.use_3d` — Nytt spel/Fortsätt (och character creator) routar via
+      `World.game_scene_path()` till game3d.tscn. Menystartade 3D-sessioner
+      bootar från GameState/sparfilen (samma regel som 2D:s game_root) och
+      sparar vid zonbyten + dungeon-nedgångar (ytzonen bokförs i
+      `World.last_surface_zone` så SaveManager:s dungeon-normalisering delas);
+      autosaven (60 s) täcker nu även 3D. F6-devkörningar av game3d.tscn och
+      testsviten har use_3d = false: de bootar slice-startzonen som förut och
+      rör ALDRIG spelarens sparfil. 10 nya tester i test_session3d.gd.
 
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1

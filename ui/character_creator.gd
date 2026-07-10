@@ -18,4 +18,4 @@ func _start() -> void:
 	GameState.player_name = n if n != "" else "Hjälte"
 	GameState.current_zone = "town"
 	GameState.player_tile = Vector2i.ZERO
-	get_tree().change_scene_to_file("res://world/game.tscn")
+	get_tree().change_scene_to_file(World.game_scene_path())

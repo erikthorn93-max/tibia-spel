@@ -9,7 +9,9 @@ func _process(delta: float) -> void:
 	_timer += delta
 	if _timer >= 60.0:
 		_timer = 0.0
-		if World.player != null:
+		# 2D-session (World.player) eller menystartad 3D-session (use_3d) —
+		# F6-devkörningar av game3d.tscn och testsviten autosparas aldrig.
+		if World.player != null or (World.use_3d and World.zone_model != null):
 			save_game()
 
 func has_save() -> bool:

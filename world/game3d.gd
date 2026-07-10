@@ -31,8 +31,6 @@ var _strike_in := 0.0        # sekunder till nästa blixt
 var _flash_t := 99.0         # sekunder sedan senaste blixt (>= FLASH_DUR = inget sken)
 var _thunder_in := -1.0      # sekunder kvar tills dundret (<0 = inget väntar)
 var _rng := RandomNumberGenerator.new()
-var _last_surface_zone := ""   # för dungeonexit tillbaka till ytan
-var _last_surface_tile := Vector2i(-1, -1)
 var _target_view: Monster3D = null   # vyn för spelarens auto-attack-mål
 var _fx: FloatingText3D              # delad flyttext-pool (skada/läkning/taggar)
 
@@ -61,7 +59,22 @@ func _ready() -> void:
 	ArenaSystem.arena_won.connect(_on_arena_won)
 	ArenaSystem.arena_failed.connect(_on_arena_failed)
 	World.item_dropped.connect(_on_item_dropped)
-	load_zone(START_ZONE)
+	var bt := boot_target(World.use_3d, GameState.current_zone, GameState.player_tile)
+	load_zone(String(bt["zone"]), bt["tile"])
+
+## Var sessionen börjar. Menystartad (use_3d): GameStates zon/tile — sparfilen
+## är redan inläst av menyn, samma regel som 2D:s game_root. F6-dev och
+## testsviten (use_3d = false): slice-startzonen, som förut.
+static func boot_target(menu_launched: bool, zone: String, tile: Vector2i) -> Dictionary:
+	if menu_launched and ResourceLoader.exists("res://data/zones/%s.json" % zone):
+		return {"zone": zone,
+			"tile": tile if tile != Vector2i.ZERO else Vector2i(-1, -1)}
+	return {"zone": START_ZONE, "tile": Vector2i(-1, -1)}
+
+## Sparar bara menystartade sessioner — F6-dev och tester rör aldrig sparfilen.
+func _save_session() -> void:
+	if World.use_3d:
+		SaveManager.save_game()
 
 ## Autoloads överlever scenen — lämna ingen monsterkälla mot en fri-ad nod.
 func _exit_tree() -> void:
@@ -75,8 +88,10 @@ func load_zone(zone_id: String, at_tile := Vector2i(-1, -1)) -> void:
 	_apply_model(JSON.parse_string(f.get_as_text()), zone_id, at_tile)
 
 func enter_dungeon(theme: String) -> void:
-	_last_surface_zone = GameState.current_zone
-	_last_surface_tile = player.sim.tile
+	# Ytzonen bokförs i World (delas med SaveManager:s dungeon-normalisering).
+	World.last_surface_zone = GameState.current_zone
+	World.last_surface_tile = player.sim.tile
+	_save_session()   # spara med ytzon INNAN vi byter (som world.gd)
 	_apply_model(DungeonGen.generate(theme, randi()), "dungeon:" + theme)
 
 ## Bygger om världen kring en ny ZoneModel: river gamla vyer/monster,
@@ -97,6 +112,8 @@ func _apply_model(data: Dictionary, zone_id: String, at_tile := Vector2i(-1, -1)
 	World.zone_model = model   # minimapen m.fl. läser zondata härifrån (som 2D)
 	GameState.current_zone = zone_id
 	QuestSystem.record_explore(zone_id)
+	if not zone_id.begins_with("dungeon:"):
+		World.last_surface_zone = zone_id   # samma bokföring som world.start_game
 	zone_view = Zone3D.new()
 	add_child(zone_view)
 	zone_view.build(model)
@@ -130,8 +147,9 @@ func _on_player_step_completed(t: Vector2i) -> void:
 	var dest := String(model.portals[t])
 	# Dungeonexit: tillbaka till rutan man gick ner från.
 	var dest_tile := Vector2i(-1, -1)
-	if GameState.current_zone.begins_with("dungeon:") and dest == _last_surface_zone:
-		dest_tile = _last_surface_tile
+	if GameState.current_zone.begins_with("dungeon:") and dest == World.last_surface_zone:
+		dest_tile = World.last_surface_tile
+	_save_session()   # spara vid zonbyte (som world.change_zone)
 	load_zone.call_deferred(dest, dest_tile)
 
 # ── Tangenter: kraftslag (F) och hälsodryck — samma actions som 2D. ──────────
