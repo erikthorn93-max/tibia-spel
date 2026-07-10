@@ -360,6 +360,14 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       autosaven (60 s) täcker nu även 3D. F6-devkörningar av game3d.tscn och
       testsviten har use_3d = false: de bootar slice-startzonen som förut och
       rör ALDRIG spelarens sparfil. 10 nya tester i test_session3d.gd.
+- [x] Zon-fade + spara vid avslut (2026-07-10): Hud3D fick 2D-HUD:ens
+      transition (tona till svart → bygg om → tona in); game3d:s zonbyten
+      (portal, dungeon-nedgång, dödsrespawn) kör bakom faden i stället för
+      call_deferred. SaveManager sparar vid NOTIFICATION_WM_CLOSE_REQUEST
+      (fönsterkryss/Alt+F4) med samma sessionsgate som autosaven
+      (`_session_active`: 2D-spelare eller menystartad 3D) — gäller båda
+      renderarna, och F6-dev/tester förblir save-fria. 4 nya tester i
+      test_session3d.gd.
 
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1

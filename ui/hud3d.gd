@@ -30,6 +30,7 @@ var _spec_lbl: Label
 var _msg_lbl: Label
 var _msg_tw: Tween
 var _arena_lbl: Label
+var _fade_rect: ColorRect   # svart overlay för zon-övergångar (som 2D-HUD:en)
 
 func _ready() -> void:
 	World.hud = self
@@ -77,6 +78,24 @@ func _ready() -> void:
 	GameState.spec_changed.connect(_on_spec_changed)
 	_on_spec_changed(GameState.spec_energy)
 	_build_arena_banner()
+	# Fade-overlayen sist → ritas överst vid zon-övergångar.
+	_fade_rect = ColorRect.new()
+	_fade_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_fade_rect.color = Color(0, 0, 0, 0.0)
+	add_child(_fade_rect)
+
+## Zon-övergång: tona till svart, kör om-byggnaden, tona tillbaka in —
+## samma kurva som 2D-HUD:ens transition.
+func transition(rebuild: Callable) -> void:
+	if _fade_rect == null:
+		rebuild.call_deferred()
+		return
+	_fade_rect.color.a = 0.0
+	var tw := create_tween()
+	tw.tween_property(_fade_rect, "color:a", 1.0, 0.18)
+	tw.tween_callback(rebuild)
+	tw.tween_property(_fade_rect, "color:a", 0.0, 0.28)
 
 ## Basraden: HP + spec-mätare + meddelanderad (mini-HUD:en från game3d).
 func _build_labels() -> void:

@@ -5,14 +5,22 @@ const SAVE_VERSION := 15
 var save_path := "user://save.json"
 var _timer := 0.0
 
+## En spelsession pågår: 2D (World.player) eller menystartad 3D (use_3d).
+## F6-devkörningar av game3d.tscn och testsviten räknas aldrig som session.
+func _session_active() -> bool:
+	return World.player != null or (World.use_3d and World.zone_model != null)
+
 func _process(delta: float) -> void:
 	_timer += delta
 	if _timer >= 60.0:
 		_timer = 0.0
-		# 2D-session (World.player) eller menystartad 3D-session (use_3d) —
-		# F6-devkörningar av game3d.tscn och testsviten autosparas aldrig.
-		if World.player != null or (World.use_3d and World.zone_model != null):
+		if _session_active():
 			save_game()
+
+## Spara vid avslut (fönsterkryss/Alt+F4) så de sista <60 s inte tappas.
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST and _session_active():
+		save_game()
 
 func has_save() -> bool:
 	return FileAccess.file_exists(save_path)

@@ -123,3 +123,43 @@ func test_enter_dungeon_saves_surface_zone():
 	var snap := SaveManager.read_snapshot()
 	assert_eq(String(snap.get("zone", "")), surface,
 		"sparfilen ska bära ytzonen — aldrig den efemära dungeonzonen")
+
+# ── Spara vid avslut (fönsterkryss/Alt+F4) ────────────────────────────────────
+
+func test_quit_saves_menu_session():
+	var g: Node3D = Game3DScene.instantiate()
+	add_child_autofree(g)
+	World.use_3d = true
+	SaveManager._notification(Node.NOTIFICATION_WM_CLOSE_REQUEST)
+	assert_true(FileAccess.file_exists(TEST_SAVE),
+		"avslut mitt i en menystartad session ska spara")
+
+func test_quit_skips_dev_runs():
+	var g: Node3D = Game3DScene.instantiate()
+	add_child_autofree(g)
+	World.use_3d = false
+	SaveManager._notification(Node.NOTIFICATION_WM_CLOSE_REQUEST)
+	assert_false(FileAccess.file_exists(TEST_SAVE),
+		"avslut av F6-dev/tester får inte skriva sparfilen")
+
+# ── Zon-fade (samma övergång som 2D-HUD:ens transition) ───────────────────────
+
+func test_transition_runs_rebuild_and_fades_back():
+	var g: Node3D = Game3DScene.instantiate()
+	add_child_autofree(g)
+	var ran := [false]
+	g.hud.transition(func(): ran[0] = true)
+	assert_false(ran[0], "om-byggnaden ska vänta tills faden nått svart")
+	await wait_seconds(0.6)
+	assert_true(ran[0], "om-byggnaden ska ha körts bakom faden")
+	assert_almost_eq(g.hud._fade_rect.color.a, 0.0, 0.05,
+		"faden ska tona tillbaka in efteråt")
+
+func test_fade_rect_topmost_and_click_transparent():
+	var g: Node3D = Game3DScene.instantiate()
+	add_child_autofree(g)
+	var fr: ColorRect = g.hud._fade_rect
+	assert_eq(g.hud.get_child(g.hud.get_child_count() - 1), fr,
+		"fade-overlayen ska ligga sist och ritas överst")
+	assert_eq(fr.mouse_filter, Control.MOUSE_FILTER_IGNORE,
+		"faden får aldrig äta klick")

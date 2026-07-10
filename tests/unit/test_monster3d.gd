@@ -107,7 +107,7 @@ func test_game3d_portal_step_changes_zone():
 	assert_ne(portal_tile, Vector2i(-1, -1), "startzonen ska ha en olåst portal")
 	var dest := String(g.model.portals[portal_tile])
 	g._on_player_step_completed(portal_tile)
-	await wait_frames(3)   # load_zone är call_deferred
+	await wait_seconds(0.4)   # load_zone kör bakom zon-faden (0,18 s in)
 	assert_eq(g.model.zone_id, dest, "modellen ska bytas till destinationszonen")
 	assert_eq(GameState.current_zone, dest, "zonbytet ska bokföras i GameState")
 	assert_eq(g.player.sim.zone, g.model, "spelarsimmen ska peka på nya modellen")

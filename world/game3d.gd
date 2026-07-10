@@ -135,7 +135,8 @@ func _apply_model(data: Dictionary, zone_id: String, at_tile := Vector2i(-1, -1)
 # ── Portalsteg (samma regler som player.gd:s _check_portal) ───────────────────
 func _on_player_step_completed(t: Vector2i) -> void:
 	if model.dungeon_entrances.has(t):
-		enter_dungeon.call_deferred(String(model.dungeon_entrances[t]))
+		# Faden defererar om-byggnaden (tween-callback) — som 2D:s change_zone.
+		hud.transition(enter_dungeon.bind(String(model.dungeon_entrances[t])))
 		return
 	if not model.portals.has(t):
 		return
@@ -150,7 +151,7 @@ func _on_player_step_completed(t: Vector2i) -> void:
 	if GameState.current_zone.begins_with("dungeon:") and dest == World.last_surface_zone:
 		dest_tile = World.last_surface_tile
 	_save_session()   # spara vid zonbyte (som world.change_zone)
-	load_zone.call_deferred(dest, dest_tile)
+	hud.transition(load_zone.bind(dest, dest_tile))
 
 # ── Tangenter: kraftslag (F) och hälsodryck — samma actions som 2D. ──────────
 # Panel-toggles (I/K/B/J/P/C) ägs av HUD-bryggan (Hud3D).
@@ -441,7 +442,7 @@ func _on_player_died() -> void:
 	World.drop_death_loot()
 	await get_tree().create_timer(1.5).timeout
 	GameState.respawn()
-	load_zone(GameState.current_zone, GameState.player_tile)
+	hud.transition(load_zone.bind(GameState.current_zone, GameState.player_tile))
 
 # ── Kamera, ljus, HUD ─────────────────────────────────────────────────────────
 ## 3/4-kamera som barn av spelaren → följer med utan egen following-kod och
