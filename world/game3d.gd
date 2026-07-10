@@ -60,6 +60,7 @@ func _ready() -> void:
 	ArenaSystem.wave_started.connect(_on_arena_wave_started)
 	ArenaSystem.arena_won.connect(_on_arena_won)
 	ArenaSystem.arena_failed.connect(_on_arena_failed)
+	World.item_dropped.connect(_on_item_dropped)
 	load_zone(START_ZONE)
 
 ## Autoloads överlever scenen — lämna ingen monsterkälla mot en fri-ad nod.
@@ -328,6 +329,12 @@ func _spawn_loot3d(drops: Array, t: Vector2i) -> GroundItem3D:
 func _on_monster_dropped(drops: Array, msim: MonsterSim) -> void:
 	if not drops.is_empty() and _npcs_root != null:
 		_spawn_loot3d(drops, msim.tile)
+
+## Ryggsäcks-drag till marken: World.drop_item har bokfört och signalerar —
+## 3D-vyn lägger påsen på spelar-tilen (2D-vyn spawnade redan om dess zon lever).
+func _on_item_dropped(drops: Array, t: Vector2i) -> void:
+	if World.current_zone == null and _npcs_root != null:
+		_spawn_loot3d(drops, t)
 
 ## Återskapar gravens lootpåse om spelaren är i grav-zonen (som world.gd:s
 ## _spawn_grave_if_here). Persistent: blinkar inte, rensar graven vid pickup.

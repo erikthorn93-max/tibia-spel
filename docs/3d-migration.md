@@ -263,9 +263,7 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       graven persisteras i GameState som förut och 3D-zonladdning återskapar
       den persistenta grav-påsen i grav-zonen. Minimapens loot-källa
       inkopplad via `attach_minimap` (gula prickar + gravsten fungerar i
-      3D). 12 nya tester i test_loot3d.gd. OBS: drag-ut-ur-ryggsäcken
-      (world_drop_zone → World.drop_item) är fortfarande 2D-bunden — tas
-      om ryggsäcks-drag behövs i 3D.
+      3D). 12 nya tester i test_loot3d.gd.
 - [x] Arenan i 3D (2026-07-09): game3d spawnar arenavågorna som Monster3D
       (samma spawnregler som world.gd — lediga rutor minst 2 steg från
       spelaren, elite-rullen ingår, ingen respawn); world.gd:s handler är
@@ -335,6 +333,15 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       faktiskt behövs (ingen kod refererade den). Källan finns kvar i
       gitignorerade `_meshy_cache`. Fler monster-/NPC-modeller decimeras
       vid behov med `tools/decimate_glb.py`.
+
+- [x] Ryggsäcks-drag till marken i 3D (2026-07-10): `World.drop_item` är nu
+      renderer-agnostisk bokföring + `item_dropped`-signal — 2D-påsen spawnas
+      bara när 2D-zonen lever, game3d prenumererar och lägger en GroundItem3D
+      på spelar-tilen (samma spegel-gating som arenavågorna). Hud3D bär
+      2D:ns world_drop_zone oförändrad (först bland barnen, bakom panelerna),
+      så drag ur ryggsäck och utrustning (unequip → drop) fungerar som i 2D,
+      inklusive "Du tappade …"-beskedet via HUD-bryggan. 6 nya tester i
+      test_drop3d.gd.
 
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1

@@ -33,6 +33,9 @@ var _arena_lbl: Label
 func _ready() -> void:
 	World.hud = self
 	World.world_message.connect(show_message)
+	# Drop-zonen först (bakom panelerna): items dragna ur ryggsäck/utrustning
+	# hamnar på marken vid spelaren — samma world_drop_zone som 2D-HUD:en.
+	add_child(preload("res://ui/world_drop_zone.gd").new())
 	inv_panel = preload("res://ui/inventory_panel.gd").new()
 	add_child(inv_panel)
 	skill_panel = preload("res://ui/skill_panel.gd").new()

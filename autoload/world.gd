@@ -4,6 +4,11 @@ extends Node
 ## Meddelanden till spelaren — HUD:en prenumererar (World rör inte UI direkt).
 signal world_message(text: String)
 
+## Ryggsäcks-drag till marken (world_drop_zone): bokfört och redo att spawnas.
+## 2D-vyn spawnar påsen direkt i drop_item (gated på 2D-zonen); 3D-vyn
+## prenumererar här — samma spegel-gating som arenavågorna.
+signal item_dropped(drops: Array, tile: Vector2i)
+
 const ZoneScript = preload("res://world/zone.gd")
 const PlayerScene = preload("res://entities/player/player.tscn")
 const DungeonGen = preload("res://world/dungeon_generator.gd")
@@ -183,14 +188,16 @@ func _spawn_world_objects() -> void:
 			npc.setup(id, Vector2i(int(nd["position"][0]), int(nd["position"][1])))
 			current_zone.add_child(npc)   # setup FÖRE add_child — _ready läser npc_id
 
-## Tappar ett item på marken vid spelarens nuvarande tile.
+## Tappar ett item på marken vid spelarens nuvarande tile. Bokföringen är
+## renderer-agnostisk; bara 2D-påsen spawnas här (3D-vyn tar item_dropped).
 func drop_item(item_id: String, qty: int = 1) -> void:
-	if current_zone == null:
-		return
-	var gi = preload("res://entities/ground_item.gd").new()
-	current_zone.add_child(gi)
-	gi.setup([{"item": item_id, "qty": qty}], GameState.player_tile)
+	var drops: Array = [{"item": item_id, "qty": qty}]
+	if current_zone != null:
+		var gi = preload("res://entities/ground_item.gd").new()
+		current_zone.add_child(gi)
+		gi.setup(drops, GameState.player_tile)
 	GameState.remove_item(item_id, qty)
+	item_dropped.emit(drops, GameState.player_tile)
 
 ## Tappar döds-loot + placerar gravsten när spelaren dör.
 ## Andelen styrs av death_drop_fraction() (ryggsäck + välsignelser minskar den).
