@@ -163,6 +163,7 @@ static func _center(r: Rect2i) -> Vector2:
 	return Vector2(r.position) + Vector2(r.size) / 2.0
 
 static func _center_i(r: Rect2i) -> Vector2i:
+	@warning_ignore("integer_division")
 	return r.position + r.size / 2
 
 static func _carve_corridor(grid: Array, from: Vector2i, to: Vector2i, floor_ch: String, rng: RandomNumberGenerator) -> void:

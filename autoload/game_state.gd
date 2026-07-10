@@ -278,6 +278,7 @@ func buy_blessings(cost_each: int) -> int:
 	var missing := MAX_BLESSINGS - blessings
 	if missing <= 0:
 		return 0
+	@warning_ignore("integer_division")
 	var affordable := (gold / cost_each) if cost_each > 0 else missing
 	var n := mini(missing, affordable)
 	if n <= 0:
@@ -389,10 +390,12 @@ func _tick_regen(delta: float) -> void:
 
 ## HP som regenereras per intervall — skalar med constitution + regen-gear.
 func hp_regen_amount() -> int:
+	@warning_ignore("integer_division")
 	return 1 + effective_skill_level("constitution") / 15 + total_regen()
 
 ## Mana som regenereras per intervall — skalar med magic-skill.
 func mp_regen_amount() -> int:
+	@warning_ignore("integer_division")
 	return 1 + effective_skill_level("magic") / 8
 
 ## Lägg till mättnadssekunder (från mat). Clampas på MAX_SATIATION.

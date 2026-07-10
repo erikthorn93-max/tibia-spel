@@ -381,6 +381,7 @@ func _fmt_eta(xp_left: int, rate_per_h: float) -> String:
 		return "< 1 min"
 	if total_min < 60:
 		return "~%d min" % total_min
+	@warning_ignore("integer_division")
 	var h := total_min / 60
 	var m := total_min % 60
 	return "~%d h %d min" % [h, m] if m > 0 else "~%d h" % h

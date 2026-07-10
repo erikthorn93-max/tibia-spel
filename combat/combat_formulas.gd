@@ -37,6 +37,7 @@ static func monster_evasion(speed: float) -> int:
 
 ## Spelarens undvikande: agility väger tyngst, sköldvana bidrar lite.
 static func player_evasion(agility: int, shielding: int) -> int:
+	@warning_ignore("integer_division")
 	return agility + shielding / 2
 
 ## Monstrets träffvärde härlett ur dess attack (hårdare fiender träffar säkrare).
@@ -44,13 +45,13 @@ static func monster_accuracy(atk: int) -> int:
 	return 12 + atk
 
 ## Träffchans (0–1) givet accuracy mot evasion, klamrad mellan golv och tak.
-## `floor` låter försvarssidan ha ett högre golv (monster missar mer sällan).
-static func hit_chance(acc: int, eva: int, floor := HIT_FLOOR) -> float:
-	return clampf(HIT_BASE + (acc - eva) * HIT_PER_DIFF, floor, HIT_CEIL)
+## `chance_floor` låter försvarssidan ha ett högre golv (monster missar mer sällan).
+static func hit_chance(acc: int, eva: int, chance_floor := HIT_FLOOR) -> float:
+	return clampf(HIT_BASE + (acc - eva) * HIT_PER_DIFF, chance_floor, HIT_CEIL)
 
 ## Slår om ett slag träffar.
-static func roll_hit(acc: int, eva: int, floor := HIT_FLOOR) -> bool:
-	return randf() < hit_chance(acc, eva, floor)
+static func roll_hit(acc: int, eva: int, chance_floor := HIT_FLOOR) -> bool:
+	return randf() < hit_chance(acc, eva, chance_floor)
 
 static func max_melee(level: int, skill: int, weapon_atk: int) -> int:
 	return maxi(int(weapon_atk * (skill + 4) / 28.0 + level / 10.0), 1)
@@ -62,6 +63,7 @@ static func roll_monster(monster_atk: int) -> int:
 	return randi_range(0, monster_atk)
 
 static func mitigate(raw_dmg: int, shielding: int, armor: int) -> int:
+	@warning_ignore("integer_division")
 	var reduction := randi_range(armor / 2, armor) + shielding / 3
 	return maxi(raw_dmg - reduction, 0)
 

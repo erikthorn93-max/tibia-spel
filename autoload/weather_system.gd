@@ -4,8 +4,6 @@ extends Node
 ## (dimma/snö) har fast väder och berörs inte. Övergångsregeln ligger i
 ## ui/weather.gd (Weather.next_ambient) så den är testbar.
 
-const Weather = preload("res://ui/weather.gd")
-
 signal weather_changed(type: String)
 
 ## Aktuellt omgivningsväder ("clear" eller "rain").

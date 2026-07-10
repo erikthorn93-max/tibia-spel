@@ -7,7 +7,6 @@ extends Node2D
 
 const TILE := 32
 const DungeonGen = preload("res://world/dungeon_generator.gd")
-const Weather = preload("res://ui/weather.gd")
 const Lighting = preload("res://world/lighting.gd")
 
 var model: ZoneModel
@@ -57,6 +56,7 @@ var entrance_points: Dictionary:
 	get: return model.entrance_points
 var stair_points: Dictionary:
 	get: return model.stair_points
+@warning_ignore("unused_private_class_variable")
 var _walkable: Dictionary:   # minimap itererar denna
 	get: return model._walkable
 

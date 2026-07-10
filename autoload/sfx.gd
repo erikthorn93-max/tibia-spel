@@ -46,13 +46,13 @@ static func synth(freqs: Array, note_dur: float, vol := 0.3) -> PackedVector2Arr
 ## Syntar en åskknall: lågt rullande muller (brus filtrerat mot djupa frekvenser)
 ## med långsam attack och lång avklingning. Statisk & seedstyrd → testbar utan
 ## ljuduppspelning och identisk varje gång för ett givet `seed`.
-static func synth_thunder(seed: int, dur := 1.4, vol := 0.35) -> PackedVector2Array:
+static func synth_thunder(rng_seed: int, dur := 1.4, vol := 0.35) -> PackedVector2Array:
 	var out := PackedVector2Array()
 	var n := int(dur * MIX_RATE)
 	if n <= 0:
 		return out
 	var rng := RandomNumberGenerator.new()
-	rng.seed = seed
+	rng.seed = rng_seed
 	var lp := 0.0   # enkel lågpass → mörkt muller istället för vasst brus
 	for i in range(n):
 		var f := float(i) / float(n)

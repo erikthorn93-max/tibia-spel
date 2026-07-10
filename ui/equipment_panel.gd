@@ -128,12 +128,12 @@ func _make_slot(slot: String) -> PanelContainer:
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_icons[slot] = icon
 
-	var wrap := Control.new()        # håller ikon + tom-silhuett ovanpå varandra
-	wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	wrap.add_child(empty_icon)
-	wrap.add_child(icon)
+	var stack := Control.new()       # håller ikon + tom-silhuett ovanpå varandra
+	stack.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	stack.add_child(empty_icon)
+	stack.add_child(icon)
 	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	cell.add_child(wrap)
+	cell.add_child(stack)
 
 	var _slot := slot
 	# Hover → tooltip för utrustat item

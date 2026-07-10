@@ -201,8 +201,8 @@ func _make_scatter(file: String, group: Dictionary) -> void:
 				s *= 0.85 + 0.3 * float(hh % 31) / 31.0
 				pos.x += (float(hh % 7) / 7.0 - 0.5) * 0.3
 				pos.z += (float(hh % 13) / 13.0 - 0.5) * 0.3
-			var basis := Basis(Vector3.UP, rot).scaled(Vector3.ONE * s)
-			mm.set_instance_transform(i, Transform3D(basis, pos) * part["xform"])
+			var xb := Basis(Vector3.UP, rot).scaled(Vector3.ONE * s)
+			mm.set_instance_transform(i, Transform3D(xb, pos) * part["xform"])
 		var inst := MultiMeshInstance3D.new()
 		inst.multimesh = mm
 		inst.name = "Scatter_%s_%d" % [file, pi]

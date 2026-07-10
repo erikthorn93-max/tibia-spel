@@ -46,7 +46,6 @@ func _init() -> void:
 
 @onready var visual: CharacterVisual = $CharacterVisual
 
-const Atmosphere = preload("res://ui/atmosphere.gd")
 const Lighting = preload("res://world/lighting.gd")
 
 var _light: PointLight2D = null   # spelarens eget sken (starkare med fackla)

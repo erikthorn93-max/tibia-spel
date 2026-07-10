@@ -72,6 +72,7 @@ func _on_spell_cast(id: String, _result: Dictionary) -> void:
 func _default_pos(i: int) -> Vector2:
 	var vp := get_viewport().get_visible_rect().size
 	var col := i % 10
+	@warning_ignore("integer_division")
 	var row := i / 10
 	return Vector2(80.0 + col * (SLOT_W + 2.0), vp.y - 130.0 + row * (SLOT_H + 2.0))
 

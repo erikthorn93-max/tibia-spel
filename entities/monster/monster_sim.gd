@@ -10,6 +10,9 @@ extends RefCounted
 ## Beroenden: rena autoloads (MonsterDB, GameState, CharmSystem,
 ## CombatFormulas, TaskSystem, QuestSystem, ArenaSystem).
 
+# Elementreglerna är statiska — anropas via klassen, inte autoload-instansen.
+const CharmRules = preload("res://autoload/charm_system.gd")
+
 signal damaged(amount: int, crit: bool)            # hp redan uppdaterat
 signal charm_damaged(amount: int, element: String) # elementär charm-bonusskada
 signal element_reaction(kind: String)  # "weak" | "resist" | "immune" | "poison_immune"
@@ -29,6 +32,7 @@ var _atk_timer := 0.0
 var hp := 10
 var max_hp := 10
 var atk := 3
+@warning_ignore("shadowed_global_identifier")   # databasfältet heter exp
 var exp := 5
 var aggro_range := 5
 var speed := 3.0
@@ -215,9 +219,9 @@ func take_damage(dmg: float, crit := false, element := "") -> void:
 	var final_dmg := int(dmg)
 	if element != "" and element != "none":
 		var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
-		var modifier := CharmSystem.element_modifier(d, element)
+		var modifier := CharmRules.element_modifier(d, element)
 		if modifier != 1.0:
-			final_dmg = CharmSystem.resisted_damage(int(dmg), modifier)
+			final_dmg = CharmRules.resisted_damage(int(dmg), modifier)
 			if final_dmg <= 0:
 				element_reaction.emit("immune")
 				return
@@ -234,8 +238,8 @@ func take_charm_damage(dmg: float, element: String) -> int:
 	if dead:
 		return 0
 	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
-	var modifier := CharmSystem.element_modifier(d, element)
-	var final_dmg := CharmSystem.resisted_damage(int(dmg), modifier)
+	var modifier := CharmRules.element_modifier(d, element)
+	var final_dmg := CharmRules.resisted_damage(int(dmg), modifier)
 	if final_dmg <= 0:
 		element_reaction.emit("immune")
 		return 0

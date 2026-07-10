@@ -8,8 +8,6 @@ extends Node
 ## Volymerna är medvetet lågt satta — bädden ska anas, inte dominera.
 ## Profil-logiken (profile) är ren och testbar; själva bruset är slump.
 
-const Weather = preload("res://ui/weather.gd")
-const Biome = preload("res://ui/biome.gd")
 
 const MIX_RATE := 22050.0
 const RAMP := 0.6   # hur snabbt gain glider mot målet (per sekund)

@@ -246,16 +246,16 @@ func _draw_mini() -> void:
 		Color(0.45, 0.45, 0.55, 0.70))
 
 func _mini_dot(tile: Vector2i, player_tile: Vector2i,
-			   ox: float, oy: float, col: Color, size: int) -> void:
+			   ox: float, oy: float, col: Color, dot_size: int) -> void:
 	var dx := tile.x - player_tile.x
 	var dy := tile.y - player_tile.y
 	if absi(dx) > MINI_RADIUS or absi(dy) > MINI_RADIUS:
 		return
-	var off := float(MINI_TILE - size) * 0.5
+	var off := float(MINI_TILE - dot_size) * 0.5
 	draw_rect(
 		Rect2(Vector2(ox + (dx + MINI_RADIUS) * MINI_TILE + off,
 					  oy + (dy + MINI_RADIUS) * MINI_TILE + off),
-			  Vector2(size, size)),
+			  Vector2(dot_size, dot_size)),
 		col)
 
 ## Glyf-bricka på minivyn vid en tile (om inom radien).
@@ -289,7 +289,7 @@ func _draw_frame(panel: Rect2) -> void:
 
 ## Kantpilar: för varje portal utanför minivyns radie, en pil vid panelkanten
 ## som pekar mot utgången, med förkortat zonnamn. Gör det lätt att orientera sig.
-func _draw_edge_arrows(panel: Rect2, center: Vector2, pt: Vector2i,
+func _draw_edge_arrows(panel: Rect2, _center: Vector2, pt: Vector2i,
 					   model, font: Font) -> void:
 	var inner := panel.grow(-4.0)
 	var half  := inner.size * 0.5
@@ -483,13 +483,13 @@ func _full_quest_marker(tile: Vector2i, clip: Rect2, ft: int, font: Font, status
 	var col   := COL_QUEST_START if status == "start" else COL_QUEST_ACTIVE
 	var glyph := "!" if status == "start" else "?"
 	var fs    := 14
-	var size  := font.get_string_size(glyph, HORIZONTAL_ALIGNMENT_LEFT, -1, fs)
+	var ts    := font.get_string_size(glyph, HORIZONTAL_ALIGNMENT_LEFT, -1, fs)
 	# Centrera glyfen över tilen men håll den innanför kartytan
-	var gx := clampf(p.x + ft * 0.5 - size.x * 0.5,
-					 clip.position.x + 1.0, clip.position.x + clip.size.x - size.x - 1.0)
+	var gx := clampf(p.x + ft * 0.5 - ts.x * 0.5,
+					 clip.position.x + 1.0, clip.position.x + clip.size.x - ts.x - 1.0)
 	var gy := clampf(p.y - 2.0,
-					 clip.position.y + size.y, clip.position.y + clip.size.y - 2.0)
-	var bg := Rect2(Vector2(gx - 3.0, gy - size.y - 1.0).round(), Vector2(size.x + 6.0, size.y + 5.0).round())
+					 clip.position.y + ts.y, clip.position.y + clip.size.y - 2.0)
+	var bg := Rect2(Vector2(gx - 3.0, gy - ts.y - 1.0).round(), Vector2(ts.x + 6.0, ts.y + 5.0).round())
 	draw_rect(bg, Color(0.04, 0.03, 0.07, 0.88))
 	draw_rect(bg, col, false, 1.0)
 	draw_string(font, Vector2(roundf(gx), roundf(gy)), glyph,
@@ -529,21 +529,21 @@ func _draw_full_portal_label(tile: Vector2i, clip: Rect2, ft: int, font: Font) -
 	if not clip.has_point(p):
 		return
 	var fs     := 10
-	var size   := font.get_string_size(name_str, HORIZONTAL_ALIGNMENT_LEFT, -1, fs)
-	var line_h := size.y + 3.0
+	var ts     := font.get_string_size(name_str, HORIZONTAL_ALIGNMENT_LEFT, -1, fs)
+	var line_h := ts.y + 3.0
 	# Centrera texten över portalpricken men håll den inom kartytan.
-	var tx := clampf(p.x + ft * 0.5 - size.x * 0.5,
-					 clip.position.x + 1.0, clip.position.x + clip.size.x - size.x - 1.0)
+	var tx := clampf(p.x + ft * 0.5 - ts.x * 0.5,
+					 clip.position.x + 1.0, clip.position.x + clip.size.x - ts.x - 1.0)
 	var ty := clampf(p.y - 4.0,
-					 clip.position.y + size.y, clip.position.y + clip.size.y - 2.0)
+					 clip.position.y + ts.y, clip.position.y + clip.size.y - 2.0)
 	# Stapla neråt tills rutan inte krockar med en redan ritad etikett.
-	var bg := _label_bg_rect(tx, ty, size)
+	var bg := _label_bg_rect(tx, ty, ts)
 	var tries := 0
 	while _label_collides(bg) and tries < 8:
 		ty += line_h
-		if ty + size.y > clip.position.y + clip.size.y:
+		if ty + ts.y > clip.position.y + clip.size.y:
 			return   # slut på plats nedåt — hoppa över denna etikett
-		bg = _label_bg_rect(tx, ty, size)
+		bg = _label_bg_rect(tx, ty, ts)
 		tries += 1
 	if _label_collides(bg):
 		return
@@ -555,8 +555,9 @@ func _draw_full_portal_label(tile: Vector2i, clip: Rect2, ft: int, font: Font) -
 		HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Color(0.88, 0.78, 1.0))
 
 ## Bakgrundsruta för en etikett med 2px inre marginal.
-func _label_bg_rect(tx: float, ty: float, size: Vector2) -> Rect2:
-	return Rect2(Vector2(tx - 2.0, ty - size.y), Vector2(size.x + 4.0, size.y + 4.0))
+func _label_bg_rect(tx: float, ty: float, text_size: Vector2) -> Rect2:
+	return Rect2(Vector2(tx - 2.0, ty - text_size.y),
+		Vector2(text_size.x + 4.0, text_size.y + 4.0))
 
 ## True om rutan överlappar någon redan ritad etikett denna frame.
 func _label_collides(r: Rect2) -> bool:

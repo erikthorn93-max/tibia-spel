@@ -172,6 +172,7 @@ static func decor_for(t: Vector2i, terrain: String) -> int:
 	var h := absi((t.x * 374761393) ^ (t.y * 668265263))
 	if h % 100 >= DECOR_DENSITY:
 		return DECOR_NONE
+	@warning_ignore("integer_division")
 	return int(opts[(h / 100) % opts.size()])
 
 static func build_decor() -> TileSet:
