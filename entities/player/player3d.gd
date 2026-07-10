@@ -3,9 +3,10 @@ extends Node3D
 ## 3D-vy för spelaren: samma PlayerSim som 2D-vyn (player.gd) driver
 ## gridrörelsen — den här noden läser bara input-intent, interpolerar
 ## position ur sim.move_progress och vrider visualen efter facing.
-## Ingen spellogik här. Kroppen är GLB-hjälten (generisk människa tills
-## outfitsystemet bryggas till 3D); kapseln finns kvar som fallback om
-## modellen inte är importerad.
+## Ingen spellogik här. Kroppen är GLB-hjälten; kapseln finns kvar som
+## fallback om modellen inte är importerad. Outfiten (garderoben) läses som
+## en färgton i tröjfärgen via en delad additiv material_overlay — GLB:n har
+## en bakad textur utan färgzoner, så per-plagg-färger är inte möjliga.
 
 const MODEL_PATH := "res://assets/models3d/middle_aged_man.glb"
 const MODEL_HEIGHT := 1.7   # modellen är normaliserad till 1,0 m
@@ -18,6 +19,7 @@ var _gather_timer := 0.0
 var _from := Vector3.ZERO
 var _to := Vector3.ZERO
 var _visual: Node3D
+var _outfit_mat: StandardMaterial3D   # delad outfit-tint (skapas EN gång)
 
 ## SpellSystem.resolve_cast läser caster.tile (fx-center för self/area_self).
 var tile: Vector2i:
@@ -35,6 +37,17 @@ func _init() -> void:
 func _ready() -> void:
 	_visual = Node3D.new()
 	add_child(_visual)
+	_build_body()
+	# Outfit-tint: samma idiom som Monster3D:s elite/enrage — EN additiv
+	# overlay över kroppens meshar, bara albedo-färgen ändras vid outfit-byte.
+	_outfit_mat = StandardMaterial3D.new()
+	_outfit_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	_outfit_mat.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+	_apply_overlay(_visual)
+	_apply_outfit()
+	GameState.appearance_changed.connect(_apply_outfit)
+
+func _build_body() -> void:
 	if ResourceLoader.exists(MODEL_PATH):
 		var inst: Node3D = (load(MODEL_PATH) as PackedScene).instantiate()
 		inst.scale = Vector3.ONE * MODEL_HEIGHT
@@ -61,6 +74,24 @@ func _ready() -> void:
 	nose.material_override = nmat
 	nose.position = Vector3(0, 0.9, -0.32)
 	_visual.add_child(nose)
+
+## Sätter den delade outfit-overlayen på alla mesh-instanser i kroppen.
+func _apply_overlay(n: Node) -> void:
+	if n is MeshInstance3D:
+		(n as MeshInstance3D).material_overlay = _outfit_mat
+	for c in n.get_children():
+		_apply_overlay(c)
+
+## Outfitens färgton: standard = svart (osynlig i additiv blend); annars
+## tröjfärgen kraftigt dämpad så GLB:ns egna texturfärger läses igenom.
+func _apply_outfit() -> void:
+	if _outfit_mat == null:
+		return
+	if GameState.outfit_equipped == "standard":
+		_outfit_mat.albedo_color = Color.BLACK
+		return
+	var shirt := Color(String(GameState.appearance.get("shirt", "#ffffff")))
+	_outfit_mat.albedo_color = shirt.darkened(0.7)
 
 ## Teleport (zonladdning/respawn) — nollställer interpolationen.
 func snap_to(t: Vector2i) -> void:

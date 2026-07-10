@@ -15,6 +15,7 @@ var bestiary_panel: PanelContainer
 var spellbook_panel: PanelContainer
 var quest_log: PanelContainer
 var equipment_panel: PanelContainer
+var wardrobe: PanelContainer
 var dialogue_box: PanelContainer
 var shop_panel: PanelContainer
 var bank_panel: PanelContainer
@@ -50,6 +51,8 @@ func _ready() -> void:
 	add_child(quest_log)
 	equipment_panel = preload("res://ui/equipment_panel.gd").new()
 	add_child(equipment_panel)
+	wardrobe = preload("res://ui/wardrobe.gd").new()
+	add_child(wardrobe)
 	dialogue_box = preload("res://ui/dialogue_box.gd").new()
 	add_child(dialogue_box)
 	shop_panel = preload("res://ui/shop_panel.gd").new()
@@ -163,6 +166,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		spellbook_panel.toggle()
 	elif event.is_action_pressed("toggle_equipment"):
 		equipment_panel.toggle()
+	elif event.is_action_pressed("toggle_wardrobe"):
+		wardrobe.toggle()
 	elif event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		close_all()
 
@@ -180,6 +185,7 @@ func close_all() -> void:
 	spellbook_panel.visible = false
 	quest_log.visible = false
 	equipment_panel.visible = false
+	wardrobe.visible = false
 	shop_panel.visible = false
 	bank_panel.visible = false
 	task_panel.visible = false

@@ -342,6 +342,15 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       så drag ur ryggsäck och utrustning (unequip → drop) fungerar som i 2D,
       inklusive "Du tappade …"-beskedet via HUD-bryggan. 6 nya tester i
       test_drop3d.gd.
+- [x] Garderoben i 3D (2026-07-10): Hud3D bär 2D:ns wardrobe-panel på samma
+      toggle_wardrobe-action (U) — panelen var den sista som saknades i
+      HUD-bryggan. Player3D visar outfiten som en färgton i tröjfärgen via
+      en delad additiv material_overlay (Monster3D-idiomet: materialet skapas
+      EN gång, outfit-byten ändrar bara albedo; standard = svart = osynlig).
+      Hjälte-GLB:n har en bakad textur utan färgzoner (verifierat med
+      tools/inspect_glb.gd), så per-plagg-färger kräver ommappade modeller —
+      görs bara om outfits blir viktiga visuellt. Live-uppdatering via
+      appearance_changed. 6 nya tester i test_outfit3d.gd.
 
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1
