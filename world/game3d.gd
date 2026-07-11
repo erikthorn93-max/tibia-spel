@@ -171,11 +171,11 @@ func _process(delta: float) -> void:
 	for _i in _ticker.advance(delta):
 		_sim_step(SimTicker.SIM_DT)
 	var a := _ticker.alpha()
-	player.render_interpolate(a)
+	player.render_interpolate(a, delta)
 	if _monsters_root != null:
 		for m in _monsters_root.get_children():
 			if m is Monster3D:
-				m.render_interpolate(a)
+				m.render_interpolate(a, delta)
 
 ## Ett fast sim-steg: spelaren (rörelse/attack/gather) och alla monster-AI:n.
 ## get_children() är en snapshot — monster som spawnas mitt i steget (t.ex.

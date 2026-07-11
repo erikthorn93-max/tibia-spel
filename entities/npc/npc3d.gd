@@ -29,6 +29,9 @@ var tile := Vector2i.ZERO
 
 var _quest_marker: Label3D
 var _model_h := 1.7
+var _body: Node3D                    # kroppen (GLB/låda) — andas i idle
+var _body_base_scale_y := 1.0
+var _breath_t := randf() * TAU       # desynkad start så torget inte andas i takt
 
 func setup(k: String, t: Vector2i, id := "") -> void:
 	kind = k
@@ -86,6 +89,8 @@ func _build_visual() -> void:
 		inst.scale = Vector3.ONE * _model_h
 		inst.rotation.y = PI
 		add_child(inst)
+		_body = inst
+		_body_base_scale_y = _model_h
 		return
 	var body := MeshInstance3D.new()
 	var box := BoxMesh.new()
@@ -97,6 +102,15 @@ func _build_visual() -> void:
 	body.position.y = 0.7
 	add_child(body)
 	_model_h = 1.4
+	_body = body
+
+## Idle-andning (samma kurva som spelare/monster via CharacterMotion3D) —
+## NPC:erna står stilla, så andningen är hela deras karaktärsliv.
+func _process(delta: float) -> void:
+	if _body == null:
+		return
+	_breath_t += delta
+	_body.scale.y = _body_base_scale_y * CharacterMotion3D.breath_scale(_breath_t)
 
 func _make_label(text: String, y: float, color: Color, size: int) -> Label3D:
 	var l := Label3D.new()

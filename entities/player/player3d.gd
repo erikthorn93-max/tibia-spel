@@ -22,6 +22,10 @@ var _to := Vector3.ZERO
 var _intent_latch := Vector2i.ZERO   # fångar korta tryck mellan sim-stegen
 var _prev_pos := Vector3.ZERO        # position vid förra sim-steget
 var _curr_pos := Vector3.ZERO        # position vid senaste sim-steget
+var _prev_bob := 0.0                 # gång-studs vid förra/senaste sim-steget
+var _curr_bob := 0.0
+var _breath_t := 0.0                 # idle-andningens klocka
+var _attacking := false              # attack-stöten pausar livs-animen (som 2D)
 var _visual: Node3D
 var _outfit_mat: StandardMaterial3D   # delad outfit-tint (skapas EN gång)
 
@@ -105,6 +109,8 @@ func snap_to(t: Vector2i) -> void:
 	_to = position
 	_prev_pos = position
 	_curr_pos = position
+	_prev_bob = 0.0
+	_curr_bob = 0.0
 
 ## Per frame: latcha bara input-intenten så korta tangenttryck mellan
 ## sim-stegen inte tappas — simuleringen tickas i fasta steg av game3d
@@ -135,10 +141,22 @@ func sim_tick(dt: float) -> void:
 	_update_gather(dt)
 	_prev_pos = _curr_pos
 	_curr_pos = _from.lerp(_to, sim.move_progress)
+	_prev_bob = _curr_bob
+	_curr_bob = CharacterMotion3D.walk_bob(sim.move_progress)
 
-## Per frame: mjuk position mellan de två senaste sim-stegen (alpha 0..1).
-func render_interpolate(alpha: float) -> void:
+## Per frame: mjuk position mellan de två senaste sim-stegen (alpha 0..1)
+## + karaktärsliv (gång-studs under steg, annars idle-andning).
+func render_interpolate(alpha: float, delta := 0.0) -> void:
 	position = _prev_pos.lerp(_curr_pos, alpha)
+	if _attacking or _visual == null:
+		return   # attack-stötens tween får styra visualen ostört (som 2D)
+	_breath_t += delta
+	if sim.move_progress < 1.0:
+		_visual.position.y = lerpf(_prev_bob, _curr_bob, alpha)
+		_visual.scale.y = 1.0
+	else:
+		_visual.position.y = 0.0
+		_visual.scale.y = CharacterMotion3D.breath_scale(_breath_t)
 
 # ── Gathering (samma regler och besked som player.gd) ─────────────────────────
 ## Gather ersätter strid: siktet nollas och spelaren auto-walkar intill noden.
@@ -194,13 +212,16 @@ func _on_facing_changed(dir: Vector2i) -> void:
 		_visual.rotation.y = atan2(-float(dir.x), -float(dir.y))
 
 ## Sving utförd (träff eller miss): snabb stöt mot slagriktningen.
+## Pausar livs-animen så tweenen får styra visualen ostört (som 2D).
 func _on_attack_swung(dir: Vector2i) -> void:
 	if _visual == null or dir == Vector2i.ZERO:
 		return
 	var lunge := Vector3(dir.x, 0, dir.y).normalized() * 0.22
+	_attacking = true
 	var tw := create_tween()
 	tw.tween_property(_visual, "position", lunge, 0.07).set_ease(Tween.EASE_OUT)
 	tw.tween_property(_visual, "position", Vector3.ZERO, 0.13).set_ease(Tween.EASE_IN_OUT)
+	tw.tween_callback(func(): _attacking = false)
 
 ## Leech-charm läkte: grön "+N" ovanför spelaren (som 2D-vyn).
 func _on_healed(amount: float) -> void:

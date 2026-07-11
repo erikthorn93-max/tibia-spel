@@ -360,6 +360,17 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       autosaven (60 s) täcker nu även 3D. F6-devkörningar av game3d.tscn och
       testsviten har use_3d = false: de bootar slice-startzonen som förut och
       rör ALDRIG spelarens sparfil. 10 nya tester i test_session3d.gd.
+- [x] Procedurellt karaktärsliv i 3D (2026-07-11,
+      `entities/character_motion3d.gd`): CharacterMotion3D — 3D-motsvarigheten
+      till 2D:s CharacterVisual-kurvor: gång-studs under ett steg (noll vid
+      tile-gränserna, topp mitt i — kontinuerlig över carry-over-steg) och
+      subtil idle-andning. GLB-modellerna är origgade rekvisita, så livet är
+      rena transformkurvor applicerade i render_interpolate (spelare/monster,
+      studsen bokförs prev/curr per sim-steg och alpha-interpoleras som
+      positionen) resp. _process (NPC:er — andning är hela deras liv).
+      Attack-stöten pausar livs-animen via _attacking-flaggan (2D-idiomet);
+      monster/NPC:er får desynkad andningsklocka så flocken inte andas i
+      takt. Ingen allokering per frame. 9 nya tester i test_motion3d.gd.
 - [x] Fast simuleringstick i 3D (2026-07-11, `world/sim_ticker.gd`): SimTicker
       (RefCounted) omvandlar frame-tid till hela sim-steg om 50 ms (20 Hz)
       med tak per frame — en fryst frame droppar sim-skulden i stället för

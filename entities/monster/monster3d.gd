@@ -45,6 +45,10 @@ var _from := Vector3.ZERO
 var _to := Vector3.ZERO
 var _prev_pos := Vector3.ZERO   # position vid förra sim-steget
 var _curr_pos := Vector3.ZERO   # position vid senaste sim-steget
+var _prev_bob := 0.0            # gång-studs vid förra/senaste sim-steget
+var _curr_bob := 0.0
+var _breath_t := randf() * TAU  # desynkad start så flocken inte andas i takt
+var _attacking := false         # attack-stöten pausar livs-animen (som 2D)
 var _visual: Node3D
 var _body_root: Node3D             # bär GLB:n/lådan — attack-stöten tweenar denna
 var _tint_mat: StandardMaterial3D  # additiv overlay: träff-blink, elite, enrage
@@ -190,12 +194,24 @@ func sim_tick(dt: float) -> void:
 	sim.ai_tick(dt, pt)
 	_prev_pos = _curr_pos
 	_curr_pos = _from.lerp(_to, sim.move_progress)
+	_prev_bob = _curr_bob
+	_curr_bob = CharacterMotion3D.walk_bob(sim.move_progress)
 
-## Per frame: mjuk position mellan de två senaste sim-stegen (alpha 0..1).
-func render_interpolate(alpha: float) -> void:
+## Per frame: mjuk position mellan de två senaste sim-stegen (alpha 0..1)
+## + karaktärsliv (gång-studs under steg, annars idle-andning).
+func render_interpolate(alpha: float, delta := 0.0) -> void:
 	if sim.dead:
 		return
 	position = _prev_pos.lerp(_curr_pos, alpha)
+	if _attacking or _body_root == null:
+		return   # attack-stötens tween får styra kroppen ostört (som 2D)
+	_breath_t += delta
+	if sim.move_progress < 1.0:
+		_body_root.position.y = lerpf(_prev_bob, _curr_bob, alpha)
+		_body_root.scale.y = 1.0
+	else:
+		_body_root.position.y = 0.0
+		_body_root.scale.y = CharacterMotion3D.breath_scale(_breath_t)
 
 # ── Reaktioner på simuleringens signaler (rent visuellt) ──────────────────────
 func _on_sim_moved(from: Vector2i, to: Vector2i) -> void:
@@ -206,15 +222,18 @@ func _on_sim_moved(from: Vector2i, to: Vector2i) -> void:
 		_visual.rotation.y = atan2(-float(d.x), -float(d.y))
 
 ## Attack-stöt: kroppen lutar sig snabbt mot spelaren och studsar tillbaka.
+## Pausar livs-animen så tweenen får styra kroppen ostört (som 2D).
 func _on_sim_attack_started(dir: Vector2i) -> void:
 	if _body_root == null or dir == Vector2i.ZERO:
 		return
 	var lunge := Vector3(dir.x, 0, dir.y).normalized() * 0.25
+	_attacking = true
 	var tw := create_tween()
 	tw.tween_property(_body_root, "position", lunge, 0.07) \
 		.set_ease(Tween.EASE_OUT)
 	tw.tween_property(_body_root, "position", Vector3.ZERO, 0.13) \
 		.set_ease(Tween.EASE_IN_OUT)
+	tw.tween_callback(func(): _attacking = false)
 
 ## Träff: uppdatera baren + kort vit blink via tint-overlayen (parameter-tween,
 ## ingen materialallokering).
