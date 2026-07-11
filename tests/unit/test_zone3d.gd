@@ -74,7 +74,7 @@ func test_portal_markers_created():
 	var z := _build_view(m)
 	var markers := 0
 	for c in z.get_children():
-		if c is MeshInstance3D:
+		if String(c.name).begins_with("Marker_"):
 			markers += 1
 	var locked_shortcuts := 0
 	for t in m.shortcut_points:
@@ -82,6 +82,73 @@ func test_portal_markers_created():
 			locked_shortcuts += 1
 	var expected: int = m.portals.size() + locked_shortcuts + m.dungeon_entrances.size()
 	assert_eq(markers, expected, "varje portal/genväg/ingång ska få en marker")
+
+# ── Interaktionsmodeller (GLB-markörer) ───────────────────────────────────────
+
+func _marker_model() -> ZoneModel:
+	var m := ZoneModel.new()
+	m.parse({"name": "Markörtest", "tiles": ["....", ".P..", "...."]}, "marker_flat")
+	return m
+
+func test_stair_marker_uses_staircase_model():
+	var m := _marker_model()
+	m.portals[Vector2i(0, 0)] = "town"
+	m.stair_points[Vector2i(0, 0)] = {"to": "town", "up": true}
+	var z := _build_view(m)
+	var marker := z.get_node_or_null("Marker_0_0")
+	assert_not_null(marker, "trappan ska få en markör-nod")
+	var stair_mesh: Mesh = Zone3D._model_meshes("stone_staircase")[0]["mesh"]
+	assert_eq((marker.get_child(0) as MeshInstance3D).mesh, stair_mesh,
+		"trappmarkören ska använda stentrappans GLB-mesh ur den delade cachen")
+
+func test_dungeon_entrance_uses_staircase_model():
+	var m := _marker_model()
+	m.dungeon_entrances[Vector2i(2, 2)] = "grotta"
+	var z := _build_view(m)
+	var marker := z.get_node_or_null("Marker_2_2")
+	assert_not_null(marker, "nedgången ska få en markör-nod")
+	var stair_mesh: Mesh = Zone3D._model_meshes("stone_staircase")[0]["mesh"]
+	assert_eq((marker.get_child(0) as MeshInstance3D).mesh, stair_mesh,
+		"dungeon-nedgången ska använda stentrappans GLB-mesh")
+
+func test_unlocked_portal_gets_sigil_locked_keeps_cube():
+	var m := _marker_model()
+	m.portals[Vector2i(0, 0)] = "town"
+	m.portals[Vector2i(3, 0)] = "town"
+	m.portal_locks[Vector2i(3, 0)] = "__marker_testlock"
+	var z := _build_view(m)
+	var sigil_mesh: Mesh = Zone3D._model_meshes("emerald_sigil")[0]["mesh"]
+	var open_marker := z.get_node("Marker_0_0")
+	assert_eq((open_marker.get_child(0) as MeshInstance3D).mesh, sigil_mesh,
+		"olåst portal ska få smaragdsigillen")
+	assert_not_null((open_marker.get_child(0) as MeshInstance3D).material_overlay,
+		"portalsigillen ska skimra via en additiv overlay")
+	var locked_marker: Node = z.get_node("Marker_3_0")
+	assert_true(locked_marker is MeshInstance3D \
+		and (locked_marker as MeshInstance3D).mesh is BoxMesh,
+		"låst portal ska behålla den dämpade kuben")
+
+func test_portal_unlock_swaps_cube_for_sigil():
+	var m := _marker_model()
+	m.portals[Vector2i(0, 0)] = "town"
+	m.portal_locks[Vector2i(0, 0)] = "__marker_testlock"
+	var z := _build_view(m)
+	assert_true(z._portal_marker_nodes[Vector2i(0, 0)] is MeshInstance3D,
+		"låst portal ska starta som kub")
+	m.portal_locks.erase(Vector2i(0, 0))
+	z._on_portal_unlocked(Vector2i(0, 0))
+	var sigil_mesh: Mesh = Zone3D._model_meshes("emerald_sigil")[0]["mesh"]
+	var marker: Node3D = z._portal_marker_nodes[Vector2i(0, 0)]
+	assert_eq((marker.get_child(0) as MeshInstance3D).mesh, sigil_mesh,
+		"upplåsning ska byta kuben mot sigillen")
+
+func test_model_marker_falls_back_to_cube():
+	var m := _marker_model()
+	var z := _build_view(m)
+	var n := z._add_model_marker(Vector2i(1, 0),
+		{"file": "finns_inte_alls", "h": 1.0}, Color.RED, 0.0)
+	assert_true(n is MeshInstance3D and (n as MeshInstance3D).mesh is BoxMesh,
+		"saknad GLB ska falla tillbaka till kub-markören")
 
 # ── Miljö-scatter (GLB-modeller) ──────────────────────────────────────────────
 

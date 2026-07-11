@@ -360,6 +360,14 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       autosaven (60 s) täcker nu även 3D. F6-devkörningar av game3d.tscn och
       testsviten har use_3d = false: de bootar slice-startzonen som förut och
       rör ALDRIG spelarens sparfil. 10 nya tester i test_session3d.gd.
+- [x] Interaktionsmodeller (2026-07-11, `zone3d.gd`): trappor och dungeon-
+      nedgångar renderas med stone_staircase-GLB:n, olåsta portaler med
+      emerald_sigil + svag additiv skimmer-overlay (Monster3D-idiomet); låsta
+      portaler och genvägar behåller den dämpade kuben ("stängd"). Markörerna
+      bygger på den delade mesh-cachen (_model_meshes — GLB:n instansieras
+      aldrig per marker), deterministisk 90°-vridning per ruta, och faller
+      tillbaka till kuben om modellen saknas. Alla markörer heter Marker_x_y
+      så vyn kan räknas/städas per namn. 5 nya tester i test_zone3d.gd.
 - [x] Procedurellt karaktärsliv i 3D (2026-07-11,
       `entities/character_motion3d.gd`): CharacterMotion3D — 3D-motsvarigheten
       till 2D:s CharacterVisual-kurvor: gång-studs under ett steg (noll vid

@@ -44,6 +44,13 @@ const BIOME_TREES := {
 const CACTUS_SMALL := {"file": "cactus", "h": 0.6}
 const CACTUS_EVERY := 17       # gles ökendekoration — enstaka småkaktusar
 
+## Interaktionsmodeller: riktiga GLB:er där en naturlig modell finns —
+## trappor och dungeon-nedgångar får stentrappan, olåsta portaler smaragd-
+## sigillen. Låsta portaler och genvägar behåller kuben (dämpad = "stängd").
+const STAIR_MARKER := {"file": "stone_staircase", "h": 0.9}
+const ENTRANCE_MARKER := {"file": "stone_staircase", "h": 0.75}
+const PORTAL_MARKER := {"file": "emerald_sigil", "h": 0.9}
+
 static func tree_models_for(biome: String) -> Array:
 	return BIOME_TREES.get(biome, TREE_MODELS)
 
@@ -95,14 +102,14 @@ func build(m: ZoneModel) -> void:
 	_build_scatter()
 	for t in model.portals:
 		if model.stair_points.has(t):
-			_add_marker(t, Color(0.80, 0.74, 0.48), 0.5)   # trappa
+			_add_model_marker(t, STAIR_MARKER, Color(0.80, 0.74, 0.48), 0.0)
 		else:
 			_add_portal_marker(t)
 	for t in model.shortcut_points:
 		if not UnlockSystem.is_unlocked(model.shortcut_points[t]):
 			_shortcut_markers[t] = _add_marker(t, Color(0.8, 0.7, 0.4), 0.4)
 	for t in model.dungeon_entrances:
-		_add_marker(t, Color(0.15, 0.12, 0.2), 0.3)        # mörkt schakt ner
+		_add_model_marker(t, ENTRANCE_MARKER, Color(0.15, 0.12, 0.2), 0.0)
 
 ## Grupperar tiles per terrängtecken och bygger en MultiMesh-batch per grupp.
 func _build_terrain() -> void:
@@ -260,17 +267,52 @@ func _add_marker(t: Vector2i, color: Color, glow: float) -> MeshInstance3D:
 	mat.emission = color
 	mat.emission_energy_multiplier = glow
 	mi.material_override = mat
+	mi.name = "Marker_%d_%d" % [t.x, t.y]
 	mi.position = tile_to_world3(t) + Vector3(0, 0.35, 0)
 	mi.rotation.y = PI / 4.0   # ställd på hörn — läses som "interagera här"
 	add_child(mi)
 	return mi
 
+## Riktig GLB-modell på en interaktionsruta — mesh-delarna ur den delade
+## cachen (ingen instansiering per marker), deterministisk 90°-vridning per
+## ruta. Faller tillbaka till kub-markern om modellen saknas. glow > 0 ger
+## en svag additiv overlay i signaturfärgen (Monster3D-idiomet) så rutan
+## läses som magisk/interaktiv även i skymning.
+func _add_model_marker(t: Vector2i, spec: Dictionary, color: Color, glow: float) -> Node3D:
+	var parts := _model_meshes(String(spec["file"]))
+	if parts.is_empty():
+		return _add_marker(t, color, maxf(glow, 0.3))
+	var root := Node3D.new()
+	root.name = "Marker_%d_%d" % [t.x, t.y]
+	root.position = tile_to_world3(t)
+	var xb := Basis(Vector3.UP, (PI / 2.0) * float(_tile_hash(t) % 4)) \
+		.scaled(Vector3.ONE * float(spec["h"]))
+	var overlay: StandardMaterial3D = null
+	if glow > 0.0:
+		overlay = StandardMaterial3D.new()
+		overlay.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		overlay.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+		overlay.albedo_color = color * glow
+	for part: Dictionary in parts:
+		var mi := MeshInstance3D.new()
+		mi.mesh = part["mesh"]
+		mi.transform = Transform3D(xb, Vector3.ZERO) * part["xform"]
+		if overlay != null:
+			mi.material_overlay = overlay
+		root.add_child(mi)
+	add_child(root)
+	return root
+
 func _add_portal_marker(t: Vector2i) -> void:
 	if _portal_marker_nodes.has(t):
-		_portal_marker_nodes[t].queue_free()
-	var locked: bool = model.portal_locks.has(t)
-	var color := Color(0.45, 0.45, 0.5) if locked else Color(0.62, 0.38, 0.9)
-	_portal_marker_nodes[t] = _add_marker(t, color, 0.0 if locked else 1.2)
+		var old: Node3D = _portal_marker_nodes[t]
+		old.name = "MarkerDying"   # frigör namnet åt ersättaren
+		old.queue_free()
+	if model.portal_locks.has(t):
+		_portal_marker_nodes[t] = _add_marker(t, Color(0.45, 0.45, 0.5), 0.0)
+	else:
+		_portal_marker_nodes[t] = _add_model_marker(t, PORTAL_MARKER,
+			Color(0.62, 0.38, 0.9), 0.5)
 
 # ── Reaktioner på modellens signaler (samma kontrakt som 2D-vyn) ──────────────
 func _on_tile_opened(_t: Vector2i, _terrain_ch: String) -> void:
