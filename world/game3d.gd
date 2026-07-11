@@ -44,6 +44,7 @@ func _ready() -> void:
 	player.sim.step_completed.connect(_on_player_step_completed)
 	player.sim.spec_flash.connect(_on_spec_flash)
 	GameState.player_died.connect(_on_player_died)
+	GameState.player_respawned.connect(_on_player_respawned)
 	_setup_camera()
 	_setup_light()
 	_ambient = AmbientParticles3D.new()
@@ -458,13 +459,16 @@ func _on_arena_failed(_at_wave: int) -> void:
 	_show_msg("Du lämnade sanden. Arenan glömmer dig.")
 
 # ── Spelardöd (Tibia-återkomst: hemzon, full HP, XP-straff, gravsten) ─────────
+## Dödsskärmen (i HUD-bryggan) visar sig själv via player_died och äger
+## respawn-knappen — här bokförs bara döds-droppen på dödstilen.
+## (World._on_player_died är gated på 2D-zonen — bokföringen delas.)
 func _on_player_died() -> void:
-	_show_msg("Du är död.")
-	# Döds-droppen bokförs på dödstilen INNAN respawn flyttar spelaren.
-	# (World._on_player_died är gated på 2D-zonen — bokföringen delas.)
 	World.drop_death_loot()
-	await get_tree().create_timer(1.5).timeout
-	GameState.respawn()
+
+## Dödsskärmens knapp körde GameState.respawn() — bygg om hemzonen bakom
+## faden. (2D:s motsvarighet är World._on_player_respawned, som är gated på
+## game_root och därför tyst i 3D-sessioner.)
+func _on_player_respawned() -> void:
 	hud.transition(load_zone.bind(GameState.current_zone, GameState.player_tile))
 
 # ── Kamera, ljus, HUD ─────────────────────────────────────────────────────────

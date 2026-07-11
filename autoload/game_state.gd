@@ -193,6 +193,11 @@ func gain_skill_xp(skill: String, amount: int) -> void:
 	skill_changed.emit(skill)
 
 func take_damage(dmg: float, dmg_type: String = "physical") -> void:
+	# Redan död: liket tar inte mer stryk. Utan vakten re-emittas player_died
+	# för varje slag mot liket — dubbla döds-flöden, och det andra
+	# drop_death_loot-anropet ser tomt inventory och raderar graven.
+	if health <= 0.0:
+		return
 	# Defensiv charm kan mildra eller helt undvika slaget innan det landar.
 	var d := CharmSystem.roll_defense(dmg)
 	if d.get("triggered", false):

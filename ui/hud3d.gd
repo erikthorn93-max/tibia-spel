@@ -38,6 +38,9 @@ func _ready() -> void:
 	# Drop-zonen först (bakom panelerna): items dragna ur ryggsäck/utrustning
 	# hamnar på marken vid spelaren — samma world_drop_zone som 2D-HUD:en.
 	add_child(preload("res://ui/world_drop_zone.gd").new())
+	# Dödsskärmen (egen CanvasLayer, lager 10 — ovanpå allt): samma överlägg
+	# och "Återuppstå"-knapp som 2D; game3d bygger om zonen vid respawn.
+	add_child(preload("res://ui/death_screen.gd").new())
 	inv_panel = preload("res://ui/inventory_panel.gd").new()
 	add_child(inv_panel)
 	skill_panel = preload("res://ui/skill_panel.gd").new()

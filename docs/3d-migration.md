@@ -360,6 +360,14 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       autosaven (60 s) täcker nu även 3D. F6-devkörningar av game3d.tscn och
       testsviten har use_3d = false: de bootar slice-startzonen som förut och
       rör ALDRIG spelarens sparfil. 10 nya tester i test_session3d.gd.
+- [x] Dödsskärm i 3D + dödsvakt (2026-07-11): Hud3D bär 2D:ns dödsskärm
+      (player_died → överlägg med "Återuppstå"-knappen); game3d auto-respawnar
+      inte längre utan svarar på player_respawned med zonombyggnad bakom
+      faden — samma UX som 2D. Buggfix i GameState.take_damage: dödsvakt så
+      liket inte tar mer stryk — utan den re-emittades player_died per slag
+      mot liket och det andra drop_death_loot-anropet såg tomt inventory och
+      raderade graven (latent i BÅDA renderarna, mest trolig i 2D där
+      spelaren själv väljer när respawn sker). 5 nya tester i test_death3d.gd.
 - [x] Interaktionsmodeller (2026-07-11, `zone3d.gd`): trappor och dungeon-
       nedgångar renderas med stone_staircase-GLB:n, olåsta portaler med
       emerald_sigil + svag additiv skimmer-overlay (Monster3D-idiomet); låsta
