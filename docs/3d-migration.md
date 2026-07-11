@@ -360,6 +360,19 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       autosaven (60 s) täcker nu även 3D. F6-devkörningar av game3d.tscn och
       testsviten har use_3d = false: de bootar slice-startzonen som förut och
       rör ALDRIG spelarens sparfil. 10 nya tester i test_session3d.gd.
+- [x] Fast simuleringstick i 3D (2026-07-11, `world/sim_ticker.gd`): SimTicker
+      (RefCounted) omvandlar frame-tid till hela sim-steg om 50 ms (20 Hz)
+      med tak per frame — en fryst frame droppar sim-skulden i stället för
+      att jagas ikapp i en dödsspiral. game3d tickar PlayerSim/MonsterSim
+      centralt i stället för per vy-`_process`: GDScript-kostnaden för
+      AI/strid följer tick-frekvensen i stället för bildfrekvensen, och
+      simuleringen beter sig lika vid 30 som 240 FPS. Vyerna bokför
+      prev/curr-position per sim-steg och renderas med alpha-interpolation
+      mellan de två senaste stegen (klassisk fixed timestep + render-
+      interpolation) — mjuk rörelse till priset av ett sim-stegs latens.
+      Input-intent latchas per frame så korta tangenttryck mellan stegen
+      inte tappas. Sista prestandakravet från godot_rpg-lärdomarna är därmed
+      på plats. 9 nya tester i test_sim_tick3d.gd; 2D-vyerna oförändrade.
 - [x] Zon-fade + spara vid avslut (2026-07-10): Hud3D fick 2D-HUD:ens
       transition (tona till svart → bygg om → tona in); game3d:s zonbyten
       (portal, dungeon-nedgång, dödsrespawn) kör bakom faden i stället för

@@ -221,12 +221,14 @@ func test_player3d_interpolates_between_tiles():
 	var dir := _first_walkable_dir(m, m.player_start)
 	assert_ne(dir, Vector2i.ZERO, "player_start ska ha en gångbar granne")
 	p.sim.step(dir)
-	p._process(0.0)
+	p.sim_tick(0.0)
+	p.render_interpolate(1.0)   # alpha 1 = senaste sim-steget
 	assert_eq(p.position, Zone3D.tile_to_world3(m.player_start),
 		"vid move_progress 0 ska vyn stå kvar på från-rutan")
 	# En kvarts sekund vid grundfart 4 tiles/s = halvvägs in i steget.
 	var expected_progress: float = 0.125 * p.sim.move_speed
-	p._process(0.125)
+	p.sim_tick(0.125)
+	p.render_interpolate(1.0)
 	var from := Zone3D.tile_to_world3(m.player_start)
 	var to := Zone3D.tile_to_world3(m.player_start + dir)
 	assert_almost_eq(p.position.x, lerpf(from.x, to.x, expected_progress), 0.001)

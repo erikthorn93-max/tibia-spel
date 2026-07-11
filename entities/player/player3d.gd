@@ -1,8 +1,9 @@
 class_name Player3D
 extends Node3D
 ## 3D-vy för spelaren: samma PlayerSim som 2D-vyn (player.gd) driver
-## gridrörelsen — den här noden läser bara input-intent, interpolerar
-## position ur sim.move_progress och vrider visualen efter facing.
+## gridrörelsen — den här noden läser bara input-intent och vrider visualen
+## efter facing. Simuleringen tickas i fasta steg av game3d (sim_tick);
+## renderingen interpolerar mellan de två senaste stegen (render_interpolate).
 ## Ingen spellogik här. Kroppen är GLB-hjälten; kapseln finns kvar som
 ## fallback om modellen inte är importerad. Outfiten (garderoben) läses som
 ## en färgton i tröjfärgen via en delad additiv material_overlay — GLB:n har
@@ -18,6 +19,9 @@ var gather_target: GatherNode3D = null
 var _gather_timer := 0.0
 var _from := Vector3.ZERO
 var _to := Vector3.ZERO
+var _intent_latch := Vector2i.ZERO   # fångar korta tryck mellan sim-stegen
+var _prev_pos := Vector3.ZERO        # position vid förra sim-steget
+var _curr_pos := Vector3.ZERO        # position vid senaste sim-steget
 var _visual: Node3D
 var _outfit_mat: StandardMaterial3D   # delad outfit-tint (skapas EN gång)
 
@@ -99,19 +103,42 @@ func snap_to(t: Vector2i) -> void:
 	position = Zone3D.tile_to_world3(t)
 	_from = position
 	_to = position
+	_prev_pos = position
+	_curr_pos = position
 
-func _process(delta: float) -> void:
-	var intent := Vector2i.ZERO
-	if Input.is_action_pressed("move_up"): intent = Vector2i.UP
-	elif Input.is_action_pressed("move_down"): intent = Vector2i.DOWN
-	elif Input.is_action_pressed("move_left"): intent = Vector2i.LEFT
-	elif Input.is_action_pressed("move_right"): intent = Vector2i.RIGHT
+## Per frame: latcha bara input-intenten så korta tangenttryck mellan
+## sim-stegen inte tappas — simuleringen tickas i fasta steg av game3d
+## via sim_tick() (prestandakravet "fast tick frikopplad från renderingen").
+func _process(_delta: float) -> void:
+	var intent := _read_intent()
+	if intent != Vector2i.ZERO:
+		_intent_latch = intent
+
+func _read_intent() -> Vector2i:
+	if Input.is_action_pressed("move_up"): return Vector2i.UP
+	if Input.is_action_pressed("move_down"): return Vector2i.DOWN
+	if Input.is_action_pressed("move_left"): return Vector2i.LEFT
+	if Input.is_action_pressed("move_right"): return Vector2i.RIGHT
+	return Vector2i.ZERO
+
+## Ett fast simuleringssteg (anropas av game3d i SimTicker-takt): rörelse,
+## auto-attack och gather. Bokför prev/curr-position för renderingen.
+func sim_tick(dt: float) -> void:
+	var intent := _read_intent()
+	if intent == Vector2i.ZERO:
+		intent = _intent_latch
+	_intent_latch = Vector2i.ZERO
 	if intent != Vector2i.ZERO:
 		gather_target = null     # manuell rörelse avbryter gather (som 2D)
-	sim.advance(delta, intent)
-	sim.attack_tick(delta)
-	_update_gather(delta)
-	position = _from.lerp(_to, sim.move_progress)
+	sim.advance(dt, intent)
+	sim.attack_tick(dt)
+	_update_gather(dt)
+	_prev_pos = _curr_pos
+	_curr_pos = _from.lerp(_to, sim.move_progress)
+
+## Per frame: mjuk position mellan de två senaste sim-stegen (alpha 0..1).
+func render_interpolate(alpha: float) -> void:
+	position = _prev_pos.lerp(_curr_pos, alpha)
 
 # ── Gathering (samma regler och besked som player.gd) ─────────────────────────
 ## Gather ersätter strid: siktet nollas och spelaren auto-walkar intill noden.

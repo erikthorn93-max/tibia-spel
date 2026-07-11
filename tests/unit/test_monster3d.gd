@@ -55,7 +55,8 @@ func test_chase_step_interpolates_position():
 	assert_lt(m.sim.move_progress, 1.0, "jaktsteget ska ha påbörjats")
 	var expected := minf(m.sim.move_progress + 0.1 * m.sim.speed, 1.0)
 	m.sim.ai_tick(0.1, Vector2i(3, 0))
-	m._process(0.0)   # player_sim=null → AI fryst; bara interpolation körs
+	m.sim_tick(0.0)            # player_sim=null → AI fryst; bokför bara prev/curr
+	m.render_interpolate(1.0)  # alpha 1 = senaste sim-steget
 	var from := Zone3D.tile_to_world3(Vector2i(0, 0))
 	var to := Zone3D.tile_to_world3(Vector2i(1, 0))
 	assert_almost_eq(m.position.x, lerpf(from.x, to.x, expected), 0.001,

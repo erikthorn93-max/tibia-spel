@@ -43,6 +43,8 @@ var fx: FloatingText3D = null      # delad flyttext-pool, sätts av game3d
 
 var _from := Vector3.ZERO
 var _to := Vector3.ZERO
+var _prev_pos := Vector3.ZERO   # position vid förra sim-steget
+var _curr_pos := Vector3.ZERO   # position vid senaste sim-steget
 var _visual: Node3D
 var _body_root: Node3D             # bär GLB:n/lådan — attack-stöten tweenar denna
 var _tint_mat: StandardMaterial3D  # additiv overlay: träff-blink, elite, enrage
@@ -67,6 +69,8 @@ func setup(mname: String, t: Vector2i, model: ZoneModel) -> void:
 	position = Zone3D.tile_to_world3(t)
 	_from = position
 	_to = position
+	_prev_pos = position
+	_curr_pos = position
 	_build_visual()
 
 func make_elite() -> void:
@@ -175,15 +179,23 @@ func set_targeted(on: bool) -> void:
 		add_child(_target_ring)
 	_target_ring.visible = on
 
-## Vyns tick: mata AI:n med spelar-tilen och interpolera ur move_progress.
-func _process(delta: float) -> void:
+## Ett fast simuleringssteg (anropas av game3d i SimTicker-takt): mata AI:n
+## med spelar-tilen och bokför prev/curr-position för renderingen.
+func sim_tick(dt: float) -> void:
 	if sim.dead:
 		return
 	var pt: Variant = null
 	if player_sim != null:
 		pt = player_sim.tile
-	sim.ai_tick(delta, pt)
-	position = _from.lerp(_to, sim.move_progress)
+	sim.ai_tick(dt, pt)
+	_prev_pos = _curr_pos
+	_curr_pos = _from.lerp(_to, sim.move_progress)
+
+## Per frame: mjuk position mellan de två senaste sim-stegen (alpha 0..1).
+func render_interpolate(alpha: float) -> void:
+	if sim.dead:
+		return
+	position = _prev_pos.lerp(_curr_pos, alpha)
 
 # ── Reaktioner på simuleringens signaler (rent visuellt) ──────────────────────
 func _on_sim_moved(from: Vector2i, to: Vector2i) -> void:

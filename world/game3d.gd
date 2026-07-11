@@ -33,6 +33,7 @@ var _thunder_in := -1.0      # sekunder kvar tills dundret (<0 = inget väntar)
 var _rng := RandomNumberGenerator.new()
 var _target_view: Monster3D = null   # vyn för spelarens auto-attack-mål
 var _fx: FloatingText3D              # delad flyttext-pool (skada/läkning/taggar)
+var _ticker := SimTicker.new()       # fast sim-tick frikopplad från renderingen
 
 func _ready() -> void:
 	_fx = FloatingText3D.new()
@@ -164,6 +165,28 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("use_potion"):
 		if not GameState.use_item("health_potion"):
 			_show_msg("Ingen hälsodryck.")
+	# Fast simuleringstick frikopplad från renderingen (prestandakravet):
+	# simmarna körs centralt i SimTicker-takt i stället för per vy-_process,
+	# vyerna renderas med alpha-interpolation mellan de två senaste stegen.
+	for _i in _ticker.advance(delta):
+		_sim_step(SimTicker.SIM_DT)
+	var a := _ticker.alpha()
+	player.render_interpolate(a)
+	if _monsters_root != null:
+		for m in _monsters_root.get_children():
+			if m is Monster3D:
+				m.render_interpolate(a)
+
+## Ett fast sim-steg: spelaren (rörelse/attack/gather) och alla monster-AI:n.
+## get_children() är en snapshot — monster som spawnas mitt i steget (t.ex.
+## nästa arenavåg) tickas från och med nästa steg.
+func _sim_step(dt: float) -> void:
+	player.sim_tick(dt)
+	if _monsters_root == null:
+		return
+	for m in _monsters_root.get_children():
+		if m is Monster3D:
+			m.sim_tick(dt)
 
 ## Släpper kraftslaget mot nuvarande mål. Vyn samlar in MonsterSims inom
 ## 1 tile från målet (cleave-kandidater) — samma kontrakt som player.gd.
