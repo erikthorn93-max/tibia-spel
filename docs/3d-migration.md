@@ -429,6 +429,18 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       över ~1,5 bränns ut till vitt (runa/glöd/lågor hålls låga). Visuell QA
       via tools/shot_stations.gd. 3 nya tester i test_station3d.gd
       (GLB-vakt per typ, modell- och fallback-vägen).
+- [x] Procedurala kreatursmodeller (2026-07-12,
+      `tools/build_creature_models.py`): fem arketyper (spindel/orm/fågel/
+      padda/krabba) i 14 färgvarianter (creature_*.glb) byggda i headless
+      Blender — samma konventioner som karaktärerna (1,0 m-normaliserade,
+      fötter på y=0, nos mot +Z). Ormen ligger i Tibia-posen: hoprullad
+      spiral med rest hals (utsträckt/rest orm läste som larv). 22 nya
+      poster i Monster3D.MODELS (bl.a. alla spindlar, ormar/maskar, fåglar
+      och krabborna) — 44 av 99 monster har nu gestalt, resten behåller
+      lådan. 2 nya vakttester i test_monster3d.gd: varje MODELS-post pekar
+      på en existerande GLB OCH ett riktigt MonsterDB-namn (felstavad
+      nyckel ger annars tyst platshållarlåda). Visuell QA via
+      tools/shot_creatures.gd.
 
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1

@@ -41,6 +41,21 @@ func _make_monster(model: ZoneModel, t: Vector2i) -> Monster3D:
 
 # ── Monster3D ─────────────────────────────────────────────────────────────────
 
+func test_alla_modellmappningar_pekar_pa_riktiga_filer():
+	# Vakt: varje MODELS-post ska peka på en GLB som finns i assets/models3d.
+	for mname in Monster3D.MODELS:
+		var file := String(Monster3D.MODELS[mname]["file"])
+		assert_true(
+			ResourceLoader.exists("res://assets/models3d/%s.glb" % file),
+			"%s mappar till %s.glb som saknas" % [mname, file])
+
+func test_alla_modellmappningar_ar_riktiga_monster():
+	# Vakt: MODELS-nycklarna ska finnas i MonsterDB — skyddar mot stavfel
+	# (en felstavad nyckel ger tyst platshållarlåda i spelet).
+	for mname in Monster3D.MODELS:
+		assert_true(MonsterDB.monsters.has(mname),
+			"MODELS-nyckeln '%s' finns inte i MonsterDB" % mname)
+
 func test_setup_places_and_occupies():
 	var model := _flat_model()
 	var m := _make_monster(model, Vector2i(0, 0))

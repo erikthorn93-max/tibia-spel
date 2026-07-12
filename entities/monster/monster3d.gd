@@ -10,8 +10,9 @@ extends Node3D
 const BAR_W := 0.8
 
 ## GLB per monsternamn + världshöjd i meter (modellerna är 1,0 m höga).
-## Medvetet konservativ mappning — bara naturliga matchningar; resten får
-## platshållarlåda tills fler modeller är decimerade.
+## Meshy-modeller för karaktärerna, procedurala kreatur (creature_*, byggda
+## av tools/build_creature_models.py) för spindlar/ormar/fåglar/paddor/
+## krabbor. Bara naturliga matchningar; resten får platshållarlåda.
 const MODELS := {
 	"Råtta":           {"file": "rat", "h": 0.5},
 	"Fältmus":         {"file": "rat", "h": 0.3},
@@ -35,6 +36,30 @@ const MODELS := {
 	"Goblinsoldat":    {"file": "orc", "h": 1.2},
 	"Bandit":          {"file": "middle_aged_man", "h": 1.7},
 	"Pirat":           {"file": "middle_aged_man", "h": 1.7},
+	"Pirat Skytt":     {"file": "middle_aged_man", "h": 1.7},
+	"Piratkapten Svartöga": {"file": "middle_aged_man", "h": 1.8},
+	"Spindel":         {"file": "creature_spider_brown", "h": 0.5},
+	"Jättespindel":    {"file": "creature_spider_brown", "h": 0.9},
+	"Grottspindel":    {"file": "creature_spider_dark", "h": 0.6},
+	"Skuggspindel":    {"file": "creature_spider_dark", "h": 0.55},
+	"Giftvävare":      {"file": "creature_spider_green", "h": 0.6},
+	"Spindeldrottningen Morwena": {"file": "creature_spider_dark", "h": 1.1},
+	"Orm":             {"file": "creature_snake_green", "h": 0.35},
+	"Sumpkräla":       {"file": "creature_snake_green", "h": 0.4},
+	"Sandorm":         {"file": "creature_snake_sand", "h": 0.5},
+	"Sjöorm":          {"file": "creature_snake_blue", "h": 0.7},
+	"Djupål":          {"file": "creature_snake_blue", "h": 0.4},
+	"Avgrundsorm":     {"file": "creature_snake_dark", "h": 0.9},
+	"Tomkrälare":      {"file": "creature_snake_dark", "h": 0.4},
+	"Glödmask":        {"file": "creature_snake_ember", "h": 0.35},
+	"Åkerkråka":       {"file": "creature_bird_dark", "h": 0.45},
+	"Askhök":          {"file": "creature_bird_dark", "h": 0.5},
+	"Frostörn":        {"file": "creature_bird_white", "h": 0.6},
+	"Snöuggla":        {"file": "creature_bird_white", "h": 0.5},
+	"Ökengam":         {"file": "creature_bird_brown", "h": 0.55},
+	"Giftpadda":       {"file": "creature_toad_green", "h": 0.4},
+	"Strandkrabba":    {"file": "creature_crab_red", "h": 0.35},
+	"Pansarkrabba":    {"file": "creature_crab_dark", "h": 0.5},
 }
 
 var sim: MonsterSim
