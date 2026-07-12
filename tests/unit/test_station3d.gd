@@ -47,6 +47,33 @@ func test_alla_stationstyper_har_farg():
 		assert_true(Station3D.COLORS.has(type),
 			"stationstypen %s saknar färg i Station3D" % type)
 
+func test_alla_stationstyper_har_glb_modell():
+	# Vakt: varje stationstyp ska ha en procedural GLB (build_station_models.py).
+	for type in CraftingStation.LABELS:
+		assert_true(
+			ResourceLoader.exists("res://assets/models3d/station_%s.glb" % type),
+			"stationstypen %s saknar station_%s.glb" % [type, type])
+
+func test_station_med_modell_far_glb_visual():
+	var s: Station3D = Station3DScript.new()
+	add_child_autofree(s)
+	s.setup("anvil", Vector2i(2, 2))
+	var has_model := false
+	for c in s.get_children():
+		if c is Node3D and not (c is Label3D) and not (c is MeshInstance3D):
+			has_model = true   # GLB-scenens rot är en ren Node3D
+	assert_true(has_model, "mappad station ska bära GLB-modellen, inte lådan")
+
+func test_station_utan_modell_far_platshallarlada():
+	var s: Station3D = Station3DScript.new()
+	add_child_autofree(s)
+	s.setup("okand_station", Vector2i(2, 2))
+	var has_box := false
+	for c in s.get_children():
+		if c is MeshInstance3D:
+			has_box = true
+	assert_true(has_box, "omappad station ska falla tillbaka till lådan")
+
 # ── game3d: spawning ur station-punkter ───────────────────────────────────────
 
 func test_game3d_spawns_stations_from_zone_points():

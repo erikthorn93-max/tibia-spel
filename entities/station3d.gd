@@ -3,8 +3,10 @@ extends Node3D
 ## 3D-vy för hantverksstationer (städ/gryta/alkemibord/runaltare/bänkar/
 ## bönaltare) ur zonens station-punkter. Klick intill (1 ruta — samma
 ## räckviddsregel som 2D:s CraftingStation) → receptpanelen för stationstypen;
-## bönaltaret öppnar prayer-panelen. GLB-modeller saknas ännu → färgad
-## platshållarlåda i stationens signaturfärg, samma regel som omappade monster.
+## bönaltaret öppnar prayer-panelen. Varje typ har en procedural GLB-modell
+## (assets/models3d/station_*.glb, byggd av tools/build_station_models.py,
+## världsskala med fötterna på y=0); saknas filen faller vyn tillbaka till
+## den färgade platshållarlådan, samma regel som omappade monster.
 
 ## Etiketterna delas med 2D-vyn (crafting_station.gd) — en källa.
 const LABELS := CraftingStation.LABELS
@@ -41,15 +43,21 @@ func interact() -> void:
 		World.hud.open_recipes(station_type)
 
 func _build_visual() -> void:
-	var body := MeshInstance3D.new()
-	var box := BoxMesh.new()
-	box.size = Vector3(0.8, 0.7, 0.8)
-	body.mesh = box
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = Color(String(COLORS.get(station_type, "#888888")))
-	body.material_override = mat
-	body.position.y = 0.35
-	add_child(body)
+	var path := "res://assets/models3d/station_%s.glb" % station_type
+	if ResourceLoader.exists(path):
+		var inst: Node3D = (load(path) as PackedScene).instantiate()
+		add_child(inst)
+	else:
+		# Platshållarlåda i stationens signaturfärg (som innan GLB-steget).
+		var body := MeshInstance3D.new()
+		var box := BoxMesh.new()
+		box.size = Vector3(0.8, 0.7, 0.8)
+		body.mesh = box
+		var mat := StandardMaterial3D.new()
+		mat.albedo_color = Color(String(COLORS.get(station_type, "#888888")))
+		body.material_override = mat
+		body.position.y = 0.35
+		add_child(body)
 	var l := Label3D.new()
 	l.text = display_name()
 	l.modulate = Color(0.92, 0.88, 0.72)

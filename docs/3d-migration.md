@@ -418,6 +418,17 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       oförändrade (Monster3D:s `h`-värden gäller fortfarande) — ren
       asset-swap. Visuell QA via tools/shot_models.gd (kontaktkarta över
       alla 12) och tools/shot_player.gd.
+- [x] Stationsmodeller i 3D (2026-07-12, `tools/build_station_models.py`):
+      alla 7 stationstyper (städ/gryta/alkemibord/runaltare/hantverksbänk/
+      bönaltare/arbetsbänk) har procedurala låg-poly-GLB:er byggda i headless
+      Blender — primitiver med platta Principled-material, inga texturer
+      (6–25 kB/st), världsskala med fötterna på y=0. Station3D laddar
+      station_<typ>.glb och faller tillbaka till signaturfärgade lådan om
+      filen saknas (Chest3D-idiomet). Lärdomar bakade i paletten: metallic
+      1,0 blir svart i Godot utan reflektionsmiljö (guld → 0,4) och emission
+      över ~1,5 bränns ut till vitt (runa/glöd/lågor hålls låga). Visuell QA
+      via tools/shot_stations.gd. 3 nya tester i test_station3d.gd
+      (GLB-vakt per typ, modell- och fallback-vägen).
 
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1
