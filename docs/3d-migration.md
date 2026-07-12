@@ -408,6 +408,16 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       (`_session_active`: 2D-spelare eller menystartad 3D) — gäller båda
       renderarna, och F6-dev/tester förblir save-fria. 4 nya tester i
       test_session3d.gd.
+- [x] Ombakade karaktärs-GLB:er (2026-07-12, `tools/rebake_character.py`):
+      alla 12 karaktärsmodeller ombakade från Meshy-källorna i
+      assets/_meshy_cache med en pipeline som tål lösa mesh-öar: join till
+      ETT objekt → svetsa vertex (merge by distance) → decimera till
+      8000 tris → texturer till 512px → höjd normaliserad till 1,0 m med
+      fötterna på y=0. Tidigare decimering betedde sig öaktigt (hål/spretiga
+      kanter) eftersom edge-collapse kördes per ö. Sökvägar/skalning
+      oförändrade (Monster3D:s `h`-värden gäller fortfarande) — ren
+      asset-swap. Visuell QA via tools/shot_models.gd (kontaktkarta över
+      alla 12) och tools/shot_player.gd.
 
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1
