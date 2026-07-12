@@ -37,21 +37,23 @@ def mat(name, color, rough=0.8, metallic=0.0, emit=None):
     return m
 
 
-def sphere(m, r, x=0.0, y=0.0, z=0.0, sx=1.0, sy=1.0, sz=1.0, rx=0.0):
+def sphere(m, r, x=0.0, y=0.0, z=0.0, sx=1.0, sy=1.0, sz=1.0, rx=0.0, ry=0.0):
     bpy.ops.mesh.primitive_uv_sphere_add(
         segments=12, ring_count=8, radius=r, location=(x, y, z))
     o = bpy.context.active_object
     o.scale = (sx, sy, sz)
     o.rotation_euler.x = rx
+    o.rotation_euler.y = ry
     o.data.materials.append(m)
     return o
 
 
-def cone(m, r, h, x=0.0, y=0.0, z=0.0, rx=0.0):
+def cone(m, r, h, x=0.0, y=0.0, z=0.0, rx=0.0, ry=0.0, r2=0.0):
     bpy.ops.mesh.primitive_cone_add(
-        vertices=8, radius1=r, radius2=0, depth=h, location=(x, y, z))
+        vertices=8, radius1=r, radius2=r2, depth=h, location=(x, y, z))
     o = bpy.context.active_object
     o.rotation_euler.x = rx
+    o.rotation_euler.y = ry
     o.data.materials.append(m)
     return o
 
@@ -339,6 +341,110 @@ def build_lizard(pal):
     return parts
 
 
+def build_brute(pal):
+    """Troll/minotaur — bred humanoid med hängande armar; horn om paletten
+    har "horn"-rollen."""
+    body, belly, tusk, eye = pal["body"], pal["accent"], pal["tusk"], pal["eye"]
+    parts = [sphere(body, 0.34, z=0.72, sx=1.1, sy=0.85, sz=1.15)]   # bröstkorg
+    parts.append(sphere(belly, 0.26, y=0.06, z=0.50))                # mage
+    parts.append(sphere(body, 0.17, y=-0.10, z=1.06))                # huvud
+    for sx_ in (-1, 1):
+        parts.append(cone(tusk, 0.028, 0.09, x=sx_ * 0.07, y=-0.24, z=1.00))
+        parts.append(cyl_between(body, (sx_ * 0.32, 0.0, 0.88),      # armar
+                                 (sx_ * 0.48, -0.10, 0.28), 0.09))
+        parts.append(sphere(body, 0.11, x=sx_ * 0.49, y=-0.12, z=0.20))
+        parts.append(cyl(body, 0.11, 0.34, x=sx_ * 0.16, y=0.04))    # ben
+        parts.append(sphere(eye, 0.04, x=sx_ * 0.07, y=-0.25, z=1.10))
+        if "horn" in pal:
+            parts.append(cone(pal["horn"], 0.05, 0.22, x=sx_ * 0.15,
+                              y=-0.04, z=1.18, ry=sx_ * 0.55))
+    return parts
+
+
+def build_dwarf(pal):
+    """Dvärg — satt kropp, stort skägg, hjälm."""
+    tunic, beard, helm = pal["body"], pal["accent"], pal["helm"]
+    skin, eye = pal["skin"], pal["eye"]
+    parts = [sphere(tunic, 0.30, z=0.40, sy=0.9, sz=1.05)]           # satt kropp
+    parts.append(sphere(skin, 0.17, y=-0.04, z=0.80))                # huvud
+    parts.append(sphere(helm, 0.19, y=-0.02, z=0.88, sz=0.70))       # hjälm
+    parts.append(sphere(beard, 0.16, y=-0.16, z=0.60,                # skägget
+                        sx=0.9, sy=0.55, sz=1.15))
+    parts.append(sphere(skin, 0.05, y=-0.21, z=0.78))                # näsa
+    for sx_ in (-1, 1):
+        parts.append(sphere(eye, 0.032, x=sx_ * 0.06, y=-0.19, z=0.84))
+        parts.append(cyl_between(tunic, (sx_ * 0.26, 0.0, 0.58),     # armar
+                                 (sx_ * 0.36, -0.08, 0.28), 0.07))
+        parts.append(sphere(skin, 0.075, x=sx_ * 0.37, y=-0.10, z=0.24))
+        parts.append(cyl(tunic, 0.09, 0.16, x=sx_ * 0.13, y=0.02))   # ben
+    return parts
+
+
+def build_robed(pal):
+    """Kåpklädd gestalt (vampyr/nekromant/lich) — flärad kåpa, huva,
+    blekt ansikte med lysande ögon."""
+    robe, trim, face, eye = pal["body"], pal["accent"], pal["face"], pal["eye"]
+    parts = [cone(robe, 0.36, 0.78, z=0.39, r2=0.14)]                # kåpan
+    parts.append(sphere(robe, 0.17, z=0.80, sx=1.35, sz=0.7))        # axlar
+    parts.append(sphere(trim, 0.20, z=0.52, sz=0.22))                # bältestrim
+    parts.append(sphere(face, 0.13, y=-0.05, z=0.94))                # ansikte
+    parts.append(sphere(robe, 0.16, y=0.045, z=0.96))                # huvan
+    for sx_ in (-1, 1):
+        parts.append(sphere(eye, 0.035, x=sx_ * 0.05, y=-0.15, z=0.96))
+        parts.append(sphere(robe, 0.08, x=sx_ * 0.26, y=-0.10, z=0.60,
+                            sy=1.5))                                  # ärmar
+    return parts
+
+
+def build_dragon(pal):
+    """Drake — liggande kropp, rest hals, vingar, svans och horn."""
+    body, wing, horn, eye = pal["body"], pal["accent"], pal["horn"], pal["eye"]
+    parts = [sphere(body, 0.30, z=0.40, sx=0.9, sy=1.5, sz=0.85)]    # kropp
+    neck = [(0.0, -0.40, 0.55), (0.0, -0.48, 0.70), (0.0, -0.55, 0.84)]
+    for i, p in enumerate(neck):
+        parts.append(sphere(body, 0.13 - i * 0.01, x=p[0], y=p[1], z=p[2]))
+    parts.append(sphere(body, 0.14, y=-0.62, z=0.94))                # huvud
+    parts.append(sphere(body, 0.09, y=-0.77, z=0.91, sy=1.4))        # nos
+    for i in range(4):                                               # svans
+        parts.append(sphere(body, 0.11 - i * 0.02, y=0.48 + i * 0.16,
+                            z=0.34 - i * 0.04))
+    for sx_ in (-1, 1):
+        parts.append(sphere(wing, 0.32, x=sx_ * 0.48, y=0.16, z=0.66,  # vingar
+                            sx=1.6, sy=1.0, sz=0.10, ry=sx_ * 0.22))   # svepta bakåt-utåt
+        parts.append(cone(horn, 0.035, 0.15, x=sx_ * 0.08, y=-0.55,
+                          z=1.05, rx=-0.5))                          # horn
+        parts.append(sphere(eye, 0.035, x=sx_ * 0.08, y=-0.70, z=0.97))
+        for yb in (-0.22, 0.24):                                     # ben
+            parts.append(cyl(body, 0.07, 0.18, x=sx_ * 0.18, y=yb))
+    return parts
+
+
+def build_demon(pal):
+    """Ärkedemon — brute-kroppen med breda vingar (accent-rollen delas)."""
+    parts = build_brute(pal)
+    wing = pal["horn"]   # vingmembran i hornens mörka material
+    for sx_ in (-1, 1):
+        parts.append(sphere(wing, 0.34, x=sx_ * 0.44, y=0.30, z=0.82,
+                            sx=1.35, sy=0.14, sz=1.0, ry=sx_ * 0.30))
+    return parts
+
+
+def build_boar(pal):
+    """Vildsvin — låg fyrbent kropp, tryne, betar och öron."""
+    body, snout, tusk, eye = pal["body"], pal["accent"], pal["tusk"], pal["eye"]
+    parts = [sphere(body, 0.26, z=0.32, sx=0.95, sy=1.5, sz=0.9)]
+    parts.append(sphere(body, 0.16, y=-0.40, z=0.32))                # huvud
+    parts.append(sphere(snout, 0.07, y=-0.55, z=0.27, sy=1.2))       # tryne
+    for sx_ in (-1, 1):
+        parts.append(cone(tusk, 0.025, 0.09, x=sx_ * 0.07, y=-0.52,
+                          z=0.24, ry=sx_ * 0.4))                     # betar
+        parts.append(cone(body, 0.045, 0.09, x=sx_ * 0.09, y=-0.32, z=0.46))
+        parts.append(sphere(eye, 0.03, x=sx_ * 0.08, y=-0.50, z=0.36))
+        for yb in (-0.24, 0.26):                                     # ben
+            parts.append(cyl(body, 0.05, 0.16, x=sx_ * 0.12, y=yb))
+    return parts
+
+
 # ── Varianter: arketyp + palett per roll ──────────────────────────────────────
 BLACK_EYE = ((0.03, 0.03, 0.04, 1), 0.4)
 
@@ -472,6 +578,52 @@ VARIANTS = {
     "lizard_sand": (build_lizard, {
         "body": ((0.58, 0.48, 0.24, 1), 0.75), "accent": ((0.40, 0.32, 0.15, 1), 0.75),
         "eye": ((0.85, 0.75, 0.2, 1), 0.4)}),
+    "brute_green": (build_brute, {
+        "body": ((0.30, 0.44, 0.20, 1), 0.85), "accent": ((0.52, 0.56, 0.38, 1), 0.85),
+        "tusk": ((0.88, 0.86, 0.78, 1), 0.6), "eye": ((0.85, 0.75, 0.2, 1), 0.4)}),
+    "brute_horned": (build_brute, {
+        "body": ((0.36, 0.25, 0.14, 1), 0.9), "accent": ((0.55, 0.42, 0.30, 1), 0.9),
+        "tusk": ((0.85, 0.82, 0.72, 1), 0.6), "horn": ((0.82, 0.78, 0.68, 1), 0.6),
+        "eye": ((0.9, 0.3, 0.1, 1), 0.4, 0.0, ((0.9, 0.3, 0.1, 1), 0.6))}),
+    "dwarf_miner": (build_dwarf, {
+        "body": ((0.42, 0.29, 0.16, 1), 0.85), "accent": ((0.55, 0.33, 0.13, 1), 0.85),
+        "helm": ((0.42, 0.41, 0.40, 1), 0.5), "skin": ((0.76, 0.58, 0.44, 1), 0.8),
+        "eye": BLACK_EYE}),
+    "dwarf_iron": (build_dwarf, {
+        "body": ((0.30, 0.30, 0.35, 1), 0.6), "accent": ((0.32, 0.27, 0.24, 1), 0.85),
+        "helm": ((0.22, 0.22, 0.26, 1), 0.5), "skin": ((0.76, 0.58, 0.44, 1), 0.8),
+        "eye": BLACK_EYE}),
+    "dwarf_purple": (build_dwarf, {
+        "body": ((0.38, 0.24, 0.52, 1), 0.8), "accent": ((0.74, 0.72, 0.68, 1), 0.85),
+        "helm": ((0.28, 0.16, 0.40, 1), 0.6), "skin": ((0.76, 0.58, 0.44, 1), 0.8),
+        "eye": ((0.7, 0.5, 1.0, 1), 0.4, 0.0, ((0.7, 0.5, 1.0, 1), 0.8))}),
+    "robed_vampire": (build_robed, {
+        "body": ((0.12, 0.10, 0.14, 1), 0.8), "accent": ((0.45, 0.08, 0.10, 1), 0.7),
+        "face": ((0.84, 0.82, 0.80, 1), 0.7),
+        "eye": ((0.9, 0.15, 0.1, 1), 0.4, 0.0, ((0.9, 0.15, 0.1, 1), 1.0))}),
+    "robed_necro": (build_robed, {
+        "body": ((0.16, 0.15, 0.19, 1), 0.8), "accent": ((0.20, 0.40, 0.20, 1), 0.7),
+        "face": ((0.70, 0.68, 0.60, 1), 0.7),
+        "eye": ((0.3, 0.9, 0.3, 1), 0.4, 0.0, ((0.3, 0.9, 0.3, 1), 1.0))}),
+    "robed_lich": (build_robed, {
+        "body": ((0.20, 0.22, 0.30, 1), 0.8), "accent": ((0.70, 0.55, 0.20, 1), 0.5),
+        "face": ((0.85, 0.85, 0.80, 1), 0.7),
+        "eye": ((0.4, 0.8, 1.0, 1), 0.4, 0.0, ((0.4, 0.8, 1.0, 1), 1.2))}),
+    "dragon_fire": (build_dragon, {
+        "body": ((0.52, 0.12, 0.06, 1), 0.8), "accent": ((0.30, 0.06, 0.04, 1), 0.8),
+        "horn": ((0.85, 0.80, 0.70, 1), 0.6),
+        "eye": ((1.0, 0.8, 0.2, 1), 0.4, 0.0, ((1.0, 0.8, 0.2, 1), 1.0))}),
+    "dragon_ice": (build_dragon, {
+        "body": ((0.55, 0.70, 0.82, 1), 0.4), "accent": ((0.35, 0.50, 0.65, 1), 0.4),
+        "horn": ((0.88, 0.92, 0.96, 1), 0.4),
+        "eye": ((0.4, 0.8, 1.0, 1), 0.4, 0.0, ((0.4, 0.8, 1.0, 1), 1.0))}),
+    "demon_arch": (build_demon, {
+        "body": ((0.34, 0.08, 0.06, 1), 0.85), "accent": ((0.16, 0.06, 0.06, 1), 0.85),
+        "tusk": ((0.80, 0.75, 0.65, 1), 0.6), "horn": ((0.14, 0.11, 0.10, 1), 0.7),
+        "eye": ((1.0, 0.6, 0.1, 1), 0.4, 0.0, ((1.0, 0.6, 0.1, 1), 1.2))}),
+    "boar_brown": (build_boar, {
+        "body": ((0.32, 0.22, 0.12, 1), 0.9), "accent": ((0.55, 0.40, 0.32, 1), 0.8),
+        "tusk": ((0.88, 0.85, 0.75, 1), 0.6), "eye": BLACK_EYE}),
 }
 
 

@@ -56,6 +56,14 @@ func test_alla_modellmappningar_ar_riktiga_monster():
 		assert_true(MonsterDB.monsters.has(mname),
 			"MODELS-nyckeln '%s' finns inte i MonsterDB" % mname)
 
+func test_alla_monster_har_gestalt():
+	# Full täckning sedan 2026-07-12: varje monster i databasen ska ha en
+	# modellmappning — ett nytt monster utan gestalt ska synas här, inte
+	# som en tyst platshållarlåda i spelet.
+	for mname in MonsterDB.monsters:
+		assert_true(Monster3D.MODELS.has(mname),
+			"monstret '%s' saknar modellmappning i Monster3D.MODELS" % mname)
+
 func test_setup_places_and_occupies():
 	var model := _flat_model()
 	var m := _make_monster(model, Vector2i(0, 0))

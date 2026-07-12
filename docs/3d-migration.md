@@ -450,6 +450,17 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       nu gestalt. Kvar som lådor: humanoiderna (troll/minotaurer/dvärgar/
       vampyrer/nekromant/lich), drakarna, ärkedemonen och vildsvinet —
       kräver egna arketyper. Vakttesterna täcker alla poster automatiskt.
+- [x] Kreatursmodeller batch 3 — FULL TÄCKNING (2026-07-12): sex sista
+      arketyper i 12 varianter — brute (troll grön/minotaur hornad), dvärg
+      (gruv/järn/geomant-lila med skägg+hjälm), kåpgestalt (vampyr/nekromant/
+      lich med lysande ögon), drake (eld/is med svepta vingar, rest hals,
+      horn), ärkedemon (brute + vingmembran) och vildsvin. 17 nya poster →
+      ALLA 99 monster har gestalt; platshållarlådan lever kvar enbart som
+      fallback för framtida omappade monster. Lärdom: upprätta vingovaler
+      vid huvudhöjd läser som kaninöron — vingar ska svepas bakåt-utåt i
+      axelhöjd. Ny fulltäckningsvakt i test_monster3d.gd: varje monster i
+      MonsterDB MÅSTE ha en MODELS-post — ett nytt monster utan gestalt
+      faller i test i stället för att tyst bli en låda.
 
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1

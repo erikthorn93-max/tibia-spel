@@ -14,12 +14,15 @@ const CREATURES := [
 	"fish_shark", "fish_dark", "fish_lantern",
 	"scorpion_ember", "beetle_sand", "kraken_deep", "kraken_dark",
 	"eye_dark", "eye_elder", "firefly_glow", "lizard_sand",
+	"brute_green", "brute_horned", "dwarf_miner", "dwarf_iron",
+	"dwarf_purple", "robed_vampire", "robed_necro", "robed_lich",
+	"dragon_fire", "dragon_ice", "demon_arch", "boar_brown",
 ]
 
 func _init() -> void:
 	var cam := Camera3D.new()
-	cam.position = Vector3(0, 5.5, 11.0)
-	cam.rotation_degrees.x = -26.0
+	cam.position = Vector3(0, 7.5, 13.5)
+	cam.rotation_degrees.x = -30.0
 	cam.fov = 55.0
 	root.add_child(cam)
 	cam.make_current()
@@ -37,7 +40,7 @@ func _init() -> void:
 	root.add_child(we)
 	var floor_mi := MeshInstance3D.new()
 	var box := BoxMesh.new()
-	box.size = Vector3(16, 0.1, 12)
+	box.size = Vector3(18, 0.1, 18)
 	floor_mi.mesh = box
 	floor_mi.position.y = -0.05
 	root.add_child(floor_mi)
@@ -48,7 +51,7 @@ func _init() -> void:
 		@warning_ignore("integer_division")
 		var row: int = i / 8
 		var col: int = i % 8
-		inst.position = Vector3(float(col) * 1.7 - 5.95, 0, float(row) * 2.2 - 4.4)
+		inst.position = Vector3(float(col) * 1.7 - 5.95, 0, float(row) * 2.2 - 6.6)
 		root.add_child(inst)
 
 	for i in 12:

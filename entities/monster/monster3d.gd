@@ -96,6 +96,23 @@ const MODELS := {
 	"Farao Khem-Ra":   {"file": "zombie", "h": 1.8},
 	"Solkonungen Akh-Mortis": {"file": "skeleton", "h": 1.9},
 	"Leviatanen Abyssos": {"file": "creature_snake_blue", "h": 1.3},
+	"Troll":           {"file": "creature_brute_green", "h": 1.6},
+	"Trollhövding":    {"file": "creature_brute_green", "h": 1.9},
+	"Minotaur":        {"file": "creature_brute_horned", "h": 1.9},
+	"MinotaurVakt":    {"file": "creature_brute_horned", "h": 2.0},
+	"MinotaurKungen":  {"file": "creature_brute_horned", "h": 2.3},
+	"Dvärg":           {"file": "creature_dwarf_miner", "h": 1.1},
+	"DvärgenSmeden":   {"file": "creature_dwarf_iron", "h": 1.15},
+	"Dvärgsoldat":     {"file": "creature_dwarf_iron", "h": 1.1},
+	"Dvärggeomant":    {"file": "creature_dwarf_purple", "h": 1.1},
+	"Vampyr":          {"file": "creature_robed_vampire", "h": 1.7},
+	"VampyrHerre":     {"file": "creature_robed_vampire", "h": 1.8},
+	"Nekromant":       {"file": "creature_robed_necro", "h": 1.7},
+	"Lich":            {"file": "creature_robed_lich", "h": 1.8},
+	"Elddraken":       {"file": "creature_dragon_fire", "h": 2.2},
+	"Isdraken":        {"file": "creature_dragon_ice", "h": 2.0},
+	"Ärkedemonen":     {"file": "creature_demon_arch", "h": 2.4},
+	"Vildsvin":        {"file": "creature_boar_brown", "h": 0.6},
 }
 
 var sim: MonsterSim
