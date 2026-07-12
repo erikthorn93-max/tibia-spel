@@ -462,6 +462,19 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       MonsterDB MÅSTE ha en MODELS-post — ett nytt monster utan gestalt
       faller i test i stället för att tyst bli en låda.
 
+- [x] Husdörrar i 3D (2026-07-12, `tools/build_prop_models.py`): entrance-
+      rutorna (värdshus/slott/gillen) fick en procedural trädörr i stenkarm
+      (prop_door.glb, 12 kB, världsskala 1,66 m — under vägghöjden 2,0) i
+      stället för portalsigillet — samma dörr/trappa/portal-åtskillnad som
+      2D-vyn. Dörren vrids efter sin väggrad (grannväggar i x-led → spänner X,
+      enbart y-led → 90°); markörvridningen flyttad till markör-roten så den
+      är läsbar för tester. Låsta och olåsta dörrar ser lika ut (stängd dörr
+      läses som stängd — låset prövas vid steget, som 2D). Nytt visuellt
+      QA-verktyg `tools/shot_zone.gd/.tscn`: bygger en riktig zon med Zone3D
+      i game3d:s ljus/kamera och skärmdumpar namngivna punkter (start/bank/
+      butik/dörr). 3 nya tester i test_zone3d.gd (dörrmesh + ingen overlay,
+      GLB-vakt, väggriktning).
+
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1
 - MultiMesh för tiles/vegetation; chunkad värld med laddningsradie

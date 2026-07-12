@@ -50,6 +50,9 @@ const CACTUS_EVERY := 17       # gles ökendekoration — enstaka småkaktusar
 const STAIR_MARKER := {"file": "stone_staircase", "h": 0.9}
 const ENTRANCE_MARKER := {"file": "stone_staircase", "h": 0.75}
 const PORTAL_MARKER := {"file": "emerald_sigil", "h": 0.9}
+## Husdörrar (entrance-rutor): prop_door är byggd i världsskala (1,66 m) —
+## h är ren skalfaktor 1,0, till skillnad från de 1 m-normaliserade modellerna.
+const DOOR_MARKER := {"file": "prop_door", "h": 1.0}
 
 static func tree_models_for(biome: String) -> Array:
 	return BIOME_TREES.get(biome, TREE_MODELS)
@@ -101,7 +104,9 @@ func build(m: ZoneModel) -> void:
 	_build_terrain()
 	_build_scatter()
 	for t in model.portals:
-		if model.stair_points.has(t):
+		if model.entrance_points.has(t):
+			_add_door_marker(t)
+		elif model.stair_points.has(t):
 			_add_model_marker(t, STAIR_MARKER, Color(0.80, 0.74, 0.48), 0.0)
 		else:
 			_add_portal_marker(t)
@@ -275,18 +280,22 @@ func _add_marker(t: Vector2i, color: Color, glow: float) -> MeshInstance3D:
 
 ## Riktig GLB-modell på en interaktionsruta — mesh-delarna ur den delade
 ## cachen (ingen instansiering per marker), deterministisk 90°-vridning per
-## ruta. Faller tillbaka till kub-markern om modellen saknas. glow > 0 ger
+## ruta (eller explicit vridning via rot, för riktade markörer som dörrar).
+## Faller tillbaka till kub-markern om modellen saknas. glow > 0 ger
 ## en svag additiv overlay i signaturfärgen (Monster3D-idiomet) så rutan
 ## läses som magisk/interaktiv även i skymning.
-func _add_model_marker(t: Vector2i, spec: Dictionary, color: Color, glow: float) -> Node3D:
+func _add_model_marker(t: Vector2i, spec: Dictionary, color: Color, glow: float,
+		rot := NAN) -> Node3D:
 	var parts := _model_meshes(String(spec["file"]))
 	if parts.is_empty():
 		return _add_marker(t, color, maxf(glow, 0.3))
 	var root := Node3D.new()
 	root.name = "Marker_%d_%d" % [t.x, t.y]
 	root.position = tile_to_world3(t)
-	var xb := Basis(Vector3.UP, (PI / 2.0) * float(_tile_hash(t) % 4)) \
-		.scaled(Vector3.ONE * float(spec["h"]))
+	if is_nan(rot):
+		rot = (PI / 2.0) * float(_tile_hash(t) % 4)
+	root.rotation.y = rot   # vridningen bor på roten (läsbar för tester/vyer)
+	var xb := Basis.IDENTITY.scaled(Vector3.ONE * float(spec["h"]))
 	var overlay: StandardMaterial3D = null
 	if glow > 0.0:
 		overlay = StandardMaterial3D.new()
@@ -302,6 +311,25 @@ func _add_model_marker(t: Vector2i, spec: Dictionary, color: Color, glow: float)
 		root.add_child(mi)
 	add_child(root)
 	return root
+
+## Husdörr på en entrance-ruta — samma åtskillnad som 2D-vyns dörrmarkör.
+## Dörrbladet spänner X i modellen; står väggarna i y-led vrids den 90° så
+## dörren fyller luckan i sin väggrad. Stängd dörr = ingen glow (låsta och
+## olåsta ser lika ut — låset prövas vid steget, som 2D).
+func _add_door_marker(t: Vector2i) -> void:
+	_add_model_marker(t, DOOR_MARKER, Color(0.45, 0.32, 0.18), 0.0,
+		_door_rotation(t))
+
+## Väggar i x-led (grannar vänster/höger) → dörren spänner X (0°); väggar
+## enbart i y-led → 90°. Fristående dörr utan väggrad behåller 0°.
+func _door_rotation(t: Vector2i) -> float:
+	var wall_x: bool = TALL.has(model.terrain.get(t + Vector2i.LEFT, "")) \
+		or TALL.has(model.terrain.get(t + Vector2i.RIGHT, ""))
+	var wall_y: bool = TALL.has(model.terrain.get(t + Vector2i.UP, "")) \
+		or TALL.has(model.terrain.get(t + Vector2i.DOWN, ""))
+	if wall_y and not wall_x:
+		return PI / 2.0
+	return 0.0
 
 func _add_portal_marker(t: Vector2i) -> void:
 	if _portal_marker_nodes.has(t):

@@ -111,6 +111,37 @@ func test_dungeon_entrance_uses_staircase_model():
 	assert_eq((marker.get_child(0) as MeshInstance3D).mesh, stair_mesh,
 		"dungeon-nedgången ska använda stentrappans GLB-mesh")
 
+func test_entrance_uses_door_model():
+	var m := _marker_model()
+	m.portals[Vector2i(0, 0)] = "frodo_inn"
+	m.entrance_points[Vector2i(0, 0)] = "frodo_inn"
+	var z := _build_view(m)
+	var marker := z.get_node_or_null("Marker_0_0")
+	assert_not_null(marker, "entrance-rutan ska få en markör-nod")
+	var door_mesh: Mesh = Zone3D._model_meshes("prop_door")[0]["mesh"]
+	assert_eq((marker.get_child(0) as MeshInstance3D).mesh, door_mesh,
+		"husdörren ska använda dörr-GLB:n, inte portalsigillen")
+	assert_null((marker.get_child(0) as MeshInstance3D).material_overlay,
+		"stängd dörr ska inte skimra (ingen overlay)")
+
+func test_door_glb_exists():
+	assert_true(ResourceLoader.exists("res://assets/models3d/prop_door.glb"),
+		"prop_door.glb ska finnas — annars blir alla dörrar fallback-kuber")
+
+func test_door_aligns_with_wall_row():
+	var m := ZoneModel.new()
+	# Vägg-rad i x-led runt (1,0) och vägg-kolumn i y-led runt (0,1).
+	m.parse({"name": "Dörrtest", "tiles": ["W.W.", "WP..", "W..."]}, "door_flat")
+	m.portals[Vector2i(1, 0)] = "frodo_inn"
+	m.entrance_points[Vector2i(1, 0)] = "frodo_inn"
+	m.portals[Vector2i(0, 1)] = "rain_castle"
+	m.entrance_points[Vector2i(0, 1)] = "rain_castle"
+	var z := _build_view(m)
+	assert_almost_eq(float(z.get_node("Marker_1_0").rotation.y), 0.0, 0.001,
+		"väggar i x-led → dörren spänner X (0°)")
+	assert_almost_eq(float(z.get_node("Marker_0_1").rotation.y), PI / 2.0, 0.001,
+		"väggar enbart i y-led → dörren vrids 90°")
+
 func test_unlocked_portal_gets_sigil_locked_keeps_cube():
 	var m := _marker_model()
 	m.portals[Vector2i(0, 0)] = "town"
