@@ -1,5 +1,6 @@
 # Bygger kreatursmodellerna (assets/models3d/creature_*.glb) proceduralt:
-# fem arketyper (spindel/orm/fågel/padda/krabba) i färgvarianter — låg-poly-
+# arketyper (spindel/orm/fågel/padda/krabba/blob/svamp/vålnad/golem/fisk/
+# skorpion/skarabé/kraken/öga/lysfluga/ödla) i färgvarianter — låg-poly-
 # primitiver med platta Principled-material, samma konventioner som
 # stationsbyggaren. Varje modell normaliseras till 1,0 m höjd med fötterna
 # på z=0 och nosen mot Blender -Y (= glTF/Godot +Z, Monster3D vrider PI).
@@ -161,6 +162,183 @@ def build_crab(pal):
     return parts
 
 
+def build_blob(pal):
+    """Amorf varelse (lava/is/träsk/sot) — bucklig kupol med droppar."""
+    body, bump, eye = pal["body"], pal["accent"], pal["eye"]
+    parts = [sphere(body, 0.42, z=0.34, sz=0.78)]
+    parts.append(sphere(bump, 0.20, x=0.20, y=0.16, z=0.52))
+    parts.append(sphere(bump, 0.16, x=-0.24, y=0.06, z=0.50))
+    parts.append(sphere(bump, 0.13, y=0.30, z=0.44))
+    for sx_, sy_ in ((0.36, -0.22), (-0.40, 0.10), (0.10, 0.40)):  # droppar
+        parts.append(sphere(body, 0.09, x=sx_, y=sy_, z=0.07))
+    for sx_ in (-1, 1):
+        parts.append(sphere(eye, 0.055, x=sx_ * 0.14, y=-0.36, z=0.42))
+    return parts
+
+
+def build_mushroom(pal):
+    """Svampfolk — fot med ögon, hatt med prickar."""
+    stem, cap, eye = pal["body"], pal["accent"], pal["eye"]
+    parts = [cyl(stem, 0.17, 0.48, z=0.0)]
+    parts.append(sphere(cap, 0.40, z=0.52, sz=0.60))
+    parts.append(sphere(cap, 0.16, z=0.70, sz=0.7))          # hattkulle
+    for x_, y_ in ((0.18, -0.18), (-0.22, 0.06), (0.06, 0.24)):
+        parts.append(sphere(stem, 0.055, x=x_, y=y_, z=0.62))  # prickar
+    for sx_ in (-1, 1):
+        parts.append(sphere(eye, 0.045, x=sx_ * 0.08, y=-0.16, z=0.32))
+    return parts
+
+
+def build_ghost(pal):
+    """Vålnad — svävande droppform med håliga ögon och små armar."""
+    body, arm, eye = pal["body"], pal["accent"], pal["eye"]
+    parts = []
+    for i in range(5):                       # kropp: avsmalnande stack nedåt
+        t = i / 4.0
+        r = 0.30 - 0.22 * t
+        parts.append(sphere(body, r, z=0.62 - t * 0.44, sy=1.0 - 0.3 * t))
+    for sx_ in (-1, 1):
+        parts.append(sphere(arm, 0.09, x=sx_ * 0.30, z=0.52, sy=1.3))
+        parts.append(sphere(eye, 0.055, x=sx_ * 0.11, y=-0.24, z=0.68))
+    return parts
+
+
+def build_golem(pal):
+    """Golem/väktare — blockig stenhumanoid med ryggpiggar."""
+    rock, spike, eye = pal["body"], pal["accent"], pal["eye"]
+
+    def block(m, sx, sy, sz, x=0.0, y=0.0, z=0.0):
+        bpy.ops.mesh.primitive_cube_add(size=1, location=(x, y, z))
+        o = bpy.context.active_object
+        o.scale = (sx, sy, sz)
+        o.data.materials.append(m)
+        return o
+
+    parts = [block(rock, 0.52, 0.38, 0.46, z=0.62)]              # torso
+    parts.append(block(rock, 0.26, 0.24, 0.22, z=0.98))          # huvud
+    for sx_ in (-1, 1):
+        parts.append(block(rock, 0.17, 0.20, 0.52, x=sx_ * 0.36, z=0.55))  # armar
+        parts.append(block(rock, 0.19, 0.24, 0.40, x=sx_ * 0.14, z=0.20))  # ben
+        parts.append(sphere(eye, 0.045, x=sx_ * 0.07, y=-0.13, z=1.00))
+    parts.append(cone(spike, 0.09, 0.22, y=0.20, z=0.94))        # ryggpiggar
+    parts.append(cone(spike, 0.07, 0.18, x=0.16, y=0.16, z=0.84))
+    parts.append(cone(spike, 0.07, 0.18, x=-0.16, y=0.16, z=0.84))
+    return parts
+
+
+def build_fish(pal):
+    """Fisk/haj — svävar på simhöjd; lykta bara om paletten har "lure"."""
+    body, fin, eye = pal["body"], pal["accent"], pal["eye"]
+    parts = [sphere(body, 0.30, z=0.50, sx=0.55, sy=1.3, sz=0.7)]
+    parts.append(sphere(fin, 0.14, y=0.44, z=0.56, sx=0.16, sy=0.9))   # stjärt
+    parts.append(sphere(fin, 0.13, z=0.70, sx=0.14, sy=0.8))           # ryggfena
+    for sx_ in (-1, 1):
+        parts.append(sphere(fin, 0.09, x=sx_ * 0.17, z=0.44,
+                            sx=0.5, sy=0.9, sz=0.4))                   # sidofenor
+        parts.append(sphere(eye, 0.04, x=sx_ * 0.11, y=-0.30, z=0.55))
+    if "lure" in pal:
+        parts.append(cyl_between(fin, (0, -0.30, 0.68), (0, -0.44, 0.82), 0.02))
+        parts.append(sphere(pal["lure"], 0.06, y=-0.46, z=0.84))
+    return parts
+
+
+def build_scorpion(pal):
+    """Skorpion — klor fram, ledad stjärt böjd över ryggen med gadd."""
+    body, claw, eye = pal["body"], pal["accent"], pal["eye"]
+    parts = [sphere(body, 0.24, z=0.18, sx=1.1, sy=1.4, sz=0.7)]
+    for sx_ in (-1, 1):
+        parts.append(sphere(claw, 0.12, x=sx_ * 0.30, y=-0.34, z=0.14, sy=1.2))
+        for i in range(3):
+            yb = -0.10 + i * 0.14
+            parts.append(cyl_between(body, (sx_ * 0.22, yb, 0.16),
+                                     (sx_ * 0.42, yb + 0.04, 0.0), 0.025))
+        parts.append(sphere(eye, 0.035, x=sx_ * 0.07, y=-0.30, z=0.28))
+    tail = [(0.0, 0.34, 0.26), (0.0, 0.44, 0.42), (0.0, 0.40, 0.58),
+            (0.0, 0.28, 0.68)]
+    for i, p in enumerate(tail):
+        parts.append(sphere(body, 0.085 - i * 0.01, x=p[0], y=p[1], z=p[2]))
+    parts.append(cone(claw, 0.05, 0.16, y=0.16, z=0.74, rx=math.pi / 2))  # gadd
+    return parts
+
+
+def build_beetle(pal):
+    """Skarabé — kupolsköld, antenner och sex ben."""
+    shell, head_m, eye = pal["body"], pal["accent"], pal["eye"]
+    parts = [sphere(shell, 0.32, z=0.24, sx=1.05, sy=1.25, sz=0.72)]
+    parts.append(sphere(head_m, 0.14, y=-0.38, z=0.16))
+    for sx_ in (-1, 1):
+        for i in range(3):
+            yb = -0.14 + i * 0.16
+            parts.append(cyl_between(shell, (sx_ * 0.26, yb, 0.14),
+                                     (sx_ * 0.46, yb + 0.04, 0.0), 0.024))
+        parts.append(cyl_between(head_m, (sx_ * 0.06, -0.46, 0.22),
+                                 (sx_ * 0.14, -0.58, 0.34), 0.016))
+        parts.append(sphere(eye, 0.03, x=sx_ * 0.06, y=-0.49, z=0.18))
+    return parts
+
+
+def build_kraken(pal):
+    """Kraken — hög mantel med stora ögon och sex tentakler mot marken."""
+    mantle, arm, eye = pal["body"], pal["accent"], pal["eye"]
+    parts = [sphere(mantle, 0.34, z=0.62, sz=1.25)]
+    for sx_ in (-1, 1):
+        parts.append(sphere(eye, 0.075, x=sx_ * 0.15, y=-0.28, z=0.60))
+    for k in range(6):
+        phi = k * math.tau / 6.0 + 0.26
+        bx, by = math.sin(phi), math.cos(phi)
+        for i in range(4):
+            t = i / 3.0
+            rad = 0.16 + 0.34 * t
+            r = 0.085 - 0.045 * t
+            parts.append(sphere(arm, r, x=bx * rad, y=by * rad,
+                                z=max(0.30 - 0.28 * t, r) + 0.02 * math.sin(t * 6)))
+    return parts
+
+
+def build_horror_eye(pal):
+    """Avgrundsöga — svävande ögonglob med hängande tentakelfransar."""
+    sclera, iris, pupil = pal["body"], pal["accent"], pal["eye"]
+    parts = [sphere(sclera, 0.36, z=0.62)]
+    parts.append(sphere(iris, 0.15, y=-0.29, z=0.62, sy=0.55))
+    parts.append(sphere(pupil, 0.07, y=-0.37, z=0.62, sy=0.5))
+    for k in range(5):
+        phi = k * math.tau / 5.0
+        bx, by = math.sin(phi) * 0.20, math.cos(phi) * 0.20
+        for i in range(3):
+            parts.append(sphere(iris, 0.05 - i * 0.012, x=bx * (1 + i * 0.35),
+                                y=by * (1 + i * 0.35), z=0.30 - i * 0.11))
+    return parts
+
+
+def build_firefly(pal):
+    """Lysfluga — liten kropp, vingar och glödande bakkropp."""
+    body, wing, glow = pal["body"], pal["accent"], pal["glow"]
+    parts = [sphere(body, 0.13, y=-0.06, z=0.42, sy=1.3)]
+    parts.append(sphere(glow, 0.11, y=0.14, z=0.40))
+    for sx_ in (-1, 1):
+        parts.append(sphere(wing, 0.14, x=sx_ * 0.12, y=0.02, z=0.52,
+                            sx=0.35, sy=1.1, sz=0.25, rx=0.3))
+        parts.append(sphere(pal["eye"], 0.03, x=sx_ * 0.05, y=-0.18, z=0.44))
+    return parts
+
+
+def build_lizard(pal):
+    """Varan — låg långsträckt kropp, svans och utåtböjda ben."""
+    body, back, eye = pal["body"], pal["accent"], pal["eye"]
+    parts = [sphere(body, 0.22, z=0.16, sx=0.9, sy=1.7, sz=0.65)]
+    parts.append(sphere(back, 0.16, z=0.24, sx=0.7, sy=1.4, sz=0.5))   # ryggteckning
+    parts.append(sphere(body, 0.13, y=-0.44, z=0.14, sy=1.3))          # huvud
+    for i in range(3):                                                  # svans
+        parts.append(sphere(body, 0.10 - i * 0.03, y=0.42 + i * 0.16,
+                            z=0.10 - i * 0.02))
+    for sx_ in (-1, 1):
+        for yb in (-0.22, 0.18):
+            parts.append(cyl_between(body, (sx_ * 0.16, yb, 0.14),
+                                     (sx_ * 0.32, yb + 0.05, 0.0), 0.035))
+        parts.append(sphere(eye, 0.035, x=sx_ * 0.07, y=-0.50, z=0.20))
+    return parts
+
+
 # ── Varianter: arketyp + palett per roll ──────────────────────────────────────
 BLACK_EYE = ((0.03, 0.03, 0.04, 1), 0.4)
 
@@ -208,6 +386,92 @@ VARIANTS = {
     "crab_dark": (build_crab, {
         "body": ((0.20, 0.18, 0.24, 1), 0.7), "accent": ((0.28, 0.25, 0.32, 1), 0.7),
         "eye": ((0.7, 0.1, 0.1, 1), 0.5, 0.0, ((0.9, 0.15, 0.1, 1), 1.0))}),
+    "blob_lava": (build_blob, {
+        "body": ((0.35, 0.08, 0.03, 1), 0.8),
+        "accent": ((0.9, 0.30, 0.05, 1), 0.8, 0.0, ((1.0, 0.30, 0.05, 1), 0.8)),
+        "eye": ((1.0, 0.8, 0.2, 1), 0.5, 0.0, ((1.0, 0.8, 0.2, 1), 1.2))}),
+    "blob_ice": (build_blob, {
+        "body": ((0.55, 0.72, 0.85, 1), 0.3), "accent": ((0.75, 0.88, 0.96, 1), 0.25),
+        "eye": ((0.1, 0.2, 0.4, 1), 0.4)}),
+    "blob_swamp": (build_blob, {
+        "body": ((0.25, 0.35, 0.12, 1), 0.85), "accent": ((0.35, 0.45, 0.18, 1), 0.85),
+        "eye": ((0.85, 0.75, 0.2, 1), 0.4)}),
+    "blob_dark": (build_blob, {
+        "body": ((0.10, 0.09, 0.11, 1), 0.9), "accent": ((0.17, 0.15, 0.18, 1), 0.9),
+        "eye": ((0.9, 0.25, 0.05, 1), 0.5, 0.0, ((1.0, 0.30, 0.05, 1), 1.0))}),
+    "mushroom_green": (build_mushroom, {
+        "body": ((0.78, 0.74, 0.60, 1), 0.85), "accent": ((0.30, 0.50, 0.20, 1), 0.8),
+        "eye": BLACK_EYE}),
+    "mushroom_brown": (build_mushroom, {
+        "body": ((0.72, 0.65, 0.50, 1), 0.85), "accent": ((0.45, 0.28, 0.14, 1), 0.8),
+        "eye": BLACK_EYE}),
+    "mushroom_purple": (build_mushroom, {
+        "body": ((0.60, 0.55, 0.62, 1), 0.85),
+        "accent": ((0.38, 0.20, 0.50, 1), 0.7, 0.0, ((0.5, 0.25, 0.7, 1), 0.5)),
+        "eye": ((0.85, 0.75, 0.2, 1), 0.4)}),
+    "ghost_pale": (build_ghost, {
+        "body": ((0.72, 0.76, 0.84, 1), 0.4), "accent": ((0.60, 0.65, 0.75, 1), 0.4),
+        "eye": ((0.05, 0.05, 0.10, 1), 0.5)}),
+    "ghost_sand": (build_ghost, {
+        "body": ((0.68, 0.58, 0.36, 1), 0.6), "accent": ((0.55, 0.45, 0.26, 1), 0.6),
+        "eye": ((0.10, 0.06, 0.02, 1), 0.5)}),
+    "ghost_kelp": (build_ghost, {
+        "body": ((0.22, 0.40, 0.32, 1), 0.6), "accent": ((0.16, 0.30, 0.24, 1), 0.6),
+        "eye": ((0.85, 0.9, 0.5, 1), 0.4, 0.0, ((0.8, 0.9, 0.4, 1), 0.8))}),
+    "golem_ice": (build_golem, {
+        "body": ((0.55, 0.70, 0.82, 1), 0.3), "accent": ((0.78, 0.90, 0.97, 1), 0.2),
+        "eye": ((0.4, 0.8, 1.0, 1), 0.4, 0.0, ((0.4, 0.8, 1.0, 1), 1.0))}),
+    "golem_crystal": (build_golem, {
+        "body": ((0.35, 0.30, 0.50, 1), 0.4),
+        "accent": ((0.55, 0.40, 0.85, 1), 0.3, 0.0, ((0.6, 0.4, 1.0, 1), 0.8)),
+        "eye": ((0.7, 0.5, 1.0, 1), 0.4, 0.0, ((0.7, 0.5, 1.0, 1), 1.0))}),
+    "golem_coral": (build_golem, {
+        "body": ((0.70, 0.40, 0.35, 1), 0.8), "accent": ((0.85, 0.55, 0.45, 1), 0.8),
+        "eye": ((0.2, 0.8, 0.8, 1), 0.4, 0.0, ((0.2, 0.8, 0.8, 1), 0.8))}),
+    "golem_stone": (build_golem, {
+        "body": ((0.38, 0.37, 0.36, 1), 0.95), "accent": ((0.28, 0.27, 0.26, 1), 0.95),
+        "eye": ((0.9, 0.7, 0.2, 1), 0.4, 0.0, ((0.9, 0.7, 0.2, 1), 0.8))}),
+    "golem_wood": (build_golem, {
+        "body": ((0.32, 0.22, 0.10, 1), 0.9), "accent": ((0.20, 0.35, 0.12, 1), 0.85),
+        "eye": ((0.6, 0.9, 0.3, 1), 0.4, 0.0, ((0.6, 0.9, 0.3, 1), 0.8))}),
+    "fish_shark": (build_fish, {
+        "body": ((0.42, 0.48, 0.55, 1), 0.6), "accent": ((0.30, 0.35, 0.42, 1), 0.6),
+        "eye": BLACK_EYE}),
+    "fish_dark": (build_fish, {
+        "body": ((0.12, 0.12, 0.18, 1), 0.6), "accent": ((0.08, 0.08, 0.13, 1), 0.6),
+        "eye": ((0.7, 0.1, 0.1, 1), 0.5, 0.0, ((0.9, 0.15, 0.1, 1), 1.0))}),
+    "fish_lantern": (build_fish, {
+        "body": ((0.15, 0.18, 0.30, 1), 0.6), "accent": ((0.10, 0.12, 0.22, 1), 0.6),
+        "eye": ((0.8, 0.9, 1.0, 1), 0.4),
+        "lure": ((0.9, 0.95, 0.6, 1), 0.4, 0.0, ((1.0, 1.0, 0.6, 1), 1.4))}),
+    "scorpion_ember": (build_scorpion, {
+        "body": ((0.30, 0.10, 0.05, 1), 0.8),
+        "accent": ((0.9, 0.30, 0.05, 1), 0.8, 0.0, ((1.0, 0.30, 0.05, 1), 0.7)),
+        "eye": ((1.0, 0.8, 0.2, 1), 0.5, 0.0, ((1.0, 0.8, 0.2, 1), 1.0))}),
+    "beetle_sand": (build_beetle, {
+        "body": ((0.60, 0.48, 0.25, 1), 0.7), "accent": ((0.42, 0.32, 0.16, 1), 0.7),
+        "eye": BLACK_EYE}),
+    "kraken_deep": (build_kraken, {
+        "body": ((0.20, 0.30, 0.45, 1), 0.6), "accent": ((0.28, 0.40, 0.55, 1), 0.6),
+        "eye": ((0.9, 0.8, 0.3, 1), 0.4, 0.0, ((0.9, 0.8, 0.3, 1), 0.6))}),
+    "kraken_dark": (build_kraken, {
+        "body": ((0.14, 0.10, 0.18, 1), 0.6), "accent": ((0.20, 0.15, 0.26, 1), 0.6),
+        "eye": ((0.8, 0.2, 0.6, 1), 0.4, 0.0, ((0.9, 0.2, 0.7, 1), 0.9))}),
+    "eye_dark": (build_horror_eye, {
+        "body": ((0.16, 0.13, 0.20, 1), 0.5),
+        "accent": ((0.45, 0.15, 0.55, 1), 0.4, 0.0, ((0.5, 0.15, 0.65, 1), 0.6)),
+        "eye": ((0.95, 0.85, 0.3, 1), 0.3, 0.0, ((0.95, 0.85, 0.3, 1), 1.0))}),
+    "eye_elder": (build_horror_eye, {
+        "body": ((0.30, 0.10, 0.35, 1), 0.5),
+        "accent": ((0.60, 0.20, 0.70, 1), 0.4, 0.0, ((0.7, 0.25, 0.8, 1), 0.8)),
+        "eye": ((0.2, 1.0, 0.7, 1), 0.3, 0.0, ((0.2, 1.0, 0.7, 1), 1.2))}),
+    "firefly_glow": (build_firefly, {
+        "body": ((0.15, 0.12, 0.08, 1), 0.7), "accent": ((0.85, 0.88, 0.95, 0.9), 0.3),
+        "glow": ((0.9, 0.95, 0.4, 1), 0.5, 0.0, ((1.0, 1.0, 0.4, 1), 1.4)),
+        "eye": BLACK_EYE}),
+    "lizard_sand": (build_lizard, {
+        "body": ((0.58, 0.48, 0.24, 1), 0.75), "accent": ((0.40, 0.32, 0.15, 1), 0.75),
+        "eye": ((0.85, 0.75, 0.2, 1), 0.4)}),
 }
 
 

@@ -7,13 +7,20 @@ const CREATURES := [
 	"snake_sand", "snake_blue", "snake_dark", "snake_ember",
 	"bird_dark", "bird_white", "bird_brown", "toad_green",
 	"crab_red", "crab_dark",
+	"blob_lava", "blob_ice", "blob_swamp", "blob_dark",
+	"mushroom_green", "mushroom_brown", "mushroom_purple",
+	"ghost_pale", "ghost_sand", "ghost_kelp",
+	"golem_ice", "golem_crystal", "golem_coral", "golem_stone", "golem_wood",
+	"fish_shark", "fish_dark", "fish_lantern",
+	"scorpion_ember", "beetle_sand", "kraken_deep", "kraken_dark",
+	"eye_dark", "eye_elder", "firefly_glow", "lizard_sand",
 ]
 
 func _init() -> void:
 	var cam := Camera3D.new()
-	cam.position = Vector3(0, 2.4, 7.0)
-	cam.rotation_degrees.x = -16.0
-	cam.fov = 50.0
+	cam.position = Vector3(0, 5.5, 11.0)
+	cam.rotation_degrees.x = -26.0
+	cam.fov = 55.0
 	root.add_child(cam)
 	cam.make_current()
 	var sun := DirectionalLight3D.new()
@@ -30,18 +37,18 @@ func _init() -> void:
 	root.add_child(we)
 	var floor_mi := MeshInstance3D.new()
 	var box := BoxMesh.new()
-	box.size = Vector3(14, 0.1, 8)
+	box.size = Vector3(16, 0.1, 12)
 	floor_mi.mesh = box
 	floor_mi.position.y = -0.05
 	root.add_child(floor_mi)
 
-	# Två rader à sju modeller, nosarna mot kameran (glTF-framåt = +Z).
+	# Rader à åtta modeller, nosarna mot kameran (glTF-framåt = +Z).
 	for i in CREATURES.size():
 		var inst: Node3D = (load("res://assets/models3d/creature_%s.glb" % CREATURES[i]) as PackedScene).instantiate()
 		@warning_ignore("integer_division")
-		var row: int = i / 7
-		var col: int = i % 7
-		inst.position = Vector3(float(col - 3) * 1.7, 0, float(row) * 2.6 - 1.3)
+		var row: int = i / 8
+		var col: int = i % 8
+		inst.position = Vector3(float(col) * 1.7 - 5.95, 0, float(row) * 2.2 - 4.4)
 		root.add_child(inst)
 
 	for i in 12:

@@ -441,6 +441,15 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       på en existerande GLB OCH ett riktigt MonsterDB-namn (felstavad
       nyckel ger annars tyst platshållarlåda). Visuell QA via
       tools/shot_creatures.gd.
+- [x] Kreatursmodeller batch 2 (2026-07-12): elva nya arketyper i 26
+      varianter — blob (lava/is/träsk/sot), svampfolk, vålnad, golem/väktare
+      (is/kristall/korall/sten/trä), fisk (haj/mörk/lyktfisk med lysande
+      betespö), skorpion, skarabé, kraken, avgrundsöga, lysfluga och varan.
+      36 nya MODELS-poster (33 nya modeller + 3 återbruk: farao → zombie,
+      solkonungen → skelett, leviatanen → blå orm) — 80 av 99 monster har
+      nu gestalt. Kvar som lådor: humanoiderna (troll/minotaurer/dvärgar/
+      vampyrer/nekromant/lich), drakarna, ärkedemonen och vildsvinet —
+      kräver egna arketyper. Vakttesterna täcker alla poster automatiskt.
 
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1
