@@ -93,6 +93,17 @@ func test_hp_bar_shrinks_on_damage():
 	assert_almost_eq(m._hp_bar.scale.x, float(m.sim.hp) / float(m.sim.max_hp), 0.01,
 		"baren ska spegla hp-kvoten efter skada")
 
+func test_status_aura_toggles_pa_gift():
+	var model := _flat_model()
+	var m := _make_monster(model, Vector2i(1, 1))
+	assert_false(m._status_aura.emitting, "auran ska vara avslagen utan status")
+	m.sim.apply_status("poison", 3.0, 1.0)
+	assert_true(m._status_aura.emitting, "gift ska tända auran (status_changed)")
+	assert_gt(m._status_aura.color.g, m._status_aura.color.r, "giftauran ska vara grön")
+	m.sim.status_effects.clear()
+	m._on_sim_status_changed()
+	assert_false(m._status_aura.emitting, "auran ska släckas när giftet tickat ut")
+
 func test_death_vacates_and_frees_node():
 	var model := _flat_model()
 	var m := _make_monster(model, Vector2i(0, 0))

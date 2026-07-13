@@ -44,8 +44,29 @@ func _init() -> void:
 	SpellFx3D.projectile(root, Vector3(0.5, 0, 1.8), Vector3(7.5, 0, 1.8),
 		Color(0.78, 0.55, 1.00))
 	SpellFx3D.flash(root, Vector3(6.5, 0, -1.5), Color(1.0, 0.5, 0.15), 2.5, 4.0)
+	# Status-auror (gift/brand) runt platshållarkroppar
+	_aura_dummy(Vector3(3.5, 0, 1.8), true, false)
+	_aura_dummy(Vector3(5.5, 0, 1.8), false, true)
 
 	await create_timer(0.16).timeout
 	root.get_texture().get_image().save_png("user://shot_fx.png")
 	print("SPARAT: ", OS.get_user_data_dir(), "/shot_fx.png")
+	# Andra bilden när engångsskurarna klingat av — visar de persistenta
+	# status-aurorna i full gång.
+	await create_timer(0.9).timeout
+	root.get_texture().get_image().save_png("user://shot_fx_aura.png")
+	print("SPARAT: ", OS.get_user_data_dir(), "/shot_fx_aura.png")
 	quit()
+
+## Platshållarkropp med status-aura (gift eller brand) för kontaktkartan.
+func _aura_dummy(pos: Vector3, poisoned: bool, burning: bool) -> void:
+	var body := MeshInstance3D.new()
+	var box := BoxMesh.new()
+	box.size = Vector3(0.5, 0.9, 0.5)
+	body.mesh = box
+	body.position = pos + Vector3(0, 0.45, 0)
+	root.add_child(body)
+	var aura := SpellFx3D.make_status_aura()
+	aura.position = pos + Vector3(0, 0.5, 0)
+	root.add_child(aura)
+	SpellFx3D.update_status_aura(aura, poisoned, burning)

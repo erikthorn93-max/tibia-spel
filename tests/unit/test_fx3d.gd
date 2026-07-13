@@ -1,4 +1,4 @@
-extends GutTest
+﻿extends GutTest
 ## Tester för SpellFx3D — 3D-motsvarigheten till SpellFx: partikelskurar,
 ## dödsskurar per stil, fontän, ring, projektil och ljusblixt.
 
@@ -101,6 +101,34 @@ func test_projektil_anlander_och_kor_callback() -> void:
 	proj._process(10.0)   # långt förbi flygtiden
 	assert_true(arrived[0], "on_arrive ska köras vid framkomst")
 	assert_true(proj.is_queued_for_deletion(), "projektilen ska städa sig själv")
+
+func test_status_aura_startar_avslagen_och_pekar_uppat() -> void:
+	var aura := FX3D.make_status_aura()
+	add_child_autofree(aura)
+	assert_false(aura.emitting, "auran ska vara avslagen tills status appliceras")
+	assert_gt(aura.direction.y, 0.0, "aurapartiklarna ska stiga uppåt")
+	assert_not_null(aura.mesh, "auran ska ha den delade billboard-meshen")
+
+func test_status_aura_gift_ar_gron_och_vinner_over_brand() -> void:
+	var aura := FX3D.make_status_aura()
+	add_child_autofree(aura)
+	FX3D.update_status_aura(aura, true, true)
+	assert_true(aura.emitting, "gift ska tända auran")
+	assert_gt(aura.color.g, aura.color.r, "gift ska vara grön (vinner över brand, som 2D)")
+
+func test_status_aura_brand_ar_orange() -> void:
+	var aura := FX3D.make_status_aura()
+	add_child_autofree(aura)
+	FX3D.update_status_aura(aura, false, true)
+	assert_true(aura.emitting, "brand ska tända auran")
+	assert_gt(aura.color.r, aura.color.b, "brand ska vara orange")
+
+func test_status_aura_slacks_utan_status() -> void:
+	var aura := FX3D.make_status_aura()
+	add_child_autofree(aura)
+	FX3D.update_status_aura(aura, true, false)
+	FX3D.update_status_aura(aura, false, false)
+	assert_false(aura.emitting, "auran ska släckas när statusen tickat ut")
 
 func test_flash_spawnar_ljus() -> void:
 	var root := Node3D.new()

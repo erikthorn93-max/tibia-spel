@@ -510,6 +510,17 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       `tools/shot_fx.gd` (kontaktkarta över alla effekttyper). 9 nya tester
       i test_fx3d.gd.
 
+- [x] Status-auror i 3D (2026-07-13): gift-/brand-auror (grön/orange, gift
+      vinner — samma regler som 2D) på både spelare och monster via
+      `SpellFx3D.make_status_aura`/`update_status_aura` — persistent
+      CPUParticles3D som byggs EN gång per entitet och bara togglas.
+      Monster3D kopplar nu sim-signalen `status_changed` (saknades helt —
+      förgiftade/brinnande monster var osynliga i 3D), Player3D kopplar
+      GameState.status_changed. Bred emissionssfär (0,4 m) eftersom partiklar
+      som föds inne i kroppen skyms av den i 3D, till skillnad från 2D där
+      auran ritas ovanpå spriten. Kontaktkartan (shot_fx) tar nu även en
+      andra bild efter engångsskurarna där aurorna syns. 5 nya tester.
+
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1 ✓
 - MultiMesh för tiles/vegetation ✓; chunkad värld med laddningsradie —

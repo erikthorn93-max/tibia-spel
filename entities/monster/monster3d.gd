@@ -134,6 +134,7 @@ var _hp_bar: MeshInstance3D
 var _hp_mat: StandardMaterial3D
 var _flash_tw: Tween
 var _target_ring: MeshInstance3D
+var _status_aura: CPUParticles3D   # gift/brand-partiklar (som 2D-vyn)
 
 func _init() -> void:
 	sim = MonsterSim.new()
@@ -143,6 +144,7 @@ func _init() -> void:
 	sim.moved.connect(_on_sim_moved)
 	sim.attack_started.connect(_on_sim_attack_started)
 	sim.enrage_started.connect(_on_sim_enraged)
+	sim.status_changed.connect(_on_sim_status_changed)
 	sim.died.connect(_on_sim_died)
 
 func setup(mname: String, t: Vector2i, model: ZoneModel) -> void:
@@ -185,6 +187,10 @@ func _build_visual() -> void:
 	_hp_bar.material_override = _hp_mat
 	_hp_bar.position.y = top + 0.35
 	_visual.add_child(_hp_bar)
+	# Status-aura (gift/brand) mitt på kroppen — byggs EN gång, togglas bara.
+	_status_aura = SpellFx3D.make_status_aura()
+	_status_aura.position.y = top * 0.5
+	_visual.add_child(_status_aura)
 	_refresh_hp_bar()
 
 ## Bygger kroppen i _body_root och returnerar dess höjd (för hp-barens läge).
@@ -354,6 +360,11 @@ func _on_sim_element_reaction(kind: String) -> void:
 func _on_sim_enraged() -> void:
 	_tint_mat.albedo_color = _rest_tint()
 	_refresh_hp_bar()
+
+## Status lades till/tickade ut: toggla gift/brand-auran (som 2D-vyn).
+func _on_sim_status_changed() -> void:
+	SpellFx3D.update_status_aura(_status_aura,
+		sim.has_status("poison"), sim.has_status("burn"))
 
 ## Död: simuleringen har bokfört exp/kills och frigjort tilen — dödsskur med
 ## stil per monstertyp (ben/slem/glöd/is/stoft, samma klassning som 2D-vyn)

@@ -153,6 +153,44 @@ static func flash(parent: Node, pos: Vector3, color: Color, peak := 1.8, radius 
 	tw.tween_property(light, "light_energy", 0.0, 0.35)
 	tw.tween_callback(light.queue_free)
 
+## Persistent status-aura (gift/brand): stigande partiklar runt en entitet.
+## Byggs EN gång per entitet (ägaren lägger den som barn och positionerar)
+## och togglas med update_status_aura — 3D-motsvarigheten till 2D-vyernas
+## _build_status_aura/_update_status_aura.
+static func make_status_aura(amount := 10) -> CPUParticles3D:
+	var p := CPUParticles3D.new()
+	p.emitting = false
+	p.amount = amount
+	p.lifetime = 0.8
+	p.mesh = _get_particle_mesh()
+	p.direction = Vector3.UP
+	p.spread = 25.0
+	p.initial_velocity_min = 0.35
+	p.initial_velocity_max = 0.7
+	p.gravity = Vector3(0, 0.4, 0)
+	# Större flagor än engångsskurarna — auran ska läsas på spelavstånd.
+	p.scale_amount_min = 2.5
+	p.scale_amount_max = 4.0
+	# Bred emissionssfär: partiklar som föds inne i kroppen skyms av den
+	# (till skillnad från 2D där auran ritas ovanpå spriten).
+	p.emission_shape = CPUParticles3D.EMISSION_SHAPE_SPHERE
+	p.emission_sphere_radius = 0.4
+	return p
+
+## Slår på/av auran utifrån statusflaggor — samma färg- och företrädesregler
+## som 2D-vyerna (gift = grön vinner över brand = orange, annars av).
+static func update_status_aura(aura: CPUParticles3D, poisoned: bool, burning: bool) -> void:
+	if aura == null:
+		return
+	if poisoned:
+		aura.color = Color(0.40, 0.95, 0.35)
+		aura.emitting = true
+	elif burning:
+		aura.color = Color(1.0, 0.50, 0.12)
+		aura.emitting = true
+	else:
+		aura.emitting = false
+
 # --- instans-implementation ---
 
 func _start_ring(color: Color, max_r: float) -> void:

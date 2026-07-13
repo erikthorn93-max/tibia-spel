@@ -28,6 +28,7 @@ var _breath_t := 0.0                 # idle-andningens klocka
 var _attacking := false              # attack-stöten pausar livs-animen (som 2D)
 var _visual: Node3D
 var _outfit_mat: StandardMaterial3D   # delad outfit-tint (skapas EN gång)
+var _status_aura: CPUParticles3D      # gift/brand-partiklar (som 2D-vyn)
 
 ## SpellSystem.resolve_cast läser caster.tile (fx-center för self/area_self).
 var tile: Vector2i:
@@ -54,6 +55,17 @@ func _ready() -> void:
 	_apply_overlay(_visual)
 	_apply_outfit()
 	GameState.appearance_changed.connect(_apply_outfit)
+	# Status-aura (gift/brand) mitt på kroppen — byggs EN gång, togglas bara.
+	_status_aura = SpellFx3D.make_status_aura(10)
+	_status_aura.position.y = MODEL_HEIGHT * 0.5
+	_visual.add_child(_status_aura)
+	GameState.status_changed.connect(_on_status_changed)
+	_on_status_changed()
+
+## Spelarstatus lades till/tickade ut: toggla gift/brand-auran (som 2D-vyn).
+func _on_status_changed() -> void:
+	SpellFx3D.update_status_aura(_status_aura,
+		GameState.has_status("poison"), GameState.has_status("burn"))
 
 func _build_body() -> void:
 	if ResourceLoader.exists(MODEL_PATH):
