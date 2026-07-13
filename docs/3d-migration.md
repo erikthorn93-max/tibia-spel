@@ -475,12 +475,32 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       butik/dörr). 3 nya tester i test_zone3d.gd (dörrmesh + ingen overlay,
       GLB-vakt, väggriktning).
 
+- [x] Procedural scatter-vegetation + prestandavalidering (2026-07-13,
+      `tools/build_prop_models.py`, `tools/perf_probe.gd`): perf-proben
+      (kör game3d i värsta zonerna, mäter zonbygge/FPS/draw calls) visade
+      9 FPS i staden på RTX 4070 Ti. Diagnosproben (`perf_probe_diag.gd`,
+      grupper släcks en i taget) attribuerade kostnaden: utan klippscattern
+      193 FPS, utan all scatter 634 FPS — Meshy-modellerna (1200–2000 tris,
+      2–5 MB st) var boven i 4105-instansers MultiMesh-batcher, inte
+      terrängen (billig) eller skuggorna (måttliga). Fix: klippan och all
+      scatter-vegetation (tall/gran/martall/dött träd/kaktus/blomma/ormbunke)
+      ersatta med procedurala låg-poly-modeller (44–360 tris, 5–29 kB) under
+      SAMMA filnamn, 1 m-normaliserade — ren asset-swap, noll kodändringar
+      (GatherNode3D:s modeller följde med gratis). Resultat: staden 9 → 483
+      FPS (värsta frame 111,8 → 2,6 ms), ice-zonen med 148 monster 656 FPS.
+      Estetiken är nu enhetligt låg-poly (som stationer/dörrar/kreatur) i
+      stället för fotoskannad Meshy mot platta färgtiles. `shot_zone` tog
+      zon via cmdline (`-- forest`) och fick träd-/klippvyer för visuell QA.
+
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
-- Ingen SSIL/dyra post-effekter; budget per frame från dag 1
-- MultiMesh för tiles/vegetation; chunkad värld med laddningsradie
-- LOD på karaktärsmodeller; material-pooling (per-hit-allokering dödade
-  godot_rpg-prestandan)
-- Fast simulerings-tick frikopplad från renderingen
+- Ingen SSIL/dyra post-effekter; budget per frame från dag 1 ✓
+- MultiMesh för tiles/vegetation ✓; chunkad värld med laddningsradie —
+  ONÖDIG efter scatter-swappen: största zonen (town, 56 000 tiles) bygger
+  på 170 ms och renderar i 483 FPS utan chunkning (perf_probe 2026-07-13)
+- LOD på karaktärsmodeller — hanteras av Godots automatiska import-LOD;
+  entitetstressen (ice, 148 monster) kör 656 FPS utan egen LOD-kod.
+  Material-pooling ✓ (per-hit-allokering dödade godot_rpg-prestandan)
+- Fast simulerings-tick frikopplad från renderingen ✓
 
 ## Slutbild
 
