@@ -83,5 +83,8 @@ func _collect() -> void:
 			oy += 0.35   # stapla flera föremål uppåt
 	if is_grave:
 		GameState.clear_grave()   # graven är tömd
+	# Guldskur vid plocket — samma glitter som 2D:s GroundItem.
+	SpellFx3D.burst(get_parent(), position + Vector3(0, 0.3, 0),
+		Color(0.96, 0.86, 0.42), 8, 1.9)
 	Sfx.pickup()
 	queue_free()

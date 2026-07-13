@@ -25,11 +25,16 @@ var prayer_panel: PanelContainer
 var minimap: Control
 var hotkey_bar: Node
 
+var player: Node3D = null           # världsankare för firande-fx, sätts av game3d
+var fx: FloatingText3D = null       # delad flyttext-pool, sätts av game3d
+
 var _hp_lbl: Label
 var _spec_lbl: Label
 var _msg_lbl: Label
 var _msg_tw: Tween
 var _arena_lbl: Label
+var _levelup_lbl: Label
+var _skillup_lbl: Label
 var _fade_rect: ColorRect   # svart overlay för zon-övergångar (som 2D-HUD:en)
 
 func _ready() -> void:
@@ -80,6 +85,12 @@ func _ready() -> void:
 	_on_hp_changed(GameState.health, GameState.max_health)
 	GameState.spec_changed.connect(_on_spec_changed)
 	_on_spec_changed(GameState.spec_energy)
+	# Firanden — samma signaler och fx-regler som 2D-HUD:en (hud.gd), men
+	# världseffekterna spawnas som SpellFx3D vid spelarens 3D-position.
+	GameState.skill_leveled.connect(_on_skill_leveled)
+	GameState.crafted.connect(_on_crafted)
+	GameState.item_used.connect(_on_item_used)
+	GameState.level_up.connect(_on_level_up_anim)
 	_build_arena_banner()
 	# Fade-overlayen sist → ritas överst vid zon-övergångar.
 	_fade_rect = ColorRect.new()
@@ -112,6 +123,78 @@ func _build_labels() -> void:
 	_msg_lbl.position = Vector2(12, 60)
 	_msg_lbl.modulate = Color(1.0, 0.9, 0.5)
 	add_child(_msg_lbl)
+	# Level-up/skill-up-popups i mitten — samma som 2D-HUD:en.
+	_levelup_lbl = Label.new()
+	_levelup_lbl.text = "★ LEVEL UP!"
+	_levelup_lbl.add_theme_color_override("font_color", Color(1.0, 0.9, 0.2))
+	_levelup_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_levelup_lbl.set_anchors_preset(Control.PRESET_CENTER)
+	_levelup_lbl.visible = false
+	add_child(_levelup_lbl)
+	_skillup_lbl = Label.new()
+	_skillup_lbl.add_theme_color_override("font_color", Color(0.6, 1.0, 0.6))
+	_skillup_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_skillup_lbl.set_anchors_preset(Control.PRESET_CENTER)
+	_skillup_lbl.position.y += 40   # under "★ LEVEL UP!" så de inte överlappar
+	_skillup_lbl.visible = false
+	add_child(_skillup_lbl)
+
+## Världsförälder för firande-fx: spelarens entitetsrot (null utan spelare).
+func _fx_parent() -> Node:
+	if player == null or not is_instance_valid(player):
+		return null
+	return player.get_parent()
+
+func _on_skill_leveled(skill: String, new_level: int) -> void:
+	Sfx.skill_up()
+	var parent := _fx_parent()
+	if parent != null:
+		SpellFx3D.ring(parent, player.position, Color(0.7, 0.9, 1.0), 0.8)
+	if _skillup_lbl == null:
+		return
+	var sname: String = String(GameState.skill_defs[skill]["name"]) \
+		if skill in GameState.skill_defs else skill.capitalize()
+	_skillup_lbl.text = "%s nivå %d!" % [sname, new_level]
+	_skillup_lbl.visible = true
+	var tw := create_tween()
+	tw.tween_interval(1.5)
+	tw.tween_callback(func(): _skillup_lbl.visible = false)
+
+## Hantverk klart: ljud + flytande "+1 <namn>" ovanför spelaren (som 2D).
+func _on_crafted(item_id: String, _skill: String) -> void:
+	Sfx.craft()
+	if fx == null or player == null or not is_instance_valid(player):
+		return
+	var iname := String(ItemDB.items.get(item_id, {}).get("name", item_id))
+	fx.show_text(player.position + Vector3(0, 1.4, 0),
+		"+1 %s" % iname, Color(0.7, 0.95, 0.7))
+
+## Förbrukad dryck/föremål: heal-gnistor (grönt) eller mana-skur (blått).
+func _on_item_used(item_id: String) -> void:
+	var parent := _fx_parent()
+	if parent == null:
+		return
+	var d: Dictionary = ItemDB.items.get(item_id, {})
+	if d.has("heal"):
+		SpellFx3D.heal_sparkle(parent, player.position)
+	elif d.has("mana"):
+		SpellFx3D.burst(parent, player.position + Vector3(0, 0.6, 0),
+			Color(0.45, 0.65, 1.0), 10, 1.9)
+
+func _on_level_up_anim() -> void:
+	Sfx.level_up()
+	# Guldpelare + ring vid spelaren (som 2D)
+	var parent := _fx_parent()
+	if parent != null:
+		var gold := Color(1.0, 0.88, 0.3)
+		SpellFx3D.ring(parent, player.position, gold, 1.4)
+		SpellFx3D.fountain(parent, player.position, gold, 22)
+	if _levelup_lbl == null:
+		return
+	_levelup_lbl.visible = true
+	var tw := create_tween()
+	tw.tween_interval(2.0)
+	tw.tween_callback(func(): _levelup_lbl.visible = false)
 
 ## Beständig arena-status högst upp i mitten — samma banner som 2D-HUD:en.
 ## Namngivna metod-kopplingar (inte lambdas) så signalerna auto-kopplas bort

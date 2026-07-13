@@ -492,6 +492,24 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       stället för fotoskannad Meshy mot platta färgtiles. `shot_zone` tog
       zon via cmdline (`-- forest`) och fick träd-/klippvyer för visuell QA.
 
+- [x] Besvärjelse- och händelse-fx i 3D (2026-07-13, `entities/spell_fx3d.gd`):
+      SpellFx3D — 3D-motsvarigheten till SpellFx med samma repertoar i
+      världsmeter (1 tile = 1 m): partikelskur, dödsskur per monstertyp
+      (ben/slem/glöd+rök/is/stoft — klassningen delas med 2D via
+      SpellFx.death_kind), fontän, expanderande markring, projektil i
+      brösthöjd med liten kastbåge samt ljusblixt. Partikelmesh + material
+      delas statiskt; allt är självstädande engångshändelser (cast/död/
+      plock), som 2D. Player3D:s cast-fx har nu 2D:ns fulla ctype-repertoar
+      (heal/support/conjure/attack med projektil → nedslagsskur + blixt) i
+      stället för ✦-symbolen; Monster3D-död ger typad dödsskur + guldglitter
+      när loot föll; GroundItem3D glittrar vid plock. Hud3D fick 2D:ns
+      firanden som helt saknades i 3D: level-up (guldring + fontän +
+      "★ LEVEL UP!"), skill-up (ring + label), dryck (heal-gnistor/mana-skur)
+      och hantverk ("+1 <namn>"-flyttext) — inklusive ljuden (level_up/
+      skill_up/craft), som heller aldrig spelades i 3D. Visuell QA via nytt
+      `tools/shot_fx.gd` (kontaktkarta över alla effekttyper). 9 nya tester
+      i test_fx3d.gd.
+
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1 ✓
 - MultiMesh för tiles/vegetation ✓; chunkad värld med laddningsradie —

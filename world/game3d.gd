@@ -52,6 +52,8 @@ func _ready() -> void:
 	_weather_fx = WeatherParticles3D.new()
 	add_child(_weather_fx)
 	hud = Hud3D.new()
+	hud.player = player                      # världsankare för firande-fx
+	hud.fx = _fx                             # delad flyttext-pool (hantverk)
 	add_child(hud)
 	hud.attach_minimap(_map_monster_tiles, _map_npc_list, _map_loot_tiles)
 	hud.hotkey_bar.caster = player           # hotbaren kastar via Player3D

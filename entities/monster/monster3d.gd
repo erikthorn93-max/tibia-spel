@@ -355,10 +355,20 @@ func _on_sim_enraged() -> void:
 	_tint_mat.albedo_color = _rest_tint()
 	_refresh_hp_bar()
 
-## Död: simuleringen har bokfört exp/kills och frigjort tilen — krymp och
-## försvinn. game3d schemalägger ev. respawn via died-signalen.
-func _on_sim_died(_drops: Array) -> void:
+## Död: simuleringen har bokfört exp/kills och frigjort tilen — dödsskur med
+## stil per monstertyp (ben/slem/glöd/is/stoft, samma klassning som 2D-vyn)
+## + guldglitter om loot föll, sedan krymp och försvinn. game3d schemalägger
+## ev. respawn via died-signalen.
+func _on_sim_died(drops: Array) -> void:
 	Sfx.monster_die()
+	var fx_parent := get_parent()
+	if fx_parent != null:
+		var d: Dictionary = MonsterDB.monsters.get(sim.monster_name, {})
+		var base_col := Color(String(d.get("color", "#aa3333")))
+		SpellFx3D.death_burst(fx_parent, position + Vector3(0, 0.4, 0),
+			base_col, SpellFx.death_kind(sim.monster_name))
+		if not drops.is_empty():
+			SpellFx3D.fountain(fx_parent, position, Color(1.0, 0.92, 0.45), 8)
 	if _visual == null:
 		queue_free()
 		return

@@ -261,30 +261,45 @@ func cast_spell(id: String) -> void:
 	if String(res.get("message", "")) != "":
 		_msg(String(res["message"]))
 
-## Besvärjelse-fx i 3D — medvetet billig: symbol ur den poolade flyttext-
-## poolen + en kort ljuspuls (engångshändelse per cast, jfr kraftslaget).
+## Besvärjelse-fx i 3D — samma repertoar som 2D-vyns _play_spell_fx:
+## heal-gnistor, support-ring, conjure-skur och attack-projektil med
+## nedslagsskur, alla med ljusblixt. Engångshändelser per cast (jfr
+## kraftslaget) — SpellFx3D-noderna städar sig själva.
 func _play_spell_fx3d(res: Dictionary) -> void:
 	var fxd: Dictionary = res.get("fx", {})
 	if fxd.is_empty():
 		return
 	Sfx.cast(String(fxd.get("ctype", "")))
-	var color := SpellFx.element_color(String(fxd.get("element", "none")))
-	var center: Vector2i = fxd.get("center", sim.tile)
-	var pos := Zone3D.tile_to_world3(center)
-	if fx != null:
-		fx.show_text(pos, "✦", color)
 	var parent := get_parent()
 	if parent == null:
 		return
-	var light := OmniLight3D.new()
-	light.light_color = color
-	light.light_energy = 1.8
-	light.omni_range = 2.5 + float(int(fxd.get("radius", 0)))
-	light.position = pos + Vector3(0, 0.8, 0)
-	parent.add_child(light)
-	var tw := light.create_tween()
-	tw.tween_property(light, "light_energy", 0.0, 0.35)
-	tw.tween_callback(light.queue_free)
+	var color := SpellFx.element_color(String(fxd.get("element", "none")))
+	var center: Vector2i = fxd.get("center", sim.tile)
+	var center_pos := Zone3D.tile_to_world3(center)
+	match String(fxd.get("ctype", "")):
+		"heal":
+			SpellFx3D.heal_sparkle(parent, position)
+			SpellFx3D.flash(parent, position, color, 0.9, 2.8)
+		"support":
+			SpellFx3D.ring(parent, position, color, 0.75)
+			SpellFx3D.burst(parent, position + Vector3(0, 0.6, 0), color, 10, 2.2)
+			SpellFx3D.flash(parent, position, color, 0.9, 2.8)
+		"conjure":
+			SpellFx3D.burst(parent, position + Vector3(0, 0.6, 0), color, 10, 2.2)
+			SpellFx3D.flash(parent, position, color, 0.7, 2.5)
+		"attack":
+			var radius := 2.5 + float(int(fxd.get("radius", 0)))
+			if String(fxd.get("target_type", "target")) == "area_self" \
+					or center == sim.tile:
+				SpellFx3D.burst(parent, center_pos + Vector3(0, 0.6, 0), color, 18, 3.4)
+				SpellFx3D.flash(parent, center_pos, color, 1.8, radius + 2.0)
+			else:
+				# Projektil från spelaren → nedslag vid målet
+				SpellFx3D.projectile(parent, position, center_pos, color,
+					func():
+						SpellFx3D.burst(parent, center_pos + Vector3(0, 0.6, 0),
+							color, 16, 3.4)
+						SpellFx3D.flash(parent, center_pos, color, 1.6, radius + 1.5))
 
 func _msg(text: String) -> void:
 	if World.hud != null:
