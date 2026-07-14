@@ -521,6 +521,19 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       auran ritas ovanpå spriten. Kontaktkartan (shot_fx) tar nu även en
       andra bild efter engångsskurarna där aurorna syns. 5 nya tester.
 
+- [x] Skyltar i 3D + låst portal-paritet (2026-07-14, `zone3d.gd`):
+      billboardade Label3D-skyltar (Npc3D-idiomet) med 2D:ns exakta texter —
+      "→ Zonnamn" på olåsta portaler, "Låst: <krav>" på låsta, zonnamnet på
+      husdörrar (en skylt per dörr-rad — grannrutors billboards överlappade
+      vid dubbeldörrar) och "Ner: <tema>" på dungeon-nedgångar; trappor är
+      oskyltade som i 2D. Låsta portaler bytte den grå kuben mot samma
+      smaragdsigill i gråtonat material_override utan skimmer (2D:s gråa
+      virvel: samma form, läses som "stängd"); upplåsning byter till glödande
+      sigill + målskylt via portal_unlocked som förut. Zonnamnen läses via
+      nya `ZoneModel.zone_display_name` (statisk cache — delas av 2D-vyns
+      etiketter, som tidigare läste zonfilen per anrop). shot_zone fick
+      portal-/nedgångsvypunkter. 6 nya + 2 omskrivna tester i test_zone3d.gd.
+
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1 ✓
 - MultiMesh för tiles/vegetation ✓; chunkad värld med laddningsradie —

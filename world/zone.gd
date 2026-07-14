@@ -360,9 +360,7 @@ func _add_shortcut_marker(t: Vector2i) -> void:
 	_shortcut_markers[t] = d
 
 func _zone_display_name(id: String) -> String:
-	var f := FileAccess.open("res://data/zones/%s.json" % id, FileAccess.READ)
-	var d = JSON.parse_string(f.get_as_text()) if f else null
-	return String(d["name"]) if d is Dictionary and d.has("name") else id
+	return ZoneModel.zone_display_name(id)
 
 # ── Reaktioner på modellens signaler ──────────────────────────────────────────
 func _on_unlock_added(id: String) -> void:

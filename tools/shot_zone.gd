@@ -52,6 +52,14 @@ func _ready() -> void:
 		_spots["shop"] = model.shop_points[0]
 	if not model.entrance_points.is_empty():
 		_spots["door"] = model.entrance_points.keys()[0]
+	for t: Vector2i in model.portals:
+		if model.entrance_points.has(t) or model.stair_points.has(t):
+			continue
+		var key := "portal_locked" if model.portal_locks.has(t) else "portal"
+		if not _spots.has(key):
+			_spots[key] = t
+	if not model.dungeon_entrances.is_empty():
+		_spots["down"] = model.dungeon_entrances.keys()[0]
 	for ch in ["t", "r"]:
 		var best := Vector2i(-1, -1)
 		var best_n := -1

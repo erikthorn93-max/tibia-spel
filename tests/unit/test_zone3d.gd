@@ -4,6 +4,7 @@ extends GutTest
 ## PlayerSim-kontrakt som 2D-vyn (snap + interpolation ur move_progress).
 
 const Zone3DScript = preload("res://world/zone3d.gd")
+const DungeonGen = preload("res://world/dungeon_generator.gd")
 const Player3DScript = preload("res://entities/player/player3d.gd")
 
 var _saved_tile: Vector2i
@@ -142,7 +143,7 @@ func test_door_aligns_with_wall_row():
 	assert_almost_eq(float(z.get_node("Marker_0_1").rotation.y), PI / 2.0, 0.001,
 		"väggar enbart i y-led → dörren vrids 90°")
 
-func test_unlocked_portal_gets_sigil_locked_keeps_cube():
+func test_unlocked_portal_glows_locked_is_gray_sigil():
 	var m := _marker_model()
 	m.portals[Vector2i(0, 0)] = "town"
 	m.portals[Vector2i(3, 0)] = "town"
@@ -154,24 +155,93 @@ func test_unlocked_portal_gets_sigil_locked_keeps_cube():
 		"olåst portal ska få smaragdsigillen")
 	assert_not_null((open_marker.get_child(0) as MeshInstance3D).material_overlay,
 		"portalsigillen ska skimra via en additiv overlay")
-	var locked_marker: Node = z.get_node("Marker_3_0")
-	assert_true(locked_marker is MeshInstance3D \
-		and (locked_marker as MeshInstance3D).mesh is BoxMesh,
-		"låst portal ska behålla den dämpade kuben")
+	assert_null((open_marker.get_child(0) as MeshInstance3D).material_override,
+		"olåst sigill ska behålla GLB:ns egna material")
+	var locked_part := z.get_node("Marker_3_0").get_child(0) as MeshInstance3D
+	assert_eq(locked_part.mesh, sigil_mesh,
+		"låst portal ska ha samma sigillform — gråtonad, inte en kub")
+	assert_not_null(locked_part.material_override,
+		"låst sigill ska gråtonas via material_override")
+	assert_null(locked_part.material_overlay,
+		"låst sigill ska inte skimra (stängd)")
 
-func test_portal_unlock_swaps_cube_for_sigil():
+func test_portal_unlock_swaps_gray_sigil_for_glowing():
 	var m := _marker_model()
 	m.portals[Vector2i(0, 0)] = "town"
 	m.portal_locks[Vector2i(0, 0)] = "__marker_testlock"
 	var z := _build_view(m)
-	assert_true(z._portal_marker_nodes[Vector2i(0, 0)] is MeshInstance3D,
-		"låst portal ska starta som kub")
+	var start_part := (z._portal_marker_nodes[Vector2i(0, 0)] as Node3D) \
+		.get_child(0) as MeshInstance3D
+	assert_not_null(start_part.material_override,
+		"låst portal ska starta som gråtonad sigill")
 	m.portal_locks.erase(Vector2i(0, 0))
 	z._on_portal_unlocked(Vector2i(0, 0))
 	var sigil_mesh: Mesh = Zone3D._model_meshes("emerald_sigil")[0]["mesh"]
 	var marker: Node3D = z._portal_marker_nodes[Vector2i(0, 0)]
-	assert_eq((marker.get_child(0) as MeshInstance3D).mesh, sigil_mesh,
-		"upplåsning ska byta kuben mot sigillen")
+	var part := marker.get_child(0) as MeshInstance3D
+	assert_eq(part.mesh, sigil_mesh, "upplåsning ska behålla sigillformen")
+	assert_null(part.material_override, "upplåst sigill ska tappa gråtoningen")
+	assert_not_null(part.material_overlay, "upplåst sigill ska skimra")
+	var lbl := marker.get_node("Skylt") as Label3D
+	assert_true(lbl.text.begins_with("→ "),
+		"upplåsning ska byta 'Låst: …'-skylten mot målskylten")
+
+# ── Skyltar (2D-paritet: portaler, dörrar och nedgångar har etiketter) ────────
+
+func test_portal_markers_get_labels():
+	var m := _marker_model()
+	m.portals[Vector2i(0, 0)] = "town"
+	m.portals[Vector2i(3, 0)] = "town"
+	m.portal_locks[Vector2i(3, 0)] = "__marker_testlock"
+	var z := _build_view(m)
+	var open_lbl := z.get_node("Marker_0_0/Skylt") as Label3D
+	assert_eq(open_lbl.text, "→ " + ZoneModel.zone_display_name("town"),
+		"olåst portal ska skylta målzonen, som 2D")
+	assert_eq(int(open_lbl.billboard), int(BaseMaterial3D.BILLBOARD_ENABLED),
+		"skylten ska vara billboardad")
+	var locked_lbl := z.get_node("Marker_3_0/Skylt") as Label3D
+	assert_true(locked_lbl.text.begins_with("Låst: "),
+		"låst portal ska skylta vad som krävs, som 2D")
+
+func test_door_marker_gets_zone_name_label():
+	var m := _marker_model()
+	m.portals[Vector2i(0, 0)] = "frodo_inn"
+	m.entrance_points[Vector2i(0, 0)] = "frodo_inn"
+	var z := _build_view(m)
+	var lbl := z.get_node("Marker_0_0/Skylt") as Label3D
+	assert_eq(lbl.text, ZoneModel.zone_display_name("frodo_inn"),
+		"husdörren ska skylta zonnamnet, som 2D")
+
+func test_double_door_gets_single_label():
+	var m := _marker_model()
+	for t in [Vector2i(1, 0), Vector2i(2, 0)]:
+		m.portals[t] = "frodo_inn"
+		m.entrance_points[t] = "frodo_inn"
+	var z := _build_view(m)
+	assert_not_null(z.get_node_or_null("Marker_1_0/Skylt"),
+		"första dörren i raden ska bära skylten")
+	assert_null(z.get_node_or_null("Marker_2_0/Skylt"),
+		"grannrutans dörr ska inte dubbla skylten (billboards överlappar)")
+
+func test_dungeon_entrance_gets_ner_label():
+	var m := _marker_model()
+	m.dungeon_entrances[Vector2i(2, 2)] = "katakomber"
+	var z := _build_view(m)
+	var lbl := z.get_node("Marker_2_2/Skylt") as Label3D
+	assert_eq(lbl.text, "Ner: " + DungeonGen.theme_name("katakomber"),
+		"nedgången ska skylta dungeontemat, som 2D")
+
+func test_stair_marker_has_no_label():
+	var m := _marker_model()
+	m.portals[Vector2i(0, 0)] = "town"
+	m.stair_points[Vector2i(0, 0)] = {"to": "town", "up": true}
+	var z := _build_view(m)
+	assert_null(z.get_node_or_null("Marker_0_0/Skylt"),
+		"trappor är oskyltade i 2D — samma i 3D")
+
+func test_zone_display_name_falls_back_to_id():
+	assert_eq(ZoneModel.zone_display_name("finns_inte_alls"), "finns_inte_alls",
+		"saknad zonfil ska ge id:t som namn (genererade dungeons)")
 
 func test_model_marker_falls_back_to_cube():
 	var m := _marker_model()

@@ -10,6 +10,18 @@ extends RefCounted
 ## Beroenden: UnlockSystem (ren autoload) och PlaceholderTiles.TERRAIN
 ## (statisk datatabell över giltiga terrängtecken — inte rendering).
 
+## Visningsnamn för en zon (läses ur zonfilen, cachas per körning) — delas av
+## 2D- och 3D-vyns skyltar. Saknad fil (t.ex. genererade dungeons) ger id:t.
+static var _zone_names: Dictionary = {}
+static func zone_display_name(id: String) -> String:
+	if _zone_names.has(id):
+		return _zone_names[id]
+	var f := FileAccess.open("res://data/zones/%s.json" % id, FileAccess.READ)
+	var d = JSON.parse_string(f.get_as_text()) if f else null
+	var n := String(d["name"]) if d is Dictionary and d.has("name") else id
+	_zone_names[id] = n
+	return n
+
 signal tile_opened(t: Vector2i, terrain_ch: String)   # gate/genväg öppnad
 signal shortcut_opened(t: Vector2i)                   # genväg öppnad (marker bort)
 signal portal_unlocked(t: Vector2i)                   # låst portal upplåst

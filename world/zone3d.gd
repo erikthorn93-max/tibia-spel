@@ -8,6 +8,8 @@ extends Node3D
 ## Samma modell som 2D-vyn (zone.gd); ingen spellogik här. Ett gemensamt
 ## material för alla terrängbatcher (material-pooling) — färgen bor per instans.
 
+const DungeonGen = preload("res://world/dungeon_generator.gd")
+
 const TILE3D := 1.0            # en tile = 1 meter
 const GROUND_THICK := 0.1
 const WALL_HEIGHT := 2.0
@@ -45,8 +47,10 @@ const CACTUS_SMALL := {"file": "cactus", "h": 0.6}
 const CACTUS_EVERY := 17       # gles ökendekoration — enstaka småkaktusar
 
 ## Interaktionsmodeller: riktiga GLB:er där en naturlig modell finns —
-## trappor och dungeon-nedgångar får stentrappan, olåsta portaler smaragd-
-## sigillen. Låsta portaler och genvägar behåller kuben (dämpad = "stängd").
+## trappor och dungeon-nedgångar får stentrappan, portaler smaragdsigillen
+## (låsta i gråtonat material utan skimmer — samma form, "stängd", som 2D:s
+## gråa virvel). Genvägar behåller kuben. Portaler/dörrar/nedgångar får
+## billboardade skyltar med samma texter som 2D ("→ Zon", "Låst: …", "Ner: …").
 const STAIR_MARKER := {"file": "stone_staircase", "h": 0.9}
 const ENTRANCE_MARKER := {"file": "stone_staircase", "h": 0.75}
 const PORTAL_MARKER := {"file": "emerald_sigil", "h": 0.9}
@@ -114,7 +118,9 @@ func build(m: ZoneModel) -> void:
 		if not UnlockSystem.is_unlocked(model.shortcut_points[t]):
 			_shortcut_markers[t] = _add_marker(t, Color(0.8, 0.7, 0.4), 0.4)
 	for t in model.dungeon_entrances:
-		_add_model_marker(t, ENTRANCE_MARKER, Color(0.15, 0.12, 0.2), 0.0)
+		var entr := _add_model_marker(t, ENTRANCE_MARKER, Color(0.15, 0.12, 0.2), 0.0)
+		_add_marker_label(entr, "Ner: " + DungeonGen.theme_name(
+			String(model.dungeon_entrances[t])), Color(0.75, 0.7, 0.8), 1.1)
 
 ## Grupperar tiles per terrängtecken och bygger en MultiMesh-batch per grupp.
 func _build_terrain() -> void:
@@ -283,9 +289,10 @@ func _add_marker(t: Vector2i, color: Color, glow: float) -> MeshInstance3D:
 ## ruta (eller explicit vridning via rot, för riktade markörer som dörrar).
 ## Faller tillbaka till kub-markern om modellen saknas. glow > 0 ger
 ## en svag additiv overlay i signaturfärgen (Monster3D-idiomet) så rutan
-## läses som magisk/interaktiv även i skymning.
+## läses som magisk/interaktiv även i skymning. override_mat ersätter
+## GLB:ns egna material (låst portal = gråtonad sigill, som 2D:s grå virvel).
 func _add_model_marker(t: Vector2i, spec: Dictionary, color: Color, glow: float,
-		rot := NAN) -> Node3D:
+		rot := NAN, override_mat: StandardMaterial3D = null) -> Node3D:
 	var parts := _model_meshes(String(spec["file"]))
 	if parts.is_empty():
 		return _add_marker(t, color, maxf(glow, 0.3))
@@ -308,17 +315,42 @@ func _add_model_marker(t: Vector2i, spec: Dictionary, color: Color, glow: float,
 		mi.transform = Transform3D(xb, Vector3.ZERO) * part["xform"]
 		if overlay != null:
 			mi.material_overlay = overlay
+		if override_mat != null:
+			mi.material_override = override_mat
 		root.add_child(mi)
 	add_child(root)
 	return root
+
+## Billboardad skylt på en interaktionsruta — samma texter som 2D:s Label-
+## markörer (Npc3D-idiomet: no_depth_test så den läses genom väggar/träd).
+func _add_marker_label(parent: Node3D, text: String, color: Color, y: float) -> void:
+	var l := Label3D.new()
+	l.name = "Skylt"
+	l.text = text
+	l.modulate = color
+	l.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	l.no_depth_test = true
+	l.font_size = 36
+	l.outline_size = 10
+	l.pixel_size = 0.01
+	l.position.y = y - parent.position.y
+	parent.add_child(l)
 
 ## Husdörr på en entrance-ruta — samma åtskillnad som 2D-vyns dörrmarkör.
 ## Dörrbladet spänner X i modellen; står väggarna i y-led vrids den 90° så
 ## dörren fyller luckan i sin väggrad. Stängd dörr = ingen glow (låsta och
 ## olåsta ser lika ut — låset prövas vid steget, som 2D).
 func _add_door_marker(t: Vector2i) -> void:
-	_add_model_marker(t, DOOR_MARKER, Color(0.45, 0.32, 0.18), 0.0,
+	var marker := _add_model_marker(t, DOOR_MARKER, Color(0.45, 0.32, 0.18), 0.0,
 		_door_rotation(t))
+	# Namnskylt på husdörren så den går att hitta — samma text som 2D. Vid
+	# dubbeldörrar (två entrance-rutor i rad mot samma zon) skyltas bara den
+	# första — billboardade skyltar på grannrutor överlappar annars varandra.
+	for prev in [t + Vector2i.LEFT, t + Vector2i.UP]:
+		if model.entrance_points.has(prev) and model.portals.get(prev) == model.portals[t]:
+			return
+	_add_marker_label(marker, ZoneModel.zone_display_name(
+		String(model.portals[t])), Color(1.0, 0.88, 0.55), 1.95)
 
 ## Väggar i x-led (grannar vänster/höger) → dörren spänner X (0°); väggar
 ## enbart i y-led → 90°. Fristående dörr utan väggrad behåller 0°.
@@ -337,10 +369,22 @@ func _add_portal_marker(t: Vector2i) -> void:
 		old.name = "MarkerDying"   # frigör namnet åt ersättaren
 		old.queue_free()
 	if model.portal_locks.has(t):
-		_portal_marker_nodes[t] = _add_marker(t, Color(0.45, 0.45, 0.5), 0.0)
+		# Låst: samma sigillform i gråtonat material utan skimmer — 2D:s grå
+		# virvel. Skylten säger vad som krävs, som 2D:s "Låst: …"-etikett.
+		var gray := StandardMaterial3D.new()
+		gray.albedo_color = Color(0.45, 0.45, 0.5)
+		gray.roughness = 1.0
+		var locked := _add_model_marker(t, PORTAL_MARKER,
+			Color(0.45, 0.45, 0.5), 0.0, NAN, gray)
+		_add_marker_label(locked, "Låst: %s" % UnlockSystem.display_name(
+			String(model.portal_locks[t])), Color(0.7, 0.7, 0.7), 1.25)
+		_portal_marker_nodes[t] = locked
 	else:
-		_portal_marker_nodes[t] = _add_model_marker(t, PORTAL_MARKER,
+		var open := _add_model_marker(t, PORTAL_MARKER,
 			Color(0.62, 0.38, 0.9), 0.5)
+		_add_marker_label(open, "→ " + ZoneModel.zone_display_name(
+			String(model.portals[t])), Color(0.88, 0.78, 1.0), 1.25)
+		_portal_marker_nodes[t] = open
 
 # ── Reaktioner på modellens signaler (samma kontrakt som 2D-vyn) ──────────────
 func _on_tile_opened(_t: Vector2i, _terrain_ch: String) -> void:
