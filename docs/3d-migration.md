@@ -534,6 +534,17 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       etiketter, som tidigare läste zonfilen per anrop). shot_zone fick
       portal-/nedgångsvypunkter. 6 nya + 2 omskrivna tester i test_zone3d.gd.
 
+- [x] Boss-markör i 3D (2026-07-14, `entities/boss_marker3d.gd`):
+      BossMarker3D — 3D-motsvarigheten till 2D:s boss_marker. Otillgänglig
+      boss (task-cooldown) gav tidigare bara `return` i `_spawn_monster3d`:
+      bossen dök aldrig upp i 3D förrän zonen laddades om. Markören står
+      osynlig på spawnrutan, pollar TaskSystem varje sekund, meddelar
+      spelare inom 6 rutor ("<boss> är inte här... (N min)", samma text och
+      cooldown som 2D) och spawnar bossen via `_spawn_monster3d`-callbacken
+      när cooldownen löpt ut. Ligger i `_monsters_root` (typfiltrerade
+      iterationer opåverkade) och städas därmed vid zonbyte. 7 nya tester
+      i test_boss3d.gd.
+
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1 ✓
 - MultiMesh för tiles/vegetation ✓; chunkad värld med laddningsradie —

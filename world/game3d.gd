@@ -397,9 +397,13 @@ func _spawn_monsters() -> void:
 
 func _spawn_monster3d(sp: Dictionary) -> void:
 	var mname := String(sp["monster"])
-	# Otillgängliga bossar väntar på sin task — boss-markern är 2D-UI, hoppas över.
+	# Otillgänglig boss väntar på sin task — markören pollar cooldownen och
+	# spawnar bossen när den löpt ut (samma regler som world.gd:s _spawn_one).
 	if bool(MonsterDB.monsters.get(mname, {}).get("boss", false)) \
 			and not TaskSystem.boss_available(mname):
+		var bm := BossMarker3D.new()
+		_monsters_root.add_child(bm)
+		bm.setup(sp, _spawn_monster3d.bind(sp))
 		return
 	var m := Monster3D.new()
 	_monsters_root.add_child(m)
