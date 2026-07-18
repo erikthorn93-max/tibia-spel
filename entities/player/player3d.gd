@@ -38,6 +38,7 @@ func _init() -> void:
 	sim.moved.connect(_on_sim_moved)
 	sim.facing_changed.connect(_on_facing_changed)
 	sim.attack_swung.connect(_on_attack_swung)
+	sim.arrow_fired.connect(_on_arrow_fired)
 	sim.healed.connect(_on_healed)
 	# Kraftslagets ljud — samma kopplingar som 2D:s player.gd.
 	sim.spec_denied.connect(func(): Sfx.denied())
@@ -234,6 +235,17 @@ func _on_attack_swung(dir: Vector2i) -> void:
 	tw.tween_property(_visual, "position", lunge, 0.07).set_ease(Tween.EASE_OUT)
 	tw.tween_property(_visual, "position", Vector3.ZERO, 0.13).set_ease(Tween.EASE_IN_OUT)
 	tw.tween_callback(func(): _attacking = false)
+
+## Pil avlossad: projektil i brösthöjd till målets ruta i ammunitionens färg
+## (annars bågens), liten träffskur vid nedslaget — som monstrens skott.
+func _on_arrow_fired(_from_t: Vector2i, to_t: Vector2i) -> void:
+	var fx_parent := get_parent()
+	if fx_parent == null:
+		return
+	var to_pos := Zone3D.tile_to_world3(to_t)
+	var col := PlayerSim.arrow_color()
+	SpellFx3D.projectile(fx_parent, position, to_pos, col,
+		func(): SpellFx3D.burst(fx_parent, to_pos + Vector3(0, 0.5, 0), col, 6, 2.0))
 
 ## Leech-charm läkte: grön "+N" ovanför spelaren (som 2D-vyn).
 func _on_healed(amount: float) -> void:

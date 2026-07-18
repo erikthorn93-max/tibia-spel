@@ -570,6 +570,15 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       6 nya tester (kiting + båg-sikt) i test_monster_ranged.gd och
       test_player_sim_combat.gd.
 
+- [x] Pil-projektiler för spelarens båge (2026-07-18): ny sim-signal
+      `PlayerSim.arrow_fired(from, to)` (spegel av monstrens ranged_attack,
+      emitteras efter ammo-förbrukningen — även bommar syns flyga) från både
+      auto-attack och kraftslag; 2D- och 3D-vyn ritar projektilen via
+      SpellFx(.3D).projectile med träffskur vid nedslaget. Färgen läses ur
+      ammunitionens item-data (annars bågens) via delade
+      `PlayerSim.arrow_color()` så pilen ser likadan ut i båda renderarna.
+      5 nya tester i test_player_sim_combat.gd.
+
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1 ✓
 - MultiMesh för tiles/vegetation ✓; chunkad värld med laddningsradie —

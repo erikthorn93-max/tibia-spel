@@ -39,6 +39,7 @@ func _init() -> void:
 	sim.facing_changed.connect(_on_sim_facing_changed)
 	sim.message.connect(_on_sim_message)
 	sim.attack_swung.connect(_on_sim_attack_swung)
+	sim.arrow_fired.connect(_on_sim_arrow_fired)
 	sim.healed.connect(_on_sim_healed)
 	sim.spec_flash.connect(_on_sim_spec_flash)
 	sim.spec_denied.connect(func(): Sfx.denied())
@@ -206,6 +207,17 @@ func _on_sim_message(text: String) -> void:
 ## Sving utförd (träff eller miss): spela attack-stöten mot facing-riktningen.
 func _on_sim_attack_swung(dir: Vector2i) -> void:
 	visual.play_attack(dir)
+
+## Pil avlossad: projektil till målets ruta i ammunitionens färg (annars
+## bågens), liten träffskur vid nedslaget — spegelbilden av monstrens skott.
+func _on_sim_arrow_fired(_from_t: Vector2i, to_t: Vector2i) -> void:
+	var fx_parent := get_parent()
+	if fx_parent == null or zone == null:
+		return
+	var to_pos: Vector2 = zone.tile_to_world(to_t)
+	var col := PlayerSim.arrow_color()
+	SpellFx.projectile(fx_parent, global_position, to_pos, col,
+		func(): SpellFx.burst(fx_parent, to_pos, col, 6, 55.0))
 
 ## Leech-charm läkte: grön "+N" ovanför spelaren.
 func _on_sim_healed(amount: float) -> void:

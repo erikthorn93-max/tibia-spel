@@ -125,6 +125,49 @@ func test_bage_vantar_bakom_vagg() -> void:
 		"ingen pil ska förbrukas när sikten är skymd")
 	_cleanup_bow()
 
+func test_bagskott_avlossar_pil() -> void:
+	watch_signals(_sim)
+	_sim.zone = _bow_zone()
+	_equip_bow()
+	_target.tile = Vector2i(9, 5)                   # dist 4, fri sikt
+	_sim.attack_tick(0.016)
+	assert_signal_emitted(_sim, "arrow_fired", "bågskott ska avlossa pil-projektilen")
+	assert_signal_emitted_with_parameters(_sim, "arrow_fired",
+		[Vector2i(5, 5), Vector2i(9, 5)])
+	_cleanup_bow()
+
+func test_narstrid_avlossar_ingen_pil() -> void:
+	watch_signals(_sim)
+	_sim.attack_tick(0.016)                         # obeväpnad intill (before_each)
+	assert_signal_emitted(_sim, "attack_swung")
+	assert_signal_not_emitted(_sim, "arrow_fired", "närstrid ska inte rita projektil")
+
+func test_skymd_sikt_avlossar_ingen_pil() -> void:
+	watch_signals(_sim)
+	_sim.zone = _bow_zone()
+	_equip_bow()
+	_target.tile = Vector2i(1, 5)                   # bakom muren
+	_sim.attack_tick(0.016)
+	assert_signal_not_emitted(_sim, "arrow_fired", "inget skott → ingen projektil")
+	_cleanup_bow()
+
+func test_kraftslag_med_bage_avlossar_pil() -> void:
+	watch_signals(_sim)
+	_sim.zone = _bow_zone()
+	_equip_bow()
+	GameState.spec_energy = 100.0
+	_target.tile = Vector2i(9, 5)                   # fri sikt
+	_sim.try_special([_target])
+	assert_signal_emitted(_sim, "spec_released")
+	assert_signal_emitted(_sim, "arrow_fired", "kraftslag med båge ska avlossa pilen")
+	_cleanup_bow()
+
+func test_pilfargen_foljer_ammunitionen() -> void:
+	_equip_bow()                                    # hunting_bow → wooden_arrow
+	assert_eq(PlayerSim.arrow_color(), Color("#a0724a"),
+		"pilfärgen ska läsas ur ammunitionens item-data")
+	_cleanup_bow()
+
 func test_kraftslag_med_bage_kraver_fri_sikt() -> void:
 	watch_signals(_sim)
 	_sim.zone = _bow_zone()

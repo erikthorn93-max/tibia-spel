@@ -17,6 +17,8 @@ signal step_completed(t: Vector2i)           # landade på t — vyn portal-chec
 signal facing_changed(dir: Vector2i)         # vyn vänder karaktärsvisualen
 signal message(text: String)                 # "Kan inte nå dit." / unlock-hints
 signal attack_swung(dir: Vector2i)           # sving utförd (träff eller miss)
+signal arrow_fired(from: Vector2i, to: Vector2i)  # pil avlossad (före träff-
+                                             # rull) — vyn ritar projektilen
 signal healed(amount: float)                 # leech-charm läkte — vyn visar +N
 signal spec_flash(t: Vector2i)               # kraftslags-nedslag på tile t
 signal spec_denied()                         # kraftslag nekades — vyn spelar ljud
@@ -152,6 +154,13 @@ func try_bump_unlock(t: Vector2i) -> void:
 func chebyshev(t: Vector2i) -> int:
 	return maxi(absi(t.x - tile.x), absi(t.y - tile.y))
 
+## Projektilfärg för pilskott: ammunitionens färg, annars bågens, annars en
+## neutral träfärg. Delas av 2D- och 3D-vyn så pilen ser likadan ut.
+static func arrow_color() -> Color:
+	var weapon: Dictionary = ItemDB.items.get(GameState.equipped_weapon, {})
+	var ammo: Dictionary = ItemDB.items.get(String(weapon.get("ammo", "")), {})
+	return Color(String(ammo.get("color", weapon.get("color", "#c8b078"))))
+
 # ── Auto-attack ───────────────────────────────────────────────────────────────
 ## Frame-tick för auto-attack mot target. Närstrid eller bågskytte beroende på
 ## utrustat vapen; träffrull, crit, charm- och giftvapen-procs, skill-xp och
@@ -181,6 +190,7 @@ func attack_tick(delta: float) -> void:
 			return
 		if ammo_id != "":
 			GameState.consume_ammo(ammo_id)
+		arrow_fired.emit(tile, target.tile)
 		if not _rolls_hit(wskill):
 			_attack_missed(wskill)
 			return
@@ -289,6 +299,8 @@ func try_special(nearby: Array = []) -> void:
 	GameState.consume_spec()
 	if weapon_range > 1 and ammo_id != "":
 		GameState.consume_ammo(ammo_id)
+	if weapon_range > 1:
+		arrow_fired.emit(tile, target.tile)
 	set_facing(Vector2i(signi(target.tile.x - tile.x), signi(target.tile.y - tile.y)))
 	attack_swung.emit(facing)
 	var prof := CombatFormulas.spec_profile(wskill)
