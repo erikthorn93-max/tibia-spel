@@ -579,6 +579,17 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       `PlayerSim.arrow_color()` så pilen ser likadan ut i båda renderarna.
       5 nya tester i test_player_sim_combat.gd.
 
+- [x] Vandrande dialog-NPC:er (2026-07-18, `entities/npc/npc_wander_sim.gd`):
+      NpcWanderSim (RefCounted, renderer-agnostisk) — korta kardinalsteg
+      kring hemrutan (radie 2) med slumpad paus (3–8 s), fryser när spelaren
+      är inom 3 rutor (samtal/klick ska inte jaga sitt mål), kliver aldrig på
+      portaler/trappor/dörrar/nedgångar, upptagna rutor eller spelarens ruta;
+      occupancy i zonmodellen så monster och NPC:er inte överlappar. 2D-vyn
+      interpolerar position ur move_progress + vänder spriten; 3D-vyn lägger
+      till gång-studs (CharacterMotion3D.walk_bob) och vrider kroppen mot
+      gångriktningen (Monster3D:s vinkelkontrakt). Service-NPC:er står kvar
+      vid sina poster. 13 nya tester i test_npc_wander.gd.
+
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1 ✓
 - MultiMesh för tiles/vegetation ✓; chunkad värld med laddningsradie —

@@ -14,6 +14,9 @@ var tile := Vector2i.ZERO
 var _bark_timer := 0.0
 var _breath_t := 0.0      # idle-andning, slumpad fas så NPC:er inte andas i takt
 var _quest_marker: Label
+var _wander: NpcWanderSim = null   # strosar kring hemrutan (kräver zonmodell)
+var _from_pos := Vector2.ZERO
+var _to_pos := Vector2.ZERO
 const MARKER_BASE_Y := -56.0
 const SpriteFx = preload("res://world/sprite_fx.gd")
 
@@ -27,6 +30,10 @@ func setup(id: String, t: Vector2i) -> void:
 	npc_id = id
 	tile = t
 	position = Vector2(t) * 32 + Vector2(16, 16)
+	if World.zone_model != null:
+		_wander = NpcWanderSim.new()
+		_wander.place(t, World.zone_model)
+		_wander.moved.connect(_on_wander_moved)
 
 func _ready() -> void:
 	name_lbl.text = String(DialogueDB.npcs[npc_id]["name"])
@@ -76,7 +83,22 @@ func _refresh_quest_marker() -> void:
 		_:
 			_quest_marker.visible = false
 
+## Strosarsteg påbörjat: uppdatera tilen och sätt interpolationsmålen.
+func _on_wander_moved(from: Vector2i, to: Vector2i) -> void:
+	tile = to
+	_from_pos = Vector2(from) * 32 + Vector2(16, 16)
+	_to_pos = Vector2(to) * 32 + Vector2(16, 16)
+	if _sprite != null and to.x != from.x:
+		_sprite.scale.x = -1.0 if to.x < from.x else 1.0
+
 func _process(delta: float) -> void:
+	# Strosa kring hemrutan; positionen interpoleras ur move_progress
+	if _wander != null:
+		_wander.tick(delta, GameState.player_tile)
+		if _wander.move_progress < 1.0:
+			position = _from_pos.lerp(_to_pos, _wander.move_progress)
+		elif tile == _wander.tile and _to_pos != Vector2.ZERO:
+			position = _to_pos
 	# Idle-andning så NPC:n inte står helt livlös
 	_breath_t += delta
 	_sprite.scale.y = CharacterVisual.breath_scale(_breath_t)

@@ -31,7 +31,11 @@ var _quest_marker: Label3D
 var _model_h := 1.7
 var _body: Node3D                    # kroppen (GLB/låda) — andas i idle
 var _body_base_scale_y := 1.0
+var _body_base_y := 0.0
 var _breath_t := randf() * TAU       # desynkad start så torget inte andas i takt
+var _wander: NpcWanderSim = null     # dialog-NPC:er strosar kring hemrutan
+var _from3 := Vector3.ZERO
+var _to3 := Vector3.ZERO
 
 func setup(k: String, t: Vector2i, id := "") -> void:
 	kind = k
@@ -46,6 +50,10 @@ func setup(k: String, t: Vector2i, id := "") -> void:
 		QuestSystem.step_advanced.connect(_on_quest_state_changed)
 		QuestSystem.quest_completed.connect(_on_quest_state_changed)
 		_refresh_quest_marker()
+		if World.zone_model != null:
+			_wander = NpcWanderSim.new()
+			_wander.place(t, World.zone_model)
+			_wander.moved.connect(_on_wander_moved)
 
 func display_name() -> String:
 	if kind == "dialogue":
@@ -91,6 +99,7 @@ func _build_visual() -> void:
 		add_child(inst)
 		_body = inst
 		_body_base_scale_y = _model_h
+		_body_base_y = 0.0
 		return
 	var body := MeshInstance3D.new()
 	var box := BoxMesh.new()
@@ -103,12 +112,32 @@ func _build_visual() -> void:
 	add_child(body)
 	_model_h = 1.4
 	_body = body
+	_body_base_y = 0.7
 
-## Idle-andning (samma kurva som spelare/monster via CharacterMotion3D) —
-## NPC:erna står stilla, så andningen är hela deras karaktärsliv.
+## Strosarsteg påbörjat: uppdatera tilen, sätt interpolationsmålen och vrid
+## kroppen mot gångriktningen (samma vinkelkontrakt som Monster3D:s visual).
+func _on_wander_moved(from: Vector2i, to: Vector2i) -> void:
+	tile = to
+	_from3 = Zone3D.tile_to_world3(from)
+	_to3 = Zone3D.tile_to_world3(to)
+	var d := to - from
+	if _body != null and d != Vector2i.ZERO:
+		_body.rotation.y = atan2(-float(d.x), -float(d.y)) + PI
+
+## Idle-andning (samma kurva som spelare/monster via CharacterMotion3D);
+## dialog-NPC:er strosar dessutom — position ur move_progress + gång-studs.
 func _process(delta: float) -> void:
 	if _body == null:
 		return
+	if _wander != null:
+		_wander.tick(delta, GameState.player_tile)
+		if _wander.move_progress < 1.0:
+			position = _from3.lerp(_to3, _wander.move_progress)
+			_body.position.y = _body_base_y \
+				+ CharacterMotion3D.walk_bob(_wander.move_progress)
+		elif _to3 != Vector3.ZERO:
+			position = _to3
+			_body.position.y = _body_base_y
 	_breath_t += delta
 	_body.scale.y = _body_base_scale_y * CharacterMotion3D.breath_scale(_breath_t)
 
