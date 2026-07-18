@@ -251,6 +251,80 @@ func test_model_marker_falls_back_to_cube():
 	assert_true(n is MeshInstance3D and (n as MeshInstance3D).mesh is BoxMesh,
 		"saknad GLB ska falla tillbaka till kub-markören")
 
+# ── Stadens design: tak, väggdressing och rekvisita ───────────────────────────
+## Kvarter med fönstervägg, golvlagd interiör, takremsa innanför väggarna,
+## gata längs muren och en fristående klippdunge ute på gräset.
+
+func _town_block_model() -> ZoneModel:
+	var m := ZoneModel.new()
+	m.parse({"name": "Kvarter", "tiles": [
+		"WWWwWWWWWWWWWWWW",
+		"WffffffffffffffW",
+		"WrrrrrrrrrrrrrrW",
+		"WWWWWWWWWWWWWWWW",
+		"cccccccccccccccc",
+		"..rr............",
+	]}, "test_town_design")
+	return m
+
+func test_classify_roofs_skiljer_tak_fran_klippor():
+	var m := _town_block_model()
+	var roofs := Zone3D.classify_roofs(m)
+	assert_true(roofs.has(Vector2i(1, 2)), "r innanför väggarna ska klassas som tak")
+	assert_true(roofs.has(Vector2i(14, 2)))
+	assert_false(roofs.has(Vector2i(2, 5)), "fristående r ska förbli klippmark")
+	assert_false(roofs.has(Vector2i(3, 5)))
+
+func test_takrutor_far_takbatch_och_klippor_scatter():
+	var z := _build_view(_town_block_model())
+	var roof := z.get_node_or_null("Roof_r") as MultiMeshInstance3D
+	assert_not_null(roof, "takrutorna ska få en egen Roof_r-batch")
+	assert_eq(roof.multimesh.instance_count, 14, "alla takrutor ska ingå i takbatchen")
+	var rocks := _scatter_nodes(z, "mossy_rock")
+	assert_gt(rocks.size(), 0, "de fristående r-rutorna ska behålla klippscattern")
+	for n in rocks:
+		assert_eq((n as MultiMeshInstance3D).multimesh.instance_count, 2,
+			"bara de fristående r-rutorna ska få klippscatter — aldrig taken")
+
+func test_vaggdressing_kron_och_fonsterglas():
+	var z := _build_view(_town_block_model())
+	var cap := z.get_node_or_null("WallCap") as MultiMeshInstance3D
+	var pane := z.get_node_or_null("WindowPane") as MultiMeshInstance3D
+	assert_not_null(cap, "väggarna ska få kröningssten")
+	assert_eq(cap.multimesh.instance_count, 36, "alla W- och w-rutor ska ha kröningssten")
+	assert_not_null(pane, "fönsterrutan ska få glasband")
+	assert_eq(pane.multimesh.instance_count, 1, "exakt en w-ruta i kvarteret")
+
+func test_stadsrekvisita_deterministiskt_urval():
+	var m := _town_block_model()
+	# Replikera urvalsregeln (vägg intill + hash-gallring) — testet låser att
+	# vyn följer den exakt, oavsett vilka rutor hashen råkar välja.
+	var lanterns := 0
+	var barrels := 0
+	var crates := 0
+	for t: Vector2i in m.terrain:
+		var ch := String(m.terrain[t])
+		var h: int = Zone3D._tile_hash(t)
+		if ch == "c" and h % 5 == 0:
+			lanterns += 1
+		elif ch == "f" and h % 9 == 0:
+			barrels += 1
+		elif ch == "f" and h % 9 == 4:
+			crates += 1
+	assert_gt(lanterns + barrels + crates, 0,
+		"testkvarteret ska ge minst en rekvisita — annars säger testet inget")
+	var z := _build_view(m)
+	var expected := {"prop_lantern": lanterns, "prop_barrel": barrels, "prop_crate": crates}
+	for file in expected:
+		var count: int = expected[file]
+		var node := z.get_node_or_null("Props_%s_0" % file) as MultiMeshInstance3D
+		if count == 0:
+			assert_null(node, "%s: ingen batch när urvalet är tomt" % file)
+			continue
+		assert_not_null(node, "%s: rekvisitabatch ska byggas" % file)
+		assert_eq(node.multimesh.instance_count, count,
+			"%s: hash-gallringen ska styra antalet" % file)
+
 # ── Miljö-scatter (GLB-modeller) ──────────────────────────────────────────────
 
 func _scatter_nodes(z: Zone3D, file: String) -> Array:

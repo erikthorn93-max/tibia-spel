@@ -14,10 +14,24 @@ const TILE3D := 1.0            # en tile = 1 meter
 const GROUND_THICK := 0.1
 const WALL_HEIGHT := 2.0
 const WATER_DROP := 0.1        # vattenytan ligger nedsänkt under marknivån
+const ROOF_HEIGHT := WALL_HEIGHT + 0.25   # taket sticker upp över väggkrönet
 
 ## Terränger som reser sig ur marken (tecken → höjd). Träd (t) och klippor (r)
 ## renderas som markplattor med GLB-scatter ovanpå — se modellerna nedan.
 const TALL := {"W": WALL_HEIGHT, "w": WALL_HEIGHT}
+
+## Internt gruppnyckel för takrutor (r-regioner som rör en vägg) i terräng-
+## bygget — får aldrig kollidera med ett riktigt terrängtecken.
+const ROOF_KEY := "R^"
+
+## 3D-palett: varmare sten för väggar än 2D-fallbackens kalla grå (fönstrens
+## basvägg = väggens — glasbandet står för fönsterkänslan). Tak i terrakotta,
+## kröningssten i ljus kalksten. Marken behåller PlaceholderTiles-färgerna.
+const COLOR_3D := {"W": Color("8a8478"), "w": Color("8a8478")}
+const ROOF_COLOR := Color("8a3a22")
+const CAP_COLOR := Color("aaa49a")
+const GLASS_COLOR := Color("31505e")
+const GLASS_GLOW := Color("7fb6d0")
 
 ## Miljömodeller ur assets/models3d (normaliserade till 1,0 m höjd, fötter på
 ## y=0) + världshöjd i meter. Trädet väljs deterministiskt per ruta ur listan
@@ -87,6 +101,7 @@ static var _mesh_cache: Dictionary = {}
 
 var model: ZoneModel
 var _shared_mat: StandardMaterial3D
+var _roof_tiles: Dictionary = {}   # Vector2i -> true (r-rutor som är hustak)
 var _shortcut_markers: Dictionary = {}    # Vector2i -> Node3D
 var _portal_marker_nodes: Dictionary = {} # Vector2i -> Node3D
 
@@ -122,19 +137,55 @@ func build(m: ZoneModel) -> void:
 		_add_marker_label(entr, "Ner: " + DungeonGen.theme_name(
 			String(model.dungeon_entrances[t])), Color(0.75, 0.7, 0.8), 1.1)
 
+## Klassar zonens 'r'-rutor: en sammanhängande r-region som rör en vägg (W/w)
+## är ett hustak — stadens byggnader får röda takvolymer — medan fristående
+## regioner förblir klippmark med stenscatter (vildmarkens betydelse av 'r').
+static func classify_roofs(m: ZoneModel) -> Dictionary:
+	var roofs: Dictionary = {}
+	var seen: Dictionary = {}
+	for start: Vector2i in m.terrain:
+		if String(m.terrain[start]) != "r" or seen.has(start):
+			continue
+		var region: Array[Vector2i] = [start]
+		var queue: Array[Vector2i] = [start]
+		seen[start] = true
+		var touches_wall := false
+		while not queue.is_empty():
+			var t: Vector2i = queue.pop_back()
+			for d in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
+				var n: Vector2i = t + d
+				var ch := String(m.terrain.get(n, ""))
+				if ch == "W" or ch == "w":
+					touches_wall = true
+				elif ch == "r" and not seen.has(n):
+					seen[n] = true
+					region.append(n)
+					queue.append(n)
+		if touches_wall:
+			for t in region:
+				roofs[t] = true
+	return roofs
+
 ## Grupperar tiles per terrängtecken och bygger en MultiMesh-batch per grupp.
+## Takrutor bryts ut ur 'r'-gruppen till en egen takbatch, och väggarna får
+## dressing (kröningssten + fönsterglas) ovanpå.
 func _build_terrain() -> void:
+	_roof_tiles = classify_roofs(model)
 	var groups: Dictionary = {}
 	for t: Vector2i in model.terrain:
 		var ch: String = model.terrain[t]
+		if ch == "r" and _roof_tiles.has(t):
+			ch = ROOF_KEY
 		if not groups.has(ch):
 			groups[ch] = []
 		groups[ch].append(t)
 	for ch in groups:
 		add_child(_make_batch(ch, groups[ch]))
+	_build_wall_dressing()
 
 func _make_batch(ch: String, tiles: Array) -> MultiMeshInstance3D:
-	var height: float = TALL.get(ch, GROUND_THICK)
+	var is_roof := ch == ROOF_KEY
+	var height: float = ROOF_HEIGHT if is_roof else TALL.get(ch, GROUND_THICK)
 	var y_center := height / 2.0 - GROUND_THICK
 	if ch == "~":
 		y_center -= WATER_DROP
@@ -145,18 +196,79 @@ func _make_batch(ch: String, tiles: Array) -> MultiMeshInstance3D:
 	mm.use_colors = true
 	mm.mesh = box
 	mm.instance_count = tiles.size()
-	var base: Color = PlaceholderTiles.COLORS.get(ch, Color("888888"))
+	var base: Color = ROOF_COLOR if is_roof \
+		else COLOR_3D.get(ch, PlaceholderTiles.COLORS.get(ch, Color("888888")))
+	var tall := is_roof or TALL.has(ch)
 	for i in tiles.size():
 		var t: Vector2i = tiles[i]
 		var pos := tile_to_world3(t)
 		pos.y = y_center
 		mm.set_instance_transform(i, Transform3D(Basis.IDENTITY, pos))
 		# Deterministisk ljusvariation per ruta — samma idé som variant_for i 2D.
-		mm.set_instance_color(i, base.lightened(float(_tile_hash(t) % 13) / 100.0))
+		# Höga volymer (väggar/tak) varieras symmetriskt åt båda hållen så
+		# stenraderna får murkänsla i stället för slät massa.
+		if tall:
+			var v := float(_tile_hash(t) % 17 - 8) / 100.0
+			mm.set_instance_color(i, base.lightened(v) if v >= 0.0 else base.darkened(-v))
+		else:
+			mm.set_instance_color(i, base.lightened(float(_tile_hash(t) % 13) / 100.0))
 	var inst := MultiMeshInstance3D.new()
 	inst.multimesh = mm
 	inst.material_override = _shared_mat
-	inst.name = "Terrain_" + ch
+	inst.name = "Roof_r" if is_roof else "Terrain_" + ch
+	return inst
+
+## Väggdressing: ljus kröningssten ovanpå varje vägg (siluetten läses som
+## huggen mur i stället för slät låda) och ett glasband på fönsterrutorna (w)
+## med svag emission så fönstren glimmar i skymningen. En batch vardera.
+func _build_wall_dressing() -> void:
+	var walls: Array = []
+	var windows: Array = []
+	for t: Vector2i in model.terrain:
+		var ch: String = model.terrain[t]
+		if ch == "W" or ch == "w":
+			walls.append(t)
+		if ch == "w":
+			windows.append(t)
+	if not walls.is_empty():
+		var cap := BoxMesh.new()
+		cap.size = Vector3(1.06, 0.09, 1.06)
+		add_child(_dressing_batch("WallCap", cap, walls,
+			WALL_HEIGHT - GROUND_THICK + 0.045, CAP_COLOR, 8, _shared_mat))
+	if not windows.is_empty():
+		var pane := BoxMesh.new()
+		pane.size = Vector3(1.05, 0.6, 1.05)
+		var glass := StandardMaterial3D.new()
+		glass.albedo_color = GLASS_COLOR
+		glass.roughness = 0.25
+		glass.emission_enabled = true
+		glass.emission = GLASS_GLOW
+		glass.emission_energy_multiplier = 0.35
+		add_child(_dressing_batch("WindowPane", pane, windows, 1.25, Color.WHITE, 0, glass))
+
+## MultiMesh-batch för väggdressing: samma platta ovanpå varje angiven ruta,
+## med valfri symmetrisk ljusvariation (var_pct = ±procent, 0 = ingen).
+func _dressing_batch(bname: String, mesh: Mesh, tiles: Array, y: float,
+		base: Color, var_pct: int, mat: StandardMaterial3D) -> MultiMeshInstance3D:
+	var mm := MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_3D
+	mm.use_colors = true
+	mm.mesh = mesh
+	mm.instance_count = tiles.size()
+	for i in tiles.size():
+		var t: Vector2i = tiles[i]
+		var pos := tile_to_world3(t)
+		pos.y = y
+		mm.set_instance_transform(i, Transform3D(Basis.IDENTITY, pos))
+		var col := base
+		if var_pct > 0:
+			var v := float(_tile_hash(t) % (2 * var_pct + 1) - var_pct) / 100.0
+			col = base.lightened(v) if v >= 0.0 else base.darkened(-v)
+		mm.set_instance_color(i, col)
+	var inst := MultiMeshInstance3D.new()
+	inst.multimesh = mm
+	inst.material_override = mat
+	inst.name = bname
 	return inst
 
 ## Deterministiskt hash per ruta — samma ruta ger samma värde varje besök.
@@ -177,7 +289,8 @@ func _build_scatter() -> void:
 			"t":
 				_scatter_add(groups, trees[_tile_hash(t) % trees.size()], t, true)
 			"r":
-				_scatter_add(groups, ROCK_MODEL, t, true)
+				if not _roof_tiles.has(t):   # takrutor är byggnader, inte stenrösen
+					_scatter_add(groups, ROCK_MODEL, t, true)
 			".", "g":
 				var decor := ground_decor_for(biome, ch)
 				if not decor.is_empty() and _tile_hash(t) % int(decor["every"]) == 0 \
@@ -185,6 +298,71 @@ func _build_scatter() -> void:
 					_scatter_add(groups, decor["spec"], t, true)
 	for file in groups:
 		_make_scatter(file, groups[file])
+	_build_town_props()
+
+## Stadsrekvisita: lyktstolpar längs gator som löper intill väggar och
+## tunnor/lådor i golvlagda interiörer — deterministiskt urval per ruta
+## (hash-gallring), placerade indragna mot väggen så gångstråket hålls fritt.
+## MultiMesh-batch per mesh-del, precis som scattern.
+func _build_town_props() -> void:
+	var lanterns: Array = []
+	var barrels: Array = []
+	var crates: Array = []
+	for t: Vector2i in model.terrain:
+		if model.blocked.has(t):
+			continue
+		var ch: String = model.terrain[t]
+		var wd := _wall_neighbor_dir(t)
+		if wd == Vector2i.ZERO:
+			continue
+		var off := Vector3(wd.x, 0, wd.y)
+		var h := _tile_hash(t)
+		if (ch == "c" or ch == "b") and h % 5 == 0:
+			lanterns.append({"t": t, "off": off * 0.34})
+		elif ch == "f":
+			if h % 9 == 0:
+				barrels.append({"t": t, "off": off * 0.26})
+			elif h % 9 == 4:
+				crates.append({"t": t, "off": off * 0.26})
+	_make_props("prop_lantern", lanterns, false)
+	_make_props("prop_barrel", barrels, true)
+	_make_props("prop_crate", crates, true)
+
+## Första kardinalgrannen som är vägg (W/w), annars ZERO — props ställs mot
+## väggen och gator utan vägg intill hålls rena.
+func _wall_neighbor_dir(t: Vector2i) -> Vector2i:
+	for d in [Vector2i.UP, Vector2i.LEFT, Vector2i.RIGHT, Vector2i.DOWN]:
+		var ch := String(model.terrain.get(t + d, ""))
+		if ch == "W" or ch == "w":
+			return d
+	return Vector2i.ZERO
+
+## Bygger MultiMesh-batcher för en världsskalig prop på givna platser
+## ({"t": tile, "off": världsoffset}). rot_jitter vrider deterministiskt.
+func _make_props(file: String, entries: Array, rot_jitter: bool) -> void:
+	if entries.is_empty():
+		return
+	var parts := _model_meshes(file)
+	if parts.is_empty():
+		return   # GLB saknas — rutan klarar sig utan rekvisita
+	for pi in parts.size():
+		var part: Dictionary = parts[pi]
+		var mm := MultiMesh.new()
+		mm.transform_format = MultiMesh.TRANSFORM_3D
+		mm.mesh = part["mesh"]
+		mm.instance_count = entries.size()
+		for i in entries.size():
+			var e: Dictionary = entries[i]
+			var t: Vector2i = e["t"]
+			var pos: Vector3 = tile_to_world3(t) + e["off"]
+			var rot := 0.0
+			if rot_jitter:
+				rot = TAU * float(_tile_hash(t) % 89) / 89.0
+			mm.set_instance_transform(i, Transform3D(Basis(Vector3.UP, rot), pos) * part["xform"])
+		var inst := MultiMeshInstance3D.new()
+		inst.multimesh = mm
+		inst.name = "Props_%s_%d" % [file, pi]
+		add_child(inst)
 
 func _scatter_add(groups: Dictionary, spec: Dictionary, t: Vector2i, jitter: bool) -> void:
 	var file := String(spec["file"])
@@ -392,7 +570,10 @@ func _on_tile_opened(_t: Vector2i, _terrain_ch: String) -> void:
 	# scattern: ett öppnat träd ska tappa sin modell). Händer enstaka gånger
 	# per zonvistelse, så en full ombyggnad duger.
 	for c in get_children():
-		if String(c.name).begins_with("Terrain_") or String(c.name).begins_with("Scatter_"):
+		var n := String(c.name)
+		if n.begins_with("Terrain_") or n.begins_with("Scatter_") \
+				or n.begins_with("Roof_") or n.begins_with("Props_") \
+				or n == "WallCap" or n == "WindowPane":
 			c.queue_free()
 	_build_terrain.call_deferred()
 	_build_scatter.call_deferred()

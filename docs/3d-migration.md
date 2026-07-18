@@ -590,6 +590,25 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       gångriktningen (Monster3D:s vinkelkontrakt). Service-NPC:er står kvar
       vid sina poster. 13 nya tester i test_npc_wander.gd.
 
+- [x] Thais stadsdesign i 3D (2026-07-18, `zone3d.gd` +
+      `tools/build_prop_models.py`): stadens 'r'-rutor visade sig betyda TAK
+      (2D:s roof-tile) men renderades som mossklippor — husen såg ut som
+      stenträdgårdar. Ny `Zone3D.classify_roofs`: sammanhängande r-regioner
+      som rör en vägg är hustak (egen Roof_r-batch — terrakottavolymer som
+      sticker upp 0,25 m över väggkrönet), fristående regioner förblir
+      klippmark med scatter (vildmarkens betydelse). Väggdressing: varmare
+      stenpalett (COLOR_3D-överdrag, 2D-fallbacken orörd), symmetrisk
+      per-instans ljusvariation för höga volymer (murkänsla), ljus
+      kröningssten ovanpå varje vägg (WallCap-batch) och glasband med svag
+      emission på fönsterrutorna w (WindowPane-batch — glimmar i skymningen).
+      Stadsrekvisita: tre nya procedurala props (prop_lantern med varmt
+      emissivt lamphus, prop_barrel, prop_crate — 6–13 kB) placerade
+      deterministiskt: lyktor längs gator (c/b) intill väggar, tunnor/lådor
+      i golvlagda interiörer, alltid indragna mot väggen. Perf-verifierat:
+      staden 503 FPS (upp från 483 — takvolymer är billigare än de ~4k
+      klippinstanserna de ersatte), ice 631 FPS. 4 nya tester i
+      test_zone3d.gd; visuell QA via shot_zone (stad + skog).
+
 - [x] Skott-ljud + NPC-uppmärksamhet (2026-07-18): `Sfx.shot()` — luftigt
       nedåtglissande "fiuu" när en projektil avlossas (spelarens pilar och
       monstrens skott, alla fyra vy-handlers), throttlad som hit() så

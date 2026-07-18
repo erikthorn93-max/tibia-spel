@@ -41,6 +41,8 @@ PALETTE = {
     "petal_yellow": ((0.92, 0.78, 0.25, 1), 0.0, 0.85, None),
     "petal_white":  ((0.90, 0.88, 0.80, 1), 0.0, 0.85, None),
     "fern_green":   ((0.13, 0.35, 0.15, 1), 0.0, 0.95, None),
+    # Varmt glödande lampglas — emission väl under utbränningsgränsen ~1,5.
+    "lamp_glass":   ((1.00, 0.85, 0.50, 1), 0.0, 0.30, ((1.0, 0.75, 0.35, 1.0), 1.2)),
 }
 
 _mats = {}
@@ -219,8 +221,44 @@ def build_fern():
     return parts
 
 
+def build_lantern():
+    """Lyktstolpe i järn med varmt glödande lamphus — ~2,2 m hög.
+    Emissivt glas (ingen ljuskälla — perf) som glimmar i skymningen."""
+    parts = []
+    parts.append(box("dark_stone", 0.22, 0.22, 0.10))              # stenfot
+    parts.append(cyl("iron", 0.035, 1.82, z=0.10, verts=8))        # stolpe
+    parts.append(box("iron", 0.16, 0.16, 0.05, z=1.90))            # lampfot
+    parts.append(box("lamp_glass", 0.13, 0.13, 0.17, z=1.95))      # glashus
+    parts.append(cone("iron", 0.15, 0.10, z=2.12, verts=8))        # plåttak
+    return parts
+
+
+def build_barrel():
+    """Ektunna med järnband — 0,65 m hög, står vid husväggar."""
+    parts = []
+    parts.append(cyl("wood", 0.26, 0.62, verts=12))                # stomme
+    for z in (0.08, 0.47):
+        parts.append(cyl("iron", 0.275, 0.05, z=z, verts=12))      # järnband
+    parts.append(cyl("dark_wood", 0.22, 0.03, z=0.62, verts=12))   # lock
+    return parts
+
+
+def build_crate():
+    """Trälåda med mörka hörnreglar — 0,5 m kub."""
+    parts = []
+    parts.append(box("wood", 0.52, 0.52, 0.50))
+    for sx_ in (-1, 1):
+        for sy_ in (-1, 1):
+            parts.append(box("dark_wood", 0.07, 0.07, 0.52,
+                             x=sx_ * 0.24, y=sy_ * 0.24))
+    return parts
+
+
 PROPS = {
     "door": build_door,
+    "lantern": build_lantern,
+    "barrel": build_barrel,
+    "crate": build_crate,
 }
 
 ## Exporteras under Meshy-modellernas gamla filnamn (ren asset-swap) och
@@ -275,9 +313,20 @@ def _export(name, build, normalize):
 
 
 def main():
+    # Valfritt filter efter "--" på kommandoraden: bygg bara angivna modeller
+    # (så en ny prop inte tvingar omexport av hela scatter-setet).
+    import sys
+    only = None
+    if "--" in sys.argv:
+        picked = sys.argv[sys.argv.index("--") + 1:]
+        only = set(picked) if picked else None
     for name, build in PROPS.items():
+        if only is not None and name not in only and ("prop_%s" % name) not in only:
+            continue
         _export("prop_%s" % name, build, normalize=False)
     for name, build in SCATTER.items():
+        if only is not None and name not in only:
+            continue
         _export(name, build, normalize=True)
 
 
