@@ -143,6 +143,7 @@ func _init() -> void:
 	sim.element_reaction.connect(_on_sim_element_reaction)
 	sim.moved.connect(_on_sim_moved)
 	sim.attack_started.connect(_on_sim_attack_started)
+	sim.ranged_attack.connect(_on_sim_ranged_attack)
 	sim.enrage_started.connect(_on_sim_enraged)
 	sim.status_changed.connect(_on_sim_status_changed)
 	sim.died.connect(_on_sim_died)
@@ -318,6 +319,19 @@ func _on_sim_attack_started(dir: Vector2i) -> void:
 	tw.tween_property(_body_root, "position", Vector3.ZERO, 0.13) \
 		.set_ease(Tween.EASE_IN_OUT)
 	tw.tween_callback(func(): _attacking = false)
+
+## Avståndsskott: projektil i brösthöjd från monstret till spelarens ruta
+## (ranged-färgen ur MonsterDB), liten träffskur vid nedslaget — som 2D.
+func _on_sim_ranged_attack(_from_t: Vector2i, to_t: Vector2i) -> void:
+	var fx_parent := get_parent()
+	if fx_parent == null:
+		return
+	var d: Dictionary = MonsterDB.monsters.get(sim.monster_name, {})
+	var rblock: Dictionary = d.get("ranged", {})
+	var col := Color(String(rblock.get("color", "#e0d8c0")))
+	var to_pos := Zone3D.tile_to_world3(to_t)
+	SpellFx3D.projectile(fx_parent, position, to_pos, col,
+		func(): SpellFx3D.burst(fx_parent, to_pos + Vector3(0, 0.5, 0), col, 6, 2.0))
 
 ## Träff: uppdatera baren + kort vit blink via tint-overlayen (parameter-tween,
 ## ingen materialallokering).

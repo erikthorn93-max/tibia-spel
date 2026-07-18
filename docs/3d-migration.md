@@ -545,6 +545,20 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       iterationer opåverkade) och städas därmed vid zonbyte. 7 nya tester
       i test_boss3d.gd.
 
+- [x] Avståndsattacker för monster (2026-07-18, renderer-agnostiskt):
+      MonsterSim äger skottet — monster med "ranged"-block i MonsterDB
+      (Pirat Skytt, Orkshamanen, Nekromant, Lich, Dvärggeomant, Avgrundsöga,
+      Mykonidäldste) skjuter på upp till range rutors avstånd med fri sikt
+      (nya `ZoneModel.has_line_of_sight`, Bresenham — väggar/träd/vatten
+      blockerar), håller positionen mellan skotten och jagar när sikten är
+      skymd; intill slår de i närstrid som förut. Ny sim-signal
+      `ranged_attack`; båda vyerna ritar projektilen i monstrets ranged-färg
+      via befintliga SpellFx(.3D).projectile med träffskur vid nedslaget.
+      Databugg fixad på köpet: 23 monster använde döda nyckeln "aggro" som
+      ingen kod läste (de fick tyst default-aggro 5) — alla normaliserade
+      till aggro_range, med vakttest mot regression. 18 nya tester i
+      test_monster_ranged.gd.
+
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1 ✓
 - MultiMesh för tiles/vegetation ✓; chunkad värld med laddningsradie —

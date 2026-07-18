@@ -230,6 +230,30 @@ func lock_at(t: Vector2i) -> String:
 func is_walkable(t: Vector2i) -> bool:
 	return _walkable.get(t, false)
 
+## Fri siktlinje mellan två tiles (avståndsattacker): sant när alla
+## MELLANLIGGANDE tiles på Bresenham-linjen är gångbara — väggar/träd/vatten
+## blockerar skottet. Ändpunkterna prövas inte (skytt och mål står ju där)
+## och enheter skymmer inte varandra.
+func has_line_of_sight(from: Vector2i, to: Vector2i) -> bool:
+	var x := from.x
+	var y := from.y
+	var dx := absi(to.x - from.x)
+	var dy := -absi(to.y - from.y)
+	var sx := 1 if to.x > from.x else -1
+	var sy := 1 if to.y > from.y else -1
+	var err := dx + dy
+	while x != to.x or y != to.y:
+		var e2 := 2 * err
+		if e2 >= dy:
+			err += dy
+			x += sx
+		if e2 <= dx:
+			err += dx
+			y += sy
+		if (x != to.x or y != to.y) and not is_walkable(Vector2i(x, y)):
+			return false
+	return true
+
 func find_path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 	if not is_walkable(to):
 		return []

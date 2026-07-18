@@ -82,6 +82,7 @@ func _init() -> void:
 	sim.died.connect(_on_sim_died)
 	sim.moved.connect(_on_sim_moved)
 	sim.attack_started.connect(_on_sim_attack_started)
+	sim.ranged_attack.connect(_on_sim_ranged_attack)
 	sim.player_dodged.connect(_on_sim_player_dodged)
 
 @onready var _hp_bar: ColorRect  = $HpBar
@@ -368,6 +369,19 @@ func _on_sim_moved(from: Vector2i, to: Vector2i) -> void:
 ## Attack inledd (före träffrull): spela lunge-stöten mot spelaren.
 func _on_sim_attack_started(dir: Vector2i) -> void:
 	play_attack(dir)
+
+## Avståndsskott: projektil från monstret till spelarens ruta i monstrets
+## ranged-färg (MonsterDB), med en liten träffskur vid nedslaget.
+func _on_sim_ranged_attack(_from_t: Vector2i, to_t: Vector2i) -> void:
+	var fx_parent := get_parent()
+	if fx_parent == null or zone == null:
+		return
+	var d: Dictionary = MonsterDB.monsters.get(monster_name, {})
+	var rblock: Dictionary = d.get("ranged", {})
+	var col := Color(String(rblock.get("color", "#e0d8c0")))
+	var to_pos: Vector2 = zone.tile_to_world(to_t)
+	SpellFx.projectile(fx_parent, global_position, to_pos, col,
+		func(): SpellFx.burst(fx_parent, to_pos, col, 6, 55.0))
 
 ## Spelaren väjde: låt spelarens vy visa "undvek"-effekten.
 func _on_sim_player_dodged() -> void:

@@ -22,6 +22,8 @@ signal enrage_started()                # enrage-fas aktiverad (speed/atk höjda)
 signal died(drops: Array)              # exp/kills bokförda; drops = utrullad loot
 signal moved(from: Vector2i, to: Vector2i)  # steg påbörjat (move_progress 0→1)
 signal attack_started(dir: Vector2i)   # attack mot spelaren inledd (före träffrull)
+signal ranged_attack(from: Vector2i, to: Vector2i)  # avståndsskott avlossat —
+                                       # vyn ritar projektilen (före träffrull)
 signal player_dodged()                 # spelaren väjde undan attacken
 
 var monster_name := ""
@@ -35,6 +37,7 @@ var atk := 3
 @warning_ignore("shadowed_global_identifier")   # databasfältet heter exp
 var exp := 5
 var aggro_range := 5
+var attack_range := 1                  # >1 = avståndsattack (ranged i MonsterDB)
 var speed := 3.0
 var cooldown := 1.0
 var dead := false
@@ -51,6 +54,8 @@ func init_stats(mname: String, night := false) -> void:
 	atk = int(d.get("atk", 3))
 	exp = int(d.get("exp", 5))
 	aggro_range = int(d.get("aggro_range", 5))
+	var rblock: Dictionary = d.get("ranged", {})
+	attack_range = maxi(int(rblock.get("range", 1)), 1)
 	speed = float(d.get("speed", 3.0))
 	cooldown = float(d.get("cooldown", 1.0))
 	if night:
@@ -88,6 +93,13 @@ func ai_tick(delta: float, player_tile: Variant = null) -> void:
 			_atk_timer = cooldown
 			_attack_player(pt - tile)
 		return
+	if dist <= attack_range \
+			and zone.has_line_of_sight(tile, pt):    # skjut på håll med fri sikt
+		if _atk_timer <= 0.0:
+			_atk_timer = cooldown
+			ranged_attack.emit(tile, pt)
+			_attack_player((pt - tile).sign())
+		return                                       # håll positionen mellan skotten
 	if dist <= aggro_range:                          # jaga
 		var path := zone.find_path(tile, pt)
 		if path.size() > 1:
