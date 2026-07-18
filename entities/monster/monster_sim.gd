@@ -88,8 +88,10 @@ func ai_tick(delta: float, player_tile: Variant = null) -> void:
 
 	var pt: Vector2i = player_tile
 	var dist := maxi(absi(tile.x - pt.x), absi(tile.y - pt.y))
-	if dist <= 1:                                    # intill: slå
-		if _atk_timer <= 0.0:
+	if dist <= 1:                                    # intill
+		if attack_range > 1 and _try_retreat(pt):    # skytt: backa och håll linjen
+			return
+		if _atk_timer <= 0.0:                        # annars: slå
 			_atk_timer = cooldown
 			_attack_player(pt - tile)
 		return
@@ -106,6 +108,27 @@ func ai_tick(delta: float, player_tile: Variant = null) -> void:
 			var next: Vector2i = path[1]
 			if next != pt and zone.is_walkable(next) and not zone.is_occupied(next):
 				_step_to(next)
+
+## Skyttens reträtt (Tibia-distansmonster håller skottlinjen): ta steget till
+## den fria grannruta som maximerar avståndet till spelaren. Stabil
+## genomgångsordning gör valet deterministiskt. False om instängd — då slår
+## skytten i närstrid som vanligt.
+func _try_retreat(pt: Vector2i) -> bool:
+	var best := tile
+	var best_d := maxi(absi(tile.x - pt.x), absi(tile.y - pt.y))
+	for d in [Vector2i(0, -1), Vector2i(0, 1), Vector2i(-1, 0), Vector2i(1, 0),
+			Vector2i(1, 1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(-1, -1)]:
+		var n: Vector2i = tile + d
+		if not zone.is_walkable(n) or zone.is_occupied(n):
+			continue
+		var nd := maxi(absi(n.x - pt.x), absi(n.y - pt.y))
+		if nd > best_d:
+			best_d = nd
+			best = n
+	if best == tile:
+		return false
+	_step_to(best)
+	return true
 
 ## Attack mot spelaren: träffrull mot evasion, mitigering mot armor/sköld,
 ## och chans på monstrets ability. Vyn spelar stöten via attack_started.

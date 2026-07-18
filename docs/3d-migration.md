@@ -559,6 +559,17 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       till aggro_range, med vakttest mot regression. 18 nya tester i
       test_monster_ranged.gd.
 
+- [x] Avståndsstrid rond 2 (2026-07-18, renderer-agnostiskt): spelarens
+      bågskott och kraftslag kräver nu fri sikt (samma
+      `ZoneModel.has_line_of_sight` som monstren — tidigare sköt bågen genom
+      väggar); skymd sikt pausar auto-attacken tyst utan att bränna pil eller
+      cooldown, kraftslag förklarar sig ("Ingen fri sikt till målet.").
+      Skyttarna kitear: ett distansmonster med spelaren intill backar till
+      den fria grannruta som maximerar avståndet (deterministiskt val) och
+      håller skottlinjen — instängd skyter slår i närstrid som förut.
+      6 nya tester (kiting + båg-sikt) i test_monster_ranged.gd och
+      test_player_sim_combat.gd.
+
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1 ✓
 - MultiMesh för tiles/vegetation ✓; chunkad värld med laddningsradie —

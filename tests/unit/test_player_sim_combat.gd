@@ -85,3 +85,53 @@ func test_kraftslag_med_full_laddning_utloses() -> void:
 	assert_signal_emitted(_sim, "spec_flash", "nedslaget ska blixtra på målets tile")
 	assert_lt(_target.hp, 100000, "kraftslaget ska göra skada (garanterad träff)")
 	assert_eq(GameState.spec_energy, 0.0, "mätaren ska tömmas")
+
+# --- bågskytte & fri sikt ---
+## 10×10 med vertikal mur på x=3: spelaren (5,5) ser (9,5) men inte (1,5).
+
+func _bow_zone() -> ZoneModel:
+	var z := ZoneModel.new()
+	var rows: Array = []
+	for y in 10:
+		rows.append("...W......")
+	z.parse({"name": "Bågzon", "tiles": rows}, "test_bow_los")
+	return z
+
+func _equip_bow() -> void:
+	GameState.equipped_weapon = "hunting_bow"       # range 4, ammo wooden_arrow
+	GameState.add_item("wooden_arrow", 10)
+
+func _cleanup_bow() -> void:
+	GameState.equipped_weapon = ""
+	GameState.remove_item("wooden_arrow", int(GameState.inventory.get("wooden_arrow", 0)))
+
+func test_bage_svingar_med_fri_sikt() -> void:
+	watch_signals(_sim)
+	_sim.zone = _bow_zone()
+	_equip_bow()
+	_target.tile = Vector2i(9, 5)                   # dist 4, fri sikt
+	_sim.attack_tick(0.016)
+	assert_signal_emitted(_sim, "attack_swung", "fri sikt: bågen ska svinga")
+	_cleanup_bow()
+
+func test_bage_vantar_bakom_vagg() -> void:
+	watch_signals(_sim)
+	_sim.zone = _bow_zone()
+	_equip_bow()
+	_target.tile = Vector2i(1, 5)                   # dist 4 men muren på x=3 emellan
+	_sim.attack_tick(0.016)
+	assert_signal_not_emitted(_sim, "attack_swung", "skymd sikt: inget skott")
+	assert_eq(int(GameState.inventory.get("wooden_arrow", 0)), 10,
+		"ingen pil ska förbrukas när sikten är skymd")
+	_cleanup_bow()
+
+func test_kraftslag_med_bage_kraver_fri_sikt() -> void:
+	watch_signals(_sim)
+	_sim.zone = _bow_zone()
+	_equip_bow()
+	GameState.spec_energy = 100.0
+	_target.tile = Vector2i(1, 5)                   # skymd av muren
+	_sim.try_special([_target])
+	assert_signal_emitted(_sim, "message", "skymd sikt ska förklaras med besked")
+	assert_signal_not_emitted(_sim, "spec_released", "inget kraftslag genom väggen")
+	_cleanup_bow()

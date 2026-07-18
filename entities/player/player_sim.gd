@@ -166,6 +166,9 @@ func attack_tick(delta: float) -> void:
 	var dist := chebyshev(target.tile)
 	if dist > weapon_range:
 		return   # utom räckvidd
+	if weapon_range > 1 and dist > 1 and zone != null \
+			and not zone.has_line_of_sight(tile, target.tile):
+		return   # skymd sikt — bågen väntar tills skottlinjen är fri
 	_attack_timer = ATTACK_COOLDOWN / (1.0 + GameState.total_speed_bonus())
 	# Vänd dig mot målet inför slaget (gäller både närstrid och bågskytte)
 	set_facing(Vector2i(signi(target.tile.x - tile.x), signi(target.tile.y - tile.y)))
@@ -261,6 +264,10 @@ func try_special(nearby: Array = []) -> void:
 	var weapon_range := int(weapon.get("range", 1))
 	if chebyshev(target.tile) > weapon_range:
 		message.emit("Målet är utom räckhåll.")
+		return
+	if weapon_range > 1 and chebyshev(target.tile) > 1 and zone != null \
+			and not zone.has_line_of_sight(tile, target.tile):
+		message.emit("Ingen fri sikt till målet.")
 		return
 	if not CombatFormulas.spec_ready(GameState.spec_energy):
 		message.emit("Kraftslaget är inte laddat.")

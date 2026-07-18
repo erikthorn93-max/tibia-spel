@@ -88,17 +88,42 @@ func test_jagar_nar_sikten_ar_skymd() -> void:
 	assert_signal_not_emitted(_sim, "ranged_attack", "ska inte skjuta genom väggen")
 	assert_signal_emitted(_sim, "moved", "ska flytta sig för fri sikt i stället")
 
-func test_intill_slar_narstrid_utan_projektil() -> void:
+func test_intill_avlossas_ingen_projektil() -> void:
 	watch_signals(_sim)
-	_sim.ai_tick(0.016, Vector2i(5, 6))              # granntile
-	assert_signal_emitted(_sim, "attack_started", "intill: vanligt slag")
-	assert_signal_not_emitted(_sim, "ranged_attack", "ingen projektil i närstrid")
+	_sim.ai_tick(0.016, Vector2i(5, 6))              # granntile → reträtt
+	assert_signal_not_emitted(_sim, "ranged_attack", "ingen projektil i närkontakt")
 
 func test_stun_blockerar_avstandsskott() -> void:
 	watch_signals(_sim)
 	_sim.apply_status("stun", 5.0, 0.0)
 	_sim.ai_tick(0.016, Vector2i(9, 5))
 	assert_signal_not_emitted(_sim, "ranged_attack", "bedövad skytt ska inte skjuta")
+
+# --- kiting (reträtt intill) ---
+
+func test_skytt_backar_nar_spelaren_gar_intill() -> void:
+	watch_signals(_sim)
+	_sim.ai_tick(0.016, Vector2i(5, 6))              # spelare på granntile
+	assert_signal_emitted(_sim, "moved", "skytten ska backa för fri skottlinje")
+	assert_signal_not_emitted(_sim, "attack_started", "reträtt i stället för slag")
+	var d := maxi(absi(_sim.tile.x - 5), absi(_sim.tile.y - 6))
+	assert_gt(d, 1, "reträttsteget ska öka avståndet till spelaren")
+
+func test_instangd_skytt_slar_narstrid() -> void:
+	watch_signals(_sim)
+	for d in [Vector2i(0, -1), Vector2i(-1, 0), Vector2i(1, 0),
+			Vector2i(1, 1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(-1, -1)]:
+		_zone.occupy(Vector2i(5, 5) + d, RefCounted.new())   # alla flyktvägar tagna
+	_sim.ai_tick(0.016, Vector2i(5, 6))
+	assert_signal_not_emitted(_sim, "moved", "instängd skytt kan inte backa")
+	assert_signal_emitted(_sim, "attack_started", "instängd skytt ska slå i närstrid")
+
+func test_melee_monster_backar_inte() -> void:
+	watch_signals(_sim)
+	_sim.attack_range = 1
+	_sim.ai_tick(0.016, Vector2i(5, 6))
+	assert_signal_not_emitted(_sim, "moved", "närstridsmonster ska stå kvar och slå")
+	assert_signal_emitted(_sim, "attack_started")
 
 func test_melee_monster_opaverkat() -> void:
 	watch_signals(_sim)
