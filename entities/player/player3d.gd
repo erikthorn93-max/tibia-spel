@@ -239,6 +239,7 @@ func _on_attack_swung(dir: Vector2i) -> void:
 ## Pil avlossad: projektil i brösthöjd till målets ruta i ammunitionens färg
 ## (annars bågens), liten träffskur vid nedslaget — som monstrens skott.
 func _on_arrow_fired(_from_t: Vector2i, to_t: Vector2i) -> void:
+	Sfx.shot()
 	var fx_parent := get_parent()
 	if fx_parent == null:
 		return

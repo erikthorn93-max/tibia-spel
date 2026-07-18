@@ -143,6 +143,18 @@ func hit() -> void:
 	_last_hit_ms = now
 	_enqueue(synth([261.63, 130.81], 0.035, 0.16))
 
+var _last_shot_ms := 0
+
+## Snabbt luftigt nedåtglissande "fiuu" när en projektil avlossas (spelarens
+## pilar och monstrens skott). Throttlad som hit() så flera samtidiga skyttar
+## ger ett ljud, inte en kakofoni.
+func shot() -> void:
+	var now := Time.get_ticks_msec()
+	if now - _last_shot_ms < 60:
+		return
+	_last_shot_ms = now
+	_enqueue(synth([1567.98, 1046.50, 698.46], 0.022, 0.12))
+
 ## Skarp ljus uppåt-figur vid kritisk träff.
 func crit() -> void:
 	_enqueue(synth([523.25, 783.99], 0.04, 0.22))

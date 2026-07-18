@@ -99,6 +99,11 @@ func _process(delta: float) -> void:
 			position = _from_pos.lerp(_to_pos, _wander.move_progress)
 		elif tile == _wander.tile and _to_pos != Vector2.ZERO:
 			position = _to_pos
+	# Uppmärksamhet: vänd spriten mot spelaren i närheten (inte mitt i ett steg)
+	if _wander == null or _wander.move_progress >= 1.0:
+		var pd := GameState.player_tile - tile
+		if pd.x != 0 and maxi(absi(pd.x), absi(pd.y)) <= 3:
+			_sprite.scale.x = -1.0 if pd.x < 0 else 1.0
 	# Idle-andning så NPC:n inte står helt livlös
 	_breath_t += delta
 	_sprite.scale.y = CharacterVisual.breath_scale(_breath_t)

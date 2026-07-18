@@ -49,6 +49,7 @@ func test_sound_methods_callable_without_error():
 	for ctype in ["heal", "support", "conjure", "attack", ""]:
 		sfx.cast(ctype)
 	sfx.hit()
+	sfx.shot()
 	sfx.monster_die()
 	sfx.player_hurt()
 	sfx.player_died()
@@ -83,6 +84,15 @@ func test_hit_is_throttled():
 	var after_first: int = sfx._last_hit_ms
 	sfx.hit()                      # direkt igen → ska throttlas (samma tidsstämpel)
 	assert_eq(int(sfx._last_hit_ms), after_first, "tät andra-träff ska ignoreras av throttlen")
+
+func test_shot_is_throttled():
+	# Två skott tätt inpå varandra ska inte båda passera throttlen.
+	var sfx = add_child_autofree(Sfx.new())
+	sfx._last_shot_ms = 0
+	sfx.shot()
+	var after_first: int = sfx._last_shot_ms
+	sfx.shot()                     # direkt igen → ska throttlas
+	assert_eq(int(sfx._last_shot_ms), after_first, "tätt andra-skott ska ignoreras av throttlen")
 
 func test_cast_and_denied_produce_audio():
 	# Cast- och denial-vågformerna ska vara icke-tomma.

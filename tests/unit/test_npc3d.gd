@@ -52,6 +52,21 @@ func test_special_model_overrides_civilian():
 	var n := _make_npc("dialogue", Vector2i.ZERO, "npc_tibianus")
 	assert_eq(n._model_file(), "king", "kungen ska få sin givna gestalt")
 
+func test_npc_vander_sig_mot_spelaren():
+	var n := _make_npc("shop", Vector2i(5, 5))
+	GameState.player_tile = Vector2i(6, 5)   # öster om NPC:n
+	n._process(0.016)
+	assert_almost_eq(n._body.rotation.y, atan2(-1.0, 0.0) + PI, 0.001,
+		"NPC:n ska vrida kroppen mot spelaren i närheten")
+
+func test_npc_ignorerar_avlagsen_spelare():
+	var n := _make_npc("shop", Vector2i(5, 5))
+	var before: float = n._body.rotation.y
+	GameState.player_tile = Vector2i(20, 20)   # utom ATTENTION_DIST
+	n._process(0.016)
+	assert_almost_eq(n._body.rotation.y, before, 0.001,
+		"långt borta: kroppen ska inte vridas")
+
 func test_quest_marker_only_for_dialogue_npcs():
 	var d := _make_npc("dialogue", Vector2i.ZERO, "npc_ranger")
 	var s := _make_npc("shop", Vector2i.ZERO)

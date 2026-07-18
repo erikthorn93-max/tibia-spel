@@ -211,6 +211,7 @@ func _on_sim_attack_swung(dir: Vector2i) -> void:
 ## Pil avlossad: projektil till målets ruta i ammunitionens färg (annars
 ## bågens), liten träffskur vid nedslaget — spegelbilden av monstrens skott.
 func _on_sim_arrow_fired(_from_t: Vector2i, to_t: Vector2i) -> void:
+	Sfx.shot()
 	var fx_parent := get_parent()
 	if fx_parent == null or zone == null:
 		return

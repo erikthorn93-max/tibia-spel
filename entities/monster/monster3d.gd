@@ -323,6 +323,7 @@ func _on_sim_attack_started(dir: Vector2i) -> void:
 ## Avståndsskott: projektil i brösthöjd från monstret till spelarens ruta
 ## (ranged-färgen ur MonsterDB), liten träffskur vid nedslaget — som 2D.
 func _on_sim_ranged_attack(_from_t: Vector2i, to_t: Vector2i) -> void:
+	Sfx.shot()
 	var fx_parent := get_parent()
 	if fx_parent == null:
 		return

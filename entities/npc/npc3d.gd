@@ -23,6 +23,8 @@ const KIND_NAMES := {
 	"taskmaster": "Taskmästaren", "spell_teacher": "Magikern",
 }
 
+const ATTENTION_DIST := 3   # vänder sig mot spelaren inom det här avståndet
+
 var kind := ""       # "dialogue" | "shop" | "bank" | "taskmaster" | "spell_teacher"
 var npc_id := ""
 var tile := Vector2i.ZERO
@@ -138,6 +140,12 @@ func _process(delta: float) -> void:
 		elif _to3 != Vector3.ZERO:
 			position = _to3
 			_body.position.y = _body_base_y
+	# Uppmärksamhet: vänd kroppen mot spelaren i närheten (alla NPC-typer) —
+	# samma vinkelkontrakt som strosandet; gäller inte mitt i ett steg.
+	if _wander == null or _wander.move_progress >= 1.0:
+		var pd := GameState.player_tile - tile
+		if pd != Vector2i.ZERO and maxi(absi(pd.x), absi(pd.y)) <= ATTENTION_DIST:
+			_body.rotation.y = atan2(-float(pd.x), -float(pd.y)) + PI
 	_breath_t += delta
 	_body.scale.y = _body_base_scale_y * CharacterMotion3D.breath_scale(_breath_t)
 

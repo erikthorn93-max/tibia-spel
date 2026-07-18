@@ -590,6 +590,14 @@ prenumererar och animerar. `world.gd` typas om mot sim-klasserna.
       gångriktningen (Monster3D:s vinkelkontrakt). Service-NPC:er står kvar
       vid sina poster. 13 nya tester i test_npc_wander.gd.
 
+- [x] Skott-ljud + NPC-uppmärksamhet (2026-07-18): `Sfx.shot()` — luftigt
+      nedåtglissande "fiuu" när en projektil avlossas (spelarens pilar och
+      monstrens skott, alla fyra vy-handlers), throttlad som hit() så
+      många skyttar ger ett ljud. NPC:er vänder sig mot spelaren inom
+      3 rutor: 3D vrider kroppen (alla NPC-typer, samma vinkelkontrakt som
+      strosandet — inte mitt i ett steg), 2D vänder spriten. 3 nya tester
+      (shot-throttle + 3D-vridning).
+
 ### Prestandakrav i 3D (från godot_rpg-lärdomarna)
 - Ingen SSIL/dyra post-effekter; budget per frame från dag 1 ✓
 - MultiMesh för tiles/vegetation ✓; chunkad värld med laddningsradie —
